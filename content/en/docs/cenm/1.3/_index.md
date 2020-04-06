@@ -59,6 +59,7 @@ Operations
 
 * [Enterprise Network Manager Quick-Start Guide](quick-start.md)
 * [Deployment with Kubernetes](deployment-kubernetes.md)
+* [Zone Service](zone-manager.md)
 * [Identity Manager Service](identity-manager.md)
 * [Network Map Service](network-map.md)
 * [Signing Services](signing-service.md)

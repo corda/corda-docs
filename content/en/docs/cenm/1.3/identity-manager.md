@@ -320,11 +320,11 @@ In order to retrieve the CSR information, the signing service will communicate w
 external signing service.
 
 
-#### Issuance Internal Server
+#### Issuance Internal Interface
 
-Similarly to the other ENM services, the Identity Manager is designed to be able to communicate between other services
+Similarly to the other ENM services, the Identity Manager is designed to be able to communicate between other ENM services
 such as the Network Map and Signing services. Both the Issuance and, optionally, the Revocation workflows have their own
-internal listening server that is created on startup which can receive and respond to messages from other ENM services.
+internal listening socket interface that is created on startup which can receive and respond to messages from other ENM services.
 For example, the Revocation workflow’s ENM listener can respond to messages from the Network Map regarding certificate
 statuses of current participants which the Network Map service will then use when refreshing the latest Network Map.
 
@@ -540,11 +540,11 @@ All inter-service communication can be configured with SSL support. See [Configu
 There are an additional two parameters that need to be specified with the revocation workflow config block:
 
 
-* **crlCacheTimeout**: 
+* **crlCacheTimeout**:
 The time (in milliseconds) for nodes to cache the CRL for
 
 
-* **crlFiles**: 
+* **crlFiles**:
 The list of CRLs for other participants within the certificate chain. This is necessary as when a node checks
 for revoked certificates, it needs to check all certificates within the certificate chain. This parameter can
 be used to include CRLs to remove the requirement for node operators to provide their own CRL
@@ -786,4 +786,3 @@ shell {
 ```
 
 [identity-manager-prod-valid.conf](https://github.com/corda/network-services/blob/release/1.2/services/src/test/resources/v1.1-configs/identity-manager/identity-manager-prod-valid.conf)
-

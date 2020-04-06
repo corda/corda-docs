@@ -38,22 +38,22 @@ The initial network parameters file can be loaded into the network map service d
 `--set-network-parameters` flag. The complete list of flags required to set the network parameters is as follows:
 
 
-* **[–set-network-parameters] or [-s]**: 
+* **[–set-network-parameters] or [-s]**:
 This flag specifies that you wish to set or update the network parameters, and
 should be followed by the new network parameters configuration file.
 
 
-* **[–network-truststore] or [-t]**: 
+* **[–network-truststore] or [-t]**:
 This is used to define the network trustStore, which should contain the root
 certificate (similar to the *network-root-truststore.jks* file for Corda nodes). This is needed to validate that the
 notaries that have been set in the network parameters have a valid certificate issued by the Identity Manager.
 
 
-* **[–truststore-password] or [-p]**: 
+* **[–truststore-password] or [-p]**:
 The password for the above trustStore.
 
 
-* **[–root-alias] or [-a]**: 
+* **[–root-alias] or [-a]**:
 The alias for the root certificate within the above trustStore.
 
 
@@ -329,12 +329,47 @@ enmListener {
 ```
 
 {{< note >}}
-This parameter can be omitted if desired, in which case it will default to port 5050 with `reconnect = true`.
-
+The reconnect parameter can be omitted if desired, in which case it will default to port 5050 with `reconnect = true`.
 {{< /note >}}
+
 {{< note >}}
 All inter-service communication can be configured with SSL support. See [Configuring the ENM services to use SSL](enm-with-ssl.md).
+{{< /note >}}
 
+
+#### Admin RPC Server
+
+The Network Map has an optional RPC interface which can be used to administrate the
+service from a remote user interface. This RPC interface is configured separately
+to the service to service interface configured above.
+
+The configuration block `adminListener` can be used to define the properties of this
+listener, such as the port it listens on as well as the retrying and logging behaviour.
+The admin interface requires an authentication and authorisation service to verify
+requests, which must be configured below in a `authServiceConfig` block:
+
+```guess
+...
+adminListener {
+    port = 5050
+    reconnect = true
+}
+authServiceConfig {
+    host = <auth service host>
+    port = <auth service port>
+    trustStore = {
+        location = /path/to/trustroot.jks
+        password = <key store password>
+    }
+    audience = <audience>
+    issuer = <issuer>
+    leeway = <leeway duration>
+}
+...
+```
+
+{{< note >}}
+The reconnect parameter can be omitted if desired, in which case it will default to port 5050 with `reconnect = true`.
 {{< /note >}}
 
 ### Identity Manager & Revocation Communication
@@ -513,4 +548,3 @@ useful especially when dealing with node’s deployment in environments with IP 
 |GET|/network-map/my-hostname|Returns the IP address of the requestor.|
 
 {{< /table >}}
-

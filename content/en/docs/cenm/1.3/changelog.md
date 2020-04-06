@@ -19,6 +19,14 @@ title: Changelog
 Here’s a summary of what’s changed in each Enterprise Network Manager release. For guidance on how to upgrade code from
 the previous release, see [Upgrading Corda Enterprise Network Manager](upgrade-notes.md).
 
+## CENM 1.3
+
+* Obfuscator support synchronized with Corda 4.5
+* CENM is now built against Corda 4.3; this has no implications on supported versions of Corda,
+  but does update dependencies of the built code.
+* Introduce Angel and Zone services
+  * Default SMR plugin now requires authentication service configuration
+
 ## CENM 1.2
 
 
