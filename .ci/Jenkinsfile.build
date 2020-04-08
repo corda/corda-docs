@@ -85,6 +85,9 @@ pipeline {
                 sh """
                     make ${MAKE_PARAMS.join(' ')} ${MAKE_BUILD_TARGETS.join(' ')}
                 """
+                script {
+                    docker.image("${env.IMAGE}:${env.IMAGE_TAG}").tag(config.latestTag)
+                }
                 sh 'docker images'
             }
         }
@@ -93,10 +96,6 @@ pipeline {
                 expression { params.DO_PUBLISH }
             }
             steps {
-                script {
-                    docker.image("${env.IMAGE}:${env.IMAGE_TAG}").tag(config.latestTag)
-                }
-
                 echo "Creating Artifactory server"
                 rtServer (
                     id: 'R3-Artifactory',
