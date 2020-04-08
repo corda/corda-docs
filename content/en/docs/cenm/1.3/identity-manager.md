@@ -137,7 +137,7 @@ along with the schema see [CENM Databases](database-set-up.md).
 
 #### Additional Properties
 
-Additional database properties can be loaded by including an optional *additionalProperties* configuration block. In CENM 1.0
+Additional database properties can be loaded by including an optional *additionalProperties* configuration block. Currently
 these are restricted to HikariCP configuration settings.
 
 ```guess

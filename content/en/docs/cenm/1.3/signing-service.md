@@ -83,7 +83,7 @@ users and certificates should have been previously setup on the box.
 
 {{< /note >}}
 
-### Run the Signing Service
+### Running the Signing Service
 
 Once the Signing Service has been configured, it can be run via the command:
 
@@ -111,7 +111,7 @@ The service can then be accessed via ssh, either locally on the machine or from 
 closed network that the service is being run on.
 
 
-### Execute a Signing Task
+### Executing A Signing Task
 
 Once the configured service is up and running, a user can execute a signing task via the interactive shell via the `run
 signer name: <SIGNING_TASK_ALIAS>` command. This will execute the task, prompting the user for signing key
@@ -122,13 +122,13 @@ Any configured task can be run through the shell, even automated scheduled tasks
 
 {{< /note >}}
 
-### View available Signing Tasks
+### Viewing Available Signing Tasks
 
 A user can see what signing tasks are available by executing the `view signers` command within the shell. This will
 output all tasks that can be run along with their schedule, if applicable.
 
 
-### Perform A Health Check
+### Performing A Health Check
 
 To verify that all configured CENM data sources or a single SMR Service data source are reachable by the Signing Service, a health check can be performed
 by running the `run clientHealthCheck`. This will iteratively run through each service, sending a simple ping message
@@ -269,7 +269,6 @@ production environment configuration.
 Using a local java keystore in a production system is strongly discouraged.
 
 {{< /note >}}
-
 More detailed descriptions of how to configure a signing key can be found in the
 `Configuration Parameters` section below.
 
@@ -325,7 +324,7 @@ Each signing task maps to exactly one of four possibly data types:
 * **Network Parameters** - signing new Network Parameters and Network Parameter Updates
 
 
-#### Schedule Signing Tasks
+#### Scheduling Signing Tasks
 
 A signing task can be configured to automatically run on a set schedule, providing *no manual user input is required*.
 That is, the signing key that is configured for the task requires no user input to authenticate (e.g. keyfile or
@@ -444,12 +443,12 @@ The configuration for the services integrated shell.
 List of configurations for any third party HSM libraries.
 
 
-* **type**:
-The HSM type for the library (`UTIMACO_HSM`, `GEMALTO_HSM`, `SECUROSYS_HSM`, `AZURE_KEY_VAULT_HSM` or `AMAZON_CLOUD_HSM`).
+  * **type**:
+  The HSM type for the library (`UTIMACO_HSM`, `GEMALTO_HSM`, `SECUROSYS_HSM`, `AZURE_KEY_VAULT_HSM` or `AMAZON_CLOUD_HSM`).
 
 
-* **jars**:
-List of paths for the HSM Jars.
+  * **jars**:
+  List of paths for the HSM Jars.
 
 
 * **sharedLibDir**:
@@ -463,12 +462,12 @@ Optional path to the shared library directory.
 defined. Should contain all certificates to build the entire certificate chain from the signing key back to the root.
 
 
-* **file**:
-Certificate store file location.
+  * **file**:
+  Certificate store file location.
 
 
-* **password**:
-Certificate store password.
+  * **password**:
+  Certificate store password.
 
 
 
@@ -622,12 +621,12 @@ entire certificate chain from the signing key back to the root. This is required
 do not contain their full certificate chains.
 
 
-* **file**:
-Certificate store file location.
+  * **file**:
+  Certificate store file location.
 
 
-* **password**:
-Certificate store password.
+  * **password**:
+  Certificate store password.
 
 
 
@@ -671,12 +670,12 @@ entire certificate chain from the signing key back to the root. This is required
 do not contain their full certificate chains.
 
 
-* **file**:
-Certificate store file location.
+  * **file**:
+  Certificate store file location.
 
 
-* **password**:
-Certificate store password.
+  * **password**:
+  Certificate store password.
 
 
 
@@ -756,22 +755,19 @@ The connection details for the CENM service that acts as the data source
   *(Optional)* SSL Information for connection with the CENM service.
     * **keyStore**:
     The key store configuration for the Signing Service SSL key pair.
-    * **location**:
-    The location in the file system of the keystore containing the SSL public / private key pair.
-    of the Signing Service.
-    * **password**:
-    The password for the keystore.
-    * **keyPassword**:
-    *(Optional)* The password for the key pair - can be omitted if it is the same as the keystore password.
-* **trustStore**:
-Trust store configuration for the SSL PKI root of trust.
-  * **location**:
-  The location in the file system of the keystore containing the SSL PKI root of trust.
-  * **password**:
-  The password for the trust root keystore.
-
-
-
+      * **location**:
+      The location in the file system of the keystore containing the SSL public / private key pair.
+      of the Signing Service.
+      * **password**:
+      The password for the keystore.
+      * **keyPassword**:
+      *(Optional)* The password for the key pair - can be omitted if it is the same as the keystore password.
+    * **trustStore**:
+    Trust store configuration for the SSL PKI root of trust.
+      * **location**:
+      The location in the file system of the keystore containing the SSL PKI root of trust.
+      * **password**:
+      The password for the trust root keystore.
 
 
 ### Signable Material Retriever Location Example
@@ -785,62 +781,30 @@ Locations, then `nonCaSmrLocation` replaces non CA related inputs of `serviceLoc
 
 * **caSmrLocation**:
 The connection details for the CA part of SMR Service that acts as the data source
-
-
-* **host**:
-Host name (or IP address) that the CA part of SMR Service is running on
-
-
-* **port**:
-Port that the CA part of SMR Service is listening on (for inter-ENM communication)
-
-
-* **verbose**:
-Boolean representing whether debug information for the IPC between the Signing Service and the remote service
-should be displayed.
-
-
-* **ssl**:
-*(Optional)* SSL Information for connection with the CA part of SMR Service.
-
-
-* **keyStore**:
-Key store configuration for the Signing Service SSL key pair.
-
-
-* **location**:
-Location on the file system of the keystore containing the SSL public / private keypair
-of the Signing Service.
-
-
-* **password**:
-password for the keyStore
-
-
-* **keyPassword**:
-*(Optional)* Password for the keypair, can be omitted if the same as the keystore.
-
-
-
-
-* **trustStore**:
-Trust store configuration for the SSL PKI root of trust.
-
-
-* **location**:
-Location on the file system of the keystore containing the SSL PKI root of trust.
-
-
-* **password**:
-password for the trust root keystore.
-
-
-
-
-
-
-
-
+  * **host**:
+  Host name (or IP address) that the CA part of SMR service is running on
+  * **port**:
+  Port that the CA part of SMR service is listening on (for inter-ENM communication)
+  * **verbose**:
+  Boolean representing whether debug information for the IPC between the Signer and the remote service
+  should be displayed.
+  * **ssl**:
+  *(Optional)* SSL Information for connection with the CA part of SMR service.
+    * **keyStore**:
+    Key store configuration for the Signing Service SSL key pair.
+      * **location**:
+      Location on the file system of the keystore containing the SSL public / private keypair
+      of the Signing Service.
+      * **password**:
+      password for the keyStore
+      * **keyPassword**:
+      *(Optional)* Password for the keypair, can be omitted if the same as the keystore.
+    * **trustStore**:
+    Trust store configuration for the SSL PKI root of trust.
+      * **location**:
+      Location on the file system of the keystore containing the SSL PKI root of trust.
+      * **password**:
+      password for the trust root keystore.
 * **nonCaSmrLocation**:
 Same as per **caSmrLocation**, just for the non-CA part of the SMR Service.
 
@@ -877,11 +841,8 @@ hosted on.
 * **updatePeriod**:
 Relevant only if type is `CRL`. This represents the millisecond duration between CRL updates and is baked into the
 generated CRL via the `nextUpdate` X509 field. For users of this CRL, this defines two key pieces of information:
-
->
->
-> * When the next CRL should be available, which is used by some libraries for cache invalidation.
-> * When the current CRL has expired and is therefore obsolete.
+  * When the next CRL should be available, which is used by some libraries for cache invalidation.
+  * When the current CRL has expired and is therefore obsolete.
 
 
 To ensure that the transition from an old CRL to a new one, this value should always be set to a time period much
@@ -905,9 +866,9 @@ are linked to signing keys that require no manual user authentication. That is, 
 signing key using `PASSWORD` or `KEY_FILE` authentication with the password preconfigured.
 
 
-* **interval**:
-The duration interval between signing executions. Either a number representing the millisecond duration
-or a string duration with unit suffix. See above [scheduling signing tasks](#scheduling-signing-tasks) section on accepted format.
+  * **interval**:
+  The duration interval between signing executions. Either a number representing the millisecond duration
+  or a string duration with unit suffix. See above [scheduling signing tasks](#scheduling-signing-tasks) section on accepted format.
 
 
 
@@ -1444,10 +1405,10 @@ in the serviceLocations map defined above.
 The schedule for automated execution of the material management task.
 
 
-* **interval**:
-The duration interval between signing executions. Either a number representing the millisecond
-duration or a string duration with unit suffix. See below scheduling signing tasks section on
-accepted format.
+  * **interval**:
+  The duration interval between signing executions. Either a number representing the millisecond
+  duration or a string duration with unit suffix. See below scheduling signing tasks section on
+  accepted format.
 
 
 
@@ -1566,8 +1527,6 @@ materialManagementTasks = {
 
 ```
 
-[smr-test-valid.conf](https://github.com/corda/network-services/blob/release/1.2/services/src/test/resources/v1.2-configs/smr/smr-test-valid.conf)
-
 
 ### Developing Signing Plugins
 
@@ -1589,8 +1548,6 @@ public interface StartablePlugin {
 
 ```
 
-[StartablePlugin.java](https://github.com/corda/network-services/blob/release/1.2/smr-plugin-api/commonapi/src/main/java/com/r3/enm/smrpluginapi/common/StartablePlugin.java)
-
 Each signable material submission plugin method must return its’ status:
 
 ```java
@@ -1602,8 +1559,6 @@ Each signable material submission plugin method must return its’ status:
  */
 public enum SigningStatus {PENDING, COMPLETED}
 ```
-
-[SigningStatus.java](https://github.com/corda/network-services/blob/release/1.2/smr-plugin-api/commonapi/src/main/java/com/r3/enm/smrpluginapi/common/SigningStatus.java)
 
 
 #### CA Signing Plugin
@@ -1639,8 +1594,6 @@ public interface CASigningPlugin extends StartablePlugin {
 }
 
 ```
-
-[CASigningPlugin.java](https://github.com/corda/network-services/blob/release/1.2/smr-plugin-api/ca/src/main/java/com/r3/enm/smrpluginapi/ca/CASigningPlugin.java)
 
 CSR submission method output:
 
@@ -1812,8 +1765,6 @@ public interface NonCASigningPlugin extends StartablePlugin {
 }
 
 ```
-
-[NonCASigningPlugin.java](https://github.com/corda/network-services/blob/release/1.2/smr-plugin-api/nonca/src/main/java/com/r3/enm/smrpluginapi/nonca/NonCASigningPlugin.java)
 
 Network Map submission method output:
 
