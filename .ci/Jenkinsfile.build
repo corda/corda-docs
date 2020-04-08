@@ -23,24 +23,29 @@ class Configuration {
     void setBranch(String branch) {
         this.branch = branch
     }
+    String getLatestTag() {
+        return latestTag
+    }
     String dockerRepo
     String deploymentCredentials
     String docsite
     String defaultPublish
     String branch
-    Configuration(dockerRepo,deploymentCredentials, docsite, defaultPublish) {
+    String latestTag
+    Configuration(dockerRepo,deploymentCredentials, docsite, defaultPublish, latestTag) {
         this.dockerRepo = dockerRepo
         this.deploymentCredentials = deploymentCredentials
         this.docsite = docsite
         this.defaultPublish = defaultPublish
+        this.latestTag = latestTag
     }
 }
 
 Configuration config
 switch (env.BRANCH_NAME) {
-    case ~/publish-.*$/: config = new Configuration('docsite','docsite-production', '10.10.0.4', true); break;
-    case "master": config = new Configuration('docsite-dev', 'docsite-staging', 'docs-staging.corda.net', true);
-    default: config = new Configuration('docsite-dev', 'docsite-staging', 'docs-staging.corda.net', false);
+    case ~/publish-.*$/: config = new Configuration('docsite','docsite-production', '10.10.0.4', true, "latest"); break;
+    case "master": config = new Configuration('docsite-dev', 'docsite-staging', 'docs-staging.corda.net', true, "latest");
+    default: config = new Configuration('docsite-dev', 'docsite-preview', 'docs-preview.corda.net.internal', false, "preview");
 }
 config.branch = env.BRANCH_NAME
 
@@ -89,7 +94,7 @@ pipeline {
             }
             steps {
                 script {
-                    docker.image("${env.IMAGE}:${env.IMAGE_TAG}").tag('latest')
+                    docker.image("${env.IMAGE}:${env.IMAGE_TAG}").tag(config.latestTag)
                 }
 
                 echo "Creating Artifactory server"
@@ -108,7 +113,7 @@ pipeline {
                 echo "Pushing '${env.IMAGE}:${env.IMAGE_TAG}' image to Artifactory Docker registry as 'latest'"
                 rtDockerPush (
                     serverId: 'R3-Artifactory',
-                    image: "${env.IMAGE}:latest",
+                    image: "${env.IMAGE}:${config.latestTag}",
                     targetRepo: config.getTargetRepo(),
                     buildName: config.getBuildName()
                 )
