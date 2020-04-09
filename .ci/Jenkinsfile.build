@@ -97,13 +97,17 @@ pipeline {
                 beforeAgent true
             }
             stages {
-                stage('Publish Docker image to Registry') {
+                stage('Publish Docker image') {
                     steps {
                         echo "Creating Artifactory server"
                         rtServer (
                             id: 'R3-Artifactory',
                             url: 'https://software.r3.com/artifactory',
                             credentialsId: 'docsite-publisher'
+                        )
+                        rtBuildInfo (
+                            captureEnv: true,
+                            buildName: config.buildName
                         )
                         echo "Pushing '${env.IMAGE}:${env.IMAGE_TAG}' image to Artifactory Docker registry"
                         rtDockerPush (
@@ -126,7 +130,7 @@ pipeline {
                         )
                     }
                 }
-                stage('Deploy Docker image to Docsite server') {
+                stage('Deploy Docker image') {
                     steps {
                         sshagent([config.deploymentCredentials]) {
                             sh "ssh -F /dev/null -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null docsite@${config.docsite} update-docsite"
