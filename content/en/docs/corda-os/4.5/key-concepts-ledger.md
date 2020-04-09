@@ -66,6 +66,6 @@ Where the rows are shared between nodes (facts 1 and 7 in this example), these a
 
 Corda guarantees that whenever one of these facts is shared by multiple nodes on the network, it evolves in lockstep in the database of every node that is aware of it. This means that Alice and Bob will both see an **exactly identical version** of shared facts 1 and 7.
 
-**Note:** Not all on-ledger facts are shared between peers. For example, Alice’s fact 11 is not shared with Bob. Fact 11 could, in fact, not be shared with any other node at all. If this is the case, it is deemed a unilateral fact.
+**Note:** Not all on-ledger facts are shared between peers. For example, Alice's fact 11 is not shared with Bob. Fact 11 could, in fact, not be shared with any other node at all. If this is the case, it is deemed a unilateral fact.
 
-**Note:** Although there is no central ledger, it is possible to broadcast a basic fact to all participants should you wish to. You would do this by using the network map service to loop over all parties.De
+**Note:** Although there is no central ledger, it is possible to broadcast a basic fact to all participants should you wish to. You would do this by using the network map service to loop over all parties.

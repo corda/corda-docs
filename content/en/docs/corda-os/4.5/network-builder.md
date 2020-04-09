@@ -18,7 +18,6 @@ title: Corda Network Builder
 
 # Corda Network Builder
 
-
 The Corda Network Builder is a tool for building Corda networks for testing purposes. It leverages Docker and
 containers to abstract the complexity of managing a distributed network away from the user.
 
@@ -31,17 +30,12 @@ Unlike the official image, a *node.conf* file and CorDapps are embedded into the
 More backends may be added in future. The tool is open source, so contributions to add more
 destinations for the containers are welcome!
 
-[Download the Corda Network Builder](https://software.r3.com/artifactory/corda-releases/net/corda/corda-tools-network-builder/4.5/corda-tools-network-builder-4.4-all.jar).
-
-
+Download the Corda Network Builder from `https://software.r3.com/artifactory/corda-releases/net/corda/corda-tools-network-builder/|corda_version|/corda-tools-network-builder-|corda_version|.jar`.
 
 ## Prerequisites
 
-
 * **Docker:** docker > 17.12.0-ce
 * **Azure:** authenticated az-cli >= 2.0 (see: [https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest))
-
-
 
 ## Creating the base nodes
 
@@ -58,20 +52,15 @@ the following layout:
 An easy way to build a valid set of nodes is by running `deployNodes`. In this document, we will be using
 the output of running `deployNodes` for the [Example CorDapp](https://github.com/corda/cordapp-example):
 
-
 * `git clone https://github.com/corda/samples`
 * `cd samples/cordapp-example`
 * `./gradlew clean workflows-java:deployNodes`
 
-
 ## Building a network via the command line
-
 
 ### Starting the nodes
 
-
 #### Quickstart Local Docker
-
 
 * `cd workflows-java/build/nodes`
 * `java -jar <path/to/corda-tools-network-builder.jar> -d .`
@@ -89,9 +78,7 @@ cf7ab689f493        node-notary:corda-network   "run-corda"     30 seconds ago  
 Depending on you machine performance, even after all containers are reported as running,
 the underlying Corda nodes may be still starting and SSHing to a node may be not available immediately.
 
-
 #### Quickstart Remote Azure
-
 
 * `cd kotlin-source/build/nodes`
 * `java -jar <path/to/corda-tools-network-builder.jar> -b AZURE -d .`
@@ -100,7 +87,6 @@ the underlying Corda nodes may be still starting and SSHing to a node may be not
 The Azure configuration is handled by the az-cli utility. See the [Prerequisites](#pre-requisites).
 
 {{< /note >}}
-
 
 ### Interacting with the nodes
 
@@ -132,7 +118,6 @@ You can also run a flow from cordapp-example: `flow start com.example.flow.Examp
 To verify it, connect into the `partyb0` node and run `run vaultQuery contractStateType: "com.example.state.IOUState"`.
 The `partyb0` vault should contain `IOUState`.
 
-
 ### Adding additional nodes
 
 It is possible to add additional nodes to the network by reusing the nodes you built earlier. For example, to add a
@@ -153,15 +138,12 @@ Tue Jul 17 15:47:14 GMT 2018>>> run networkMapSnapshot
 ]
 ```
 
-
 ## Building a network in Graphical User Mode
 
 The Corda Network Builder also provides a GUI for when automated interactions are not required. To launch it, run
 `java -jar <path/to/corda-tools-network-builder.jar> -g`.
 
-
 ### Starting the nodes
-
 
 * Click `Open nodes ...` and select the folder where you built your nodes in [Creating the base nodes](#creating-the-base-nodes) and
 click `Open`
@@ -183,17 +165,14 @@ c8c44c515bdb        node-partya:corda-network   "run-corda"     17 seconds ago  
 cf7ab689f493        node-notary:corda-network   "run-corda"     30 seconds ago      Up 31 seconds       0.0.0.0:32888->10003/tcp, 0.0.0.0:32889->10005/tcp, 0.0.0.0:32890->10020/tcp, 0.0.0.0:32891->12222/tcp   notary0
 ```
 
-
 ### Interacting with the nodes
 
 See [Interacting with the nodes](#interacting-with-the-nodes).
-
 
 ### Adding additional nodes
 
 It is possible to add additional nodes to the network by reusing the nodes you built earlier. For example, to add a
 node by reusing the existing `PartyA` node, you would:
-
 
 * Select `partya` in the dropdown
 * Click `Add Instance`
@@ -213,8 +192,6 @@ Tue Jul 17 15:47:14 GMT 2018>>> run networkMapSnapshot
 ]
 ```
 
-
 ## Shutting down the nodes
 
 Run `docker kill $(docker ps -q)` to kill all running Docker processes.
-

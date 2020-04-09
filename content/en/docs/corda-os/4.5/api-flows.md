@@ -25,24 +25,20 @@ Before reading this page, you should be familiar with the key concepts of [Flows
 
 {{< /note >}}
 
-
 ## An example flow
 
 Before we discuss the API offered by the flow, let’s consider what a standard flow may look like.
 
 Imagine a flow for agreeing a basic ledger update between Alice and Bob. This flow will have two sides:
 
-
 * An `Initiator` side, that will initiate the request to update the ledger
 * A `Responder` side, that will respond to the request to update the ledger
-
 
 ### Initiator
 
 In our flow, the Initiator flow class will be doing the majority of the work:
 
 *Part 1 - Build the transaction*
-
 
 * Choose a notary for the transaction
 * Create a transaction builder
@@ -52,17 +48,14 @@ In our flow, the Initiator flow class will be doing the majority of the work:
 
 *Part 2 - Sign the transaction*
 
-
 * Sign the transaction builder
 * Convert the builder to a signed transaction
 
 *Part 3 - Verify the transaction*
 
-
 * Verify the transaction by running its contracts
 
 *Part 4 - Gather the counterparty’s signature*
-
 
 * Send the transaction to the counterparty
 * Wait to receive back the counterparty’s signature
@@ -70,7 +63,6 @@ In our flow, the Initiator flow class will be doing the majority of the work:
 * Verify the transaction’s signatures
 
 *Part 5 - Finalize the transaction*
-
 
 * Send the transaction to the notary
 * Wait to receive back the notarised transaction
@@ -88,7 +80,6 @@ To respond to these actions, the responder takes the following steps:
 
 *Part 1 - Sign the transaction*
 
-
 * Receive the transaction from the counterparty
 * Verify the transaction’s existing signatures
 * Verify the transaction by running its contracts
@@ -97,11 +88,9 @@ To respond to these actions, the responder takes the following steps:
 
 *Part 2 - Record the transaction*
 
-
 * Receive the notarised transaction from the counterparty
 * Record the transaction locally
 * Store any relevant states in the vault
-
 
 ## FlowLogic
 
@@ -111,6 +100,7 @@ subclass’s constructor can take any number of arguments of any type. The gener
 
 {{< tabs name="tabs-1" >}}
 {{% tab name="kotlin" %}}
+
 ```kotlin
 class Initiator(val arg1: Boolean,
                 val arg2: Int,
@@ -118,9 +108,11 @@ class Initiator(val arg1: Boolean,
 
 class Responder(val otherParty: Party) : FlowLogic<Unit>() { }
 ```
+
 {{% /tab %}}
 
 {{% tab name="java" %}}
+
 ```java
 public static class Initiator extends FlowLogic<SignedTransaction> {
     private final boolean arg1;
@@ -137,10 +129,10 @@ public static class Initiator extends FlowLogic<SignedTransaction> {
 
 public static class Responder extends FlowLogic<Void> { }
 ```
+
 {{% /tab %}}
 
 {{< /tabs >}}
-
 
 ## FlowLogic annotations
 
@@ -149,19 +141,23 @@ Additionally, if you wish to start the flow via RPC, you must annotate it with t
 
 {{< tabs name="tabs-2" >}}
 {{% tab name="kotlin" %}}
+
 ```kotlin
 @InitiatingFlow
 @StartableByRPC
 class Initiator(): FlowLogic<Unit>() { }
 ```
+
 {{% /tab %}}
 
 {{% tab name="java" %}}
+
 ```java
 @InitiatingFlow
 @StartableByRPC
 public static class Initiator extends FlowLogic<Unit> { }
 ```
+
 {{% /tab %}}
 
 {{< /tabs >}}
@@ -171,24 +167,27 @@ Meanwhile, any flow that responds to a message from another flow must be annotat
 
 {{< tabs name="tabs-3" >}}
 {{% tab name="kotlin" %}}
+
 ```kotlin
 @InitiatedBy(Initiator::class)
 class Responder(val otherSideSession: FlowSession) : FlowLogic<Unit>() { }
 ```
+
 {{% /tab %}}
 
 {{% tab name="java" %}}
+
 ```java
 @InitiatedBy(Initiator.class)
 public static class Responder extends FlowLogic<Void> { }
 ```
+
 {{% /tab %}}
 
 {{< /tabs >}}
 
 Additionally, any flow that is started by a `SchedulableState` must be annotated with the `@SchedulableFlow`
 annotation.
-
 
 ## Call
 
@@ -202,15 +201,18 @@ as well as any function invoked from within `FlowLogic.call()`, with an `@Suspen
 
 {{< tabs name="tabs-4" >}}
 {{% tab name="kotlin" %}}
+
 ```kotlin
 class Initiator(val counterparty: Party): FlowLogic<Unit>() {
     @Suspendable
     override fun call() { }
 }
 ```
+
 {{% /tab %}}
 
 {{% tab name="java" %}}
+
 ```java
 public static class InitiatorFlow extends FlowLogic<Void> {
     private final Party counterparty;
@@ -225,10 +227,10 @@ public static class InitiatorFlow extends FlowLogic<Void> {
 
 }
 ```
+
 {{% /tab %}}
 
 {{< /tabs >}}
-
 
 ## ServiceHub
 
@@ -236,43 +238,38 @@ Within `FlowLogic.call`, the flow developer has access to the node’s `ServiceH
 various services the node provides. We will use the `ServiceHub` extensively in the examples that follow. You can
 also see [API: ServiceHub](api-service-hub.md) for information about the services the `ServiceHub` offers.
 
-
 ## Common flow tasks
 
 There are a number of common tasks that you will need to perform within `FlowLogic.call` in order to agree ledger
 updates. This section details the API for common tasks.
-
 
 ### Transaction building
 
 The majority of the work performed during a flow will be to build, verify and sign a transaction. This is covered
 in [API: Transactions](api-transactions.md).
 
-
 ### Extracting states from the vault
 
 When building a transaction, you’ll often need to extract the states you wish to consume from the vault. This is
 covered in [API: Vault Query](api-vault-query.md).
-
 
 ### Retrieving information about other nodes
 
 We can retrieve information about other nodes on the network and the services they offer using
 `ServiceHub.networkMapCache`.
 
-
 #### Notaries
 
 Remember that a transaction generally needs a notary to:
 
-
 * Prevent double-spends if the transaction has inputs
 * Serve as a timestamping authority if the transaction has a time-window
 
-There are several ways to retrieve a notary from the network map:
+A notary can be retrieved from the network map as follows:
 
 {{< tabs name="tabs-5" >}}
 {{% tab name="kotlin" %}}
+
 ```kotlin
 val notaryName: CordaX500Name = CordaX500Name(
         organisation = "Notary Service",
@@ -284,13 +281,12 @@ val specificNotary: Party = serviceHub.networkMapCache.getNotary(notaryName)!!
 // explicitly, as the notary list might change when new notaries are
 // introduced, or old ones decommissioned.
 val firstNotary: Party = serviceHub.networkMapCache.notaryIdentities.first()
-
 ```
+
 {{% /tab %}}
 
-
-
 {{% tab name="java" %}}
+
 ```java
 CordaX500Name notaryName = new CordaX500Name("Notary Service", "London", "GB");
 Party specificNotary = getServiceHub().getNetworkMapCache().getNotary(notaryName);
@@ -301,15 +297,12 @@ Party specificNotary = getServiceHub().getNetworkMapCache().getNotary(notaryName
 Party firstNotary = getServiceHub().getNetworkMapCache().getNotaryIdentities().get(0);
 
 ```
+
 {{% /tab %}}
-
-
-
 
 [FlowCookbook.kt](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/FlowCookbook.kt) | [FlowCookbook.java](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/java/net/corda/docs/java/FlowCookbook.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
-
 
 #### Specific counterparties
 
@@ -317,6 +310,7 @@ We can also use the network map to retrieve a specific counterparty:
 
 {{< tabs name="tabs-6" >}}
 {{% tab name="kotlin" %}}
+
 ```kotlin
 val counterpartyName: CordaX500Name = CordaX500Name(
         organisation = "NodeA",
@@ -328,26 +322,23 @@ val keyedCounterparty: Party = serviceHub.identityService.partyFromKey(dummyPubK
         throw IllegalArgumentException("Couldn't find counterparty with key: $dummyPubKey in identity service")
 
 ```
+
 {{% /tab %}}
 
-
-
 {{% tab name="java" %}}
+
 ```java
 CordaX500Name counterPartyName = new CordaX500Name("NodeA", "London", "GB");
 Party namedCounterparty = getServiceHub().getIdentityService().wellKnownPartyFromX500Name(counterPartyName);
 Party keyedCounterparty = getServiceHub().getIdentityService().partyFromKey(dummyPubKey);
 
 ```
+
 {{% /tab %}}
-
-
-
 
 [FlowCookbook.kt](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/FlowCookbook.kt) | [FlowCookbook.java](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/java/net/corda/docs/java/FlowCookbook.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
-
 
 ### Communication between parties
 
@@ -356,30 +347,29 @@ In order to create a communication session between your initiator flow and the r
 
 `FlowSession` instances in turn provide three functions:
 
-
 * `send(payload: Any)`
-    * Sends the `payload` object
-
+  * Sends the `payload` object
 
 * `receive(receiveType: Class<R>): R`
-    * Receives an object of type `receiveType`
-
+  * Receives an object of type `receiveType`
 
 * `sendAndReceive(receiveType: Class<R>, payload: Any): R`
-    * Sends the `payload` object and receives an object of type `receiveType` back
+  * Sends the `payload` object and receives an object of type `receiveType` back
 
-
-
-In addition `FlowLogic` provides functions that batch receives:
-
+In addition ``FlowLogic`` provides functions that can receive messages from multiple sessions and send messages to multiple sessions:
 
 * `receiveAllMap(sessions: Map<FlowSession, Class<out Any>>): Map<FlowSession, UntrustworthyData<Any>>`
-Receives from all `FlowSession` objects specified in the passed in map. The received types may differ.
+  * Receives from all `FlowSession` objects specified in the passed in map. The received types may differ.
 * `receiveAll(receiveType: Class<R>, sessions: List<FlowSession>): List<UntrustworthyData<R>>`
-Receives from all `FlowSession` objects specified in the passed in list. The received types must be the same.
+  * Receives from all `FlowSession` objects specified in the passed in list. The received types must be the same.
+* `sendAll(payload: Any, sessions: Set<FlowSession>)`
+  * Sends the ``payload`` object to all the provided `FlowSession`.
+* `sendAllMap(payloadsPerSession: Map<FlowSession, Any>)`
+  * Sends a potentially different payload to each `FlowSession`, as specified by the provided `payloadsPerSession`.
 
-The batched functions are implemented more efficiently by the flow framework.
-
+{{% note %}}
+It's more efficient to call `sendAndReceive` instead of calling `send` and then `receive`. It's also more efficient to call `sendAll / receiveAll` instead of multiple `send / receive` respectively.
+{{% /note %}}
 
 #### InitiateFlow
 
@@ -387,23 +377,22 @@ The batched functions are implemented more efficiently by the flow framework.
 
 {{< tabs name="tabs-7" >}}
 {{% tab name="kotlin" %}}
+
 ```kotlin
 val counterpartySession: FlowSession = initiateFlow(counterparty)
 
 ```
+
 {{% /tab %}}
 
-
-
 {{% tab name="java" %}}
+
 ```java
 FlowSession counterpartySession = initiateFlow(counterparty);
 
 ```
+
 {{% /tab %}}
-
-
-
 
 [FlowCookbook.kt](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/FlowCookbook.kt) | [FlowCookbook.java](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/java/net/corda/docs/java/FlowCookbook.java) | ![github](/images/svg/github.svg "github")
 
@@ -412,10 +401,8 @@ FlowSession counterpartySession = initiateFlow(counterparty);
 Note that at the time of call to this function no actual communication is done, this is deferred to the first
 send/receive, at which point the counterparty will either:
 
-
 * Ignore the message if they are not registered to respond to messages from this flow.
 * Start the flow they have registered to respond to this flow.
-
 
 #### Send
 
@@ -423,23 +410,22 @@ Once we have a `FlowSession` object we can send arbitrary data to a counterparty
 
 {{< tabs name="tabs-8" >}}
 {{% tab name="kotlin" %}}
+
 ```kotlin
 counterpartySession.send(Any())
 
 ```
+
 {{% /tab %}}
 
-
-
 {{% tab name="java" %}}
+
 ```java
 counterpartySession.send(new Object());
 
 ```
+
 {{% /tab %}}
-
-
-
 
 [FlowCookbook.kt](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/FlowCookbook.kt) | [FlowCookbook.java](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/java/net/corda/docs/java/FlowCookbook.java) | ![github](/images/svg/github.svg "github")
 
@@ -447,12 +433,10 @@ counterpartySession.send(new Object());
 
 The flow on the other side must eventually reach a corresponding `receive` call to get this message.
 
-
 #### Receive
 
 We can also wait to receive arbitrary data of a specific type from a counterparty. Again, this implies a corresponding
 `send` call in the counterparty’s flow. A few scenarios:
-
 
 * We never receive a message back. In the current design, the flow is paused until the node’s owner kills the flow.
 * Instead of sending a message back, the counterparty throws a `FlowException`. This exception is propagated back
@@ -467,6 +451,7 @@ be what it appears to be! We must unwrap the `UntrustworthyData` using a lambda:
 
 {{< tabs name="tabs-9" >}}
 {{% tab name="kotlin" %}}
+
 ```kotlin
 val packet1: UntrustworthyData<Int> = counterpartySession.receive<Int>()
 val int: Int = packet1.unwrap { data ->
@@ -477,11 +462,11 @@ val int: Int = packet1.unwrap { data ->
 }
 
 ```
+
 {{% /tab %}}
 
-
-
 {{% tab name="java" %}}
+
 ```java
 UntrustworthyData<Integer> packet1 = counterpartySession.receive(Integer.class);
 Integer integer = packet1.unwrap(data -> {
@@ -492,10 +477,8 @@ Integer integer = packet1.unwrap(data -> {
 });
 
 ```
+
 {{% /tab %}}
-
-
-
 
 [FlowCookbook.kt](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/FlowCookbook.kt) | [FlowCookbook.java](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/java/net/corda/docs/java/FlowCookbook.java) | ![github](/images/svg/github.svg "github")
 
@@ -506,32 +489,30 @@ as it likes, and each party can invoke a different response flow:
 
 {{< tabs name="tabs-10" >}}
 {{% tab name="kotlin" %}}
+
 ```kotlin
 val regulatorSession: FlowSession = initiateFlow(regulator)
 regulatorSession.send(Any())
 val packet3: UntrustworthyData<Any> = regulatorSession.receive<Any>()
 
 ```
+
 {{% /tab %}}
 
-
-
 {{% tab name="java" %}}
+
 ```java
 FlowSession regulatorSession = initiateFlow(regulator);
 regulatorSession.send(new Object());
 UntrustworthyData<Object> packet3 = regulatorSession.receive(Object.class);
 
 ```
+
 {{% /tab %}}
-
-
-
 
 [FlowCookbook.kt](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/FlowCookbook.kt) | [FlowCookbook.java](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/java/net/corda/docs/java/FlowCookbook.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
-
 
 {{< warning >}}
 If you initiate several flows from the same `@InitiatingFlow` flow then on the receiving side you must be
@@ -542,8 +523,6 @@ statement.
 
 {{< /warning >}}
 
-
-
 #### SendAndReceive
 
 We can also use a single call to send data to a counterparty and wait to receive data of a specific type back. The
@@ -551,6 +530,7 @@ type of data sent doesn’t need to match the type of the data received back:
 
 {{< tabs name="tabs-11" >}}
 {{% tab name="kotlin" %}}
+
 ```kotlin
 val packet2: UntrustworthyData<Boolean> = counterpartySession.sendAndReceive<Boolean>("You can send and receive any class!")
 val boolean: Boolean = packet2.unwrap { data ->
@@ -561,11 +541,11 @@ val boolean: Boolean = packet2.unwrap { data ->
 }
 
 ```
+
 {{% /tab %}}
 
-
-
 {{% tab name="java" %}}
+
 ```java
 UntrustworthyData<Boolean> packet2 = counterpartySession.sendAndReceive(Boolean.class, "You can send and receive any class!");
 Boolean bool = packet2.unwrap(data -> {
@@ -576,21 +556,17 @@ Boolean bool = packet2.unwrap(data -> {
 });
 
 ```
+
 {{% /tab %}}
-
-
-
 
 [FlowCookbook.kt](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/FlowCookbook.kt) | [FlowCookbook.java](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/java/net/corda/docs/java/FlowCookbook.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
-
 #### Counterparty response
 
 Suppose we’re now on the `Responder` side of the flow. We just received the following series of messages from the
 `Initiator`:
-
 
 * They sent us an `Any` instance
 * They waited to receive an `Integer` instance back
@@ -600,34 +576,32 @@ Our side of the flow must mirror these calls. We could do this as follows:
 
 {{< tabs name="tabs-12" >}}
 {{% tab name="kotlin" %}}
+
 ```kotlin
 val any: Any = counterpartySession.receive<Any>().unwrap { data -> data }
 val string: String = counterpartySession.sendAndReceive<String>(99).unwrap { data -> data }
 counterpartySession.send(true)
 
 ```
+
 {{% /tab %}}
 
-
-
 {{% tab name="java" %}}
+
 ```java
 Object obj = counterpartySession.receive(Object.class).unwrap(data -> data);
 String string = counterpartySession.sendAndReceive(String.class, 99).unwrap(data -> data);
 counterpartySession.send(true);
 
 ```
+
 {{% /tab %}}
-
-
-
 
 [FlowCookbook.kt](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/FlowCookbook.kt) | [FlowCookbook.java](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/java/net/corda/docs/java/FlowCookbook.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
-
-### Why sessions?
+### Why sessions
 
 Before `FlowSession` s were introduced the send/receive API looked a bit different. They were functions on
 `FlowLogic` and took the address `Party` as argument. The platform internally maintained a mapping from `Party` to
@@ -640,6 +614,7 @@ Consider the following contrived example using the old `Party` based API:
 
 {{< tabs name="tabs-13" >}}
 {{% tab name="kotlin" %}}
+
 ```kotlin
 @InitiatingFlow
 class LaunchSpaceshipFlow : FlowLogic<Unit>() {
@@ -684,11 +659,11 @@ class SecretaryFlow(val president: Party) : FlowLogic<Unit>() {
 }
 
 ```
+
 {{% /tab %}}
 
-
-
 {{% tab name="java" %}}
+
 ```java
 @InitiatingFlow
 class LaunchSpaceshipFlow extends FlowLogic<Void> {
@@ -751,10 +726,8 @@ class SecretaryFlow extends FlowLogic<Void> {
 }
 
 ```
+
 {{% /tab %}}
-
-
-
 
 [LaunchSpaceshipFlow.kt](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/LaunchSpaceshipFlow.kt) | [LaunchSpaceshipFlow.java](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/java/net/corda/docs/java/LaunchSpaceshipFlow.java) | ![github](/images/svg/github.svg "github")
 
@@ -776,6 +749,7 @@ of flows would look like this:
 
 {{< tabs name="tabs-14" >}}
 {{% tab name="kotlin" %}}
+
 ```kotlin
 @InitiatingFlow
 class LaunchSpaceshipFlowCorrect : FlowLogic<Unit>() {
@@ -822,11 +796,11 @@ class SecretaryFlowCorrect(val presidentSession: FlowSession) : FlowLogic<Unit>(
 }
 
 ```
+
 {{% /tab %}}
 
-
-
 {{% tab name="java" %}}
+
 ```java
 @InitiatingFlow
 class LaunchSpaceshipFlowCorrect extends FlowLogic<Void> {
@@ -891,17 +865,14 @@ class SecretaryFlowCorrect extends FlowLogic<Void> {
 }
 
 ```
+
 {{% /tab %}}
-
-
-
 
 [LaunchSpaceshipFlow.kt](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/LaunchSpaceshipFlow.kt) | [LaunchSpaceshipFlow.java](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/java/net/corda/docs/java/LaunchSpaceshipFlow.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
 Note how the president is now explicit about which session it wants to send to.
-
 
 ### Porting from the old Party-based API
 
@@ -910,6 +881,7 @@ explicit in the `initiateFlow` function call. To port existing code:
 
 {{< tabs name="tabs-15" >}}
 {{% tab name="kotlin" %}}
+
 ```kotlin
 send(regulator, Any()) // Old API
 // becomes
@@ -917,11 +889,11 @@ val session = initiateFlow(regulator)
 session.send(Any())
 
 ```
+
 {{% /tab %}}
 
-
-
 {{% tab name="java" %}}
+
 ```java
 send(regulator, new Object()); // Old API
 // becomes
@@ -929,15 +901,12 @@ FlowSession session = initiateFlow(regulator);
 session.send(new Object());
 
 ```
+
 {{% /tab %}}
-
-
-
 
 [FlowCookbook.kt](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/FlowCookbook.kt) | [FlowCookbook.java](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/java/net/corda/docs/java/FlowCookbook.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
-
 
 ## Subflows
 
@@ -945,7 +914,6 @@ Subflows are pieces of reusable flows that may be run by calling `FlowLogic.subF
 of subflows, inlined and initiating ones. The main difference lies in the counter-flow’s starting method, initiating
 ones initiate counter-flows automatically, while inlined ones expect some parent counter-flow to run the inlined
 counterpart.
-
 
 ### Inlined subflows
 
@@ -990,17 +958,14 @@ Corda-provided initiating subflows are a little different to standard ones as th
 platform, and their initiated counter-flows are registered explicitly, so there is no need for the `InitiatedBy`
 annotation.
 
-
 ### Library flows
 
 Corda installs four initiating subflow pairs on each node by default:
-
 
 * `NotaryChangeFlow`/`NotaryChangeHandler`, which should be used to change a state’s notary
 * `ContractUpgradeFlow.Initiate`/`ContractUpgradeHandler`, which should be used to change a state’s contract
 * `SwapIdentitiesFlow`/`SwapIdentitiesHandler`, which is used to exchange confidential identities with a
 counterparty
-
 
 {{< warning >}}
 `SwapIdentitiesFlow`/`SwapIdentitiesHandler` are only installed if the `confidential-identities` module
@@ -1009,10 +974,8 @@ is included. The `confidential-identities` module  is still not stabilised, so t
 
 {{< /warning >}}
 
-
 Corda also provides a number of built-in inlined subflows that should be used for handling common tasks. The most
 important are:
-
 
 * `FinalityFlow` which is used to notarise, record locally and then broadcast a signed transaction to its participants
 and any extra parties.
@@ -1024,7 +987,6 @@ the other side.
 
 Let’s look at some of these flows in more detail.
 
-
 #### FinalityFlow
 
 `FinalityFlow` allows us to notarise the transaction and get it recorded in the vault of the participants of all
@@ -1032,23 +994,22 @@ the transaction’s states:
 
 {{< tabs name="tabs-16" >}}
 {{% tab name="kotlin" %}}
+
 ```kotlin
 val notarisedTx1: SignedTransaction = subFlow(FinalityFlow(fullySignedTx, listOf(counterpartySession), FINALISATION.childProgressTracker()))
 
 ```
+
 {{% /tab %}}
 
-
-
 {{% tab name="java" %}}
+
 ```java
 SignedTransaction notarisedTx1 = subFlow(new FinalityFlow(fullySignedTx, singleton(counterpartySession), FINALISATION.childProgressTracker()));
 
 ```
+
 {{% /tab %}}
-
-
-
 
 [FlowCookbook.kt](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/FlowCookbook.kt) | [FlowCookbook.java](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/java/net/corda/docs/java/FlowCookbook.java) | ![github](/images/svg/github.svg "github")
 
@@ -1058,25 +1019,24 @@ We can also choose to send the transaction to additional parties who aren’t on
 
 {{< tabs name="tabs-17" >}}
 {{% tab name="kotlin" %}}
+
 ```kotlin
 val partySessions: List<FlowSession> = listOf(counterpartySession, initiateFlow(regulator))
 val notarisedTx2: SignedTransaction = subFlow(FinalityFlow(fullySignedTx, partySessions, FINALISATION.childProgressTracker()))
 
 ```
+
 {{% /tab %}}
 
-
-
 {{% tab name="java" %}}
+
 ```java
 List<FlowSession> partySessions = Arrays.asList(counterpartySession, initiateFlow(regulator));
 SignedTransaction notarisedTx2 = subFlow(new FinalityFlow(fullySignedTx, partySessions, FINALISATION.childProgressTracker()));
 
 ```
+
 {{% /tab %}}
-
-
-
 
 [FlowCookbook.kt](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/FlowCookbook.kt) | [FlowCookbook.java](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/java/net/corda/docs/java/FlowCookbook.java) | ![github](/images/svg/github.svg "github")
 
@@ -1088,23 +1048,22 @@ flow to receive the transaction:
 
 {{< tabs name="tabs-18" >}}
 {{% tab name="kotlin" %}}
+
 ```kotlin
 subFlow(ReceiveFinalityFlow(counterpartySession, expectedTxId = idOfTxWeSigned))
 
 ```
+
 {{% /tab %}}
 
-
-
 {{% tab name="java" %}}
+
 ```java
 subFlow(new ReceiveFinalityFlow(counterpartySession, idOfTxWeSigned));
 
 ```
+
 {{% /tab %}}
-
-
-
 
 [FlowCookbook.kt](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/FlowCookbook.kt) | [FlowCookbook.java](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/java/net/corda/docs/java/FlowCookbook.java) | ![github](/images/svg/github.svg "github")
 
@@ -1113,13 +1072,11 @@ subFlow(new ReceiveFinalityFlow(counterpartySession, idOfTxWeSigned));
 `idOfTxWeSigned` is an optional parameter used to confirm that we got the right transaction. It comes from using `SignTransactionFlow`
 which is described in the error handling behaviour section.
 
-
 ##### Finalizing transactions with only one participant
 
 In some cases, transactions will only have one participant, the initiator. In these instances, there are no other
 parties to send the transactions to during `FinalityFlow`. In these cases the `counterpartySession` list must exist,
 but be empty.
-
 
 ##### Error handling behaviour
 
@@ -1132,12 +1089,10 @@ upon node restart, or according to other conditional retry rules explained in [f
 This gives the node operator the opportunity to recover from the error. Until the issue is resolved the node will continue to retry the flow
 on each startup. Upon successful completion by the receiver’s finality flow, the ledger will become fully consistent once again.
 
-
 {{< warning >}}
 It’s possible to forcibly terminate the erroring finality handler using the `killFlow` RPC but at the risk of an inconsistent view of the ledger.
 
 {{< /warning >}}
-
 
 {{< note >}}
 A future release will allow retrying hospitalised flows without restarting the node, i.e. via RPC.
@@ -1152,23 +1107,22 @@ transaction ourselves, we can automatically gather the signatures of the other r
 
 {{< tabs name="tabs-19" >}}
 {{% tab name="kotlin" %}}
+
 ```kotlin
 val fullySignedTx: SignedTransaction = subFlow(CollectSignaturesFlow(twiceSignedTx, setOf(counterpartySession, regulatorSession), SIGS_GATHERING.childProgressTracker()))
 
 ```
+
 {{% /tab %}}
 
-
-
 {{% tab name="java" %}}
+
 ```java
 SignedTransaction fullySignedTx = subFlow(new CollectSignaturesFlow(twiceSignedTx, emptySet(), SIGS_GATHERING.childProgressTracker()));
 
 ```
+
 {{% /tab %}}
-
-
-
 
 [FlowCookbook.kt](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/FlowCookbook.kt) | [FlowCookbook.java](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/java/net/corda/docs/java/FlowCookbook.java) | ![github](/images/svg/github.svg "github")
 
@@ -1179,6 +1133,7 @@ transaction (by implementing the `checkTransaction` method) and provide their si
 
 {{< tabs name="tabs-20" >}}
 {{% tab name="kotlin" %}}
+
 ```kotlin
 val signTransactionFlow: SignTransactionFlow = object : SignTransactionFlow(counterpartySession) {
     override fun checkTransaction(stx: SignedTransaction) = requireThat {
@@ -1191,11 +1146,11 @@ val signTransactionFlow: SignTransactionFlow = object : SignTransactionFlow(coun
 val idOfTxWeSigned = subFlow(signTransactionFlow).id
 
 ```
+
 {{% /tab %}}
 
-
-
 {{% tab name="java" %}}
+
 ```java
 class SignTxFlow extends SignTransactionFlow {
     private SignTxFlow(FlowSession otherSession, ProgressTracker progressTracker) {
@@ -1216,10 +1171,8 @@ class SignTxFlow extends SignTransactionFlow {
 SecureHash idOfTxWeSigned = subFlow(new SignTxFlow(counterpartySession, SignTransactionFlow.tracker())).getId();
 
 ```
+
 {{% /tab %}}
-
-
-
 
 [FlowCookbook.kt](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/FlowCookbook.kt) | [FlowCookbook.java](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/java/net/corda/docs/java/FlowCookbook.java) | ![github](/images/svg/github.svg "github")
 
@@ -1227,15 +1180,11 @@ SecureHash idOfTxWeSigned = subFlow(new SignTxFlow(counterpartySession, SignTran
 
 Types of things to check include:
 
-
-
 * Ensuring that the transaction received is the expected type, i.e. has the expected type of inputs and outputs
 * Checking that the properties of the outputs are expected, this is in the absence of integrating reference
 data sources to facilitate this
 * Checking that the transaction is not incorrectly spending (perhaps maliciously) asset states, as potentially
 the transaction creator has access to some of signer’s state references
-
-
 
 #### SendTransactionFlow/ReceiveTransactionFlow
 
@@ -1246,6 +1195,7 @@ transaction data vending requests as the receiver walks the dependency chain usi
 
 {{< tabs name="tabs-21" >}}
 {{% tab name="kotlin" %}}
+
 ```kotlin
 subFlow(SendTransactionFlow(counterpartySession, twiceSignedTx))
 
@@ -1257,11 +1207,11 @@ subFlow(object : SendTransactionFlow(counterpartySession, twiceSignedTx) {
 })
 
 ```
+
 {{% /tab %}}
 
-
-
 {{% tab name="java" %}}
+
 ```java
 subFlow(new SendTransactionFlow(counterpartySession, twiceSignedTx));
 
@@ -1274,10 +1224,8 @@ subFlow(new SendTransactionFlow(counterpartySession, twiceSignedTx) {
 });
 
 ```
+
 {{% /tab %}}
-
-
-
 
 [FlowCookbook.kt](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/FlowCookbook.kt) | [FlowCookbook.java](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/java/net/corda/docs/java/FlowCookbook.java) | ![github](/images/svg/github.svg "github")
 
@@ -1288,23 +1236,22 @@ dependencies and verify the transaction:
 
 {{< tabs name="tabs-22" >}}
 {{% tab name="kotlin" %}}
+
 ```kotlin
 val verifiedTransaction = subFlow(ReceiveTransactionFlow(counterpartySession))
 
 ```
+
 {{% /tab %}}
 
-
-
 {{% tab name="java" %}}
+
 ```java
 SignedTransaction verifiedTransaction = subFlow(new ReceiveTransactionFlow(counterpartySession));
 
 ```
+
 {{% /tab %}}
-
-
-
 
 [FlowCookbook.kt](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/FlowCookbook.kt) | [FlowCookbook.java](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/java/net/corda/docs/java/FlowCookbook.java) | ![github](/images/svg/github.svg "github")
 
@@ -1314,6 +1261,7 @@ We can also send and receive a `StateAndRef` dependency chain and automatically 
 
 {{< tabs name="tabs-23" >}}
 {{% tab name="kotlin" %}}
+
 ```kotlin
 subFlow(SendStateAndRefFlow(counterpartySession, dummyStates))
 
@@ -1321,11 +1269,11 @@ subFlow(SendStateAndRefFlow(counterpartySession, dummyStates))
 val resolvedStateAndRef = subFlow(ReceiveStateAndRefFlow<DummyState>(counterpartySession))
 
 ```
+
 {{% /tab %}}
 
-
-
 {{% tab name="java" %}}
+
 ```java
 subFlow(new SendStateAndRefFlow(counterpartySession, dummyStates));
 
@@ -1333,17 +1281,14 @@ subFlow(new SendStateAndRefFlow(counterpartySession, dummyStates));
 List<StateAndRef<DummyState>> resolvedStateAndRef = subFlow(new ReceiveStateAndRefFlow<>(counterpartySession));
 
 ```
+
 {{% /tab %}}
-
-
-
 
 [FlowCookbook.kt](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/FlowCookbook.kt) | [FlowCookbook.java](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/java/net/corda/docs/java/FlowCookbook.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
-
-### Why inlined subflows?
+### Why inlined subflows
 
 Inlined subflows provide a way to share commonly used flow code *while forcing users to create a parent flow*. Take for
 example `CollectSignaturesFlow`. Say we made it an initiating flow that automatically kicks off
@@ -1356,7 +1301,6 @@ forcing them to nest it in their own parent flows.
 In general if you’re writing a subflow the decision of whether you should make it initiating should depend on whether
 the counter-flow needs broader context to achieve its goal.
 
-
 ## FlowException
 
 Suppose a node throws an exception while running a flow. Any counterparty flows waiting for a message from the node
@@ -1368,6 +1312,7 @@ If you wish to notify any waiting counterparties of the cause of the exception, 
 
 {{< tabs name="tabs-24" >}}
 {{% tab name="kotlin" %}}
+
 ```kotlin
 /**
  * Exception which can be thrown by a [FlowLogic] at any point in its logic to unexpectedly bring it to a permanent end.
@@ -1400,10 +1345,8 @@ open class FlowException(message: String?, cause: Throwable?, var originalErrorI
 }
 
 ```
+
 {{% /tab %}}
-
-
-
 
 [FlowException.kt](https://github.com/corda/corda/blob/release/os/4.5/core/src/main/kotlin/net/corda/core/flows/FlowException.kt) | ![github](/images/svg/github.svg "github")
 
@@ -1412,7 +1355,6 @@ open class FlowException(message: String?, cause: Throwable?, var originalErrorI
 The flow framework will automatically propagate the `FlowException` back to the waiting counterparties.
 
 There are many scenarios in which throwing a `FlowException` would be appropriate:
-
 
 * A transaction doesn’t `verify()`
 * A transaction’s signatures are invalid
@@ -1423,6 +1365,7 @@ Below is an example using `FlowException`:
 
 {{< tabs name="tabs-25" >}}
 {{% tab name="kotlin" %}}
+
 ```kotlin
 @InitiatingFlow
 class SendMoneyFlow(private val moneyRecipient: Party) : FlowLogic<Unit>() {
@@ -1453,10 +1396,10 @@ class ReceiveMoneyFlow(private val moneySender: FlowSession) : FlowLogic<Unit>()
 
 class WrongCurrencyException(message: String) : CordaRuntimeException(message)
 ```
+
 {{% /tab %}}
 
 {{< /tabs >}}
-
 
 ## HospitalizeFlowException
 
@@ -1467,6 +1410,7 @@ A `HospitalizeFlowException` can be defined in various ways:
 
 {{< tabs name="tabs-26" >}}
 {{% tab name="kotlin" %}}
+
 ```kotlin
 /**
  * This exception allows a flow to pass itself to the flow hospital. Once the flow reaches
@@ -1481,10 +1425,8 @@ open class HospitalizeFlowException(message: String?, cause: Throwable?) : Corda
 }
 
 ```
+
 {{% /tab %}}
-
-
-
 
 [HospitalizeFlowException.kt](https://github.com/corda/corda/blob/release/os/4.5/core/src/main/kotlin/net/corda/core/flows/HospitalizeFlowException.kt) | ![github](/images/svg/github.svg "github")
 
@@ -1503,6 +1445,7 @@ Below is an example of a flow that should retry again in the future if an error 
 
 {{< tabs name="tabs-27" >}}
 {{% tab name="kotlin" %}}
+
 ```kotlin
 class TryAccessServiceFlow(): FlowLogic<Unit>() {
     override fun call() {
@@ -1515,10 +1458,10 @@ class TryAccessServiceFlow(): FlowLogic<Unit>() {
     }
 }
 ```
+
 {{% /tab %}}
 
 {{< /tabs >}}
-
 
 ## ProgressTracker
 
@@ -1528,6 +1471,7 @@ To provide a progress tracker, we have to override `FlowLogic.progressTracker` i
 
 {{< tabs name="tabs-28" >}}
 {{% tab name="kotlin" %}}
+
 ```kotlin
 companion object {
     object ID_OTHER_NODES : Step("Identifying other nodes on the network.")
@@ -1563,11 +1507,11 @@ companion object {
 }
 
 ```
+
 {{% /tab %}}
 
-
-
 {{% tab name="java" %}}
+
 ```java
 private static final Step ID_OTHER_NODES = new Step("Identifying other nodes on the network.");
 private static final Step SENDING_AND_RECEIVING_DATA = new Step("Sending data between parties.");
@@ -1605,10 +1549,8 @@ private final ProgressTracker progressTracker = new ProgressTracker(
 );
 
 ```
+
 {{% /tab %}}
-
-
-
 
 [FlowCookbook.kt](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/FlowCookbook.kt) | [FlowCookbook.java](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/java/net/corda/docs/java/FlowCookbook.java) | ![github](/images/svg/github.svg "github")
 
@@ -1618,29 +1560,26 @@ We then update the progress tracker’s current step as we progress through the 
 
 {{< tabs name="tabs-29" >}}
 {{% tab name="kotlin" %}}
+
 ```kotlin
 progressTracker.currentStep = ID_OTHER_NODES
 
 ```
+
 {{% /tab %}}
 
-
-
 {{% tab name="java" %}}
+
 ```java
 progressTracker.setCurrentStep(ID_OTHER_NODES);
 
 ```
+
 {{% /tab %}}
-
-
-
 
 [FlowCookbook.kt](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/FlowCookbook.kt) | [FlowCookbook.java](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/java/net/corda/docs/java/FlowCookbook.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
-
-
 
 ## Calling external systems inside of flows
 
@@ -1653,23 +1592,16 @@ Flow worker threads belong to the thread pool that executes flows.
 {{< /note >}}
 Examples of where this functionality is useful include:
 
-
-
 * Triggering a long running process on an external system
 * Retrieving information from a external service that might go down
 
-
 `FlowLogic` provides two `await` functions that allow custom operations to be defined and executed outside of the context of a flow.
 Below are the interfaces that must be implemented and passed into `await`, along with brief descriptions of what they do:
-
-
 
 * `FlowExternalOperation` - An operation that returns a result which should be run using a thread from one of the node’s
 thread pools.
 * `FlowExternalAsyncOperation` - An operation that returns a future which should be run on a thread provided to its implementation.
 Threading needs to be explicitly handled when using `FlowExternalAsyncOperation`.
-
-
 
 ### FlowExternalOperation
 
@@ -1684,6 +1616,7 @@ Below is an example of how `FlowExternalOperation` can be called from a flow to 
 
 {{< tabs name="tabs-30" >}}
 {{% tab name="kotlin" %}}
+
 ```kotlin
 @StartableByRPC
 class FlowUsingFlowExternalOperation : FlowLogic<Unit>() {
@@ -1740,9 +1673,11 @@ class ExternalService(serviceHub: AppServiceHub) : SingletonSerializeAsToken() {
 
 data class Data(val name: String, val value: Any)
 ```
+
 {{% /tab %}}
 
 {{% tab name="java" %}}
+
 ```java
 @StartableByRPC
 public class FlowUsingFlowExternalOperation extends FlowLogic<Void> {
@@ -1826,13 +1761,12 @@ public class Data {
     }
 }
 ```
+
 {{% /tab %}}
 
 {{< /tabs >}}
 
 In summary, the following steps are taken in the code above:
-
-
 
 * `ExternalService` is a Corda service that provides a way to contact an external system (by HTTP in this example).
 * `ExternalService.retrieveDataFromExternalSystem` is passed a `deduplicationId` which is included as part of the request to the
@@ -1842,12 +1776,9 @@ computed.
 * `RetrieveDataFromExternalSystem` is then passed into `await` to execute the code contained in `RetrieveDataFromExternalSystem.execute`.
 * The result of `RetrieveDataFromExternalSystem.execute` is then returned to the flow once its execution finishes.
 
-
-
 ### FlowExternalAsyncOperation
 
 `FlowExternalAsyncOperation` allows developers to write an operation that returns a future whose threading is handled within the CorDapp.
-
 
 {{< warning >}}
 Threading must be explicitly controlled when using `FlowExternalAsyncOperation`. A future will be run on its current flow worker
@@ -1855,7 +1786,6 @@ thread if a new thread is not spawned or provided by a thread pool. This prevent
 another flow to take control and run.
 
 {{< /warning >}}
-
 
 Implementations of `FlowExternalAsyncOperation` must return a `CompletableFuture`. How this future is created is up to the developer.
 It is recommended to use `CompletableFuture.supplyAsync` and supply an executor to run the future on. Other libraries can be used to
@@ -1871,6 +1801,7 @@ Below is an example of how `FlowExternalAsyncOperation` can be called from a flo
 
 {{< tabs name="tabs-31" >}}
 {{% tab name="kotlin" %}}
+
 ```kotlin
 @StartableByRPC
 class FlowUsingFlowExternalAsyncOperation : FlowLogic<Unit>() {
@@ -1940,9 +1871,11 @@ class ExternalService(serviceHub: AppServiceHub) : SingletonSerializeAsToken() {
 
 data class Data(val name: String, val value: Any)
 ```
+
 {{% /tab %}}
 
 {{% tab name="java" %}}
+
 ```java
 @StartableByRPC
 public class FlowUsingFlowExternalAsyncOperation extends FlowLogic<Void> {
@@ -2039,13 +1972,12 @@ public class Data {
     }
 }
 ```
+
 {{% /tab %}}
 
 {{< /tabs >}}
 
 In summary, the following steps are taken in the code above:
-
-
 
 * `ExternalService` is a Corda service that provides a way to contact an external system (by HTTP in this example).
 * `ExternalService.retrieveDataFromExternalSystem` is passed a `deduplicationId` which is included as part of the request to the
@@ -2056,8 +1988,6 @@ computed.
 * An implementation of `FlowExternalAsyncOperation` (`RetrieveDataFromExternalSystem`) is created that calls the `ExternalService.retrieveDataFromExternalSystem`.
 * `RetrieveDataFromExternalSystem` is then passed into `await` to execute the code contained in `RetrieveDataFromExternalSystem.execute`.
 * The result of `RetrieveDataFromExternalSystem.execute` is then returned to the flow once its execution finishes.
-
-
 
 ### Handling deduplication in external operations
 
@@ -2071,13 +2001,11 @@ result retrieved from a previous attempt. How deduplication is handled depends o
 example, an external system might already handle this scenario and return the result from a previous calculation or it could be idempotent
 and can be safely executed multiple times.
 
-
 {{< warning >}}
 There is no inbuilt deduplication for external operations. Any deduplication must be explicitly handled in whatever way is
 appropriate for the CorDapp and external system.
 
 {{< /warning >}}
-
 
 The `deduplicationId` passed to an external operation is constructed from its calling flow’s ID and the number of suspends the flow has
 made. Therefore, the `deduplicationId` is guaranteed to be the same on a retry and will never be used again once the flow has successfully
@@ -2090,13 +2018,10 @@ restart.
 {{< /note >}}
 Below are examples of how deduplication could be handled:
 
-
-
 * The external system records successful computations and returns previous results if requested again.
 * The external system is idempotent, meaning the computation can be made multiple times without altering any state (similar to the point above).
 * An extra external service maintains a record of deduplication IDs.
 * Recorded inside of the node’s database.
-
 
 {{< note >}}
 Handling deduplication on the external system’s side is preferred compared to handling it inside of the node.
@@ -2108,9 +2033,6 @@ In-memory data structures should not be used for handling deduplication as their
 
 {{< /warning >}}
 
-
-
-
 ### Creating CompletableFutures from Guava’s ListenableFutures
 
 The code below demonstrates how to convert a `ListenableFuture` into a `CompletableFuture`, allowing the result to be executed using a
@@ -2118,6 +2040,7 @@ The code below demonstrates how to convert a `ListenableFuture` into a `Completa
 
 {{< tabs name="tabs-32" >}}
 {{% tab name="kotlin" %}}
+
 ```kotlin
 @CordaService
 class ExternalService(serviceHub: AppServiceHub) : SingletonSerializeAsToken() {
@@ -2173,9 +2096,11 @@ class ExternalService(serviceHub: AppServiceHub) : SingletonSerializeAsToken() {
     }
 }
 ```
+
 {{% /tab %}}
 
 {{% tab name="java" %}}
+
 ```java
 @CordaService
 public class ExternalService extends SingletonSerializeAsToken {
@@ -2237,13 +2162,12 @@ public class ExternalService extends SingletonSerializeAsToken {
     }
 }
 ```
+
 {{% /tab %}}
 
 {{< /tabs >}}
 
 In the code above:
-
-
 
 * A `ListenableFuture` is created and receives a thread from the `ListeningExecutorService`. This future does all the processing.
 * A `CompletableFuture` is created, so that it can be returned to and executed by a `FlowExternalAsyncOperation`.
@@ -2251,12 +2175,9 @@ In the code above:
 exceptionally) depending on the outcome of the `ListenableFuture`.
 * `CompletableFuture.cancel` is overridden to propagate its cancellation down to the underlying `ListenableFuture`.
 
-
-
 ## Concurrency, Locking and Waiting
 
 Corda is designed to:
-
 
 * run many flows in parallel
 * persist flows to storage and resurrect those flows much later
@@ -2264,14 +2185,12 @@ Corda is designed to:
 
 Because of this, care must be taken when performing locking or waiting operations.
 
-
 ### Locking
 
 Flows should avoid using locks or interacting with objects that are shared between flows (except for `ServiceHub` and other
 carefully crafted services such as Oracles.  See [Writing oracle services](oracles.md)). Locks will significantly reduce the scalability of the
 node, and can cause the node to deadlock if they remain locked across flow context switch boundaries (such as when sending
 and receiving from peers, as discussed above, or sleeping, as discussed below).
-
 
 ### Waiting
 
@@ -2288,7 +2207,6 @@ complicated).
 
 For example, the `finance` package currently uses `FlowLogic.sleep` to make several attempts at coin selection when
 many states are soft locked, to wait for states to become unlocked:
-
 
 ```kotlin
 for (retryCount in 1..maxRetries) {
@@ -2309,5 +2227,4 @@ for (retryCount in 1..maxRetries) {
 
 ```
 
-{{/* github src='finance/workflows/src/main/kotlin/net/corda/finance/workflows/asset/selection/AbstractCashSelection.kt' url='https://github.com/corda/corda/blob/release/os/4.5/finance/workflows/src/main/kotlin/net/corda/finance/workflows/asset/selection/AbstractCashSelection.kt#L101-L115' raw='https://raw.githubusercontent.com/corda/corda/release/os/4.5/finance/workflows/src/main/kotlin/net/corda/finance/workflows/asset/selection/AbstractCashSelection.kt' start='DOCSTART CASHSELECT 1' end='DOCEND CASHSELECT 1' */}}[AbstractCashSelection.kt](https://github.com/corda/corda/blob/release/os/4.5/finance/workflows/src/main/kotlin/net/corda/finance/workflows/asset/selection/AbstractCashSelection.kt)
-
+{{/* github src='finance/workflows/src/main/kotlin/net/corda/finance/workflows/asset/selection/AbstractCashSelection.kt' url='<https://github.com/corda/corda/blob/release/os/4.5/finance/workflows/src/main/kotlin/net/corda/finance/workflows/asset/selection/AbstractCashSelection.kt#L101-L115'> raw='<https://raw.githubusercontent.com/corda/corda/release/os/4.5/finance/workflows/src/main/kotlin/net/corda/finance/workflows/asset/selection/AbstractCashSelection.kt'> start='DOCSTART CASHSELECT 1' end='DOCEND CASHSELECT 1' */}}[AbstractCashSelection.kt](https://github.com/corda/corda/blob/release/os/4.5/finance/workflows/src/main/kotlin/net/corda/finance/workflows/asset/selection/AbstractCashSelection.kt)

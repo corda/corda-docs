@@ -21,7 +21,6 @@ title: Using the Node Explorer to test a Corda node on Corda Testnet
 
 This document will explain how to test the installation of a Corda node on Testnet.
 
-
 ## Prerequisites
 
 This guide assumes you have deployed a Corda node to the Corda Testnet.
@@ -36,7 +35,6 @@ If you need to set up a node on Testnet first please follow the instructions: [J
 To run the tests and make sure your node is connecting correctly to the network you will need to download and install a
 couple of resources.
 
-
 * Log into your Cloud VM via SSH.
 * Stop the Corda node(s) running on your cloud instance.
 
@@ -44,12 +42,11 @@ couple of resources.
 ps aux | grep corda.jar | awk '{ print $2 }' | xargs sudo kill
 ```
 
-
 * Download the finance CorDappIn the terminal on your cloud instance run:
 
 ```bash
-wget https://software.r3.com/artifactory/corda-releases/net/corda/corda-finance-contracts/4.5/corda-finance-contracts-4.4.jar
-wget https://software.r3.com/artifactory/corda-releases/net/corda/corda-finance-workflows/4.5/corda-finance-workflows-4.4.jar
+wget https://software.r3.com/artifactory/corda-releases/net/corda/corda-finance-contracts/|corda_version|/corda-finance-contracts-|corda_version|.jar
+wget https://software.r3.com/artifactory/corda-releases/net/corda/corda-finance-workflows/|corda_version|/corda-finance-workflows-|corda_version|.jar
 ```
 
 This is required to run some flows to check your connections, and to issue/transfer cash to counterparties. Copy it to
@@ -59,13 +56,11 @@ the Corda installation location:
 sudo cp /home/<USER>/corda-finance-4.4-corda.jar /opt/corda/cordapps/
 ```
 
-
 * Run the following to create a config file for the finance CorDapp:
 
 ```bash
 echo "issuableCurrencies = [ USD ]" > /opt/corda/cordapps/config/corda-finance-4.4-corda.conf
 ```
-
 
 * Restart the Corda node:
 
@@ -83,15 +78,12 @@ Node Explorer is a JavaFX GUI which connects to the node over the RPC interface 
 Download the Node Explorer from here:
 
 ```bash
-https://software.r3.com/artifactory/corda-releases/net/corda/corda-tools-explorer/4.4-corda/corda-tools-explorer-4.4-corda.jar
+https://software.r3.com/artifactory/corda-releases/net/corda/corda-tools-explorer/|corda_version|-corda/corda-tools-explorer-|corda_version|-corda.jar
 ```
 
-
 {{< warning >}}
-This Node Explorer is incompatible with the Corda Enterprise distribution and vice versa as they currently
-use different serialisation schemes (Kryo vs AMQP).{{< /warning >}}
-
-
+This Node Explorer is incompatible with the Corda Enterprise distribution and vice versa as they currently use different serialisation schemes (Kryo vs AMQP).
+{{< /warning >}}
 
 * Run the Node Explorer tool on your **LOCAL** machine.
 
@@ -101,12 +93,9 @@ java -jar corda-tools-explorer-4.4-corda.jar
 
 ![explorer login](/en/images/explorer-login.png "explorer login")
 
-
-
 ## Connect to the node
 
 To connect to the node you will need:
-
 
 * The IP address of your node (the public IP of your cloud instance). You can find this in the instance page of your cloud console.
 * The port number of the RPC interface to the node, specified in `/opt/corda/node.conf` in the `rpcSettings` section,
@@ -116,7 +105,6 @@ To connect to the node you will need:
 
 Click on `Connect` to log into the node.
 
-
 ## Check your network identity and counterparties
 
 Once Explorer has logged in to your node over RPC click on the `Network` tab in the side navigation of the Explorer UI:
@@ -124,7 +112,6 @@ Once Explorer has logged in to your node over RPC click on the `Network` tab in 
 ![explorer network](/en/images/explorer-network.png "explorer network")
 If your Corda node is correctly configured and connected to the Testnet then you should be able to see the identities of
 your node, the Testnet notary and the network map listing all the counterparties currently on the network.
-
 
 ## Test issuance transaction
 
@@ -142,4 +129,3 @@ or wait for a success message to be displayed:
 
 ![explorer transactions](/en/images/explorer-transactions.png "explorer transactions")
 Congratulations! You have now successfully installed a CorDapp and executed a transaction on the Corda Testnet.
-

@@ -20,9 +20,7 @@ title: Changelog
 Here’s a summary of what’s changed in each Corda release. For guidance on how to upgrade code from the previous
 release, see [Upgrading CorDapps to newer Platform Versions](app-upgrade-notes.md).
 
-
 ## Unreleased
-
 
 * Added ability for `CordaService` to register for receiving node lifecycle events to perform initialisation and clean-up actions.
 * Custom serializer classes implementing `SerializationCustomSerializer` should ideally be packaged in the same CorDapp as the
@@ -43,7 +41,7 @@ to a specified set of external IDs. This feature should be used when querying st
 further information).
 * Introduced a new API on `IdentityService` called `RegisterKey` which maps a `PublicKey` to a specified `CordaX500Name` and to an
 optional `UUID` (external Id).
-* Introduced a new API on `IdentityService` called `publicKeyToExternalId` which facilitates lookups of ``PublicKey` s to
+* Introduced a new API on `IdentityService` called `publicKeyToExternalId` which facilitates lookups of ``PublicKey`s to
 `externalId` s (Account IDs).
 * Introduced a new API on `IdentityService` called `publicKeysForExternalId` which returns all the `PublicKey` s associated with a
 particular external ID.
@@ -69,8 +67,6 @@ done, then the node may record new output states that are not relevant to the no
 Nodes may re-record transactions if they have previously recorded them as a participant and wish to record them as an observer.
 However, the node cannot resolve the forward chain of transactions if this is done. This means that if you wish to re-record a chain of
 transactions and get the new output states to be correctly marked as consumed, the full chain must be sent to the node *in order*.{{< /warning >}}
-
-
 
 * Added `nodeDiagnosticInfo` to the RPC API. The new RPC is also available as the `run nodeDiagnosticInfo` command executable from
 the Corda shell. It retrieves version information about the Corda platform and the CorDapps installed on the node.
@@ -101,11 +97,9 @@ See [overriding config values](corda-configuration-file.md#corda-configuration-f
 options, as well as `extensions.sshd` configuration entry, have been removed from the standalone shell.
 Available alternatives are either to use the standalone shell directly, or connect to the node embedded shell via SSH.
 * Fixed the operator used by the `notEqual` predicate
-
-
+* Added new node configuration option to exclude packages from Quasar instrumentation.
 
 ## Version 4.1
-
 
 * Fix a bug in Corda 4.0 that combined commands in `TransactionBuilder` if they only differed by the signers list.  The behaviour is now consistent with prior Corda releases.
 * Disabled the default loading of `hibernate-validator` as a plugin by hibernate when a CorDapp depends on it. This change will in turn fix the
@@ -114,10 +108,7 @@ For nodes that already did that, it can be safely removed when the latest Corda 
 One thing to keep in mind is that if any CorDapp relied on hibernate-validator to validate Querayable JPA Entities via annotations, that will no longer happen.
 That was a bad practice anyway, because the `ContractState` should be validated in the Contract verify method.
 
-
-
 ## Version 4.0
-
 
 * Fixed race condition between `NodeVaultService.trackBy` and `NodeVaultService.notifyAll`, where there could be states that were not reflected
 in the data feed returned from `trackBy` (either in the query’s result snapshot or the observable).
@@ -247,11 +238,10 @@ of `Kryo` from general use within Corda, remaining only for use in flow checkpoi
 * Node will now gracefully fail to start if `devMode` is true and `compatibilityZoneURL` is specified.
 * Added smart detection logic for the development mode setting and an option to override it from the command line.
 * Changes to the JSON/YAML serialisation format from `JacksonSupport`, which also applies to the node shell:
-    * `WireTransaction` now nicely outputs into its components: `id`, `notary`, `inputs`, `attachments`, `outputs`,
+  * `WireTransaction` now nicely outputs into its components: `id`, `notary`, `inputs`, `attachments`, `outputs`,
 `commands`, `timeWindow` and `privacySalt`. This can be deserialized back.
-    * `SignedTransaction` is serialised into `wire` (i.e. currently only `WireTransaction` tested) and `signatures`,
+  * `SignedTransaction` is serialised into `wire` (i.e. currently only `WireTransaction` tested) and `signatures`,
 and can be deserialized back.
-
 
 * The Vault Criteria API has been extended to take a more precise specification of which class contains a field. This
 primarily impacts Java users; Kotlin users need take no action. The old methods have been deprecated but still work -
@@ -260,13 +250,12 @@ the new methods avoid bugs that can occur when JPA schemas inherit from each oth
 CorDapps implementing custom notary services will need to be updated, see `samples/notary-demo` for an example.
 Further changes may be required in the future.
 * Configuration file changes:
-    * Added program line argument `on-unknown-config-keys` to allow specifying behaviour on unknown node configuration property keys.
+  * Added program line argument `on-unknown-config-keys` to allow specifying behaviour on unknown node configuration property keys.
 Values are: [FAIL, IGNORE], default to FAIL if unspecified.
-    * Introduced a placeholder for custom properties within `node.conf`; the property key is “custom”.
-    * The deprecated web server now has its own `web-server.conf` file, separate from `node.conf`.
-    * Property keys with double quotes (e.g. “key”) in `node.conf` are no longer allowed, for rationale refer to [Node configuration](corda-configuration-file.md).
-    * The `issuableCurrencies` property is no longer valid for `node.conf`. Instead, it has been moved to the finance workflows CorDapp configuration.
-
+  * Introduced a placeholder for custom properties within `node.conf`; the property key is “custom”.
+  * The deprecated web server now has its own `web-server.conf` file, separate from `node.conf`.
+  * Property keys with double quotes (e.g. “key”) in `node.conf` are no longer allowed, for rationale refer to [Node configuration](corda-configuration-file.md).
+  * The `issuableCurrencies` property is no longer valid for `node.conf`. Instead, it has been moved to the finance workflows CorDapp configuration.
 
 * Added public support for creating `CordaRPCClient` using SSL. For this to work the node needs to provide client applications
 a certificate to be added to a truststore. See [Using the client RPC API](tutorial-clientrpc-api.md)
@@ -278,10 +267,9 @@ was equal to `address`.
 object directly. To enable RPC connectivity ensure node’s `rpcSettings.address` and `rpcSettings.adminAddress` settings
 are present.
 * Changes to the network bootstrapper:
-    * The whitelist.txt file is no longer needed. The existing network parameters file is used to update the current contracts
+  * The whitelist.txt file is no longer needed. The existing network parameters file is used to update the current contracts
 whitelist.
-    * The CorDapp jars are also copied to each nodes’ `cordapps` directory.
-
+  * The CorDapp jars are also copied to each nodes’ `cordapps` directory.
 
 * Errors thrown by a Corda node will now reported to a calling RPC client with attention to serialization and obfuscation
 of internal data.
@@ -341,15 +329,15 @@ Note that this means apps running on nodes using Observer node functionality sho
 * Test `CordaService` s can be installed on mock nodes using `UnstartedMockNode.installCordaService`.
 * The finance-contracts demo CorDapp has been slimmed down to contain only that which is relevant for contract verification. Everything else
 has been moved to the finance-workflows CorDapp:
-    * The cash selection logic. `AbstractCashSelection` is now in net.corda.finance.contracts.asset so any custom implementations must now be
+  * The cash selection logic. `AbstractCashSelection` is now in net.corda.finance.contracts.asset so any custom implementations must now be
 defined in `META-INF/services/net.corda.finance.workflows.asset.selection.AbstractCashSelection`.
-    * The jackson annotations on `Expression` have been removed. You will need to use `FinanceJSONSupport.registerFinanceJSONMappers` if
+  * The jackson annotations on `Expression` have been removed. You will need to use `FinanceJSONSupport.registerFinanceJSONMappers` if
 you wish to preserve the JSON format for this class.
-    * The various utility methods defined in `Cash` for creating cash transactions have been moved to `net.corda.finance.workflows.asset.CashUtils`.
+  * The various utility methods defined in `Cash` for creating cash transactions have been moved to `net.corda.finance.workflows.asset.CashUtils`.
 Similarly with `CommercialPaperUtils` and `ObligationUtils`.
-    * Various other utilities such as `GetBalances` and the test calendar data.
+  * Various other utilities such as `GetBalances` and the test calendar data.
 
 The only exception to this is `Interpolator` and related classes. These are now in the [IRS demo workflows CorDapp](https://github.com/corda/corda/tree/master/samples/irs-demo/cordapp/workflows-irs).
+
 * Vault states are migrated when moving from V3 to V4: the relevancy column is correctly filled, and the state party table is populated.
 Note: This means Corda can be slow to start up for the first time after upgrading from V3 to V4.
-

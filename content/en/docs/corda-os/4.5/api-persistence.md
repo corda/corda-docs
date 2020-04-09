@@ -723,6 +723,7 @@ Please note that suspendable flow operations such as:
 * `FlowSession.send`
 * `FlowSession.receive`
 * `FlowLogic.receiveAll`
+* `FlowLogic.sendAll`
 * `FlowLogic.sleep`
 * `FlowLogic.subFlow`
 

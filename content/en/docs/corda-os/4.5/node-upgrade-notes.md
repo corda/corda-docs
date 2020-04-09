@@ -21,7 +21,6 @@ title: Upgrading your node to Corda 4
 Corda releases strive to be backwards compatible, so upgrading a node is fairly straightforward and should not require changes to
 applications. It consists of the following steps:
 
-
 * Drain the node.
 * Make a backup of your node directories and/or database.
 * Replace the `corda.jar` file with the new version.
@@ -29,7 +28,6 @@ applications. It consists of the following steps:
 * Undrain it to re-enable processing of new inbound flows.
 
 The protocol is designed to tolerate node outages, so during the upgrade process peers on the network will wait for your node to come back.
-
 
 ## Step 1. Drain the node
 
@@ -43,15 +41,12 @@ and protocol complexity increases.
 To drain the node, run the `gracefulShutdown` command. This will wait for the node to drain and then shut down the node when the drain
 is complete.
 
-
 {{< warning >}}
 The length of time a node takes to drain depends on both how your applications are designed, and whether any apps are currently
 talking to network peers that are offline or slow to respond. It is thus hard to give guidance on how long a drain should take, but in
 an environment with well written apps and in which your counterparties are online, drains may need only a few seconds.
 
 {{< /warning >}}
-
-
 
 ## Step 2. Make a backup of your node directories and/or database
 
@@ -61,7 +56,6 @@ user guide to learn how to make backups.
 
 We provide some [backup recommendations](node-administration.md#backup-recommendations) if you’d like more detail.
 
-
 ## Step 3. Upgrade the node database to Corda 3.2 or later
 
 Ensure your node is running Corda 3.2 or later.
@@ -70,26 +64,21 @@ These changes need to be applied to the database before upgrading to Corda 4.0.
 Refer to [Corda 3.2 release notes](https://docs.corda.net/releases/release-V3.4/upgrade-notes.html#v3-1-to-v3-2)
 for further information.
 
-
 ## Step 4. Replace `corda.jar` with the new version
 
-Download the latest version of Corda from [our Artifactory site](https://software.r3.com/artifactory/webapp/#/artifacts/browse/simple/General/corda/net/corda/corda-node).
+Download the latest version of Corda from [our Artifactory site]<https://software.r3.com/artifactory/webapp/#/artifacts/browse/simple/General/corda/net/corda/corda-node).>
 Make sure it’s available on your path, and that you’ve read the [Release notes](release-notes.md), in particular to discover what version of Java this
 node requires.
-
 
 {{< important >}}
 Corda 4 requires Java 8u171 or any higher Java 8 patchlevel. Java 9+ is not currently supported.
 
-
 {{< /important >}}
-
 
 ## Step 5. Start up the node
 
 Start the node in the usual manner you have selected. The node will perform any automatic data migrations required, which may take some
 time. If the migration process is interrupted it can be continued simply by starting the node again, without harm.
-
 
 ## Step 6. Undrain the node
 
@@ -98,4 +87,3 @@ You may now do any checks that you wish to perform, read the logs, and so on. Wh
 `run setFlowsDrainingModeEnabled enabled: false`
 
 Your upgrade is complete.
-
