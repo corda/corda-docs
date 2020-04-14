@@ -59,25 +59,23 @@ The full options are:
 -   `--user`: User for the Zone service\'s database.
 -   `--password`: Password for the Zone service\'s database.
 -   `--admin-listener-port`: Port to connect for Admin Client RPC.
--   \`\`\--auth-dev-mode: Whether to run with a real or developer
-    authentication/authorisation service. Defaults to false if not
-    provided.
--   \`\`\--auth-host: Hostname of the authentication service. Required
-    unless running in developer mode.
--   \`\`\--auth-port: Port number of the authentication service.
-    Required unless running in developer mode.
--   \`\`\--auth-trust-store-location: Location of the authentication
-    service trust root keystore. Required unless running in developer
-    mode.
--   \`\`\--auth-trust-store-password: Password for the authentication
-    service trust root keystore. Required unless running in developer
-    mode.
--   \`\`\--auth-audience: Audience, passed to the authentication
-    service. Required unless running in developer mode.
--   \`\`\--auth-issuer: Issuer, passed to the authentication service.
-    Required unless running in developer mode.
--   \`\`\--auth-leeway: Leeway, passed to the authentication service.
-    Required unless running in developer mode.
+-   `--auth-disable-authentication: Whether to disable authentication. Defaults
+    to false, and must not be used in production.
+-   `--auth-host: Hostname of the authentication service. Required
+    unless authentication is disabled.
+-   `--auth-port: Port number of the authentication service. Required
+    unless authentication is disabled.
+-   `--auth-trust-store-location: Location of the authentication
+    service trust root keystore. Required unless authentication is disabled.
+-   `--auth-trust-store-password: Password for the authentication
+    service trust root keystore. Required unless authentication is disabled.
+-   `--auth-issuer: The issuer refers to the `iss` claim in the JSON Web Token
+    (JWT) and needs to be set to the same value as in the Auth service configuration.
+    Required unless authentication is disabled.
+-   `--auth-leeway: Leeway is the amount of time allowed when checking JWT
+    issuance and expiration times. It is recommended to set this to a few seconds
+    to prevent issues because of clocks being out of sync.
+    Required unless authentication is disabled.
 
 Interoperability with Angel service
 -----------------------------------
