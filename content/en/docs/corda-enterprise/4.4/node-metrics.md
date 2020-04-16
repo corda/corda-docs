@@ -78,6 +78,7 @@ weightPercent are only available for weight-based caches.
 |net.corda:type=Flows,name=QueueSizeOnInsert|Histogram showing the queue size at the point new flows are added|
 |net.corda:type=Flows,name=Started|The total number of flows started|
 |net.corda:type=Flows,name=Success|The total number of successful flows|
+|net.corda:type=Flows,component=Actions,name=<action_name>>|Histogram indicating the elapsed time to execute a particular action|
 
 {{< /table >}}
 
