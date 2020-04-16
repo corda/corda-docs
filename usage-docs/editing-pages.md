@@ -4,7 +4,7 @@
 
 To edit documentation `md` files in this repository, all you need to do is to:
 
-1. [Fork this reposiroty](https://guides.github.com/activities/forking/).
+1. [Fork this repository](https://guides.github.com/activities/forking/).
 2. [Edit your fork](https://guides.github.com/activities/forking/#making-changes).
 3. [Push to your fork](https://guides.github.com/activities/forking/#making-changes).
 4. [Make a pull request](https://guides.github.com/activities/forking/#making-a-pull-request).
