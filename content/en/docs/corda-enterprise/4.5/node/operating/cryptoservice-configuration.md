@@ -332,7 +332,11 @@ The communication with the HSM is achieved via a daemon middleware process (call
 
 ## AWS CloudHSM
 
-Corda Enterprise nodes can be configured to generate keys in [AWS CloudHSM](https://aws.amazon.com/cloudhsm/)
+Corda Enterprise nodes can be configured to generate keys in [AWS CloudHSM](https://aws.amazon.com/cloudhsm/) using [AWS CloudHSM Software Library for Java](https://docs.aws.amazon.com/cloudhsm/latest/userguide/java-library.html).
+
+{{< note >}}
+See [Install and Use the AWS CloudHSM Software Library for Java](https://docs.aws.amazon.com/cloudhsm/latest/userguide/java-library-install.html) for the list of supported operating systems.
+{{< /note >}}
 
 In the ``node.conf``, the ``cryptoServiceName`` needs to be set to "AWS_CLOUD", and ``cryptoServiceConf`` should contain the path to a configuration file, the content of which is explained further down.
 
@@ -361,7 +365,10 @@ partition: "hsm-w4b6nnfio7z"
 ```
 
 
-In addition to the configuration:
+In addition to the configuration the following steps are required:
 
-* `cloudhsm-3.0.0.jar` from AWS CloudHSM Software Library for Java needs to be placed in the node’s drivers folder.
-* Corda must be running with the system property `-Djava.library.path=/opt/cloudhsm/lib` pointing to the directory with corresponding native library (e.g. `libcaviumjca.so` for Linux).
+1. `cloudhsm-3.0.0.jar` from AWS CloudHSM Software Library for Java needs to be placed in the node’s drivers folder.
+2. Corda must be running with the system property `java.library.path` pointing to the directory that contains the AWS CloudHSM JCA provider binaries (e.g. ``libcaviumjca.so`` for Linux). For example:
+```text
+java -Djava.library.path=/opt/cloudhsm/lib -jar corda.jar
+```
