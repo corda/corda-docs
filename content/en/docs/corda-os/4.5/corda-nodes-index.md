@@ -16,7 +16,7 @@ title: Nodes
 ---
 
 
-# Nodes
+# Nodes Usage
 
 
 
@@ -35,6 +35,3 @@ title: Nodes
 * [Creating nodes locally](generating-a-node.md)
 * [Running nodes locally](running-a-node.md)
 * [Flow Hospital](node-flow-hospital.md)
-
-
-
