@@ -8,28 +8,13 @@ class Configuration {
     String getTargetRepo() {
         return "${dockerRepo}-local"
     }
-//    String getDeploymentCredentials() {
-//        return deploymentCredentials
-//    }
-//    String getDocsite() {
-//        return docsite
-//    }
     String getBuildName() {
         return "${ARTIFACTORY_BUILD_NAME} (${branch})"
     }
-//    boolean getDefaultPublish() {
-//        return defaultPublish
-//    }
-//    void setBranch(String branch) {
-//        this.branch = branch
-//    }
-//    String getLatestTag() {
-//        return latestTag
-//    }
     String dockerRepo
     String deploymentCredentials
     String docsite
-    String defaultPublish
+    boolean defaultPublish
     String branch
     String latestTag
     Configuration(dockerRepo,deploymentCredentials, docsite, defaultPublish, latestTag) {
