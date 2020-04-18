@@ -2,9 +2,6 @@
 aliases:
 - /releases/4.4/shell.html
 date: '2020-01-08T09:59:25Z'
-menu:
-  corda-enterprise-4-4:
-    parent: corda-ent-4-4-tool-index
 tags:
 - shell
 title: Embedded Shell

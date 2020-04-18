@@ -35,8 +35,7 @@ See [CENM Database Configuration](config-database.md)
 
 
 * **localSigner**:
-*(Optional)* Configuration of the local signer for the Identity Manager service. Useful for debugging, testing or when HSM support is not available.
-<!-- HSM - spell out unless mentioned earlier in the doc -->
+*(Optional)* Configuration of the local signer for the Identity Manager service. Useful for debugging, testing or when Hardware Security Module (HSM) support is not available.
 
 
 * **keyStore**:

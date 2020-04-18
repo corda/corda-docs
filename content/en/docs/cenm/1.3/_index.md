@@ -1,14 +1,12 @@
 ---
-aliases:
-- /releases/release-1.2/index.html
 date: '2020-01-08T09:59:25Z'
 menu:
   versions:
     weight: 980
 project: cenm
-section_menu: cenm-1-2
-title: CENM 1.2
-version: '1.2'
+section_menu: cenm-1-3
+title: CENM 1.3
+version: '1.3'
 ---
 
 
@@ -59,6 +57,8 @@ Operations
 
 * [Enterprise Network Manager Quick-Start Guide](quick-start.md)
 * [Deployment with Kubernetes](deployment-kubernetes.md)
+* [Zone Service](zone-manager.md)
+* [Angel Service](angel-manager.md)
 * [Identity Manager Service](identity-manager.md)
 * [Network Map Service](network-map.md)
 * [Signing Services](signing-service.md)
