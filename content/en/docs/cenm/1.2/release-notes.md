@@ -15,6 +15,11 @@ title: Release notes
 
 # Release notes
 
+## Release 1.2.1
+
+* Bug fix: Generating a certificate hierarchy using the PKI tool and a supported version of Gemalto HSM fails to generate keys.
+* Bug fix: Using `csr_token` as part of a node registration causes the registration to fail when the Identity manager is set up to use a supported version of Oracle DB.
+
 ## Release 1.2
 
 ### Major New Features
