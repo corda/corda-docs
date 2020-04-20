@@ -113,13 +113,12 @@ as warning: “There is already a ticket: ‘<TICKET ID>’ corresponding to *Re
 
 ## Release 1.1.2
 
-* The issue where Signer requires repeated authentication is now fixed for Utimaco card reader configuration
-  along with other HSMs.
-* Bug fix: Identity Manager upgrade from CENM 0.4 causes JIRA Workflow Plugin to stop processing the existing tickets in status 'New' or 'In Progress'.
+* Bug fix: Identity Manager upgrade from CENM 0.4 causes JIRA Workflow Plugin to stop the existing tickets in status 'New' or 'In Progress' from being progressed and prevents rejected records from being cleared by `workflow_*`.
+* Bug fix: When multiple users were configured to use the Signing Service, the service would authenticate all the credentials before checking whether the threshold was reached or not, that would cause multiple authentication per user.
+
 ## Release 1.1.1
 
-* Bug fix: Identity Manager upgrade from CENM 0.4 causes JIRA Workflow Plugin to stop the existing tickets in status 'New' or
-'In Progress' to be progressed.
+* Bug fix: Identity Manager upgrade from CENM 0.4 causes JIRA Workflow Plugin to lose all pending tickets.
 
 ## Release 1.1
 
