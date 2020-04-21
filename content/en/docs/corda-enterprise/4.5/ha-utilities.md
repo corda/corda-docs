@@ -270,8 +270,8 @@ ha-utilities generate-internal-artemis-ssl-keystores [-hvV] [--logging-level=<lo
 
 * `-v`, `--verbose`, `--log-to-console`: If set, prints logging to the console as well as to a file.
 * `--logging-level=<loggingLevel>`: Enable logging at this level and higher. Possible values: ERROR, WARN, INFO, DEBUG, TRACE. Default: INFO
-* `-p`, `--keyStorePassword=<keyStorePassword>`: Password <sup>[\[4\]](#ha-utilities-id9) for all generated keystores. Default: changeit
-* `-t`, `--trustStorePassword=<trustStorePassword>`: Password <sup>[\[4\]](#ha-utilities-id10) for the trust store. Default: changeit
+* `-p`, `--keystore-password=<keyStorePassword>`: Password <sup>[\[4\]](#ha-utilities-id9) for all generated keystores. Default: changeit
+* `-t`, `--truststore-password=<trustStorePassword>`: Password <sup>[\[4\]](#ha-utilities-id10) for the trust store. Default: changeit
 * `-o`, `--organization=<organization>`: X500Name’s organization attribute. Default: Corda
 * `-l`, `--locality=<locality>`: X500Name’s locality attribute. Default: London
 * `-c`, `--country=<country>`: X500Name’s country attribute. Default: GB
@@ -284,7 +284,7 @@ ha-utilities generate-internal-artemis-ssl-keystores [-hvV] [--logging-level=<lo
 * `-h`, `--help`: Show this help message and exit.
 * `-V`, `--version`: Print version information and exit.
 
-The name of HSM provider to be used, e.g. `UTIMACO`, `GEMALTO_LUNA`, etc. 
+The name of HSM provider to be used, e.g. `UTIMACO`, `GEMALTO_LUNA`, etc.
 
 ### Self signed internal Tunnel SSL keystore
 
@@ -311,22 +311,22 @@ ha-utilities generate-internal-tunnel-ssl-keystores [-hvV] [--logging-level=<log
 
 * `-v`, `--verbose`, `--log-to-console`: If set, prints logging to the console as well as to a file.
 * `--logging-level=<loggingLevel>`: Enable logging at this level and higher. Possible values: ERROR, WARN, INFO, DEBUG, TRACE. Default: INFO
-* `-p`, `--keyStorePassword=<keyStorePassword>`: Password for all generated keystores. Default: changeit
-* `-e`, `--entryPassword=<entryPassword>`: Password for all the keystores private keys. Default: changeit
-* `-t`, `--trustStorePassword=<trustStorePassword>`: Password for the trust store. Default: changeit
+* `-p`, `--keystore-password=<keyStorePassword>`: Password for all generated keystores. Default: changeit
+* `-e`, `--entry-password=<entryPassword>`: Password for all the keystores private keys. Default: changeit
+* `-t`, `--truststore-password=<trustStorePassword>`: Password for the trust store. Default: changeit
 * `-o`, `--organization=<organization>`: X500Name’s organization attribute. Default: Corda
 * `-l`, `--locality=<locality>`: X500Name’s locality attribute. Default: London
 * `-c`, `--country=<country>`: X500Name’s country attribute. Default: GB
 * `-d`, `--tls-cert-validity=<days>`: Validity for TLS certificate in days. Default: 3650 days (10 years).
 * `-b`, `--base-directory=<baseDirectory>`: The working directory where all the files are kept.
-* `-m`, `--float-hsm-name`: The HSM name for the Float. 
+* `-m`, `--float-hsm-name`: The HSM name for the Float.
 * `-f`, `--float-hsm-config-file`: The path to the Float HSM config file. Only required if the HSM name has been specified.
-* `-s`, `--bridge-hsm-name`: The HSM name for the Bridge. 
+* `-s`, `--bridge-hsm-name`: The HSM name for the Bridge.
 * `-i`, `--bridge-hsm-config-file`: The path to the Bridge HSM config file. Only required if the HSM name has been specified.
 * `-h`, `--help`: Show this help message and exit.
 * `-V`, `--version`: Print version information and exit.
 
-The name of HSM provider to be used, e.g. `UTIMACO`, `GEMALTO_LUNA`, etc. 
+The name of HSM provider to be used, e.g. `UTIMACO`, `GEMALTO_LUNA`, etc.
 
 ### Artemis configuration
 
@@ -409,4 +409,3 @@ After successful registration, a keystore file is created by the tool. The locat
 This key store contains the service identity certificate (and key if not using a HSM) that all notary workers of this notary cluster share.
 Due to HSM restrictions around storing certificate chains, the key store will still be generated when using a HSM however it will only
 contain the notary service certificate chain. See [HSM Support](notary/hsm-support.md#hsm-support) for more information.
-
