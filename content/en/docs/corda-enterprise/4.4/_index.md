@@ -80,7 +80,7 @@ More details on Corda Enterprise features compared to Corda open source features
 
 {{< /table >}}
 
-### Key storage
+### Key storage
 
 {{< table >}}
 
@@ -91,7 +91,7 @@ More details on Corda Enterprise features compared to Corda open source features
 
 {{< /table >}}
 
-### Vault databases
+### Vault databases
 
 {{< table >}}
 
@@ -117,7 +117,7 @@ More details on Corda Enterprise features compared to Corda open source features
 
 {{< /table >}}
 
-### Performance
+### Performance
 
 {{< table >}}
 
@@ -140,7 +140,7 @@ More details on Corda Enterprise features compared to Corda open source features
 
 {{< /table >}}
 
-### Support
+### Support
 
 {{< table >}}
 
