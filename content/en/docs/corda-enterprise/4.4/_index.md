@@ -42,7 +42,7 @@ More details on Corda Enterprise features compared to Corda open source features
 {{< table >}}
 
 |Feature|Corda open source|Corda Enterprise|
-|------------------------------|------------------------------|------------------------------|
+|------------------------------------------------------------|------------------------------|------------------------------|
 |Corda ledger|&#9745;|&#9745;|
 |Flow framework|&#9745;|&#9745;|
 |Immutable states|&#9745;|&#9745;|
@@ -61,7 +61,7 @@ More details on Corda Enterprise features compared to Corda open source features
 {{< table >}}
 
 |Feature|Corda open source|Corda Enterprise|
-|------------------------------|------------------------------|------------------------------|
+|------------------------------------------------------------|------------------------------|------------------------------|
 |Single node|&#9745;|&#9745;|
 |Multiple nodes for high availability/disaster recovery|&#9746;|&#9745;|
 
@@ -72,7 +72,7 @@ More details on Corda Enterprise features compared to Corda open source features
 {{< table >}}
 
 |Feature|Corda open source|Corda Enterprise|
-|------------------------------|------------------------------|------------------------------|
+|------------------------------------------------------------|------------------------------|------------------------------|
 |In-process Artemis MQ|&#9745;|&#9745;|
 |External Artemis MQ|&#9746;|&#9745;|
 |Corda firewall|&#9746;|&#9745;|
@@ -85,7 +85,7 @@ More details on Corda Enterprise features compared to Corda open source features
 {{< table >}}
 
 |Feature|Corda open source|Corda Enterprise|
-|------------------------------|------------------------------|------------------------------|
+|------------------------------------------------------------|------------------------------|------------------------------|
 |Java keystore file|&#9745;|&#9745;|
 |HSM support|&#9746;|&#9745;|
 
@@ -96,7 +96,7 @@ More details on Corda Enterprise features compared to Corda open source features
 {{< table >}}
 
 |Feature|Corda open source|Corda Enterprise|
-|------------------------------|------------------------------|------------------------------|
+|------------------------------------------------------------|------------------------------|------------------------------|
 |H2 (development use only)|&#9745;|&#9745;|
 |Postgres|&#9745; Please note that this will be harmonised with Corda Enterprise in Corda 4.5 to allow for in-place upgrades|&#9745;|
 |SQL Server|Experimental only|&#9745;|
@@ -109,7 +109,7 @@ More details on Corda Enterprise features compared to Corda open source features
 {{< table >}}
 
 |Feature|Corda open source|Corda Enterprise|
-|------------------------------|------------------------------|------------------------------|
+|------------------------------------------------------------|------------------------------|------------------------------|
 |Simple notary|&#9745;|&#9745;|
 |Oracle RAC connectivity|&#9746;|&#9745;|
 |CockroachDB connectivity|&#9746;|&#9745;|
@@ -122,7 +122,7 @@ More details on Corda Enterprise features compared to Corda open source features
 {{< table >}}
 
 |Feature|Corda open source|Corda Enterprise|
-|------------------------------|------------------------------|------------------------------|
+|------------------------------------------------------------|------------------------------|------------------------------|
 |Dynamic database caching and performance enhancements|&#9746;|&#9745;|
 |Multi-threaded flow state machine|&#9746;|&#9745;|
 
@@ -133,7 +133,7 @@ More details on Corda Enterprise features compared to Corda open source features
 {{< table >}}
 
 |Feature|Corda open source|Corda Enterprise|
-|------------------------------|------------------------------|------------------------------|
+|------------------------------------------------------------|------------------------------|------------------------------|
 |Node health check tool|&#9746;|&#9745;|
 |Configuration obfuscation tool|&#9746;|&#9745;|
 |HA admin tool|&#9746;|&#9745;|
@@ -145,7 +145,7 @@ More details on Corda Enterprise features compared to Corda open source features
 {{< table >}}
 
 |Feature|Corda open source|Corda Enterprise|
-|------------------------------|------------------------------|------------------------------|
+|------------------------------------------------------------|------------------------------|------------------------------|
 |Developer mailing lists (no SLA)|&#9745;|&#9745;|
 |Cordaledger slack (no SLA)|&#9745;|&#9745;|
 |Software maintenance|&#9746;|&#9745;|
