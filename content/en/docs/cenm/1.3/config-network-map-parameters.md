@@ -158,3 +158,8 @@ of the Corda API. Value must be equal to the one specified in Network Parameters
 * **newPKIOnly**:
 *(Optional - defaults to false)* A boolean that determines whether node info publishing should be rejected for all nodes running an outdated
 version of Corda that does not support the new PKI (arbitrary length certificate chains).
+
+* **adminListener**:
+For the usage of the RPC API in Signer a config property called `adminListener` has to be defined.
+`port`, `reconnect` and `verbose` can be added, also this property has an SSL field, see: [SSL Settings](config-ssl.md).
+If adminListener is present, the `shell` property can not be defined. Only one of those can be in the config.

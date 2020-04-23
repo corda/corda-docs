@@ -158,10 +158,13 @@ Whilst this value is optional, picking the correct value is essential for a zone
 
 
 * **“revocation workflow”**:
+  * **crlCacheTimeout**:
+  The number  of times the Revocation Workflow Processor needs to synchronise Certificate Revocation Requests (CSR) statuses, as well as the duration after the CRL cache in Revocation Web Service is cleared.
+  * **crlFiles**:
+  A List of CRLs hosted by the Identity Manager in addition to the Revocation List of the certificate signing CSR’s for nodes. This allows the Identity Manager to host the CRLs for those nodes that do not wish to host their own CRL infrastructure, at the cost of not being able to revoke TLS certificates issued by the node.
 
-* **crlCacheTimeout**:
-The number  of times the Revocation Workflow Processor needs to synchronise Certificate Revocation Requests (CSR) statuses, as well as the duration after the CRL cache in Revocation Web Service is cleared.
 
-
-* **crlFiles**:
-A List of CRLs hosted by the Identity Manager in addition to the Revocation List of the certificate signing CSR’s for nodes. This allows the Identity Manager to host the CRLs for those nodes that do not wish to host their own CRL infrastructure, at the cost of not being able to revoke TLS certificates issued by the node.
+* **adminListener**:
+For the usage of the RPC API in Identity Manager a config property called `adminListener` has to be defined.
+`port`, `reconnect` and `verbose` can be added, also this property has an SSL field, see: [SSL Settings](config-ssl.md).
+If adminListener is present, the `shell` property can not be defined. Only one of those can be in the config.

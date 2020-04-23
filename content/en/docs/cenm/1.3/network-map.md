@@ -108,6 +108,7 @@ Similar to the Identity Manager the main elements that need to be configured for
 * [ENM Internal Server](#enm-internal-server)
 * [Identity Manager & Revocation Communication](#identity-manager-revocation-communication)
 * [Restricting A Node’s Corda Version (optional)](#restricting-a-node-s-corda-version-optional)
+* [Admin RPC](#admin-rpc)
 
 
 ### Address
@@ -482,7 +483,28 @@ shell {
 
 ```
 
-[network-map-test-valid.conf](https://github.com/corda/network-services/blob/release/1.2/services/src/test/resources/v1.1-configs/network-map/network-map-test-valid.conf)
+### Admin RPC
+For the usage of the RPC API in Network Map a config property called `adminListener` has to be defined.
+Example:
+```docker
+adminListener = {
+    port = 10000
+    reconnect = true
+    ssl {
+        keyStore {
+            location = exampleSslKeyStore.jks
+            password = "password"
+        }
+        trustStore {
+            location = exampleSslTrustStore.jks
+            password = "trustpass"
+        }
+    }
+}
+```
+
+Important: If the adminListener is present in the config it means that the service should only be used via Admin RPC.
+Thus the `shell` configuration property is disabled. Only one of `shell` and `adminListener` can be used.
 
 
 ## Network Parameters
@@ -547,6 +569,7 @@ useful especially when dealing with node’s deployment in environments with IP 
 |GET|/network-map/my-hostname|Returns the IP address of the requestor.|
 
 {{< /table >}}
+
 
 ## Obfuscated configuration files
 

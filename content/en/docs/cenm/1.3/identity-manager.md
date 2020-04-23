@@ -76,6 +76,9 @@ The main elements that need to be configured for the Identity Manager are:
     * [Application Gateway Setup](#application-gateway-setup)
     * [System Configuration And Behavior](#system-configuration-and-behavior)
 
+* [Admin RPC](#admin-rpc)
+
+
 {{< note >}}
 See [Identity Manager Configuration Parameters](config-identity-manager-parameters.md) for a detailed explanation about each possible parameter.
 
@@ -891,7 +894,29 @@ shell {
 
 ```
 
-[identity-manager-prod-valid.conf](https://github.com/corda/network-services/blob/release/1.2/services/src/test/resources/v1.1-configs/identity-manager/identity-manager-prod-valid.conf)
+### Admin RPC
+For the usage of the RPC API in Identity Manager a config property called `adminListener` has to be defined.
+Example:
+```docker
+adminListener = {
+    port = 10000
+    reconnect = true
+    ssl {
+        keyStore {
+            location = exampleSslKeyStore.jks
+            password = "password"
+        }
+        trustStore {
+            location = exampleSslTrustStore.jks
+            password = "trustpass"
+        }
+    }
+}
+```
+
+{{% important %}}
+If the `adminListener` property is present in the configuration, this means that the service must only be used via Admin RPC. In this case, the `shell` configuration property will be disabled. The `shell` and `adminListener` properties cannot be used in the configuration at the same time.
+{{% /important %}}
 
 ## Obfuscated configuration files
 
