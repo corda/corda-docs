@@ -498,7 +498,7 @@ The actual content of the states can be retrieved from the `NODE_TRANSACTIONS` t
 |------------------------------|------------------------------------------------------------------------------------------|
 |TIMESTAMP|The time in UTC, to the nearest hour, that the metering count was recorded|
 |SIGNING_ID|An external identifier that signed a transaction, or UNMAPPED_IDENTITY|
-|TRANSACTION_TYPE|Whether this was a normal transaction, a contract upgrade, or a notary change|
+|TRANSACTION_TYPE|Whether this was a normal transaction, a contract upgrade, a notary change, or an indication that signing events were discarded due to heavy memory use or restarting a node|
 |CORDAPP_STACK_ID|An identifier linking to the NODE_METERING_CORDAPPS table|
 |COMMAND_ID|An identifier linking to the NODE_METERING_COMMANDS table|
 |COUNT|The total number of events in this window with the above characteristics|
