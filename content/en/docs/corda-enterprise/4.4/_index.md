@@ -76,7 +76,7 @@ More details on Corda Enterprise features compared to Corda open source features
 |In-process Artemis MQ|&#9745;|&#9745;|
 |External Artemis MQ|&#9746;|&#9745;|
 |Corda firewall|&#9746;|&#9745;|
-|CMulti-node use of a shared external Artemis MQ and a shared Corda firewall|&#9746;|&#9745;|
+|Multi-node use of a shared external Artemis MQ and a shared Corda firewall|&#9746;|&#9745;|
 
 {{< /table >}}
 
