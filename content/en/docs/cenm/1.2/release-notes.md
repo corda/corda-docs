@@ -17,8 +17,12 @@ title: Release notes
 
 ## Release 1.2.1
 
-* Bug fix: Generating a certificate hierarchy using the PKI tool and a supported version of Gemalto HSM fails to generate keys.
-* Bug fix: Using `csr_token` as part of a node registration causes the registration to fail when the Identity manager is set up to use a supported version of Oracle DB.
+CENM 1.2.1 introduces fixes to known issues in CENM 1.2.
+
+Fixed issues
+
+* Generating a certificate hierarchy using the PKI tool and a supported version of Gemalto HSM fails to generate keys.
+* Using `csr_token` as part of a node registration causes the registration to fail when the Identity manager is set up to use a supported version of Oracle DB.
 
 ## Release 1.2
 
@@ -113,12 +117,20 @@ as warning: “There is already a ticket: ‘<TICKET ID>’ corresponding to *Re
 
 ## Release 1.1.2
 
-* Bug fix: Identity Manager upgrade from CENM 0.4 causes JIRA Workflow Plugin to stop the existing tickets in status 'New' or 'In Progress' from being progressed and prevents rejected records from being cleared by `workflow_*`.
-* Bug fix: When multiple users were configured to use the Signing Service, the service would authenticate all the credentials before checking whether the threshold was reached or not, that would cause multiple authentication per user.
+CENM 1.1.2 introduces fixes to known issues in CENM 1.1.
+
+Fixed issues
+
+* Identity Manager upgrade from CENM 0.4 causes JIRA Workflow Plugin to stop the existing tickets in status 'New' or 'In Progress' from being progressed and prevents rejected records from being cleared by `workflow_*`.
+* When multiple users were configured to use the Signing Service, the service would authenticate all the credentials before checking whether the threshold was reached or not, that would cause multiple authentication per user.
 
 ## Release 1.1.1
 
-* Bug fix: Identity Manager upgrade from CENM 0.4 causes JIRA Workflow Plugin to lose all pending tickets.
+CENM 1.1.1 introduces a fix to a known issue in CENM 1.1.
+
+Fixed issues
+
+* Identity Manager upgrade from CENM 0.4 causes JIRA Workflow Plugin to lose all pending tickets.
 
 ## Release 1.1
 
