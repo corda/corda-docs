@@ -16,6 +16,32 @@ title: Corda Enterprise Release notes
 # Corda Enterprise Release notes
 
 
+## Corda Enterprise 4.4.1
+
+
+Corda Enterprise 4.4.1 is a patch release of Corda Enterprise that includes fixes for several issues identified post development of Corda Enterprise 4.4.1.
+
+
+### Upgrade recommendation
+
+
+As a developer, you must upgrade to the latest version of Corda as soon as possible.
+
+As a node operator, you must upgrade if any of the fixed issues listed below is relevant to your work.
+
+
+### Fixed issues
+
+
+* Prevent `IndexOutOfBoundsException` from being thrown when serialising a FlowAsyncOperation which has maintained a reference to a `FlowLogic`. This can happen when constructing a `FlowAsyncOperation` from a `FlowExternalOperation` [[CORDA-3704](https://r3-cev.atlassian.net/browse/CORDA-3704)]
+* Removed references to unavailable man command in CRaSH and fixed syntax of output-format command [[CORDA-3688](https://r3-cev.atlassian.net/browse/CORDA-3688)]
+* Resolved a race condition in `FlowLogic.waitForLedgerCommit`
+* A number of problems with the JPA notary have been addressed:
+    * Prevent database connection leak on unexpected DB exceptions
+    * Prevent incorrect handling of scenarios where a successful transaction containing an input state and an unspent reference state is retried
+* "In-process" Driver nodes used in testing now support custom CorDapp serialisers
+
+
 ## Corda Enterprise 4.4
 
 This release extends the [Corda Enterprise 4.3 release](https://docs.corda.r3.com/releases/4.3/release-notes-enterprise.html)
