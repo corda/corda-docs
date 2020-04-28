@@ -401,7 +401,7 @@ Note: For the purpose of this exercise, the simplest settings have been used for
 * More advanced CSR approval workflows (“Certificate approval mechanism” section within [Identity Manager Service](identity-manager.md))
 * External signing of CSRs/Network Map updates including HSM integration ([Signing Services](signing-service.md))
 
-{{ < note>}}For more information, see the configuration sections within [Identity Manager Service](identity-manager.md) and [Network Map Service](network-map.md). {{</ note>}}
+{{< note >}}For more information, see the configuration sections within [Identity Manager Service](identity-manager.md) and [Network Map Service](network-map.md). {{< /note >}}
 
 ## Bundled Service alternative
 
