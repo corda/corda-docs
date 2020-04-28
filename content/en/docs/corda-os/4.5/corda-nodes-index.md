@@ -16,7 +16,7 @@ title: Nodes
 ---
 
 
-# Nodes Usage
+# Node Usage
 
 
 
