@@ -2,7 +2,7 @@
 date: '2020-04-24T12:00:00Z'
 menu:
   corda-enterprise-4-5:
-    parent: corda-enterprise-4-5-corda-nodes-collaborative-recovery
+    parent: corda-enterprise-collaborative-recovery
 tags:
 - disaster recovery
 - collaborative recovery
@@ -13,7 +13,7 @@ title: Adding Corda Collaborative Recovery across your network
 weight: 200
 ---
 
-# Preparing your network for Collaborative Recovery 
+# Preparing your business network for Collaborative Recovery
 
 The collaborative nature of Disaster Recovery tools (including both Ledger Sync and Ledger Recover) requires
 node operators to initiate recovery processes using a comprehensive list of identities with whom they have may previously transacted.

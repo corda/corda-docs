@@ -15,16 +15,12 @@ weight: 300
 
 # Deploy and operate Collaborative Recovery in Corda
 
-Collaborative recovery is the process of recovering data from across a Corda network or ledger in the rare event of a data loss. As data in a Corda ledger is sent peer-to-peer, and not broadcasted to all members of the network, lost data must be reconciled or recovered piece by piece through collaboration across the network.
-
-If you are a **node operator** in a Corda ledger, you can use two Collaborative Recovery CorDapps to automate the process of recovering or reconciling data in a Disaster Recovery scenario. The two CorDapps are:
+If you are a **node operator** in a Corda ledger, you can use the Collaborative Recovery CorDapps to automate the process of recovering or reconciling data in a disaster recovery scenario. The two CorDapps are:
 
 * **Ledger Sync** - which requests a reconciliation of data across the network, in the event of a partial or minor loss of data.
 
-* **Ledger Recover** - which commences a recovery and logging process that ends with all data being recovered, safely removed from the ledger, and reinserted.
+* **Ledger Recover** - which commences a recovery by requesting a snapshot of the ledger held by other related nodes on the network.
 
-
-Use these guides to establish best practices and follow recommendations for embedding Collaborative Recovery into existing infrastructure.
 
 In this section:
 
@@ -35,31 +31,11 @@ In this section:
 * Recommended procedure to follow after DR.
 * Business Network Operator (BNO) involvement and responsibilities.
 
-## Database Operations
 
-Collaborative Recovery CorDapps are relying on the following DB tables:
-
-* *LedgerSync*
-    * `CR_RECONCILIATION_REQUEST`
-* *LedgerRecover*
-    * `CR_RECOVERY_REQUEST`
-    * `CR_RECOVERY_LOG`
-
-The DB tables are managed via Liquibase migrations that are shipped as a part of the Collaborative Recovery CorDapps.
-No manual schema alterations should be performed at any time. The table schemas should be managed using the
-[Database Management Tool](https://docs.corda.r3.com/node-database.html#database-management-tool)
-that is shipped as a part of Corda Enterprise.
-
-Collaborative Recovery CorDapps are compatible with the full range of the [databases supported by Corda Enterprise](https://docs.corda.r3.com/platform-support-matrix.html#node-databases).
-
-Contents of the Collaborative Recovery tables should *not* be altered manually. The tables are not envisioned to grow large in size.
-The space complexities are outlined below:
-
-* `CR_RECONCILIATION_REQUEST` - **O**(**Number of participants in Business Network**).
-* `CR_RECOVERY_REQUEST` - **O**(**Number of incoming / outgoing recovery attempts**).
-* `CR_RECOVERY_LOG` - **O**(**Number of sent / recovered transactions, attachments and network parameters**).
 
 ## Running Reconciliation and Recovery
+
+Reconciliation, the process of comparing 
 
 The Collaborative Recovery CorDapps don't have a scheduling mechanism available out of the box. Instead we advise users to
 to implement a small layer for scheduling and integration with their Business Network services, as has been described
@@ -96,6 +72,30 @@ Once this is done, the metric value will be reset to zero during the next reconc
 The `NumberOfReconciliationsWithDifferences` metric shows how many reconciliations have highlighted actual differences.
 If this value is not zero, it might potentially mean that the node's ledger is in an inconsistent state.
 Please refer to the following sections for the procedure to follow.
+
+## Database Operations
+
+Collaborative Recovery CorDapps rely on the following DB tables:
+
+* *LedgerSync*
+    * `CR_RECONCILIATION_REQUEST`
+* *LedgerRecover*
+    * `CR_RECOVERY_REQUEST`
+    * `CR_RECOVERY_LOG`
+
+The DB tables are managed via Liquibase migrations that are shipped as a part of the Collaborative Recovery CorDapps.
+No manual schema alterations should be performed at any time. The table schemas should be managed using the
+[Database Management Tool](node/node-database.html#database-management-tool)
+that is shipped as a part of Corda Enterprise.
+
+Collaborative Recovery CorDapps are compatible with the full range of the [databases supported by Corda Enterprise](https://docs.corda.r3.com/platform-support-matrix.html#node-databases).
+
+Contents of the Collaborative Recovery tables should *not* be altered manually. The tables are not envisioned to grow large in size.
+The space complexities are outlined below:
+
+* `CR_RECONCILIATION_REQUEST` - **O**(**Number of participants in Business Network**).
+* `CR_RECOVERY_REQUEST` - **O**(**Number of incoming / outgoing recovery attempts**).
+* `CR_RECOVERY_LOG` - **O**(**Number of sent / recovered transactions, attachments and network parameters**).
 
 ## Suggested DR Setup
 

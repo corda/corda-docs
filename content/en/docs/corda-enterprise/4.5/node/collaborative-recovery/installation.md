@@ -17,17 +17,15 @@ weight: 100
 
 To begin the process of enabling your Corda node for collaborative recovery with other Corda nodes, you must first install the provided Disaster Recovery CorDapps.
 
-For the collaborative recovery process to be effective when it’s needed, you should install the required CorDapps as early as possible. You may be able to install them during a disaster  
-scenario, but it saves valuable time to prepare in advance.
+For the collaborative recovery process to be effective when it’s needed, you should install the required CorDapps as early as possible. You may be able to install them during a disaster scenario, but it saves valuable time to prepare in advance.
 
-If you are part of an operating Business Network, Corda Network or Segregated Sub-Zone that is NOT currently mandating all nodes run disaster recovery, you should recommend
-these measures are taken. Collaborative recovery can only be successful if all nodes on the network are able to participate (meaning that they have the appropriate CorDapps installed).
+If you are part of an operating business network, Corda Network or Segregated Sub-Zone that does not currently mandate all nodes run disaster recovery, you should recommend these measures are taken. Collaborative recovery can only be successful if all nodes on the network have the appropriate CorDapps installed and up to date.
 
 In this guide:
 
-* Check the requirements for Corda Collaborative Recovery - both on your local environment and your network.
+* Check the requirements for Corda Collaborative Recovery - both on your local environment and your business network.
 * Check that you have received the correct .JAR files
-* 
+*
 
 ## Requirements
 
@@ -35,14 +33,39 @@ Corda nodes must be running Corda Enterprise NOT Corda Open Source in order to i
 - Corda Enterprise
 
 Collaborative recovery requires operative Corda nodes to have a Corda Platform Version (CPV) of 6 or greater. This version number is related to the version of Corda a node is running.
-- Node MPV > 6
+- Node Minimum Platform Version (MPV) > 6
 
-In addition to a CPV of greater than 6, the Corda Work itself must have a sufficient Minimum Platform Version.
+In addition to a CPV of greater than 6, the Corda Work itself must have a sufficient MPV.
 - Network MPV > 6
 
 ## Database requirements
 
 Collaborative Recovery CorDapps are tested against Corda Enterprise and will work according to the support matrix defined in the documentation found [here](https://docs.corda.net/docs/corda-enterprise/4.3.1/platform-support-matrix.html).
+
+## Database Operations
+
+To facilitate recovery, the Collaborative Recovery CorDapps rely on the following Database tables:
+
+* *LedgerSync*
+    * `CR_RECONCILIATION_REQUEST`
+* *LedgerRecover*
+    * `CR_RECOVERY_REQUEST`
+    * `CR_RECOVERY_LOG`
+
+These tables are managed via Liquibase migrations that are included as part of the Collaborative Recovery CorDapps.
+
+You should not perform manual schema alterations at any time. Instead, use the [Database Management Tool](node/node-database.html#database-management-tool) which is included in your Corda Enterprise setup.
+
+Collaborative Recovery CorDapps are compatible with the full range of the [databases supported by Corda Enterprise](https://docs.corda.r3.com/platform-support-matrix.html#node-databases).
+
+You must not alter the contents of the Collaborative Recovery tables manually - doing so would mean recovered data is incorrect.
+
+The Collaborative Recovery tables are not envisioned to grow large in size.
+The space complexities are outlined below:
+
+* `CR_RECONCILIATION_REQUEST` - **O**(**Number of participants in Business Network**).
+* `CR_RECOVERY_REQUEST` - **O**(**Number of incoming / outgoing recovery attempts**).
+* `CR_RECOVERY_LOG` - **O**(**Number of sent / recovered transactions, attachments and network parameters**).
 
 ## Install the CorDapps
 
