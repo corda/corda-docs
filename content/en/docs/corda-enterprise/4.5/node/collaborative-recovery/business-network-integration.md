@@ -2,12 +2,13 @@
 date: '2020-04-24T12:00:00Z'
 menu:
   corda-enterprise-4-5:
-    parent: corda-enterprise-collaborative-recovery
+    parent: corda-enterprise-4-5-corda-nodes-collaborative-recovery
 tags:
 - disaster recovery
 - collaborative recovery
 - install
 - node operator
+
 
 title: Adding Corda Collaborative Recovery across your network
 weight: 200
@@ -19,20 +20,11 @@ weight: 200
 * Node operators
 * Business Network Operators (BNOs)
 
+In a disaster recovery scenario, you need to be sure you can recover data from the nodes you have transacted with on the Business Network. This is tricky because, with a compromised node, you have no way of determining which other specific nodes you could have transacted with. The only way to ensure you can recover all the required data, you need to be able to collaborate with the entire Business Network.
 
-**Related links:**
-* [Introduction to Collaborative Recovery](introduction-cr.md)
-* [Integration of Collaborative Recovery - Business Network level](business-network-integration.md)
-* [LedgerSync developers' guide](ledger-sync.md)
-* [Automatic ledger recovery - developers' guide](ledger-recovery-automatic.md)
-* [Manual ledger recovery - developers' guide](ledger-recovery-manual)
-* [Install Collaborative Recovery](installation)
+This is why it's essential that Business Network Operators make Collaborative Recovery part of the disaster recovery plan for their network. If you are a node operator, you need to seek an agreement at the governance level with all relevant Business Netowrk Operators (BNOs) before implementing collaborative recovery on your own node.
 
-In a disaster recovery scenario, you have no way of determining which other specific nodes you could have transacted with. In order to be absolutely certain that your ledger data has been successfully recovered, you need to initiate the recovery processes with every other operating identity on the Business Networks of which you are a member.
-
-Business Network Operators need to ensure that Collaborative Recovery is part of the disaster recovery plan for their network. This requires some agreement at the governance level before implementing Collaborative Recovery.
-
-At a node level, to ensure you initiate recovery with only the nodes in your Business Network, you need to create wrapping flows.
+Once you have this agreement in place on your Business Network, you need to create the wrapping flows that make recovery possible with all participants.
 
 
 ## Wrapping Flows

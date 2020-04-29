@@ -11,8 +11,8 @@ tags:
 - install
 - node operator
 
-title: Introducing Collaborative Recovery
-weight: 10
+title: Collaborative Recovery
+weight: 100
 ---
 
 # Collaborative Recovery
@@ -22,15 +22,13 @@ weight: 10
 * Business Network Operators (BNOs)
 * Corda developers
 
-**Related links:**
-* [Integration of Collaborative Recovery - Business Network level](business-network-integration.md)
-* [Deploy Collaborative Recovery before and during a disaster scenario](deployment-and-operations.md)
-* [LedgerSync developers' guide](ledger-sync.md)
-* [Automatic ledger recovery - developers' guide](ledger-recovery-automatic.md)
-* [Manual ledger recovery - developers' guide](ledger-recovery-manual)
-* [Install Collaborative Recovery](installation)
+In this section, you will find guides for:
+* Business Network Operators who need to integrate Collaborative Recovery into their Disaster Recovery planning.
+* Deployment and operation guides for Node operators.
+* Installation guides for Collaborative Recovery CorDapps.
+* Developer and Node Operator Guides.
 
-## About Collaborative Recovery
+## Introducing Collaborative Recovery
 
 Collaborative Recovery is a CorDapp-based solution that helps you retrieve lost data in a disaster recovery scenario where all other strategies have been exhausted.
 
@@ -42,17 +40,17 @@ With a coordinated approach, you can use Collaborative Recovery to detect potent
 
 {{< /note >}}
 
-Collaborative Recovery is a final, last resort option to recover your data. Whilst it provides tools to detect and recover missing ledger data, it's
-not sufficient as a disaster recovery strategy on its own. You must use Collaborative Recovery in conjunction with conventional DR approaches,
-such as backups and replication.
-
-Before installing the Collaborative Recovery CorDapps, make sure you have read the documentation so you know:
+What you need to know before installing the Collaborative Recovery CorDapps:
 
 * Your Business Network disaster recovery policy
 * The Corda platform requirements
 * How the LedgerSync and LedgerRecover CorDapps should be used.
 
 ## When to use Collaborative Recovery
+
+Collaborative Recovery is a final, last resort option to recover your data. Whilst it provides tools to detect and recover missing ledger data, it's
+not sufficient as a disaster recovery strategy on its own. You must use Collaborative Recovery in conjunction with conventional DR approaches,
+such as backups and replication.
 
 Ideally, you should never need to use Collaborative Recovery. To protect the data on your node, each node you transact with should be part of a robust disaster recovery plan, agreed at the Business Network level. This strategy should mean you have backups include the following:
 
@@ -64,6 +62,11 @@ If your Business Network is not supported by synchronous database replication on
 
 If you find yourself in this position, or if your other disaster recovery procedures fail, Collaborative Recovery can help you restore and synchronise data across the ledger.
 
+## Who can use Collaborative Recovery
+
+Collaborative Recovery applications have a minimum platform version of 6 and are compatible only with Corda Enterprise nodes.  
+
+Collaborative Recovery is an Enterprise, CorDapp-level solution and is not shipped as a part of Corda itself. Only nodes that have the DR CorDapps installed can participate in Collaborative Recovery. In mixed networks that consist of both Open Source and Enterprise nodes, only the Enterprise nodes of the right version that have the Collaborative Recovery CorDapps installed will be able to participate in Collaborative Recovery.  
 
 ## Scope of Collaborative Recovery
 
@@ -73,28 +76,31 @@ Collaborative Recovery allows Corda nodes to retrieve missing ledger data from o
 * Attachments
 * Historical network parameters
 
-You cannot recover these assets using Collaborative Recovery:
+### Out of scope assets
 
-* **Confidential identities**. Private keys can't be recovered from other peers by definition. The states, that belong to those keys
+You **cannot** recover these assets using Collaborative Recovery:
+
+* Confidential identities. Private keys can't be recovered from other peers by definition. The states, that belong to those keys
 can be recovered though, but only if the proof of owning the key has been shared with the counterparty when the transaction happened.
-* **Node identity / TLS keys**.
-* **Node and CorDapp configuration files**.
-* **CorDapp jars**.
-* **MQ data**.
-* **Self issued but never transacted states**. However such states can be unilaterally reissued onto the ledger, as issuances
+* Node identity / TLS keys.
+* Node and CorDapp configuration files.
+* CorDapp jars.
+* MQ data.
+* Self issued but never transacted states. However such states can be unilaterally reissued onto the ledger, as issuances
 don't require notarization.
-* **Off-ledger tables**.
-* **Observed transactions**. Transactions that have been shared as a part of *Observers* functionality
+* Off-ledger tables.
+* Observed transactions. Transactions that have been shared as a part of *Observers* functionality
 will have to be reprovisioned separately.
-* **Scheduled states**.
-* **Any ledger data that has been shared with parties that are not available on the network anymore**.  
+* Scheduled states.
+* Any ledger data that has been shared with parties that are not available on the network anymore.  
 
-## Recovery Point Objective (RPO) and Recovery Time Objective (RTO) Guarantees
+### Out of scope RPO and RTO guarantees
 
-Due to the nature of decentralised systems, Collaborative Recovery **does not provide any RPO / RTO guarantees**. For example,
-some data might be unrecoverable due to a counterparty not being a part of the network anymore.
+Due to the nature of decentralised systems, Collaborative Recovery cannot provide Recovery Point Objective (RPO) and Recovery Time Objective (RTO) guarantees.
 
-The amount of time required for recovery can't be guaranteed either as peers might be temporarily unavailable or have low bandwidth.
+RPOs cannot be guaranteed because of factors beyond Corda's control. For example, some data might be unrecoverable due to a counterparty not being a part of the network anymore.
+
+The amount of time required for recovery can't be guaranteed as peers might be temporarily unavailable or have low bandwidth.
 
 Collaborative Recovery policies that mandate the SLAs for the participants' nodes to respond to the DR requests should be enforced at the Business Network governance level.
 
@@ -196,11 +202,3 @@ It is currently not possible to recover the issuance transaction containing an `
 Collaborative Recovery is *not* compatible with the [legacy](https://docs.corda.net/api-stability-guarantees.html) Corda Finance module.
 This is due to the way Confidential Identities are used as a part of the `CashPaymentFlow`.
 Please consider avoiding Corda Finance in the favour of Tokens and Accounts SDKs.
-
-## Corda Support Matrix
-
-Collaborative Recovery applications have a minimum platform version of 6 and are compatible only with Corda Enterprise nodes.  
-
-It's important to understand, that Collaborative Recovery is a CorDapp level solution and is not shipped as a part of Corda itself.
-Only the nodes that have the DR CorDapps installed can participate in Collaborative Recovery. In mixed networks that consist of both Open Source and Enterprise nodes, only the Enterprise nodes of the right version *and* that have the Collaborative Recovery CorDapps installed will be able to
-participate in Collaborative Recovery.   

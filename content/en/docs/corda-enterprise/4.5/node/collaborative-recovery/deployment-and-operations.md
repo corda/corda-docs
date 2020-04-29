@@ -9,44 +9,37 @@ tags:
 - install
 - node operator
 
-title: Using the Corda Collaborative Recovery CorDapps
+title: Deploy and operate Collaborative Recovery
 weight: 300
 ---
 
-# Deploy and operate Collaborative Recovery in Corda
+# Deploy and operate Collaborative Recovery
 
 **Who this documentation is for:**
 * Node operators
 * Business Network Operators (BNOs)
 * Corda developers
 
-**Related links:**
-* [Introduction to Collaborative Recovery](introduction-cr.md)
-* [Integration of Collaborative Recovery - Business Network level](business-network-integration.md)
-* [LedgerSync developers' guide](ledger-sync.md)
-* [Automatic ledger recovery - developers' guide](ledger-recovery-automatic.md)
-* [Manual ledger recovery - developers' guide](ledger-recovery-manual)
-* [Install Collaborative Recovery](installation)
-
 You can use the Collaborative Recovery CorDapps to automate the process of recovering or reconciling data in a disaster recovery scenario. This section gives you an overview of the practical deployment and operation of Collaborative Recovery.
 
 Use this guide to help you establish effective schedules for data reconciliation, and best practices for retrieving data in a disaster scenario.
 
 
-## Scheduling Reconciliation
+## Schedule Reconciliation
 
 You need to schedule regular reconciliation checks using the LedgerSync CorDapp. To do this, you can implement a small layer for scheduling and integration with your business network services. For practical steps on scheduling recovery, use the [LedgerSync guide](ledger-sync.md).
 
 You should run reconciliations on a scheduled basis at appropriate intervals (at least once a day).
 
-Recovery flows have been designed to be run *manually*. We recommend that you set up alerting (as explained in the next section)
+Recovery flows have been designed to be run manually. We recommend that you set up alerting (as explained in the next section)
 for reconciliation differences and then start recovery manually with each of the highlighted parties.
 
-## Monitoring and Alerting
+## Monitor reconciliation and receive alerts
 
-The Collaborative Recovery CorDapps expose a number of JMX metric via Jolokia. The full list of the exposed metrics can be found
-[here](TODO LedgerSyncLINK) and [here](TODO LedgerRecover link). The metrics are exposed alongside the ones from the node.
-More information about monitoring via Jolokia can be found [here](https://docs.corda.r3.com/node-administration.html#monitoring-via-jolokia).
+The Collaborative Recovery CorDapps expose a number of JMX metric via Jolokia. The full list of the exposed metrics for
+[for LedgerSync here](ledger-sync.md), and [LedgerRecover here](ledger-recovery-automatic.md). The metrics are exposed alongside the ones from the node.
+You can also [monitor via Jolokia using this guide](operating/node-administration.html#monitoring-via-jolokia).
+
 
 We recommend setting up alerts for *LedgerSync's* `NumberOfFailedReconciliations` and `NumberOfReconciliationsWithDifferences` metrics.
 During normal operations, values for both of these metrics should be equal to zero.

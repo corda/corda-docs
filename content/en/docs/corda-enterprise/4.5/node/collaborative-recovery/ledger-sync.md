@@ -13,7 +13,12 @@ title: The Ledger Sync CorDapp
 weight: 400
 ---
 
-# LedgerSync for Operators
+# The Ledger Sync CorDapp
+
+**Who this documentation is for:**
+* Node operators
+* Business Network Operators (BNOs)
+* Corda developers
 
 Part of [Collaborative Recovery](introduction-cr.md), **LedgerSync** is a CorDapp used for the discovery of differences between the common ledger data held by two nodes that exist on the same Business Network. It uses an efficient set reconciliation algorithm to minimize the amount of network communication required. Reconciliations can be configured to run both on-demand, and at a given time (through the use of scheduled states).
 

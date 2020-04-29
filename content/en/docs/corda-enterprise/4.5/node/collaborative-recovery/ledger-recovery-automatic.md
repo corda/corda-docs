@@ -2,33 +2,23 @@
 date: '2020-04-24T12:00:00Z'
 menu:
   corda-enterprise-4-5:
-    identifier: corda-enterprise-4-5-corda-nodes-collaborative-recovery
-    name: "Collaborative Recovery"
-    parent: corda-enterprise-4-5-corda-nodes
+    parent: corda-enterprise-4-5-corda-nodes-collaborative-recovery
 tags:
 - disaster recovery
 - collaborative recovery
 - install
 - node operator
 
-title: Ledger Recover - Automatic
+title: Ledger Recover (Automatic)
 weight: 500
 ---
 
-# LedgerRecover - Automatic
+# LedgerRecover (Automatic)
 
 **Who this documentation is for:**
 * Node operators
 * Business Network Operators (BNOs)
 * Corda developers
-
-**Related links:**
-* [Introduction to Collaborative Recovery](introduction-cr.md)
-* [Integration of Collaborative Recovery - Business Network level](business-network-integration.md)
-* [Deploy Collaborative Recovery before and during a disaster scenario](deployment-and-operations.md)
-* [Automatic ledger recovery - developers' guide](ledger-recovery-automatic.md)
-* [Manual ledger recovery - developers' guide](ledger-recovery-manual)
-* [Install Collaborative Recovery](installation)
 
 In a disaster recovery scenario, you can use LedgerRecover to either automatically or manually recover lost data. You should consider the automatic process your preferred option, before trying to recover data manually.
 
