@@ -1,12 +1,42 @@
-# LedgerRecover (Automatic)
+---
+date: '2020-04-24T12:00:00Z'
+menu:
+  corda-enterprise-4-5:
+    identifier: corda-enterprise-4-5-corda-nodes-collaborative-recovery
+    name: "Collaborative Recovery"
+    parent: corda-enterprise-4-5-corda-nodes
+tags:
+- disaster recovery
+- collaborative recovery
+- install
+- node operator
 
-## Overview
+title: Ledger Recover - Automatic
+weight: 500
+---
 
-As mentioned in the project [overview](../design-and-architecture.md), recovery of data through LedgerRecover is facilitated via either Automatic or Manual recovery processes. This documentation provides more information for node operators on how to use LedgerRecover to complete an Automatic Ledger Recovery.  
+# LedgerRecover - Automatic
+
+**Who this documentation is for:**
+* Node operators
+* Business Network Operators (BNOs)
+* Corda developers
+
+**Related links:**
+* [Introduction to Collaborative Recovery](introduction-cr.md)
+* [Integration of Collaborative Recovery - Business Network level](business-network-integration.md)
+* [Deploy Collaborative Recovery before and during a disaster scenario](deployment-and-operations.md)
+* [Automatic ledger recovery - developers' guide](ledger-recovery-automatic.md)
+* [Manual ledger recovery - developers' guide](ledger-recovery-manual)
+* [Install Collaborative Recovery](installation)
+
+In a disaster recovery scenario, you can use LedgerRecover to either automatically or manually recover lost data. You should consider the automatic process your preferred option, before trying to recover data manually.
 
 ## Configuration Parameters
 
-**LedgerRecover** behaviour can be adjusted using the following configuration parameters. If the configuration parameter is not specified, or the configuration file is not present, the default value(s) will be used. **LedgerRecover** can be configured, like other CorDapps, by creating a configuration file named after the **LedgerRecover** configuration JAR file (for example, if the **LedgerRecover** JAR file is called `ledger-recover-1.0.jar`, the configuration file would be `<corda_node_dir>/cordapps/config/ledger-recover-1.0.conf`).
+LedgerRecover can be configured, like other CorDapps, by creating a configuration file named after the LedgerRecover configuration JAR file. For example, if the LedgerRecover JAR file is called `ledger-recover-1.0.jar`, the configuration file would be `<corda_node_dir>/cordapps/config/ledger-recover-1.0.conf`.
+
+You can adjust LedgerRecover behaviour using the configuration parameters set out in the table below. If the configuration parameter is not specified, or the configuration file is not present, the default value(s) is used.
 
 **Example configuration file contents:**
 <!-- 'ini' is used since it provides reasonable syntax highlighting. GitHub does not have hocon language support in markdown.  -->
@@ -36,9 +66,19 @@ timeWindowForMaxAllowedRequests = 1h
 
 ## Flows
 
-Need an introduction here about this. 
+You use flows to initiate and monitor the automatic ledger recovery process. Each flow you can use is detailed in this section, along with its parameters, return type, Commmand Line interface and examples.
+
+Available Flows:
+* **AutomaticLedgerRecoverFlow**: Initiates an Automatic Recovery process with a counterparty.
+* **FailAutomaticRecoveryFlow**: Marks an automatic recovery process as failed.
+* **ShowInitiatedAutomaticRecoveryProgressFlow**: Returns the number of transactions received against number of total transactions requested on the latest automatic recovery request.
+* **GetRecoveryRequestsFlow**: Retrieves recovery requests optionally filtered by the provided parameters.
+* **GetCurrentRecoveryRequestWithPartyFlow**: Retrieves the current `RecoveryRequest` with a counterparty.
+* **GetRecoveryLogsFlow**: This flow fetches all `RecoveryLog`s associated with a specific `RecoveryRequest`.
+
 
 ### AutomaticLedgerRecoverFlow
+
 This flow initiates an Automatic Recovery process with a counterparty.
 
 The requesting node first fetches the latest results of the corresponding `ReconciliationStatus` and verifies that it indicates differences between the ledgers of the requesting and responding nodes.
@@ -47,7 +87,7 @@ The requesting node then filters out any transactions that already exist in its 
 
 Successful execution will persist a record of this `RecoveryRequest` in a custom CorDapp table on both the requesting and responding nodes.
 
-It is important to note that before a record of the `RecoveryRequest` is persisted by the requester, the following will be checked:
+Before a record of the `RecoveryRequest` is persisted by the requester, the following will be checked:
 
 - The list of requested transactions is not empty.
 - The number of transactions requested does not exceed the configured limit.
@@ -67,10 +107,12 @@ In case of failure, the usage of standard Corda flows for transmission of artifa
 
 Upon successful completion of the Automatic **LedgerRecover** all `ReconciliationStatus`es initiated by the requester node (of the recovery) are refreshed. This is done so newly acquired transactions will not show up as difference in the reconciliation results.
 
-> Note:
-> When recovered transactions are persisted they will trigger the same events as it did when the transaction was originally persisted (before the disaster). If users are subscribing to vault-observable feeds (see [documentation on updates](https://docs.corda.net/api/kotlin/corda/net.corda.core.node.services/-vault-service/updates.html)) they will receive duplicate updates.
+{{< note >}}
+When recovered transactions are persisted they will trigger the same events as it did when the transaction was originally persisted (before the disaster). If users are subscribing to vault-observable feeds (see [documentation on updates](https://docs.corda.net/api/kotlin/corda/net.corda.core.node.services/-vault-service/updates.html)) they will receive duplicate updates.
+{{< /note >}}
 
-#### Parameters
+#### AutomaticLedgerRecoverFlow - Parameters
+
 * `party` - The legal identity of the node from whom we will be recovering transactions. This parameter is not nullable.
 
 #### Return Type
@@ -382,13 +424,13 @@ Some information regarding the progress of recovery can be found in a node's `CR
 
 ## JMX Metrics
 
-The JMX metrics for **LedgerRecover** automatic recovery are identical to those of [Manual LedgerRecover](./ledger-recovery-manual.md#JMX-Metrics).
+The JMX metrics for **LedgerRecover** automatic recovery are identical to those of [Manual LedgerRecover](ledger-recovery-manual.md#JMX-Metrics).
 
 > Note: The metrics do not distinguish between automatic and manual recoveries, the results returned are aggregated over both types.
 
 ## System Requirements
 
-System Requirements for **LedgerRecover** automatic recovery are identical to those of [Manual LedgerRecover](./ledger-recovery-manual.md#System-Requirements).
+System Requirements for **LedgerRecover** automatic recovery are identical to those of [Manual LedgerRecover](ledger-recovery-manual.md#System-Requirements).
 
 ## Log Messages
 

@@ -1,6 +1,21 @@
+---
+date: '2020-04-24T12:00:00Z'
+menu:
+  corda-enterprise-4-5:
+    parent: corda-enterprise-4-5-corda-nodes-collaborative-recovery
+tags:
+- disaster recovery
+- collaborative recovery
+- install
+- node operator
+
+title: The Ledger Sync CorDapp
+weight: 400
+---
+
 # LedgerSync for Operators
 
-**LedgerSync** is a CorDapp used for the discovery of differences between the common ledger data held by two nodes that exist on the same Business Network. It uses an efficient set reconciliation algorithm to minimize the amount of network communication required. Reconciliations can be configured to run on-demand, or at a given time (through the use of scheduled states).
+Part of [Collaborative Recovery](introduction-cr.md), **LedgerSync** is a CorDapp used for the discovery of differences between the common ledger data held by two nodes that exist on the same Business Network. It uses an efficient set reconciliation algorithm to minimize the amount of network communication required. Reconciliations can be configured to run both on-demand, and at a given time (through the use of scheduled states).
 
 All reconciliations are added to a bounded execution pool (configurable, see below) for eventual execution by the internal job scheduler. Results of reconciliations are stored in the database of the node that requested the reconciliation, and work only in one direction; that is, the node that requested the reconciliation will be notified if the responding node has transactions that the requesting node does not. The _responding_ node will _not_ be notified if the _requesting_ node has transactions that the _responding_ node does not. See the [Workflow](#Workflow) section for more info.
 
@@ -11,6 +26,7 @@ All reconciliations are added to a bounded execution pool (configurable, see bel
 
 **Example configuration file contents:**
 <!-- 'ini' is used since it provides reasonable syntax highlighting. GitHub does not have hocon language support in markdown.  -->
+
 ```ini
 maxNumberOfIbfFilterFlows = 5
 maxNumberOfParallelReconciliationRequests = 3
@@ -21,13 +37,17 @@ maxAllowedReconciliationRequestsPerTimeWindow = 1000
 
 **Details of Configuration Parameters:**
 
+{{< table >}}
+
 |Configuration Parameter|Default Value|Acceptable Value(s)|Description|
-|-|:-:|:-:|-|
+| :---: | :---: | :---: | --- |
 |`maxNumberOfIbfFilterFlows`|`5`|`1` to `15`|When **LedgerSync** attempts to reconcile with another party it exchanges a number of "Invertible Bloom Filters" in order to accurately estimate the number of ledger differences. This configuration parameter is used to limit the number of these exchanges in order to prevent intentional/accidental abuse of the responding node's flow.|
 |`maxNumberOfParallelReconciliationRequests`|`3`|`1` to `10`|Limits the configured node to the specified maximum number of active concurrent (parallel) reconciliations. |
 |`maxReconciliationRetryAttemptTimeout` **&dagger;**|`1h`|`0s` or more|When the configured node's execution pool for reconciliations is full, it will reject any _incoming_ reconciliation requests by throwing an exception to the requester, indicating that it is too busy to handle the request. This configuration parameter is used to control how long the requesting node will keep retrying the reconciliation. Back-pressure is applied to keep the node from retrying excessively over short periods. |
 |`timeWindowForReconciliationRequestLimit` **&dagger;**|`1h`|`0s` or more|Use this configuration parameter in conjunction with `maxAllowedReconciliationRequestsPerTimeWindow` to control how often a node will respond to reconciliation requests from another party/node within a given amount of time (sliding time window). For example: 10 responses per 1 minute. Note that this limit is not preserved over node restarts.|
 |`maxAllowedReconciliationRequestsPerTimeWindow`|`1000`|`0` to `2147483647`|Use this configuration parameter in conjunction with `timeWindowForReconciliationRequestLimit` to control how often a node will respond to reconciliation requests from another party/node within a given amount of time (sliding time window). For example: 10 responses per 1 minute. Note that this limit is not preserved over node restarts.|
+
+{{< /table >}}
 
 **&dagger;** Duration value. Supported values are the same as the _time portion_ of a duration represented by ISO_8601. For example: `1H`, `3S`, `5H3M2S`, etc... Spaces between or around time elements are tolerated, e.g. `1H 30M`, but other characters are not. The units can be represented in uppercase, or lowercase (i.e. `H` or `h`, `M` or `m`, `S` or `s`).
 
@@ -35,39 +55,33 @@ maxAllowedReconciliationRequestsPerTimeWindow = 1000
 
 The following are the flows exposed by LedgerSync.
 
-* #### `ScheduleReconciliationFlow`
+### `ScheduleReconciliationFlow`
 
-    ##### Example Usage(s)
+Example Usage:
 
-    *   ```
-        flow start ScheduledReconciliationFlow parties: ["O=PartyA, L=London, C=GB", "O=PartyB, L=Ottawa, C=CA"]
-        ```
+`flow start ScheduledReconciliationFlow parties: ["O=PartyA, L=London, C=GB", "O=PartyB, L=Ottawa, C=CA"]`
 
-    ##### Overview
+This flow starts an outgoing reconciliation from the current node with each of the specified parties. The reconciliation is added as a job to an internal queue for eventual execution. When the reconciliation starts depends on whether there are other ongoing reconciliations and whether the configured maximum for concurrent reconciliations has been exceeded.
 
-    This flow starts an outgoing reconciliation from the current node with each of the specified parties. The reconciliation is added as a job to an internal queue for eventual execution. When the reconciliation starts depends on whether there are other ongoing reconciliations and whether the configured maximum for concurrent reconciliations has been exceeded.
+If the other party being reconciled with is too busy, the scheduler will make numerous (depends on the node's **LedgerSync** configuration, see the `maxReconciliationRetryAttemptTimeout` configuration parameter above) attempts to perform the reconciliation with an appropriate fallback so as not to overwhelm the other party's node with repeated attempts.
 
-    If the other party being reconciled with is too busy, the scheduler will make numerous (depends on the node's **LedgerSync** configuration, see the `maxReconciliationRetryAttemptTimeout` configuration parameter above) attempts to perform the reconciliation with an appropriate fallback so as not to overwhelm the other party's node with repeated attempts.
+When you request a reconciliation to be performed with a party, if the execution pool is full, the reconciliation will be delayed until an open spot in the pool becomes available. If the node is restarted, and the reconciliation job has not entered the execution pool prior to the restart, the job will be lost and will need to be re-requested by calling this flow again.
 
-    > **Note**: When you request a reconciliation to be performed with a party, if the execution pool is full, the reconciliation will be delayed until an open spot in the pool becomes available. If the node is restarted, and the reconciliation job has not entered the execution pool prior to the restart, the job will be lost and will need to be re-requested by calling this flow again.
+It is not possible to perform reconciliations under the following conditions:
 
-    It is not possible to perform reconciliations under the following conditions:
+* The party being reconciled against has the same identity as the node where you're starting the reconciliation (A party can't reconcile with itself).
+* There is already an _outgoing_ reconciliation scheduled/ongoing with the other party.
+* There is already an _incoming_ reconciliation ongoing _from_ the other party.
 
-    * The party being reconciled against has the same identity as the node where you're starting the reconciliation (A party can't reconcile with itself).
+This flow returns immediately after the reconciliation jobs are added to the scheduler's queue. To get the status of a given reconciliation, see the related flows below.
 
-    * There is already an _outgoing_ reconciliation scheduled/ongoing with the other party.
+##### Parameters
 
-    * There is already an _incoming_ reconciliation ongoing _from_ the other party.
+* `parties` - A list of legal identies of the nodes to reconcile against.
 
-    This flow returns immediately after the reconciliation jobs are added to the scheduler's queue. To get the status of a given reconciliation, see the related flows below.
+##### Return Type
 
-    ##### Parameters
-
-    * `parties` - A list of legal identies of the nodes to reconcile against.
-
-    ##### Return Type
-
-    * None
+* None
 
 * #### `GetReconciliationStatusesFlow`
 

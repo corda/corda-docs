@@ -9,23 +9,25 @@ tags:
 - install
 - node operator
 
-title: Installing the Corda Collaborative Recovery CorDapps
-weight: 100
+title: Install Collaborative Recovery
+weight: 700
 ---
 
 # Install Collaborative Recovery CorDapps
-
-To begin the process of enabling your Corda node for collaborative recovery with other Corda nodes, you must first install the provided Disaster Recovery CorDapps.
 
 For the collaborative recovery process to be effective when it’s needed, you should install the required CorDapps as early as possible. You may be able to install them during a disaster scenario, but it saves valuable time to prepare in advance.
 
 If you are part of an operating business network, Corda Network or Segregated Sub-Zone that does not currently mandate all nodes run disaster recovery, you should recommend these measures are taken. Collaborative recovery can only be successful if all nodes on the network have the appropriate CorDapps installed and up to date.
 
-In this guide:
+Steps for installation:
 
-* Check the requirements for Corda Collaborative Recovery - both on your local environment and your business network.
-* Check that you have received the correct .JAR files
-*
+* Check the requirements for Corda Collaborative Recovery - both on your local environment and your business network
+* Database requirements and operations outline
+* Prepare your node for installation
+* Install and check the CorDapps
+* Run database migrations
+* Verify installation
+
 
 ## Requirements
 

@@ -13,63 +13,60 @@ title: Adding Corda Collaborative Recovery across your network
 weight: 200
 ---
 
-# Preparing your business network for Collaborative Recovery
+# Integrating Collaborative Recovery on your Business Network
 
-The collaborative nature of Disaster Recovery tools (including both Ledger Sync and Ledger Recover) requires
-node operators to initiate recovery processes using a comprehensive list of identities with whom they have may previously transacted.
+**Who this documentation is for:**
+* Node operators
+* Business Network Operators (BNOs)
 
-Disaster scenarios further complicate this situation - without a complete and current vault, how can a node
-operator be certain which identities they need to engage in collaborative recovery with? How do they ensure that
-an incoming request for recovery is valid? Outside of manual execution and analysis by the node operator, the answer
-to these questions involves integration with a business network CorDapp.
 
-## Recovery in Context (Business Networks)
+**Related links:**
+* [Introduction to Collaborative Recovery](introduction-cr.md)
+* [Integration of Collaborative Recovery - Business Network level](business-network-integration.md)
+* [LedgerSync developers' guide](ledger-sync.md)
+* [Automatic ledger recovery - developers' guide](ledger-recovery-automatic.md)
+* [Manual ledger recovery - developers' guide](ledger-recovery-manual)
+* [Install Collaborative Recovery](installation)
 
-To initiate reconciliation a node operator must initiate a sequence of flows with all parties with whom they *may*
-have transacted - *may* being the operative word - Given that the ledger data of the recovering node is now
-compromised, the operator will have no way of determining which other nodes on the network they could have transacted with.
-Therefore, they would have to initiate recovery processes with every other operating identity on the network in order
-to be absolutely certain that their ledger data has been successfully recovered.
+In a disaster recovery scenario, you have no way of determining which other specific nodes you could have transacted with. In order to be absolutely certain that your ledger data has been successfully recovered, you need to initiate the recovery processes with every other operating identity on the Business Networks of which you are a member.
 
-However, what is more likely for a production environment is that there are several business networks to which
-the recovering node may be a member. Further, it is likely that the recovering node's transactions took place
-with parties in a particular business network with coinciding governance structures. Therefore, the recovering
-node must be able to initiate recovery with *only* the nodes that comprise that business network to recover
-their data.
+Business Network Operators need to ensure that Collaborative Recovery is part of the disaster recovery plan for their network. This requires some agreement at the governance level before implementing Collaborative Recovery.
 
-> Note: In this context, Business Network refers to a governance system enforced at the application level. This system
->may govern which nodes are able to transact using a particular CorDapp.
+At a node level, to ensure you initiate recovery with only the nodes in your Business Network, you need to create wrapping flows.
+
 
 ## Wrapping Flows
 
-To facilitate recovery with parties on a business network - representing a subset of the parties on the larger
-Corda network - the business network operator (or node operator) must write (and distribute) simple wrapping flows for:
-- [ScheduleReconciliationFlow](./ledger-sync.md#schedule-reconciliation-flow)
+To facilitate recovery with parties on a Business Network, you, the Business Network Operator or node operator, must write and distribute simple wrapping flows for:
+
+- [ScheduleReconciliationFlow](./ledger-sync.md#schedule-reconciliation-flow) - this schedules regular reconciliation checks.
 - [AutomaticRecoveryFlow](./ledger-recovery-automatic.md#automatic-ledger-recover-flow)
 - [InitiateManualRecoveryFlow](./ledger-recovery-manual.md#initiate-manual-recovery-flow)
 
-The purpose of each wrapping flow will be to validate the parties specified as input to each Disaster Recovery flow
-are members of the business network.
+The purpose of each wrapping flow is to validate the parties specified as input to each Disaster Recovery flow
+are members of the Business Network.
 
 ## Example Flows
 
-The code snippets in this section are reference implementations of business network enabled Disaster Recovery
-flows.
+The code snippets in this section are reference implementations of Business Network enabled Disaster Recovery
+flows. Use these references to create wrapping flows appropriate to your Business Networks.
 
 ### Initiating Business Network Enabled Flows
 
-Each flow in the examples below contains the private function `getMembers`. The implementation of this function will be
-the responsibility of either the node operator or business network operator. It will be used throughout the snippets
-to demonstrate how membership of a party might be validated using a retrieved list of business network members.
+Each flow in the examples below contains the private function `getMembers`. The implementation of this function is
+the responsibility of either the node operator or Business Network operator. It is used throughout the snippets
+to demonstrate how membership of a party might be validated using a retrieved list of Business Network members.
 
 ### Business Network Initiated Ledger Sync
 
 In order to determine whether or not ledger data is synchronized with the rest of the network after a disaster scenario,
-the node operator will use `ScheduleReconciliationFlow` to schedule and eventually execute reconciliation with a specified
-list of parties. In this case, that list will be verified using a retrieved set of the business network members.
+ use `ScheduleReconciliationFlow` to schedule and eventually execute reconciliation with a specified
+list of parties. In this case, that list will be verified using a retrieved set of the Business Network members.
 
-> Note: In order to enable overriding of the ledger-sync reconciliation responder flows, they must be manually specified
-> in the configuration of the responding node. This can be done by adding the following config block to the node.conf.
+{{< note >}}
+In order to enable overriding of the ledger-sync reconciliation responder flows, they must be manually specified
+in the configuration of the responding node. This can be done by adding the following config block to the node.conf.
+{{< /note >}}
 
 ```none
 flowOverrides {
@@ -82,8 +79,12 @@ flowOverrides {
 }
 ```
 
-> Note: After reconciling with all necessary parties, the node operator should then proceed with either automatic
-> or manual recovery.
+{{< note >}}
+
+After reconciling with all necessary parties, the node operator should then proceed with either automatic or manual recovery.
+
+{{< /note >}}
+
 
 ```kotlin
 // Kotlin
@@ -94,12 +95,12 @@ flowOverrides {
     ): FlowLogic<Unit>() {
         @Suspendable
         override fun call() {
-            // Retrieve the list of identities with which we COULD have shared transaction data
+            // Retrieve the list of identities with which we could have shared transaction data
             val businessNetworkMembers: List<Party> = getMembers()
 
-            // Check that all parties we wish to reconcile with are part of the business network
+            // Check that all parties we wish to reconcile with are part of the Business Network
             if (businessNetworkMembers.containsAll(reconciliationParties)) {
-                throw LedgerSyncException("Only parties in this business network are eligible for reconciliation.")    
+                throw LedgerSyncException("Only parties in this Business Network are eligible for reconciliation.")    
             }
 
             // Initiate a subFlow to kick off reconciliation with all parties retrieved
@@ -121,9 +122,9 @@ flowOverrides {
             // Retrieve the list of identities with which we COULD have shared transaction data
             val businessNetworkMembers: List<Party> = getMembers()
 
-            // Check that the counterparty is part of the business network
+            // Check that the counterparty is part of the Business Network
             if (!businessNetworkMembers.contains(session.counterparty)) {
-                throw LedgerSyncException("Only parties in this business network are eligible for reconciliation.")    
+                throw LedgerSyncException("Only parties in this Business Network are eligible for reconciliation.")    
             }
 
             // Kick off the responding flow to continue to reconcile with the initiating part
@@ -154,9 +155,9 @@ flowOverrides {
             // Retrieve the list of identities with which we COULD have shared transaction data
             List<Party> businessNetworkMembers = getMembers();
 
-            // Check that all parties we wish to reconcile with are part of the business network
+            // Check that all parties we wish to reconcile with are part of the Business Network
             if (!businessNetworkMembers.containsAll(reconciliationParties)) {
-                throw new LedgerSyncException("Only parties in this business network are eligible for reconciliation.");
+                throw new LedgerSyncException("Only parties in this Business Network are eligible for reconciliation.");
             };
 
             // Initiate a subFlow to kick off reconciliation with all parties retrieved
@@ -183,9 +184,9 @@ flowOverrides {
             // Retrieve the list of identities with which we COULD have shared transaction data
             List<Party> businessNetworkMembers = getMembers();
 
-            // Check that all parties we wish to reconcile with are part of the business network
+            // Check that all parties we wish to reconcile with are part of the Business Network
             if (!businessNetworkMembers.contains(session.counterparty)) {
-                throw new LedgerSyncException("Only parties in this business network are eligible for reconciliation.");
+                throw new LedgerSyncException("Only parties in this Business Network are eligible for reconciliation.");
             }
 
             // Initiate a subFlow to kick off reconciliation with all parties retrieved
@@ -199,7 +200,7 @@ flowOverrides {
     }
 ```
 
-### Business Network Enabled Automatic Recovery
+### Business Network enabled automatic recovery
 
 The simplest form of recovering ledger data is executed using `AutomaticLedgerRecover` which on the
 basis of a previous reconciliation record or `ReconciliationStatus`, uses built-in Corda processes
@@ -221,12 +222,12 @@ For more information on this process and how it may be further configured please
             // Retrieve the list of identities with which we COULD have shared transaction data
             val businessNetworkMembers: List<Party> = getMembers()
 
-            // Check that all parties we wish to reconcile with are part of the business network
+            // Check that all parties we wish to reconcile with are part of the Business Network
             if (businessNetworkMembers.contains(recoveryParty)) {
-                throw AutomaticRecoveryException("Only parties in this business network are eligible for recovery.")    
+                throw AutomaticRecoveryException("Only parties in this Business Network are eligible for recovery.")    
             }
 
-            // Initiate a subFlow to kick off recovery with all business network members
+            // Initiate a subFlow to kick off recovery with all Business Network members
             subFlow(AutomaticLedgerRecover(recoveryParty))
         }
 
@@ -245,9 +246,9 @@ For more information on this process and how it may be further configured please
             // Retrieve the list of identities with which we COULD have shared transaction data
             val businessNetworkMembers: List<Party> = getMembers()
 
-            // Check that the counterparty is part of the business network
+            // Check that the counterparty is part of the Business Network
             if (!businessNetworkMembers.contains(session.counterparty)) {
-                throw AutomaticRecoveryException("Only parties in this business network are eligible for recovery.")    
+                throw AutomaticRecoveryException("Only parties in this Business Network are eligible for recovery.")    
             }
 
             // Kick off the responding flow to continue to reconcile with the initiating part
@@ -277,12 +278,12 @@ For more information on this process and how it may be further configured please
             // Retrieve the list of identities with which we COULD have shared transaction data
             List<Party> businessNetworkMembers = getMembers();
 
-            // Check that all parties we wish to recover from are part of the business network
+            // Check that all parties we wish to recover from are part of the Business Network
             if (!businessNetworkMembers.contains(recoveryParty)) {
-                throw new AutomaticRecoveryException("Only parties in this business network are eligible for recovery.");
+                throw new AutomaticRecoveryException("Only parties in this Business Network are eligible for recovery.");
             }
 
-            // Initiate a subFlow to kick off recovery with all business network members
+            // Initiate a subFlow to kick off recovery with all Business Network members
             subFlow(new AutomaticLedgerRecover(recoveryParty));
         }
 
@@ -306,9 +307,9 @@ For more information on this process and how it may be further configured please
             // Retrieve the list of identities with which we COULD have shared transaction data
             List<Party> businessNetworkMembers = getMembers();
 
-            // Check that the party who wishes to engage in automatic recovery is part of the business network
+            // Check that the party who wishes to engage in automatic recovery is part of the Business Network
             if (!businessNetworkMembers.contains(session.counterparty)) {
-                throw AutomaticRecoveryException("Only parties in this business network are eligible for recovery.");   
+                throw AutomaticRecoveryException("Only parties in this Business Network are eligible for recovery.");   
             }
 
             // Initiate a subFlow to kick off reconciliation with all parties retrieved
@@ -343,12 +344,12 @@ to export, transfer and eventually import the missing transaction data.
             // Retrieve the list of identities with which we COULD have shared transaction data
             val businessNetworkMembers: List<Party> = getMembers()
 
-            // Check that all parties we wish to reconcile with are part of the business network
+            // Check that all parties we wish to reconcile with are part of the Business Network
             if (!businessNetworkMembers.contains(recoveryParty)) {
-                throw ManualRecoveryException("Only parties in this business network are eligible for recovery.")    
+                throw ManualRecoveryException("Only parties in this Business Network are eligible for recovery.")    
             }
 
-            // Initiate a subFlow to kick off recovery with all business network members
+            // Initiate a subFlow to kick off recovery with all Business Network members
             subFlow(InitiateManualRecoveryFlow(recoveryParty))
         }
 
@@ -367,9 +368,9 @@ to export, transfer and eventually import the missing transaction data.
             // Retrieve the list of identities with which we COULD have shared transaction data
             val businessNetworkMembers: List<Party> = getMembers()
 
-            // Check that the counterparty is part of the business network
+            // Check that the counterparty is part of the Business Network
             if (!businessNetworkMembers.contains(session.counterparty)) {
-                throw ManualRecoveryException("Only parties in this business network are eligible for recovery.")    
+                throw ManualRecoveryException("Only parties in this Business Network are eligible for recovery.")    
             }
 
             // Kick off the responding flow to continue to reconcile with the initiating part
@@ -399,12 +400,12 @@ to export, transfer and eventually import the missing transaction data.
             // Retrieve the list of identities with which we COULD have shared transaction data
             List<Party> businessNetworkMembers = getMembers();
 
-            // Check that all parties we wish to recover from are part of the business network
+            // Check that all parties we wish to recover from are part of the Business Network
             if (!businessNetworkMembers.contains(recoveryParty)) {
-                throw new ManualRecoveryException("Only parties in this business network are eligible for recovery.");
+                throw new ManualRecoveryException("Only parties in this Business Network are eligible for recovery.");
             }
 
-            // Initiate a subFlow to kick off recovery with all business network members
+            // Initiate a subFlow to kick off recovery with all Business Network members
             subFlow(new InitiateManualRecoveryFlow(recoveryParty));
         }
 
@@ -428,9 +429,9 @@ to export, transfer and eventually import the missing transaction data.
             // Retrieve the list of identities with which we COULD have shared transaction data
             List<Party> businessNetworkMembers = getMembers();
 
-            // Check that the party who wishes to engage in automatic recovery is part of the business network
+            // Check that the party who wishes to engage in automatic recovery is part of the Business Network
             if (!businessNetworkMembers.contains(session.counterparty)) {
-                throw AutomaticRecoveryException("Only parties in this business network are eligible for recovery.");   
+                throw AutomaticRecoveryException("Only parties in this Business Network are eligible for recovery.");   
             }
 
             // Initiate a subFlow to kick off reconciliation with all parties retrieved
@@ -451,7 +452,7 @@ As mentioned previously, a recovering node - or a node that may be missing trans
 parties on the network they have previously transacted with. As such, reconciliation should be conducted on a regular basis to
 enable the node operator to determine whether or not their vault data is consistent with that of all other parties on the network.
 
-The flow in the snippet below represents a wrapping flow that schedules reconciliation with every member of a business network
+The flow in the snippet below represents a wrapping flow that schedules reconciliation with every member of a Business Network
 on a recurring basis. In doing so, a node operator will be informed in a timely manner of any discrepancies between their vault data
 and that of counterparties.
 
@@ -492,7 +493,7 @@ performed where there is reduced network traffic.
             // Retrieve the list of identities with which we COULD have shared transaction data
             val businessNetworkMembers: List<Party> = getMembers()
 
-            // Initiate a subFlow to kick off recovery with all business network members
+            // Initiate a subFlow to kick off recovery with all Business Network members
             subFlow(InitiateReconciliationWithBusinessNetwork(getMembers()))
         }
 
@@ -503,7 +504,7 @@ performed where there is reduced network traffic.
     }
 
     /**
-     * The schedulable state that will be used to kick off reconciliation with all other parties on a business network
+     * The schedulable state that will be used to kick off reconciliation with all other parties on a Business Network
      * at a regular interval. Defaults to executing once daily.
      */
     @BelongsToContract(BusinessNetworkReconSchedulerContract::class)
@@ -573,7 +574,7 @@ performed where there is reduced network traffic.
             // Retrieve the list of identities with which we COULD have shared transaction data
             List<Party> businessNetworkMembers = getMembers();
 
-            // Initiate a subFlow to kick off recovery with all business network members
+            // Initiate a subFlow to kick off recovery with all Business Network members
             subFlow(new InitiateReconciliationWithBusinessNetwork(getMembers()));
         }
 
@@ -584,7 +585,7 @@ performed where there is reduced network traffic.
     }
 
     /**
-     * The schedulable state that will be used to kick off reconciliation with all other parties on a business network
+     * The schedulable state that will be used to kick off reconciliation with all other parties on a Business Network
      * at a regular interval. Defaults to executing once daily.
      */
     @BelongsToContract(BusinessNetworkReconSchedulerContract.class)

@@ -12,20 +12,33 @@ tags:
 - node operator
 
 title: Introducing Collaborative Recovery
-weight: 100
+weight: 10
 ---
 
 # Collaborative Recovery
 
-Corda's Collaborative Recovery solution helps you retrieve data lost in a disaster scenario where all other strategies for **disaster recovery** (DR) have been exhausted.
+**Who this documentation is for:**
+* Node operators
+* Business Network Operators (BNOs)
+* Corda developers
 
-Using a coordinated approach across your network, you and other node operators can use the Collaborative Recovery CorDapps to detect potential ledger inconsistencies and recover any missing ledger data (including transactions, attachments and historical network parameters) from other
-counterparts on the business network.
+**Related links:**
+* [Integration of Collaborative Recovery - Business Network level](business-network-integration.md)
+* [Deploy Collaborative Recovery before and during a disaster scenario](deployment-and-operations.md)
+* [LedgerSync developers' guide](ledger-sync.md)
+* [Automatic ledger recovery - developers' guide](ledger-recovery-automatic.md)
+* [Manual ledger recovery - developers' guide](ledger-recovery-manual)
+* [Install Collaborative Recovery](installation)
+
+## About Collaborative Recovery
+
+Collaborative Recovery is a CorDapp-based solution that helps you retrieve lost data in a disaster recovery scenario where all other strategies have been exhausted.
+
+With a coordinated approach, you can use Collaborative Recovery to detect potential ledger inconsistencies and recover any missing ledger data from parties you have transacted with on the Business Network. For this solution to be effective, the Collaborative Recovery CorDapps must be deployed to every node with which you may transact. This means that as well as installing locally, you must try to make Collaborative Recovery part of the overall disaster recovery policy for your Business Network.
 
 {{< note >}}
 
-In this context, business network refers to a governance system enforced at the application level. This system
-may govern which nodes are able to transact using a particular CorDapp.
+**Business Network** refers to a governance system enforced at the application level. This system may govern which nodes are able to transact using a particular CorDapp.
 
 {{< /note >}}
 
@@ -33,20 +46,23 @@ Collaborative Recovery is a final, last resort option to recover your data. Whil
 not sufficient as a disaster recovery strategy on its own. You must use Collaborative Recovery in conjunction with conventional DR approaches,
 such as backups and replication.
 
+Before installing the Collaborative Recovery CorDapps, make sure you have read the documentation so you know:
+
+* Your Business Network disaster recovery policy
+* The Corda platform requirements
+* How the LedgerSync and LedgerRecover CorDapps should be used.
 
 ## When to use Collaborative Recovery
 
-Corda's DR strategy assumes that the ledger is protected by a combination of:
+Ideally, you should never need to use Collaborative Recovery. To protect the data on your node, each node you transact with should be part of a robust disaster recovery plan, agreed at the Business Network level. This strategy should mean you have backups include the following:
 
 * full and incremental database backups
 * synchronous database replication
 * replicated and fault-tolerant filesystem (to prevent loss of MQ data).
 
-To protect the integrity of your transactions on Corda, each node you transact with should be part of a robust disaster recovery plan, agreed at the business network level. This means fault-tolerant infrastructure components, such as enterprise-grade databases and durable message queues.
+If your Business Network is not supported by synchronous database replication on all nodes, but uses asynchronous replication combined with incremental backups instead, you do not have a 100% recovery guarantee in a disaster scenario. By definition, your asynchronous replica is behind the master node.  
 
-If your business network is not supported by synchronous database replication on all nodes - if you use asynchronous replication combined with incremental backups instead - you do not have a 100% recovery guarantee in a disaster scenario. By definition, your asynchronous replica is behind the master node.  
-
-If you find yourself in this position, Collaborative Recovery can help you restore and synchronise data across the ledger.
+If you find yourself in this position, or if your other disaster recovery procedures fail, Collaborative Recovery can help you restore and synchronise data across the ledger.
 
 
 ## Scope of Collaborative Recovery
@@ -75,34 +91,32 @@ will have to be reprovisioned separately.
 
 ## Recovery Point Objective (RPO) and Recovery Time Objective (RTO) Guarantees
 
-Due to the nature of decentralised systems, Collaborative Recovery **doesn't provide any RPO / RTO guarantees**. For example,
-some data might be unrecoverable due to a counterparty not being a part of the network anymore. The amount of time required
-for recovery can't be guaranteed either as peers might be temporarily unavailable or have low bandwidth.
+Due to the nature of decentralised systems, Collaborative Recovery **does not provide any RPO / RTO guarantees**. For example,
+some data might be unrecoverable due to a counterparty not being a part of the network anymore.
 
-Collaborative Recovery policies that mandate the SLAs for the participants' nodes to respond to the DR requests
-should be enforced at the Business Network governance level.
+The amount of time required for recovery can't be guaranteed either as peers might be temporarily unavailable or have low bandwidth.
+
+Collaborative Recovery policies that mandate the SLAs for the participants' nodes to respond to the DR requests should be enforced at the Business Network governance level.
 
 ## Overview of the Collaborative Recovery CorDapps
 
-This section explains some basic capabilities of the LedgerSync and LedgerRecover CorDapps - the applications that make-up the Collaborative Recovery solution. You can read in more detail about each of these CorDapps and their procedures
+Collaborative Recovery is made up of two CorDapps - LedgerSync and LedgerRecover. They are used together to reconcile and recover lost data.
 
-## LedgerSync
+### LedgerSync
 
-LedgerSync is a CorDapp that highlights the differences between the common ledger data held by two nodes in the same business network.
+LedgerSync is a CorDapp that highlights the differences between the common ledger data held by two nodes in the same Business Network.
 A peer running the CorDapp is alerted to any missing transactions. This procedure is called **Reconciliation**.
 
-> LedgerSync relies on the user to provide a list of the parties to reconcile with. This can be used as an integration
-> point with custom membership management systems.  
 
-LedgerSync uses [Efficient Set Reconciliation Algorithm Without Prior Context](https://www.ics.uci.edu/~eppstein/pubs/EppGooUye-SIGCOMM-11.pdf)
-for peer-to-peer reconciliations. It has been designed to efficiently reconcile large sets of data with small amount or no differences at all. Generally
-speaking, the amount of data one would need to transfer is proportional to the size of the difference and not the total number of
-items in the data set. Due to that, LedgerSync introduces only a minimal network overhead even for a large data sets.
+{{< note >}}
 
-LedgerSync has been designed with privacy in mind. Parties never share any real data. Instead they share
-*Invertible Bloom Filters* that contain obfuscated data only and can't be decoded by a party unilaterally.
-Furthermore, LedgerSync prevents privacy leaks by allowing only parties that participated in a transaction to report
-that the transaction is missing from the initiator's ledger.
+LedgerSync relies on the user to provide a list of the parties to reconcile with. This can be used as an integration point with custom membership management systems.
+
+{{< /note >}}
+
+LedgerSync uses Efficient Set Reconciliation Algorithm Without Prior Context for peer-to-peer reconciliations. It has been designed to efficiently reconcile large sets of data with small amount or no differences at all. Generally speaking, the amount of data you can expect to transfer is proportional to the size of the difference and not the total number of items in the data set. For this reason, LedgerSync introduces only a minimal network overhead even for a large data sets.
+
+LedgerSync has been designed with privacy in mind. Parties never share any real data. Instead they share *Invertible Bloom Filters* that contain obfuscated data only and can't be decoded by a party unilaterally. Furthermore, LedgerSync prevents privacy leaks by allowing only parties that participated in a transaction to report that the transaction is missing from the initiator's ledger.
 
 LedgerSync can operate on schedule as well as on demand. It utilises bounded flow pools to limit the number of concurrent
 inbound / outbound reconciliations and also supports different throttling techniques to prevent the functionality from being abused.
@@ -110,9 +124,9 @@ inbound / outbound reconciliations and also supports different throttling techni
 A high level peer to peer reconciliation flow is depicted in the diagram below. LedgerSync can run multiple of these concurrently
 up to the limit configured by the user.
 
-![Peer To Peer Reconciliation Flow](./resources/ledger-sync-flow.png)
+![Peer To Peer Reconciliation Flow](resources/ledger-sync-flow.png)
 
-## LedgerRecover
+### LedgerRecover
 
 LedgerRecover helps to recover missing transactions, attachments and network parameters based on the outputs of LedgerSync.
 LedgerRecover can be operated in manual and automatic modes.

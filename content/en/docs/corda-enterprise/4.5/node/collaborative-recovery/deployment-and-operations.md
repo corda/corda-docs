@@ -15,33 +15,29 @@ weight: 300
 
 # Deploy and operate Collaborative Recovery in Corda
 
-If you are a **node operator** in a Corda ledger, you can use the Collaborative Recovery CorDapps to automate the process of recovering or reconciling data in a disaster recovery scenario. The two CorDapps are:
+**Who this documentation is for:**
+* Node operators
+* Business Network Operators (BNOs)
+* Corda developers
 
-* **Ledger Sync** - which requests a reconciliation of data across the network, in the event of a partial or minor loss of data.
+**Related links:**
+* [Introduction to Collaborative Recovery](introduction-cr.md)
+* [Integration of Collaborative Recovery - Business Network level](business-network-integration.md)
+* [LedgerSync developers' guide](ledger-sync.md)
+* [Automatic ledger recovery - developers' guide](ledger-recovery-automatic.md)
+* [Manual ledger recovery - developers' guide](ledger-recovery-manual)
+* [Install Collaborative Recovery](installation)
 
-* **Ledger Recover** - which commences a recovery by requesting a snapshot of the ledger held by other related nodes on the network.
+You can use the Collaborative Recovery CorDapps to automate the process of recovering or reconciling data in a disaster recovery scenario. This section gives you an overview of the practical deployment and operation of Collaborative Recovery.
 
-
-In this section:
-
-* Database Operations for Collaborative Recovery.
-* How to run reconciliation and recovery using the CorDapps.
-* How to set up, and run monitoring and alerting.
-* Recommended Disaster Recovery (DR) setup.
-* Recommended procedure to follow after DR.
-* Business Network Operator (BNO) involvement and responsibilities.
+Use this guide to help you establish effective schedules for data reconciliation, and best practices for retrieving data in a disaster scenario.
 
 
+## Scheduling Reconciliation
 
-## Running Reconciliation and Recovery
+You need to schedule regular reconciliation checks using the LedgerSync CorDapp. To do this, you can implement a small layer for scheduling and integration with your business network services. For practical steps on scheduling recovery, use the [LedgerSync guide](ledger-sync.md).
 
-Reconciliation, the process of comparing 
-
-The Collaborative Recovery CorDapps don't have a scheduling mechanism available out of the box. Instead we advise users to
-to implement a small layer for scheduling and integration with their Business Network services, as has been described
-in the [previous sections](TODO LINK to LedgerSync and LedgerRecover HERE).
-
-We recommend to run reconciliations on a scheduled basis at appropriate intervals (at least once a day).
+You should run reconciliations on a scheduled basis at appropriate intervals (at least once a day).
 
 Recovery flows have been designed to be run *manually*. We recommend that you set up alerting (as explained in the next section)
 for reconciliation differences and then start recovery manually with each of the highlighted parties.
