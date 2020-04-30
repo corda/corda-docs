@@ -90,14 +90,14 @@ The space complexities are outlined below:
 
 A suggested high level Disaster Recovery setup is shown in the diagram below.
 
-![Suggested Disaster Recovery Setup](./resources/dr-setup.png)
+![Suggested Disaster Recovery Setup](../../resources/collaborative-recovery/dr-setup.png)
 
 While the exact setup might vary from an organisation to organisation, the key points are:
 
-* Always use synchronous replication for both database and filesystem if it's affordable from the cost and performance perspectives;
-* If synchronous replication is not an option, consider using asynchronous, which is usually cheaper and faster;
-* Take full and incremental database backups at an appropriate schedule;
-* Run LedgerSync at appropriate intervals;
+* Always use synchronous replication for both database and filesystem if it's affordable from the cost and performance perspectives
+* If synchronous replication is not an option, consider using asynchronous, which is usually cheaper and faster
+* Take full and incremental database backups at an appropriate schedule
+* Run LedgerSync at appropriate intervals
 * Set up alerting for the `NumberOfFailedReconciliations` and `NumberOfReconciliationsWithDifferences` metrics as explained in the previous section.
 
 ## Suggested Disaster Recovery Procedure

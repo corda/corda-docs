@@ -22,11 +22,6 @@ weight: 100
 * Business Network Operators (BNOs)
 * Corda developers
 
-In this section, you will find guides for:
-* Business Network Operators who need to integrate Collaborative Recovery into their Disaster Recovery planning.
-* Deployment and operation guides for Node operators.
-* Installation guides for Collaborative Recovery CorDapps.
-* Developer and Node Operator Guides.
 
 ## Introducing Collaborative Recovery
 
@@ -40,7 +35,7 @@ With a coordinated approach, you can use Collaborative Recovery to detect potent
 
 {{< /note >}}
 
-What you need to know before installing the Collaborative Recovery CorDapps:
+What you need to know before installing and using the Collaborative Recovery CorDapps:
 
 * Your Business Network disaster recovery policy
 * The Corda platform requirements
@@ -89,7 +84,7 @@ can be recovered though, but only if the proof of owning the key has been shared
 * Self issued but never transacted states. However such states can be unilaterally reissued onto the ledger, as issuances
 don't require notarization.
 * Off-ledger tables.
-* Observed transactions. Transactions that have been shared as a part of *Observers* functionality
+* Observed transactions. Transactions that have been shared as a part of **Observers** functionality
 will have to be reprovisioned separately.
 * Scheduled states.
 * Any ledger data that has been shared with parties that are not available on the network anymore.  
@@ -130,7 +125,7 @@ inbound / outbound reconciliations and also supports different throttling techni
 A high level peer to peer reconciliation flow is depicted in the diagram below. LedgerSync can run multiple of these concurrently
 up to the limit configured by the user.
 
-![Peer To Peer Reconciliation Flow](resources/ledger-sync-flow.png)
+![Peer To Peer Reconciliation Flow](./resources/ledger-sync-flow.png)
 
 ### LedgerRecover
 
@@ -141,7 +136,7 @@ LedgerRecover can be operated in manual and automatic modes.
 
 ### Automatic
 
-*Automatic* LedgerRecover has been designed to recover a small amount of ledger data, that would have a little to no impact
+Automatic LedgerRecover has been designed to recover a small amount of ledger data, that would have a little to no impact
 on the responding node's performance. Automatic LedgerRecover is built on top of Corda's `SendTransactionFlow` and `ReceiveTransactionFlow`.
 These flows handle resolution of attachments, network parameters and transaction backchains out-of-the-box. Before entering recovery,
 the responder should always verify the eligibility of the requester seeing the requested transactions. Only the transactions
@@ -157,7 +152,7 @@ This is to prevent the participants from abusing this functionality and overload
 
 ### Manual
 
-*Manual* LedgerRecover has been designed for larger volumes of data and for cases when the recovery request requires manual approval.
+Manual LedgerRecover has been designed for larger volumes of data and for cases when the recovery request requires manual approval.
 During a manual recovery flow, an initiating party would make a request to kick off a manual recovery process.
 Each party (the initiator and responder) persists a record of this request. The responder would then manually investigate the recovery request,
 export the data to the filesystem, and pass it to the requester. This process would be carried out off-ledger without

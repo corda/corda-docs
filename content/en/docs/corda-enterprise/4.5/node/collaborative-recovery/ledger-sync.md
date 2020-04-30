@@ -24,6 +24,8 @@ Part of [Collaborative Recovery](introduction-cr.md), **LedgerSync** is a CorDap
 
 All reconciliations are added to a bounded execution pool (configurable, see below) for eventual execution by the internal job scheduler. Results of reconciliations are stored in the database of the node that requested the reconciliation, and work only in one direction; that is, the node that requested the reconciliation will be notified if the responding node has transactions that the requesting node does not. The _responding_ node will _not_ be notified if the _requesting_ node has transactions that the _responding_ node does not. See the [Workflow](#Workflow) section for more info.
 
+![Peer To Peer Reconciliation Flow](./resources/ledger-sync-flow.png)
+
 ## Configuration Parameters
 
 **LedgerSync** behaviour can be adjusted using the following configuration parameters. If the configuration parameter is not specified, or the configuration file is not present, the default value(s) will be used. **LedgerSync** can be configured, like other CorDapps, by creating a configuration file named after the **LedgerSync** configuration JAR file (for example, if the **LedgerSync** JAR file is called `ledger-sync-1.0.jar`, the configuration file would be `<corda_node_dir>/cordapps/config/ledger-sync-1.0.conf`).
@@ -184,15 +186,15 @@ This flow returns immediately after the reconciliation jobs are added to the sch
 
 ## Related DB Tables
 
-> **Do _NOT_ edit or change the contents of the LedgerSync database table(s).**
+Do not edit or change the contents of the LedgerSync database table(s).
 
-> **The information provided in this section is meant only to provide insight into the purpose of the database tables' existence. It is implementation-specific, and is subject to change without notice.**
+The information provided in this section is meant only to provide insight into the purpose of the database tables' existence. It is implementation-specific, and is subject to change without notice.
 
 ### Reconciliation Status Table
 
-Some information regarding the state of reconciliations can be found in a node's `CR_RECONCILIATION_STATUS` table (_only_ present if the **LedgerSync** CorDapp is installed). It is _not_ reliable as a log of reconciliations, nor is it reliable for providing all state information.
+Some information regarding the state of reconciliations can be found in a node's `CR_RECONCILIATION_STATUS` table (_only_ present if the **LedgerSync** CorDapp is installed). It is not reliable as a log of reconciliations, nor is it reliable for providing all state information.
 
-> The status of a reconciliation is _only_ stored/updated in this table when a reconciliation is actually executed by the scheduler (becomes `IN_PROGRESS`), or stops/fails thereafter. Reconciliations that are yet to enter the execution pool will not appear in this table, and so the data in this table should not be used for real-time status monitoring. **Please use the provided API (see [Flows](#Flows) or [JMX](#JMX%20Metrics)) to get reliable status information on reconciliaitons.**
+The status of a reconciliation is only stored/updated in this table when a reconciliation is actually executed by the scheduler (becomes `IN_PROGRESS`), or stops/fails thereafter. Reconciliations that are yet to enter the execution pool will not appear in this table, and so the data in this table should not be used for real-time status monitoring. **Please use the provided API (see [Flows](#Flows) or [JMX](#JMX%20Metrics)) to get reliable status information on reconciliations.**
 
 ### Table Structure
 

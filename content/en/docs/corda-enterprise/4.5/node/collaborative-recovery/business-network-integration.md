@@ -31,7 +31,7 @@ Once you have this agreement in place on your Business Network, you can create t
 
 The Collaborative recovery CorDapps use flows to initiate and execute the recovery process. Before this can happen, you need validation that the parties specified as input to each Disaster Recovery flow are members of the Business Network.
 
-TO validate these parties, you need to write and distribute simple wrapping flows for these flows:
+To validate these parties, you need to write and distribute simple wrapping flows for these reconciliation and recovery flows:
 
 - [ScheduleReconciliationFlow](ledger-sync.md#schedule-reconciliation-flow) - This flow schedules regular reconciliation checks
 - [AutomaticRecoveryFlow](ledger-recovery-automatic.md#automatic-ledger-recover-flow) to initiate automatic data recovery
@@ -191,7 +191,7 @@ basis of a previous reconciliation record or `ReconciliationStatus`, uses built-
 to request and retrieve the appropriate transactions from a counter party.
 
 For more information on this process and how it may be further configured please checkout the
-[docs](./ledger-recovery-automatic.md).
+[docs](ledger-recovery-automatic.md).
 
 
 ```kotlin
@@ -313,7 +313,7 @@ Another option available to node operators is to initiate manual recovery of led
 outlines a simple wrapping flow that initiates manual recovery, persisting a record or `RecoveryRequest`
 on both the initiating and responding nodes.
 
-The participating nodes may then continue with the processes described [here](./ledger-recovery-manual.md)
+The participating nodes may then continue with the processes described [here](ledger-recovery-manual.md)
 to export, transfer and eventually import the missing transaction data.
 
 ```kotlin
