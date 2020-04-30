@@ -26,6 +26,29 @@ All reconciliations are added to a bounded execution pool (configurable, see bel
 
 ![Peer To Peer Reconciliation Flow](./resources/ledger-sync-flow.png)
 
+## System Requirements
+
+System requirements for **LedgerSync** are mainly dependent on the size of your vault. Internally, **LedgerSync** uses an in-memory graph of all transactions in the vault, though not all transaction information is kept in memory.
+
+Overall memory usage will be dependent on the number of transactions in the vault, and the number of participants (parties) involved in each transaction.
+
+The following table provides a rough estimation of how much memory _may_ be requried for the scenarios described within. This is a guideline only. There are many variables in any given Corda network that can affect the amount of heap space used, but this should give you an idea.
+
+{{< table >}}
+
+|No of Transactions|Total Party Count|Participants Per Transaction &dagger;|Output States|Est. Heap Usage (MB)|
+|-:|:-:|:-:|:-:|:-:|
+|1,000,000  |100,000|2 + 3 + 3|3|1,791.11|
+|100,000    |100,000|2 + 3 + 3|3|400.46  |
+|10,000     |100,000|2 + 3 + 3|3|78.94   |
+|1,000      |100,000|2 + 3 + 3|3|8.75    |
+|100        |100,000|2 + 3 + 3|3|0.89    |
+
+{{< /table >}}
+
+**&dagger;** Participants (parties) per transaction are represented in terms number of participants per output state: `A + B + C`, where **A** is the number of participants on output state `0`, **B** is the number of participants on output state `1`, and **C** is the number of participants on output state `2`.
+
+
 ## Configuration Parameters
 
 **LedgerSync** behaviour can be adjusted using the following configuration parameters. If the configuration parameter is not specified, or the configuration file is not present, the default value(s) will be used. **LedgerSync** can be configured, like other CorDapps, by creating a configuration file named after the **LedgerSync** configuration JAR file (for example, if the **LedgerSync** JAR file is called `ledger-sync-1.0.jar`, the configuration file would be `<corda_node_dir>/cordapps/config/ledger-sync-1.0.conf`).
@@ -64,10 +87,6 @@ The following are the flows exposed by LedgerSync.
 
 ### `ScheduleReconciliationFlow`
 
-Example Usage:
-
-`flow start ScheduledReconciliationFlow parties: ["O=PartyA, L=London, C=GB", "O=PartyB, L=Ottawa, C=CA"]`
-
 This flow starts an outgoing reconciliation from the current node with each of the specified parties. The reconciliation is added as a job to an internal queue for eventual execution. When the reconciliation starts depends on whether there are other ongoing reconciliations and whether the configured maximum for concurrent reconciliations has been exceeded.
 
 If the other party being reconciled with is too busy, the scheduler will make numerous (depends on the node's **LedgerSync** configuration, see the `maxReconciliationRetryAttemptTimeout` configuration parameter above) attempts to perform the reconciliation with an appropriate fallback so as not to overwhelm the other party's node with repeated attempts.
@@ -82,107 +101,99 @@ It is not possible to perform reconciliations under the following conditions:
 
 This flow returns immediately after the reconciliation jobs are added to the scheduler's queue. To get the status of a given reconciliation, see the related flows below.
 
-##### Parameters
+#### Example Usage
+
+`flow start ScheduledReconciliationFlow parties: ["O=PartyA, L=London, C=GB", "O=PartyB, L=Ottawa, C=CA"]`
+
+#### Parameters
 
 * `parties` - A list of legal identies of the nodes to reconcile against.
 
-##### Return Type
+#### Return Type
 
 * None
 
-* #### `GetReconciliationStatusesFlow`
+### `GetReconciliationStatusesFlow`
 
-    ##### Example Usage(s)
+Gets a list of reconciliation all statuses that match the given criteria. For example, you can use this method to get all of the statuses that are `IN_PROGRESS` and were initiated by the current node.
 
-    *   ```
-        flow start GetReconciliationStatusesFlow isRequester: true
-        ```
-    *   ```
-        flow start GetReconciliationStatusesFlow party: "O=PartyA, L=London, C=GB", isRequester: true
-        ```
-    *   ```
-        flow start GetReconciliationStatusesFlow party: "O=PartyA, L=London, C=GB", lastReconciliationStatus: IN_PROGRESS, isRequester: true
-        ```
-    *   ```
-        flow start GetReconciliationStatusesFlow lastReconciliationStatus: DIFFERENCES_FOUND, isRequester: true
-        ```
+#### Example Usages
 
-    ##### Overview
+*   ```
+    flow start GetReconciliationStatusesFlow isRequester: true
+    ```
+*   ```
+    flow start GetReconciliationStatusesFlow party: "O=PartyA, L=London, C=GB", isRequester: true
+    ```
+*   ```
+    flow start GetReconciliationStatusesFlow party: "O=PartyA, L=London, C=GB", lastReconciliationStatus: IN_PROGRESS, isRequester: true
+    ```
+*   ```
+    flow start GetReconciliationStatusesFlow lastReconciliationStatus: DIFFERENCES_FOUND, isRequester: true
+    ```
 
-    Gets a list of reconciliation all statuses that match the given criteria. For example, you can use this method to get all of the statuses that are `IN_PROGRESS` and were initiated by the current node.
+#### Parameters
 
-    ##### Parameters
+* `party` - The legal identity of the node for whom you want to get the status (optional).
+* `lastReconciliationStatus` - The status that you want to look up (optional).
+* `isRequester` - Whether you want to look up statuses where the current node initiated the reconciliation (`true`), or whether it was another party that initiated it with the current node (`false`).
 
-    * `party` - The legal identity of the node for whom you want to get the status (optional).
-    * `lastReconciliationStatus` - The status that you want to look up (optional).
-    * `isRequester` - Whether you want to look up statuses where the current node initiated the reconciliation (`true`), or whether it was another party that initiated it with the current node (`false`).
+#### Return Type
 
-    ##### Return Type
+* A _list_ of `ReconciliationStatus` objects.
 
-    * A _list_ of `ReconciliationStatus` objects.
+### `GetReconciliationStatusForPartyFlow`
 
-* #### `GetReconciliationStatusForPartyFlow`
+Gets the status of the reconciliation for the given party.
 
-    ##### Example Usage(s)
+#### Example Usage(s)
 
-    *   ```
-        flow start GetReconciliationStatusForPartyFlow party: "O=PartyA, L=London, C=GB", isRequester: true
-        ```
+*   ```
+    flow start GetReconciliationStatusForPartyFlow party: "O=PartyA, L=London, C=GB", isRequester: true
+    ```
 
-    ##### Overview
+#### Parameters
 
-    Gets the status of the reconciliation for the given party.
+* `party` - The legal identity of the node for whom you want to get the status.
+* `isRequester` - Whether you want to look up the status where the current node initiated the reconciliation (`true`), or whether it was another party that initiated it with the current node (`false`).
 
-    ##### Parameters
+#### Return Type
 
-    * `party` - The legal identity of the node for whom you want to get the status.
-    * `isRequester` - Whether you want to look up the status where the current node initiated the reconciliation (`true`), or whether it was another party that initiated it with the current node (`false`).
+* A `ReconciliationStatus` object, or `null` if there was no reconciliation found for the given parameters.
 
-    ##### Return Type
+### `RefreshReconciliationStatusesFlow`
 
-    * A `ReconciliationStatus` object, or `null` if there was no reconciliation found for the given parameters.
+This flow "refreshes" the results of a previous reconciliation where transactions were found to be missing from the current node's ledger. It scans the node's ledger looking for transactions whose IDs match those in the list of missing transactions. If transactions are found, the reconciliation's status is updated to reflect that the transactions are no longer missing.
 
-* #### `RefreshReconciliationStatusesFlow`
+You need to refresh a reconciliation's status in the case where some, or all, of the missing transactions have been recovered.
 
-    ##### Example Usage(s)
+#### Example Usage(s)
 
-    *   ```
-        flow start RefreshReconciliationStatusesFlow
-        ```
+*   `flow start RefreshReconciliationStatusesFlow`
 
-    ##### Overview
+#### Parameters
 
-    This flow "refreshes" the results of a previous reconciliation where transactions were found to be missing from the current node's ledger. It scans the node's ledger looking for transactions whose IDs match those in the list of missing transactions. If transactions are found, the reconciliation's status is updated to reflect that the transactions are no longer missing.
+* None
 
-    You would need to refresh a reconciliation's status in the case where some, or all, of the missing transactions have been recovered.  
+#### Return Type
 
-    ##### Parameters
+* None
 
-    * None
+### `StopReconciliationForPartyFlow`
 
-    ##### Return Type
+Sets the status of an outgoing or incoming reconciliation request to `STOPPED`, and attempts to kill any threads attached to the reconciliation. This should only be used in conjunction with (after) the Corda `killFlow` RPC command. This is a necessary step in some circumstances since, otherwise, the scheduler would not be able to start a new reconciliation with the involved party.
 
-    * None
+#### Example Usage(s)
 
-* #### `StopReconciliationForPartyFlow`
+*   `flow start StopReconciliationForPartyFlow`
 
-    ##### Example Usage(s)
+#### Parameters
 
-    *   ```
-        flow start StopReconciliationForPartyFlow
-        ```
+* `party` - The legal identity of the node for whom you want to stop the reconciliation.
 
-    ##### Overview
+#### Return Type
 
-    Sets the status of an outgoing or incoming reconciliation request to `STOPPED`, and attempts to kill any threads attached to the reconciliation. This should only be used in conjunction with (after) the Corda `killFlow` RPC command. This is a necessary step in some circumstances since, otherwise, the scheduler would not be able to start a new reconciliation with the involved party.
-
-    ##### Parameters
-
-    * `party` - The legal identity of the node for whom you want to stop the reconciliation.
-
-    ##### Return Type
-
-    * None
+* None
 
 ## Related DB Tables
 
@@ -198,6 +209,8 @@ The status of a reconciliation is only stored/updated in this table when a recon
 
 ### Table Structure
 
+{{< table >}}
+
 |Column|Description|
 |-|-|
 |`party_name`|The unique name of another party that the reconciliation is related to.|
@@ -212,9 +225,11 @@ The status of a reconciliation is only stored/updated in this table when a recon
 |`last_reconciliation_status` **&Dagger;**|The status of the most recent reconciliation (regardless of success). Either `IN_PROGRESS`, `DIFFERENCES_FOUND`, `DIFFERENCES_NOT_FOUND`, `FAILED`, or `STOPPED`.|
 |`last_reconciliation_error`|If the reconciliation ran into an error, such as an exception, then a description should be stored in this field. Associated with the `FAILED` status.|
 
+{{< /table >}}
+
 **&dagger;** `last_successful_XXX` columns are only updated when a reconciliation involving the given party completed _successfully_, and so do NOT necessarily represent the most recently run reconciliation. This means that it is possible for these columns to indicate success, when the most recently run reconciliation actually failed.
 
-**&Dagger;** Possible values for `status` columns are as follows:
+**&Dagger;** Possible values for `status` columns are:
 
 * `DIFFERENCES_FOUND`
 
@@ -251,135 +266,104 @@ The status of a reconciliation is only stored/updated in this table when a recon
 
 A Corda node running the **LedgerSync** CorDapp will expose the following metrics via JMX.
 
-* #### `ReconciliationStatus`
+### `ReconciliationStatus`
 
-    ##### Overview
+Gets the `ReconciliationStatus` for the specified party. If there is no such reconciliation for that party, `null` is returned.
 
-    Gets the `ReconciliationStatus` for the specified party. If there is no such reconciliation for that party, `null` is returned.
+#### Parameters
 
-    ##### Parameters
+* `party` - The legal identity of the node for which you want the status.
 
-    * `party` - The legal identity of the node for which you want the status.
+#### Return Type
 
-    ##### Return Type
+* A `ReconciliationStatus` object, or `null` if there is no reconciliation ongoing with the specified party.
 
-    * A `ReconciliationStatus` object, or `null` if there is no reconciliation ongoing with the specified party.
+### `FailedParties`
 
-* #### `FailedParties`
+Gets a list of party names where their reconciliations have failed.
 
-    ##### Overview
+#### Parameters
 
-    Gets a list of party names where their reconciliations have failed.
+* None.
 
-    ##### Parameters
+#### Return Type
 
-    * None.
+* A list of party names.
 
-    ##### Return Type
+### `PartiesWithDifference`
 
-    * A _list_ of party names.
+Gets a list of party names where their reconciliations have reported differences.
 
-* #### `PartiesWithDifference`
+#### Parameters
 
-    ##### Overview
+* None.
 
-    Gets a list of party names where their reconciliations have reported differences.
+#### Return Type
 
-    ##### Parameters
+* A list of party names.
 
-    * None.
+### `NumberOfScheduledReconciliations`
 
-    ##### Return Type
+Gets the number of reconciliations that are currently scheduled for execution.
 
-    * A _list_ of party names.
+#### Parameters
 
-* #### `NumberOfScheduledReconciliations`
+* None.
 
-    ##### Overview
+#### Return Type
 
-    Gets the number of reconciliations that are currently scheduled for execution.
+* The number of reconciliations.
 
-    ##### Parameters
+### `NumberOfReconciliationsInProgress`
 
-    * None.
+Gets the number of reconciliations that are currently executing.
 
-    ##### Return Type
+#### Parameters
 
-    * The number of reconciliations.
+* None.
 
-* #### `NumberOfReconciliationsInProgress`
+#### Return Type
 
-    ##### Overview
+* The number of reconciliations.
 
-    Gets the number of reconciliations that are currently executing.
+###`NumberOfFailedReconciliations`
 
-    ##### Parameters
+Gets the number of reconciliations that have failed.
 
-    * None.
+#### Parameters
 
-    ##### Return Type
+* None.
 
-    * The number of reconciliations.
+#### Return Type
 
-* #### `NumberOfFailedReconciliations`
+* The number of reconciliations.
 
-    ##### Overview
+### `NumberOfReconciliationsWithDifferences`
 
-    Gets the number of reconciliations that have failed.
+Gets the number of reconciliations where differences were found.
 
-    ##### Parameters
+#### Parameters
 
-    * None.
+* None.
 
-    ##### Return Type
+#### Return Type
 
-    * The number of reconciliations.
+* The number of reconciliations.
 
-* #### `NumberOfReconciliationsWithDifferences`
+### `NumberOfReconciliationsWithoutDifferences`
 
-    ##### Overview
+#### Overview
 
-    Gets the number of reconciliations where differences were found.
+Gets the number of reconciliations where differences were NOT found.
 
-    ##### Parameters
+#### Parameters
 
-    * None.
+* None.
 
-    ##### Return Type
+#### Return Type
 
-    * The number of reconciliations.
+* The number of reconciliations.
 
-* #### `NumberOfReconciliationsWithoutDifferences`
-
-    ##### Overview
-
-    Gets the number of reconciliations where differences were NOT found.
-
-    ##### Parameters
-
-    * None.
-
-    ##### Return Type
-
-    * The number of reconciliations.
-
-## System Requirements
-
-System requirements for **LedgerSync** are mainly dependent on the size of your vault. Internally, **LedgerSync** uses an in-memory graph of all transactions in the vault, though not all transaction information is kept in memory.
-
-Overall memory usage will be dependent on the number of transactions in the vault, and the number of participants (parties) involved in each transaction.
-
-The following table provides a rough estimation of how much memory _may_ be requried for the scenarios described within. This is a guideline only. There are many variables in any given Corda network that can affect the amount of heap space used, but this should give you an idea.
-
-|No of Transactions|Total Party Count|Participants Per Transaction &dagger;|Output States|Est. Heap Usage (MB)|
-|-:|:-:|:-:|:-:|:-:|
-|1,000,000  |100,000|2 + 3 + 3|3|1,791.11|
-|100,000    |100,000|2 + 3 + 3|3|400.46  |
-|10,000     |100,000|2 + 3 + 3|3|78.94   |
-|1,000      |100,000|2 + 3 + 3|3|8.75    |
-|100        |100,000|2 + 3 + 3|3|0.89    |
-
-**&dagger;** Participants (parties) per transaction are represented in terms number of participants per output state: `A + B + C`, where **A** is the number of participants on output state `0`, **B** is the number of participants on output state `1`, and **C** is the number of participants on output state `2`.
 
 ## Log Messages
 
@@ -435,7 +419,7 @@ In this scenario, we'll make the following assumptions:
 
 This process, or a similar process, should be followed every time after recovering your vault from backup. It should involve every other party you've previously transacted with. In our example, we're only reconciling with one other party, but it's likely you've transacted with more than one in the past.
 
-#### Step 1. The Reconciliation.
+### Step 1. The Reconciliation.
 
 The first step we need to perform after recovering our vault from the most recent backup is to initiate a reconciliation request with the other party (party B). This must be done from _our_ (party A's) node.
 
@@ -445,19 +429,19 @@ This can be done using the `ScheduleReconciliationFlow` flow from the Corda CLI:
 flow start ScheduleReconciliationFlow parties: ["O=PartyB, L=London, C=GB"]
 ```
 
-> This flow expects a list, hence the use of brackets `[` `]`.
+This flow expects a list, hence the use of brackets `[` `]`.
 
 This flow will return immediately, and should indicate success.
 
-> **When the unexpected happens**
->
-> It is possible to get an exception when executing this flow.
->
-> **`ReconciliationAlreadyScheduledException`** &mdash; As the name suggests, this exception will be thrown if there is already an ongoing reconciliation with the party you've tried to reconcile with. This exception can also occur if the other party (party B) has already initiated a reconciliation with you in the other direction &ndash; B -&gt; ; A instead of A -&gt; B.
->
-> **`MaxIncomingSessionsExceededException`** &mdash; This exception can be thrown if the other party (party B) is already overloaded processing reconciliations from other parties. In this event, it is recommended that you try again at a later time.
+#### When the unexpected happens
 
-#### Step 2. Checking the Status of the Reconciliation.
+It is possible to get an exception when executing this flow.
+
+**`ReconciliationAlreadyScheduledException`** &mdash; As the name suggests, this exception will be thrown if there is already an ongoing reconciliation with the party you've tried to reconcile with. This exception can also occur if the other party (party B) has already initiated a reconciliation with you in the other direction &ndash; B -&gt; ; A instead of A -&gt; B.
+
+**`MaxIncomingSessionsExceededException`** &mdash; This exception can be thrown if the other party (party B) is already overloaded processing reconciliations from other parties. In this event, it is recommended that you try again at a later time.
+
+### Step 2. Checking the Status of the Reconciliation.
 
 Since the call to `ScheduleReconciliationFlow` returns immediately, it won't tell you whether the reconciliation was successful, stopped for some reason, or is still in progress.
 
@@ -518,38 +502,38 @@ Flow completed with result: ReconciliationStatus(
 )
 ```
 
-> **When the unexpected happens**
->
-> **No differences were found, or not all expected differences were found.** &mdash; It is possible that when reconciling with another party that no differences will be discovered between your ledger and theirs, or that you were expecting more to be found, but they weren't. This could be for a number of reasons, but the most likely are that either the transaction(s) did not actually involve the other party, like an issuance, or the other party is not able to tell that the transactions you were expecting involved your identity &ndash; maybe your identity had been anonymized.
->
-> **The reconciliation is 'stuck' with a status of `IN_PROGRESS`**. &mdash; This may occur for the following reasons.
->
-> 1. The other party's node is down, or is not present on the network.
-> 1. The other party's node does not have the **LedgerSync** CorDapp installed.
-> 1. An unforeseen problem was encountered when your node tried to persist an updated status to its database for the reconciliation.
->    
->    In all cases, it may be necessary to _kill_ the flow. See below for the details of this process.
->
-> **An error occurred**. &mdash; It is possible that an unforeseen error occurred while processing either the initiating (on your node), or the responding (on the other party's node), flows. In such an event, you will need to inspect the node logs for the cause and may need to re-run the reconciliation.
->
+#### When the unexpected happens
 
-#### Step 3. Transaction recovery.
+* **No differences were found, or not all expected differences were found.** &mdash; It is possible that when reconciling with another party that no differences will be discovered between your ledger and theirs, or that you were expecting more to be found, but they weren't. This could be for a number of reasons, but the most likely are that either the transaction(s) did not actually involve the other party, like an issuance, or the other party is not able to tell that the transactions you were expecting involved your identity &ndash; maybe your identity had been anonymized.
 
-<!-- TODO: Provide links to auto/manual recovery docs -->
+* **The reconciliation is 'stuck' with a status of `IN_PROGRESS`**. &mdash; This may occur for the following reasons.
 
-If differences were found during the reconciliation, the next step will be to perform an [Automatic Recovery]() or a [ManualRecovery]().
+1. The other party's node is down, or is not present on the network.
+2.  The other party's node does not have the **LedgerSync** CorDapp installed.
+3.  An unforeseen problem was encountered when your node tried to persist an updated status to its database for the reconciliation.
+
+In all cases, it may be necessary to _kill_ the flow. See below for the details of this process.
+
+* **An error occurred**. &mdash; It is possible that an unforeseen error occurred while processing either the initiating (on your node), or the responding (on the other party's node), flows. In such an event, you will need to inspect the node logs for the cause and may need to re-run the reconciliation.
+
+
+### Step 3. Transaction recovery.
+
+If differences were found during the reconciliation, the next step will be to perform an [Automatic Recovery](ledger-recover-automatic.html) or a [ManualRecovery](ledger-recover-manual.html).
 
 #### Killing Reconciliation Flows
 
 As indicated in steps above, it may be necessary to kill a reconciliation flow. This is a _two-step process_. The first step is to use the Corda RPC command `killFlow`.  For this, you'll need the **state machine run id** of the flow to kill. This can be obtained from the output when you run `GetReconciliationStatusForPartyFlow` (see above).
 
-```sh
+```
+sh
 run killFlow id: <state-machine-run-id>
 ```
 
-**For example:**
+For example:
 
-```sh
+```
+sh
 run killFlow id: c243222b-1940-45df-8828-a8496196d274
 ```
 
@@ -561,7 +545,8 @@ The result of running `killFlow` should look as follows.
 
 The next step, which must be run _after_ `killFlow`, is to run the `StopReconciliationForPartyFlow` flow to update the status of the reconciliation from `IN_PROGRESS` to `STOPPED`. Not completing this step will prevent the reconciliation scheduler from being able to do reconciliations with that other party and it will also result in a spot in the scheduler's execution pool being permanently occupied by a reconciliation that does not exist.
 
-```sh
+```
+sh
 flow start StopReconciliationForPartyFlow party: "O=PartyB, L=London, C=GB"
 ```
 
@@ -573,7 +558,8 @@ Flow completed with result: kotlin.Unit
 
 And if you run the `GetReconciliationStatusForPartyFlow` flow again as follows,
 
-```sh
+```
+sh
 flow start GetReconciliationStatusForPartyFlow party: "O=PartyB, L=London, C=GB", isRequester: true
 ```
 
