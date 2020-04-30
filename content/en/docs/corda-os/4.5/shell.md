@@ -64,13 +64,16 @@ There are also operations that allow starting/killing the flows or even stopping
 
 
 * Watching flows (`flow watch`) requires `InvokeRpc.stateMachinesFeed`.
-* Starting flows requires `InvokeRpc.startTrackedFlowDynamic`, `InvokeRpc.registeredFlows` and `InvokeRpc.wellKnownPartyFromX500Name`, as well as a
+* Starting flows requires `InvokeRpc.registeredFlows` and `InvokeRpc.wellKnownPartyFromX500Name`, as well as a
 permission for the flow being started.
 * Killing flows (`flow kill`) requires `InvokeRpc.killFlow`. This currently
 allows the user to kill *any* flow, so please be careful when granting it!
 
 Description of RPC operations can be found in [API: RPC operations](api-rpc.md).
 
+{{< note >}}
+`InvokeRpc.startTrackedFlowDynamic` permission gives permission to run all existing flows.
+{{< /note >}}
 
 ## The shell via the local terminal
 
@@ -295,7 +298,7 @@ simple JSON-like language. The key features of Yaml are:
 
 
 * Parameters are separated by commas
-* Each parameter is specified as a `key: value` pair> 
+* Each parameter is specified as a `key: value` pair>
 
     * There **MUST** to be a space after the colon, otherwise you’ll get a syntax error
 
