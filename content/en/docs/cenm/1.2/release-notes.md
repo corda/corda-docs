@@ -15,14 +15,15 @@ title: Release notes
 
 # Release notes
 
-## Release 1.2.1
+## Release 1.2.2
 
-CENM 1.2.1 introduces fixes to known issues in CENM 1.2.
+CENM 1.2.2 introduces fixes to known issues in CENM 1.2.
 
 Fixed issues
 
 * Generating a certificate hierarchy using the PKI tool and a supported version of Gemalto HSM fails to generate keys.
 * Using `csr_token` as part of a node registration causes the registration to fail when the Identity manager is set up to use a supported version of Oracle DB.
+* Creating and signing the CRL fails when upgrading from 0.4 whenever existing revoked certificates are lacking a revocation reason
 
 ## Release 1.2
 
@@ -115,14 +116,15 @@ until the request is REJECTED or APPROVED. This means the external system needs 
 are currently being processed and reject surplus creation attempts. The Identity Manager service records this in logs
 as warning: “There is already a ticket: ‘<TICKET ID>’ corresponding to *Request ID* = <VALUE>, not creating a new one.”
 
-## Release 1.1.2
+## Release 1.1.3
 
-CENM 1.1.2 introduces fixes to known issues in CENM 1.1.
+CENM 1.1.3 introduces fixes to known issues in CENM 1.1.
 
 Fixed issues
 
 * Identity Manager upgrade from CENM 0.4 causes JIRA Workflow Plugin to stop the existing tickets in status 'New' or 'In Progress' from being progressed and prevents rejected records from being cleared by `workflow_*`.
 * When multiple users were configured to use the Signing Service, the service would authenticate all the credentials before checking whether the threshold was reached or not, that would cause multiple authentication per user.
+* Creating and signing the CRL fails when upgrading from 0.4 whenever existing revoked certificates were lacking a revocation reason
 
 ## Release 1.1.1
 

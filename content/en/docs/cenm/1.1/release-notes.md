@@ -17,14 +17,15 @@ title: Release notes
 
 # Release notes
 
-## Release 1.1.2
+## Release 1.1.3
 
-CENM 1.1.2 introduces fixes to known issues in CENM 1.1.
+CENM 1.1.3 introduces fixes to known issues in CENM 1.1.
 
 Fixed issues
 
 * Identity Manager upgrade from CENM 0.4 causes JIRA Workflow Plugin to stop the existing tickets in status 'New' or 'In Progress' from being progressed and prevents rejected records from being cleared by `workflow_*`.
 * When multiple users were configured to use the Signing Service, the service would authenticate all the credentials before checking whether the threshold was reached or not, that would cause multiple authentication per user.
+* Creating and signing the CRL fails when upgrading from 0.4 whenever existing revoked certificates were lacking a revocation reason
 
 ## Release 1.1.1
 
