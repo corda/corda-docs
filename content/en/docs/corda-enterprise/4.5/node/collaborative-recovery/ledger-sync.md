@@ -20,19 +20,23 @@ weight: 400
 * Business Network Operators (BNOs)
 * Corda developers
 
-Part of [Collaborative Recovery](introduction-cr.md), **LedgerSync** is a CorDapp used for the discovery of differences between the common ledger data held by two nodes that exist on the same Business Network. It uses an efficient set reconciliation algorithm to minimize the amount of network communication required. Reconciliations can be configured to run both on-demand, and at a given time (through the use of scheduled states).
+Part of [Collaborative Recovery](introduction-cr.md), LedgerSync is a CorDapp used to discover any differences between the common ledger data held by two nodes that exist on the same Business Network. This is called the **Reconciliation** stage of collaborative recovery.
 
-All reconciliations are added to a bounded execution pool (configurable, see below) for eventual execution by the internal job scheduler. Results of reconciliations are stored in the database of the node that requested the reconciliation, and work only in one direction; that is, the node that requested the reconciliation will be notified if the responding node has transactions that the requesting node does not. The _responding_ node will _not_ be notified if the _requesting_ node has transactions that the _responding_ node does not. See the [Workflow](#Workflow) section for more info.
+It uses an efficient set reconciliation algorithm to minimize the amount of network communication required. Reconciliations can be configured to run both on-demand, and at a given time (through the use of scheduled states).
+
+All reconciliations are added to a bounded execution pool, which are configurable, for eventual execution by the internal job scheduler. Results of reconciliations are stored in the database of the node that requested the reconciliation, and work only in one direction.
+
+This means the node that requested the reconciliation will be notified if the responding node has transactions that the requesting node does not. The responding node will not be notified if the requesting node has transactions that the responding node does not.
 
 ![Peer To Peer Reconciliation Flow](./resources/ledger-sync-flow.png)
 
 ## System Requirements
 
-System requirements for **LedgerSync** are mainly dependent on the size of your vault. Internally, **LedgerSync** uses an in-memory graph of all transactions in the vault, though not all transaction information is kept in memory.
+System requirements for LedgerSync are mainly dependent on the size of your vault. Internally, LedgerSync uses an in-memory graph of all transactions in the vault, though not all transaction information is kept in memory.
 
 Overall memory usage will be dependent on the number of transactions in the vault, and the number of participants (parties) involved in each transaction.
 
-The following table provides a rough estimation of how much memory _may_ be requried for the scenarios described within. This is a guideline only. There are many variables in any given Corda network that can affect the amount of heap space used, but this should give you an idea.
+Use the table below for a guide to how much memory may be required for the scenarios described in this section. This is a guideline only. There are many variables in any given Corda network that can affect the amount of heap space used, but this should give you an idea.
 
 {{< table >}}
 
@@ -51,11 +55,12 @@ The following table provides a rough estimation of how much memory _may_ be requ
 
 ## Configuration Parameters
 
-**LedgerSync** behaviour can be adjusted using the following configuration parameters. If the configuration parameter is not specified, or the configuration file is not present, the default value(s) will be used. **LedgerSync** can be configured, like other CorDapps, by creating a configuration file named after the **LedgerSync** configuration JAR file (for example, if the **LedgerSync** JAR file is called `ledger-sync-1.0.jar`, the configuration file would be `<corda_node_dir>/cordapps/config/ledger-sync-1.0.conf`).
+You can adjust LedgerSync behaviour using the configuration parameters listed below. If the configuration parameter is not specified, or the configuration file is not present, the default values will be used.
+
+You can configure LedgerSync, like other CorDapps, by creating a configuration file named after the LedgerSync configuration JAR file. For example, if the LedgerSync JAR file is called `ledger-sync-1.0.jar`, the configuration file would be `<corda_node_dir>/cordapps/config/ledger-sync-1.0.conf`.
 
 
-**Example configuration file contents:**
-<!-- 'ini' is used since it provides reasonable syntax highlighting. GitHub does not have hocon language support in markdown.  -->
+### Example configuration file contents
 
 ```ini
 maxNumberOfIbfFilterFlows = 5
@@ -65,7 +70,7 @@ timeWindowForReconciliationRequestLimit = 1h
 maxAllowedReconciliationRequestsPerTimeWindow = 1000
 ```
 
-**Details of Configuration Parameters:**
+### Details of Configuration Parameters
 
 {{< table >}}
 
@@ -83,7 +88,7 @@ maxAllowedReconciliationRequestsPerTimeWindow = 1000
 
 ## Flows
 
-The following are the flows exposed by LedgerSync.
+All reconciliation tasks are carried out using flows. You will find the list flows exposed by LedgerSync, and their parameters, below.
 
 ### `ScheduleReconciliationFlow`
 
@@ -203,9 +208,9 @@ The information provided in this section is meant only to provide insight into t
 
 ### Reconciliation Status Table
 
-Some information regarding the state of reconciliations can be found in a node's `CR_RECONCILIATION_STATUS` table (_only_ present if the **LedgerSync** CorDapp is installed). It is not reliable as a log of reconciliations, nor is it reliable for providing all state information.
+Some information regarding the state of reconciliations can be found in a node's `CR_RECONCILIATION_STATUS` table. This table is present when the LedgerSync CorDapp is installed. You should not rely on this as a log of reconciliations, nor is it reliable for providing all state information.
 
-The status of a reconciliation is only stored/updated in this table when a reconciliation is actually executed by the scheduler (becomes `IN_PROGRESS`), or stops/fails thereafter. Reconciliations that are yet to enter the execution pool will not appear in this table, and so the data in this table should not be used for real-time status monitoring. **Please use the provided API (see [Flows](#Flows) or [JMX](#JMX%20Metrics)) to get reliable status information on reconciliations.**
+The status of a reconciliation is only stored/updated in this table when a reconciliation is actually executed by the scheduler (becomes `IN_PROGRESS`), or stops/fails thereafter. Reconciliations that are yet to enter the execution pool will not appear in this table, and so the data in this table should not be used for real-time status monitoring. Please use the provided API (see [Flows](#Flows) or [JMX](#JMX%20Metrics)) to get reliable status information on reconciliations.
 
 ### Table Structure
 
