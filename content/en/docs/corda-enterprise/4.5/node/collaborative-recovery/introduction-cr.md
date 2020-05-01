@@ -31,15 +31,27 @@ With a coordinated approach, you can use Collaborative Recovery to detect potent
 
 {{< note >}}
 
-**Business Network** refers to a governance system enforced at the application level. This system may govern which nodes are able to transact using a particular CorDapp.
+**Business Network** refers to a governance system, within a wider network, enforced at the application level. This system may govern which nodes are able to transact using a particular CorDapp.
 
 {{< /note >}}
 
-What you need to know before installing and using the Collaborative Recovery CorDapps:
+Before installing and using the Collaborative Recovery CorDapps, you need to know:
 
 * Your Business Network disaster recovery policy
 * The Corda platform requirements
-* How the LedgerSync and LedgerRecover CorDapps should be used.
+* How and when the LedgerSync and LedgerRecover CorDapps should be used.
+
+### Main stages of Collaborative Recovery
+
+1. Agree to add and enforce Collaborative Recovery at the Business Network level.
+2. Validate the nodes you may transact with by creating wrapping flows for Collaborative Recovery CorDapp flows.
+3. Monitor for inconsistencies in your node's data. You do this by scheduling regular reconciliation flows using the LedgerSync CorDapp.
+4. In a disaster recovery scenario, follow your agreed DR policy. Try to recover data using backups first.
+5. If your other procedures cannot recover your data, initiate data recovery flows using:
+    * LedgerRecover (Automatic) for automatic data recovery. Usually this is most effective when there is only a minor data loss.
+    * LedgerRecover (Manual) for manual data recovery. In this path, you need to manually extract and add data back onto the network.
+6. Validate that the data has been recovered.
+7. Review disaster recovery policy.
 
 ## When to use Collaborative Recovery
 
