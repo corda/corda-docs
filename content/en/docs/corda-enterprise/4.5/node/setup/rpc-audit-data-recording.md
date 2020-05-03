@@ -1,5 +1,5 @@
 ---
-date: '2020-05-04T12:00:00Z'
+date: '2020-05-03T12:00:00Z'
 menu:
   corda-enterprise-4-5:
     parent: corda-enterprise-4-5-corda-nodes-configuring
@@ -7,17 +7,17 @@ tags:
 - rpc
 - audit
 - recording
-title: Recording of RPC Audit Data
+title: Recording of RPC audit data
 weight: 4
 ---
 
-# Recording of RPC Audit Data
+# Recording of RPC audit data
 
 In this section, you will learn how the node records [Remote Procedural Command (RPC)](../../api-rpc.md) audit data.
 
 This feature is distributed as part of Corda Enterprise.
 
-## RPC Audit Data
+## RPC audit data
 
 RPC actions play a vital part in the process of triggering commands and flows on a node. In a variety of cases you will need to track the usage of RPC actions - for example, when there are security and regulatory concerns. To do so, you can use the Corda Enterprise node's capability to record audit information about RPC actions as they are received, prior to executing each action.
 
@@ -31,7 +31,7 @@ The data recorded by the node is listed below:
 - `invocationid` - the unique invocation id of the action
 - `allowed` - a boolean field indicating if the `user` was allowed to call the `action`
 
-## Overview of RPC Audit Data Recording
+## Overview of the RPC audit data recording process
 
 To enable collection of RPC actions, we have provided a configuration option in the `enterpriseConfiguration.auditService` section of the `node.conf` file, as follows:
 
@@ -53,6 +53,6 @@ The current `AuditService` configuration supports the following audit types:
 - `RPC` - RPC actions will be recorded
 - `ALL` - all audit services will be recorded (note that only RPC is supported at this time)
 
-## Collecting RPC Audit Data
+## Collecting RPC audit data
 
 In addition to recording RPC Audit Data it will also be useful to collect information on any data recorded.  See the [RPC Audit Data Collector](../../rpc-audit-collector.md) page for details on this.
