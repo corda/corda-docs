@@ -27,7 +27,7 @@ A Corda node, including a notary node, must have all its keys in the same keysto
 Splitting the keys across a combination of different keystores and HSMs is not supported.
 
 {{< note >}}
-Importing existing keys from the file based keystore into a HSM is not supported.
+Importing existing keys from the file-based keystore into a HSM is not supported.
 
 {{< /note >}}
 
@@ -109,13 +109,13 @@ username: user
 password: "my-password"
 ```
 
-In addition to the configuration, the node needs to access binaries provided by Utimaco. The `CryptoServerJCE.jar` for release 4.21.1, which can be obtained from Utimaco, needs to be placed in the node’s drivers folder.
+In addition to the configuration, the node needs to access binaries provided by Utimaco. The `CryptoServerJCE.jar` for release 4.21.1, which can be obtained from Utimaco, needs to be placed in the node’s `drivers` folder.
 
 ## Gemalto Luna
 
 Corda Enterprise nodes can be configured to store their legal identity keys in [Gemalto Luna](https://safenet.gemalto.com/data-encryption/hardware-security-modules-hsms/safenet-network-hsm) HSMs running firmware version 7.0.3.
 
-In the `node.conf`, the `cryptoServiceName` needs to be set to “GEMALTO_LUNA”, and `cryptoServiceConf` should contain the path to a configuration file, the content of which is explained further down.
+In the `node.conf`, the `cryptoServiceName` must set to “GEMALTO_LUNA”, and `cryptoServiceConf` should contain the path to a configuration file, the content of which is explained further down.
 
 ```kotlin
 cryptoServiceName : "GEMALTO_LUNA"
@@ -285,7 +285,7 @@ username: "my-username"
 password: "my-password"
 ```
 
-In addition to the configuration, the Securosys’ Primus X JCA provider (version 1.8.2) needs to be placed in the node’s drivers folder.
+In addition to the configuration, the Securosys’ Primus X JCA provider (version 1.8.2) needs to be placed in the node’s `drivers` folder.
 
 ## nCipher nShield
 
@@ -316,7 +316,7 @@ keyStore: "certificates/keystore.nshield"
 password: "my-password"
 ```
 
-In addition to the configuration, the `nCipherKM.jar` needs to be placed in the node’s drivers folder.
+In addition to the configuration, the `nCipherKM.jar` needs to be placed in the node’s `drivers` folder.
 
 Keys generated in HSM modules are stored in encrypted form (“key blob”) on the hard disk outside HSM, usually on the client side in Security World’s Key Management Data directory. In addition, nCipherKM JCA/JCE CSP creates KeyStore data files which are stored locally and separately from key blobs.
 
@@ -332,7 +332,11 @@ The communication with the HSM is achieved via a daemon middleware process (call
 
 ## AWS CloudHSM
 
-Corda Enterprise nodes can be configured to generate keys in [AWS CloudHSM](https://aws.amazon.com/cloudhsm/)
+Corda Enterprise nodes can be configured to generate keys in [AWS CloudHSM](https://aws.amazon.com/cloudhsm/) using [AWS CloudHSM Software Library for Java](https://docs.aws.amazon.com/cloudhsm/latest/userguide/java-library.html).
+
+{{< note >}}
+See [Install and Use the AWS CloudHSM Software Library for Java](https://docs.aws.amazon.com/cloudhsm/latest/userguide/java-library-install.html) for the list of supported operating systems.
+{{< /note >}}
 
 In the ``node.conf``, the ``cryptoServiceName`` needs to be set to "AWS_CLOUD", and ``cryptoServiceConf`` should contain the path to a configuration file, the content of which is explained further down.
 
@@ -361,7 +365,10 @@ partition: "hsm-w4b6nnfio7z"
 ```
 
 
-In addition to the configuration:
+In addition to the configuration, the following steps are required:
 
-* `cloudhsm-3.0.0.jar` from AWS CloudHSM Software Library for Java needs to be placed in the node’s drivers folder.
-* Corda must be running with the system property `-Djava.library.path=/opt/cloudhsm/lib` pointing to the directory with corresponding native library (e.g. `libcaviumjca.so` for Linux).
+1. `cloudhsm-3.0.0.jar` from AWS CloudHSM Software Library for Java needs to be placed in the node’s `drivers` folder.
+2. Corda must be running with the system property `java.library.path` pointing to the directory that contains the AWS CloudHSM JCA provider binaries (e.g. ``libcaviumjca.so`` for Linux). For example:
+```text
+java -Djava.library.path=/opt/cloudhsm/lib -jar corda.jar
+```

@@ -128,7 +128,7 @@ the correct context as configured.
 
 This document describes what is currently and what will be supported in the Corda AMQP format from the perspective
 of CorDapp developers, to allow CorDapps to take into consideration the future state.  The AMQP serialization format will
-continue to apply the whitelisting functionality that is already in place and described in [Object serialization](.md).
+continue to apply the whitelisting functionality that is already in place and described in this page.
 
 
 ## Core Types
@@ -686,4 +686,3 @@ all versions of the class. This ensures an object serialized with an older idea 
 and a version of the current state of the class instantiated.
 
 More detail can be found in [Default Class Evolution](serialization-default-evolution.md).
-

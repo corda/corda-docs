@@ -2208,6 +2208,8 @@ complicated).
 For example, the `finance` package currently uses `FlowLogic.sleep` to make several attempts at coin selection when
 many states are soft locked, to wait for states to become unlocked:
 
+{{< tabs name="tabs-33" >}}
+{{% tab name="kotlin" %}}
 ```kotlin
 for (retryCount in 1..maxRetries) {
     if (!attemptSpend(services, amount, lockId, notary, onlyFromIssuerParties, withIssuerRefs, stateAndRefs)) {
@@ -2226,5 +2228,6 @@ for (retryCount in 1..maxRetries) {
 }
 
 ```
+{{% /tab %}}
 
-{{/* github src='finance/workflows/src/main/kotlin/net/corda/finance/workflows/asset/selection/AbstractCashSelection.kt' url='<https://github.com/corda/corda/blob/release/os/4.5/finance/workflows/src/main/kotlin/net/corda/finance/workflows/asset/selection/AbstractCashSelection.kt#L101-L115'> raw='<https://raw.githubusercontent.com/corda/corda/release/os/4.5/finance/workflows/src/main/kotlin/net/corda/finance/workflows/asset/selection/AbstractCashSelection.kt'> start='DOCSTART CASHSELECT 1' end='DOCEND CASHSELECT 1' */}}[AbstractCashSelection.kt](https://github.com/corda/corda/blob/release/os/4.5/finance/workflows/src/main/kotlin/net/corda/finance/workflows/asset/selection/AbstractCashSelection.kt)
+{{< /tabs >}}
