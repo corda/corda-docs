@@ -29,6 +29,7 @@ wish to try the [Blob Inspector](blob-inspector.md).
 * [Health Survey Tool](health-survey.md)
 * [Embedded Shell](shell.md)
 * [Public Key Infrastructure (PKI) Tool](pki-tool.md)
+* [RPC Audit Collection Tool](rpc-audit-collector.md)
 
 
 

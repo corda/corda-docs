@@ -384,7 +384,11 @@ Allows fine-grained controls of various features only available in the enterpris
       * The name of HSM provider to be used. E.g.: ``UTIMACO``, ``GEMALTO_LUNA``, etc.
     * `cryptoServiceConf`
       * Absolute path to HSM provider specific configuration which will contain everything necessary to establish connection with HSM.
-      * *Default* Not present so local file system is used.
+      * *Default:* Not present so local file system is used.
+* `auditService`
+  * Allows for configuration of audit services within the node
+    * `eventsToRecord` defines which types of events will be recorded by the audit service - currently supported types are `{NONE, RPC, ALL}`
+    * *Default:* `NONE`
 
 ### `tuning`
 
