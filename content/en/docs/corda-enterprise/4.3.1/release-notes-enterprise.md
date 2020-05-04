@@ -17,10 +17,10 @@ title: Release notes
 # Release notes
 
 
-## Corda Enterprise 4.3.3
+## Corda Enterprise 4.3.2
 
 
-Corda Enterprise 4.3.3 is a patch release of Corda Enterprise that introduces fixes to known issues in Corda Enterprise 4.3.1.
+Corda Enterprise 4.3.2 is a patch release of Corda Enterprise that introduces fixes to known issues in Corda Enterprise 4.3.1.
 
 
 ### Upgrade recommendation
@@ -33,8 +33,6 @@ As a node operator, you must upgrade if any of the fixed issues listed below is 
 
 ### Fixed issues
 
-* Fixed an issue in DNS resolution when using the Corda Health Survey
-* Fixed issues in existing checkpoint iterator serialisers
 * Operations run on the node’s external thread pool might end up being executed multiple times [[CORDA-3686](https://r3-cev.atlassian.net/browse/CORDA-3686)]
 * Database indexes have been added for the `NODE_MESSAGE_IDS` and `VAULT_STATES` table to speed up frequently-used queries
 * A number of problems with the JPA notary have been addressed:
