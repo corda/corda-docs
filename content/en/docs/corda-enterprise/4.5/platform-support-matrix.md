@@ -129,6 +129,6 @@ for your deployment needs.
 |                               | * Driver version 1.8.2     | * Driver version 1.8.2     | * Driver version 1.8.2     | * Driver version 1.8.2   |
 | nCipher nShield Connect       | * Firmware version 12.50.11| * Firmware version 12.50.11| Not supported              | Not supported            |
 |                               | * Driver version 12.60.2   | * Driver version 12.60.2   |                            |                          |
-| AWS CloudHSM                  | * Driver version 3.0.0     | * Driver version 3.0.0     | Not supported              | Not supported            |
+| AWS CloudHSM                  | * Driver version 3.0.0     | * Driver version 3.0.0     | * Driver version 3.0.0     | Not supported            |
 
 {{< /table >}}
