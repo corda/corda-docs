@@ -215,12 +215,19 @@ The available configuration fields are listed below in alphabetic order.
 
   *Default:* not defined
 
+`crlCheckArtemisServer`
+  Set this configuration field to ``true`` to enable CRL checking of TLS certificates for inbound P2P connections into the embedded Artemis messaging server. The CRL checking mode is defined by `crlCheckSoftFail` option.
+
+  *Default:* ``false``
+
 `crlCheckSoftFail`
   This is a boolean flag that when enabled (i.e. ``true`` value is set) causes certificate revocation list (CRL) checking to use soft fail mode.
   Soft fail mode allows the revocation check to succeed if the revocation status cannot be determined because of a network error.
   If this parameter is set to ``false`` rigorous CRL checking takes place. This involves each certificate in the certificate path being checked for a CRL distribution point extension, and that this extension points to a URL serving a valid CRL.
   This means that if any CRL URL in the certificate path is inaccessible, the connection with the other party will fail and be marked as bad.
   Additionally, if any certificate in the hierarchy, including the self-generated node SSL certificate, is missing a valid CRL URL, then the certificate path will be marked as invalid.
+
+  By default, CRL checking is applicable only for outbound P2P connections. To enable it also for inbound P2P connections, set `crlCheckArtemisServer=true`.
 
   *Default:* true
 
