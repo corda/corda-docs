@@ -21,18 +21,18 @@ title: CENM support matrix
 
 ## Hardware Security Modules (HSMs)
 
-Both the Signing Service and the PKI Tool support a variety of HSMs. The
+Both the Signing Service and the PKI Tool support a variety of HSMs.
 
 
 {{< table >}}
 
-|Device|Firmware Version|Driver Version|
-|--------------------------------|------------------|------------------|
-|Utimaco SecurityServer Se Gen2|4.21.1|4.21.1|
-|Gemalto Luna|7.0.3|7.3|
-|Securosys PrimusX|2.7.4|1.8.2|
-|Azure Key Vault|N/A|1.1.1|
-|AWS CloudHSM|N/A|3.0.0|
+|Device|Firmware Version|Driver Version|High Availability (HA)|
+|--------------------------------|----------------------------------|------------------|------|
+|Utimaco SecurityServer Se Gen2|4.21.1|4.21.1|No|
+|Gemalto Luna|7.0.3|7.3|Yes. (Tested and officically supported)|
+|Securosys PrimusX|2.7.4|1.8.2|No|
+|Azure Key Vault|N/A|1.1.1|No|
+|AWS CloudHSM|N/A|3.0.0|No|
 
 {{< /table >}}
 
