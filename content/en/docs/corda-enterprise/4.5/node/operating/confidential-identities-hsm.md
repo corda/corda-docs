@@ -87,14 +87,14 @@ The `freshIdentitiesConfiguration` field contains the following attributes:
 |mode|String|Yes|Defines the mode of operation, valid values are: `WRAPPED` or `DEGRADED_WRAPPED`.|
 |masterKeyAlias|String|No|Defines an alias for the wrapping key. The default value is `wrapping-key-alias`.|
 |cryptoServiceConfiguration|N/A|Yes|Contains the `cryptoServiceName` and `cryptoServiceConf` attributes.|
-|cryptoServiceName|String|Yes|Defines the type of HSM. Valid values can be found in the [HSM documentation](./cryptoservice-configuration.html).|
-|cryptoServiceConf|String|Yes|Defines a path to the HSM configuration file to use, for details, see the [HSM documentation](./cryptoservice-configuration.html).|
+|cryptoServiceName|String|Yes|Defines the type of HSM. Valid values can be found in the [HSM documentation]({{% ref "cryptoservice-configuration.md" %}}).|
+|cryptoServiceConf|String|Yes|Defines a path to the HSM configuration file to use, for details, see the [HSM documentation]({{% ref "cryptoservice-configuration.md" %}}).|
 
 {{< /table >}}
 
 A completed configuration file might appear as follows:
 
-```kotlin
+```json
 freshIdentitiesConfiguration: {
     mode: "DEGRADED_WRAPPED",
     cryptoServiceConfiguration: {
@@ -116,6 +116,7 @@ The following table contains the current support and the associated configuratio
 |-------------------------|-------------------------|-------------------------|-------------------------|
 |file-based keystore|`BC_SIMPLE`|not used|`DEGRADED_WRAPPED`|
 |Securosys PrimusX HSM|`PRIMUS_X`|path to the PrimusX configuration file|`WRAPPED`|
+|AWS CloudHSM|`AWS_CLOUD`|path to the AWS CloudHSM configuration file|`WRAPPED`|
 
 {{< /table >}}
 
@@ -131,3 +132,21 @@ Note that Corda still ensures that only the wrapped keys corresponding to confid
 * Specifically for PrimusX HSM, you will also need to enable the JCE API for wrapping (`jce_process.active` set to `enabled`) and ideally disable key invalidation (`invalidate_keys` set to `disabled`),
 so that ephemeral keys do not continue to consume memory after being used and explicitly cleaned up.
 
+## AWS CloudHSM
+
+Configuration file example:
+
+```json
+freshIdentitiesConfiguration {
+    mode="WRAPPED"
+    cryptoServiceConfiguration {
+       cryptoServiceName="AWS_CLOUD"
+       cryptoServiceConf="aws_cloud.conf"
+    }
+    masterKeyAlias="master-key"
+}
+```
+The following parameters are used for confidential identities on AWS CloudHSM:
+* AES Key Wrap Algorithm (RFC 3394) with PKCS#5 padding
+* Persistent, non-extractable 256-bit AES key as a wrapping key (KEK)
+* Non-persistent (valid for the current session only), extractable EC secp256r1 key pair as an ephemeral key

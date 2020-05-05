@@ -201,6 +201,12 @@ This property requires retrieving the hashes of public keys that need to be blac
 
 *Default:* not defined
 
+### `crlCheckArtemisServer`
+
+Set this configuration field to ``true`` to enable CRL checking of TLS certificates for inbound P2P connections into the embedded Artemis messaging server. The CRL checking mode is defined by `crlCheckSoftFail` option.
+
+*Default:* ``false``
+
 ### `crlCheckSoftFail`
 
 This is a boolean flag that when enabled (i.e. ``true`` value is set) causes certificate revocation list (CRL) checking to use soft fail mode.
@@ -208,6 +214,32 @@ Soft fail mode allows the revocation check to succeed if the revocation status c
 If this parameter is set to ``false`` rigorous CRL checking takes place. This involves each certificate in the certificate path being checked for a CRL distribution point extension, and that this extension points to a URL serving a valid CRL.
 This means that if any CRL URL in the certificate path is inaccessible, the connection with the other party will fail and be marked as bad.
 Additionally, if any certificate in the hierarchy, including the self-generated node SSL certificate, is missing a valid CRL URL, then the certificate path will be marked as invalid.
+
+By default, CRL checking is applicable only for outbound P2P connections. To enable it also for inbound P2P connections, set `crlCheckArtemisServer=true`.
+
+If a proxy is configured for HTTP connections to network services, you can optionally use it for CRL checking. To do so, specify the following Java system properties:
+
+* `http.proxyHost` and `http.proxyPort` for HTTP proxy
+* `socksProxyHost` and `socksProxyPort` for SOCKS proxy
+
+To use proxy with authentication, you must also configure:
+* Java system properties
+* proxy parameters in the `networkServices` section
+
+For example:
+  ```json
+    custom.jvmArgs = ["-Dhttp.proxyHost=198.51.100.5", "-Dhttp.proxyPort=3128"]
+    crlCheckSoftFail = true
+    crlCheckArtemisServer = true
+    networkServices {
+        doormanURL = "https://cz.example.com"
+        networkMapURL = "https://cz.example.com"
+        proxyType = HTTP
+        proxyAddress = "198.51.100.5:3128"
+        proxyUser = my-user
+        proxyPassword = my-password
+    }
+  ```
 
 *Default:* true
 
@@ -384,7 +416,11 @@ Allows fine-grained controls of various features only available in the enterpris
       * The name of HSM provider to be used. E.g.: ``UTIMACO``, ``GEMALTO_LUNA``, etc.
     * `cryptoServiceConf`
       * Absolute path to HSM provider specific configuration which will contain everything necessary to establish connection with HSM.
-      * *Default* Not present so local file system is used.
+      * *Default:* Not present so local file system is used.
+* `auditService`
+  * Allows for configuration of audit services within the node
+    * `eventsToRecord` defines which types of events will be recorded by the audit service - currently supported types are `{NONE, RPC, ALL}`
+    * *Default:* `NONE`
 
 ### `tuning`
 
