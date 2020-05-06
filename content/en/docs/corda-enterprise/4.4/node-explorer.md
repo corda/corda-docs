@@ -169,4 +169,4 @@ The screen is organised to show you the inputs and outputs of the new transactio
 
 The vault contains information about all of the transaction history on your node. You can use the dynamically populated filters to explore transactions of all types, for example transactions with a Contract state type of `CashState`.
 
-As the filters are generated dynamically, they will vary 
+As the filters are generated dynamically, they will vary from node to node, depending on the kind of transactions that exist in the vault. 
