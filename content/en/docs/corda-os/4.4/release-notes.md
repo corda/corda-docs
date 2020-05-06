@@ -27,11 +27,11 @@ comes with those same guarantees. States and apps valid in Corda 3.0 are usable 
 
 ## Corda 4.4
 
-Corda 4.4 lays the foundation of a new open-core approach for the Corda codebase. This involved a refactoring of the
+Corda 4.4 lays the foundation of a new open core approach for the Corda codebase. This involved a refactoring of the
 main functional components of Corda. Please consult [the CorDapp overview](cordapp-overview.md/) to get an overview of
 the practical impact on CorDapp development.
 
-Furthermore, Corda 4.4 introduces improvements to the flow framework API, a new diagnostic `ServiceHub` call and includes
+Furthermore, Corda 4.4 introduces improvements to the flow framework API and a new diagnostic `ServiceHub` call, and includes
 a number of security enhancements.
 
 
@@ -40,15 +40,15 @@ a number of security enhancements.
 
 #### Flows API improvements
 
-Corda 4.4 introduces a `FlowLogic.await` API that allows a CorDapp developer to suspend their flow when executing
-user-defined long-running operations such as call-outs to external services. The `FlowLogic.await` API prevents these
+Corda 4.4 introduces a `FlowLogic.await` API, allowing a CorDapp developer to suspend a flow when executing
+user-defined long-running operations, such as call-outs to external services. The `FlowLogic.await` API prevents these
 long-running operations from blocking the flow thread, allowing other flows to progress. Previously, these operations
 had to be executed synchronously, blocking the flow thread.
 
 The CorDapp developer can decide whether to run these asynchronous flow operations in a dedicated thread pool, or to
 handle the threading themselves directly.
 
-Note that as before, the flow framework suspends automatically for certain operations (e.g. when waiting to receive a
+Note that as before, the flow framework suspends automatically for certain operations (for example, when waiting to receive a
 message from a counterparty). These suspensions do not have to be triggered explicitly.
 
 The node operator can configure the number of threads in the threadpool to dedicate to external operations.
