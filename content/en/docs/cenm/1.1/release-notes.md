@@ -53,7 +53,7 @@ For full setup instructions see [CENM Databases](database-set-up.md).
 **Configuration Migration Tool**
 
 To simplify the upgrade process from early versions of CENM a configuration migration tool has been
-added. This is intended to upgrade v0.2.2 / v0.3+ configurations to v1.1, including both restructuring
+added. This is intended to upgrade v0.2.2/v0.3+ configurations to v1.1, including both restructuring
 changes to the configuration file and updating the value of fields (such as database driver class).
 See [Config migration tool](tool-config-migration.md) for details on this tool.
 

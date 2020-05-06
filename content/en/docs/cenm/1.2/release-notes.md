@@ -21,7 +21,6 @@ CENM 1.2.2 introduces fixes to known issues in CENM 1.2.
 
 Fixed issues
 
-* Generating a certificate hierarchy using the PKI tool and a supported version of Gemalto HSM fails to generate keys.
 * Using `csr_token` as part of a node registration causes the registration to fail when the Identity Manager is set up to use a supported version of Oracle DB.
 * Creating and signing the CRL fails when upgrading from CENM 0.4 if the existing revoked certificates lacked a revocation reason.
 
