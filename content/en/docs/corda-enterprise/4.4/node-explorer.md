@@ -15,79 +15,158 @@ title: Node Explorer
 # Node Explorer
 
 {{< note >}}
-To run Node Explorer on your machine, you will need JavaFX for Java 8. If you don’t have JavaFX
-installed, you can either download and build your own version of OpenJFK, or use a pre-existing
-build, like the one offered by Zulu. They have community builds of OpenJFX for Window, macOS and Linux
-available on their [website](https://www.azul.com/downloads/zulu/zulufx/).
 
-{{< /note >}}
-The node explorer provides views into a node’s vault and transaction data using Corda’s RPC framework.
-Node Explorer assumes that “corda-finance-4.4.jar” CorDapp is deployed on the node.
-The user can execute cash transaction commands to issue and move cash to other parties on the network or exit cash (eg. remove from the ledger)
-
-The tool is distributed in the form of runnable JAR file: “corda-tools-explorer-4.4.jar”.
-
-
-## Running the UI
-
-```kotlin
-java -jar corda-tools-explorer-4.4.jar
-```
-
-
-{{< note >}}
-In order to connect to a given node, the node explorer must have access to all CorDapps loaded on that particular node.
-By default, it only has access to the finance CorDapp.
-All other CorDapps present on the node must be copied to a `cordapps` directory located within the directory from which the node explorer is run.
+This version of Node Explorer replaces and improves upon the deprecated Corda Finance Node Explorer. [Read more about the retired version of Node Explorer.](node-explorer-corda-finance.md)
 
 {{< /note >}}
 
-## Running demo nodes
+The Node Explorer is a visual user interface that allows you to see your node on the network and perform regular tasks.
 
-Node Explorer is included with the [DemoBench](demobench.md) application, which allows
-you to create local Corda networks on your desktop. For example:
+Use the Node Explorer to:
+
+* see the geographical location of your node and counterparts on your network
+* execute CorDapp flows - such as transactions
+* review transactions performed in Node Explorer
+* explore the contents of your node's vault.
+
+## Install Node Explorer
+
+Node Explorer is a standalone programme that accesses your node and its CorDapps using your security credentials - you do not need to install it directly onto any particular node.  
+
+### Requirements
+
+To use Node Explorer, you need:
+
+* access to a node, either locally or remotely
+* your RCP login details for your local node
+* SSH credentials for access to a remote node.
+
+Node Explorer is available for Mac OSX, Windows, and Linux.  System requirements are matched to the requirements for operating a node. <!--- check this detail --->
+
+### Download and install
+
+Download your required Node explorer from the GitHub repository:
+
+[https://github.com/corda/node-explorer/releases](https://github.com/corda/node-explorer/releases)
+
+Once downloaded, run the installer on your machine in the way you would any other app.
+
+## Access your node with Node Explorer
+
+You can access any node with Node Explorer using the node's login credentials. If you are accessing a local Node, you can use the node's RPC login details. To access a remote node, you need the SSH credentials.
+
+<!--- Add in login UI screenshot --->
+
+### Local node
+
+To log in to a local node:
+
+1. Open Node Explorer.
+
+2. In the Host Name field, type **localhost**.
+
+3. In the Node Port field, enter the RPC connection address for your node. You can find this address by accessing your node through the command line - you will see the **RPC connection address** listed towards the top of your Node's key information.
+
+<!--- Add in commandline screenshot --->
+4. Enter the username and password you would use to access your node.
+
+The Node Explorer dashboard is shown. If you are connecting to this node for the first time, you can now configure the explorer to access your node's CorDapps.
+<!--- Ask if this information is saved or if you have to do this every time you access NE --->
+
+### Remote node
+
+To log in to a remote node:
+
+1. Open Node Explorer.
+
+2. In the login screen, check the **Use SSH** box.
+
+    Fields for accessing the node with SSH appear.
+
+3. Enter the SSH Port for your remote node.
+
+4. Enter the user name and password
+
+The Node Explorer dashboard is shown. If you are connecting to this node for the first time, you can now configure the explorer to access your node's CorDapps.
 
 
+## Configure Node Explorer to access CorDapps on your node.
 
-* Notary
-* Bank of Breakfast Tea    (*Issuer node* for GBP)
-* Bank of Big Apples       (*Issuer node* for USD)
-* Alice                    (*Participant node*, for user Alice)
-* Bob                      (*Participant node*, for user Bob)
+Before you can start using Node Explorer to execute flows, you need to add the directory of your CorDapps. This enables the explorer to discover the required parameters for each flow.
+
+To add your CorDapp directory:
+
+1. From the Node Explorer dashboard screen, click **Settings** in the left hand menu.
+
+2. On the settings screen, add the required directory path in the **Enter the path of your CorDapps directory** field. This is the folder where all the CorDapps are kept for your node.
+
+3. Use the **Date format** and **Date time format** fields to specify the expected date and time formats used by your CorDapps. If you do not enter anything here, the defaults shown are used.
+
+You have configured Node Explorer so it can now access the CorDapps for this node.
+
+## Use the dashboard to get an overview of your nodes
+
+The dashboard is the first screen that opens when you start Node Explorer.
+
+The dashboard shows details and diagnostics of two aspects of your node - **Node information** and **Network Parameters**.
+
+The **Node information** panel tells you:
+
+* the version of Corda your node is using
+* the CorDapps that have been detected by Node Explorer, based on the directory you provided
+* basic parameters and details of each individual CorDapp.
+
+The **Network parameters** panel tells you:
+
+* the Minimum Platform Version (MPV) for nodes on this network
+* the maximum transaction size for the network
+* Notaries on the network, and their status as signatory or non-signatory
+* Whitelisted contracts.
 
 
-DemoBench will deploy all nodes with Corda’s Finance CorDapp automatically, and
-allow you to launch an instance of Node Explorer for each. You will also be logged
-into the Node Explorer automatically.
+## View the geo-location of your node and network peers
 
-When connected to an *Issuer* node, a user can execute cash transaction commands to issue and move cash to itself or other
-parties on the network or to exit cash (for itself only).
+To see a geographical view of your network, click **Network** in the left hand menu of the Dashboard screen.
 
-When connected to a *Participant* node a user can only execute cash transaction commands to move cash to other parties on the network.
+On the network screen, you can see your Node's location, and the location of peers on your network.
+
+## Execute transaction flows
+
+Node Explorer allows you to execute transaction flows using the CorDapps you have available to your node.
+
+You can execute each flow by completing the required information in the UI, without any additional coding. Node Explorer identifies the required fields in your CorDapps, and presents them for you to complete.
+
+To execute a transaction flow:
+
+1. From the Node Explorer dashboard screen, click **Transactions** in the left hand menu.
+
+    The **Transactions explorer** screen is displayed.
+
+2. Click the **New transaction** button in the top right corner.
+
+3. In the **Execute flow** dialogue box, select the required flow from the drop-down menu. This is a list of all available flows based on the CorDapps you have shared with Node Explorer.
+
+4. In the dialogue box, enter the required parameters for your flow. The information requested here is dynamically populated using your CorDapp's parameters, so you can expect it to be different from flow to flow.
+
+5. Click **Execute**.
+
+You have executed a flow. If your flow has been executed successfully, a success message is displayed along with a transaction ID.
 
 
-## Interface
+## View details of a transaction
 
-User can login to any Corda node using the explorer.
-Corda node address, username and password are required for login, the address is defaulted to localhost:0 if left blank.
-Username and password can be configured via the `rpcUsers` field in node’s configuration file.![login](resources/login.png "login")
-The dashboard shows the top level state of node and vault.
-Currently, it shows your cash balance and the numbers of transaction executed.
-The dashboard is intended to house widgets from different CordApps and provide useful information to system admin at a glance.![dashboard](resources/dashboard.png "dashboard")
-The cash view shows all currencies you currently own in a tree table format, it is grouped by issuer -> currency.
-Individual cash transactions can be viewed by clicking on the table row. The user can also use the search field to narrow down the scope.![vault](resources/vault.png "vault")
-This is where you can create new cash transactions.
-The user can choose from three transaction types (issue, pay and exit) and any party visible on the network.General nodes can only execute pay commands to any other party on the network.![newTransactionCash](resources/newTransactionCash.png "newTransactionCash")
-Issuer nodes can execute issue (to itself or to any other party), pay and exit transactions.
-The result of the transaction will be visible in the transaction screen when executed.![newTransactionIssuer](resources/newTransactionIssuer.png "newTransactionIssuer")
-The transaction view contains all transactions handled by the node in a table view. It shows basic information on the table e.g. Transaction ID,
-command type, USD equivalence value etc. User can expand the row by double clicking to view the inputs,
-outputs and the signatures details for that transaction.![transactionView](resources/transactionView.png "transactionView")
-The network view shows the network information on the world map. Currently only the user’s node is rendered on the map.
-This will be extended to other peers in a future release.
-The map provides an intuitive way of visualizing the Corda network and the participants.![network](resources/network.png "network")
-User can configure the client preference in this view.{{< note >}}
-Although the reporting currency is configurable, FX conversion won’t be applied to the values as we don’t have an FX service yet.
+You can also review transactions on your node in detail using Node Explorer.
 
-{{< /note >}}
-![settings](resources/settings.png "settings")
+To review a transaction, click **Transactions** from the menu in the Dashboard screen.
+
+Select the required transaction. The transaction details are displayed, including generic information as well as dynamically generated information, depending on the type of transaction you are viewing.
+
+The screen is organised to show you the inputs and outputs of the new transaction state that exists as a result of an executed flow. There can be multiple inputs and outputs for each transaction - for example, when a loan has been issued and then partly repaid.
+
+<!--- Add screenshot here --->
+
+## Explore your node's vault
+
+The vault contains information about all of the transaction history on your node. You can use the dynamically populated filters to explore transactions of all types, for example transactions with a Contract state type of `CashState`.
+
+As the filters are generated dynamically, they will vary 
