@@ -18,9 +18,45 @@ title: Release notes
 # Release notes
 
 
-Welcome to the Corda 4.4 release notes. Please read these carefully to understand what’s new in this release and how the features can help you. Just as prior releases have brought with them commitments to wire and API stability, Corda 4.4 comes with those same guarantees. States and apps valid in Corda 3.0 are usable in Corda 4.4.
+Welcome to the Corda 4.5 release notes. Please read these carefully to understand what’s new in this release and how the features can help you. Just as prior releases have brought with them commitments to wire and API stability, Corda 4.5 comes with those same guarantees. States and apps valid in Corda 3.0 are usable in Corda 4.5.
 
+## Corda 4.5
 
+### Changes for developers in Corda 4.5
+
+#### RestrictedEntityManager and RestrictedConnection
+
+To improve reliability and prevent user errors, we have modified the database access provided via the JDBC and EntityManager to block access to methods that may corrupt flow checkpointing. As a result, it is now impossible to mistakenly call rollback inside the raw vault observer transaction, or to close the database connection prematurely. The full list of blocked methods is listed below:
+
+For `RestrictedConnection`:
+``` kotlin
+- abort(executor: Executor?)
+- clearWarnings()
+- close()
+- commit()
+- setSavepoint() methods
+- releaseSavepoint(savepoint: Savepoint?)
+- rollback() methods
+- setCatalog(catalog : String?)
+- setTransactionIsolation(level: Int)
+- setTypeMap(map: MutableMap<String, Class<*>>?)
+- setHoldability(holdability: Int)
+- setSchema(schema: String?)
+- setNetworkTimeout(executor: Executor?, milliseconds: Int)
+- setAutoCommit(autoCommit: Boolean)
+- setReadOnly(readOnly: Boolean)
+```
+
+For `RestrictedEntityManager`:
+``` kotlin
+- close()
+- clear()
+- getMetamodel()
+- getTransaction()
+- joinTransaction()
+- lock() methods
+- setProperty(propertyName: String?, value: Any?)
+```
 
 ## Corda 4.4
 
