@@ -49,7 +49,7 @@ Download your required Node Explorer from the GitHub repository:
 
 [https://github.com/corda/node-explorer/releases](https://github.com/corda/node-explorer/releases)
 
-Once downloaded, run the installer on your machine in the way you would any other app.
+Run the installer on your machine in the way you would any other app.
 
 ## Access your node with Node Explorer
 
