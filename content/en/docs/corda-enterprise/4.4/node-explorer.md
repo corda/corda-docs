@@ -20,7 +20,7 @@ This version of Node Explorer replaces and improves upon the deprecated Corda Fi
 
 {{< /note >}}
 
-The Node Explorer is a visual user interface that allows you to see your node on the network and perform regular tasks.
+The Node Explorer is a visual user interface (UI) that allows you to see your node on the network and perform regular tasks. You can view the contents of your node's vault, and transaction history based real-time query. This includes transactions performed both inside and outside of the Node Explorer UI. 
 
 Use the Node Explorer to:
 
@@ -41,7 +41,7 @@ To use Node Explorer, you need:
 * your RCP login details for your local node
 * SSH credentials for access to a remote node.
 
-Node Explorer is available for Mac OSX, Windows, and Linux.  System requirements are matched to the requirements for operating a node. <!--- check this detail --->
+Node Explorer is available for Mac OSX, Windows, and Linux.  System requirements are matched to the requirements for operating a Corda node. <!--- check this detail --->
 
 ### Download and install
 
@@ -55,9 +55,7 @@ Once downloaded, run the installer on your machine in the way you would any othe
 
 You can access any node with Node Explorer using the node's login credentials. If you are accessing a local Node, you can use the node's RPC login details. To access a remote node, you need the SSH credentials.
 
-<!--- Add in login UI screenshot --->
-
-### Local node
+![login](resources/node-explorer/node-explorer-ssh-login.png "login")
 
 To log in to a local node:
 
@@ -67,13 +65,12 @@ To log in to a local node:
 
 3. In the Node Port field, enter the RPC connection address for your node. You can find this address by accessing your node through the command line - you will see the **RPC connection address** listed towards the top of your Node's key information.
 
-<!--- Add in commandline screenshot --->
+![RPC connection address](resources/node-explorer/node-explorer-cl.png "RPC connection address")
+
 4. Enter the username and password you would use to access your node.
 
 The Node Explorer dashboard is shown. If you are connecting to this node for the first time, you can now configure the explorer to access your node's CorDapps.
 <!--- Ask if this information is saved or if you have to do this every time you access NE --->
-
-### Remote node
 
 To log in to a remote node:
 
@@ -90,9 +87,11 @@ To log in to a remote node:
 The Node Explorer dashboard is shown. If you are connecting to this node for the first time, you can now configure the explorer to access your node's CorDapps.
 
 
-## Configure Node Explorer to access CorDapps on your node.
+## Configure Node Explorer to access CorDapps on your node
 
 Before you can start using Node Explorer to execute flows, you need to add the directory of your CorDapps. This enables the explorer to discover the required parameters for each flow.
+
+![Settings](resources/node-explorer/node-explorer-settings-temp.png "Settings")
 
 To add your CorDapp directory:
 
@@ -104,11 +103,14 @@ To add your CorDapp directory:
 
 You have configured Node Explorer so it can now access the CorDapps for this node.
 
+
 ## Use the dashboard to get an overview of your nodes
 
 The dashboard is the first screen that opens when you start Node Explorer.
 
 The dashboard shows details and diagnostics of two aspects of your node - **Node information** and **Network Parameters**.
+
+![Dashboard](resources/node-explorer/node-explorer-dash.png "Dashboard")
 
 The **Node information** panel tells you:
 
@@ -130,11 +132,15 @@ To see a geographical view of your network, click **Network** in the left hand m
 
 On the network screen, you can see your Node's location, and the location of peers on your network.
 
+![Map view](resources/node-explorer/node-explorer-map.png "Map view")
+
 ## Execute transaction flows
 
 Node Explorer allows you to execute transaction flows using the CorDapps you have available to your node.
 
 You can execute each flow by completing the required information in the UI, without any additional coding. Node Explorer identifies the required fields in your CorDapps, and presents them for you to complete.
+
+![Flows](resources/node-explorer/node-explorer-flow.png "Execute flow")
 
 To execute a transaction flow:
 
@@ -163,10 +169,12 @@ Select the required transaction. The transaction details are displayed, includin
 
 The screen is organised to show you the inputs and outputs of the new transaction state that exists as a result of an executed flow. There can be multiple inputs and outputs for each transaction - for example, when a loan has been issued and then partly repaid.
 
-<!--- Add screenshot here --->
+![Transaction explorer](resources/node-explorer/node-explorer-transactions.png "Transactions")
 
 ## Explore your node's vault
 
 The vault contains information about all of the transaction history on your node. You can use the dynamically populated filters to explore transactions of all types, for example transactions with a Contract state type of `CashState`.
 
-As the filters are generated dynamically, they will vary from node to node, depending on the kind of transactions that exist in the vault. 
+![Vault explorer](resources/node-explorer/node-explorer-vault.png "Vault")
+
+As the filters are generated dynamically, they vary from node to node, depending on the kind of transactions that exist in the vault.
