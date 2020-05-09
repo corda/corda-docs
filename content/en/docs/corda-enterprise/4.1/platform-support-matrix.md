@@ -53,8 +53,8 @@ for your deployment needs.
 6.x|
 |Suse Linux Enterprise Server|x86-64|12.x,
 11.x|
-|Ubuntu Linux|x86-64|16.10,
-16.04|
+|Ubuntu Linux|x86-64|16.04,
+18.04|
 |Oracle Linux|x86-64|7.x,
 6.x|
 
