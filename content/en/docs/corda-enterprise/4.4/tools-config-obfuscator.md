@@ -103,8 +103,6 @@ The obfuscation passphrase or seed can be provided by passing the --config-obfus
 
 
 
-The passphrase and seed can also be provided by setting environment variables. The environment variables are CONFIG_OBFUSCATION_PASSPHRASE and CONFIG_OBFUSCATION_SEED respectively. If both options via environment variables and options via the CLI are provided, the CLI options take precedence. The same environment variables are used by all components that use the obfuscator.
-
 ## Configuration directives
 
 The configuration directives described below can be placed arbitrarily within string properties in the configuration file, with a maximum of one per line.
@@ -164,6 +162,14 @@ de-obfuscated on the fly and interpreted like:
   // (...)
 }
 ```
+
+## Using environment variables
+
+add content
+
+How to use environment variables (`CONFIG_OBFUSCATION_PASSPHRASE`) to supply the obfuscation passphrase to obfuscate/de-obfuscate a config file
+
+The passphrase and seed can also be provided by setting environment variables. The environment variables are CONFIG_OBFUSCATION_PASSPHRASE and CONFIG_OBFUSCATION_SEED respectively. If both options via environment variables and options via the CLI are provided, the CLI options take precedence. The same environment variables are used by all components that use the obfuscator.
 
 ## Limitations
 
