@@ -33,7 +33,7 @@ It is also recommended to use the most up to date version of this tool for impro
 
 
 
-## Using the command-line tool
+## Obfuscate using the command-line tool
 
 The command-line tool is included as a JAR file, named `corda-tools-config-obfuscator-<version>.jar`.
 This tool takes as input the configuration file that is to be obfuscated, denoted `CONFIG_FILE` in
@@ -97,9 +97,36 @@ The node will de-obfuscate the included files automatically.
 The Corda Enterprise Network Manager (see the CENM section on [https://docs.corda.net/](https://docs.corda.net/)) does not currently support obfuscated configurations.
 {{< /warning >}}
 
+## De-obfuscate using the command-line tool
 
+The obfuscation passphrase or seed can be provided by passing the --config-obfuscation-passphrase and --config-obfuscation-seed flags respectively. The flags are the same for all components that use the obfuscator. These flags take 0 or 1 parameter. If a value is provided, that value is treated as the passphrase/seed. Otherwise, the user is prompted to provide the passphrase/seed on the terminal
+
+
+
+The passphrase and seed can also be provided by setting environment variables. The environment variables are CONFIG_OBFUSCATION_PASSPHRASE and CONFIG_OBFUSCATION_SEED respectively. If both options via environment variables and options via the CLI are provided, the CLI options take precedence. The same environment variables are used by all components that use the obfuscator.
 
 ## Configuration directives
+
+The configuration directives described below can be placed arbitrarily within string properties in the configuration file, with a maximum of one per line.
+
+For example:
+
+```json
+{
+  // (...)
+  "dataSourceProperties" : {
+    "dataSource" : {
+      "url" : "jdbc:h2:file:persistence;<encrypt{sensitive-options-go-here}>",
+      "user" : "<encrypt{your-database-username}>",
+      "password" : "<encrypt{your-secret-database-password}>"
+    },
+    "dataSourceClassName" : "org.h2.jdbcx.JdbcDataSource"
+  },
+  // (...)
+}
+```
+
+### Directive to indicate obfuscation areas
 
 To indicate parts of the configuration that should be obfuscated, we can place text markers on the form
 `<encrypt{...}>`, like so:
@@ -124,32 +151,16 @@ Which, after having been run through the obfuscation tool, would result in somet
 }
 ```
 
+### De-obfuscation based on configuration directive
+
 When run by a Corda node on a machine with the matching hardware address, the configuration would be
-deobfuscated on the fly and interpreted like:
+de-obfuscated on the fly and interpreted like:
 
 ```json
 {
   // (...)
   "p2pAddress": "somehost.com:10001",
   "keyStorePassword": "testpassword",
-  // (...)
-}
-```
-
-These directives can be placed arbitrarily within string properties in the configuration file, with a maximum of one per line.
-For instance:
-
-```json
-{
-  // (...)
-  "dataSourceProperties" : {
-    "dataSource" : {
-      "url" : "jdbc:h2:file:persistence;<encrypt{sensitive-options-go-here}>",
-      "user" : "<encrypt{your-database-username}>",
-      "password" : "<encrypt{your-secret-database-password}>"
-    },
-    "dataSourceClassName" : "org.h2.jdbcx.JdbcDataSource"
-  },
   // (...)
 }
 ```
