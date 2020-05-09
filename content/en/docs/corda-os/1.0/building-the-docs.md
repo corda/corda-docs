@@ -13,14 +13,16 @@ tags:
 title: Build the documentation
 ---
 
-# Overview
+
+# Build the docs
 
 The documentation source files are under the `../content` directory in the [corda-docs](https://github.com/corda/corda-docs/) repository, and is written in `markdown` format.
 
 The documentation output in HTML format is generated using [Hugo](https://github.com/gohugoio/hugo/releases). You can build the docs locally in seconds once you have set up your environment (see below).
 
+## Build the docs locally
 
-# Build the docs locally
+Steps:
 
 1. Download [Visual Studio Code](https://code.visualstudio.com/) or a markdown editor of your choice ([atom](https://atom.io/), for example).
 2. Download [Hugo](https://github.com/gohugoio/hugo/releases). Use the latest version, otherwise at least v0.65.
@@ -31,17 +33,17 @@ The documentation output in HTML format is generated using [Hugo](https://github
 7. Open the local docs site build on [http://localhost:1313](http://localhost:1313) (or whatever it says in the console) in your browser.
 8. Edit the documentation source files in `markdown` - all source files are in the `../content` directory in the repo structure. Each edit triggers an immediate page update on [http://localhost:1313](http://localhost:1313).
 
-# Contribute to documentation updates
+## Contribute to documentation updates
 
 To propose an update to the public released Corda docs, fork the [corda-docs](https://github.com/corda/corda-docs/) repository, make your changes, and submit a pull request targeting the `master` branch in the upstream repository from your fork.
 
-## Steps
+### Steps
 1. Fork the [corda-docs](https://github.com/corda/corda-docs/) repository and add it as upstream (or sync your existing fork with the upstream repo’s `master` branch - see below for instructions).
 2. Edit the documentation files in a new branch in your fork.
 3. Commit and push the changes to your fork.
 4. Create a pull request targeting the `master` branch in the upstream repo. Your pull request will be auto-assigned to R3's technical writing team for review.
 
-## Where are the files
+### Where are the files
 
 The documentation for all released versions of Corda OS, Corda Enterprise, and Corda Enterprise Network Manager (CENM) are organised in sub-directories, following the product flavour and then the version.
 
@@ -96,11 +98,11 @@ export HUGO_PARAMS_EDITOR=atom
 make hugo-serve-and-edit
 ```
 
-# How to keep your fork in sync with the upstream repo
+## Keep your fork in sync with the upstream repo
 
 To best way to keep your fork in sync with the upstream (original) repository is to add it as the `upstream` repo after you create the fork.
 
-## Add the upstream repo
+### Add the upstream repo
 
 To add `upstream`:
 
@@ -111,7 +113,7 @@ $ git remote add upstream git://github.com/corda/corda-docs.git
 
 You would normally only need do this once after you create the fork.
 
-## View your remotes
+### View your remotes
 
 To view your remotes:
 
@@ -128,17 +130,17 @@ upstream	git://github.com/corda/corda-docs.git (fetch)  #  THE ORIGINAL REPO
 upstream	git://github.com/corda/corda-docs.git (push)
 ```
 
-## Keep the upstream repo updated
+### Keep the upstream repo updated
 
 To keep the upstream updated (in other words, to fetch all the stuff from the upstream repo):
 
 `$ git fetch upstream`
 
-## Sync your fork
+### Sync your fork
 
 There are two ways in which you can do this - merge or rebase.
 
-### Merge the upstream with your fork
+#### Merge the upstream with your fork
 
 To sync your fork via merge:
 
@@ -148,7 +150,7 @@ This command will merge the latest changes from the `master` branch of the upstr
 
 To merge a different branch, replace `master` with the name of that branch for both repos.
 
-### Rebase the upstream with your fork
+#### Rebase the upstream with your fork
 
 `$ git rebase upstream/master`
 
