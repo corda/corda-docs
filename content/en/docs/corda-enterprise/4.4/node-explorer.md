@@ -40,7 +40,7 @@ Node Explorer is a standalone tool that accesses your node and its CorDapps usin
 To use Node Explorer, you need:
 
 * Access to a node, either locally or remotely.
-* Your RCP login details for your local node.
+* Your RPC login details for your local node.
 * SSH credentials for access to a remote node.
 
 Node Explorer is available for Mac OSX, Windows, and Linux.  System requirements are matched to the requirements for operating a Corda node.
@@ -55,15 +55,15 @@ Run the installer on your machine in the way you would any other app.
 
 ## Access your node with Node Explorer
 
-You can access any node with Node Explorer using the node's login credentials. If you are accessing a local node, you can use the node's RPC login details. To access a remote node, you need the SSH credentials.
+You can access any node with Node Explorer using the node's login credentials. If you are accessing a local node, or a remote node that is not protected with SSH, you can use the node's RPC login details. To access a remote node, protected by SSH, you also need the relevant port, username and password.
 
 ![login](resources/node-explorer/node-explorer-ssh-login.png "login")
 
-To log in to a local node:
+**To log in to a node without SSH credentials:**
 
 1. Open Node Explorer.
 
-2. In the Host Name field, type **localhost**.
+2. In the Host Name field, enter the name of the host for your node. If it is a local node on your machine, type **localhost**.
 
 3. In the **Node port** field, enter the RPC connection address for your node. You can find this address by accessing your node through the command line - you will see the **RPC connection address** listed towards the top of your node's key information.
 
@@ -73,17 +73,19 @@ To log in to a local node:
 
 Node Explorer dashboard is shown. If you are connecting to this node for the first time, you can now configure the explorer to access your node's CorDapps.
 
-To log in to a remote node:
+**To log in to a remote node using SSH credentials:**
 
 1. Open Node Explorer.
 
-2. In the login screen, check the **Use SSH** box.
+2. Enter the username and password you would use to access your node.
+
+3. Select the **Use SSH** box.
 
 Fields for SSH credentials are displayed.
 
-3. Enter the SSH Port for your remote node.
+4. Enter the SSH Port for your remote node.
 
-4. Enter the username and password
+5. Enter the username and password.
 
 Node Explorer dashboard is shown. If you are connecting to this node for the first time, you can now configure the explorer to access your node's CorDapps.
 
@@ -130,13 +132,23 @@ In the **Network parameters** panel you can see:
 
 To see a geographical view of your network, click **Network** in the left-hand side menu of the Dashboard screen.
 
+{{< note >}}
+
+
 On the network screen, you can see your Node's location, and the location of peers on your network.
 
 ![Map view](resources/node-explorer/node-explorer-map.png "Map view")
 
 ## Execute transaction flows
 
-Node Explorer allows you to execute transaction flows using the CorDapps you have available to your node.
+Node Explorer allows you to execute transaction flows using the CorDapps you have available on your node.
+
+
+{{< note >}}
+
+You can use Node Explorer to execute a range of commonly used flows, however not all flows can be executed this way. [Check the compatibility of your CorDapp's flow parameters before you begin](#accepted-flow-parameters).
+
+{{< /note >}}
 
 You can execute each flow by completing the required information in the UI, without any additional coding. Node Explorer identifies the required fields in your CorDapps, and presents them for you to complete.
 
@@ -152,7 +164,7 @@ To execute a transaction flow:
 
 3. In the **Execute flow** dialog box, select the required flow from the drop-down menu. This is a list of all available flows based on the CorDapps you have shared with Node Explorer.
 
-4. In the dialog box, enter the required parameters for your flow. The information requested here is dynamically populated using your CorDapp's parameters, so you can expect it to be different from flow to flow.
+4. In the dialog box, enter the required parameters for your flow. The information requested here is auto-generated according to your CorDapp's parameters, so you can expect it to be different from flow to flow. You should also [confirm that your flow parameters are accepted in Node Explorer](#accepted-flow-parameters) before you get started.
 
 5. Click **Execute**.
 
@@ -189,3 +201,34 @@ To access your node's vault:
 The **Vault explorer** screen is displayed.
 
 The filters in the Vault explorer are generated dynamically, they vary from node to node, depending on the kind of transactions that exist in the vault.
+
+## Accepted flow Parameters
+
+You can use Node Explorer to execute flows which have any of the following parameters:
+
+* net.corda.core.identity.Party
+* java.lang.String
+* java.lang.StringBuilder
+* java.lang.StringBuffer
+* java.lang.Long
+* long
+* java.lang.Integer
+* int
+* java.land.Double
+* double
+* java.lang.Float
+* float
+* java.math.BigDecimal
+* java.math.BigInteger
+* java.lang.Boolean
+* boolean
+* java.util.UUID
+* net.corda.core.contracts.UniqueIdentifier
+* net.corda.core.contracts.Amount
+* java.time.LocalDateTime
+* java.time.LocalDate
+* java.time.Instant
+* net.corda.core.crypto.SecureHash
+* java.util.List
+* java.util.Set
+* net.corda.core.utilities.OpaqueBytes
