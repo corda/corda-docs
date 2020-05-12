@@ -47,7 +47,7 @@ As a node operator, you must upgrade if any of the fixed issues listed below is 
 * Allow CRaSH shell to use safely the built-in "dashboard" command
 * Published the metering collection tool as part of the Corda Enterprise distribution
 * Fixed an issue in DNS resolution when using the Corda Health Survey
-* Allow the Health Survey tool to follow HTTP to HTTPS redirects when Identity Manager/Network Map addresses
+* Allow the Health Survey tool to follow HTTP to HTTPS redirects when resolving Identity Manager/Network Map addresses
 
 
 ## Corda Enterprise 4.3.1
