@@ -17,6 +17,25 @@ title: Release notes
 # Release notes
 
 
+## Corda Enterprise 4.2.1
+
+
+Corda Enterprise 4.2.1 is a patch release of Corda Enterprise that introduces fixes to known issues in Corda Enterprise 4.2.
+
+
+### Upgrade recommendation
+
+
+As a developer, you must upgrade to the latest version of Corda as soon as possible.
+
+As a node operator, you must upgrade if any of the fixed issues listed below is relevant to your work.
+
+
+### Fixed issues
+
+* A recent JDK update has broken the way we used delegated signatures for TLS handshakes. We have fixed this issue through patches on all affected Corda Enterprise versions (4.2+) to allow users to upgrade to the latest versions of compatible JDK distributions. Users that have not upgraded to one of the patched releases are advised not to upgrade to versions of Java 8 equal or higher than `8u252`.
+
+
 ## Corda Enterprise 4.2
 
 This release extends the [Corda Enterprise 4.1 release](https://docs.corda.net/docs/corda-enterprise/4.1/release-notes-enterprise.html)
