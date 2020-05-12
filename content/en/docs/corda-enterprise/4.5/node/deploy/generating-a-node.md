@@ -35,7 +35,7 @@ The remaining files and directories described in node-structure will be generate
 
 ## Automatically generating nodes
 
-Corda provides two gradle plugins called `Cordform` and `Dokerform` that allow you to automatically generate and configure a set of nodes for testing and demos. The `Dockerform` is a sister task of `Cordform` that provides an extra file allowing you to easily spin up nodes using `docker-compose`. This creates a docker-compose file to control de deployment of Corda nodes and databases by running a single command, whereas in `Cordform` you need to this manually one-by-one. However, `Dockerform` relies on Docker to be installed on the local host, whereas `Cordform` does not have this dependency.
+Corda provides two gradle plugins called `Cordform` and `Dokerform` that allow you to automatically generate and configure a set of nodes for testing and demos. The `Dockerform` is a sister task of `Cordform` that provides an extra file allowing you to easily spin up nodes using `docker-compose`. This creates a docker-compose file to control de deployment of Corda nodes and databases by running a single command, whereas in `Cordform` you need to this manually one-by-one. However, `Dockerform` relies on Docker to be installed on the local host, whereas `Cordform` does not have this dependency. 
 
 ## The Cordform task
 
@@ -529,7 +529,7 @@ services:
 
 ### Specifying an external database
 
-You can configure `Dockerform` to use a standalone database to test with non-H2 databases. For example, to use PostgresSQL, you need to make the following changes to your Cordapp project:
+You can configure `Dockerform` to use a standalone database to test with non-H2 databases. For example, to use PostgresSQL, you need to make the following changes to your Cordapp project: 
 
 * Create a file called `postgres.gradle` in your Cordapp directory and insert the following code block:
 
@@ -681,7 +681,7 @@ EOSQL
 }
 ```
 
-In the `build.gradle` file:
+In the `build.gradle` file: 
 * Add the gradle task `generateInitScripts` to `dependsOn` list of `prepareDockerNodes` task;
 * Add the `dockerConfig` element and initialise it with `postgres` block as follows:
 
@@ -693,21 +693,21 @@ task prepareDockerNodes(type: net.corda.plugins.Dockerform, dependsOn: ['jar',  
     node {
         [...]
     }
-
+    
     // The postgres block from the postgres.gradle file
     dockerConfig = postgres
 }
 ```
 
-The `postgres.gradle` file includes:
+The `postgres.gradle` file includes: 
 * A gradle task `generateInitScripts` to generate the Postgres Docker image files;
-* A set of variables to initialise the Postgres Docker image.
+* A set of variables to initialise the Postgres Docker image. 
 
-Two files are necessary to setup the external database, which are placed in the `build` directory:
+Two files are necessary to setup the external database, which are placed in the `build` directory: 
 * `Postgres_Dockerfile` :  a wrapper for the base Postgres Docker image;
 * `Postgres_init.sh` :  a shell script to initialise the database.
 
-The `Postgres_Dockerfile` is referenced in the `docker-compose.yml` file, and allows for a number of arguments to configure the Docker image.
+The `Postgres_Dockerfile` is referenced in the `docker-compose.yml` file, and allows for a number of arguments to configure the Docker image. 
 
 The following parameters can be configured in the `postgres.gradle` file:
 
@@ -735,11 +735,11 @@ To create the nodes defined in our `prepareDockerNodes` gradle task, run the fol
 * Linux/macOS: `./gradlew prepareDockerNodes`
 * Windows: `gradlew.bat prepareDockerNodes`
 
-This will create the nodes in the `build/nodes` directory. There will be a node directory generated for each node defined in the `prepareDockerNodes` task. The task will also create a `docker-compose.yml` file in the `build/nodes` directory.
+This will create the nodes in the `build/nodes` directory. There will be a node directory generated for each node defined in the `prepareDockerNodes` task. The task will also create a `docker-compose.yml` file in the `build/nodes` directory. 
 
 If you configure an external database as detailed above, a `Postgres_Dockerfile` file and `Postgres_init.sh` file will be generated in the `build` directory. If you make any changes to your CorDapp source or `prepareDockerNodes` task, you will need to re-run the task to see the changes take effect.
 
-Each Corda node will be associated with a Postgres database. There will not be two or more Corda nodes connecting to the same database. While there is no maximum number of nodes you can deploy with `Dockerform`, you are constrained by the maximum available resources on the machine running this task as well as the overhead introduced by each started Docker container. All the started nodes run in the same Docker overlay network.
+Each Corda node will be associated with a Postgres database. There will not be two or more Corda nodes connecting to the same database. While there is no maximum number of nodes you can deploy with `Dockerform`, you are constrained by the maximum available resources on the machine running this task as well as the overhead introduced by each started Docker container. All the started nodes run in the same Docker overlay network. 
 
 The connection settings to the Postgres database are provided to each node through the `postgres.gradle` file. The Postgres JDBC driver is provided via Maven as part of the `cordaDrive` gradle configuration, which is also specified in the dependencies block of the `postgres.gradle` file.
 
