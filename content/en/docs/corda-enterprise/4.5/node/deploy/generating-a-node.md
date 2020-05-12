@@ -496,7 +496,7 @@ task prepareDockerNodes(type: net.corda.plugins.Dockerform, dependsOn: ['jar']) 
             adminAddress("localhost:10023")
         }
         rpcUsers = [[user: "user1", "password": "test", "permissions": ["ALL"]]]
-      }
+    }
     // This property needs to be outside the node {...} elements
     dockerImage = "corda/corda-zulu-java1.8-4.4"
 }
