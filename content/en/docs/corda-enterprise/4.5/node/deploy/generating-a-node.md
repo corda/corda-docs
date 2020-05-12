@@ -456,6 +456,7 @@ The nodes' webservers will not be started. Instead, you should interact with eac
 
 Where `<NUMBER>` is the port you want to open to SSH into the shell.
 
+
 The Docker image associated with each node can be configured in the `Dockerform` task. This will initialise *each* node in the `Dockerform` task with the specified Docker image. If you need nodes with different Docker images, you can edit the `docker-compose.yml` file with your preferred image.
 
 To run the Dockerform task, follow these steps:
@@ -497,6 +498,7 @@ task prepareDockerNodes(type: net.corda.plugins.Dockerform, dependsOn: ['jar']) 
         }
         rpcUsers = [[user: "user1", "password": "test", "permissions": ["ALL"]]]
     }
+
     // This property needs to be outside the node {...} elements
     dockerImage = "corda/corda-zulu-java1.8-4.4"
 }
