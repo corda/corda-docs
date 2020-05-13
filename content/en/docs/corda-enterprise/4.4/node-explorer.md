@@ -134,6 +134,9 @@ To see a geographical view of your network, click **Network** in the left-hand s
 
 {{< note >}}
 
+The geographical location of each node is based on the [`locality` property of the node's registered CordaX500 name](https://api.corda.net/api/corda-os/4.4/html/api/kotlin/corda/net.corda.core.identity/-corda-x500-name/index.html)
+
+{{< /note >}}
 
 On the network screen, you can see your Node's location, and the location of peers on your network.
 
