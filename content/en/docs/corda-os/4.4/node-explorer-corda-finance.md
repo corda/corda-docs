@@ -12,10 +12,12 @@ menu:
     identifier: corda-os-4-4-node-explorer-retired
     parent: corda-os-4-4-tools-index
     weight: 1050
-tags:
-- node
-- explorer
-title: Node Explorer retired
+    tags:
+    - node
+    - explorer
+    - deprecated
+    - retired
+    title: Node Explorer (Corda Finance - retired)
 ---
 
 

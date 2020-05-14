@@ -70,7 +70,13 @@ You can access any node with Node Explorer using the node's login credentials. I
 
 2. In the **Host name** field, enter the name of the host for your node. If it is a local node on your machine, type **localhost**.
 
-3. In the **Node port** field, enter the RPC connection address for your node. You can find this address by accessing your node through the command line - you will see the **RPC connection address** listed towards the top of your node's key information.
+3. In the **Node port** field, enter the RPC connection address for your node.
+
+{{< note >}}
+
+You can find this address by accessing your node through the command line - you will see the **RPC connection address** listed towards the top of your node's key information.
+
+{{< /note >}}
 
 ![RPC connection address](resources/node-explorer/node-explorer-cl.png "RPC connection address")
 
