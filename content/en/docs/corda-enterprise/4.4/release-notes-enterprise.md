@@ -32,7 +32,7 @@ As a node operator, you should upgrade to the [latest released version of Corda]
 
 * A recent JDK update has broken the way we used delegated signatures for TLS (Transport Layer Security) handshakes. We have fixed this issue through patches on all affected Corda Enterprise versions (4.2+) to allow users to upgrade to the latest versions of compatible JDK distributions. If you have not upgraded to one of the patched releases yet, do not upgrade to Java 8 version `8u252` or higher.
 * Fixed an issue to prevent `IndexOutOfBoundsException` from being thrown when serialising a `FlowAsyncOperation` that has maintained a reference to a `FlowLogic`. This issue occurred when constructing a `FlowAsyncOperation` from a `FlowExternalOperation` [[CORDA-3704](https://r3-cev.atlassian.net/browse/CORDA-3704)].
-* Removed references to unavailable man command in CRaSH and fixed syntax of output-format command [[CORDA-3688](https://r3-cev.atlassian.net/browse/CORDA-3688)].
+* Removed references to unavailable `man` command in CRaSH and fixed syntax of `output-format` command [[CORDA-3688](https://r3-cev.atlassian.net/browse/CORDA-3688)].
 * Resolved a race condition in `FlowLogic.waitForLedgerCommit`.
 * Addressed the following problems with the JPA notary:
     * Prevent database connection leak on unexpected DB exceptions.
