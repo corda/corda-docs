@@ -90,14 +90,11 @@ Note also that `HARDWARE_ADDRESS` is optional.
 {{< note >}}
 The tool works on both HOCON and JSON files. Include directives (i.e. `include "other.conf"`) are not followed by the
 tool. If you wish to obfuscate fields in multiple files, you will need to run the tool against each file individually.
-The node will de-obfuscate the included files automatically.
+The node will deobfuscate the included files automatically.
 {{< /note >}}
 
-{{< warning >}}
-The Corda Enterprise Network Manager (see the CENM section on [https://docs.corda.net/](https://docs.corda.net/)) does not currently support obfuscated configurations.
-{{< /warning >}}
 
-## De-obfuscate using the command-line tool
+## deobfuscate using the command-line tool
 
 The obfuscation passphrase or seed can be provided by passing the --config-obfuscation-passphrase and --config-obfuscation-seed flags respectively. The flags are the same for all components that use the obfuscator. These flags take 0 or 1 parameter. If a value is provided, that value is treated as the passphrase/seed. Otherwise, the user is prompted to provide the passphrase/seed on the terminal
 
@@ -149,10 +146,9 @@ Which, after having been run through the obfuscation tool, would result in somet
 }
 ```
 
-### De-obfuscation based on configuration directive
+### Deobfuscation based on configuration directive
 
-When run by a Corda node on a machine with the matching hardware address, the configuration would be
-de-obfuscated on the fly and interpreted like:
+When run by a Corda node or service on a machine with the matching hardware address, the configuration would be deobfuscated on the fly and interpreted as shown in the example below:
 
 ```json
 {
@@ -163,16 +159,16 @@ de-obfuscated on the fly and interpreted like:
 }
 ```
 
-## Using environment variables
+## Obfuscate and deobfuscate using environment variables
 
 add content
 
-How to use environment variables (`CONFIG_OBFUSCATION_PASSPHRASE`) to supply the obfuscation passphrase to obfuscate/de-obfuscate a config file
+How to use environment variables (`CONFIG_OBFUSCATION_PASSPHRASE`) to supply the obfuscation passphrase to obfuscate/deobfuscate a config file
 
 The passphrase and seed can also be provided by setting environment variables. The environment variables are CONFIG_OBFUSCATION_PASSPHRASE and CONFIG_OBFUSCATION_SEED respectively. If both options via environment variables and options via the CLI are provided, the CLI options take precedence. The same environment variables are used by all components that use the obfuscator.
 
 ## Limitations
 
 The `<encrypt{}>` blocks can only appear inside string properties. They cannot be used to obfuscate entire
-configuration blocks. Otherwise, the node will not be able to decipher the obfuscated content. More explicitly,
+configuration blocks. Otherwise, the Corda node or service will not be able to decipher the obfuscated content. More explicitly,
 this means that the blocks can only appear on the right hand-side of the colon, and for string properties only.
