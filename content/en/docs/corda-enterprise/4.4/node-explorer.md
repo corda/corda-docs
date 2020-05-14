@@ -55,21 +55,21 @@ Run the installer on your machine in the way you would any other app.
 
 ## Access your node with Node Explorer
 
-You can access any node with Node Explorer using the node's login credentials. If you are accessing a local node, or a remote node that is not protected with SSH, you can use the node's RPC login details. To access a remote node, protected by SSH, you also need the relevant port, username and password.
+You can access any node with Node Explorer using the node's login credentials. If you are accessing a local node, or a remote node that is not protected with SSH, you can use the node's RPC login details. To access a remote node, protected by SSH, you also need the relevant port, username, and password.
 
 ![login](resources/node-explorer/node-explorer-ssh-login.png "login")
 
-**To log in to a node without SSH credentials:**
+**To log in to a local or remote node without SSH credentials:**
 
 1. Open Node Explorer.
 
-2. In the Host Name field, enter the name of the host for your node. If it is a local node on your machine, type **localhost**.
+2. In the **Host name** field, enter the name of the host for your node. If it is a local node on your machine, type **localhost**.
 
 3. In the **Node port** field, enter the RPC connection address for your node. You can find this address by accessing your node through the command line - you will see the **RPC connection address** listed towards the top of your node's key information.
 
 ![RPC connection address](resources/node-explorer/node-explorer-cl.png "RPC connection address")
 
-4. Enter the username and password you would use to access your node.
+4. In the **Username** and **Password** fields, enter the username and password you would use to access your node.
 
 Node Explorer dashboard is shown. If you are connecting to this node for the first time, you can now configure the explorer to access your node's CorDapps.
 
@@ -77,24 +77,26 @@ Node Explorer dashboard is shown. If you are connecting to this node for the fir
 
 1. Open Node Explorer.
 
-2. Enter the username and password you would use to access your node.
+2. In the **Host name** field enter your remote server address.
 
-3. Select the **Use SSH** box.
+3. In the **Node port** field, enter the node port value for your remote node.
 
-Fields for SSH credentials are displayed.
+4. In the **Username** and **Password** fields, enter the username and password you would use to access your node.
 
-4. Enter the SSH Port for your remote node.
+5. Select the **Use SSH** box. Fields for SSH credentials are displayed.
 
-5. Enter the username and password.
+6. In the **SSH port** field, enter the SSH port for your remote node.
 
-Node Explorer dashboard is shown. If you are connecting to this node for the first time, you can now configure the explorer to access your node's CorDapps.
+7. In the **SSH username** and **SSH password** fields, enter the SSH username and password.
+
+The Node Explorer dashboard is shown. If you are connecting to this node for the first time, you can now configure the explorer to access your node's CorDapps.
 
 
 ## Configure Node Explorer to access CorDapps on your node
 
 Before you can start using Node Explorer to execute flows, you need to add the directory of your CorDapps. This enables the explorer to discover the required parameters for each flow.
 
-![Settings](resources/node-explorer/node-explorer-settings-temp.png "Settings")
+![Settings](resources/node-explorer/node-explorer-settings.png "Settings")
 
 To add your CorDapp directory:
 
