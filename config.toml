@@ -34,8 +34,10 @@ pygmentsStyle = "emacs"
 # https://gohugo.io/variables/git/
 enableGitInfo = true
 
+# GA was added here: /themes/hugo-r3-theme/scripts/vendor/googleanalytics.js
+# We are NOT using the built-in Hugo functionality commented out below
 # https://gohugo.io/templates/internal/#google-analytics
-googleAnalytics = "UA-87760032-1"
+# googleAnalytics = "UA-87760032-1"
 
 # https://gohugo.io/getting-started/configuration-markup#highlight
 [markup]
