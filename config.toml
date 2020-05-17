@@ -34,6 +34,8 @@ pygmentsStyle = "emacs"
 # https://gohugo.io/variables/git/
 enableGitInfo = true
 
+# GA was added here: /themes/hugo-r3-theme/scripts/vendor/googleanalytics.js
+# We are NOT using the built-in Hugo functionality commented out below
 # https://gohugo.io/templates/internal/#google-analytics
 # googleAnalytics = "UA-87760032-1"
 
@@ -88,6 +90,7 @@ default_tab = "java"
 
 ogimage = "/images/png/corda.png"
 
+# hack - these values are asigned in global.html
 algolia_appId = "UX2KMUWFAL"
 algolia_apiKey = "1fe3367db02689b4aeebc59efad5abaf"
 algolia_index = "docs.corda.net"
