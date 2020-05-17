@@ -23,20 +23,14 @@ The purpose of the Configuraton Obfuscator tool is to obfuscate sensitive inform
 
 It takes a seed and a passphrase as input to obfuscate a given configuration file. To deobfuscate that configuration file, you must provide the same seed and passphrase to any process that accepts obfuscated configurations.
 
-{{< note >}}
 The Configuration Obfuscator makes node installation less vulnerable to someone trawling plain text files, searching for passwords and credentials of resources that they should not have access to in the first place.
-{{< /note >}}
 
 {{< warning >}}
-Although the Configuration Obfuscator does protect the node against trawling attacks, it does not ensure that password protection is completely secure.
-
-For improved security, always use the [latest released version](https://docs.corda.net/docs/corda-enterprise/tools-config-obfuscator.html) of the tool.
+Although the Configuration Obfuscator does protect the node against trawling attacks, it does not ensure that password protection is completely secure. For improved security, always use the [latest released version](https://docs.corda.net/docs/corda-enterprise/tools-config-obfuscator.html) of the tool.
 {{< /warning >}}
 
 {{< note >}}
-The Configuraton Obfuscator tool can only be used with Corda Enterprise 4.4 (and above) node and Firewall configuration files.
-
-The tool is also capable of deobfuscating configuration files obfuscated with Corda Enterprise versions older than 4.4.
+The Configuraton Obfuscator tool can only be used with Corda Enterprise 4.4 (and above) node and Firewall configuration files. The tool is also capable of deobfuscating configuration files obfuscated with Corda Enterprise versions older than 4.4.
 {{< /note >}}
 
 ## Obfuscate/deobfuscate using the command-line tool
@@ -154,7 +148,7 @@ $ Enter value for --config-obfuscation-passphrase (The passphrase used in the ke
 
 ### Example of an obfuscated node configuration file
 
-```
+```json
 p2pAddress="localhost:10005"
 rpcSettings {
   address="localhost:10006"
@@ -207,7 +201,7 @@ $ export CONFIG_OBFUSCATION_SEED=my-seed; export CONFIG_OBFUSCATION_PASSPHRASE=m
 
 ## Configuration directives
 
-The configuration directives described below can be placed arbitrarily within string properties in the configuration file, with a maximum of one per line.
+The configuration directives described below can be placed arbitrarily within 'string' properties in the target configuration file, with a maximum of one per line.
 
 For example:
 
@@ -228,8 +222,7 @@ For example:
 
 ### Directive to indicate obfuscation areas
 
-To indicate parts of the configuration that should be obfuscated, we can place text markers on the form
-`<encrypt{...}>`, like so:
+To indicate parts of the configuration that should be obfuscated, you can place text markers in the form `<encrypt{...}>`. For example:
 
 ```json
 {
@@ -240,7 +233,7 @@ To indicate parts of the configuration that should be obfuscated, we can place t
 }
 ```
 
-Which, after having been run through the obfuscation tool, would result in something like:
+The example below shows how this area of the configuration file will look like after it is run through the obfuscation tool:
 
 ```json
 {
@@ -253,7 +246,7 @@ Which, after having been run through the obfuscation tool, would result in somet
 
 ### Deobfuscation based on configuration directives
 
-When run by a Corda node or service on a machine with the matching hardware address, the configuration would be deobfuscated on the fly and interpreted as shown in the example below:
+When run by a Corda node or service on a machine with the matching hardware address, the configuration is deobfuscated on the fly and interpreted as shown in the example below:
 
 ```json
 {
@@ -266,7 +259,7 @@ When run by a Corda node or service on a machine with the matching hardware addr
 
 ### Limitations
 
-The `<encrypt{}>` blocks can only appear inside string properties - they cannot be used to obfuscate entire configuration blocks.
+The `<encrypt{}>` blocks can only appear inside 'string' properties - they cannot be used to obfuscate entire configuration blocks.
 
 Otherwise, the Corda node or service will not be able to decipher the obfuscated content.
 
