@@ -1,6 +1,9 @@
 ---
 aliases:
 - /releases/4.4/tools-config-obfuscator.html
+- /docs/corda-enterprise/head/tools-config-obfuscator.html
+- /docs/corda-enterprise/tools-config-obfuscator.html
+- /docs/cenm/config-obfuscation-tool.html
 - /docs/cenm/1.2/config-obfuscation-tool.html
 date: '2020-01-08T09:59:25Z'
 menu:
@@ -30,13 +33,17 @@ Although the Configuration Obfuscator does protect the node against trawling att
 For improved security, always use the [latest released version](https://docs.corda.net/docs/corda-enterprise/tools-config-obfuscator.html) of the tool.
 {{< /warning >}}
 
-## How to obfuscate a configuration file
+{{< note >}}
+The Configuraton Obfuscator tool can only be used with Corda Enterprise 4.4 (and above) node and Firewall configuration files.
 
-### Obfuscate using the command-line tool
+The tool is also capable of deobfuscating configuration files obfuscated with Corda Enterprise versions older than 4.4.
+{{< /note >}}
+
+## Obfuscate/deobfuscate using the command-line tool
 
 The command-line tool is included in Corda Enterprise as a `.jar` file with a name `corda-tools-config-obfuscator-<version>.jar`, where `<version>` stands for the Corda Enterprise version (for example, `corda-tools-config-obfuscator-4.4.jar` or `corda-tools-config-obfuscator-4.4.2.jar`).
 
-#### Usage
+### Usage
 
 The paramaters, options, and commands that you can use when running the command-line tool, are shown below.
 
@@ -47,7 +54,7 @@ config-obfuscator [-hiV] [--config-obfuscation-passphrase[=<cliPassphrase>]]
                   [HARDWARE_ADDRESS]
 ```
 
-##### Input parameters
+### Input parameters
 
 The command-line tool takes following parameters as input:
 
@@ -56,31 +63,7 @@ The command-line tool takes following parameters as input:
 * `--config-obfuscation-seed[=<cliSeed>]` is the seed used in the key derivation function to create a salt. Leave blank to provide input interactively.
 * `[HARDWARE_ADDRESS]` is the primary hardware address of the machine on which the configuration file resides. By default, the MAC address of the running machine is used - to explicitly use that, set the value to `DEFAULT`. Note that this parameter provides backwards compatibility but should not be used in cases where backwards compatibility is not required. This is an optional parameter.
 
-#### How to pass the seed and passphrase in the command-line tool
-
-The command-line tool takes a seed and a passphrase as input parameters (as shown above), and uses them to derive a 256bit AES encryption key.
-
-{{< warning >}}
-For backwards compatibility reasons, it is possible to run the tool without passing the seed and passphrase - in that case, the tool uses default seed and passphrase values.
-However, we strongly recommend that you always set the seed and passphrase in order to obfuscate configuration files in the most secure way.
-{{< /warning >}}
-
-The following example shows a run of the command-line tool with a seed and a passphrase passed explicitly:
-
-```bash
-$ java -jar corda.jar --config-obfuscation-seed my-seed --config-obfuscation-passphrase my-passphrase
-
-```
-
-The following example shows a run of the command-line tool with the seed and passphrase values left blank - the user is prompted to provide these interactively:
-
-```bash
-$ java -jar corda.jar --config-obfuscation-seed my-seed --config-obfuscation-passphrase my-passphrase
-$ Enter value for --config-obfuscation-seed (The seed used in the key derivation function to create a salt):
-$ Enter value for --config-obfuscation-passphrase (The passphrase used in the key derivation function when creating an AES key):
-```
-
-##### Input options
+### Input options
 
 The following options are available when running the command-line tool:
 
@@ -109,7 +92,7 @@ $ java -jar corda-tools-config-obfuscator-4.4.2.jar node_template.conf -w
 {{< /note >}}
 
 
-##### Input commands
+### Input commands
 
 You can use the following command to install 'alias' and 'autocompletion' for `bash` and `zsh`:
 
@@ -121,27 +104,106 @@ For example:
 $ java -jar corda-tools-config-obfuscator-4.4.2.jar install-shell-extensions
 ```
 
-### Obfuscate using environment variables
+### How to pass the seed and passphrase to the Obfuscation Tool using the command-line tool options
 
-add content
+As described above, the command-line tool takes a seed and a passphrase as input parameters, and uses them to derive a 256bit AES encryption key.
 
-How to use environment variables (`CONFIG_OBFUSCATION_PASSPHRASE`) to supply the obfuscation passphrase to obfuscate/deobfuscate a config file
+* The option (flag) for the seed is `--config-obfuscation-seed[=<cliSeed>]`.
+* The option (flag) of the passphrase is `--config-obfuscation-passphrase[=<cliPassphrase>]`.
 
-The passphrase and seed can also be provided by setting environment variables. The environment variables are CONFIG_OBFUSCATION_PASSPHRASE and CONFIG_OBFUSCATION_SEED respectively. If both options via environment variables and options via the CLI are provided, the CLI options take precedence. The same environment variables are used by all components that use the obfuscator.
+If you provide a value in your command, that value is treated as the seed/passphrase. Otherwise, you are prompted to provide the seed/passphrase in the command prompt.
 
-## How to deobfuscate a configuration file
+{{< warning >}}
+For backwards compatibility reasons, it is possible to run the tool without passing the seed and passphrase - in that case, the tool uses default seed and passphrase values.
+However, we strongly recommend that you always set the seed and passphrase in order to obfuscate configuration files in the most secure way.
+{{< /warning >}}
 
-## Deobfuscate using the command-line tool
+The following example shows a run of the command-line tool with a seed and a passphrase passed explicitly:
 
-The obfuscation passphrase or seed can be provided by passing the --config-obfuscation-passphrase and --config-obfuscation-seed flags respectively. The flags are the same for all components that use the obfuscator. These flags take 0 or 1 parameter. If a value is provided, that value is treated as the passphrase/seed. Otherwise, the user is prompted to provide the passphrase/seed on the terminal
+```bash
+$ java -jar tools/config-obfuscator/build/libs/corda-tools-config-obfuscator-4.4.2.jar --config-obfuscation-seed my-seed --config-obfuscation-passphrase my-passphrase -w node.conf /p/tmp/node-non-obfuscated.conf
+```
 
-## Deobfuscate using environment variables
+The following example shows a run of the command-line tool with the seed and passphrase values left blank - the user is prompted to provide these interactively:
 
-add content
+```bash
+$ java -jar tools/config-obfuscator/build/libs/corda-tools-config-obfuscator-4.4.2.jar --config-obfuscation-seed --config-obfuscation-passphrase -w node.conf /p/tmp/node-non-obfuscated.conf
+$ Enter value for --config-obfuscation-seed (The seed used in the key derivation function to create a salt):
+$ Enter value for --config-obfuscation-passphrase (The passphrase used in the key derivation function when creating an AES key):
+```
 
-How to use environment variables (`CONFIG_OBFUSCATION_PASSPHRASE`) to supply the obfuscation passphrase to obfuscate/deobfuscate a config file
+### How to pass the seed and passphrase to a node or Firewall component using the command-line tool options
 
-The passphrase and seed can also be provided by setting environment variables. The environment variables are CONFIG_OBFUSCATION_PASSPHRASE and CONFIG_OBFUSCATION_SEED respectively. If both options via environment variables and options via the CLI are provided, the CLI options take precedence. The same environment variables are used by all components that use the obfuscator.
+To pass the obfuscation seed and passphrase to a node or Firewall component using the command-line tool, just use the `--config-obfuscation-seed` and `--config-obfuscation-passphrase` flags, respectively, in your Node or Firewall run command.
+
+These flags are the same for all components that use the Configuration Obfuscator tool.
+
+The following example shows how to pass a seed and a passphrase explicitly to a node component using the command-line tool:
+
+```bash
+$ java -jar corda.jar --config-obfuscation-seed my-seed --config-obfuscation-passphrase my-passphrase
+
+```
+The following example shows how to pass a seed and a passphrase to a node component using the command-line tool by leaving the flag values blank to invoke a prompt:
+
+```bash
+$ java -jar corda.jar --config-obfuscation-seed --config-obfuscation-passphrase
+$ Enter value for --config-obfuscation-seed (The seed used in the key derivation function to create a salt):
+$ Enter value for --config-obfuscation-passphrase (The passphrase used in the key derivation function when creating an AES key):
+```
+
+### Example of an obfuscated node configuration file
+
+```
+p2pAddress="localhost:10005"
+rpcSettings {
+  address="localhost:10006"
+  adminAddress="localhost:10015"
+}
+security {
+  authService {
+    dataSource {
+      type=INMEMORY
+      users=[
+        {
+          password="<encrypt{my-pass}>"
+          permissions=[
+            ALL
+          ]
+          user=bankUser
+        }
+      ]
+    }
+  }
+}
+```
+
+## Obfuscate/deobfuscate using environment variables
+
+Another way to provide the seed and passphrase to obfuscate/deobfuscate a configuration file is to set the following environment variables:
+
+* `CONFIG_OBFUSCATION_SEED`
+* `CONFIG_OBFUSCATION_PASSPHRASE`
+
+{{< note >}}
+If you use both command-line options and environment variables to pass the seed and passphrase, the command-line options take precedence.
+{{< /note >}}
+
+{{< note >}}
+The same environment variables are used by all components that use the Configuration Obfuscator tool.
+{{< /note >}}
+
+### How to pass the seed and passphrase to the Obfuscation Tool using environment variables
+
+```bash
+$ export CONFIG_OBFUSCATION_SEED=my-seed; export CONFIG_OBFUSCATION_PASSPHRASE=my-passphrase; java -jar tools/config-obfuscator/build/libs/corda-tools-config-obfuscator-4.4.2.jar -w node.conf /p/tmp/node-non-obfuscated.conf
+```
+
+### How to pass the seed and passphrase to a node or Firewall component using environment variables
+
+```bash
+$ export CONFIG_OBFUSCATION_SEED=my-seed; export CONFIG_OBFUSCATION_PASSPHRASE=my-passphrase; java -jar corda.jar
+```
 
 ## Configuration directives
 
@@ -189,7 +251,7 @@ Which, after having been run through the obfuscation tool, would result in somet
 }
 ```
 
-### Deobfuscation based on configuration directive
+### Deobfuscation based on configuration directives
 
 When run by a Corda node or service on a machine with the matching hardware address, the configuration would be deobfuscated on the fly and interpreted as shown in the example below:
 
@@ -202,11 +264,10 @@ When run by a Corda node or service on a machine with the matching hardware addr
 }
 ```
 
-## Limitations
+### Limitations
 
 The `<encrypt{}>` blocks can only appear inside string properties - they cannot be used to obfuscate entire configuration blocks.
 
 Otherwise, the Corda node or service will not be able to decipher the obfuscated content.
 
-More explicitly,
-this means that the blocks can only appear on the right hand-side of the colon, and for string properties only.
+More explicitly, this means that the blocks can only appear on the right-hand side of the colon, and for 'string' properties only.
