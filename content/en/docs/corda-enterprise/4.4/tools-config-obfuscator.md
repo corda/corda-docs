@@ -1,6 +1,8 @@
 ---
 aliases:
 - /releases/4.4/tools-config-obfuscator.html
+- /docs/corda-enterprise/head/tools-config-obfuscator.html
+- /docs/corda-enterprise/tools-config-obfuscator.html
 date: '2020-01-08T09:59:25Z'
 menu:
   corda-enterprise-4-4:
@@ -94,7 +96,7 @@ The node will de-obfuscate the included files automatically.
 {{< /note >}}
 
 {{< warning >}}
-The Corda Enterprise Network Manager ([https://docs.cenm.r3.com/](https://docs.cenm.r3.com/)) does not currently support obfuscated configurations.
+The Corda Enterprise Network Manager (see the CENM section on [https://docs.corda.net/](https://docs.corda.net/)) does not currently support obfuscated configurations.
 {{< /warning >}}
 
 
@@ -159,4 +161,3 @@ For instance:
 The `<encrypt{}>` blocks can only appear inside string properties. They cannot be used to obfuscate entire
 configuration blocks. Otherwise, the node will not be able to decipher the obfuscated content. More explicitly,
 this means that the blocks can only appear on the right hand-side of the colon, and for string properties only.
-
