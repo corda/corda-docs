@@ -9,25 +9,27 @@ title: Introducing the Tokens SDK
 ---
 # The Token SDK
 
-Use the token SDK to make CorDapps which use can **issue**, **move**, and **redeem** tokens that represent assets on the ledger.
+The Token SDK provides you with the fastest, and easiest way to create tokens that represent assets on your network. With it, you can add functionality to CorDapps so they can **issue**, **move**, and **redeem** tokens on a ledger. With these three basic actions, you can make a token for virtually any asset - tangible or conceptual - that you can imagine.  
 
-The tokens SDK is made up of CorDapp JARs for the following purposes:
+## What's in the Token SDK
 
-* **Contracts** which contains the base types, states and contracts
-* **Workflows** which contains flows for issuing, moving and redeeming tokens as well as utilities for the above operations.
-* **Money**  which contains token type definitions for various currencies
-* **Selection**  that contains both database and in memory token selection of fungible tokens
+When you install the Token SDK, you add the dependencies to your CorDapp that allow you to write the required The Token SDK is made up of JARs that contain the required code for these essential token elements:
+
+* **Contracts**, which contains the base types, states and contracts
+* **Workflows**, which contains flows for issuing, moving and redeeming tokens
+* **Money**,  which contains token type definitions for various fiat and digital currencies
+* **Selection**,  which contains both database and in memory token selection of fungible tokens
 
 
 ## The anatomy of a token
 
-You can create tokens in Corda can represent anything of value that exists off-ledger, like diamonds, or a national currency. You an also create tokens that represent a currency that is native to the ledger itself.
+You can create tokens in Corda to represent anything of value. This could be a representation of an asset that exists outside of your network, like diamonds, or US dollars, or it could represent something that only exists inside your network, like a new digital currency that is native to the ledger itself.
 
-Your token can represent both fungible and non-fungible assets, and these assets can evolve over time or remain the same:
+Your token can represent both fungible and non-fungible assets. These assets can evolve over time or remain the same:
 
-* **Fungible assets** are represented by the `FungibleToken` *class* and can be split and merged – just as the assets they represent, like money or stocks - can be split and merged.
+* **Fungible tokens** are represented by the `FungibleToken` *class* and can be split and merged – just as the assets they represent, like money or stocks - can be split and merged.
 
-* **Non-fungible** tokens are represented by the `NonFungibleTokens` *state*, and cannot be split and merged - just as the assets they represent, like certified diamonds – cannot be split and merged.
+* **Non-fungible** tokens are represented by the `NonFungibleTokens` *state*, and cannot be split and merged - just as the assets they represent, like physical diamonds or a house – cannot be split and merged.
 
 * **Evolvable assets** change over time - not just in value, but in other ways, such as the condition, or size of a house.
 
@@ -40,30 +42,25 @@ Your token can represent both fungible and non-fungible assets, and these assets
 | Diamonds | Non-Fungible | Evolvable | Off-ledger asset |
 
 
-## What you can do with the Token SDK
+## What you can do with the Token SDK  
 
-The Token SDK enables you to create a token for almost anything you can imagine. Once you have established what type of token you want to create, you can proceed to introduce it to the ledger.
+Once you have established what type of token you want to create, you can use the Token SDK to perform the following key tasks:
 
-You can use the Token SDK to enable your CorDapp to perform three main functions with your token:
+* **Issue** tokens onto your ledger as part of a transaction.
 
-* **Issue** - to create tokens and issue them on your ledger as part of a transaction.
+* **Move** the token from one party to another as part of a transaction.
 
-* **Move** - to move or transfer the token from one party to another as part of a transaction.
+    * **Select** which specific tokens are to be used to settle a transaction. This applies when a party has more than one 'wallet' or 'pot' of tokens that can be used to settle a transaction.
 
-    * **Select** - to select which specific tokens are to be used to settle a transaction. 
-
-
-* **Redeem** - to complete the transaction and remove the token from the ledger as it is redeemed for a physical world asset.
-
-Tokens created using the Token SDK obey all the existing rules of the Corda network.
+* **Redeem** and remove the token from the ledger, for example when a party finally takes ownership of their real-life diamond and the token it represents can no longer be used.
 
 ## Install the Token SDK
 
 Depending on your plan for issuing tokens onto your network - whether you are ready to deploy tokens in an enterprise scenario or experimenting - there are different ways to install the Tokens SDK:
 
-* Use the kotlin token SDK template to get started and issue tokens locally. This is a great way to learn about the Token SDK through practical application, but may not be suitable for your enterprise deployment.
-* Clone the latest repo.
-* Install the binaries directly to your local maven repository.
+* [Use the kotlin token SDK](###get-started-using-the-kotlin-token-sdk-template) template to get started and issue tokens locally. This is a great way to learn about the Token SDK through practical application, but may not be suitable for your enterprise deployment.
+* [Clone the latest repo](build-token-sdk-against-corda-release-branch).
+* [Install the binaries directly to your local maven repository](add-token-sdk-dependencies-to-an-existing-cordapp).
 
 For each of the these steps, follow the instructions below.
 
@@ -105,7 +102,7 @@ shell with the following command:
 See the token template code [here](https://github.com/corda/cordapp-template-kotlin/tree/token-template)
 for more information.
 
-## Build Tokens SDK against Corda release branch
+## Build Token SDK against Corda release branch
 
 Often, in order to use the latest `token-sdk` master you will need to build against a specific Corda release branch until
 the required changes make it into a Corda release. At the time of writing tokens `1.1-SNAPSHOT` requires Corda **THIS IS OUT OF DATE - PLEASE PROVIDE CORRECT INFORMATION**
@@ -182,3 +179,5 @@ You can build the `token-sdk` from source, by publishing the binaries to your lo
     cd token-sdk
     ./gradlew clean install
 ```
+
+The dependencies are now added to your CorDapp, allowing you to write the code to create your tokens.
