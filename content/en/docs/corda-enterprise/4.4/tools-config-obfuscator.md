@@ -195,7 +195,7 @@ When you need your node, Firewall component, or service, to deobfuscate an obfus
 
 ### How to pass the seed and passphrase to a node, Firewall component, or service, using the command-line tool options
 
-To pass the obfuscation seed and passphrase to a node or Firewall component using the command-line tool, just use the `--config-obfuscation-seed` and `--config-obfuscation-passphrase` flags, respectively, in your Node or Firewall run command.
+To pass the obfuscation seed and passphrase to a node or Firewall component using the command-line tool, use the `--config-obfuscation-seed` and `--config-obfuscation-passphrase` flags, respectively, in your node, Firewall, or service run command.
 
 These flags are the same for all components that use the Configuration Obfuscator tool.
 
@@ -266,7 +266,7 @@ The example below shows how this area of the configuration file will look like a
 
 ### Deobfuscation based on configuration directives
 
-When run by a Corda node or service on a machine with the matching hardware address, the configuration is deobfuscated on the fly and interpreted as shown in the example below:
+When the Corda node, Firewall component, or service is run with the correct seed/passphrase provided, the configuration is deobfuscated on the fly and interpreted as shown in the example below:
 
 ```json
 {
