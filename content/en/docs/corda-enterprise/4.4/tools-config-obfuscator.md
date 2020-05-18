@@ -19,8 +19,6 @@ title: Configuration Obfuscator
 
 The purpose of the Configuraton Obfuscator tool is to obfuscate sensitive information in configuration files.
 
-It takes a seed and a passphrase as input to obfuscate a given configuration file. To deobfuscate that configuration file, you must provide the same seed and passphrase to any process that accepts obfuscated configurations.
-
 The Configuration Obfuscator makes node installation less vulnerable to someone trawling plain text files, searching for passwords and credentials of resources that they should not have access to in the first place.
 
 {{< warning >}}
@@ -28,10 +26,28 @@ Although the Configuration Obfuscator does protect the node against trawling att
 {{< /warning >}}
 
 {{< note >}}
-The Configuraton Obfuscator tool can only be used with Corda Enterprise 4.4 (and above) node and Firewall configuration files. The tool is also capable of deobfuscating configuration files obfuscated with Corda Enterprise versions older than 4.4.
+The Configuraton Obfuscator tool can only be used with Corda Enterprise 4.4 (and above) node and Corda Firewall configuration files. Configuration files obfuscated with older versions of Corda Enterprise can still be deobfuscated by Corda Enterprise 4.4 and above.
 {{< /note >}}
 
-## Obfuscate/deobfuscate using the command-line tool
+## How obfuscation works
+
+You obfuscate a configuration file using the Configuration Obfuscation tool.
+
+It takes a seed and a passphrase as input to obfuscate a given configuration file.
+
+{{< note >}}
+To deobfuscate that configuration file, you must provide the same seed and passphrase to any process (see below) that accepts obfuscated configurations - for example, when starting a node.
+{{< /note >}}
+
+## How deobfuscation works
+
+You deobfuscate an obfuscated configuration file by starting the respective node, Firewall component, or service (for example, a [Corda Enterprise Network Manager service](https://docs.corda.net/docs/cenm/index.html)).
+
+You cannot use the Configuration Obfuscator tool to deobfuscate an obfuscated file directly. This is intentional in order to prevent a potential security risk where plain text passwords could be revealed by just running the tool again.
+
+The node or service itself deobfuscates the configuration object internally on startup, taking the same seed and passphrase as the Configuration Obfuscator tool. The 'Deobfuscate an obfuscated configuration file' section further below describes how to do that.
+
+## Obfuscate using the command-line tool
 
 The command-line tool is included in Corda Enterprise as a `.jar` file with a name `corda-tools-config-obfuscator-<version>.jar`, where `<version>` stands for the Corda Enterprise version (for example, `corda-tools-config-obfuscator-4.4.jar` or `corda-tools-config-obfuscator-4.4.2.jar`).
 
@@ -124,26 +140,6 @@ $ Enter value for --config-obfuscation-seed (The seed used in the key derivation
 $ Enter value for --config-obfuscation-passphrase (The passphrase used in the key derivation function when creating an AES key):
 ```
 
-### How to pass the seed and passphrase to a node or Firewall component using the command-line tool options
-
-To pass the obfuscation seed and passphrase to a node or Firewall component using the command-line tool, just use the `--config-obfuscation-seed` and `--config-obfuscation-passphrase` flags, respectively, in your Node or Firewall run command.
-
-These flags are the same for all components that use the Configuration Obfuscator tool.
-
-The following example shows how to pass a seed and a passphrase explicitly to a node component using the command-line tool:
-
-```bash
-$ java -jar corda.jar --config-obfuscation-seed my-seed --config-obfuscation-passphrase my-passphrase
-
-```
-The following example shows how to pass a seed and a passphrase to a node component using the command-line tool by leaving the flag values blank to invoke a prompt:
-
-```bash
-$ java -jar corda.jar --config-obfuscation-seed --config-obfuscation-passphrase
-$ Enter value for --config-obfuscation-seed (The seed used in the key derivation function to create a salt):
-$ Enter value for --config-obfuscation-passphrase (The passphrase used in the key derivation function when creating an AES key):
-```
-
 ### Example of an obfuscated node configuration file
 
 ```json
@@ -170,9 +166,9 @@ security {
 }
 ```
 
-## Obfuscate/deobfuscate using environment variables
+## Obfuscate using environment variables
 
-Another way to provide the seed and passphrase to obfuscate/deobfuscate a configuration file is to set the following environment variables:
+Another way to provide the seed and passphrase to obfuscate a configuration file is to set the following environment variables:
 
 * `CONFIG_OBFUSCATION_SEED`
 * `CONFIG_OBFUSCATION_PASSPHRASE`
@@ -191,7 +187,33 @@ The same environment variables are used by all components that use the Configura
 $ export CONFIG_OBFUSCATION_SEED=my-seed; export CONFIG_OBFUSCATION_PASSPHRASE=my-passphrase; java -jar tools/config-obfuscator/build/libs/corda-tools-config-obfuscator-4.4.2.jar -w node.conf /p/tmp/node-non-obfuscated.conf
 ```
 
-### How to pass the seed and passphrase to a node or Firewall component using environment variables
+## Deobfuscate an obfuscated configuration file
+
+You deobfuscate an obfuscated configuration file by starting the respective node, Firewall component, or service (for example, a [Corda Enterprise Network Manager service](https://docs.corda.net/docs/cenm/index.html)).
+
+When you need your node, Firewall component, or service, to deobfuscate an obfuscated configuration file, you must pass them the same seed and passhprase used when that configuration file was deobfuscated. There are two ways you can do that, as described below.
+
+### How to pass the seed and passphrase to a node, Firewall component, or service, using the command-line tool options
+
+To pass the obfuscation seed and passphrase to a node or Firewall component using the command-line tool, just use the `--config-obfuscation-seed` and `--config-obfuscation-passphrase` flags, respectively, in your Node or Firewall run command.
+
+These flags are the same for all components that use the Configuration Obfuscator tool.
+
+The following example shows how to pass a seed and a passphrase explicitly to a node component using the command-line tool:
+
+```bash
+$ java -jar corda.jar --config-obfuscation-seed my-seed --config-obfuscation-passphrase my-passphrase
+
+```
+The following example shows how to pass a seed and a passphrase to a node component using the command-line tool by leaving the flag values blank to invoke a prompt:
+
+```bash
+$ java -jar corda.jar --config-obfuscation-seed --config-obfuscation-passphrase
+$ Enter value for --config-obfuscation-seed (The seed used in the key derivation function to create a salt):
+$ Enter value for --config-obfuscation-passphrase (The passphrase used in the key derivation function when creating an AES key):
+```
+
+### How to pass the seed and passphrase to a node, Firewall component, or service, using environment variables
 
 ```bash
 $ export CONFIG_OBFUSCATION_SEED=my-seed; export CONFIG_OBFUSCATION_PASSPHRASE=my-passphrase; java -jar corda.jar
