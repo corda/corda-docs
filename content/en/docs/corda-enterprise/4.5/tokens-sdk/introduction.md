@@ -9,31 +9,30 @@ title: Introducing the Tokens SDK
 ---
 # The Token SDK
 
-The Token SDK provides you with the fastest, and easiest way to create tokens that represent assets on your network. With it, you can add functionality to CorDapps so they can **issue**, **move**, and **redeem** tokens on a ledger. With these three basic actions, you can make a token for virtually any asset - tangible or conceptual - that you can imagine.  
+The Token SDK provides you with the fastest and easiest way to create tokens that represent assets on your network. With it, you can define token types, and add functionality to CorDapps so they can **issue**, **move**, and **redeem** your tokens on a ledger.
 
 ## What's in the Token SDK
 
-When you install the Token SDK, you add the dependencies to your CorDapp that allow you to write the required The Token SDK is made up of JARs that contain the required code for these essential token elements:
+The Token SDK is contained in two JAR files which includes all the required dependencies for your CorDapp, including:
 
-* **Contracts**, which contains the base types, states and contracts
-* **Workflows**, which contains flows for issuing, moving and redeeming tokens
-* **Money**,  which contains token type definitions for various fiat and digital currencies
-* **Selection**,  which contains both database and in memory token selection of fungible tokens
+* **Contracts**, which contains the base token types, states and contracts needed to create a token, including token type definitions for fiat and digital currencies.
+* **Workflows**, which contains the flows for issuing, moving, redeeming tokens, and selection workflows, which allow a party to select which source of fungible tokens they will use to pay with in a transaction.
 
+As the **Contracts** JAR contains the ability to define and create tokens, and the **Workflows** JAR contains the flows required to use them, you must add both JARS to your CorDapp in order to use the Token SDK.
 
 ## The anatomy of a token
 
 You can create tokens in Corda to represent anything of value. This could be a representation of an asset that exists outside of your network, like diamonds, or US dollars, or it could represent something that only exists inside your network, like a new digital currency that is native to the ledger itself.
 
-Your token can represent both fungible and non-fungible assets. These assets can evolve over time or remain the same:
+Your token can represent both fungible and non-fungible assets. These assets can evolve (evolvable) over time or remain the same (non-evolvable):
 
 * **Fungible tokens** are represented by the `FungibleToken` *class* and can be split and merged – just as the assets they represent, like money or stocks - can be split and merged.
 
 * **Non-fungible** tokens are represented by the `NonFungibleTokens` *state*, and cannot be split and merged - just as the assets they represent, like physical diamonds or a house – cannot be split and merged.
 
-* **Evolvable assets** change over time - not just in value, but in other ways, such as the condition, or size of a house.
+* **Evolvable assets** change over time - not just in value, but in other ways, such as the condition of a car, or size of a house.
 
-* **Non-evolvable assets** have no way of changing over time. While the FX markets may undulate, a US dollar bill does not change into a different state. It cannot evolve into a 1 Euro coin.
+* **Non-evolvable assets** have no way of changing over time. While the FX markets may fluctuate, a US dollar bill does not change into a different state. It cannot evolve into a 1 Euro coin.
 
 | Asset  |   Fungibility   | Evolvability | On / off ledger asset |
 | :------------- | :------------- | :------------- | :------------- |
@@ -41,14 +40,54 @@ Your token can represent both fungible and non-fungible assets. These assets can
 | Ledger-native coin | Fungible  | non-evolvable | On-ledger asset  |
 | Diamonds | Non-Fungible | Evolvable | Off-ledger asset |
 
+### `Tokentype` - the units of a token
+
+A `TokenType` defines the unit of your token. To create a new `TokenType`, you must give it:
+
+* An identifier, like USD.
+* Fractional digits to define how much it can be broken down by. USD has two fractional digits because the smallest possible unit is 0.01 USD (a cent).
+
+You can also give a `TokenType` an optional custom identifier, which is then fixed to that customised `TokenType` and *cannot change* over time. If your tokens represent wines, and you create a custom `WineColor` identifier, a **white wine** token cannot turn into a **red wine** token.
+
+### `EvolvableTokenType` - a token type that can change over time
+
+An `EvolvableTokenType` has properties that can change over time. This is represented in Corda by a `LinearState`. To create and issue an `EvolvableTokenType`, you must:
+
+* Define the `TokenType` - the unit and decimal fractions.
+* Define the evolvable attributes that can change over time.
+* Identify at least one signatory service that can approve the newly evolved state. This is called a `Maintainer`.
+
+
+### `FungibleToken` class
+
+A fungible token is represented by the `FungibleToken` class. It must always have:
+
+* A `TokenType` - which you can define manually, or use define using a specified fiat or digital currency.
+* A `Holder` so the person holding the token is clear.
+* An `Amount` to show how many units the token is worth.
+* An `IssuedTokenType` which defines who issued the token. A fungible token can only be exchanged for fungible tokens with the same issuer.
+
+Fungible tokens can be split using a flow initiated by the **Move** command. This allows a party to send some of the value of a single token to more than one recipient. Just like you can split a 10 USD bill between two people (as long as someone has change).
+
+### `NonFungilbeToken` state
+
+A non-fungible token cannot be split and merged, and represents a unique asset. To create a `NonFungibleToken` you must:
+
+* Define the `TokenType` - the name of the unit of your token. As the token cannot be split, the digital fraction value can only be 1. [CHECK THIS]
+* Define the first `Holder` of the token type. The holder of the token must be approved by a maintainer each time the token moves from party to party. 
+* Define at least one `Maintainer` with the power to authorise any changes to the token. This includes every change of `Holder` and changes of attributes if it is also an `EvolvableTokenType`.
+* Define any custom attributes of the token.
+* Define the issuer of the token using the `IssuedTokenType`.
 
 ## What you can do with the Token SDK  
 
 Once you have established what type of token you want to create, you can use the Token SDK to perform the following key tasks:
 
-* **Issue** tokens onto your ledger as part of a transaction.
+* **Define** your token. Using the readymade utilities contained in the contract JAR, you can define all the required attributes and custom attributes of your tokens.
 
-* **Move** the token from one party to another as part of a transaction.
+* **Issue** tokens onto your ledger so they can be used as part of a transaction.
+
+* **Move** the token from at least one party to at least one other party in a transaction.
 
     * **Select** which specific tokens are to be used to settle a transaction. This applies when a party has more than one 'wallet' or 'pot' of tokens that can be used to settle a transaction.
 
@@ -102,7 +141,7 @@ shell with the following command:
 See the token template code [here](https://github.com/corda/cordapp-template-kotlin/tree/token-template)
 for more information.
 
-## Build Token SDK against Corda release branch
+### Build Token SDK against Corda release branch
 
 Often, in order to use the latest `token-sdk` master you will need to build against a specific Corda release branch until
 the required changes make it into a Corda release. At the time of writing tokens `1.1-SNAPSHOT` requires Corda **THIS IS OUT OF DATE - PLEASE PROVIDE CORRECT INFORMATION**
@@ -114,7 +153,7 @@ the required changes make it into a Corda release. At the time of writing tokens
 
 Then run a `./gradlew clean install` from the root directory.
 
-## Add Token SDK dependencies to an existing CorDapp
+### Add Token SDK dependencies to an existing CorDapp
 
 1. Add a variable for the tokens release group and the version you
 wish to use and set the corda version that should've been installed locally::
@@ -170,7 +209,7 @@ in each module of your CorDapp. For contract modules add:
         cordapp("$tokens_release_group:tokens-selection:$tokens_release_version")
     }
 
-## Installing the token SDK binaries
+### Install the token SDK binaries
 
 You can build the `token-sdk` from source, by publishing the binaries to your local maven repository. In a command line window, enter:
 
