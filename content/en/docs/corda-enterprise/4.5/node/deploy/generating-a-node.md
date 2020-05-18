@@ -13,6 +13,9 @@ weight: 4
 
 # Create nodes locally
 
+You can create local nodes either
+* Manually - create a directory, add and configure the node and CorDapp files
+* Automatically
 
 ## Create a node manually
 
@@ -34,7 +37,7 @@ The remaining files and directories described in [Node folder structure](../setu
 
 Corda provides two gradle plugins called `Cordform` and `Dockerform` that allow you to automatically generate and configure a set of nodes for testing and demos. The `Dockerform` is a sister task of `Cordform` that provides an extra file allowing you to easily spin up nodes using `docker-compose`. This creates a docker-compose file to control de deployment of Corda nodes and databases by running a single command, whereas in `Cordform` you need to this manually one-by-one. However, `Dockerform` relies on Docker to be installed on the local host, whereas `Cordform` does not have this dependency.
 
-## The Cordform task
+### The Cordform task
 
 Here is an example `Cordform` task called `deployNodes` that creates three nodes, defined in the [Kotlin CorDapp Template](https://github.com/corda/cordapp-template-kotlin/blob/release-V6/build.gradle#L95):
 
@@ -116,7 +119,7 @@ template CorDapp, for example, would automatically build and add the template Co
 The configuration values available in `deployNodes` task are as follows:
 
 
-### Required configuration
+#### Required configuration
 
 
 * `name` <string>
@@ -168,7 +171,7 @@ rpcSettings {
 
 
 
-### Optional configuration
+#### Optional configuration
 
 
 * `notary` <config> (see [notary](../setup/corda-configuration-file.md#corda-configuration-file-notary))
@@ -303,7 +306,7 @@ ext.jolokia_version = "1.6.1"
 
 
 
-### Package namespace ownership
+#### Package namespace ownership
 
 To specify [Package namespace ownership](env-dev.md#package-namespace-ownership) configuration, the optional `networkParameterOverrides` and `packageOwnership` blocks can be used, similar to the configuration file used in network-bootstrapper:
 
@@ -324,7 +327,7 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['jar']) {
 ```
 
 
-### Signing CorDapp JARs
+#### Signing CorDapp JARs
 
 The default behaviour of Cordform is to deploy CorDapp JARs “as built”:
 
@@ -396,7 +399,7 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['jar']) {
 
 
 
-### Specifying a custom webserver
+#### Specifying a custom webserver
 
 By default, any node listing a web port will use the default development webserver, which is not production-ready. You
 can use your own webserver JAR instead by using the `webserverJar` argument in a `Cordform` `node` configuration
@@ -420,7 +423,7 @@ node’s `node.conf` file.
 {{< /warning >}}
 
 
-### Running the Cordform task
+#### Running the Cordform task
 
 To create the nodes defined in our `deployNodes` task, run the following command in a terminal window from the root of the project where the `deployNodes` task is defined:
 
@@ -431,7 +434,7 @@ This will create the nodes in the `build/nodes` directory. There will be a node 
 for testing and development purposes. If you make any changes to your CorDapp source or `deployNodes` task, you will need to re-run the task to see the changes take effect.
 
 
-## The Dockerform task
+### The Dockerform task
 
 
 Dockerform supports the following configuration options for each node:
@@ -524,7 +527,7 @@ services:
 ```
 
 
-### Specifying an external database
+#### Specifying an external database
 
 You can configure `Dockerform` to use a standalone database to test with non-H2 databases. For example, to use PostgresSQL, you need to make the following changes to your Cordapp project:
 
@@ -725,7 +728,7 @@ The following parameters can be configured in the `postgres.gradle` file:
 
 To make the database files can be made persistent across multiple `Dockerform` runs, you need to set the parameter `dbDataVolume`. If this variable is commented out, the database files will be removed after every Dockerform run.
 
-### Running the Dockerform task
+#### Running the Dockerform task
 
 To create the nodes defined in our `prepareDockerNodes` gradle task, run the following command in a terminal window from the root of the project where the `prepareDockerNodes` task is defined:
 
