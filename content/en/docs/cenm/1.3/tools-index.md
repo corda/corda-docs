@@ -41,7 +41,7 @@ A small number of tools are available to help with setting up, running and testi
 
 
 
-* [Config Obfuscation Tool](https://docs.corda.net/docs/corda-enterprise/4.5/tools-config-obfuscator.html)
+* [Config Obfuscation Tool]([Config Obfuscation Tool](../../corda-enterprise/4.5/tools-config-obfuscator.md)
 * [CRL Endpoint Check Tool](crl-endpoint-check-tool.md)
 
 
