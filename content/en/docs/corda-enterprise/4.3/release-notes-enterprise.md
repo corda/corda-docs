@@ -20,7 +20,7 @@ title: Release notes
 ## Corda Enterprise 4.3.3
 
 
-Corda Enterprise 4.3.3 is a patch release of Corda Enterprise that introduces fixes to known issues in Corda Enterprise 4.3.1.
+Corda Enterprise 4.3.3 is a patch release of Corda Enterprise that introduces fixes to known issues in Corda Enterprise 4.3.1 and a fix to a new issue related to a recent third-party dependency update.
 
 
 ### Upgrade recommendation
@@ -28,7 +28,7 @@ Corda Enterprise 4.3.3 is a patch release of Corda Enterprise that introduces fi
 
 As a developer, you should upgrade to the [latest released version of Corda](https://docs.corda.net/docs/corda-enterprise/index.html) as soon as possible. Check the latest Corda Enterprise release notes and upgrade guide [here](https://docs.corda.net/docs/corda-enterprise/release-notes-index.html).
 
-As a node operator, you should upgrade to the [latest released version of Corda](https://docs.corda.net/docs/corda-enterprise/index.html) if the fixed issue listed below is relevant to your work.
+As a node operator, you should upgrade to the [latest released version of Corda](https://docs.corda.net/docs/corda-enterprise/index.html) if the fixed issues listed below is relevant to your work.
 
 
 ### Fixed issues
@@ -37,17 +37,17 @@ As a node operator, you should upgrade to the [latest released version of Corda]
 * Operations run on the node’s external thread pool might end up being executed multiple times [[CORDA-3686](https://r3-cev.atlassian.net/browse/CORDA-3686)]
 * Database indexes have been added for the `NODE_MESSAGE_IDS` and `VAULT_STATES` table to speed up frequently-used queries
 * A number of problems with the JPA notary have been addressed:
-    * Ensured that notarisation succeeds when committing large batches of states using CockroachDB
+    * Ensure that notarisation succeeds when committing large batches of states using CockroachDB
     * Prevent database connection leak on unexpected DB exceptions
     * Prevent incorrect handling of scenarios where a successful transaction containing an input state and an unspent reference state is retried
 * Resolved a race condition in `FlowLogic.waitForLedgerCommit`
 * Resolved unrestorable checkpoint issue in IRS sample app
-* Made recordTransaction idempotent, preventing constraint violation errors when trying to add a transaction that is already in the vault
+* Made `recordTransaction` idempotent, preventing constraint violation errors when trying to add a transaction that is already in the vault
 * Prevent notarisation batches containing duplicate transactions from getting stuck
-* Allow CRaSH shell to use safely the built-in "dashboard" command
+* Fixed an issue to allow the CRaSH shell to use the built-in "dashboard" command in a safe way
 * Published the metering collection tool as part of the Corda Enterprise distribution
 * Fixed an issue in DNS resolution when using the Corda Health Survey
-* Allow the Health Survey tool to follow HTTP to HTTPS redirects when resolving Identity Manager/Network Map addresses
+* Fixed an issue to allow the Health Survey tool to follow HTTP to HTTPS redirects when resolving Identity Manager/Network Map addresses
 
 
 ## Corda Enterprise 4.3.1
