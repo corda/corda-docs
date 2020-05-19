@@ -34,20 +34,20 @@ As a node operator, you should upgrade to the [latest released version of Corda]
 ### Fixed issues
 
 * A recent JDK update has broken the way we used delegated signatures for TLS (Transport Layer Security) handshakes. We have fixed this issue through patches on all affected Corda Enterprise versions (4.2+) to allow users to upgrade to the latest versions of compatible JDK distributions. If you have not upgraded to one of the patched releases yet, do not upgrade to Java 8 version `8u252` or higher.
-* Operations run on the node’s external thread pool might end up being executed multiple times [[CORDA-3686](https://r3-cev.atlassian.net/browse/CORDA-3686)].
+* Fixed an issue that prevents operations run on the node’s external thread pool from being executed multiple times [[CORDA-3686](https://r3-cev.atlassian.net/browse/CORDA-3686)].
 * Database indexes have been added for the `NODE_MESSAGE_IDS` and `VAULT_STATES` table to speed up frequently-used queries.
 * A number of problems with the JPA notary have been addressed:
     * Ensure that notarisation succeeds when committing large batches of states using CockroachDB.
     * Prevent database connection leak on unexpected DB exceptions.
     * Prevent incorrect handling of scenarios where a successful transaction containing an input state and an unspent reference state is retried.
-* Resolved a race condition in `FlowLogic.waitForLedgerCommit`.
-* Resolved an issue in the [IRS sample app](contract-irs.md) where a checkpoint could not be restored.
+* Fixed a race condition in `FlowLogic.waitForLedgerCommit`.
+* Fixed an issue in the [IRS sample app](contract-irs.md) where a checkpoint could not be restored.
 * Made `recordTransaction` idempotent, preventing constraint violation errors when trying to add a transaction that is already in the vault.
 * Fixed an issue to prevent notarisation batches containing duplicate transactions from getting stuck.
 * Fixed an issue to allow the CRaSH shell to use the built-in "dashboard" command in a safe way.
 * Published the metering collection tool as part of the Corda Enterprise distribution.
 * Fixed an issue in DNS resolution when using the Corda Health Survey.
-* Fixed an issue to allow the Health Survey tool to follow HTTP to HTTPS redirects when resolving Identity Manager/Network Map addresses.
+* Fixed an issue to allow the Corda Health Survey tool to follow HTTP to HTTPS redirects when resolving Identity Manager/Network Map addresses.
 
 
 ## Corda Enterprise 4.3.1
