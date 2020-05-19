@@ -11,26 +11,23 @@ menu:
 tags:
 - quick
 - start
-title: Enterprise Network Manager Quick Start Guide
+title: Enterprise Network Manager - Quick Start Guide
 ---
 
 
-# Enterprise Network Manager Quick Start Guide
-
-
+# Quick Start Guide to Manual Deployment of CENM
 
 ## Introduction
 
 This guide provides a set of simple steps for creating a permissioned network which consists of the following:
 * Identity Manager service
 * Network Map service
-* [Notary Service](https://docs.corda.net/docs/corda-enterprise/4.4/notary/)
+* [Notary Service](https://docs.corda.net/docs/corda-enterprise/4.5/notary/)
 
 ### Targeted Audience
 This guide is targeted at:
 * anyone wanting to operate a permissioned network on Corda.
 * software developers who wish to run a representative network in their dev cycle
-<mark> check with Kat, Gabe and Ross about the audiences and whether this guide will be used in Prod) </mark>
 
 ### Pre-Requisites
 * You should have read and understood [Networks | Corda Documentation
@@ -43,10 +40,10 @@ Networks](https://docs.corda.net/docs/corda-os/4.4/corda-networks-index.html)
     * 3 Machines set up with Java 8 installed *(if not running locally).*
 
 {{< note >}}
-Throughout this guide, placeholder values for external endpoints are used (for example, `<IDENTITY_MANAGER_ADDRESS>`).
+In this guide, we use placeholder values for external endpoints (for example, `<IDENTITY_MANAGER_ADDRESS>`).
 They depend on the machine in which the service is running and should be replaced with the correct values.
 
-If you are running the network locally, this value will be the exact value of the `address` parameter
+If you are running the network locally, this value will match the `address` parameter
 within the Identity Manager config file but if you are deploying the network in a cloud environment, this value should be the external address of your machine along with any port defined in the `address` config parameter.
 
 {{< /note >}}
@@ -59,7 +56,7 @@ Follow the steps below to create your permissioned network:
  * Generate the PKI first before starting any services. 
  To do that, you have to:
     * create the certificates and key pairs for all Corda Enterprise Network Manager (CENM) services
-    * decide what entities the nodes will trust  <mark>How do you do that? Any action needed here?</mark>
+    * decide what entities the nodes will trust
 
 
 {{ < note > }} For more information on the certificate hierarchy, see [Certificate Hierarchy Guide](pki-guide.md). 
