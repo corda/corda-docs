@@ -41,7 +41,7 @@ As a node operator, you should upgrade to the [latest released version of Corda]
     * Prevent database connection leak on unexpected DB exceptions.
     * Prevent incorrect handling of scenarios where a successful transaction containing an input state and an unspent reference state is retried.
 * Resolved a race condition in `FlowLogic.waitForLedgerCommit`.
-* Resolved an issue in the IRS sample app where a checkpoint could not be restored.
+* Resolved an issue in the [IRS sample app](contract-irs.md) where a checkpoint could not be restored.
 * Made `recordTransaction` idempotent, preventing constraint violation errors when trying to add a transaction that is already in the vault.
 * Fixed an issue to prevent notarisation batches containing duplicate transactions from getting stuck.
 * Fixed an issue to allow the CRaSH shell to use the built-in "dashboard" command in a safe way.
