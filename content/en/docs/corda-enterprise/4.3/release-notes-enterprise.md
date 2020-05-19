@@ -40,14 +40,14 @@ As a node operator, you should upgrade to the [latest released version of Corda]
     * Ensure that notarisation succeeds when committing large batches of states using CockroachDB.
     * Prevent database connection leak on unexpected DB exceptions.
     * Prevent incorrect handling of scenarios where a successful transaction containing an input state and an unspent reference state is retried.
-* Fixed a race condition in `FlowLogic.waitForLedgerCommit`.
+* Resolved a race condition in `FlowLogic.waitForLedgerCommit`.
 * Fixed an issue in the [IRS sample app](contract-irs.md) where a checkpoint could not be restored.
 * Made `recordTransaction` idempotent, preventing constraint violation errors when trying to add a transaction that is already in the vault.
 * Fixed an issue to prevent notarisation batches containing duplicate transactions from getting stuck.
 * Fixed an issue to allow the CRaSH shell to use the built-in "dashboard" command in a safe way.
 * Published the metering collection tool as part of the Corda Enterprise distribution.
 * Fixed an issue in DNS resolution when using the Corda Health Survey.
-* Fixed an issue to allow the Corda Health Survey tool to follow HTTP to HTTPS redirects when resolving Identity Manager/Network Map addresses.
+* Fixed an issue to allow the Corda Health Survey Tool to follow HTTP to HTTPS redirects when resolving Identity Manager/Network Map addresses.
 
 
 ## Corda Enterprise 4.3.1
