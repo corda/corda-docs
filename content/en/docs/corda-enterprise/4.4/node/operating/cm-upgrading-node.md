@@ -1,6 +1,8 @@
 ---
 aliases:
 - /releases/4.4/node/operating/cm-upgrading-node.html
+- /docs/corda-enterprise/head/node/operating/cm-upgrading-node.html
+- /docs/corda-enterprise/node/operating/cm-upgrading-node.html
 date: '2020-01-08T09:59:25Z'
 menu:
   corda-enterprise-4-4:
@@ -32,7 +34,7 @@ Note: The protocol is designed to tolerate node outages. During the upgrade proc
 ## Step 1. Drain the node
 
 Before a node, or an application on a node, can be upgraded, the node must be put in draining-mode. This brings the currently running
-[key concepts: flows](../key-concepts-flows.html) to a smooth halt (existing work is finished, and new work is queued rather than being processed).
+flows to a smooth halt (existing work is finished, and new work is queued rather than being processed).
 
 Draining flows is a key task for node administrators to perform. It exists to simplify applications by ensuring apps don’t have to be
 able to migrate workflows from any arbitrary point to other arbitrary points, a task that would rapidly become unfeasible as workflow
@@ -303,7 +305,7 @@ The option `-b` points to the base directory (with a `node.conf` file, and *driv
 ## Step 4. Replace `corda.jar` with the new version
 
 Replace the `corda.jar` with the latest version of Corda.
-Make sure it’s available on your path, and that you’ve read the [release notes](../release-notes.html). Pay particular attention to which version of Java this
+Make sure it’s available on your path, and that you’ve read the [release notes](../../release-notes.md). Pay particular attention to which version of Java this
 node requires.
 
 
@@ -331,9 +333,7 @@ Your upgrade is complete.
 
 {{< warning >}}
 if upgrading from Corda Enterprise 3.x, please ensure your node has been upgraded to the latest point release of that
-distribution. See [Upgrade a Corda 3.X Enterprise Node](https://docs.corda.r3.com/releases/3.3/node-operations-upgrading.html#upgrading-a-corda-enterprise-node)
+distribution. See [Upgrade a Corda 3.X Enterprise Node](https://docs.corda.net/docs/corda-enterprise/3.3/node-operations-upgrading.html#upgrading-a-corda-enterprise-node)
 for information on upgrading Corda 3.x versions.
 
 {{< /warning >}}
-
-

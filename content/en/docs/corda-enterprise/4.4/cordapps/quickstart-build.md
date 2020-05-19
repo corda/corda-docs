@@ -1,6 +1,8 @@
 ---
 aliases:
 - /releases/4.4/cordapps/quickstart-build.html
+- /docs/corda-enterprise/head/cordapps/quickstart-build.html
+- /docs/corda-enterprise/cordapps/quickstart-build.html
 date: '2020-01-08T09:59:25Z'
 menu:
     corda-enterprise-4-4:
@@ -609,5 +611,5 @@ The getting started experience is designed to be lightweight and get to code as 
 
 For operational users, see the following documentation:
 
-* [Deploying a node to a server](deploying-a-node.md)
-* [Notary documentation](running-a-notary.md)
+* [Deploying a node to a server](../node/deploy/deploying-a-node.md/)
+* [Notary documentation](../notary/running-a-notary.md/)

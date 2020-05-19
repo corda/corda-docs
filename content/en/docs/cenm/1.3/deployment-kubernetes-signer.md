@@ -1,3 +1,15 @@
+---
+date: '2020-01-08T09:59:25Z'
+menu:
+  cenm-1-3:
+    parent: cenm-1-3-deployment-kubernetes
+tags:
+- config
+- kubernetes
+title: CENM Signer Helm chart
+weight: 200
+---
+
 # CENM Signer Helm Chart
 
 This Helm chart is to configure, deploy and run CENM [Signing](signing-service.md) service.

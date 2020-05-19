@@ -1,6 +1,8 @@
 ---
 aliases:
 - /releases/4.4/node-upgrade-notes.html
+- /docs/corda-enterprise/head/node-upgrade-notes.html
+- /docs/corda-enterprise/node-upgrade-notes.html
 date: '2020-01-08T09:59:25Z'
 menu:
   corda-enterprise-4-4:
@@ -335,9 +337,7 @@ Your upgrade is complete.
 
 {{< warning >}}
 if upgrading from Corda Enterprise 3.x, please ensure your node has been upgraded to the latest point release of that
-distribution. See [Upgrade a Corda 3.X Enterprise Node](https://docs.corda.r3.com/releases/3.3/node-operations-upgrading.html#upgrading-a-corda-enterprise-node)
+distribution. See [Upgrade a Corda 3.X Enterprise Node](https://docs.corda.net/docs/corda-enterprise/3.3/node-operations-upgrading.html#upgrading-a-corda-enterprise-node)
 for information on upgrading Corda 3.x versions.
 
 {{< /warning >}}
-
-
