@@ -20,7 +20,7 @@ flag days.
 
 The Zone service stores relevant configurations for services such as Identity
 Manager and Network Map, and deploys those configurations if needed, via the
-connected Angel service and its authorisation token. It also determines the subzone that you belong to and fetches the actions needed (for example, configuration change or lifecycle event) for that subzone at a given moment. If any action is required, it is sent to the Angel service.
+connected Angel service and its authentication token. It also determines the subzone that you belong to and fetches the actions needed (for example, configuration change or lifecycle event) for that subzone at a given moment. If any action is required, it is sent to the associated Angel service. 
 
 Run the Zone service
 ------------------------
@@ -35,28 +35,26 @@ java -jar zoneservice-<VERSION>.jar --enm-listener-port 5050 --admin-listener-po
 
 The full options are:
 
--   `--enm-listener-port`: The port where the Zone service listens
+-   `--enm-listener-port`: The port where the Zone service listens for Angel services to connect
 -   `--enm-reconnect`:  Allows you to reconnect. Defaults to true if not
     provided
--   `--tls`: Allows you to use TLS for connections. Defaults to false if
+-   `--tls`: Whether to use TLS on listening sockets (ENM and admin). Defaults to false if
     not provided
 -   `--tls-keystore`: The path for the TLS keystore (Optional)
 -   `--tls-keystore-password`: The password for the TLS keystore
     (Optional)
 -   `--tls-truststore`: The path for the TLS truststore (Optional)
 -   `--tls-truststore-password`: The password for the TLS truststore (Optional)
--   `--run-migration`: Allows you to run migration on the database
-    Defaults to true if not provided
--   `--init-schema`: (Deprecated) Allows you to initialize the schema for the database. Defaults to true if not provided. 
+-   `--run-migration`:  Whether to enable schema migration on the database. Defaults to true if not provided
+-   `--init-schema`: (Deprecated) Allows you to initialize the schema for the database. Defaults to false if not provided. 
     
     We now use `--run-migration`
--   `--driver`: The driver for the database that the Zone service is going to
-    use
+-   `--jdbc-driver`:  Path to the JAR file containing the JDBC driver for the database.
+-   `--driver-class-name`: Name of the JDBC driver class within the JAR file specified by                   --jdbc-driver.
 -   `--url`: The URL for the Zone service's database
 -   `--user`: The user for the Zone service's database
 -   `--password`: The password for the Zone service's database
 -   `--admin-listener-port`: The port where the Angel service connects to the Zone service
-
 - `--auth-dev-mode`: Allows you to run with a real or developer
     authentication/authorisation service. Defaults to false if not
     provided 
@@ -85,6 +83,6 @@ Interoperability with Angel service
 Angel service regularly polls the Zone service for jobs. The Zone service
 maintains its database and decides if a configuration update or
 lifecycle event is needed for the Angel's underlying service and sends
-a response accordingly. If a Flag Day is  triggered then Zone service
+a response accordingly. If a Flag Day is triggered, the Zone service
 sends the required step (initiate, start or cancel Flag Day) to the
-Angel service that manages the Network Map. Angel always reports back the status of the current action to Zone service.
+Angel service that manages the Network Map. Angel always reports back the status of the current action to the Zone service.
