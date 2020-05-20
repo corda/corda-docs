@@ -22,7 +22,7 @@ As the **Contracts** JAR contains the ability to define and create tokens, and t
 
 ## The anatomy of a token
 
-You can create tokens in Corda to represent anything of value. This could be a representation of an asset that exists outside of your network, like diamonds, or US dollars, or it could represent something that only exists inside your network, like a new digital currency that is native to the ledger itself.
+You can create tokens in Corda to represent anything of value. This could be a representation of an asset that exists outside of your network, like diamonds, or US dollars, or it could represent something that only exists inside your network, like a new digital currency that is native to the ledger itself. In the case of a ledger-native digital currency, the token itself is the object of value - it *is* the asset.
 
 Your token can represent both fungible and non-fungible assets. These assets can evolve (evolvable) over time or remain the same (non-evolvable):
 
@@ -74,7 +74,7 @@ Fungible tokens can be split using a flow initiated by the **Move** command. Thi
 A non-fungible token cannot be split and merged, and represents a unique asset. To create a `NonFungibleToken` you must:
 
 * Define the `TokenType` - the name of the unit of your token. As the token cannot be split, the digital fraction value can only be 1. [CHECK THIS]
-* Define the first `Holder` of the token type. The holder of the token must be approved by a maintainer each time the token moves from party to party. 
+* Define the first `Holder` of the token type. The holder of the token must be approved by a maintainer each time the token moves from party to party.
 * Define at least one `Maintainer` with the power to authorise any changes to the token. This includes every change of `Holder` and changes of attributes if it is also an `EvolvableTokenType`.
 * Define any custom attributes of the token.
 * Define the issuer of the token using the `IssuedTokenType`.
@@ -156,7 +156,7 @@ Then run a `./gradlew clean install` from the root directory.
 ### Add Token SDK dependencies to an existing CorDapp
 
 1. Add a variable for the tokens release group and the version you
-wish to use and set the corda version that should've been installed locally::
+wish to use. Set the Corda version to the one you have installed locally::
 
     buildscript {
         ext {
@@ -182,7 +182,7 @@ in each module of your CorDapp. For contract modules add:
 
     cordaCompile "$tokens_release_group:tokens-workflows:$tokens_release_version"
 
-5. add selection module:
+5. Add selection module:
 
     cordaCompile "$tokens_release_group:tokens-selection:$tokens_release_version"
 
@@ -194,8 +194,6 @@ in each module of your CorDapp. For contract modules add:
 
     cordapp "$tokens_release_group:tokens-contracts:$tokens_release_version"
     cordapp "$tokens_release_group:tokens-workflows:$tokens_release_version"
-    cordapp "$tokens_release_group:tokens-money:$tokens_release_version"
-    cordapp "$tokens_release_group:tokens-selection:$tokens_release_version"
 
 8. Add the following to the `deployNodes` task with the following syntax:
 
@@ -205,8 +203,6 @@ in each module of your CorDapp. For contract modules add:
         }
         cordapp("$tokens_release_group:tokens-contracts:$tokens_release_version")
         cordapp("$tokens_release_group:tokens-workflows:$tokens_release_version")
-        cordapp("$tokens_release_group:tokens-money:$tokens_release_version")
-        cordapp("$tokens_release_group:tokens-selection:$tokens_release_version")
     }
 
 ### Install the token SDK binaries
