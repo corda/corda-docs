@@ -11,21 +11,21 @@ local
 Overview
 -------
 
-The Zone service is a central store of configuration for CENM services
+Zone service is a central store of configuration for CENM services
 for one or more zones and optionally their subzones. These CENM services
-can fetch their configuration from the Zone service, simplifying
+can fetch their configuration from Zone service, simplifying
 management of changes. They also provide functionality for managing
 lifecycle events of subzones, such as updating network parameters via
 flag days.
 
-The Zone service stores relevant configurations for services such as Identity
+Zone service stores relevant configurations for services such as Identity
 Manager and Network Map, and deploys those configurations if needed, via the
 connected Angel service and its authentication token. It also determines the subzone that you belong to and fetches the actions needed (for example, configuration change or lifecycle event) for that subzone at a given moment. If any action is required, it is sent to the associated Angel service. 
 
-Run the Zone service
+Run Zone service
 ------------------------
 
-To run the Zone service you must specify:
+To run Zone service you must specify:
 
 ``` {.bash}
 java -jar zoneservice-<VERSION>.jar --enm-listener-port 5050 --admin-listener-port 5051 \
@@ -35,7 +35,7 @@ java -jar zoneservice-<VERSION>.jar --enm-listener-port 5050 --admin-listener-po
 
 The full options are:
 
--   `--enm-listener-port`: The port where the Zone service listens for Angel services to connect
+-   `--enm-listener-port`: The port where Zone service listens for Angel services to connect
 -   `--enm-reconnect`:  Allows you to reconnect. Defaults to true if not
     provided
 -   `--tls`: Whether to use TLS on listening sockets (ENM and admin). Defaults to false if
@@ -51,10 +51,10 @@ The full options are:
     We now use `--run-migration`
 -   `--jdbc-driver`:  Path to the JAR file containing the JDBC driver for the database.
 -   `--driver-class-name`: Name of the JDBC driver class within the JAR file specified by                   --jdbc-driver.
--   `--url`: The URL for the Zone service's database
--   `--user`: The user for the Zone service's database
--   `--password`: The password for the Zone service's database
--   `--admin-listener-port`: The port where the Angel service connects to the Zone service
+-   `--url`: The URL for Zone service's database
+-   `--user`: The user for Zone service's database
+-   `--password`: The password for Zone service's database
+-   `--admin-listener-port`: The port where Angel service connects to Zone service
 - `--auth-dev-mode`: Allows you to run with a real or developer
     authentication/authorisation service. Defaults to false if not
     provided 
@@ -80,9 +80,9 @@ The full options are:
 Interoperability with Angel service
 -----------------------------------
 
-Angel service regularly polls the Zone service for jobs. The Zone service
+Angel service regularly polls Zone service for jobs. Zone service
 maintains its database and decides if a configuration update or
-lifecycle event is needed for the Angel's underlying service and sends
-a response accordingly. If a Flag Day is triggered, the Zone service
-sends the required step (initiate, start or cancel Flag Day) to the
-Angel service that manages the Network Map. Angel always reports back the status of the current action to the Zone service.
+lifecycle event is needed for Angel's underlying service and sends
+a response accordingly. If a Flag Day is triggered, Zone service
+sends the required step (initiate, start or cancel Flag Day) to the 
+Angel service that manages the Network Map. Angel always reports back the status of the current action to Zone service.
