@@ -13,14 +13,15 @@ weight: 4
 
 # Create nodes locally
 
-You can create local nodes either
-* Manually - create a directory, add and configure the node and CorDapp files
-* Automatically
+Local nodes are used for testing and demo purposes only.
 
-## Create a node manually
+There are two ways you can create a node locally:
+* Manually - create a directory, add the relevant node and CorDapp files, and configure them.
+* Automatically - use the Cordform or Dockerform gradle plugins, which automatically generate and configure a set of nodes.
 
-To create a node manually, make a directory that contains the following items:
+## Create a local node manually
 
+To create a local node manually, make a directory that contains the following items:
 
 * The Corda JAR, downloaded from [https://r3.bintray.com/corda/net/corda/corda/](https://r3.bintray.com/corda/net/corda/corda/) (under /4.5/corda-4.5.jar).
 * A node configuration file with a name `node.conf`, configured as described in [Node configuration](../setup/corda-configuration-file.md).
@@ -33,9 +34,11 @@ To create a node manually, make a directory that contains the following items:
 
 The remaining files and directories described in [Node folder structure](../setup/corda-configuration-file.md) will be generated at runtime.
 
-## Create a node automatically
+## Create a set of local nodes automatically
 
-Corda provides two gradle plugins called `Cordform` and `Dockerform` that allow you to automatically generate and configure a set of nodes for testing and demos. The `Dockerform` is a sister task of `Cordform` that provides an extra file allowing you to easily spin up nodes using `docker-compose`. This creates a docker-compose file to control de deployment of Corda nodes and databases by running a single command, whereas in `Cordform` you need to this manually one-by-one. However, `Dockerform` relies on Docker to be installed on the local host, whereas `Cordform` does not have this dependency.
+Corda provides two gradle plugins called `Cordform` and `Dockerform` that allow you to automatically generate and configure a set of nodes for testing and demos.
+
+The `Dockerform` is a sister task of `Cordform` that provides an extra file allowing you to easily spin up nodes using `docker-compose`. This creates a docker-compose file to control de deployment of Corda nodes and databases by running a single command, whereas in `Cordform` you need to this manually one-by-one. However, `Dockerform` relies on Docker to be installed on the local host, whereas `Cordform` does not have this dependency.
 
 ### The Cordform task
 
@@ -265,8 +268,14 @@ When adding nodes, make sure that there are no port clashes!
 
 
 To extend node configuration beyond the properties defined in the `deployNodes` task use the `configFile` property with the path (relative or absolute) set to an additional configuration file.
-This file should follow the standard corda-configuration-file format, as per node.conf. The properties from this file will be appended to the generated node configuration. Note, if you add a property already created by the ‘deployNodes’ task, both properties will be present in the file.
+This file should follow the standard corda-configuration-file format, as per node.conf. The properties from this file will be appended to the generated node configuration.
+
+{{< note >}}
+If you add a property already created by the ‘deployNodes’ task, both properties will be present in the file.
+{{< /note >}}
+
 The path to the file can also be added while running the Gradle task via the `-PconfigFile` command line option. However, the same file will be applied to all nodes.
+
 Following the previous example `PartyB` node will have additional configuration options added from a file `none-b.conf`:
 
 ```groovy
@@ -327,7 +336,7 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['jar']) {
 ```
 
 
-#### Signing CorDapp JARs
+#### Sign CorDapp JARs
 
 The default behaviour of Cordform is to deploy CorDapp JARs “as built”:
 
@@ -399,7 +408,7 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['jar']) {
 
 
 
-#### Specifying a custom webserver
+#### Specify a custom webserver
 
 By default, any node listing a web port will use the default development webserver, which is not production-ready. You
 can use your own webserver JAR instead by using the `webserverJar` argument in a `Cordform` `node` configuration
@@ -423,7 +432,7 @@ node’s `node.conf` file.
 {{< /warning >}}
 
 
-#### Running the Cordform task
+#### Run the Cordform task
 
 To create the nodes defined in our `deployNodes` task, run the following command in a terminal window from the root of the project where the `deployNodes` task is defined:
 
@@ -527,7 +536,7 @@ services:
 ```
 
 
-#### Specifying an external database
+#### Specify an external database
 
 You can configure `Dockerform` to use a standalone database to test with non-H2 databases. For example, to use PostgresSQL, you need to make the following changes to your Cordapp project:
 
@@ -728,7 +737,7 @@ The following parameters can be configured in the `postgres.gradle` file:
 
 To make the database files can be made persistent across multiple `Dockerform` runs, you need to set the parameter `dbDataVolume`. If this variable is commented out, the database files will be removed after every Dockerform run.
 
-#### Running the Dockerform task
+#### Run the Dockerform task
 
 To create the nodes defined in our `prepareDockerNodes` gradle task, run the following command in a terminal window from the root of the project where the `prepareDockerNodes` task is defined:
 
@@ -743,4 +752,7 @@ Each Corda node will be associated with a Postgres database. There will not be t
 
 The connection settings to the Postgres database are provided to each node through the `postgres.gradle` file. The Postgres JDBC driver is provided via Maven as part of the `cordaDrive` gradle configuration, which is also specified in the dependencies block of the `postgres.gradle` file.
 
-**Note.** We have not designed this feature for users to access the database via elevated or admin rights - you must only use such configuration changes for testing/development purposes.
+
+{{< note >}}
+We have not designed this feature for users to access the database via elevated or admin rights - you must only use such configuration changes for testing/development purposes.
+{{< /note >}}
