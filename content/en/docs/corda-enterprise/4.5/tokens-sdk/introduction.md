@@ -9,7 +9,22 @@ title: Introducing the Tokens SDK
 ---
 # The Token SDK
 
-The Token SDK provides you with the fastest and easiest way to create tokens that represent assets on your network. With it, you can define token types, and add functionality to CorDapps so they can **issue**, **move**, and **redeem** your tokens on a ledger.
+The Token SDK provides you with the fastest and easiest way to create tokens that represent any kind of asset on your network. This asset can be anything you want it to be - conceptual, physical, valuable or not. You can create a token to represent something outside of the network, or something that only exists on the ledger - like a Corda-native digital currency.
+
+With the SDK, you can define your token and its attributes, then add functionality to a CorDapp so the token can be **issued**, **moved**, and **redeemed** on a ledger.
+
+## Upgrade from v 1.1 to 1.2
+
+If you have developed a CorDapp that uses the Tokens SDK V1.1, you can upgrade to 1.2:
+
+1. Change the V number (version number) in your CorDapp's relevant Gradle file from 1.1 to 1.2.
+
+2. Remove all references to `selection` and `money` JARS. The functions of these JARS has been moved into `workflows` in V1.2.
+
+3. Recompile your CorDapp.
+
+4. Communicate the change to parties consuming your CorDapp accordingly, along with your recommended steps for upgrading.
+
 
 ## What's in the Token SDK
 
@@ -18,7 +33,7 @@ The Token SDK is contained in two JAR files which includes all the required depe
 * **Contracts**, which contains the base token types, states and contracts needed to create a token, including token type definitions for fiat and digital currencies.
 * **Workflows**, which contains the flows for issuing, moving, redeeming tokens, and selection workflows, which allow a party to select which source of fungible tokens they will use to pay with in a transaction.
 
-As the **Contracts** JAR contains the ability to define and create tokens, and the **Workflows** JAR contains the flows required to use them, you must add both JARS to your CorDapp in order to use the Token SDK.
+As the **Contracts** JAR contains the ability to define and create tokens, and the **Workflows** JAR contains the flows required to use them, you must add both JARS to your CorDapp's folder in order to use the Token SDK.
 
 ## The anatomy of a token
 
@@ -57,6 +72,105 @@ An `EvolvableTokenType` has properties that can change over time. This is repres
 * Define the evolvable attributes that can change over time.
 * Identify at least one signatory service that can approve the newly evolved state. This is called a `Maintainer`.
 
+In the example below, the evolvable token is for a diamond. You can see the evolvable attributes, which are the attributes included in a grading report for a diamond.
+
+**Kotlin:**
+```kotlin
+/** Creating an evolveable TokenType */
+@BelongsToContract(DiamondGradingReportContract::class)
+data class DiamondGradingReport(
+        val caratWeight: BigDecimal,
+        val color: ColorScale,
+        val clarity: ClarityScale,
+        val cut: CutScale,
+        val assessor: Party,
+        val requester: Party,
+        override val linearId: UniqueIdentifier = UniqueIdentifier()
+) : EvolvableTokenType() {
+        override val maintainers: List<Party>
+            get() = listOf()             
+        override val fractionDigits: Int
+            get() = 2
+}
+
+val diamond = DiamondGradingReport("1.0", DiamondGradingReport.ColorScale.A, DiamondGradingReport.ClarityScale.A, DiamondGradingReport.CutScale.A, gic.legalIdentity(), denise.legalIdentity())
+```
+**Java:**
+```java
+public final class DiamondGradingReport extends EvolvableTokenType {
+    private final BigDecimal caratWeight;
+    private final ColorScale color;
+    private final ClarityScale clarity;
+    private final CutScale cut;
+    private final Party assessor;
+    private final Party requester;
+    private final UniqueIdentifier linearId;
+
+    @NotNull
+    public List getMaintainers() {
+        return CollectionsKt.emptyList();
+    }
+
+    public int getFractionDigits() {
+        return 2;
+    }
+
+    @NotNull
+    public final BigDecimal getCaratWeight() {
+        return this.caratWeight;
+    }
+
+    @NotNull
+    public final ColorScale getColor() {
+        return this.color;
+    }
+
+    @NotNull
+    public final ClarityScale getClarity() {
+        return this.clarity;
+    }
+
+    @NotNull
+    public final CutScale getCut() {
+        return this.cut;
+    }
+
+    @NotNull
+    public final Party getAssessor() {
+        return this.assessor;
+    }
+
+    @NotNull
+    public final Party getRequester() {
+        return this.requester;
+    }
+
+    @NotNull
+    public UniqueIdentifier getLinearId() {
+        return this.linearId;
+    }
+
+    public DiamondGradingReport(
+            BigDecimal caratWeight,
+            ColorScale color,
+            ClarityScale clarity,
+            CutScale cut,
+            Party assessor,
+            Party requester,
+            UniqueIdentifier linearId) {
+        super();
+        this.caratWeight = caratWeight;
+        this.color = color;
+        this.clarity = clarity;
+        this.cut = cut;
+        this.assessor = assessor;
+        this.requester = requester;
+        this.linearId = linearId;
+    }
+}
+
+DiamondGradingReport diamond = new DiamondGradingReport("1.0", DiamondGradingReport.ColorScale.A, DiamondGradingReport.ClarityScale.A, DiamondGradingReport.CutScale.A, gic.getLegalIdentity(), denise.getLegalIdentity())
+```
 
 ### `FungibleToken` class
 
@@ -69,7 +183,25 @@ A fungible token is represented by the `FungibleToken` class. It must always hav
 
 Fungible tokens can be split using a flow initiated by the **Move** command. This allows a party to send some of the value of a single token to more than one recipient. Just like you can split a 10 USD bill between two people (as long as someone has change).
 
-### `NonFungilbeToken` state
+In the below example, Alice issues a token representing a BitCoin. This token is generated using the Token SDK's built-in `money` library.
+
+**Kotlin:**
+```kotlin
+                    val fungibleToken = 1 of DigitalCurrency.getInstance("BTC") issuedBy aliceParty heldBy aliceParty
+```
+
+**Java:**
+
+```java
+FungibleToken fungibleToken = new FungibleTokenBuilder()
+        .withAmount(1)
+        .ofTokenType(DigitalCurrency.getInstance("BTC"))
+        .issuedBy(aliceParty)
+        .heldBy(aliceParty)
+        .buildFungibleToken();
+```
+
+### `NonFungilbeToken` class
 
 A non-fungible token cannot be split and merged, and represents a unique asset. To create a `NonFungibleToken` you must:
 
@@ -78,6 +210,20 @@ A non-fungible token cannot be split and merged, and represents a unique asset. 
 * Define at least one `Maintainer` with the power to authorise any changes to the token. This includes every change of `Holder` and changes of attributes if it is also an `EvolvableTokenType`.
 * Define any custom attributes of the token.
 * Define the issuer of the token using the `IssuedTokenType`.
+
+In this example, Alice issues a unit of digital currency that cannot be split into any smaller pieces, and does not have attributes that evolve over time.
+
+**Kotlin:**
+
+```kotlin
+val nonFungibleToken = 1 of DigitalCurrency.getInstance("BTC") heldBy aliceParty
+```
+**Java:**
+
+```java
+IssuedTokenType issuedRubles = new IssuedTokenType(ALICE.getParty(), DigitalCurrency.getInstance("BTC"));
+new NonFungibleToken(issuedRubles, ALICE.getParty(), new UniqueIdentifier());
+```
 
 ## What you can do with the Token SDK  
 
@@ -97,9 +243,9 @@ Once you have established what type of token you want to create, you can use the
 
 Depending on your plan for issuing tokens onto your network - whether you are ready to deploy tokens in an enterprise scenario or experimenting - there are different ways to install the Tokens SDK:
 
-* [Use the kotlin token SDK](###get-started-using-the-kotlin-token-sdk-template) template to get started and issue tokens locally. This is a great way to learn about the Token SDK through practical application, but may not be suitable for your enterprise deployment.
-* [Clone the latest repo](build-token-sdk-against-corda-release-branch).
-* [Install the binaries directly to your local maven repository](add-token-sdk-dependencies-to-an-existing-cordapp).
+* [Use the kotlin token SDK template](###get-started-using-the-kotlin-token-sdk-template) template to get started and issue tokens locally. This is a great way to learn about the Token SDK through practical application, but may not be suitable for your enterprise deployment.
+* [Clone the latest repo](###build-token-sdk-against-corda-release-branch).
+* [Install the binaries directly to your local maven repository](###add-token-sdk-dependencies-to-an-existing-cordapp).
 
 For each of the these steps, follow the instructions below.
 
@@ -122,7 +268,7 @@ To use the tokens template:
 You now have a template repo with the token SDK dependencies
 included and some example code to illustrate how to use the token SDK.
 
-To test your token SDK set up locally:
+**To test your token SDK set up locally:**
 
 1. Use command line to create three nodes:
 
@@ -147,31 +293,37 @@ Often, in order to use the latest `token-sdk` master you will need to build agai
 the required changes make it into a Corda release. At the time of writing tokens `1.1-SNAPSHOT` requires Corda **THIS IS OUT OF DATE - PLEASE PROVIDE CORRECT INFORMATION**
 `4.3-SNAPSHOT`. You can build this branch with the following commands:
 
+    ```
     git clone https://github.com/corda/corda
     git fetch
     git checkout origin release/os/4.3
+    ```
 
 Then run a `./gradlew clean install` from the root directory.
 
 ### Add Token SDK dependencies to an existing CorDapp
 
 1. Add a variable for the tokens release group and the version you
-wish to use. Set the Corda version to the one you have installed locally::
+wish to use. Set the Corda version to the one you have installed locally:
 
+```
     buildscript {
         ext {
             tokens_release_version = '1.1'
             tokens_release_group = 'com.r3.corda.lib.tokens'
         }
     }
+```
 
 2.  Add the tokens development artifactory repository to the
 list of repositories for your project:
 
+```
     repositories {
         maven { url 'https://ci-artifactory.corda.r3cev.com/artifactory/corda-lib' }
         maven { url 'https://ci-artifactory.corda.r3cev.com/artifactory/corda-lib-dev' }
     }
+```
 
 3. Add the `token-sdk` dependencies to the `dependencies` block
 in each module of your CorDapp. For contract modules add:
@@ -182,20 +334,12 @@ in each module of your CorDapp. For contract modules add:
 
     cordaCompile "$tokens_release_group:tokens-workflows:$tokens_release_version"
 
-5. Add selection module:
-
-    cordaCompile "$tokens_release_group:tokens-selection:$tokens_release_version"
-
-6. For `FiatCurrency` and `DigitalCurrency` definitions, add:
-
-    cordaCompile "$tokens_release_group:tokens-money:$tokens_release_version"
-
-7. To use the `deployNodes` task, add the following dependencies to your root `build.gradle` file:
+5. To use the `deployNodes` task, add the following dependencies to your root `build.gradle` file:
 
     cordapp "$tokens_release_group:tokens-contracts:$tokens_release_version"
     cordapp "$tokens_release_group:tokens-workflows:$tokens_release_version"
 
-8. Add the following to the `deployNodes` task with the following syntax:
+6. Add the following to the `deployNodes` task with the following syntax:
 
     nodeDefaults {
         projectCordapp {
