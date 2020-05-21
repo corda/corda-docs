@@ -1,12 +1,9 @@
 ---
-aliases:
-- /quick-start.html
-- /releases/release-1.2/quick-start.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-2:
-    identifier: cenm-1-2-quick-start
-    parent: cenm-1-2-operations
+  cenm-1-3:
+    identifier: cenm-1-3-quick-start
+    parent: cenm-1-3-operations
     weight: 120
 tags:
 - quick
@@ -27,12 +24,12 @@ This guide provides a set of simple steps for creating a permissioned network wh
 ### Targeted Audience
 This guide is targeted at:
 * anyone wanting to operate a permissioned network on Corda.
-* software developers who wish to run a representative network in their dev cycle
+* software developers who wish to run a representative network in their development cycle
 
 ### Pre-Requisites
 * You should have read and understood [Networks | Corda Documentation
-Networks](https://docs.corda.net/docs/corda-os/4.4/corda-networks-index.html)
-* The following zip files need to be downloaded from <mark>[where]??</mark>  and installed on your device before you start creating your network:
+Networks](https://docs.corda.net/docs/corda-os/4.5/corda-networks-index.html)
+* Download and install the following JAR files (provided by R3) on your device, before creating your network:
     * Identity Manager distribution zip
     * Network Map distribution zip
     * PKI Tool distribution zip *(for PKI generation)*
@@ -66,7 +63,7 @@ Follow the steps below to create your permissioned network:
 #### Example Configuration
 
 In the example below, the configuration file (`pki-generation.conf`) uses a placeholder value for 
-`<IDENTITY_MANAGER_ADDRESS>` which you should replace with an actual value.
+`<IDENTITY_MANAGER_ADDRESS>` which you should replace with the external IP/hostname of the Identity Manager service.
 
 ```guess
 certificates = {
@@ -120,10 +117,10 @@ The passwords for the key stores are defaulted to “password” and the passwor
     ```bash
     java -jar pkitool.jar --config-file pki-generation.conf
     ```
-    This will produce the following set of files: <mark>Are these acronyms below described anywhere?</mark>
-    * "key-stores/corda-identity-manager-keys.jks` - Contains the key pairs for the Identity Manager service which are used for signing CSRs and CRRs
+    This will produce the following set of files: 
+    * `key-stores/corda-identity-manager-keys.jks` - Contains the key pairs for the Identity Manager service which are used for signing Certificate Signing Requests (CSRs) and Certificate Revocation Requests (CRRs)
     * `key-stores/corda-network-map-keys.jks` - Contains the key pairs for the Network Map service which are used for signing the Network Map and Network Parameters
-    * `trust-stores/network-root-truststore.jks` - Contains the network root certificate and the TLS CRL signer certificate which are used by nodes to verify that responses from other participants on the network are valid.
+    * `trust-stores/network-root-truststore.jks` - Contains the network root certificate and the TLS CRL signer certificate which are used by nodes to verify that responses from other participants on the network are valid
 
 If you run the PKI tool with the first example config, a further set of CRL files will be created. Although these files are not required to get a basic network up and running, additional functionalities such as certificate revocation support (CRS), will be available for you to use when required.
 
@@ -204,7 +201,7 @@ Network management web services started on <IDENTITY_MANAGER_ADDRESS> with [Regi
 
 #### Example Configuration
 
-This is an example `node.conf` file, with dummy values for the end points. As these endpoints are dependent on the setup of the machines, replace them with their true values (e.g. IPs addresses for machines).
+This is an example `node.conf` file, with dummy values for the endpoints. As these endpoints are dependent on the setup of the machines, replace them with their true values (e.g. IPs addresses for machines).
 
 ```guess
 myLegalName="O=NotaryA,L=London,C=GB"
@@ -240,7 +237,7 @@ rpcSettings {
 }
 ```
 
-#### Run Registration
+#### Node Registration
 
 ```bash
 java -jar corda.jar --initial-registration --network-root-truststore-password trustpass --network-root-truststore network-root-truststore.jks
@@ -311,7 +308,7 @@ This example uses a local h2 database. You can modify this to point to a separat
 
 ##### Network Parameters
 
-This is a sample configuration file (`network-parameters.conf`) that is passed to the service when you set the network parameters. The <NOTARY_NODE_INFO_FILENAME> should correspond to the node info file copied across during the previous step ([Register your Notary with the Identity Manager](#register-your-notary-with-the-identity-manager)).
+This is a sample configuration file (`network-parameters.conf`) that is passed to the service when you set the network parameters. The <NOTARY_NODE_INFO_FILENAME> should correspond to the node info file copied across during the previous step ([Register your Notary with the Identity Manager](#register-your-notary-with-the-identity-manager)). The configured path should be relative to the Network Map working directory.
 
 ```guess
 notaries : [
@@ -334,7 +331,7 @@ previous step:
 java -jar networkmap.jar --config-file network-map.conf --set-network-parameters network-parameters.conf --network-truststore network-root-truststore.jks --truststore-password trustpass --root-alias cordarootca
 ```
 
-Upon successfully setting the initial parameters, you will see the follwing details displayed to the console:
+Upon successfully setting the initial parameters, you will see the following details displayed to the console:
 
 ```guess
 Saved initial network parameters to be signed:
@@ -411,7 +408,7 @@ The standard run command form is generalised for running multiple services:
 java -jar bundled.jar -f <conf_1> ... -f <conf_n> -S <service_1> ... -S <service_n>
 ```
 
-For instance, you can run Identity Manager and Network Map in parallel:
+For example, you can run Identity Manager and Network Map in parallel:
 
 ```bash
 java -jar bundled.jar -f identity-manager.conf -f network-map.conf -S IDENTITY_MANAGER -S NETWORK_MAP
@@ -430,7 +427,7 @@ Network management web services started on <NETWORK_MAP_ADDRESS> with [NetworkMa
 
 You could also run this service as a template for one of the services you want to run. The Bundled service deduces which service to run from the configuration file, making this feature backward compatible with CENM 1.1.
 
-For example, you can implicitly run Identity Manager:
+For example, you can implicitly run the Identity Manager service:
 
 ```bash
 java -jar bundled.jar -f identity-manager.conf
