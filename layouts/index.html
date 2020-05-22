@@ -4,6 +4,7 @@
 
     <body>
         <noscript>You need to enable javascript for this site</noscript>
+        {{- partial "cookie-banner.html" . -}}
         {{- partial "header.html" . -}}
         <div class="r3-o-landing r3-o-landing__container">
             <div class="r3-o-row">
@@ -23,9 +24,8 @@
                         <a class="github" href="{{ relref . .Page.Params.target_cenm }}">
                             <span>Corda Enterprise Network Manager</span>
                         </a>
-                        <a class="corda-light" href="">
+                        <a class="github" href="https://training.corda.net" target=new>
                             <span>Developer<br/>Tutorials</span>
-                            <span>Coming<br/>Soon</span>
                         </a>
                     </div>
                 </div>
@@ -62,9 +62,6 @@
             </div>
         </footer>
         {{ partial "scripts.html" . }}
-        <script>
-            oneTimePopUp("#popup");
-        </script>
     </body>
 
     </html>
