@@ -1,6 +1,8 @@
 ---
 aliases:
 - /releases/4.4/release-notes-enterprise.html
+- /docs/corda-enterprise/head/release-notes-enterprise.html
+- /docs/corda-enterprise/release-notes-enterprise.html
 date: '2020-01-08T09:59:25Z'
 menu:
   corda-enterprise-4-4:
@@ -16,9 +18,30 @@ title: Corda Enterprise Release notes
 # Corda Enterprise Release notes
 
 
+## Corda Enterprise 4.4.2
+
+Corda Enterprise 4.4.2 is a patch release of Corda Enterprise that introduces fixes to known issues in Corda Enterprise 4.4 and a fix to a new issue related to a recent third-party dependency update.
+
+### Upgrade recommendation
+
+As a developer, you should upgrade to the [latest released version of Corda](https://docs.corda.net/docs/corda-enterprise/index.html) as soon as possible. Check the latest Corda Enterprise release notes and upgrade guide [here](https://docs.corda.net/docs/corda-enterprise/release-notes-index.html).
+
+As a node operator, you should upgrade to the [latest released version of Corda](https://docs.corda.net/docs/corda-enterprise/index.html) if any of the fixed issues listed below is relevant to your work.
+
+### Fixed issues
+
+* A recent JDK update has broken the way we used delegated signatures for TLS (Transport Layer Security) handshakes. We have fixed this issue through patches on all affected Corda Enterprise versions (4.2+) to allow users to upgrade to the latest versions of compatible JDK distributions. If you have not upgraded to one of the patched releases yet, do not upgrade to Java 8 version `8u252` or higher.
+* Fixed an issue to prevent `IndexOutOfBoundsException` from being thrown when serialising a `FlowAsyncOperation` that has maintained a reference to a `FlowLogic`. This issue occurred when constructing a `FlowAsyncOperation` from a `FlowExternalOperation` [[CORDA-3704](https://r3-cev.atlassian.net/browse/CORDA-3704)].
+* Removed references to unavailable `man` command in CRaSH and fixed syntax of `output-format` command [[CORDA-3688](https://r3-cev.atlassian.net/browse/CORDA-3688)].
+* Resolved a race condition in `FlowLogic.waitForLedgerCommit`.
+* Addressed the following problems with the JPA notary:
+    * Prevent database connection leak on unexpected DB exceptions.
+    * Prevent incorrect handling of scenarios where a successful transaction containing an input state and an unspent reference state is retried.
+* "In-process" Driver nodes used in testing now support custom CorDapp serialisers.
+
 ## Corda Enterprise 4.4
 
-This release extends the [Corda Enterprise 4.3 release](https://docs.corda.r3.com/releases/4.3/release-notes-enterprise.html)
+This release extends the [Corda Enterprise 4.3 release](https://docs.corda.net/docs/corda-enterprise/4.3/release-notes-enterprise.html)
 with further performance, resilience and operational improvements.
 
 Corda Enterprise 4.4 supports Linux for production deployments, with Windows and macOS support for development and demonstration purposes only. Please refer to product documentation for details.
@@ -104,7 +127,7 @@ The Configuration Obfuscator has been improved to:
 
 
 * Use a more robust key derivation function (PBKDF2 with HMAC-SHA256)
-* 
+*
     * keyboard input (stdin)
     * Command-line
     * Environment variables
@@ -126,4 +149,3 @@ From Corda Enterprise 4.4 onwards, we are moving towards an open core strategy. 
 
 As per previous major releases, we have provided a comprehensive upgrade notes ([Upgrading CorDapps to Corda Enterprise 4.4](app-upgrade-notes-enterprise.md)) to ease the upgrade
 of CorDapps to Corda Enterprise 4.4.
-

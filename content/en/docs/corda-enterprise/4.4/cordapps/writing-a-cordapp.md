@@ -1,6 +1,8 @@
 ---
 aliases:
 - /releases/4.4/cordapps/writing-a-cordapp.html
+- /docs/corda-enterprise/head/cordapps/writing-a-cordapp.html
+- /docs/corda-enterprise/cordapps/writing-a-cordapp.html
 date: '2020-01-08T09:59:25Z'
 menu:
   corda-enterprise-4-4:
@@ -54,7 +56,7 @@ Please use the branch of the template that corresponds to the major version of C
 ### Build system
 
 The templates are built using Gradle. A Gradle wrapper is provided in the `wrapper` folder, and the dependencies are
-defined in the `build.gradle` files. See [Building and installing a CorDapp](cordapp-build-systems.md) for more information.
+defined in the `build.gradle` files. See [Building and installing a CorDapp](cordapp-build-systems.md/) for more information.
 
 No templates are currently provided for Maven or other build systems.
 
@@ -169,4 +171,3 @@ In a production CorDapp:
 `TemplateWebPlugin.java`, `resources/templateWeb`, and `net.corda.webserver.services.WebServerPluginRegistry`)
 and replace them with a production-ready webserver
 * We would also move `TemplateClient.java` into a separate module so that it is not included in the CorDapp
-

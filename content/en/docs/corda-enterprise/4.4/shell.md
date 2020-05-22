@@ -1,6 +1,8 @@
 ---
 aliases:
 - /releases/4.4/shell.html
+- /docs/corda-enterprise/head/shell.html
+- /docs/corda-enterprise/shell.html
 date: '2020-01-08T09:59:25Z'
 tags:
 - shell
@@ -123,5 +125,3 @@ The current supported commands that can be run from the shell are:
 ### Signing Service
 
 The current supported commands that can be run from the shell are:
-
-
