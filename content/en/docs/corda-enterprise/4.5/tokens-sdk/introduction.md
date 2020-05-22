@@ -7,6 +7,7 @@ tags:
 - release
 title: Introducing the Tokens SDK
 ---
+
 # The Token SDK
 
 The Token SDK provides you with the fastest and easiest way to create tokens that represent any kind of asset on your network. This asset can be anything you want it to be - conceptual, physical, valuable or not. You can create a token to represent something outside of the network, or something that only exists on the ledger - like a Corda-native digital currency.
@@ -55,9 +56,17 @@ Your token can represent both fungible and non-fungible assets. These assets can
 | Ledger-native coin | Fungible  | non-evolvable | On-ledger asset  |
 | Diamonds | Non-Fungible | Evolvable | Off-ledger asset |
 
+## Create tokens using the Token SDK
+
+When you know what kind of token you want to introduce into the network, you can start defining it. The requirements for each token depend on whether it is fungible, and whether it can evolve over time.  
+
+Use the list below to understand what needs to be included in the token you want to create. 
+
 ### `Tokentype` - the units of a token
 
-A `TokenType` defines the unit of your token. To create a new `TokenType`, you must give it:
+A `TokenType` defines the unit of your token.
+
+To create a new `TokenType`, you must give it:
 
 * An identifier, like USD.
 * Fractional digits to define how much it can be broken down by. USD has two fractional digits because the smallest possible unit is 0.01 USD (a cent).
@@ -174,7 +183,9 @@ DiamondGradingReport diamond = new DiamondGradingReport("1.0", DiamondGradingRep
 
 ### `FungibleToken` class
 
-A fungible token is represented by the `FungibleToken` class. It must always have:
+A fungible token is represented by the `FungibleToken` class.
+
+To create and issue a fungible token, you must ensure it has:
 
 * A `TokenType` - which you can define manually, or use define using a specified fiat or digital currency.
 * A `Holder` so the person holding the token is clear.
