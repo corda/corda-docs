@@ -33,12 +33,10 @@ With the User Management tool, you can:
 * Create and manage groups. A group is comprised of multiple users with shared roles and permissions.
 * Create and manage roles. A role is a set of permissions that can be assigned to users and groups of users.
 
-<<<<<<< Updated upstream
 =======
 ### Who can use it
 
 You can only use the User Admin tool if you are registered to use the tool as an Administrator.
->>>>>>> Stashed changes
 
 ## Install the CENM User Admin tool
 
@@ -69,11 +67,7 @@ Users are able to access network services to perform relevant tasks. When you cr
 Administrators can only perform tasks on the User Admin tool - an administrator in this tool *cannot* have any role as a user on your network operation services.
 
 {{< note >}}
-<<<<<<< Updated upstream
-You must be an administrator to create new users and administrators.
-=======
 You must be registered as an Administrator to create new users and administrators.
->>>>>>> Stashed changes
 {{< /note >}}
 
 To add a new user or administrator:
@@ -90,11 +84,6 @@ To add a new user or administrator:
 
 You have added a new User.
 
-<<<<<<< Updated upstream
-## Create a new Group
-
-
-=======
 ### Next steps for a new user
 
 The password you give to new users can be changed by them using the [LINK TO CLI TOOL HERE]. You can give them these instructions when you first add them using the tool.
@@ -106,7 +95,7 @@ You can create Groups to give multiple users a common set of roles and permissio
 To create a Group:
 
 1.
->>>>>>> Stashed changes
+
 
 ## Manage a Group
 
