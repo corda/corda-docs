@@ -49,8 +49,6 @@ The worker specific legal identity key pair is used for P2P messaging, whereas t
 all the notary workers of the CFT notary cluster to sign valid transactions. During operation, each notary worker will access the HSM and
 use the distributed notary key when processing notarisation requests.
 
-See the certificates-hierarchy design doc for more information on the key hierarchies used by Corda.
-
 For information on which HSMs are supported by Corda Enterprise, see the [platform support matrix](../platform-support-matrix.md).
 Please read the section below for setup instructions and [configuration details](../node/operating/cryptoservice-configuration.md/).
 
