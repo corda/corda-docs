@@ -21,14 +21,7 @@ This guide provides a set of simple steps for creating a permissioned network wh
 * Network Map service
 * [Notary Service](https://docs.corda.net/docs/corda-enterprise/4.5/notary/)
 
-### Targeted Audience
-This guide is targeted at:
-* anyone wanting to operate a permissioned network on Corda.
-* software developers who wish to run a representative network in their development cycle
-
 ### Pre-Requisites
-* You should have read and understood [Networks | Corda Documentation
-Networks](https://docs.corda.net/docs/corda-os/4.5/corda-networks-index.html)
 * Download and install the following JAR files (provided by R3) on your device, before creating your network:
     * Identity Manager distribution zip
     * Network Map distribution zip
@@ -122,8 +115,9 @@ The passwords for the key stores are defaulted to “password” and the passwor
     * `key-stores/corda-network-map-keys.jks` - Contains the key pairs for the Network Map service which are used for signing the Network Map and Network Parameters
     * `trust-stores/network-root-truststore.jks` - Contains the network root certificate and the TLS CRL signer certificate which are used by nodes to verify that responses from other participants on the network are valid
 
-If you run the PKI tool with the first example config, a further set of CRL files will be created. Although these files are not required to get a basic network up and running, additional functionalities such as certificate revocation support (CRS), will be available for you to use when required.
+If you run the PKI tool with the first example config, a further set of CRL files will be created. Although these files are not required to get a basic network up and running, additional functionalities such as Certificate Revocation Support (CRS), will be available for you to use when required.
 
+<mark>Do we want to add something here to say that the steps below are guidelines for anyone wanting to create a permissioned network?</mark>
 ### Start the Identity Manager service
 
 Before running the service, copy the Identity Manager jar along with the `corda-identity-manager-keys.jks` file to the 
@@ -180,7 +174,7 @@ See the “Database properties” section of [Identity Manager Service](identity
 
 {{< /note >}}
 
-#### Run The Service
+### Run The Service
 * Run the Identity Manager service via:
 
 ```bash
