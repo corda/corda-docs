@@ -11,6 +11,7 @@ tags:
 title: CENM Command Line Interface
 ---
 
+
 # CENM Command Line Interface (CLI)
 
 The Command Line Interface (CLI) allows you to perform key CENM tasks remotely and securely.
@@ -27,6 +28,7 @@ Once you have permissions to access the CENM service you require, you can use th
 In order to use the CLI, you must have permission to access the CENM services you plan to use.
 
 You should have an account that can be set up by administrators using the [User Admin tool](user-admin-tool.html).
+
 
 ## Quickstart - set up a new network with the CLI
 
@@ -56,6 +58,7 @@ To set up a new network with the CLI:
 
 6. Set the Signer configuration last, as it depends on the first two service's locations for it to be complete
 ./cenm signer config set -f config/signer.conf --zone-token
+
 
 ## Overview of available commands
 
@@ -95,11 +98,14 @@ This command allows you to change the password you use to access your CENM servi
 
 ### Options
 `-n, --new-password[=<newPassword>]`
+
 New password
 
 If present without value, the password can be entered interactively.
 
+
 ``-p, --password[=<password>]``
+
 Current password
 
 If present without value, the password can be entered interactively.
@@ -127,6 +133,7 @@ Setting a context means that your session is not interrupted by any natural time
 ### Aliases for contexts
 
 If you work on multiple services, or need to access the same service using multiple contexts, you can use the CLI to create **context aliases**. This means you can switch between sessions and back again by switching aliases.
+
 
 
 ## Log in to a CENM session
