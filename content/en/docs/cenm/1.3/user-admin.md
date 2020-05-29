@@ -5,7 +5,7 @@ aliases:
 date: '2020-05-22T05:59:25Z'
 menu:
   cenm-1-3:
-    identifier: cenm-1-3-user-management-tool
+    identifier: cenm-1-3-user-admin-tool
     parent: cenm-1-3-tools-index
     weight: 1015
 tags:
@@ -69,6 +69,8 @@ Users are able to access network services to perform relevant tasks. When you cr
 
 Administrators can only perform tasks on the User Admin tool - an administrator in this tool *cannot* have any role as a user on your network operation services.
 
+![create_user](resources/create_user.png)
+
 {{< note >}}
 You must be registered as an Administrator to create new users and administrators.
 {{< /note >}}
@@ -96,11 +98,13 @@ You have added a new User.
 
 ### Next steps for a new user
 
-The password you give to new users can be changed by them using the [LINK TO CLI TOOL HERE]. You can give them these instructions when you first add them using the tool.
+The password you give to new users can be changed by them using the CENM CLI. You can give new users these instructions when you add them.
 
 ## Manage a user
 
 You can change a user's roles, group membership and active status.
+
+![Manage user](resources/edit_user.png)
 
 To amend a user's active status, roles and group membership:
 
@@ -116,11 +120,13 @@ To amend a user's active status, roles and group membership:
 
 4. All updates are saved automatically. Click **Back to users** in the top left-hand corner of the screen to return to the list of users.
 
-You have managed a user's groups and active status. 
+You have managed a user's groups and active status.
 
 ## Create a new Group
 
 You can create Groups to give multiple users common roles and permissions.
+
+![Creating a group](resources/create_group.png)
 
 To create a Group:
 
@@ -145,6 +151,7 @@ You have created a new group. You can access your newly created group from the *
 
 You can add or remove members of a group, or delete an existing group any time. Deleting a group does not delete the users in the group.
 
+![Manage a group](resources/editing_group.png)
 To make changes to a group:
 
 1. From any screen, click **Groups** in the left-hand menu.
@@ -161,7 +168,7 @@ To make changes to a group:
 
 You have made changes to your group. If you have removed a user from the group, they may lose permissions that they had been given as a group-member. You can check an individual user's roles to confirm this.
 
-To delete a group:
+### To delete a group:
 
 1. From any screen, click **Groups** in the left-hand menu.
     The **Groups** screen is displayed. You can see your existing groups in a card formation.
