@@ -96,24 +96,25 @@ Network-map management features.
 
 This command allows you to change the password you use to access your CENM services.
 
+{{< attention >}}
+
+If you have been allocated a new password by an administrator using the [User admin tool](user-admin.md), you must change it to something only you know. You must do this before you continue to use CENM services.
+
+{{< /attention >}}
+
 ### Options
+
 `-n, --new-password[=<newPassword>]`
-
-New password
-
-If present without value, the password can be entered interactively.
-
+New password. Leave `-p` without a value to enter your password on the next line. This prevents your password being visible in the command line history.
 
 ``-p, --password[=<password>]``
-
-Current password
-
-If present without value, the password can be entered interactively.
+Current password. Leave `-p` without a value to enter your password on the next line. This prevents your password being visible in the command line history.
 
 ``-u, --username=<username>``
 Username for password based authentication.
 
 ### Arguments
+
 ``<server>``
 Url for the targeted CENM API Gateway - the FARM service.
 
@@ -134,8 +135,6 @@ Setting a context means that your session is not interrupted by any natural time
 
 If you work on multiple services, or need to access the same service using multiple contexts, you can use the CLI to create **context aliases**. This means you can switch between sessions and back again by switching aliases.
 
-
-
 ## Log in to a CENM session
 
 When you log in to a CENM session using the CLI, you do so by setting the required **Context** for your session. This ensures you are able to stay logged in to the correct server address for the duration of your work.
@@ -150,9 +149,7 @@ Optionally sets an alias for this session.
 This can be used for setting the 'current context' and logging out later on.
 
 **-p, --password[=<password>]**
-Password for password based authentication.
-
-If present without value, the password can be entered interactively.
+Password for password based authentication. Leave `-p` without a value to enter your password on the next line. This prevents your password being visible in the command line history.
 
 **-s, --set-active-context**
 Sets the active context to the configured url.
@@ -197,9 +194,35 @@ Displays configured approval plugins.
 `cert-path`
 Display certificate path for a legal name.
 
-### Configure Identity Manager
+## Set external address and configure Identity Manager
 
-You can use the CLI to:
+You can use the CLI to configure the following elements of the Identity manager service for the context you are working on:
+
+* Update the Identity manager's service address.
+* Retrieve the Identity manager configuration.
+* Update the Identity manager's configuration.
+
+
+### Update the Identity manager's service address.
+
+To update the service address of the Identity manager, use the `set-address` command. Changing the address of the Identity manager service also means you can update the Context of the current session to match the new address.
+
+When entering the address, you must enter `<host>-<port>`. The `port` value must be the same as the value for `adminListener` in the services configuration file. **[PLEASE CHECK THIS]**
+
+**Sample command**
+
+`cenm identity-manager config set-address -a=<address> [-c=<useContext>] [-o=<outputType>]`
+
+**Options**
+
+`-a, --address=<address>`
+The address of the service, in the format `<host>:<port>`. The value for `port` must match the value for `adminListener` in the service configuration file.
+
+`-c, --use-context=<useContext>`
+Sets the context of the command to override the current context you are using.
+
+`-o, <outputType>`
+Specifies output format. Valid values are: json, pretty. Default value is `pretty`
 
 ### Retrieve the current Identity manager configuration
 
@@ -217,13 +240,13 @@ Sets the context of the command that overrides the current context set.
 `-o, <outputType>`
 Specifies output format. Valid values are: json, pretty
 
-Default value is pretty
+Default value is `pretty`
 
 `--zone-token`
-Indicates that the zone token should be printed instead of the config, when using the 'pretty' output type..
+Indicates that the zone token should be printed instead of the config, when using the 'pretty' output type.
 
 
-### Update the current Identity manager's configuration.
+### Update the Identity manager's configuration
 
 To update the configuration of the Identity manager, you need to include a config file with the new settings. Then use the `set` command to update the Identity manager.
 
@@ -245,4 +268,29 @@ Specifies output format. Valid values are: json, pretty. Default value is pretty
 `--zone-token`
 Indicates that the zone token should be printed instead of the config, when using the 'pretty' output type..
 
-### Update the identity manager's service address.
+
+## Identity manager - Certificate signing request Management
+
+You can use the CLI to see the **approved** and **pending** certificate signing requests for the Identity manager service.
+
+### See the approved certificate signing requests
+
+To see the approved certificate signing requests for a different context to the one you are on, you need to specify the context you require. You also need to define the output type.
+
+{{< Note >}}
+
+Requesting certificate signing requests on a different context may trigger a request for login details. Make sure you have authorisation to access this context before entering the command.
+
+{{< /Note >}}
+
+**Sample command**
+
+`cenm identity-manager csr approved [-c=<useContext>] [-o=<outputType>]`
+
+**Options**
+
+``-c, --use-context=<useContext>``
+Sets the context of the command - overrides the current context set.
+
+``-o, <outputType>``
+Specifies output format. Valid values are: json, pretty. Default value is `pretty`.
