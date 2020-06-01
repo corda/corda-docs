@@ -48,7 +48,7 @@ To install Network User Manager:
 
 ## Change your password
 
-When logging into the CENM User Admin tool as an administrator for the first time, you must change your temporary password. You can also repeat this process whenever you want to update your password to access your managed network.
+When logging into the CENM User Admin tool as an administrator for the first time, you must change your temporary password. You can repeat this process whenever you want.
 
 To change your password:
 
