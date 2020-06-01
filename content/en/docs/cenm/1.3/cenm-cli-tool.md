@@ -257,7 +257,7 @@ To update the configuration of the Identity manager, you need to include a confi
 **Options**
 
 `-c, --use-context=<useContext>`
-Sets the context of the command that overrides the current context set.
+Sets the context of the command. This overrides the current context set.
 
 `-f, --config-file=<configFile>`
 Configuration file.
@@ -273,15 +273,15 @@ Indicates that the zone token should be printed instead of the config, when usin
 
 You can use the CLI to see the **approved** and **pending** certificate signing requests for the Identity manager service.
 
-### See the approved certificate signing requests
-
-To see the approved certificate signing requests for a different context to the one you are on, you need to specify the context you require. You also need to define the output type.
+To see the requests for a different context to the one you are on, you need to specify the context you require.
 
 {{< Note >}}
 
 Requesting certificate signing requests on a different context may trigger a request for login details. Make sure you have authorisation to access this context before entering the command.
 
 {{< /Note >}}
+
+### Get the approved certificate signing requests
 
 **Sample command**
 
@@ -290,6 +290,120 @@ Requesting certificate signing requests on a different context may trigger a req
 **Options**
 
 ``-c, --use-context=<useContext>``
+Sets the context of the command - overrides the current context set.
+
+``-o, <outputType>``
+Specifies output format. Valid values are: json, pretty. Default value is `pretty`.
+
+ ### Get the pending certificate signing requests
+
+ **Sample command**
+
+ `cenm identity-manager csr pending [-c=<useContext>] [-o=<outputType>]`
+
+ **Options**
+
+ `-c, --use-context=<useContext>`
+ Sets the context of the command - overrides the current context set.
+
+ ``-o, <outputType>``
+ Specifies output format. Valid values are: json, pretty. Default value is `pretty`.
+
+
+ ## Identity manager - certificate revocation list Management
+
+ Identity certificates allow parties to access the network managed by CENM. Using the CLI, you can:
+
+ * Submit a certificate revocation request.
+ * Get the list of **approved** certificate revocation requests.
+ * Get the list of **pending** certificate revocation requests.
+
+ You can use the CLI to see the **approved** and **pending** certificate revocation requests for the Identity manager service.
+
+ To see the requests for a different context to the one you are on, you need to specify the context you require.
+
+ {{< Note >}}
+
+ Requesting certificate signing requests on a different context may trigger a request for login details. Make sure you have authorisation to access this context before entering the command.
+
+ {{< /Note >}}
+
+When making a request to revoke a certificate, you must provide *only one* of the following certificate identifiers:
+
+* Request ID of the certificate being revoked.
+* Legal name of the party whose certificate is being revoked.
+* The serial ID of the certificate being revoked.
+
+### Request revocation of a certificate
+
+To request that a certificate is revoked, you must provide a reason for the revocation, and one form of certificate identifier.
+
+**Sample command**
+
+`cenm identity-manager crr submit (-n=<legalName> | -i=<requestId> | -s=<serial>) [-c=<useContext>] -e=<reporter> [-o=<outputType>] -r=<reason>`
+
+**Options**
+
+`-c, --use-context=<useContext>`
+Sets the context of the command that overrides the current context set.
+
+`-e, --reporter=<reporter>`
+
+`-o, <outputType>``
+Specifies output format. Valid values are: json, pretty. Default value is `pretty`.
+
+``-r, --reason=<reason>``
+Reason for the revocation. Possible values:
+* `UNSPECIFIED`
+* `KEY_COMPROMISE`
+* `CA_COMPROMISE`
+* `AFFILIATION_CHANGED`
+* `SUPERSEDED`
+* `CESSATION_OF_OPERATION`
+* `CERTIFICATE_HOLD`
+* `UNUSED`
+* `REMOVE_FROM_CRL`
+* `PRIVILEGE_WITHDRAWN`
+* `AA_COMPROMISE`
+
+**Certificate identifiers**
+
+Only use one certificate identifier per request.
+
+`-i, --request-id=<requestId>`
+Submits a CRR using the request id. Can only be present if serial and legal name not set
+
+`-n, --legal-name=<legalName>`
+Submits a CRR using the legal name. Can only be present if request id and serial not set
+
+`-s, --serial=<serial>`
+Submits a CRR using the certificate serial.
+
+Can only be present if request id and legal name not set
+
+### Get list of approved certificate revocation requests
+
+**Sample command**
+
+cenm identity-manager crr approved [-c=<useContext>] [-o=<outputType>]
+
+**Options**
+
+`-c, --use-context=<useContext>`
+Sets the context of the command - overrides the current context set.
+
+``-o, <outputType>``
+Specifies output format. Valid values are: json, pretty. Default value is `pretty`.
+
+### Get list of pending certificate revocation requests
+
+**Sample command**
+
+cenm identity-manager crr pending [-c=<useContext>] [-o=<outputType>]
+
+**Options**
+
+`-c, --use-context=<useContext>`
 Sets the context of the command - overrides the current context set.
 
 ``-o, <outputType>``
