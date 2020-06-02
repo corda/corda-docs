@@ -17,13 +17,7 @@ title: CENM User Admin tool
 
 ## CENM User Admin tool
 
-The User Admin tool allows you to manage the profiles of users, groups, and administrators who perform network operations on your bespoke network. You can use the tool to create roles with specific permissions and assign them to users. For example, you can give a user of the Identity Manager service a role that permits them to sign the issuance of a certificate to join the network.
-
-The three main services you can give users access to are:
-
-* Identity Manager service
-* Network Map service
-* Signing service
+The User Admin tool allows you to manage the profiles of users, groups, and administrators who need access to your network services. You can use the tool to create roles with specific permissions and assign them to users. For example, you can give a user of the Identity Manager service a role that permits them to request the revocation of a network certificate.
 
 With the User Management tool, you can:
 
@@ -48,7 +42,7 @@ To install Network User Manager:
 
 ## Change your password
 
-When logging into the CENM User Admin tool as an administrator for the first time, you must change your temporary password. You can repeat this process whenever you want.
+When logging into the User Admin tool as an administrator for the first time, you must change your temporary password. You can repeat this process whenever you want.
 
 To change your password:
 
@@ -98,7 +92,7 @@ You have added a new User.
 
 ### Next steps for a new user
 
-The password you give to new users can be changed by them using the CENM CLI. You can give new users these instructions when you add them.
+New users must change the password you give them using the CENM CLI. You must give new users these instructions when you add them.
 
 ## Manage a user
 
