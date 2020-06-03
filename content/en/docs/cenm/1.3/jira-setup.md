@@ -1,7 +1,6 @@
 ---
 aliases:
 - /jira-setup.html
-- /releases/release-1.2/jira-setup.html
 date: '2020-01-08T09:59:25Z'
 menu: []
 tags:
@@ -44,8 +43,8 @@ Tickets are moved from `Approved` status to `Done` automatically, once the reque
 
 Additionally, the following 3 custom fields need to be created and configured in JIRA.
 
-> 
-> 
+>
+>
 > * Request ID
 > * Reject Reason
 > * Reject Reason Description

@@ -1,12 +1,11 @@
 ---
 aliases:
 - /upgrade-notes.html
-- /releases/release-1.2/upgrade-notes.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-2:
-    identifier: cenm-1-2-upgrade-notes
-    parent: cenm-1-2-operations
+  cenm-1-3:
+    identifier: cenm-1-3-upgrade-notes
+    parent: cenm-1-3-operations
     weight: 170
 tags:
 - upgrade
@@ -244,4 +243,3 @@ The new JAR can then be run with the new configuration file with no extra steps 
 * **Auto Enrolment in Private Networks**To support automatic enrolment of nodes within a Private Network a new column has been added to the `private-networks` table
 to facilitate indication as to whether that private network should allow for automatic registration. This task will handled
 automatically via liquibase if “run_migration” is set when starting the 0.2.1 `doorman.jar`.
-

@@ -1,12 +1,11 @@
 ---
 aliases:
 - /corda-networks.html
-- /releases/release-1.2/corda-networks.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-2:
-    identifier: cenm-1-2-corda-networks
-    parent: cenm-1-2-concepts-and-overview
+  cenm-1-3:
+    identifier: cenm-1-3-corda-networks
+    parent: cenm-1-3-concepts-and-overview
     weight: 20
 tags:
 - corda
@@ -94,11 +93,9 @@ unaware of one another
 
 Each Network Map requires
 
-> 
-> 
+>
+>
 > * A configuration file
 > * A starting set of network parameters
 > * One or more notaries for inclusion in the whitelist
 > * A signing service configured to sign the network map and network parameters
-
-

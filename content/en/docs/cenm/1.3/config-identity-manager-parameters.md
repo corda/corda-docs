@@ -1,12 +1,11 @@
 ---
 aliases:
 - /config-identity-manager-parameters.html
-- /releases/release-1.2/config-identity-manager-parameters.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-2:
-    identifier: cenm-1-2-config-identity-manager-parameters
-    parent: cenm-1-2-configuration
+  cenm-1-3:
+    identifier: cenm-1-3-config-identity-manager-parameters
+    parent: cenm-1-3-configuration
     weight: 220
 tags:
 - config
@@ -166,10 +165,3 @@ The number  of times the Revocation Workflow Processor needs to synchronise Cert
 
 * **crlFiles**:
 A List of CRLs hosted by the Identity Manager in addition to the Revocation List of the certificate signing CSR’s for nodes. This allows the Identity Manager to host the CRLs for those nodes that do not wish to host their own CRL infrastructure, at the cost of not being able to revoke TLS certificates issued by the node.
-
-
-
-
-
-
-

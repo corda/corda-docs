@@ -1,12 +1,11 @@
 ---
 aliases:
 - /changelog.html
-- /releases/release-1.2/changelog.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-2:
-    identifier: cenm-1-2-changelog
-    parent: cenm-1-2-cenm-releases
+  cenm-1-3:
+    identifier: cenm-1-3-changelog
+    parent: cenm-1-3-cenm-releases
     weight: 100
 tags:
 - changelog
@@ -104,4 +103,3 @@ the future versioning of both independently.
 * Added client and server health check tools to the utilities JAR
 * Change of the naming convention Enterprise Zone Manager -> Enterprise Network Manager.
 * Added packageOwnership map to the network parameters config
-
