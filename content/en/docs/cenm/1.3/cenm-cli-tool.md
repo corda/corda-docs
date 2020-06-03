@@ -156,7 +156,7 @@ Username for password based authentication.
 **Arguments**
 
 ``<server>``
-Url for the targeted CENM API Gateway - the FARM service.
+URL for the targeted CENM API Gateway - the FARM service.
 
 
 ## Log in to a CENM session
