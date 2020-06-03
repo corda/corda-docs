@@ -296,7 +296,7 @@ enum class Example {
 When deserializing the most applicable transform will be applied. Continuing the above example, deserializing
 nodes could have three distinct views on what the enum Example looks like (annotations omitted for brevity)
 
-{{< tabs name="tabs-9" >}}
+{{< tabs name="tabs-9-1" >}}
 {{% tab name="kotlin-1" %}}
 ```kotlin
 // The original version of the class. Will deserialize: -
@@ -310,8 +310,10 @@ enum class Example {
 }
 ```
 {{% /tab %}}
+{{< /tabs >}}
 
-{{% tab name="kotlin-2" %}}
+{{< tabs name="tabs-9-2" >}}
+{{% tab name="kotlin" %}}
 ```kotlin
 // The class as it existed after the first addition. Will deserialize:
 //   A -> A
@@ -324,8 +326,10 @@ enum class Example {
 }
 ```
 {{% /tab %}}
+{{< /tabs >}}
 
-{{% tab name="kotlin-3" %}}
+{{< tabs name="tabs-9-3" >}}
+{{% tab name="kotlin" %}}
 ```kotlin
 // The current state of the class. All values will deserialize as themselves
 enum class Example {
