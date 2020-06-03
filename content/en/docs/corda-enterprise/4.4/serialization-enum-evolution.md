@@ -249,14 +249,14 @@ Just as with the `CordaSerializationTransformRename` transformation if a single 
 then the meta transform may be omitted.
 
 {{< tabs name="tabs-7" >}}
-{{% tab name="kotlin" %}}
+{{< tab name="kotlin" >}}
 ```kotlin
 @CordaSerializationTransformEnumDefault("D", "C")
 enum class Example {
     A, B, C, D
 }
 ```
-{{% /tab %}}
+{{< /tab >}}
 
 {{< /tabs >}}
 

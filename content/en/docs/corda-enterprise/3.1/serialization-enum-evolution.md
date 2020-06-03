@@ -250,7 +250,7 @@ Just as with the `CordaSerializationTransformRename` transformation if a single 
 then the meta transform may be omitted.
 
 {{< tabs name="tabs-7" >}}
-{{% tab name="kotlin" %}}
+{{< tab name="kotlin" >}}
 ```kotlin
 @CordaSerializationTransformEnumDefault("D", "C")
 enum class Example {
@@ -428,5 +428,3 @@ The following evolutions are not currently supports
 
 * Removing constants
 * Reordering constants
-
-
