@@ -1,3 +1,19 @@
+---
+aliases:
+- /zone-service.html
+- /releases/release-1.3/zone-service.html
+date: '2020-06-04T13:44:00Z'
+menu:
+  cenm-1-3:
+    identifier: cenm-1-3-zone-service
+    parent: cenm-1-2-operations
+    weight: 155
+tags:
+- zone
+- configuration
+title: Zone Service
+---
+
 # Zone Service
 
 ## Overview
