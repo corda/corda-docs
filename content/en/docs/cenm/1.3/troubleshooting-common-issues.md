@@ -1,12 +1,11 @@
 ---
 aliases:
 - /troubleshooting-common-issues.html
-- /releases/release-1.2/troubleshooting-common-issues.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-2:
-    identifier: cenm-1-2-troubleshooting-common-issues
-    parent: cenm-1-2-operations
+  cenm-1-3:
+    identifier: cenm-1-3-troubleshooting-common-issues
+    parent: cenm-1-3-operations
     weight: 190
 tags:
 - troubleshooting
@@ -164,4 +163,3 @@ Also make sure that the given JAR file does not attempt to use invalid or non-ex
 
 If a class in the JAR file tries to import a class that does not exist the SMR will not be able to load the JAR
 and throw this error.
-

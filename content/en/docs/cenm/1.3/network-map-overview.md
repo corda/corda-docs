@@ -1,12 +1,11 @@
 ---
 aliases:
 - /network-map-overview.html
-- /releases/release-1.2/network-map-overview.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-2:
-    identifier: cenm-1-2-network-map-overview
-    parent: cenm-1-2-concepts-and-overview
+  cenm-1-3:
+    identifier: cenm-1-3-network-map-overview
+    parent: cenm-1-3-concepts-and-overview
     weight: 50
 tags:
 - network
@@ -89,24 +88,24 @@ messages separated into parallel and nested flows, which isn’t necessary for n
 
 The node info consists the following data:
 
-> 
-> 
-> * **addresses**: 
+>
+>
+> * **addresses**:
 > List of network addresses (including port numbers) under which the node is accessible.
-> 
-> 
-> * **legalIdentitiesAndCerts**: 
+>
+>
+> * **legalIdentitiesAndCerts**:
 > List of legal identities (with their certificates) registered at the node.
-> 
-> 
-> * **platformVersion**: 
+>
+>
+> * **platformVersion**:
 > Platform version of the node.
-> 
-> 
-> * **serial**: 
+>
+>
+> * **serial**:
 > Serial number of this node info file.
-> 
-> 
+>
+>
 
 
 
@@ -161,37 +160,37 @@ also distributes the node info files to the node directories.
 The current set of network parameters:
 
 
-* **minimumPlatformVersion**: 
+* **minimumPlatformVersion**:
 The minimum platform version that the nodes must be running. Any node which is below this will
 not start.
 
 
-* **notaries**: 
+* **notaries**:
 List of identity and validation type (either validating or non-validating) of the notaries which are
 permitted in the network.
 
 
-* **maxMessageSize**: 
+* **maxMessageSize**:
 Maximum allowed size in bytes of an individual message sent over the wire. Note that attachments are a
 special case and may be fragmented for streaming transfer, however, an individual transaction or flow
 message may not be larger than this value.
 
 
-* **maxTransactionSize**: 
+* **maxTransactionSize**:
 Maximum allowed size in bytes of a transaction. This is the size of the transaction object and its
 attachments.
 
 
-* **modifiedTime**: 
+* **modifiedTime**:
 The time when the network parameters were last modified by the network operator.
 
 
-* **epoch**: 
+* **epoch**:
 Version number of the network parameters. Starting from 1, this will always increment whenever any of the
 parameters change.
 
 
-* **whitelistedContractImplementations**: 
+* **whitelistedContractImplementations**:
 List of whitelisted versions of contract code. For each contract class there is a
 list of hashes of the approved CorDapp jar versions containing that contract. Read
 more about *contract constraints* in the [contract constraints doc](https://docs.corda.net/api-contract-constraints.html). See
@@ -199,7 +198,7 @@ more about *contract constraints* in the [contract constraints doc](https://docs
 configuration file.
 
 
-* **eventHorizon**: 
+* **eventHorizon**:
 Time after which nodes are considered to be unresponsive and removed from network map. Nodes republish
 their `NodeInfo` on a regular interval. Network map treats that as a heartbeat from the node.
 
@@ -268,4 +267,3 @@ useful especially when dealing with node’s deployment in environments with IP 
 |GET|/network-map/my-hostname|Returns the IP address of the requestor.|
 
 {{< /table >}}
-

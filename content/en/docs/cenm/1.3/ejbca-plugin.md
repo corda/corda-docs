@@ -1,12 +1,11 @@
 ---
 aliases:
 - /ejbca-plugin.html
-- /releases/release-1.2/ejbca-plugin.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-2:
-    identifier: cenm-1-2-ejbca-plugin
-    parent: cenm-1-2-signing-plugin-samples
+  cenm-1-3:
+    identifier: cenm-1-3-ejbca-plugin
+    parent: cenm-1-3-signing-plugin-samples
     weight: 340
 tags:
 - ejbca
@@ -53,8 +52,8 @@ Corda’s certificates contain a custom extension named Certificate Role. We mus
 generation. This is done by accessing *System Configuration* tab followed by *Custom Certificate Extensions* tab. Here
 we add new custom extension with following properties:
 
-> 
-> 
+>
+>
 > * **OID** -> *1.3.6.1.4.1.50530.1.1*
 > * **Label** -> *X509_EXTENSION_CORDA_ROLE*
 > * **Critical** -> *No*
@@ -67,8 +66,8 @@ we add new custom extension with following properties:
 Now we must set up new certificate profile in order to support Corda compatible certificate issuance. This is done by
 accessing *Certificate Profiles* tab and adding new profile. After that edit profile to have following properties set up:
 
-> 
-> 
+>
+>
 > * **Type** -> *Sub CA*
 > * **Allow Extension Override** -> *True*
 > * **Allow certificate serial number override** -> *True*
@@ -83,8 +82,8 @@ accessing *Certificate Profiles* tab and adding new profile. After that edit pro
 At the end we must set up new end entity profile. This is done by accessing *End Entity Profiles* and adding new profile.
 After that edit profile to have following properties set up:
 
-> 
-> 
+>
+>
 > * **Subject DN Attributes** -> Add *OU*, *O*, *L*, *C*, *ST*, *DC*
 > * **Default Certificate Profile** -> The one you’ve set up
 > * **Available Certificate Profiles** -> The one you’ve set up
@@ -376,4 +375,3 @@ On success you should see a message similar to:
 EJBCA plugin started
 SMR Service started
 ```
-

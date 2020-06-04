@@ -1,12 +1,11 @@
 ---
 aliases:
 - /tool-crr-submission.html
-- /releases/release-1.2/tool-crr-submission.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-2:
-    identifier: cenm-1-2-tool-crr-submission
-    parent: cenm-1-2-tools-index
+  cenm-1-3:
+    identifier: cenm-1-3-tool-crr-submission
+    parent: cenm-1-3-tools-index
     weight: 1030
 tags:
 - tool
@@ -44,4 +43,3 @@ Example:
 ```bash
 java -jar crrsubmissiontool.jar --submission-url http://<<CORDA_DOMAIN>>/certificate-revocation-request
 ```
-

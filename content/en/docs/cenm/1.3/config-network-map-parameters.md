@@ -1,12 +1,11 @@
 ---
 aliases:
 - /config-network-map-parameters.html
-- /releases/release-1.2/config-network-map-parameters.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-2:
-    identifier: cenm-1-2-config-network-map-parameters
-    parent: cenm-1-2-configuration
+  cenm-1-3:
+    identifier: cenm-1-3-config-network-map-parameters
+    parent: cenm-1-3-configuration
     weight: 230
 tags:
 - config
@@ -22,125 +21,125 @@ title: Network Map Configuration Parameters
 Configuration reference for the Network Map Service
 
 
-* **address**: 
+* **address**:
 The host and port on which the service runs
 
 
-* **database**: 
+* **database**:
 See [CENM Database Configuration](config-database.md)
 
 
-* **shell**: 
+* **shell**:
 *(Optional)*  See [Shell Configuration Parameters](config-shell.md)
 
 
-* **enmListener**: 
+* **enmListener**:
 Details on how the service will communicate with the rest of the ENM deployment.
 <!-- Is ENM spelt out ealier in this doc?-->
 
 
-* **port**: 
+* **port**:
 Port that the service will bind to and other ENM components will connect to.
 
 
-* **verbose**: 
+* **verbose**:
 *(Optional)* Enables verbose logging for the socket layer
 
 
-* **reconnect**: 
+* **reconnect**:
 Informs whether a client should attempt to reconnect if the connection is dropped.
 
 
-* **ssl**: 
+* **ssl**:
 See [SSL Settings](config-ssl.md)
 
 
 
 
-* **checkRevocation**: 
+* **checkRevocation**:
 If set to true, the Network Map will check with the Identity Manager’s revocation service to find out if the registering node is revoked.
 
 
-* **pollingInterval**: 
+* **pollingInterval**:
 How often nodes registering with the network map should check back for new entries.
 
 
-* **identityManager**: 
+* **identityManager**:
 Details where the issuance service is on the network
 
 
-* **host**: 
+* **host**:
 The host the Identity Manager is running on
 
 
-* **port**: 
+* **port**:
 The port that its enmListener is bound to
 
 
-* **ssl**: 
+* **ssl**:
 See [SSL Settings](config-ssl.md)
 
 
 
 
-* **revocation**: 
+* **revocation**:
 Details where the revocation service is on the network
 
 
-* **host**: 
+* **host**:
 The host that the Identity Manager is running on
 
 
-* **port**: 
+* **port**:
 The port that its enmListener is bound to
 
 
-* **ssl**: 
+* **ssl**:
 See [SSL Settings](config-ssl.md)
 
 
 
 
-* **localSigner**: 
+* **localSigner**:
 *(Optional)* Configuration of the local signer for the Network Map service. Useful for debugging, testing or when HSM support is not available.
-* **keyStore**: 
+* **keyStore**:
 Configuration for key store containing the Network Map key pair.
 
 
-* **file**: 
+* **file**:
 Path to the key store file containing the signing keys for the Network Map service.
 
 
-* **password**: 
+* **password**:
 Key store password.
 
 
 
 
-* **keyAlias**: 
+* **keyAlias**:
 Key alias under which the key can be found in the key store.
 
 
-* **keyPassword**: 
+* **keyPassword**:
 Password for the ‘keyAlias’ key entry within the key store.
 
 
-* **signInterval**: 
+* **signInterval**:
 The number of times the signing process should be triggered (in milliseconds).
 
 
-* **timeout**: 
+* **timeout**:
 *(Optional)* The maximum time allowed for executing the signing process (in milliseconds). Defaults
 to 30 seconds. If the timeout threshold is reached, then the signing process will abort and wait before retrying. The wait time after each failure is determined by an exponential backoff strategy.
 
 
 
 
-* **versionInfoValidation**: 
+* **versionInfoValidation**:
 *(Optional)* Configuration for the validation of node version info while publishing node info to the Network Map
 
 
-* **minimumPlatformVersion**: 
+* **minimumPlatformVersion**:
 *(Optional - defaults to -1)* The minimum platform version of Corda that a node needs to run, to successfully publish its node info to the Network Map. The platform version is an integer value which increments on any release where any of the
 public API of the entire Corda platform changes. Setting this to a value of <1 disables this behaviour, where the Network Map Service won’t check that the platform version is passed from the node. However checks against Network Parameters
 will still be done.
@@ -156,11 +155,6 @@ of the Corda API. Value must be equal to the one specified in Network Parameters
 {{< /important >}}
 
 
-* **newPKIOnly**: 
+* **newPKIOnly**:
 *(Optional - defaults to false)* A boolean that determines whether node info publishing should be rejected for all nodes running an outdated
 version of Corda that does not support the new PKI (arbitrary length certificate chains).
-
-
-
-
-

@@ -1,12 +1,11 @@
 ---
 aliases:
 - /workflow.html
-- /releases/release-1.2/workflow.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-2:
-    identifier: cenm-1-2-workflow
-    parent: cenm-1-2-configuration
+  cenm-1-3:
+    identifier: cenm-1-3-workflow
+    parent: cenm-1-3-configuration
     weight: 260
 tags:
 - workflow
@@ -457,4 +456,3 @@ HTTP Response header:
 Response Body:
 
 Rejection reason code: 8. Description: On a Sanctions Watchlist. Additional remark: No additional remark.”
-

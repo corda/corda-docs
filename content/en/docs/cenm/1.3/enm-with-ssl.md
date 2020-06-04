@@ -1,12 +1,11 @@
 ---
 aliases:
 - /enm-with-ssl.html
-- /releases/release-1.2/enm-with-ssl.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-2:
-    identifier: cenm-1-2-enm-with-ssl
-    parent: cenm-1-2-configuration
+  cenm-1-3:
+    identifier: cenm-1-3-enm-with-ssl
+    parent: cenm-1-3-configuration
     weight: 250
 tags:
 - enm
@@ -624,4 +623,3 @@ signers = {
 ```
 
 [signer-prod-valid.conf](https://github.com/corda/network-services/blob/release/1.2/services/src/test/resources/v1.1-configs/signer/signer-prod-valid.conf)
-

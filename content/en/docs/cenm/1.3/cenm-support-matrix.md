@@ -1,9 +1,9 @@
 ---
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-2:
-    identifier: cenm-1-2-cenm-support-matrix
-    parent: cenm-1-2-operations
+  cenm-1-3:
+    identifier: cenm-1-3-cenm-support-matrix
+    parent: cenm-1-3-operations
     weight: 200
 tags:
 - cenm
@@ -32,4 +32,3 @@ Both the Signing Service and the PKI Tool support a variety of HSMs.
 |AWS CloudHSM|N/A|3.0.0|No|
 
 {{< /table >}}
-

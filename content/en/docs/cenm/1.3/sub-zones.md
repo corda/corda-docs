@@ -1,12 +1,11 @@
 ---
 aliases:
 - /sub-zones.html
-- /releases/release-1.2/sub-zones.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-2:
-    identifier: cenm-1-2-sub-zones
-    parent: cenm-1-2-concepts-and-overview
+  cenm-1-3:
+    identifier: cenm-1-3-sub-zones
+    parent: cenm-1-3-concepts-and-overview
     weight: 40
 tags:
 - zones

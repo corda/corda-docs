@@ -1,7 +1,6 @@
 ---
 aliases:
-- /config-shell.html
-- /releases/release-1.2/config-shell.html
+- /config-shell.htmls
 date: '2020-01-08T09:59:25Z'
 menu: []
 tags:
@@ -14,34 +13,29 @@ title: Shell Configuration Parameters
 # Shell Configuration Parameters
 
 
-* **shell**: 
+* **shell**:
 *(Optional)* Configuration for the embedded shell
 
 
-* **sshdPort**: 
+* **sshdPort**:
 The port that the shell ssh daemon should listen on.
 
 
-* **user**: 
+* **user**:
 The username for connecting to the shell via SSH.
 
 
-* **password**: 
+* **password**:
 The password for connecting to the shell via SSH.
 
 
-* **commandsDirectory**: 
+* **commandsDirectory**:
 *(Optional)* The path to the directory containing additional CRaSH shell commands.
 
 
-* **sshHostKeyDirectory**: 
+* **sshHostKeyDirectory**:
 *(Optional)* The path to the directory containing the hostkey.pem file for connecting to the shell via SSH.
 
 
-* **localShell**: 
+* **localShell**:
 *(Optional)* Boot straight into shell upon startup
-
-
-
-
-
