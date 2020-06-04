@@ -46,16 +46,14 @@ The full options are:
 - `--user`: The user for the Zone service's database
 - `--password`: The password for the Zone service's database
 - `--admin-listener-port`: The port where Angel services connect to Zone service
-- `--auth-dev-mode`: Allows you to run with a real or developer authentication/authorisation service. Defaults to false if not provided.
-- `--auth-host`: The hostname of the authentication service. Required unless running in developer mode
-- `--auth-port`: The port number of the authentication service. Required unless running in developer mode
-- `--auth-trust-store-location`: The location of the authentication service trust root keystore. Required unless running in developer mode
-- `--auth-trust-store-password`: The password for the authentication service trust root keystore. Required unless running in developer mode
-- `--auth-audience`: The audience that is passed to the authentication service. Required unless running in developer mode
-- `--auth-issuer`: The issuer that is passed to the authentication service. Required unless running in developer mode
-
+- `--disable-authentication`: Allows you to disable authentication, intended only for use in development environments. Defaults to false if not provided.
+- `--auth-host`: The hostname of the authentication service. Required unless authentication is disabled
+- `--auth-port`: The port number of the authentication service. Required unless authentication is disabled
+- `--auth-trust-store-location`: The location of the authentication service trust root keystore. Required unless authentication is disabled
+- `--auth-trust-store-password`: The password for the authentication service trust root keystore. Required unless authentication is disabled
+- `--auth-issuer`: The \"iss\" claim in the JWT; needs to be set to the same value as in the Auth service's configuration. Required unless authentication is disabled.
 - `--auth-leeway`: Leeway is the amount of time, in seconds, allowed when checking JSON Web Token (JWT) issuance and expiration times.
-    Required unless running in developer mode. We recommend a default time of **10 seconds**.
+    Required unless authentication is disabled. We recommend a default time of **10 seconds**.
 
 ## Configuration Composition
 
