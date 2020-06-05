@@ -81,7 +81,7 @@ The Zone Service sets the authentication configuration for the Identity Manager 
 The authentication trust store location and password must match on the hosts of the Zone Service and the Identity Manager Service. It is recommended that the trust store location is set as a relative path to the working directory on each host (for example, `certificates/auth-trust-store.jks`) rather than as an absolute path.
 
 {{ <note> }}
-The shell UI used in CENM 1.2 (and below) is not supported in combination with the authentication functionality in CENM 1.3, so configurations *must not* specify a shell configuration or they will be rejected by the Identity Manager Service.
+The shell UI used in CENM 1.2 (and below) is not supported in combination with the authentication functionality in CENM 1.3, so configurations *must not* specify a shell configuration or they will be rejected by the respected services.
 {{ </note> }}
 
 ### Network Map Service configuration
