@@ -19,10 +19,10 @@ title: Zone Service
 ## Overview
 
 The Zone service is a central store of configuration for CENM services
-for one or more zones and optionally their subzones. These CENM services
+for one or more zones and optionally their Sub Zones. These CENM services
 can fetch their configuration from Zone service, simplifying
 management of changes. They also provide functionality for managing
-lifecycle events of subzones, such as updating network parameters via
+lifecycle events of Sub Zones, such as updating network parameters via
 flag days.
 
 Zone service stores relevant configurations for the following services:
@@ -34,7 +34,7 @@ Zone service stores relevant configurations for the following services:
 It deploys those configurations as needed, via the associated Angel service.
 Angel services identify themselves to the Zone service via an authentication
 token referred to as the "zone token". The Zone service also co-ordinates actions
-needed (for example, new network parameters) on subzones, which are executed
+needed (for example, new network parameters) on Sub Zones, which are executed
 by the Angel service for the appropriate Network Map service.
 
 ## Running the Zone service
@@ -92,11 +92,11 @@ service configuration, using the values provided to the Zone service. Note that:
 ### Network Map Configuration
 
 The Zone service sets the authentication configuration on the Network Map service
-configuration, along with the subzone ID (`authObjectId`). As with the Identity
+configuration, along with the Sub Zone ID (`authObjectId`). As with the Identity
 Manager it uses the auth service configuration provided to the Zone service, and
 the same guidance on sharing values applies as per the Identity Manager.
 
-The subzone ID is used to support per-subzone permissioning for users. Generally
+The Sub Zone ID is used to support permissioning per Sub Zone for users. Generally
 as it is set automatically the user is not expected to need to be aware of this
 value, but it is documented to be thorough.
 
