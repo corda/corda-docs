@@ -18,108 +18,95 @@ title: Zone Service
 
 ## Overview
 
-The Zone service is a central store of configuration for CENM services
-for one or more zones and optionally their Sub Zones. These CENM services
-can fetch their configuration from Zone service, simplifying
-management of changes. They also provide functionality for managing
+The Zone Service is a central store of configuration for other CENM services
+for one or more zones, and optionally for their Sub Zones. These CENM services
+can fetch their configuration from the Zone Service and therefore simplify change
+management. They also provide functionality for managing
 lifecycle events of Sub Zones, such as updating network parameters via
 flag days.
 
-Zone service stores relevant configurations for the following services:
+The Zone Service stores relevant configurations for the following services:
 
-* Identity Manager
-* Network Map
-* Signing
+* Identity Manager Service
+* Network Map Service
+* Signing Services
 
-It deploys those configurations as needed, via the associated Angel service.
-Angel services identify themselves to the Zone service via an authentication
-token referred to as the "zone token". The Zone service also co-ordinates actions
-needed (for example, new network parameters) on Sub Zones, which are executed
-by the Angel service for the appropriate Network Map service.
+It uses the associated [Angel Service](angel-service.md) to deploy those configurations as needed.
+Each Angel Service identifies itself to the Zone Service via an authentication
+token, referred to as the "zone token". The Zone Service also coordinates actions
+needed on Sub Zones (for example, new network parameters), which are executed
+by the Angel Service for the appropriate Network Map Service.
 
-## Running the Zone service
+## Running the Zone Service
 
-The Zone service does not have a configuration file, and is configured entirely
-from the command line. To run the Zone service you use a command such as:
+The Zone Service does not have a configuration file, and is configured entirely
+from the command line. To run the Zone Service, use a command like the one shown in the example below:
 
 ```bash
 java -jar zone.jar --enm-listener-port=5061 --url=\"jdbc:h2:file:/opt/zone/zone-persistence;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=10000;WRITE_DELAY=0;AUTO_SERVER_PORT=0\" --user=testuser --password=password --admin-listener-port=5063 --driver-class-name=org.h2.jdbcx.JdbcDataSource --auth-host=auth-service --auth-port=8081 --auth-trust-store-location=certificates/corda-ssl-trust-store.jks --auth-trust-store-password=trustpass --auth-issuer=http://test --auth-leeway=10 --run-migration=true
 ```
 
-The full options are:
+The full list of configuration options follows below:
 
-- `--enm-listener-port`: The port where Zone service listens for Angel services to connect.
-- `--enm-reconnect`:  Allows you to reconnect. Defaults to true if not provided.
-- `--tls`: Whether to use TLS on listening sockets (ENM and admin). Defaults to false if not provided.
-- `--tls-keystore`: The path for the TLS keystore. Required if `--tls` is true.
-- `--tls-keystore-password`: The password for the TLS keystore. Required if `--tls` is true.
-- `--tls-truststore`: The path for the TLS truststore. Required if `--tls` is true.
-- `--tls-truststore-password`: The password for the TLS truststore. Required if `--tls` is true.
-- `--run-migration`:  Whether to enable schema migration on the database. Defaults to false if not provided.
-- `--jdbc-driver`:  Path to the JAR file containing the JDBC driver for the database.
-- `--driver-class-name`: Name of the JDBC driver class within the JAR file specified by --jdbc-driver.
-- `--url`: The URL for Zone service's database
-- `--user`: The user for the Zone service's database
-- `--password`: The password for the Zone service's database
-- `--admin-listener-port`: The port where Angel services connect to Zone service
-- `--disable-authentication`: Allows you to disable authentication, intended only for use in development environments. Defaults to false if not provided.
-- `--auth-host`: The hostname of the authentication service. Required unless authentication is disabled
-- `--auth-port`: The port number of the authentication service. Required unless authentication is disabled
-- `--auth-trust-store-location`: The location of the authentication service trust root keystore. Required unless authentication is disabled
-- `--auth-trust-store-password`: The password for the authentication service trust root keystore. Required unless authentication is disabled
-- `--auth-issuer`: The \"iss\" claim in the JWT; needs to be set to the same value as in the Auth service's configuration. Required unless authentication is disabled.
-- `--auth-leeway`: Leeway is the amount of time, in seconds, allowed when checking JSON Web Token (JWT) issuance and expiration times.
-    Required unless authentication is disabled. We recommend a default time of **10 seconds**.
+- `--enm-listener-port`: The port where the Zone Service listens for Angel Services to connect.
+- `--enm-reconnect`: Allows you to reconnect. Defaults to `true` if no value is provided.
+- `--tls`: Defines whether TLS is used on listening sockets (ENM and admin). Defaults to `false` if no value is provided.
+- `--tls-keystore`: The path for the TLS keystore. Required if `--tls` is set to `true`.
+- `--tls-keystore-password`: The password for the TLS keystore. Required if `--tls` is set to `true`.
+- `--tls-truststore`: The path for the TLS truststore. Required if `--tls` is set to `true`.
+- `--tls-truststore-password`: The password for the TLS truststore. Required if `--tls` is set to `true`.
+- `--run-migration`:  Defines whether schema migration is enabled on the database. Defaults to `false` if no value is provided.
+- `--jdbc-driver`:  The path for the `.jar` file containing the JDBC driver for the database.
+- `--driver-class-name`: The name of the JDBC driver class within the `.jar` file specified by `--jdbc-driver`.
+- `--url`: The URL for the Zone Service's database.
+- `--user`: The user for the Zone Service's database.
+- `--password`: The password for the Zone Service's database.
+- `--admin-listener-port`: The port where Angel Services connect to the Zone Service.
+- `--disable-authentication`: Allows you to disable authentication via the [Auth Service](auth-service.md). Only use this option in development environments. Defaults to `false` if no value is provided.
+- `--auth-host`: The hostname of the Auth Service. Required unless authentication is disabled.
+- `--auth-port`: The port number of the Auth Service. Required unless authentication is disabled.
+- `--auth-trust-store-location`: The location of the Auth Service trust root keystore. Required unless authentication is disabled.
+- `--auth-trust-store-password`: The password for the Auth Service trust root keystore. Required unless authentication is disabled.
+- `--auth-issuer`: The \"iss\" claim in the JWT - needs to be set to the same value as in the Auth Service's configuration. Required unless authentication is disabled.
+- `--auth-leeway`: Defines the amount of time, in seconds, allowed when checking JSON Web Token (JWT) issuance and expiration times. Required unless authentication is disabled. We recommend a default time of **10 seconds**.
 
-## Configuration Composition
+## Configurations for other CENM services
 
-The Zone service edits configurations before sending them to managed services,
-to ensure consistency and correctness of the configurations. These changes are
-outlined below:
+To ensure consistency and correctness of the configurations it sends to other CENM services, the Zone Service edits them before sending. The following sections describe these changes for each affected service.
 
-### Identity Manager Configuration
+### Identity Manager Service configuration
 
-The Zone service sets the authentication configuration on the Identity Manager
-service configuration, using the values provided to the Zone service. Note that:
+The Zone Service sets the authentication configuration for the Identity Manager Service based on the Auth Service configuration options provided when running the Zone Service (see the previous section).
 
-* Auth trust store location and password must match on the Zone and Identity Manager
-  hosts. It is suggested that the trust store location is relative to the working directory
-  on each host, i.e. `certificates/auth-trust-store.jks`, rather than an absolute path.
-* The shell UI used in 1.2 and below is not supported in combination with the 1.3 authentication,
-  so configurations *must not* specify a shell configuration or they will be rejected by the
-  Identity Manager.
+The authentication trust store location and password must match on the hosts of the Zone Service and the Identity Manager Service. It is recommended that the trust store location is set as a relative path to the working directory on each host (for example, `certificates/auth-trust-store.jks`) rather than as an absolute path.
 
-### Network Map Configuration
+{{ <note> }}
+The shell UI used in CENM 1.2 (and below) is not supported in combination with the authentication functionality in CENM 1.3, so configurations *must not* specify a shell configuration or they will be rejected by the Identity Manager Service.
+{{ </note> }}
 
-The Zone service sets the authentication configuration on the Network Map service
-configuration, along with the Sub Zone ID (`authObjectId`). As with the Identity
-Manager it uses the auth service configuration provided to the Zone service, and
-the same guidance on sharing values applies as per the Identity Manager.
+### Network Map Service configuration
 
-The Sub Zone ID is used to support permissioning per Sub Zone for users. Generally
-as it is set automatically the user is not expected to need to be aware of this
-value, but it is documented to be thorough.
+The Zone Service sets the authentication configuration for the Network Map Service based on the Auth Service configuration options provided when running the Zone Service. The same guidance on sharing values applies as described for the Identity Manager Service above.
 
-### Signing Configuration
+The Zone Service also sets the Sub Zone ID (`authObjectId`) for the Network Map Service. The Sub Zone ID is used to support permissioning per Sub Zone for users. It is set automatically so no user action is required.
 
-The service locations for the Signing service are set by the Zone service using
-the external addresses of the Identity Manager and Network Map service configurations,
-and the configured ENM port for those services. Any service locations provided
-in Signing service configurations sent to the Zone service are overwritten.
+### Signing Services configuration
+
+The service locations for the Signing Services are set by the Zone Service using the external addresses and the ENM ports configured for the Identity Manager Service and Network Map Service. Any service locations provided in Signing Services configurations, sent to the Zone Service, are overwritten.
 
 The SSL client settings used when connecting to these services are set uniformly
 across all service locations, and are taken from the first of any service location
-in the Signing service location set on the Zone service.
+in the Signing Service location set on the Zone Service.
 
 As the service locations are generated programmatically, the service location aliases
-(referred to by the signing task configurations) are in a specific format which
-must be matched exactly:
+(referred to by the signing task configurations) are in a specific format, which
+must be matched exactly, as follows:
 
 * Identity Manager CSR: `issuance`
 * Identity Manager CRR/CRL: `revocation`
 * Network Map: `network-map-<subzone-id>`
 
-An example configuration section generated by the Zone service is provided below:
+An example configuration section generated by the Zone Service is provided below:
 
 ```guess
 serviceLocations = {
@@ -182,9 +169,8 @@ serviceLocations = {
 
 ## Interaction with Angel Services
 
-Angel services regularly poll the network's Zone service for jobs. Zone service
-maintains its database and decides if a configuration update or
-lifecycle event is needed for Angel's underlying service and sends
-a response accordingly. If a Flag Day is triggered, Zone service
-sends the required step (initiate, start or cancel Flag Day) to the
-Angel service that manages the Network Map. Angel always reports back the status of the current action to Zone service.
+Angel Services regularly poll the network's Zone Service for jobs.
+
+The Zone Service maintains its database and decides if a configuration update or a lifecycle event is needed for the underlying Angel Service. If needed, it sends the relevant response.
+
+If a Flag Day is triggered, the Zone Service sends the required step (initiate, start, or cancel Flag Day) to the Angel Service that manages the Network Map. The Angel Service always reports the status of the current action back to the Zone Service.
