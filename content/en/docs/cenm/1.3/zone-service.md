@@ -6,7 +6,7 @@ date: '2020-06-04T13:44:00Z'
 menu:
   cenm-1-3:
     identifier: cenm-1-3-zone-service
-    parent: cenm-1-2-operations
+    parent: cenm-1-3-operations
     weight: 155
 tags:
 - zone
