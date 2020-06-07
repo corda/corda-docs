@@ -40,7 +40,7 @@ Optional parameter:
 ```
 
 This will set the working directory to the specified folder. The service will look for files in that folder. This means
-certificates, config files etc. should be under the working directory.
+certificates, configuration files etc. should be under the working directory.
 If not specified it will default to the current working directory (the directory from which the service has been started).
 
 On success you should see a message similar to:
@@ -100,7 +100,7 @@ IP/DNS name to connect to Identity Manager.
 
 The Identity Manager service is backed by a SQL database which it uses to store information such as Certificate Signing
 Requests (CSRs) and (optionally) Certificate Revocation Requests (CRRs). The connection settings must be included within
-the `database` configuration block in the config file. The main options that should be included here are:
+the `database` configuration block in the configuration file. The main options that should be included here are:
 
 
 * `driverClassName` - the DB driver class name (e.g *com.microsoft.sqlserver.jdbc.SQLServerDriver* for Microsoft SQL Server, *org.postgresql.Driver* for postgres)
@@ -135,7 +135,7 @@ along with the schema see [CENM Databases](database-set-up.md).
 
 #### Additional Properties
 
-Additional database properties can be loaded by including an optional *additionalProperties* config block. In CENM 1.0
+Additional database properties can be loaded by including an optional *additionalProperties* configuration block. In CENM 1.0
 these are restricted to HikariCP configuration settings.
 
 ```guess
@@ -191,7 +191,7 @@ CSR gets approval as well as how the desired certificate is signed.
 Before a certificate can be issued to a new node, its CSR first needs to be approved. The mechanism by which approval is
 granted can vary from a basic automatic approval approach to a more manual, production grade approach like JIRA
 integration. The approval mechanism is configured by specifying the plugin class responsible for handling CSR approvals
-within the Issuance workflow inside the Identity Manager’s config file. The CENM currently ships with two included
+within the Issuance workflow inside the Identity Manager’s configuration file. The CENM currently ships with two included
 plugins:
 
 
@@ -220,7 +220,7 @@ This should only be enabled in a test environment
 {{< /warning >}}
 
 
-This mechanism can be enabled by referencing the auto approval workflow plugin within the config file:
+This mechanism can be enabled by referencing the auto approval workflow plugin within the configuration file:
 
 ```guess
 workflows {
@@ -238,7 +238,7 @@ workflows {
 ##### JIRA Workflow
 
 The Identity Manager service can use JIRA to manage the certificate signing request approval work flow. This can be
-enabled by referencing the JIRA CSR workflow plugin within the config file along with the associated configuration
+enabled by referencing the JIRA CSR workflow plugin within the configuration file along with the associated configuration
 parameters:
 
 ```guess
@@ -288,7 +288,7 @@ In order for the local signer to function, it needs to be able to access Identit
 which should have been previously generated (see [Certificate Hierarchy Guide](pki-guide.md) for more information). The local signer uses local
 key stores which should include the necessary signing keys along with their full certificate chains.
 
-To enable the local signer, the top level `localSigner` configuration block should be added to the config file:
+To enable the local signer, the top level `localSigner` configuration block should be added to the configuration file:
 
 ```guess
 localSigner {
@@ -326,7 +326,7 @@ For example, the Revocation workflow’s ENM listener can respond to messages fr
 statuses of current participants which the Network Map service will then use when refreshing the latest Network Map.
 
 To configure this internal server, the configuration block `enmListener` should be added within the Issuance
-workflow’s config:
+workflow’s configuration:
 
 ```guess
 workflows {
@@ -405,7 +405,7 @@ Similarly to the Issuance workflow, the Revocation workflow determines how a CRR
 In order to revoke a node’s certificate and therefore be evicted from the network, a CRR needs to be approved and signed
 by the network operator. The method by which the CRR is approved is, similar to the Issuance workflow, configured by
 specifying the plugin class responsible for the handling of the CRRs within the Revocation workflow inside the Identity
-Manager’s config file. The CENM ships with two included plugins:
+Manager’s configuration file. The CENM ships with two included plugins:
 
 
 * Auto approval
@@ -433,7 +433,7 @@ This should only be enabled in a test environment
 {{< /warning >}}
 
 
-This mechanism can be enabled by referencing the auto approval workflow plugin within the config file:
+This mechanism can be enabled by referencing the auto approval workflow plugin within the configuration file:
 
 ```guess
 workflows {
@@ -451,7 +451,7 @@ workflows {
 ##### JIRA Workflow
 
 The Issuance workflow can alternatively use JIRA to manage CRR approval. This can be enabled by referencing the JIRA
-CRR workflow plugin within the config file along with the associated configuration parameters:
+CRR workflow plugin within the configuration file along with the associated configuration parameters:
 
 ```guess
 workflows {
@@ -506,7 +506,7 @@ external signing service.
 
 Similarly to the Issuance workflow, the Revocation workflow is configured with an internal listening server to enable
 communication between other services such as the Network Map and Signing services.  To configure this, the configuration
-block `enmListener` should be added within the Revocation workflow’s config:
+block `enmListener` should be added within the Revocation workflow’s configuration:
 
 ```guess
 workflows {
@@ -532,9 +532,9 @@ All inter-service communication can be configured with SSL support. See [Configu
 
 {{< /note >}}
 
-#### CRL Configuration
+#### CRL configuration
 
-There are an additional two parameters that need to be specified with the revocation workflow config block:
+There are two additional parameters that need to be specified with the revocation workflow configuration block:
 
 
 * **crlCacheTimeout**:
@@ -608,7 +608,7 @@ choose to make that empty list available to node operators as a convenience.
 {{< attention >}}
 
 There is of course no obligation of a zone to provide the empty list infrastructure. However it is still
-a required element of the config that can be set to any invalid string should they wish to not provide it.
+a required element of the configuration that can be set to any invalid string should they wish to not provide it.
 
 
 {{< /attention >}}
@@ -700,9 +700,8 @@ shell {
 
 #### Production Configuration
 
-Below is an example of a more production-like configuration of the Identity Manager. It is configured with a Issuance
-and Revocation workflow, using JIRA workflows for CSR/CRR approvals, no local signer and also using SSL for secure
-communication between ENM services. In this scenario, all approved requests would be signed using an external signing
+The example below shows a more production-like configuration of the Identity Manager. It is configured with an Issuance
+and Revocation workflow, using JIRA workflows for CSR/CRR approvals, no local signer, and using SSL for secure communication between CENM services. In this scenario, all approved requests would be signed using an external signing
 service (see [Signing Services](signing-service.md)).
 
 ```docker
@@ -783,3 +782,8 @@ shell {
 ```
 
 [identity-manager-prod-valid.conf](https://github.com/corda/network-services/blob/release/1.2/services/src/test/resources/v1.1-configs/identity-manager/identity-manager-prod-valid.conf)
+
+
+## Obfuscated configuration files
+
+To view the latest changes to the obfuscated configuration files, see [Obfuscation configuration file changes](obfuscated-config-file-changes.md).

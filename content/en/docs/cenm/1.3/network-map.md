@@ -90,7 +90,7 @@ Optional parameter:
 ```
 
 This will set the working directory to the specified folder. The service will look for files in that folder. This means
-certificates, config files etc. should be under the working directory.
+certificates, configuration files etc. should be under the working directory.
 If not specified it will default to the current working directory (the directory from which the service has been started).
 
 
@@ -132,7 +132,7 @@ connect to Network Map.
 ### Database
 
 The Network Map service is backed by a SQL database which it uses to store the network map along with node infos. The
-connection settings must be included within the `database` configuration block in the config file. The main options
+connection settings must be included within the `database` configuration block in the configuration file. The main options
 that should be included here are:
 
 
@@ -169,7 +169,7 @@ along with the schema see [CENM Databases](database-set-up.md).
 
 #### Additional Properties
 
-Additional database properties can be loaded by including an optional *additionalProperties* config block. In CENM 1.0
+Additional database properties can be loaded by including an optional *additionalProperties* configuration block. In CENM 1.0
 these are restricted to HikariCP configuration settings.
 
 ```guess
@@ -238,7 +238,7 @@ In order for the local signer to function, it needs to be able to access Network
 which should have been previously generated (see [Certificate Hierarchy Guide](pki-guide.md) for more information). The local signer uses local
 key stores which should include the necessary signing keys along with their full certificate chains.
 
-To enable the local signer, the top level `localSigner` configuration block should be added to the config file:
+To enable the local signer, the top level `localSigner` configuration block should be added to the configuration file:
 
 ```guess
 localSigner {
@@ -276,7 +276,7 @@ determines how often nodes should poll the network map service for a new network
 HTTP response header).
 
 It takes a numerical value and represents the number of milliseconds between each refresh. An example of how this should
-be added to the config file is:
+be added to the configuration file is:
 
 ```guess
 ...
@@ -297,7 +297,7 @@ revocation lists whenever the Network Map is updated. Any node that has a revoke
 Network Map. The certificates are also checked when the node submits its information to the Network Map service to
 publish for the first time.
 
-An example of how this should be added to the config file is:
+An example of how this should be added to the configuration file is:
 
 ```guess
 ...
@@ -400,7 +400,7 @@ revocation {
 ```
 
 The `host` should correspond to the host part of the `address` value in the Identity Manager configuration. The
-`port` parameter for each service should correspond with the `port` value within the `enmListener` config block in
+`port` parameter for each service should correspond with the `port` value within the `enmListener` configuration block in
 the service’s configuration. See [Network Map Configuration Parameters](config-network-map-parameters.md) for more information.
 
 {{< note >}}
@@ -547,3 +547,11 @@ useful especially when dealing with node’s deployment in environments with IP 
 |GET|/network-map/my-hostname|Returns the IP address of the requestor.|
 
 {{< /table >}}
+
+## Obfuscated configuration files
+
+To view the latest changes to the obfuscated configuration files, see [Obfuscation configuration file changes](obfuscated-config-file-changes.md).
+
+{{< note >}}
+You should not obfuscate the Network Parameters configuration file as it is not yet supported.
+{{< /note >}}

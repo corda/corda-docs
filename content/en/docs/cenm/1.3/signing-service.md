@@ -83,7 +83,7 @@ users and certificates should have been previously setup on the box.
 
 {{< /note >}}
 
-### Running the Signing Service
+### Run the Signing Service
 
 Once the Signing Service has been configured, it can be run via the command:
 
@@ -98,7 +98,7 @@ Optional parameter:
 ```
 
 This will set the working directory to the specified folder. The service will look for files in that folder. This means
-certificates, config files etc. should be under the working directory.
+certificates, configuration files etc. should be under the working directory.
 If not specified it will default to the current working directory (the directory from which the service has been started).
 
 On success you should see a message similar to:
@@ -111,7 +111,7 @@ The service can then be accessed via ssh, either locally on the machine or from 
 closed network that the service is being run on.
 
 
-### Executing A Signing Task
+### Execute a Signing Task
 
 Once the configured service is up and running, a user can execute a signing task via the interactive shell via the `run
 signer name: <SIGNING_TASK_ALIAS>` command. This will execute the task, prompting the user for signing key
@@ -122,13 +122,13 @@ Any configured task can be run through the shell, even automated scheduled tasks
 
 {{< /note >}}
 
-### Viewing Available Signing Tasks
+### View available Signing Tasks
 
 A user can see what signing tasks are available by executing the `view signers` command within the shell. This will
 output all tasks that can be run along with their schedule, if applicable.
 
 
-### Performing A Health Check
+### Perform A Health Check
 
 To verify that all configured CENM data sources or a single SMR service data source are reachable by the Signing Service, a health check can be performed
 by running the `run clientHealthCheck`. This will iteratively run through each service, sending a simple ping message
@@ -153,7 +153,7 @@ The configuration for the Signing Service consists of the following sections:
 
 #### Shell Configuration
 
-The Signing Service is interacted with via the shell, which is configured at the top level of the config file. This
+The Signing Service is interacted with via the shell, which is configured at the top level of the configuration file. This
 shell is similar to the interactive shell available in other ENM services and is configured in a similar way. See
 [Shell Configuration](shell.md#shell-config) for more information on how to configure the shell.
 
@@ -187,7 +187,7 @@ hsmLibraries = [
 ]
 ```
 
-See the [Example Signing Service Configuration](#example-signing-service-configuration) section below for examples of these config blocks being used in a complete file.
+See the [Example Signing Service Configuration](#example-signing-service-configuration) section below for examples of these configuration blocks being used in a complete file.
 
 
 ##### Azure Key Vault
@@ -232,7 +232,7 @@ or if gradle is not on the path but gradlew is in the current directory then run
 ./gradlew shadowJar
 ```
 
-This will create a jar called `azure-keyvault-with-deps.jar` which can be referenced in the config.
+This will create a jar called `azure-keyvault-with-deps.jar` which can be referenced in the configuration.
 
 
 #### Global Certificate Store
@@ -327,7 +327,7 @@ Each signing task maps to exactly one of four possibly data types:
 * **Network Parameters** - signing new Network Parameters and Network Parameter Updates
 
 
-#### Scheduling Signing Tasks
+#### Schedule Signing Tasks
 
 A signing task can be configured to automatically run on a set schedule, providing *no manual user input is required*.
 That is, the signing key that is configured for the task requires no user input to authenticate (e.g. keyfile or
@@ -350,7 +350,7 @@ and are manually signed every 3 months. See [CRL Endpoint Check Tool](crl-endpoi
 CRLs’ update deadlines.
 
 {{< /note >}}
-An appropriate signing task can be scheduled via the `schedule` config block within the signing task configuration:
+An appropriate signing task can be scheduled via the `schedule` configuration block within the signing task configuration:
 
 ```guess
 ...
@@ -509,7 +509,7 @@ expected format.
 ### Signing Key Map Entry Example
 
 Each entry in the `signingKeys` map should be keyed on the user-defined, human-readable alias. This can be any string
-and is used only within the config to map the signing keys to each signing task that use it.
+and is used only within the configuration to map the signing keys to each signing task that use it.
 
 A signing key can come from two sources - a local Java key store or a HSM.
 
@@ -693,7 +693,7 @@ First of all AWS CloudHSM requires a UNIX client running on the machine. It will
 For detailed documentation about setting up the client please visit Amazon’s
 [Getting Started with AWS CloudHSM](https://docs.aws.amazon.com/cloudhsm/latest/userguide/getting-started.html).
 After the client is installed the shared library should be under the folder `/opt/cloudhsm/lib` so this should be
-used when configuring the `hsmLibraries` property in the config. The jar can be found under `/opt/cloudhsm/java/cloudhsm-<version>.jar`
+used when configuring the `hsmLibraries` property in the configuration. The jar can be found under `/opt/cloudhsm/java/cloudhsm-<version>.jar`
 by default.
 
 
@@ -742,7 +742,7 @@ The password for the local certificate store
 ### Service Location Map Entry Example
 
 Each entry in the `serviceLocations` map should be keyed on the user-defined, human-readable alias. This can be any
-string and is used only within the config to map the service locations to each signing task that use it.
+string and is used only within the configuration to map the service locations to each signing task that use it.
 
 
 * **enmService**:
@@ -1415,7 +1415,7 @@ Optional parameter:
 ```
 
 This will set the working directory to the specified folder. The service will look for files in that folder. This means
-certificates, config files etc. should be under the working directory.
+certificates, configuration files etc. should be under the working directory.
 If not specified it will default to the current working directory (the directory from which the service has been started).
 
 On success you should see a message similar to:
@@ -1997,3 +1997,11 @@ Non CA Plugin’s configuration file must be in the same directory as the servic
 ### Other Sample Plugins
 
 See [EJBCA Sample Plugin](ejbca-plugin.md) for sample open source CA implementation.
+
+## Obfuscated configuration files
+
+To view the latest changes to the obfuscated configuration files, see [Obfuscation configuration file changes](obfuscated-config-file-changes.md).
+
+{{< note >}}
+You should not obfuscate SMR plugin configuration files as they are not yet supported.
+{{< /note >}}
