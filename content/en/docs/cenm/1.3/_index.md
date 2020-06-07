@@ -57,6 +57,10 @@ Operations
 
 * [Enterprise Network Manager Quick-Start Guide](quick-start.md)
 * [Deployment with Kubernetes](deployment-kubernetes.md)
+  * [CENM Identity Manager Helm Chart](deployment-kubernetes-idman.md)
+  * [CENM Network Map Helm Chart](deployment-kubernetes-nmap.md)
+  * [CENM Signer Helm Chart](deployment-kubernetes-signer.md)
+  * [CENM Notary Helm Chart](deployment-kubernetes-notary.md)
 * [Zone Service](zone-service.md)
 * [Angel Service](angel-service.md)
 * [Identity Manager Service](identity-manager.md)

@@ -7,7 +7,7 @@ tags:
 - config
 - kubernetes
 title: CENM Network Map Helm chart
-weight: 300
+weight: 200
 ---
 
 # CENM Network Map Helm Chart
