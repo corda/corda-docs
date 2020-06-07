@@ -47,7 +47,7 @@ Unlike `Cordform` tasks, `Dockerform` tasks require Docker to be installed on th
 
 ### Tasks using the Cordform plugin
 
-The following example shows a `Cordform` task called `deployNodes` that creates the three nodes as described above:
+The following example, as defined in the [Kotlin CorDapp Template](https://github.com/corda/cordapp-template-kotlin/blob/release-V4/build.gradle#L120), shows a `Cordform` task called `deployNodes` that creates the three nodes described above:
 
 ```groovy
 task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['jar']) {
