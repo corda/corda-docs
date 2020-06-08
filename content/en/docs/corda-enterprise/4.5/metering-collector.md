@@ -733,9 +733,9 @@ Note that even if `PartyA` threw `PermissionDeniedException` the collection cont
 
 A similar result could have been obtained by the following command lines
 ```
-flow start com.r3.corda.metering.MultiAggregatedCollectionFlow dateFormat: "yyyy-MM-dd",  period: {value: 1mon}, end : {value: "2020-05-06"}, destinations: [PartyA, PartyB]
-flow start com.r3.corda.metering.MultiAggregatedCollectionFlow dateFormat: "yyyy-MM-dd",  start: {value: "2020-04-06"}, end : {value: "2020-05-06"}, destinations: [PartyA, PartyB]
-flow start com.r3.corda.metering.MultiAggregatedCollectionFlow dateFormat: "yyyy-MM-dd",  start: {value: "2020-04-06"}, end : {value: "2020-05-06"}, destinations: [PartyA, PartyB]
+flow start com.r3.corda.metering.MultiAggregatedCollectionFlow dateFormat: {value: "yyyy-MM-dd"},  period: {value: 1mon}, end : {value: "2020-05-06"}, destinations: [PartyA, PartyB]
+flow start com.r3.corda.metering.MultiAggregatedCollectionFlow dateFormat: {value: "yyyy-MM-dd"},  start: {value: "2020-04-06"}, end : {value: "2020-05-06"}, destinations: [PartyA, PartyB]
+flow start com.r3.corda.metering.MultiAggregatedCollectionFlow dateFormat: {value: "yyyy-MM-dd"},  start: {value: "2020-04-06"}, end : {value: "2020-05-06"}, destinations: [PartyA, PartyB]
 ```
 
 
@@ -802,8 +802,8 @@ Flow completed with result: {
 A similar result could have been obtained by the following command lines
 ```
 flow start com.r3.corda.metering.MultiAggregatedCollectionFlow period: {value: 1mon}, filter: {filterBy: CORDAPP_HASHES, values: [4DF7DAC0703459E97CB040CD6194ACC0D7B53931FAFC859158B16FDD85D525B5]}
-flow start com.r3.corda.metering.MultiAggregatedCollectionFlow dateFormat: "yyyy-MM-dd",  start: {value: "2020-04-06"}, end : {value: "2020-05-06"}, destinations: [PartyA, PartyB], filter: {filterBy: CORDAPP_NAMES, values: [Finance]}, txTypes: [NORMAL]
-flow start com.r3.corda.metering.MultiAggregatedCollectionFlow dateFormat: "yyyy-MM-dd",  start: {value: "2020-04-06"}, end : {value: "2020-05-06"}, destinations: [PartyA, PartyB], filter: {filterBy: CORDAPP_NAMES, values: [Finance]}, txTypes: [NORMAL]
+flow start com.r3.corda.metering.MultiAggregatedCollectionFlow dateFormat: {value: "yyyy-MM-dd"},  start: {value: "2020-04-06"}, end : {value: "2020-05-06"}, destinations: [PartyA, PartyB], filter: {filterBy: CORDAPP_NAMES, values: [Finance]}, txTypes: [NORMAL]
+flow start com.r3.corda.metering.MultiAggregatedCollectionFlow dateFormat: {value: "yyyy-MM-dd"},  start: {value: "2020-04-06"}, end : {value: "2020-05-06"}, destinations: [PartyA, PartyB], filter: {filterBy: CORDAPP_NAMES, values: [Finance]}, txTypes: [NORMAL]
 ```
 
 
