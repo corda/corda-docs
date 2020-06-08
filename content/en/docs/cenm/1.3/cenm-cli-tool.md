@@ -636,7 +636,7 @@ When you sign Identity Manager certficate requests using the CLI, you  need to i
 
 **Sample command structure**
 
-`cenm signer csr sign [-c=<useContext>] [-o=<outputType>] REQUEST_ID...`
+`cenm signer csr sign [-c=<useContext>] [-o=<outputType>] REQUEST_ID`
 
 **Options**
 
