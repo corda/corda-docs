@@ -143,10 +143,18 @@ Passwords must contain characters from three of the following four sets: upperca
 
 3. Connect to a user database as database administrator (replace *master* with a user database in the connection string).
 
-4. Run the following script to create a schema and assign user permissions:
+4. Run the following script to create a schema:
 
 ```sql
 CREATE SCHEMA my_schema;
+```
+
+After creating the schema you may need to commit the change - for example, with the `GO`
+command on Microsoft tools, or `commit;` on other tools.
+
+5. Run the following script to assign user permissions:
+
+```sql
 CREATE USER my_admin_user FOR LOGIN my_admin_login WITH DEFAULT_SCHEMA = my_schema;
 GRANT ALTER ON SCHEMA::my_schema TO my_admin_user;
 GRANT SELECT, INSERT, UPDATE, DELETE, VIEW DEFINITION, REFERENCES ON SCHEMA::my_schema TO my_admin_user;
@@ -184,19 +192,26 @@ You can create schemas for several instances of CENM services within the same da
 
 3. Connect to a user database as the administrator (replace *master* with *my_database* in the connection string).
 
-4. Run the following script to create a schema and assign user permissions:
+4. Run the following script to create a schema:
 
-  ```sql
-  CREATE SCHEMA my_schema;
+```sql
+CREATE SCHEMA my_schema;
+```
 
-  CREATE USER my_admin_user FOR LOGIN my_admin_login WITH DEFAULT_SCHEMA = my_schema;
-  GRANT ALTER ON SCHEMA::my_schema TO my_admin_user;
-  GRANT SELECT, INSERT, UPDATE, DELETE, VIEW DEFINITION, REFERENCES ON SCHEMA::my_schema TO my_admin_user;
-  GRANT CREATE TABLE TO my_admin_user;
-  GRANT CREATE VIEW TO my_admin_user;
-  CREATE USER my_user FOR LOGIN my_login WITH DEFAULT_SCHEMA = my_schema;
-  GRANT SELECT, INSERT, UPDATE, DELETE, VIEW DEFINITION, REFERENCES ON SCHEMA::my_schema TO my_user;
-  ```
+After creating the schema you may need to commit the change - for example, with the `GO`
+command on Microsoft tools, or `commit;` on other tools.
+
+5. Run the following script to assign user permissions:
+
+```sql
+CREATE USER my_admin_user FOR LOGIN my_admin_login WITH DEFAULT_SCHEMA = my_schema;
+GRANT ALTER ON SCHEMA::my_schema TO my_admin_user;
+GRANT SELECT, INSERT, UPDATE, DELETE, VIEW DEFINITION, REFERENCES ON SCHEMA::my_schema TO my_admin_user;
+GRANT CREATE TABLE TO my_admin_user;
+GRANT CREATE VIEW TO my_admin_user;
+CREATE USER my_user FOR LOGIN my_login WITH DEFAULT_SCHEMA = my_schema;
+GRANT SELECT, INSERT, UPDATE, DELETE, VIEW DEFINITION, REFERENCES ON SCHEMA::my_schema TO my_user;
+```
 
 #### Oracle
 
