@@ -890,11 +890,7 @@ shell {
 ```
 
 [identity-manager-prod-valid.conf](https://github.com/corda/network-services/blob/release/1.2/services/src/test/resources/v1.1-configs/identity-manager/identity-manager-prod-valid.conf)
-<<<<<<< HEAD
-
 
 ## Obfuscated configuration files
 
 To view the latest changes to the obfuscated configuration files, see [Obfuscation configuration file changes](obfuscated-config-file-changes.md).
-=======
->>>>>>> 138399b5... EG-453 Document IM HA proxy config and guarantees (#245)
