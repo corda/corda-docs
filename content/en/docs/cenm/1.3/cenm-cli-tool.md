@@ -648,7 +648,7 @@ Specifies output format. Valid values are: json, pretty. Default value is `prett
 
 **Arguments**
 
-`REQUEST_ID…​`
+`REQUEST_ID`
 The ID of the request you wish to sign.
 
 ### See a list of outstanding certificate signing requests
