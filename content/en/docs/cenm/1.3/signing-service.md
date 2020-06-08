@@ -295,10 +295,10 @@ information.
 
 #### Indirect data source via SMR Service Location
 
-For all CA related signing tasks (CSRs and CRLs), global data source for getting the unsigned data and persisting the
+For all CA related signing tasks (CSRs and CRLs), a global data source for getting the unsigned data and persisting the
 signed data needs to be defined. This is ENM location of CA related part of Signable Material Retriever Service.
 
-For all non CA related signing tasks (Network Maps and Network Parameters), global data source for getting the unsigned
+For all non CA related signing tasks (Network Maps and Network Parameters), a global data source for getting the unsigned
 data and persisting the signed data needs to be defined. This is ENM location of non CA related part of Signable
 Material Retriever Service.
 
@@ -1395,10 +1395,14 @@ signers = {
 
 ## Signable Material Retriever
 
-The Signable Material Retriever service is an optional service which acts as a bridge between other CENM services and one or more
+The Signable Material Retriever (SMR) service is an optional service which acts as a bridge between other CENM services and one or more
 signing services. It delegates signing to a plugin, which routes work either to the CENM Signing Service,
 or to a third party service. Third party integration plugins are not provided as part of CENM.
 
+{{< note >}}
+The SMR is not currently configurable via the Zone and Angel Services, and
+must be manually edited in 1.3. This will be addressed in a future release.
+{{< /note >}}
 
 ### Running the Signable Material Retriever Service
 
