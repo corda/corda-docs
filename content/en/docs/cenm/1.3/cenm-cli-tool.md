@@ -145,7 +145,7 @@ If you have been allocated a new password by an administrator using the [User ad
 **Options**
 
 `-n, --new-password[=<newPassword>]`
-New password. Leave `-p` without a value to enter your password on the next line. This prevents your password being visible in the command line history.
+New password. Leave `-n` without a value to enter your password on the next line. This prevents your password being visible in the command line history.
 
 ``-p, --password[=<password>]``
 Current password. Leave `-p` without a value to enter your password on the next line. This prevents your password being visible in the command line history.
