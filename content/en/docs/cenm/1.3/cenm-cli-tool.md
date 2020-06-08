@@ -1141,7 +1141,7 @@ Indicates that the zone token should be printed instead of the config, when usin
 **Options**
 
 `-a, --address=<address>`
-The new address of the service, in the format `<host>:<port>`. The value for `port` must match the value for `adminListener` in the service configuration file.//
+The new address of the service, in the format `<host>:<port>`. The value for `port` must match the value for `adminListener` in the service configuration file.
 
 `-c, --use-context=<useContext>`
 Sets the context of the command - overrides the current context set.
