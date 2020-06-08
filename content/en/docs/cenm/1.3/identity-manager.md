@@ -575,7 +575,7 @@ http {
 
     # enabling caching
     # timeout set to 10 days of stale value
-    proxy_cache_path /var/cache/nginx keys_zone=mycache:10m max_size=1g loader_threshold=300 loader_files=200 timeout=240h;
+    proxy_cache_path /var/cache/nginx keys_zone=mycache:10m max_size=1g loader_threshold=300 loader_files=200 timeout=240h
 
     # server group for load balancing
     upstream idman {
