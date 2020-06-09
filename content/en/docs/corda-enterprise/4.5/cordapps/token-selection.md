@@ -1,11 +1,16 @@
 ---
 date: '2020-05-10T12:00:00Z'
-menu: token-sdk
+menu:
+corda-enterprise-4-5:
+  identifier: corda-enterprise-4-5-cordapps-token-sdk-selection
+  name: "Token SDK - Selection options"
+  parent: corda-enterprise-4-5-cordapps-token-sdk
 tags:
 - building
 - against
 - release
 title: Selection in the Token SDK
+Weight: 11
 ---
 
 # Token selection using the Token SDK
@@ -51,5 +56,4 @@ fun addMoveFungibleTokens(
 to use in memory token selection, you need to write wrappers around `MoveTokensFlow` and
 `RedeemTokensFlow`.
 
-You can also use that selection with `addMoveTokens` and `addRedeemTokens` utility functions, but
-make sure that all the checks are performed before construction of the transaction.
+You can also use that selection with `addMoveTokens` and `addRedeemTokens` utility functions. When doing this, you must make sure that all the checks are performed before construction of the transaction.

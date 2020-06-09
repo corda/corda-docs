@@ -1,11 +1,16 @@
 ---
 date: '2020-05-10T12:00:00Z'
-menu: tokens-sdk
+menu:
+corda-enterprise-4-5:
+  identifier: corda-enterprise-4-5-cordapps-token-sdk-walkthrough
+  name: "Token SDK - Evolvable token walk through"
+  parent: corda-enterprise-4-5-cordapps-token-sdk
 tags:
 - building
 - against
 - release
 title: Diamonds as tokens - non-fungible, evolvable tokens using the Token SDK
+Weight: 12
 ---
 
 In this example workflow, the Token SDK is used to create a non-fungible, evolvable token for diamonds. A diamond cannot be split and merged, but its value and other attributes can evolve over time.

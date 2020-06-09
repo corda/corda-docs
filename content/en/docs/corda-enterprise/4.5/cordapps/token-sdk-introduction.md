@@ -1,11 +1,16 @@
 ---
 date: '2020-05-10T12:00:00Z'
-menu: token-sdk
+menu:
+corda-enterprise-4-5:
+  identifier: corda-enterprise-4-5-cordapps-token-sdk
+  name: "Token SDK"
+  parent: corda-enterprise-4-5-cordapps
 tags:
 - building
 - against
 - release
 title: Introducing the Token SDK
+weight: 10
 ---
 
 # The Token SDK
@@ -56,8 +61,6 @@ You can create tokens in Corda to represent anything you like. This could be a r
 
 Before using the SDK to create a token, you need to have a clear understanding of what it represents, and how it needs to behave. You need to know if the token is *fungible* or *non-fungible*, and you need to know if certain characteristics of the token need to evolve over time.
 
-
-
 * **Fungible tokens** are represented by the `FungibleToken` *class* and can be split and merged – just as the assets they represent, like money or stocks - can be split and merged.
 
 * **Non-fungible** tokens are represented by the `NonFungibleTokens` *state*, and cannot be split and merged - just as the assets they represent, like physical diamonds or a house – cannot be split and merged.
@@ -66,17 +69,33 @@ Before using the SDK to create a token, you need to have a clear understanding o
 
 * **Non-evolvable assets** have no way of changing over time. While the FX markets may fluctuate, a US dollar bill does not change into a different state. It cannot evolve into a 1 Euro coin.
 
+{{< table >}}
 | Asset  |   Fungibility   | Evolvability | On / off ledger asset |
 | :------------- | :------------- | :------------- | :------------- |
 | US Dollar  | Fungible       | non-evolvable      | Off-ledger asset       |
 | Ledger-native coin | Fungible  | non-evolvable | On-ledger asset  |
 | Diamonds | Non-Fungible | Evolvable | Off-ledger asset |
+{{< /table >}}
 
 ## Create tokens using the Token SDK
 
 When you know what kind of token you want to introduce into the network, you can start defining it. The requirements for each token depend on whether it is fungible, and whether it can evolve over time.  
 
 Use the list below to understand what needs to be included in the token you want to create.
+
+## The process of using the Token SDK  
+
+Once you have established what type of token you want to create, you can use the Token SDK to perform the following key tasks:
+
+* **Define** your token. Using the readymade utilities contained in the contract JAR, you can define all the required attributes and custom attributes of your tokens.
+
+* **Issue** tokens onto your ledger so they can be used as part of a transaction.
+
+* **Move** the token from at least one party to at least one other party in a transaction.
+
+    * **Select** which specific tokens are to be used to settle a transaction. This applies when a party has more than one 'wallet' or 'pot' of tokens that can be used to settle a transaction.
+
+* **Redeem** and remove the token from the ledger, for example when a party finally takes ownership of their real-life diamond and the token it represents can no longer be used.
 
 ### `Tokentype` - the units of a token
 
@@ -252,27 +271,13 @@ IssuedTokenType issuedRubles = new IssuedTokenType(ALICE.getParty(), DigitalCurr
 new NonFungibleToken(issuedRubles, ALICE.getParty(), new UniqueIdentifier());
 ```
 
-## What you can do with the Token SDK  
-
-Once you have established what type of token you want to create, you can use the Token SDK to perform the following key tasks:
-
-* **Define** your token. Using the readymade utilities contained in the contract JAR, you can define all the required attributes and custom attributes of your tokens.
-
-* **Issue** tokens onto your ledger so they can be used as part of a transaction.
-
-* **Move** the token from at least one party to at least one other party in a transaction.
-
-    * **Select** which specific tokens are to be used to settle a transaction. This applies when a party has more than one 'wallet' or 'pot' of tokens that can be used to settle a transaction.
-
-* **Redeem** and remove the token from the ledger, for example when a party finally takes ownership of their real-life diamond and the token it represents can no longer be used.
-
 ## Write the flows for your token
 
-You can add three different types of flow to your CorDapp using the SDK:
+You can use the Token SDK to create flows for your tokens in the following ways:
 
 * **Utility methods** - methods by which you can compose your own flows.
 * **Sub flows** - ready made processes that need to be initiated by another flow.
-* **RPC Enabled flows** - out-of-the-box flows that have been produced for testing purposes, and may not be suitable for commercial use.
+* **RPC Enabled flows** - out-of-the-box flows that have been produced for testing purposes. These may not be suitable for commercial use.
 
 ### Utility method - Issue
 
@@ -414,6 +419,7 @@ fun addMoveTokens(
 
     return transactionBuilder
 }
+```
 
 **Add a single fungible token move to a transaction:**
 
@@ -530,7 +536,7 @@ fun addMoveNonFungibleTokens(
 
 ### Utility method - redeem
 
-Use this utility method to write flows that redeems a token and removes it from the ledger.
+Use this utility method to write flows that redeem a token and removes it from the ledger.
 
 ```
 @file:JvmName("RedeemFlowUtilities")
@@ -560,7 +566,7 @@ import net.corda.core.node.services.vault.QueryCriteria
 import net.corda.core.transactions.TransactionBuilder
 ```
 
-**Redeem multiple tokens, with possible change returned - fungible tokens**
+**Redeem multiple fungible tokens, with possible change returned**
 
 Use this method to write a redeeming flow of multiple `inputs` to the `transactionBuilder` with possible `changeOutput`.
 
@@ -605,32 +611,12 @@ fun addTokensToRedeem(
 }
 ```
 
-**Redeem non-fungible tokens**
+**Redeem an amount of a fungible token issued by a specific issuer**
 
-Use this method to write a flow that redeems non-fungible `heldToken` issued by the `issuer` and add it to the `transactionBuilder`.
+Redeem an amount of a token issued by `issuer`. Pay possible change to the `changeHolder` - this can be a confidential identity.
 
-```java
-@Suspendable
-fun addNonFungibleTokensToRedeem(
-        transactionBuilder: TransactionBuilder,
-        serviceHub: ServiceHub,
-        heldToken: TokenType,
-        issuer: Party
-): TransactionBuilder {
-    val heldTokenStateAndRef = serviceHub.vaultService.heldTokensByTokenIssuer(heldToken, issuer).states
-    check(heldTokenStateAndRef.size == 1) {
-        "Exactly one held token of a particular type $heldToken should be in the vault at any one time."
-    }
-    val nonFungibleState = heldTokenStateAndRef.first()
-    addNotaryWithCheck(transactionBuilder, nonFungibleState.state.notary)
-    generateExitNonFungible(transactionBuilder, nonFungibleState)
-    return transactionBuilder
-}
-```
+You can provide additional query criteria  using `additionalQueryCriteria`.
 
- * Redeem amount of certain type of the token issued by [issuer]. Pay possible change to the [changeHolder] - it can be confidential identity.
- * Additional query criteria can be provided using [additionalQueryCriteria].
- */
 
 ```java
 @Suspendable
@@ -665,9 +651,567 @@ fun addFungibleTokensToRedeem(
 }
 ```
 
+**Redeem a non-fungible token**
+
+Use this method to write a flow that redeems non-fungible `heldToken` issued by the `issuer` and add it to the `transactionBuilder`.
+
+```java
+@Suspendable
+fun addNonFungibleTokensToRedeem(
+        transactionBuilder: TransactionBuilder,
+        serviceHub: ServiceHub,
+        heldToken: TokenType,
+        issuer: Party
+): TransactionBuilder {
+    val heldTokenStateAndRef = serviceHub.vaultService.heldTokensByTokenIssuer(heldToken, issuer).states
+    check(heldTokenStateAndRef.size == 1) {
+        "Exactly one held token of a particular type $heldToken should be in the vault at any one time."
+    }
+    val nonFungibleState = heldTokenStateAndRef.first()
+    addNotaryWithCheck(transactionBuilder, nonFungibleState.state.notary)
+    generateExitNonFungible(transactionBuilder, nonFungibleState)
+    return transactionBuilder
+}
+```
+
+## Issue, move and redeem tokens using sub flows
+
+Use these ready-made subflows to issue, move and redeem tokens. These flows are triggered automatically by existing transaction flows.
+
+
+### Issue fungible or non-fungible tokens
+
+
+Use this flow to issue fungible or non-fungible tokens. It should be called as an in-line sub-flow, so you must have flow `participantSessions` set up prior to calling this flow.
+
+Tokens are usually constructed before calling this flow. This flow is to be used in conjunction with the `IssueTokensFlowHandler`.
+
+This flow:
+
+1. Creates a `TransactionBuilder` with the preferred notary, which is set in the token SDK config file.
+
+2. Adds the requested set of `tokensToIssue` as outputs to the transaction builder and adds `IssueTokenCommand`s for each group of states, grouped by `IssuedTokenType`.
+
+3. Finalises the transaction and updates the evolvable token distribution list, if necessary.
+
+Key points:
+
+* If you are issuing to self, there is no need to pass in a flow session. Instead, pass in an emptyList for `participantSessions` or use one of the overloads that doesn't require sessions.
+* This flow can only be used by one issuer at a time.
+* Tokens can be issued to well-known identities or confidential identities. To issue tokens with confidential keys, use the `ConfidentialIssueTokensFlow` as demonstrated below.
+* This flow supports issuing many tokens to a single or multiple parties, of the same or different types of tokens.
+* Transaction observers can be specified.
+* Observers can also be specified.
+* This flow supports the issuance of fungible and non fungible tokens in the same transaction.
+* The notary is selected from a config file or picked at random if no notary preference is available.
+* This is not an initiating flow. There will also be an initiating version which is startable from the rpc.
+
+```
+package com.r3.corda.lib.tokens.workflows.flows.issue
+import co.paralleluniverse.fibers.Suspendable
+import com.r3.corda.lib.tokens.contracts.commands.IssueTokenCommand
+import com.r3.corda.lib.tokens.contracts.states.AbstractToken
+import com.r3.corda.lib.tokens.contracts.states.FungibleToken
+import com.r3.corda.lib.tokens.contracts.states.NonFungibleToken
+import com.r3.corda.lib.tokens.contracts.types.IssuedTokenType
+import com.r3.corda.lib.tokens.workflows.internal.flows.distribution.UpdateDistributionListFlow
+import com.r3.corda.lib.tokens.workflows.internal.flows.finality.ObserverAwareFinalityFlow
+import com.r3.corda.lib.tokens.workflows.utilities.addTokenTypeJar
+import com.r3.corda.lib.tokens.workflows.utilities.getPreferredNotary
+import net.corda.core.flows.FlowLogic
+import net.corda.core.flows.FlowSession
+import net.corda.core.transactions.SignedTransaction
+import net.corda.core.transactions.TransactionBuilder
+```
+
+```java
+class IssueTokensFlow
+@JvmOverloads
+constructor(
+        val tokensToIssue: List<AbstractToken>,
+        val participantSessions: List<FlowSession>,
+        val observerSessions: List<FlowSession> = emptyList()
+) : FlowLogic<SignedTransaction>() {
+
+    /** Issue a single [FungibleToken]. */
+    @JvmOverloads
+    constructor(
+            token: FungibleToken,
+            participantSessions: List<FlowSession>,
+            observerSessions: List<FlowSession> = emptyList()
+    ) : this(listOf(token), participantSessions, observerSessions)
+
+    /** Issue a single [FungibleToken] to self with no observers. */
+    constructor(token: FungibleToken) : this(listOf(token), emptyList(), emptyList())
+
+    /** Issue a single [NonFungibleToken]. */
+    @JvmOverloads
+    constructor(
+            token: NonFungibleToken,
+            participantSessions: List<FlowSession>,
+            observerSessions: List<FlowSession> = emptyList()
+    ) : this(listOf(token), participantSessions, observerSessions)
+
+    /** Issue a single [NonFungibleToken] to self with no observers. */
+    constructor(token: NonFungibleToken) : this(listOf(token), emptyList(), emptyList())
+
+    @Suspendable
+    override fun call(): SignedTransaction {
+        // Initialise the transaction builder with a preferred notary or choose a random notary.
+        val transactionBuilder = TransactionBuilder(notary = getPreferredNotary(serviceHub))
+        // Add all the specified tokensToIssue to the transaction. The correct commands and signing keys are also added.
+        addIssueTokens(transactionBuilder, tokensToIssue)
+        addTokenTypeJar(tokensToIssue, transactionBuilder)
+        // Create new participantSessions if this is started as a top level flow.
+        val signedTransaction = subFlow(
+                ObserverAwareFinalityFlow(
+                        transactionBuilder = transactionBuilder,
+                        allSessions = participantSessions + observerSessions
+                )
+        )
+        // Update the distribution list.
+        subFlow(UpdateDistributionListFlow(signedTransaction))
+        // Return the newly created transaction.
+        return signedTransaction
+    }
+}
+```
+
+### Issue tokens to confidential keys
+
+
+Use this flow to issue tokens to confidential keys. This should be used in conjunction with the `ConfidentialIssueTokensFlowHandler`.
+
+Properties in this flow:
+
+* `tokens` a list of tokens to issue.
+* `participantSessions` a list of sessions for the parties being issued tokens.
+* `observerSessions` a list of sessions for any observers.
+
+
+```
+com.r3.corda.lib.tokens.workflows.flows.issue
+
+import co.paralleluniverse.fibers.Suspendable
+import com.r3.corda.lib.tokens.contracts.states.AbstractToken
+import com.r3.corda.lib.tokens.contracts.states.FungibleToken
+import com.r3.corda.lib.tokens.contracts.states.NonFungibleToken
+import com.r3.corda.lib.tokens.workflows.flows.confidential.ConfidentialTokensFlow
+import com.r3.corda.lib.tokens.workflows.internal.flows.finality.TransactionRole
+import net.corda.core.flows.FlowLogic
+import net.corda.core.flows.FlowSession
+import net.corda.core.transactions.SignedTransaction
+```
+
+```Kotlin
+class ConfidentialIssueTokensFlow
+@JvmOverloads
+constructor(
+        val tokens: List<AbstractToken>,
+        val participantSessions: List<FlowSession>,
+        val observerSessions: List<FlowSession> = emptyList()
+) : FlowLogic<SignedTransaction>() {
+
+    /** Issue a single [FungibleToken]. */
+    @JvmOverloads
+    constructor(
+            token: FungibleToken,
+            participantSessions: List<FlowSession>,
+            observerSessions: List<FlowSession> = emptyList()
+    ) : this(listOf(token), participantSessions, observerSessions)
+
+    /** Issue a single [FungibleToken] to self with no observers. */
+    constructor(token: FungibleToken) : this(listOf(token), emptyList(), emptyList())
+
+    /** Issue a single [NonFungibleToken]. */
+    @JvmOverloads
+    constructor(
+            token: NonFungibleToken,
+            participantSessions: List<FlowSession>,
+            observerSessions: List<FlowSession> = emptyList()
+    ) : this(listOf(token), participantSessions, observerSessions)
+
+    /** Issue a single [NonFungibleToken] to self with no observers. */
+    constructor(token: NonFungibleToken) : this(listOf(token), emptyList(), emptyList())
+
+    @Suspendable
+    override fun call(): SignedTransaction {
+        participantSessions.forEach { it.send(TransactionRole.PARTICIPANT) }
+        observerSessions.forEach { it.send(TransactionRole.OBSERVER) }
+        // Request new keys pairs from all proposed token holders.
+        val confidentialTokens = subFlow(ConfidentialTokensFlow(tokens, participantSessions))
+        // Issue tokens using the existing participantSessions.
+        return subFlow(IssueTokensFlow(confidentialTokens, participantSessions, observerSessions))
+    }
+}
+```
+
+### Create evolvable tokens
+
+Use this flow to create and update evolvable token states.
+
+Properties in this flow:
+
+ * `transactionStates` - a list of state to create evolvable token types with.
+ * `participantSessions` - a list of sessions for participants in the evolvable token types.
+ * `observerSessions` - a list of sessions for any observers to the create observable token transaction.
+```
+package com.r3.corda.lib.tokens.workflows.flows.evolvable
+import co.paralleluniverse.fibers.Suspendable
+import com.r3.corda.lib.tokens.contracts.states.EvolvableTokenType
+import com.r3.corda.lib.tokens.workflows.internal.flows.finality.ObserverAwareFinalityFlow
+import net.corda.core.contracts.TransactionState
+import net.corda.core.flows.CollectSignaturesFlow
+import net.corda.core.flows.FlowLogic
+import net.corda.core.flows.FlowSession
+import net.corda.core.identity.AbstractParty
+import net.corda.core.identity.Party
+import net.corda.core.serialization.CordaSerializable
+import net.corda.core.transactions.SignedTransaction
+import net.corda.core.transactions.TransactionBuilder
+```
+```Kotlin
+class CreateEvolvableTokensFlow
+@JvmOverloads
+constructor(
+        val transactionStates: List<TransactionState<EvolvableTokenType>>,
+        val participantSessions: List<FlowSession>,
+        val observerSessions: List<FlowSession> = emptyList()
+) : FlowLogic<SignedTransaction>() {
+    @JvmOverloads
+    constructor(transactionState: TransactionState<EvolvableTokenType>, participantSessions: List<FlowSession>, observerSessions: List<FlowSession> = emptyList()) :
+            this(listOf(transactionState), participantSessions, observerSessions)
+
+    @CordaSerializable
+    data class Notification(val signatureRequired: Boolean = false)
+
+    private val evolvableTokens = transactionStates.map { it.data }
+
+    @Suspendable
+    override fun call(): SignedTransaction {
+        checkLinearIds(transactionStates)
+        // TODO what about... preferred notary
+        checkSameNotary()
+        val transactionBuilder = TransactionBuilder(transactionStates.first().notary) // todo
+
+        // Create a transaction which updates the ledger with the new evolvable tokens.
+        transactionStates.forEach {
+            addCreateEvolvableToken(transactionBuilder, it)
+        }
+
+        // Sign the transaction proposal
+        val ptx: SignedTransaction = serviceHub.signInitialTransaction(transactionBuilder)
+
+        // Gather signatures from other maintainers
+        // Check that we have sessions with all maitainers but not with ourselves
+        val otherMaintainerSessions = participantSessions.filter { it.counterparty in evolvableTokens.otherMaintainers(ourIdentity) }
+        otherMaintainerSessions.forEach { it.send(Notification(signatureRequired = true)) }
+        val stx = subFlow(CollectSignaturesFlow(
+                partiallySignedTx = ptx,
+                sessionsToCollectFrom = otherMaintainerSessions
+        ))
+        // Finalise with all participants, including maintainers, participants, and subscribers (via distribution list)
+        val wellKnownObserverSessions = participantSessions.filter { it.counterparty in wellKnownObservers }
+        val allObserverSessions = (wellKnownObserverSessions + observerSessions).toSet()
+        allObserverSessions.forEach { it.send(Notification(signatureRequired = false)) }
+        return subFlow(ObserverAwareFinalityFlow(signedTransaction = stx, allSessions = otherMaintainerSessions + allObserverSessions))
+    }
+
+    private fun checkLinearIds(transactionStates: List<TransactionState<EvolvableTokenType>>) {
+        check(transactionStates.map { it.data.linearId }.toSet().size == transactionStates.size) {
+            "Shouldn't create evolvable tokens with the same linearId."
+        }
+    }
+
+    private fun checkSameNotary() {
+        check(transactionStates.map { it.notary }.toSet().size == 1) {
+            "All states should have the same notary"
+        }
+    }
+
+    // TODO Refactor it more.
+    private val otherObservers
+        get(): Set<AbstractParty> {
+            return evolvableTokens.participants().minus(evolvableTokens.maintainers()).minus(this.ourIdentity)
+        }
+
+    private val wellKnownObservers
+        get(): List<Party> {
+            return otherObservers.map { serviceHub.identityService.wellKnownPartyFromAnonymous(it)!! }
+        }
+}
+```
+
+### Update evolvable token
+
+
+Use this flow to update an existing evolvable token type which is already recorded on the ledger. This is an **In-line** flow, which means it must be invoked with a `subFlow` call from an Initiating Flow.
+
+Properties in this flow:
+
+ * `oldStateAndRef` - the existing evolvable token type to update.
+ * `newState` - the new version of the evolvable token type.
+ * `participantSessions` - a list of sessions for participants in the evolvable token types.
+ * `observerSessions` - a list of sessions for any observers to the create observable token transaction.
+
+```
+package com.r3.corda.lib.tokens.workflows.flows.evolvable
+
+import co.paralleluniverse.fibers.Suspendable
+import com.r3.corda.lib.tokens.contracts.states.EvolvableTokenType
+import com.r3.corda.lib.tokens.workflows.internal.flows.finality.ObserverAwareFinalityFlow
+import net.corda.core.contracts.StateAndRef
+import net.corda.core.flows.CollectSignaturesFlow
+import net.corda.core.flows.FlowLogic
+import net.corda.core.flows.FlowSession
+import net.corda.core.identity.AbstractParty
+import net.corda.core.identity.Party
+import net.corda.core.serialization.CordaSerializable
+import net.corda.core.transactions.SignedTransaction
+import net.corda.core.transactions.TransactionBuilder
+```
+```Kotlin
+class UpdateEvolvableTokenFlow @JvmOverloads constructor(
+        val oldStateAndRef: StateAndRef<EvolvableTokenType>,
+        val newState: EvolvableTokenType,
+        val participantSessions: List<FlowSession>,
+        val observerSessions: List<FlowSession> = emptyList()
+) : FlowLogic<SignedTransaction>() {
+    /**
+     * Simple notification class to inform counterparties of their role. In this instance, informs participants if
+     * they are required to sign the command. This is intended to allow maintainers to sign commands while participants
+     * and other observers merely finalise the transaction.
+     */
+    @CordaSerializable
+    data class Notification(val signatureRequired: Boolean = false)
+
+    @Suspendable
+    override fun call(): SignedTransaction {
+        require(ourIdentity in oldStateAndRef.state.data.maintainers) {
+            "This flow can only be started by existing maintainers of the EvolvableTokenType."
+        }
+
+        // Create a transaction which updates the ledger with the new evolvable token.
+        // The tokenHolders listed as maintainers in the old state should be the signers.
+        val utx = addUpdateEvolvableToken(
+                TransactionBuilder(notary = oldStateAndRef.state.notary),
+                oldStateAndRef,
+                newState
+        )
+
+        // Sign the transaction proposal (creating a partially signed transaction, or ptx)
+        val ptx: SignedTransaction = serviceHub.signInitialTransaction(utx)
+
+        // Gather signatures from other maintainers
+        val otherMaintainerSessions = participantSessions.filter { it.counterparty in evolvableTokens.otherMaintainers(ourIdentity) }
+        otherMaintainerSessions.forEach { it.send(Notification(signatureRequired = true)) }
+        val stx = subFlow(CollectSignaturesFlow(
+                partiallySignedTx = ptx,
+                sessionsToCollectFrom = otherMaintainerSessions
+        ))
+
+        // Distribute to all observers, including maintainers, participants, and subscribers (via distribution list)
+        val wellKnownObserverSessions = participantSessions.filter { it.counterparty in wellKnownObservers }
+        val allObserverSessions = (wellKnownObserverSessions + observerSessions).toSet()
+        observerSessions.forEach { it.send(Notification(signatureRequired = false)) }
+        return subFlow(ObserverAwareFinalityFlow(signedTransaction = stx, allSessions = otherMaintainerSessions + allObserverSessions))
+    }
+
+    private val oldState get() = oldStateAndRef.state.data
+    private val evolvableTokens = listOf(oldState, newState)
+
+    private fun otherObservers(subscribers: Set<Party>): Set<AbstractParty> {
+        return (evolvableTokens.participants() + subscribers).minus(evolvableTokens.maintainers()).minus(this.ourIdentity)
+    }
+
+    private val wellKnownObservers
+        get(): List<Party> {
+            return otherObservers(subscribersForState(newState, serviceHub)).map { serviceHub.identityService.wellKnownPartyFromAnonymous(it)!! }
+        }
+}
+```
+
+### Move tokens
+
+Use this general, in-line flow to move any type of tokens. This flow builds a transaction containing input and output states passed as parameters. You must ensure all checks are done before calling this flow as a subflow.
+
+You can only call this flow for one `TokenType` at a time. If you need to handle multiple token types in one transaction, create a new flow, calling `addMoveTokens` for each token type.
+
+Parameters for this flow:
+
+* `inputs` - list of token inputs to move.
+* `outputs` - list of result token outputs.
+* `participantSessions` - session with the participants of move tokens transaction.
+* `observerSessions` - session with optional observers of the redeem transaction.
+
+```
+package com.r3.corda.lib.tokens.workflows.flows.move
+
+import co.paralleluniverse.fibers.Suspendable
+import com.r3.corda.lib.tokens.contracts.states.AbstractToken
+import com.r3.corda.lib.tokens.contracts.types.TokenType
+import net.corda.core.contracts.StateAndRef
+import net.corda.core.flows.FlowSession
+import net.corda.core.transactions.TransactionBuilder
+```
+
+```Kotlin
+class MoveTokensFlow
+@JvmOverloads
+constructor(
+        val inputs: List<StateAndRef<AbstractToken>>,
+        val outputs: List<AbstractToken>,
+        override val participantSessions: List<FlowSession>,
+        override val observerSessions: List<FlowSession> = emptyList()
+) : AbstractMoveTokensFlow() {
+    @JvmOverloads
+    constructor(
+            input: StateAndRef<AbstractToken>,
+            output: AbstractToken,
+            participantSessions: List<FlowSession>,
+            observerSessions: List<FlowSession> = emptyList()
+    ) : this(listOf(input), listOf(output), participantSessions, observerSessions)
+
+    @Suspendable
+    override fun addMove(transactionBuilder: TransactionBuilder) {
+        addMoveTokens(transactionBuilder, inputs, outputs)
+    }
+}
+```
+
+### Move tokens with confidential keys
+
+Use this responder flow to confidentially move tokens flows: `ConfidentialMoveNonFungibleTokensFlow` and `ConfidentialMoveFungibleTokensFlow`.
+
+```
+ package com.r3.corda.lib.tokens.workflows.flows.move
+
+ import co.paralleluniverse.fibers.Suspendable
+ import com.r3.corda.lib.tokens.workflows.flows.confidential.ConfidentialTokensFlowHandler
+ import com.r3.corda.lib.tokens.workflows.internal.flows.finality.ObserverAwareFinalityFlowHandler
+ import com.r3.corda.lib.tokens.workflows.internal.flows.finality.TransactionRole
+ import net.corda.core.flows.FlowLogic
+ import net.corda.core.flows.FlowSession
+ import net.corda.core.utilities.unwrap
+```
+
+```Kotlin
+class ConfidentialMoveTokensFlowHandler(val otherSession: FlowSession) : FlowLogic<Unit>() {
+    @Suspendable
+    override fun call() {
+        val role = otherSession.receive<TransactionRole>().unwrap { it }
+        if (role == TransactionRole.PARTICIPANT) {
+            subFlow(ConfidentialTokensFlowHandler(otherSession))
+        }
+        subFlow(ObserverAwareFinalityFlowHandler(otherSession))
+    }
+}
+```
+
+### Redeem tokens
+
+Use this general in-lined flow to redeem any type of tokens with the issuer.
+
+The flow must be be called on tokens owner's side.
+
+You can see in the flow below that token selection and change output generation should be done beforehand. This flow builds a transaction containing those states, but all checks should have be done before calling this flow as a subflow.
+
+You can can only call this flow for one `TokenType` at a time. To handle multiple token types in one transaction, you must create a new flow, calling `addTokensToRedeem` for each token type.
+
+Parameters in this flow:
+
+ * `inputs` - list of token inputs to redeem.
+ * `changeOutput` - possible change output to be paid back to the tokens owner.
+ * `issuerSession` - session with the issuer of the tokens.
+ * `observerSessions` - session with optional observers of the redeem transaction.
+
+```
+package com.r3.corda.lib.tokens.workflows.flows.redeem
+
+import co.paralleluniverse.fibers.Suspendable
+import com.r3.corda.lib.tokens.contracts.states.AbstractToken
+import com.r3.corda.lib.tokens.contracts.types.TokenType
+import net.corda.core.contracts.StateAndRef
+import net.corda.core.flows.FlowSession
+import net.corda.core.transactions.TransactionBuilder
+```
+
+```Kotlin
+///called on the owner side.
+class RedeemTokensFlow
+@JvmOverloads
+constructor(
+        val inputs: List<StateAndRef<AbstractToken>>,
+        val changeOutput: AbstractToken?,
+        override val issuerSession: FlowSession,
+        override val observerSessions: List<FlowSession> = emptyList()
+) : AbstractRedeemTokensFlow() {
+    @Suspendable
+    override fun generateExit(transactionBuilder: TransactionBuilder) {
+        addTokensToRedeem(transactionBuilder, inputs, changeOutput)
+    }
+}
+```
+
+### Redeem token with confidential keys
+
+Use this version of `RedeemFungibleTokensFlow` to allow a party with confidential identity redeem a token. There is no `NonFungibleToken` version of this flow, because there is no output paid. Identities are synchronised during normal redeem call.
+
+Parameters in this flow:
+
+ * `amount` - amount of token to redeem.
+ * `issuerSession` - session with the issuer tokens should be redeemed with.
+ * `observerSessions` - optional sessions with the observer nodes, to witch the transaction will be broadcasted.
+ * `additionalQueryCriteri` - a additional criteria for token selection.
+ * `changeHolder` - optional change key, if using accounts you should generate the change key prior to calling this flow then pass it in to the flow via this parameter.
+
+```
+package com.r3.corda.lib.tokens.workflows.flows.redeem
+
+import co.paralleluniverse.fibers.Suspendable
+import com.r3.corda.lib.tokens.contracts.types.TokenType
+import net.corda.core.contracts.Amount
+import net.corda.core.flows.FlowLogic
+import net.corda.core.flows.FlowSession
+import net.corda.core.identity.AbstractParty
+import net.corda.core.identity.AnonymousParty
+import net.corda.core.node.services.vault.QueryCriteria
+import net.corda.core.transactions.SignedTransaction
+```
+
+```
+class ConfidentialRedeemFungibleTokensFlow
+@JvmOverloads
+constructor(
+        val amount: Amount<TokenType>,
+        val issuerSession: FlowSession,
+        val observerSessions: List<FlowSession> = emptyList(),
+        val additionalQueryCriteria: QueryCriteria? = null,
+        val changeHolder: AbstractParty? = null
+) : FlowLogic<SignedTransaction>() {
+    @Suspendable
+    override fun call(): SignedTransaction {
+        // If a change holder key is not specified then one will be created for you. NB. If you want to use accounts
+        // with tokens, then you must generate and allocate the key to an account up-front and pass the key in as the
+        // "changeHolder".
+        val confidentialHolder = changeHolder ?: let {
+            val key = serviceHub.keyManagementService.freshKey()
+            AnonymousParty(key)
+        }
+        return subFlow(RedeemFungibleTokensFlow(
+                amount = amount,
+                issuerSession = issuerSession,
+                changeHolder = confidentialHolder,  // This will never be null.
+                observerSessions = observerSessions,
+                additionalQueryCriteria = additionalQueryCriteria
+        ))
+    }
+}
+```
+
 ## Install the Token SDK
 
-Depending on your plan for issuing tokens onto your network - whether you are ready to deploy tokens in an enterprise scenario or experimenting - there are different ways to install the Tokens SDK:
+Depending on your plan for issuing tokens onto your network - whether you are ready to deploy tokens in an enterprise scenario or experimenting - there are two different ways to install the Tokens SDK:
 
 * [Use the kotlin token SDK template](###get-started-using-the-kotlin-token-sdk-template) template to get started and issue tokens locally. This is a great way to learn about the Token SDK through practical application, but may not be suitable for your enterprise deployment.
 * [Clone the latest repo](###build-token-sdk-against-corda-release-branch).
