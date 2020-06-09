@@ -609,7 +609,7 @@ See the [Nginx documentation](https://nginx.org/en/docs/) for additional informa
 
 Based on the configuration mentioned previously, if there is no expiry routine set in place the call
 will always return a value if it has managed to save one at any point in time. This effectively means that
-the system can operate as normal without an Identity Manager running as long as the CRL is valid.
+the system can operate as normal without a running Identity Manager Service as long as the CRL is valid.
 
 When more than one caching proxies are defined, there could be inconsistencies among their cached values, which
 are however expected to be rare. Some of the instances may contain outdated cached values because they were not hit after a CRL update,
