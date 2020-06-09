@@ -2,7 +2,6 @@
 date: '2020-05-10T12:00:00Z'
 menu:
 corda-enterprise-4-5:
-  identifier: corda-enterprise-4-5-cordapps-token-sdk
   name: "Token SDK"
   parent: corda-enterprise-4-5-cordapps
 tags:
@@ -10,7 +9,7 @@ tags:
 - against
 - release
 title: Introducing the Token SDK
-weight: 10
+weight: 15
 ---
 
 # The Token SDK
