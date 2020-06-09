@@ -633,7 +633,7 @@ After configuring the proxy and the Application Gateway, all the configuration f
 the Identity Manager CRL endpoint must be pointing to the Gateway endpoint instead.
 
 After making these changes and spinning up an ecosystem with Identity Manager, Network Map, Signer and Nodes,
-retrieval of revocation lists from the registered nodes can be observed to work successfully even when the
+you can observe a successful retrieval of revocation lists from the registered nodes even when the 
 Identity Manager is not operating (using the CRL endpoint check tool provided by CENM). However, operations that require
 additional calls such as signing a new CRL from the Signer may not be able to be performed.
 
