@@ -46,7 +46,7 @@ The minimum platform version that the nodes must be running. Any node, which is 
 not start.
 
 * **notaries**:
-  Ordered list of file paths to the node info files, or X500 names, of the notaries which are permitted in the
+  An ordered list of file paths to the node info files, or X500 names, of the notaries, which are permitted on the
   network.
 
   * **validating**:
