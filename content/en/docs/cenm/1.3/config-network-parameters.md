@@ -42,7 +42,7 @@ Guidance on using notaries in flows: [https://docs.corda.net/api-flows.html?high
 
 
 * **minimumPlatformVersion**:
-The minimum platform version that the nodes must be running. Any node which is below this will
+The minimum platform version that the nodes must be running. Any node, which is below this, will
 not start.
 
 * **notaries**:
