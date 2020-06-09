@@ -541,7 +541,7 @@ All inter-service communication can be configured with SSL support. See [Configu
 The crucial role that the Identity Manager Service plays in the communication between nodes, and in particular the
 importance of the Certificate Revocation List (CRL) during flow execution, creates the need for high availability
 even when Identity Manager is unresponsive. The suggested approach is made of a load balancing gateway and as an entry point,
-redirecting CRL requests to a pool of caching proxies, which ultimately redirect to the Identity Manager
+redirecting CRL requests to a pool of caching proxies, which ultimately redirect to the Identity Manager Service 
 or use their cached CRL values if it is down.
 
 R3 have verified a solution using [Azure Application Gateway](https://docs.microsoft.com/en-us/azure/application-gateway/overview) and [Nginx](https://www.nginx.com), although the concepts applied should be similar for other solutions.
