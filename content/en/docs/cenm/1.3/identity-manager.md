@@ -621,7 +621,7 @@ The cache of each proxy instance (or all of them, if they are using a shared vol
 In order to avoid a case of a regularly failing Identity Manager, which is up just in time to sign a new CRL but fails again before receiving
 calls from the proxies, a regular polling interval can be set.
 
-##### Application Gateway Setup
+##### Application Gateway setup
 
 The Application Gateway setup is very straightforward and for the most part follows the default configuration that Azure provides.
 However, a custom health check probe may need to be added if we want proxies to declare themselves unavailable, for example
