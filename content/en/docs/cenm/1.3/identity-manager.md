@@ -627,7 +627,7 @@ The Application Gateway setup is very straightforward and for the most part foll
 However, a custom health check probe may need to be added if we want proxies to declare themselves unavailable, for example
 if the cached values are too old to use and the Identity Manager is not responding.
 
-##### System Configuration And Behavior
+##### System configuration and behavior
 
 After configuring the proxy and the Application Gateway, all the configuration files and certificates that would point to
 the Identity Manager CRL endpoint must be pointing to the Gateway endpoint instead.
