@@ -111,7 +111,7 @@ List of `.jar` file hashes (given as strings) containing the contract class.
 
 
   * **attachmentIds**:
-    List of JAR file hashes (given as strings) containing the contract class.
+    The list of `.jar` file hashes (given as strings) containing the contract class.
 
 
 * **packageOwnership**:
