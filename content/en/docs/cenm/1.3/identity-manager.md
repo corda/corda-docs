@@ -630,7 +630,7 @@ if the cached values are too old to use and the Identity Manager Service is not 
 ##### System configuration and behavior
 
 After configuring the proxy and the Application Gateway, all the configuration files and certificates that would point to
-the Identity Manager CRL endpoint must be pointing to the Gateway endpoint instead.
+the Identity Manager Service CRL endpoint must be pointing to the Gateway endpoint instead.
 
 After making these changes and spinning up an ecosystem with Identity Manager, Network Map, Signer and Nodes,
 you can observe a successful retrieval of revocation lists from the registered nodes even when the 
