@@ -625,7 +625,7 @@ calls from the proxies, a regular polling interval can be set.
 
 The Application Gateway setup is very straightforward and for the most part follows the default configuration that Azure provides.
 However, a custom health check probe may need to be added if we want proxies to declare themselves unavailable, for example
-if the cached values are too old to use and the Identity Manager is not responding.
+if the cached values are too old to use and the Identity Manager Service is not responding.
 
 ##### System configuration and behavior
 
