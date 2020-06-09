@@ -538,7 +538,7 @@ All inter-service communication can be configured with SSL support. See [Configu
 
 #### HA Endpoint
 
-The crucial role that Identity Manager plays in the communication between nodes, and in particular the
+The crucial role that the Identity Manager Service plays in the communication between nodes, and in particular the
 importance of the Certificate Revocation List (CRL) during flow execution, creates the need for high availability
 even when Identity Manager is unresponsive. The suggested approach is made of a load balancing gateway and as an entry point,
 redirecting CRL requests to a pool of caching proxies, which ultimately redirect to the Identity Manager
