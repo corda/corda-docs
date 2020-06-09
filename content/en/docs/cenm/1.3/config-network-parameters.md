@@ -53,7 +53,7 @@ not start.
     Boolean to determine whether the notary is a validating or non-validating one.
 
   * **notaryNodeInfoFile**:
-    File path to the notaries’ node info file.
+    The file path to the `node.info` file of the notary.
 
   * **notaryX500Name**:
     Notaries’ X500 name, as an alternative to providing the node info. Only supported for HA notaries.
