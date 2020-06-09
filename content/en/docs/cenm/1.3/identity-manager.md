@@ -611,7 +611,7 @@ Based on the configuration mentioned above, if there is no expiry routine set in
 will always return a value if it has managed to save one at any point in time. This effectively means that
 the system can operate as normal without a running Identity Manager Service as long as the CRL is valid.
 
-When more than one caching proxies are defined, there could be inconsistencies among their cached values, which
+When multiple caching proxies are defined, in rare cases there could be inconsistencies among their cached values.
 are however expected to be rare. Some of the instances may contain outdated cached values because they were not hit after a CRL update,
 or may not contain a value at all due to no hits after their spawn. For this reason, it's suggested to use a shared mounted volume as
 the cache directory in order to make sure that all the cached responses are the same, and there are no CRL inconsistencies across proxy instances.
