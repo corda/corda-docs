@@ -50,7 +50,7 @@ not start.
   network.
 
   * **validating**:
-    Boolean to determine whether the notary is a validating or non-validating one.
+    A boolean value to determine whether the notary is a validating (`true`) or a non-validating (`false`) one.
 
   * **notaryNodeInfoFile**:
     The file path to the `node.info` file of the notary.
