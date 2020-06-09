@@ -155,7 +155,7 @@ The request log, used to record the request signatures of the requesting parties
 |Column|Description|
 |------------------------------------|------------------------------------------------------------------------|
 |id|The ID of the request (indexed).|
-|consuming_transaction_id|The ID of the transaction consuming the input states.|
+|consuming_transaction_id|The ID of the transaction consuming the input states (indexed).|
 |requesting_party_name|The X500 name of the party requesting the notarisation.|
 |request_timestamp|The timestamp when the notary worker started processing the request.|
 |request_signature|The request signature of the requesting party.|
@@ -163,6 +163,20 @@ The request log, used to record the request signatures of the requesting parties
 
 {{< /table >}}
 
+### Notary Double-Spend Table
+
+The double-spend table includes records of transactions that attempted a double-spend.
+
+{{< table >}}
+
+|Column|Description|
+|-----|-------------|
+|state_ref|The identifier of the spent state (indexed).|
+|request_timestamp|The time when the notary worker started processing the request that resulted in an attempted double-spend (indexed).|
+|consuming_transaction_id|The identifier of the transaction that attempted to double-spend the state (indexed).|
+
+
+{{< /table >}}
 
 ## Configuring the notary backend - CockroachDB
 
@@ -216,7 +230,16 @@ create table corda.notary_request_log (
   request_timestamp timestamp not null,
   request_signature bytea not null,
   worker_node_x500_name varchar(255),
-  constraint id3 primary key (id)
+  constraint id3 primary key (id),
+  index (consuming_transaction_id)
+  );
+
+create table corda.notary_double_spends (
+  state_ref varchar(73) not null,
+  request_timestamp timestamp not null,
+  consuming_transaction_id varchar(64) not null,
+  constraint id4 primary key (state_ref, consuming_transaction_id),
+  index (state_ref, request_timestamp, consuming_transaction_id)
   );
 ```
 
@@ -323,18 +346,18 @@ Tool if desired. If not, the following script can be used. Note that this script
 database created above.
 
 ```sql
-create table notary_committed_states (
+create table corda_adm.notary_committed_states (
   state_ref varchar(73) not null,
   consuming_transaction_id varchar(64) not null,
   constraint id1 primary key (state_ref)
   );
 
-create table notary_committed_transactions (
+create table corda_adm.notary_committed_transactions (
   transaction_id varchar(64) not null,
   constraint id2 primary key (transaction_id)
   );
 
-create table notary_request_log (
+create table corda_adm.notary_request_log (
   id varchar(76) not null,
   consuming_transaction_id varchar(64),
   requesting_party_name varchar(255),
@@ -343,8 +366,28 @@ create table notary_request_log (
   worker_node_x500_name varchar(255),
   constraint id3 primary key (id)
   );
+
+create table corda_adm.notary_double_spends (
+  state_ref varchar(73) not null,
+  request_timestamp timestamp not null,
+  consuming_transaction_id varchar(64) not null,
+  constraint id4 primary key (state_ref)
+  );
 ```
 
+Once you have created the tables, you must add the following indexes:
+
+```sql
+create index tx_idx on corda_adm.notary_request_log(consuming_transaction_id)
+
+create index state_ts_tx_idx on corda_adm.notary_double_spends (state_ref,request_timestamp,consuming_transaction_id)
+```
+
+Lastly, you must grant user rights:
+
+```sql
+GRANT SELECT, INSERT ON corda_adm.notary_double_spends TO corda_pdb_user;
+```
 
 ### Database user setup
 
