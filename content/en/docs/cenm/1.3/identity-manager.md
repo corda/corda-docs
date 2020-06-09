@@ -541,7 +541,7 @@ All inter-service communication can be configured with SSL support. See [Configu
 The crucial role that the Identity Manager Service plays in the communication between nodes, and in particular the
 importance of the Certificate Revocation List (CRL) during flow execution, creates the need for high availability
 even when the Identity Manager Service is unresponsive. The suggested approach is made of a load balancing gateway and as an entry point,
-redirecting CRL requests to a pool of caching proxies, which ultimately redirect to the Identity Manager Service 
+redirecting CRL requests to a pool of caching proxies, which ultimately redirect to the Identity Manager Service
 or use their cached CRL values if it is down.
 
 R3 have verified a solution using [Azure Application Gateway](https://docs.microsoft.com/en-us/azure/application-gateway/overview) and [Nginx](https://www.nginx.com), although the concepts applied should be similar for other solutions.
@@ -561,9 +561,10 @@ Moreover, Nginx by default deletes cached files that have not been accessed with
 forcing the use of the timeout variable when specifying the `proxy_cache_path` to make sure that the cache
 is not cleared even the CRL hasn't been requested for a while.
 
-Due to this implementation, expiring the cached responses and returning error after some time
-could be done in an alternative way if wanted, for example by making the proxy's health check
-to query its cached values for their updated time, and declare itself unavailable if needed.
+As a result of this implementation, you can choose to use an alternative method to
+expire the cached responses and to return an error after some time - for example,
+by making the proxy's health check to query its cached values for their updated
+time, and to declare itself unavailable if needed.
 
 A part of this configuration is shown below:
 
@@ -617,9 +618,10 @@ or may not contain a value at all due to no hits after their spawn. For this rea
 the cache directory in order to make sure that all the cached responses are the same, and there are no CRL inconsistencies across proxy instances.
 This can be easily done for example by using a Kubernetes cluster for managing the proxy containers.
 
-The cache of each proxy instance (or all of them, if they are using a shared volume) is refreshed as soon as a call to this proxy is made.
-In order to avoid a case of a regularly failing Identity Manager, which is up just in time to sign a new CRL but fails again before receiving
-calls from the proxies, a regular polling interval can be set.
+The cache of each proxy instance (or all of them, if they are using a shared volume) is refreshed as soon as a request to this proxy is made.
+A frequent polling interval should be set in order to avoid a scenario where an
+Identity Manager Service is live long enough to receive a new signed CRL but
+fails again before the proxies fetch and cache the updated CRL.
 
 ##### Application Gateway setup
 
@@ -633,7 +635,7 @@ After configuring the proxy and the Application Gateway, all the configuration f
 the Identity Manager Service CRL endpoint must be pointing to the Gateway endpoint instead.
 
 After you've made these changes and you have spun up a CENM ecosystem with an Identity Manager Service, a Network Map Service, a Signing Service, and Nodes,
-you can observe a successful retrieval of revocation lists from the registered nodes even when the 
+you can observe a successful retrieval of revocation lists from the registered nodes even when the
 Identity Manager is not operating (using the CRL endpoint check tool provided by CENM). However, operations that require
 additional calls such as signing a new CRL from the Signer may not be able to be performed.
 
