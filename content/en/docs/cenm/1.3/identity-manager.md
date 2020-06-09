@@ -565,7 +565,7 @@ Due to this implementation, expiring the cached responses and returning error af
 could be done in an alternative way if wanted, for example by making the proxy's health check
 to query its cached values for their updated time, and declare itself unavailable if needed.
 
-Part of this configuration is provided below:
+A part of this configuration is shown below:
 
 ```guess
 ...
