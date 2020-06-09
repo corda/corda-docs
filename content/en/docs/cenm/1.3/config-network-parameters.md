@@ -107,7 +107,7 @@ Contract whitelist specific configuration (Optional).
 
 
 * **attachmentIds**:
-List of JAR file hashes (given as strings) containing the contract class.
+List of `.jar` file hashes (given as strings) containing the contract class.
 
 
   * **attachmentIds**:
