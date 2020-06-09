@@ -550,7 +550,7 @@ R3 have verified a solution using [Azure Application Gateway](https://docs.micro
 
 Most of the reverse-proxy configuration provided in this document is straightforward, however the caching configuration requires
 a few tweaks. Instead of operating as a normal cache that uses its stored values for purely performance benefits, this cache
-needs to be updated frequently and to store the content for as long as Identity Manager is not responsive.
+needs to be updated frequently and to store the content for as long as the Identity Manager Service is not responsive.
 
 For this reason, the validity period of the value is set to a very small amount (1 second), forcing all calls that
 are not within the same second to attempt a redirection to the Identity Manager for a fresh response.
