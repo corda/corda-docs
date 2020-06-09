@@ -128,7 +128,7 @@ public keys. More information about this can be found here: [Package Ownership](
 
 
   * **algorithm**:
-  The algorithm used to generate the public key (e.g. RSA or EC). (Optional - defaults to RSA).
+  The algorithm used to generate the public key (for example, RSA or EC). This parameter is optional and defaults to RSA.
   *Note: Corda (and by association CENM) do not support DSA keys.*
 
 
