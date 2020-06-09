@@ -38,7 +38,7 @@ and therefore changing the order could cause errors elsewhere.
 Also note you can provide only file path to the node info file or X500 name of the notary, not both.
 Guidance on using notaries in flows: [https://docs.corda.net/api-flows.html?highlight=flow#notaries](https://docs.corda.net/api-flows.html?highlight=flow#notaries)
 
-## Configuration Parameters
+## Configuration parameters
 
 
 * **minimumPlatformVersion**:
