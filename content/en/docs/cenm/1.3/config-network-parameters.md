@@ -103,7 +103,7 @@ Contract whitelist specific configuration (Optional).
 
 
   * **className**:
-  Full package class name of the contract to be whitelisted.
+  The full package class name of the contract to be whitelisted.
 
 
 * **attachmentIds**:
