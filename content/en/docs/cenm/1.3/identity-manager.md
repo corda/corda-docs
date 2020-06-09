@@ -607,7 +607,7 @@ See the [Nginx documentation](https://nginx.org/en/docs/) for additional informa
 
 ##### Caching Proxy Limitations
 
-Based on the configuration mentioned previously, if there is no expiry routine set in place the call
+Based on the configuration mentioned above, if there is no expiry routine set in place, the call
 will always return a value if it has managed to save one at any point in time. This effectively means that
 the system can operate as normal without a running Identity Manager Service as long as the CRL is valid.
 
