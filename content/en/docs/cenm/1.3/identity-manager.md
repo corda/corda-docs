@@ -895,7 +895,7 @@ shell {
 ```
 
 ### Admin RPC
-For the usage of the RPC API in Identity Manager a config property called `adminListener` has to be defined.
+To use the RPC API in the Identity Manager Service, you must define a configuration property called `adminListener`.
 Example:
 ```docker
 adminListener = {
@@ -915,7 +915,7 @@ adminListener = {
 ```
 
 {{% important %}}
-If the `adminListener` property is present in the configuration, this means that the service must only be used via Admin RPC. In this case, the `shell` configuration property will be disabled. The `shell` and `adminListener` properties cannot be used in the configuration at the same time.
+Important: If the adminListener is present in the config it means that the service should only be used via Admin RPC.
 {{% /important %}}
 
 ## Obfuscated configuration files

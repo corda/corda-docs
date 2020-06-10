@@ -165,6 +165,6 @@ Whilst this value is optional, picking the correct value is essential for a zone
 
 
 * **adminListener**:
-For the usage of the RPC API in Identity Manager a config property called `adminListener` has to be defined.
-`port`, `reconnect` and `verbose` can be added, also this property has an SSL field, see: [SSL Settings](config-ssl.md).
+To use the RPC API in the Identity Manager Service, you must define a configuration property called `adminListener`.
+You can add `port`, `reconnect`, and `verbose`. Also, this property has an SSL field - see: [SSL Settings](config-ssl.md).
 If adminListener is present, the `shell` property can not be defined. Only one of those can be in the config.

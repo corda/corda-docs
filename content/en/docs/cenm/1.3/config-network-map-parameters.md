@@ -160,6 +160,6 @@ of the Corda API. Value must be equal to the one specified in Network Parameters
 version of Corda that does not support the new PKI (arbitrary length certificate chains).
 
 * **adminListener**:
-For the usage of the RPC API in Signer a config property called `adminListener` has to be defined.
-`port`, `reconnect` and `verbose` can be added, also this property has an SSL field, see: [SSL Settings](config-ssl.md).
-If adminListener is present, the `shell` property can not be defined. Only one of those can be in the config.
+To use the RPC API in the Signing Service, you must define a configuration property called `adminListener`.
+You can add `port`, `reconnect`, and `verbose`. Also, this property has an SSL field - see: [SSL Settings](config-ssl.md).
+If `adminListener` is present, the `shell` property can not be defined. Only one of these properties can be in the configuration.

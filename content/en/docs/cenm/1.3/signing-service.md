@@ -2003,7 +2003,7 @@ Non CA Plugin’s configuration file must be in the same directory as the servic
 See [EJBCA Sample Plugin](ejbca-plugin.md) for sample open source CA implementation.
 
 ### Admin RPC
-For the usage of the RPC API in Signer a config property called `adminListener` has to be defined.
+To use the RPC API in the Signing Service, you must define a configuration property called `adminListener`.
 Example:
 ```docker
 adminListener = {
@@ -2023,7 +2023,6 @@ adminListener = {
 ```
 
 Important: If the adminListener is present in the config it means that the service should only be used via Admin RPC.
-Thus the `shell` configuration property is disabled. Only one of `shell` and `adminListener` can be used.
 
 ## Obfuscated configuration files
 
