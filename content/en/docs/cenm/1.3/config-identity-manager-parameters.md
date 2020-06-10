@@ -159,9 +159,9 @@ Whilst this value is optional, picking the correct value is essential for a zone
 
 * **“revocation workflow”**:
   * **crlCacheTimeout**:
-  The number  of times the Revocation Workflow Processor needs to synchronise Certificate Revocation Requests (CSR) statuses, as well as the duration after the CRL cache in Revocation Web Service is cleared.
+  The number  of times the Revocation Workflow Processor needs to synchronise Certificate Revocation Requests (CRR) statuses, as well as the duration after the CRL cache in Revocation Web Service is cleared.
   * **crlFiles**:
-A list of CRLs hosted by the Identity Manager Service in addition to the Revocation List of the certificate signing CSR’s for nodes. This allows the Identity Manager Service to host the CRLs for node operators that will not host their own CRL infrastructure, at the cost of not being able to revoke TLS certificates issued by the node.
+A list of CRLs hosted by the Identity Manager Service, in addition to the CRLs hosted by node operators. This allows the Identity Manager Service to host the CRLs for node operators that will not host their own CRL infrastructure, at the cost of not being able to revoke TLS certificates issued by the node.
 
 
 * **adminListener**:
