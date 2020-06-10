@@ -552,7 +552,7 @@ Most of the reverse-proxy configuration provided in this document is straightfor
 a few tweaks. Instead of operating as a normal cache that uses its stored values for purely performance benefits, this cache
 needs to be updated frequently and to store the content for as long as the Identity Manager Service is not responsive.
 
-For this reason, the validity period of the value is set to a very small amount (1 second), forcing all calls that
+For this reason, the validity period of the value is set to a very small amount (1 second). This forces all calls, which
 are not within the same second to attempt a redirection to the Identity Manager for a fresh response.
 Simultaneously, Nginx is configured to use the stale content in case the server times out or errors, ignoring
 the aforementioned time window.
