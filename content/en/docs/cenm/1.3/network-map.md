@@ -329,7 +329,7 @@ enmListener {
 ```
 
 {{< note >}}
-The reconnect parameter can be omitted if desired, in which case it will default to port 5050 with `reconnect = true`.
+The `reconnect` parameter is optional - it will default to `reconnect = true` if not set.
 {{< /note >}}
 
 {{< note >}}
@@ -365,7 +365,7 @@ adminListener {
 ```
 
 {{< note >}}
-The reconnect parameter can be omitted if desired, in which case it will default to `reconnect = true`.
+The `reconnect` parameter is optional - it will default to `reconnect = true` if not set.
 {{< /note >}}
 
 {{% important %}}
