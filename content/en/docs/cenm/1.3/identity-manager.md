@@ -553,13 +553,13 @@ a few tweaks. Instead of operating as a normal cache that uses its stored values
 needs to be updated frequently and to store the content for as long as the Identity Manager Service is not responsive.
 
 For this reason, the validity period of the value is set to a very small amount (1 second). This forces all calls, which
-are not within the same second to attempt a redirection to the Identity Manager for a fresh response.
-Simultaneously, Nginx is configured to use the stale content in case the server times out or errors, ignoring
+are not within the same second, to attempt a redirection to the Identity Manager Service for a fresh response.
+Simultaneously, Nginx is configured to use the stale content in case the server times out or fails with an error, ignoring
 the aforementioned time window.
 
 Moreover, Nginx by default deletes cached files that have not been accessed within the specified timeout,
 forcing the use of the timeout variable when specifying the `proxy_cache_path` to make sure that the cache
-is not cleared even the CRL hasn't been requested for a while.
+is not cleared even if the CRL hasn't been requested for a while.
 
 As a result of this implementation, you can choose to use an alternative method to
 expire the cached responses and to return an error after some time - for example,
@@ -613,10 +613,10 @@ will always return a value if it has managed to save one at any point in time. T
 the system can operate as normal without a running Identity Manager Service as long as the CRL is valid.
 
 When multiple caching proxies are defined, in rare cases there could be inconsistencies among their cached values.
-are however expected to be rare. Some of the instances may contain outdated cached values because they were not hit after a CRL update,
-or may not contain a value at all due to no hits after their spawn. For this reason, it's suggested to use a shared mounted volume as
-the cache directory in order to make sure that all the cached responses are the same, and there are no CRL inconsistencies across proxy instances.
-This can be easily done for example by using a Kubernetes cluster for managing the proxy containers.
+Some of the instances may contain outdated cached values because they were not hit after a CRL update,
+or they may not contain a value at all due to a lack of hits after they were spawn. For this reason, we recommend that you use a shared mounted volume as
+the cache directory in order to make sure that all the cached responses are the same, and that there are no CRL inconsistencies across proxy instances.
+You can do that easily by, for example, using a Kubernetes cluster for managing the proxy containers.
 
 The cache of each proxy instance (or all of them, if they are using a shared volume) is refreshed as soon as a request to this proxy is made.
 A frequent polling interval should be set in order to avoid a scenario where an
@@ -636,11 +636,11 @@ the Identity Manager Service CRL endpoint must be pointing to the Gateway endpoi
 
 After you've made these changes and you have spun up a CENM ecosystem with an Identity Manager Service, a Network Map Service, a Signing Service, and Nodes,
 you can observe a successful retrieval of revocation lists from the registered nodes even when the
-Identity Manager is not operating (using the CRL endpoint check tool provided by CENM). However, operations that require
-additional calls such as signing a new CRL from the Signer may not be able to be performed.
+Identity Manager Service is not operating (using the CRL endpoint health check tool provided by CENM). However, operations that require
+additional calls, such as signing a new CRL from the Signing Service, may not be possible to perform.
 
-It's worth mentioning that during the tests, errors were observed from the side of the Network Map failing to validate
-the registered Notary's certificate, but this was considered to be an unrelated issue.
+Although we have observed errors during the tests where the Network Map Service would fail to validate 
+the registered Notary's certificate, we considered this to be an unrelated issue.
 
 #### CRL configuration
 
