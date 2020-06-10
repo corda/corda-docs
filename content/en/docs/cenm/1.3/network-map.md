@@ -343,7 +343,7 @@ To enable the CENM CLI to send commands to the Network Map Service,
 you must enable the RPC API by defining a configuration block called `adminListener`.
 The configuration block `adminListener` is used to define the properties of this
 listener, such as the port it listens on as well as the retrying and logging behaviour.
-For example add the following to the service configuration:
+For example, add the following to the service configuration:
 
 ```guess
 ...

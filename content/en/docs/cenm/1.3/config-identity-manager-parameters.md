@@ -159,7 +159,7 @@ If the `adminListener` property is present in the configuration, this means that
 
 To enable the CENM CLI to send commands to the Identity Manager Service,
 you must enable the RPC API by defining a configuration property called `adminListener`.
-For example add the following to the service configuration:
+For example, add the following to the service configuration:
 
 ```guess
 ...
