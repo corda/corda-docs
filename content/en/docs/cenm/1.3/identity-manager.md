@@ -67,7 +67,6 @@ The main elements that need to be configured for the Identity Manager are:
     * [CRR Approval Mechanism](#crr-approval-mechanism)
     * [CRR Signing Mechanism](#crr-signing-mechanism)
     * [Revocation Internal Server](#revocation-internal-server)
-* [Admin RPC Interface](#admin-rpc-interface)
 * [HA Endpoint (optional)](#ha-endpoint)
     * [Caching Proxy Setup](#caching-proxy-setup)
     * [Caching Proxy Limitations](#caching-proxy-limitations)
@@ -533,57 +532,6 @@ This parameter can be omitted if desired, in which case it will default to port 
 All inter-service communication can be configured with SSL support. See [Configuring the ENM services to use SSL](enm-with-ssl.md).
 
 {{< /note >}}
-
-### Admin RPC Interface
-
-To enable the CENM CLI to send commands to the Identity Manager Service,
-you must enable the RPC API by defining a configuration property called `adminListener`.
-
-For example, add the following to the service configuration:
-
-```guess
-...
-adminListener {
-    port = 5050
-    reconnect = true
-    ssl {
-        keyStore {
-            location = exampleSslKeyStore.jks
-            password = "password"
-        }
-        trustStore {
-            location = exampleSslTrustStore.jks
-            password = "trustpass"
-        }
-    }
-}
-...
-```
-
-See [Identity Manager Configuration Parameters](config-identity-manager-parameters.md#admin-rpc-interface)
-for a detailed explanation on configuring the admin listener.
-
-The admin RPC interface requires an authentication and authorisation service to verify
-requests, which must be configured below in a `authServiceConfig` block. Typically
-this is provided automatically by the Zone service (via an Angel service)
-
-The admin RPC interface requires an authentication and authorisation service to verify
-requests, which must be configured below in a `authServiceConfig` block. Typically
-this is provided automatically by the [Zone Service](zone-service.md) (via an Angel Service),
-however an example is provided below for reference:
-
-```guess
-authServiceConfig {
-    host = <auth service host>
-    port = <auth service port>
-    trustStore = {
-        location = /path/to/trustroot.jks
-        password = <key store password>
-    }
-    issuer = <issuer>
-    leeway = <leeway duration>
-}
-```
 
 ### HA Endpoint
 

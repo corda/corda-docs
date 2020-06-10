@@ -745,59 +745,30 @@ string and is used only within the configuration to map the service locations to
 
 * **enmService**:
 The connection details for the CENM service that acts as the data source
-
-
-* **host**:
-Host name (or IP address) that the CENM service is running on
-
-
-* **port**:
-Port that the CENM service is listening on (for inter-ENM communication)
-
-
-* **verbose**:
-Boolean representing whether debug information for the IPC between the Signer and the remote service
-should be displayed.
-
-
-* **ssl**:
-*(Optional)* SSL Information for connection with the CENM service.
-
-
-* **keyStore**:
-Key store configuration for the Signing Service SSL key pair.
-
-
-* **location**:
-Location on the file system of the keystore containing the SSL public / private keypair
-of the Signing Service.
-
-
-* **password**:
-password for the keyStore
-
-
-* **keyPassword**:
-*(Optional)* Password for the keypair, can be omitted if the same as the keystore.
-
-
-
-
+  * **host**:
+  Host name (or IP address) that the CENM service is running on
+  * **port**:
+  Port that the CENM service is listening on (for inter-ENM communication)
+  * **verbose**:
+  Boolean representing whether debug information for the IPC between the Signer and the remote service
+  should be displayed.
+  * **ssl**:
+  *(Optional)* SSL Information for connection with the CENM service.
+    * **keyStore**:
+    Key store configuration for the Signing Service SSL key pair.
+    * **location**:
+    Location on the file system of the keystore containing the SSL public / private keypair
+    of the Signing Service.
+    * **password**:
+    password for the keyStore
+    * **keyPassword**:
+    *(Optional)* Password for the keypair, can be omitted if the same as the keystore.
 * **trustStore**:
 Trust store configuration for the SSL PKI root of trust.
-
-
-* **location**:
-Location on the file system of the keystore containing the SSL PKI root of trust.
-
-
-* **password**:
-password for the trust root keystore.
-
-
-
-
-
+  * **location**:
+  Location on the file system of the keystore containing the SSL PKI root of trust.
+  * **password**:
+  password for the trust root keystore.
 
 
 
