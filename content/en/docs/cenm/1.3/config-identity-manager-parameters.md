@@ -149,7 +149,10 @@ A list of CRLs hosted by the Identity Manager Service, in addition to the CRLs h
 * **adminListener**:
 To use the RPC API in the Identity Manager Service, you must define a configuration property called `adminListener`.
 You can add `port`, `reconnect`, and `verbose`. Also, this property has an SSL field - see: [SSL Settings](config-ssl.md).
-If adminListener is present, the `shell` property can not be defined. Only one of those can be in the config.
+
+{{% important %}}
+If the `adminListener` property is present in the configuration, this means that the service must only be used via Admin RPC. In this case, the `shell` configuration property will be disabled. The `shell` and `adminListener` properties cannot be used in the configuration at the same time.
+{{% /important %}}
 
 
 ### Admin RPC Interface
@@ -186,9 +189,6 @@ adminListener {
 * **ssl**:
   See [SSL Settings](config-ssl.md)
 
-{{% important %}}
-If the `adminListener` property is present in the configuration, this means that the service must only be used via Admin RPC. In this case, the `shell` configuration property will be disabled. The `shell` and `adminListener` properties cannot be used in the configuration at the same time.
-{{% /important %}}
 
 ## Obfuscated configuration files
 
