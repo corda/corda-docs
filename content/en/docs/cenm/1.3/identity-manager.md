@@ -22,7 +22,7 @@ The Identity Manager Service acts as the gatekeeper to the network. It is formed
 
 
 * **Issuance**: Responsible for issuing certificates to new nodes wanting to join the network.
-* **Revocation**: *(Optional)* Responsible for handling certificate revocation requests as well as hosting the CRLendpoints that are used by participants to check a certificate’s revocation status.
+* **Revocation**: *(Optional)* Responsible for handling certificate revocation requests as well as hosting the CRL endpoints that are used by participants to check a certificate’s revocation status.
 
 
 ## Running The Identity Manager Service
@@ -70,7 +70,11 @@ The main elements that need to be configured for the Identity Manager are:
     * [CRR Signing Mechanism](#crr-signing-mechanism)
     * [Revocation Internal Server](#revocation-internal-server)
 
-
+* [HA Endpoint (optional)](#ha-endpoint)
+    * [Caching Proxy Setup](#caching-proxy-setup)
+    * [Caching Proxy Limitations](#caching-proxy-limitations)
+    * [Application Gateway Setup](#application-gateway-setup)
+    * [System Configuration And Behavior](#system-configuration-and-behavior)
 
 {{< note >}}
 See [Identity Manager Configuration Parameters](config-identity-manager-parameters.md) for a detailed explanation about each possible parameter.
@@ -532,6 +536,112 @@ All inter-service communication can be configured with SSL support. See [Configu
 
 {{< /note >}}
 
+#### HA Endpoint
+
+The crucial role that the Identity Manager Service plays in the communication between nodes, and in particular the
+importance of the Certificate Revocation List (CRL) during flow execution, creates the need for high availability
+even when the Identity Manager Service is unresponsive. The suggested approach is made of a load balancing gateway and as an entry point,
+redirecting CRL requests to a pool of caching proxies, which ultimately redirect to the Identity Manager Service
+or use their cached CRL values if it is down.
+
+R3 have verified a solution using [Azure Application Gateway](https://docs.microsoft.com/en-us/azure/application-gateway/overview) and [Nginx](https://www.nginx.com), although the concepts applied should be similar for other solutions.
+
+##### Caching Proxy Setup
+
+Most of the reverse-proxy configuration provided in this document is straightforward, however the caching configuration requires
+a few tweaks. Instead of operating as a normal cache that uses its stored values for purely performance benefits, this cache
+needs to be updated frequently and to store the content for as long as the Identity Manager Service is not responsive.
+
+For this reason, the validity period of the value is set to a very small amount (1 second). This forces all calls, which
+are not within the same second, to attempt a redirection to the Identity Manager Service for a fresh response.
+Simultaneously, Nginx is configured to use the stale content in case the server times out or fails with an error, ignoring
+the aforementioned time window.
+
+Moreover, Nginx by default deletes cached files that have not been accessed within the specified timeout,
+forcing the use of the timeout variable when specifying the `proxy_cache_path` to make sure that the cache
+is not cleared even if the CRL hasn't been requested for a while.
+
+As a result of this implementation, you can choose to use an alternative method to
+expire the cached responses and to return an error after some time - for example,
+by making the proxy's health check to query its cached values for their updated
+time, and to declare itself unavailable if needed.
+
+A part of this configuration is shown below:
+
+```guess
+...
+
+http {
+    ...
+
+    # enabling caching
+    # timeout set to 10 days of stale value
+    proxy_cache_path /var/cache/nginx keys_zone=mycache:10m max_size=1g loader_threshold=300 loader_files=200 inactive=240h;
+
+    # server group for load balancing
+    upstream idman {
+	  ...
+    }
+
+    ...
+
+    server {
+	...
+
+        location / {
+            proxy_pass          http://idman;
+            proxy_set_header    Host $host;
+            proxy_buffering     on;
+
+            proxy_cache mycache;
+            proxy_cache_methods GET HEAD;
+            # just one sec validity "forces" to hit backend
+            proxy_cache_valid 200 1s;
+            # use stale result in case of unreachable Identity Manager
+            proxy_cache_use_stale error timeout;
+        }
+    }
+}
+```
+
+See the [Nginx documentation](https://nginx.org/en/docs/) for additional information.
+
+##### Caching Proxy Limitations
+
+Based on the configuration mentioned above, if there is no expiry routine set in place, the call
+will always return a value if it has managed to save one at any point in time. This effectively means that
+the system can operate as normal without a running Identity Manager Service as long as the CRL is valid.
+
+When multiple caching proxies are defined, in rare cases there could be inconsistencies among their cached values.
+Some of the instances may contain outdated cached values because they were not hit after a CRL update,
+or they may not contain a value at all due to a lack of hits after they were spawn. For this reason, we recommend that you use a shared mounted volume as
+the cache directory in order to make sure that all the cached responses are the same, and that there are no CRL inconsistencies across proxy instances.
+You can do that easily by, for example, using a Kubernetes cluster for managing the proxy containers.
+
+The cache of each proxy instance (or all of them, if they are using a shared volume) is refreshed as soon as a request to this proxy is made.
+A frequent polling interval should be set in order to avoid a scenario where an
+Identity Manager Service is live long enough to receive a new signed CRL but
+fails again before the proxies fetch and cache the updated CRL.
+
+##### Application Gateway setup
+
+The Application Gateway setup is very straightforward and for the most part follows the default configuration that Azure provides.
+However, a custom health check probe may need to be added if we want proxies to declare themselves unavailable, for example
+if the cached values are too old to use and the Identity Manager Service is not responding.
+
+##### System configuration and behavior
+
+After configuring the proxy and the Application Gateway, all the configuration files and certificates that would point to
+the Identity Manager Service CRL endpoint must be pointing to the Gateway endpoint instead.
+
+After you've made these changes and you have spun up a CENM ecosystem with an Identity Manager Service, a Network Map Service, a Signing Service, and Nodes,
+you can observe a successful retrieval of revocation lists from the registered nodes even when the
+Identity Manager Service is not operating (using the CRL endpoint health check tool provided by CENM). However, operations that require
+additional calls, such as signing a new CRL from the Signing Service, may not be possible to perform.
+
+Although we have observed errors during the tests where the Network Map Service would fail to validate 
+the registered Notary's certificate, we considered this to be an unrelated issue.
+
 #### CRL configuration
 
 There are two additional parameters that need to be specified with the revocation workflow configuration block:
@@ -782,7 +892,6 @@ shell {
 ```
 
 [identity-manager-prod-valid.conf](https://github.com/corda/network-services/blob/release/1.2/services/src/test/resources/v1.1-configs/identity-manager/identity-manager-prod-valid.conf)
-
 
 ## Obfuscated configuration files
 
