@@ -374,7 +374,7 @@ If the `adminListener` property is present in the configuration, this means that
 
 The admin RPC interface requires an authentication and authorisation service to verify
 requests, which must be configured below in a `authServiceConfig` block. Typically
-this is provided automatically by the Zone service (via an Angel service),
+this is provided automatically by the Zone Service (via an Angel Service),
 however an example is provided below for reference:
 
 ```guess
