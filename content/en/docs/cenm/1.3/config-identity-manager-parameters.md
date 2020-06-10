@@ -146,8 +146,6 @@ If the `adminListener` property is present in the configuration, this means that
   requests, which must be configured below in a `authServiceConfig` block. Typically
   this is provided automatically by the [Zone Service](zone-service.md) (via an Angel Service),
   however the parameters are detailed below for reference:
-
-
   * **host**: The hostname of the Auth Service. Required unless authentication is disabled.
   * **port**: The port number of the Auth Service. Required unless authentication is disabled.
   * **trustStore**:

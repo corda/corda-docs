@@ -67,6 +67,7 @@ The main elements that need to be configured for the Identity Manager are:
     * [CRR Approval Mechanism](#crr-approval-mechanism)
     * [CRR Signing Mechanism](#crr-signing-mechanism)
     * [Revocation Internal Server](#revocation-internal-server)
+* [Admin RPC Interface](#admin-rpc-interface)
 * [HA Endpoint (optional)](#ha-endpoint)
     * [Caching Proxy Setup](#caching-proxy-setup)
     * [Caching Proxy Limitations](#caching-proxy-limitations)
@@ -532,6 +533,60 @@ This parameter can be omitted if desired, in which case it will default to port 
 All inter-service communication can be configured with SSL support. See [Configuring the ENM services to use SSL](enm-with-ssl.md).
 
 {{< /note >}}
+
+
+### Admin RPC Interface
+
+To enable the CENM CLI to send commands to the Identity Manager Service,
+you must enable the RPC API by defining a configuration block called `adminListener`.
+The configuration block `adminListener` is used to define the properties of this
+listener, such as the port it listens on as well as the retrying and logging behaviour.
+For example, add the following to the service configuration:
+
+```guess
+...
+adminListener {
+    port = 5050
+    reconnect = true
+    ssl {
+        keyStore {
+            location = exampleSslKeyStore.jks
+            password = "password"
+        }
+        trustStore {
+            location = exampleSslTrustStore.jks
+            password = "trustpass"
+        }
+    }
+}
+...
+```
+
+{{< note >}}
+The `reconnect` parameter is optional - it will default to `reconnect = true` if not set.
+{{< /note >}}
+
+{{% important %}}
+If the `adminListener` property is present in the configuration, this means that the service must only be used via Admin RPC. In this case, the `shell` configuration property will be disabled. The `shell` and `adminListener` properties cannot be used in the configuration at the same time.
+{{% /important %}}
+
+The admin RPC interface requires an authentication and authorisation service to verify
+requests, which must be configured below in a `authServiceConfig` block. Typically
+this is provided automatically by the Zone Service (via an Angel Service),
+however an example is provided below for reference:
+
+```guess
+authServiceConfig {
+    host = <auth service host>
+    port = <auth service port>
+    trustStore = {
+        location = /path/to/trustroot.jks
+        password = <key store password>
+    }
+    issuer = <issuer>
+    leeway = <leeway duration>
+}
+```
 
 ### HA Endpoint
 

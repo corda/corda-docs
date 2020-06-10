@@ -110,6 +110,9 @@ Similar to the Identity Manager the main elements that need to be configured for
 * [Restricting A Node’s Corda Version (optional)](#restricting-a-node-s-corda-version-optional)
 * [Admin RPC Interface](#admin-rpc-interface)
 
+{{< note >}}
+See [Network Map Configuration Parameters](config-network-map-parameters.md) for a detailed explanation about each possible parameter.
+{{< /note >}}
 
 ### Address
 
@@ -462,6 +465,30 @@ and Network Map service
 
 {{< /note >}}
 
+### Admin RPC
+To use the RPC API in the Network Map Service, you must define a configuration property called `adminListener`.
+Example:
+```docker
+adminListener = {
+    port = 10000
+    reconnect = true
+    ssl {
+        keyStore {
+            location = exampleSslKeyStore.jks
+            password = "password"
+        }
+        trustStore {
+            location = exampleSslTrustStore.jks
+            password = "trustpass"
+        }
+    }
+}
+```
+
+{{% important %}}
+If the `adminListener` property is present in the configuration, this means that the service must only be used via Admin RPC. In this case, the `shell` configuration property will be disabled. The `shell` and `adminListener` properties cannot be used in the configuration at the same time.
+{{% /important %}}
+
 ### Example Configuration
 
 ```docker
@@ -500,30 +527,6 @@ shell {
 }
 
 ```
-
-### Admin RPC
-To use the RPC API in the Network Map Service, you must define a configuration property called `adminListener`.
-Example:
-```docker
-adminListener = {
-    port = 10000
-    reconnect = true
-    ssl {
-        keyStore {
-            location = exampleSslKeyStore.jks
-            password = "password"
-        }
-        trustStore {
-            location = exampleSslTrustStore.jks
-            password = "trustpass"
-        }
-    }
-}
-```
-
-{{% important %}}
-If the `adminListener` property is present in the configuration, this means that the service must only be used via Admin RPC. In this case, the `shell` configuration property will be disabled. The `shell` and `adminListener` properties cannot be used in the configuration at the same time.
-{{% /important %}}
 
 
 ## Network Parameters
