@@ -18,11 +18,11 @@ weight: 200
 
 **Who this documentation is for:**
 * Node operators
-* Business Network Operators (BNOs)
+* Business Network Operators 
 
 In a disaster recovery scenario, you need to be sure you can recover data from the nodes you have transacted with on each Business Network you are a part of.
 
-Unless Business Network Operators make Collaborative Recovery part of the disaster recovery plan for their network, Collaborative Recovery cannot be used. If you are a node operator, you need to seek an agreement at the governance level with all relevant Business Netowrk Operators (BNOs) before implementing collaborative recovery on your own node.
+Unless Business Network Operators (BNOs) make Collaborative Recovery part of the disaster recovery plan for their network, Collaborative Recovery cannot be used. If you are a node operator, you need to seek an agreement at the governance level with all relevant BNOs before implementing collaborative recovery on your own node.
 
 Once you have this agreement in place on your Business Network, you can create the wrapping flows that make recovery possible with all participants.
 
