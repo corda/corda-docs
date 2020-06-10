@@ -56,7 +56,7 @@ not start.
     The file path to the `node.info` file of the notary.
 
   * **notaryX500Name**:
-    Notaries’ X500 name, as an alternative to providing the node info. Only supported for HA notaries.
+    The X500 name of the notary, as an alternative to providing the node info. Only supported for HA notaries.
 
 * **maxMessageSize**:
 Maximum allowed size in bytes of an individual message sent over the wire. Note that attachments are
@@ -73,11 +73,11 @@ Number of days after which nodes will be removed from the network map if they ha
 
 
 * **parametersUpdate**:
-Parameters update specific configuration (Optional).
+Specific `parametersUpdate` configuration (optional).
 
 
   * **description**:
-  Brief description for this parameters update instance.
+  A brief description of this instance of `parametersUpdate`.
 
 
   * **updateDeadline**:
@@ -87,19 +87,19 @@ Parameters update specific configuration (Optional).
 
 
 * **whitelistContracts**:
-Contract whitelist specific configuration (Optional).
+Specific configuration for contracts whitelist (optional).
 
 
   * **cordappsJars**:
-  List of file paths referencing CorDapp JAR files that will be automatically scanned for contract classes to be included in the whitelist.
+  The list of file paths referencing CorDapp `.jar` files that will be automatically scanned for contract classes to be included in the whitelist.
 
 
   * **exclude**:
-  List of contract class names (i.e. full package names) to be excluded from the whitelist.
+  The list of contract class names (for instance, full package names) to be excluded from the whitelist.
 
 
   * **contracts**:
-  List of explicitly specified whitelisted contracts. Each element of the list has the following attributes:
+  The list of explicitly specified whitelisted contracts. Each element of the list has the following attributes:
 
 
   * **className**:
