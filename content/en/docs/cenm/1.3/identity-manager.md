@@ -915,7 +915,7 @@ adminListener = {
 ```
 
 {{% important %}}
-Important: If the adminListener is present in the config it means that the service should only be used via Admin RPC.
+If the `adminListener` property is present in the configuration, this means that the service must only be used via Admin RPC. In this case, the `shell` configuration property will be disabled. The `shell` and `adminListener` properties cannot be used in the configuration at the same time.
 {{% /important %}}
 
 ## Obfuscated configuration files
