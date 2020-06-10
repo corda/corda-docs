@@ -489,9 +489,10 @@ database.transaction {
     val jdbcSession = services.jdbcSession()
     val prepStatement = jdbcSession.prepareStatement(nativeQuery)
     val rs = prepStatement.executeQuery()
+}
 ```
 
-JDBC sessions can be used in flows and services (see “flow-state-machines”).
+JDBC sessions can be used in flows and services (see [Writing flows](../flow-state-machines.md)).
 
 The following example illustrates the creation of a custom Corda service using a `jdbcSession`:
 
@@ -547,35 +548,57 @@ object CustomVaultQuery {
 which is then referenced within a custom flow:
 
 ```kotlin
-        @Suspendable
-        @Throws(CashException::class)
-        override fun call(): List<SignedTransaction> {
-            progressTracker.currentStep = AWAITING_REQUEST
-            val topupRequest = otherPartySession.receive<TopupRequest>().unwrap {
-                it
-            }
+@Suspendable
+@Throws(CashException::class)
+override fun call(): List<SignedTransaction> {
+    progressTracker.currentStep = AWAITING_REQUEST
+    val topupRequest = otherPartySession.receive<TopupRequest>().unwrap {
+        it
+    }
 
-            val customVaultQueryService = serviceHub.cordaService(CustomVaultQuery.Service::class.java)
-            val reserveLimits = customVaultQueryService.rebalanceCurrencyReserves()
+    val customVaultQueryService = serviceHub.cordaService(CustomVaultQuery.Service::class.java)
+    val reserveLimits = customVaultQueryService.rebalanceCurrencyReserves()
 
-            val txns: List<SignedTransaction> = reserveLimits.map { amount ->
-                // request asset issue
-                logger.info("Requesting currency issue $amount")
-                val txn = issueCashTo(amount, topupRequest.issueToParty, topupRequest.issuerPartyRef, topupRequest.notaryParty)
-                progressTracker.currentStep = SENDING_TOP_UP_ISSUE_REQUEST
-                return@map txn.stx
-            }
+    val txns: List<SignedTransaction> = reserveLimits.map { amount ->
+        // request asset issue
+        logger.info("Requesting currency issue $amount")
+        val txn = issueCashTo(amount, topupRequest.issueToParty, topupRequest.issuerPartyRef, topupRequest.notaryParty)
+        progressTracker.currentStep = SENDING_TOP_UP_ISSUE_REQUEST
+        return@map txn.stx
+    }
 
-            otherPartySession.send(txns)
-            return txns
-        }
-
+    otherPartySession.send(txns)
+    return txns
+}
 ```
 
 [CustomVaultQuery.kt](https://github.com/corda/enterprise/blob/release/ent/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/vault/CustomVaultQuery.kt)
 
 For examples on testing `@CordaService` implementations, see the oracle example here.
 
+### Restricted control of connections
+
+Corda restricts the functions available by the `Connection` returned by `jdbcSession` in order to prevent a flow's underlying database transaction from being tampered with, which would likely lead to errors within the flow.
+
+Calling `jdbcSession` returns a `RestrictedConnection` which prevents calls to the following functions:
+
+``` kotlin
+abort(executor: Executor?)
+clearWarnings()
+close()
+commit()
+setSavepoint() methods
+releaseSavepoint(savepoint: Savepoint?)
+rollback() methods
+setCatalog(catalog : String?)
+setTransactionIsolation(level: Int)
+setTypeMap(map: MutableMap<String, Class<*>>?)
+setHoldability(holdability: Int)
+setSchema(schema: String?)
+setNetworkTimeout(executor: Executor?, milliseconds: Int)
+setAutoCommit(autoCommit: Boolean)
+setReadOnly(readOnly: Boolean)
+```
 
 ## JPA Support
 
@@ -620,12 +643,20 @@ public class FooSchemaV1 extends MappedSchema {
 
 {{% tab name="kotlin" %}}
 ```kotlin
-object FooSchema
-
-object FooSchemaV1 : MappedSchema(schemaFamily = FooSchema.javaClass, version = 1, mappedTypes = listOf(PersistentFoo::class.java)) {
+object FooSchemaV1 : MappedSchema(
+    schemaFamily = FooSchema.javaClass, 
+    version = 1, 
+    mappedTypes = listOf(PersistentFoo::class.java)
+) {
     @Entity
     @Table(name = "foos")
-    class PersistentFoo(@Id @Column(name = "foo_id") var fooId: String, @Column(name = "foo_data") var fooData: String) : Serializable
+    class PersistentFoo(
+        @Id 
+        @Column(name = "foo_id") 
+        var fooId: String, 
+        @Column(name = "foo_data") 
+        var fooData: String
+    ) : Serializable
 }
 ```
 {{% /tab %}}
@@ -661,7 +692,7 @@ And retrieved via a query, as follows:
 {{< tabs name="tabs-4" >}}
 {{% tab name="java" %}}
 ```java
-node.getServices().withEntityManager((EntityManager entityManager) -> {
+getServiceHub().withEntityManager((EntityManager entityManager) -> {
     CriteriaQuery<PersistentFoo> query = entityManager.getCriteriaBuilder().createQuery(PersistentFoo.class);
     Root<PersistentFoo> type = query.from(PersistentFoo.class);
     query.select(type);
@@ -672,7 +703,7 @@ node.getServices().withEntityManager((EntityManager entityManager) -> {
 
 {{% tab name="kotlin" %}}
 ```kotlin
-val result: MutableList<FooSchemaV1.PersistentFoo> = services.withEntityManager {
+serviceHub.withEntityManager {
     val query = criteriaBuilder.createQuery(FooSchemaV1.PersistentFoo::class.java)
     val type = query.from(FooSchemaV1.PersistentFoo::class.java)
     query.select(type)
@@ -695,3 +726,190 @@ Please note that suspendable flow operations such as:
 
 Cannot be used within the lambda function passed to `withEntityManager`.
 
+### Restricted control of entity managers
+
+Corda restricts the functions available by the `EntityManager` returned by `withEntityManager` in order to prevent a flow's underlying database transaction from being tampered with, which would likely lead to errors within the flow.
+
+The `withEntityManager` function provides an object that adheres to the `EntityManager` interface but with two differences:
+
+- `getTransaction` returns a `RestrictedEntityTransaction`.
+- All other restricted functions will `UnsupportedOperationException` exceptions.
+
+The full list of restricted functions are:
+
+For `RestrictedEntityManager`:
+
+``` kotlin
+close()
+unwrap()
+getDelegate()
+getMetamodel()
+joinTransaction()
+lock() methods
+setProperty(propertyName: String?, value: Any?)
+```
+
+For `RestrictedEntityTransaction`:
+
+```kotlin
+rollback()
+commit()
+begin()
+```
+
+### Intermediate database sessions within flows
+
+When you call `withEntityManager`, an intermediate database session is created that provides rollback capability without affecting the current transaction.
+
+A `withEntityManager` block has 3 outcomes:
+
+- __Completes successfully__: The intermediate session is automatically flushed to the underlying transaction. 
+- __Throws a database error__: The intermediate session is automatically rolled back.
+- __Throws a non-database error__: The intermediate session is not flushed to the underlying transaction.
+
+{{< note >}}
+For the behaviour described above to occur, a flow does not need to manually flush or rollback an intermediate session.
+
+{{< /note >}}
+  
+Changes are committed to the database when the transaction is committed.
+
+{{< note >}}
+A flow commits its current database transaction whenever it suspends.
+
+{{< /note >}}
+
+#### Handling database errors
+
+This behaviour allows a flow to handle database exceptions that occur within a `withEntityManager` block without affecting the flow's underlying database transaction.
+
+{{< warning >}}
+Your flows should not handle database exceptions that occur outside a `withEntityManager` block. Doing so will lead to further errors as the flow's transaction needs to be rolled back.
+
+{{< /warning >}}
+
+You can handle database errors that occur within a `withEntityManager` by catching relevant exceptions. Below are two ways to handle these exceptions:
+
+- Around the block:
+
+  {{< tabs name="tabs-5" >}}
+  {{% tab name="java" %}}
+  ```java
+  try {
+      getServiceHub().withEntityManager(entityManager -> {
+          entityManager.persist(entity);
+      });
+  } catch (PersistenceException e) {
+      // Exception thrown due to constraint violation
+      getLogger().info("Ok, let's not save this entity 2");
+  }
+  ```
+  {{% /tab %}}
+
+  {{% tab name="kotlin" %}}
+  ```kotlin
+  try {
+      serviceHub.withEntityManager {
+          persist(entity)
+      }
+  } catch (e: PersistenceException) {
+      // Exception thrown due to constraint violation
+      logger.info("Caught the exception!")
+  }
+  ```
+  {{% /tab %}}
+  {{< /tabs >}}
+
+  There is no need for a `flush` when catching exceptions around the `withEntityManager` block. It will automatically trigger a `flush` when leaving the block.
+
+  {{< note >}}
+  It is recommended that exceptions are handled around a `withEntityManager` block as it is less likely to lead to unexpected behaviour when interacting with JPA.
+
+  {{< /note >}}
+
+- Inside the block:
+
+  {{< tabs name="tabs-6" >}}
+  {{% tab name="java" %}}
+  ```java
+  getServiceHub().withEntityManager(entityManager -> {
+      entityManager.persist(entity);
+      try {
+          // Manually trigger a flush on the intermediate session 
+          entityManager.flush();
+      } catch (PersistenceException e) {
+          // Exception thrown due to constraint violation
+          getLogger().info("Ok, let's not save this entity");
+      }
+  });
+  ```
+  {{% /tab %}}
+
+  {{% tab name="kotlin" %}}
+  ```kotlin
+  serviceHub.withEntityManager {
+      persist(entity)
+      try {
+          // Manually trigger a flush on the intermediate session 
+          flush()
+      } catch (e: PersistenceException) {
+          // Exception thrown due to constraint violation
+          logger.info("Ok, let's not save this entity")
+      }
+  }
+  ```
+  {{% /tab %}}
+  {{< /tabs >}}
+
+  A `flush` must be manually triggered if the exception is to be caught inside the entity manager. If the `flush` is not included, the code above would throw the `PersistenceException` instead of catching it.
+
+  {{< warning >}}
+  After a database error occurs inside a `withEntityManager` block, any executed updates will not be flushed to the underlying database transaction. All changes will be lost as the transaction will be rolled back to the state it had at the beginning of the block.
+
+  {{< /warning >}}
+
+#### Manually flushing intermediate database sessions
+
+Manually flushing `withEntityManager` sessions was touched on in the example above. You will need to manually `flush` database changes to the underlying database transaction for two reasons:
+
+- __Handling database errors__: Handle any possible database errors that occur from the `flush` within the `withEntityManager` block.
+- __Survive non-database errors__: Keep your database changes even if a non-database error is thrown out of the `withEntityManager` block.
+
+An example of flushing a session to survive a non-database error:
+
+{{< tabs name="tabs-7" >}}
+{{% tab name="java" %}}
+```java
+try {
+    getServiceHub().withEntityManager(entityManager -> {
+        entityManager.persist(entity);
+        // Manually trigger a flush on the intermediate session 
+        entityManager.flush();
+        throw new RuntimeException("Non-database error");
+    });
+} catch (Exception e) {
+    getLogger().info("I still want to save that entity");
+}
+```
+{{% /tab %}}
+
+{{% tab name="kotlin" %}}
+```kotlin
+try {
+    serviceHub.withEntityManager {
+        persist(entity)
+        // Manually trigger a flush on the intermediate session 
+        flush()
+        throw RuntimeException("Non-database error")
+    }
+} catch (e: Exception) {
+    logger.info("I still want to save that entity")
+}
+```
+{{% /tab %}}
+{{< /tabs >}}
+
+{{< note >}}
+To avoid having to `flush` the sessions manually in order to survive non-database exceptions, we recommend that you keep any code that is likely to cause such errors out of `withEntityManager` blocks.
+
+{{< /note >}}
