@@ -24,6 +24,7 @@ Allowed parameters are:
 The minimum platform version that the nodes must be running. Any node which is below this will
 not start.
 
+Once a network has started, the only supported changes to notaries are to add new notaries at the end of the list or to remove existing ones as part of a decommissioning process.
 
 * **notaries**:
 Ordered list of file paths to the node info files, or X500 names, of the notaries which are permitted in the
@@ -37,20 +38,25 @@ and therefore changing the order could cause errors elsewhere.
 Also note you can provide only file path to the node info file or X500 name of the notary, not both.
 Guidance on using notaries in flows: [https://docs.corda.net/api-flows.html?highlight=flow#notaries](https://docs.corda.net/api-flows.html?highlight=flow#notaries)
 
-
-* **notaryNodeInfoFile**:
-File path to the notaries’ node info file.
+## Configuration parameters
 
 
-* **notaryX500Name**:
-Notaries’ X500 name.
+* **minimumPlatformVersion**:
+The minimum platform version that the nodes must be running. Any node, which is below this, will
+not start.
 
+* **notaries**:
+  An ordered list of file paths to the node info files, or X500 names, of the notaries, which are permitted on the
+  network.
 
-* **validating**:
-Boolean to determine whether the notary is a validating or non-validating one.
+  * **validating**:
+    A boolean value to determine whether the notary is a validating (`true`) or a non-validating (`false`) one.
 
+  * **notaryNodeInfoFile**:
+    The file path to the `node.info` file of the notary.
 
-
+  * **notaryX500Name**:
+    The X500 name of the notary, as an alternative to providing the node info. Only supported for HA notaries.
 
 * **maxMessageSize**:
 Maximum allowed size in bytes of an individual message sent over the wire. Note that attachments are
@@ -67,45 +73,45 @@ Number of days after which nodes will be removed from the network map if they ha
 
 
 * **parametersUpdate**:
-Parameters update specific configuration (Optional).
+Specific `parametersUpdate` configuration (optional).
 
 
-* **description**:
-Brief description for this parameters update instance.
+  * **description**:
+  A brief description of this instance of `parametersUpdate`.
 
 
-* **updateDeadline**:
-ISO-8601 time format indicating the deadline for this update. Example value: “2017-08-31T05:10:36.297Z”
+  * **updateDeadline**:
+  ISO-8601 time format indicating the deadline for this update. Example value: “2017-08-31T05:10:36.297Z”
 
 
 
 
 * **whitelistContracts**:
-Contract whitelist specific configuration (Optional).
+Specific configuration for contracts whitelist (optional).
 
 
-* **cordappsJars**:
-List of file paths referencing CorDapp JAR files that will be automatically scanned for contract classes to be included in the whitelist.
+  * **cordappsJars**:
+  The list of file paths referencing CorDapp `.jar` files that will be automatically scanned for contract classes to be included in the whitelist.
 
 
-* **exclude**:
-List of contract class names (i.e. full package names) to be excluded from the whitelist.
+  * **exclude**:
+  The list of contract class names (for instance, full package names) to be excluded from the whitelist.
 
 
-* **contracts**:
-List of explicitly specified whitelisted contracts. Each element of the list has the following attributes:
+  * **contracts**:
+  The list of explicitly specified whitelisted contracts. Each element of the list has the following attributes:
 
 
-* **className**:
-Full package class name of the contract to be whitelisted.
+  * **className**:
+  The full package class name of the contract to be whitelisted.
 
 
 * **attachmentIds**:
-List of JAR file hashes (given as strings) containing the contract class.
+List of `.jar` file hashes (given as strings) containing the contract class.
 
 
-
-
+  * **attachmentIds**:
+    The list of `.jar` file hashes (given as strings) containing the contract class.
 
 
 * **packageOwnership**:
@@ -113,20 +119,17 @@ List of the network-wide Java packages that have been claimed by their owners al
 public keys. More information about this can be found here: [Package Ownership](https://docs.corda.net/design/data-model-upgrades/package-namespace-ownership.html)
 (Optional) The list should consist of entries with the following parameters:
 
-
-* **packageName**:
-The full package name in string format.
-
-
-* **publicKeyPath**:
-The file path to the public key. Note: This public key needs to be in a pem file format.
+  * **packageName**:
+  The full package name in string format.
 
 
-* **algorithm**:
-The algorithm used to generate the public key (e.g. RSA or EC). (Optional - defaults to RSA).
-*Note: Corda (and by association CENM) do not support DSA keys.*
+  * **publicKeyPath**:
+  The file path to the public key. Note that this public key needs to be in a `.pem` [file format](https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail).
 
 
+  * **algorithm**:
+  The algorithm used to generate the public key (for example, RSA or EC). This parameter is optional and defaults to RSA.
+  *Note: Corda (and by association CENM) do not support DSA keys.*
 
 
 * **epoch**:
