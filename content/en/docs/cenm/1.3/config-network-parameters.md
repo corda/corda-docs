@@ -124,7 +124,7 @@ public keys. More information about this can be found here: [Package Ownership](
 
 
   * **publicKeyPath**:
-  The file path to the public key. Note that this public key needs to be in a `.pem` file format.
+  The file path to the public key. Note that this public key needs to be in a `.pem` [file format](https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail).
 
 
   * **algorithm**:
