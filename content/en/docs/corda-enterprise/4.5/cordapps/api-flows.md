@@ -1811,3 +1811,142 @@ for (retryCount in 1..maxRetries) {
     }
 }
 ```
+
+## Killing flows
+
+A flow becomes unusable and problematic in the following cases:
+
+- Blocked due to a never-ending or long-running loop.
+- Waiting indefinitely for another node to respond.
+- Started accidentally.
+
+To resolve such issues, you can kill a flow - this will effectively "cancel" that flow.
+
+### Overview
+
+Killing a flow will gracefully terminate the flow. When you kill a flow, the following sequence of events occurs:
+
+- An `UnexpectedFlowEndException` is propagated to any nodes the flow is interacting with.
+- The flow releases its resources and any soft locks that it reserved.
+- An exception is returned to the calling client (as a `FlowKilledException` unless another exception is specified).
+
+A flow can be killed through the following means:
+
+- `flow kill` shell command.
+- `CordaRPCOps.killFlow` when writing a RPC client.
+
+{{< note >}}
+Exceptions are only propagated between flows (either from a flow initiator to its responder, or vice versa) when there is an active session established between them. A session is considered active if there are further calls to functions that interact with it within the flow's execution, such as `send`, `receive`, and `sendAndReceive`. If a flow’s counter party flow is killed, it only receives an `UnexceptedFlowEndException` once it interacts with the failed session again.
+{{< /note >}}
+
+{{< note >}}
+A `FlowKilledException` is propagated to client that started the initiating flow. The `KilledFlowException` cannot be caught unless manually thrown as documented below in [Cooperating with a killed flow](#cooperating-with-a-killed-flow).
+{{< /note >}}
+
+### Cooperating with a killed flow
+
+Killing a flow requires cooperation from the flow. To achieve this, your flow must include exit points that allow it to terminate when killed.
+
+All suspendable functions (functions annotated with `@Suspendable`) already take this into account and check if a flow has been killed. This allows a killed flow to terminate when reaching a suspendable function. The flow will also exit if it is currently suspended. 
+
+An example of this is shown below:
+
+{{< tabs name="tabs-26" >}}
+{{% tab name="kotlin" %}}
+```kotlin
+@Suspendable
+override fun call() {
+    val session = initiateFlow(party)
+    while (true) {
+        // processing code
+        session.sendAndReceive<String>("Here is some data")
+    }
+}
+```
+{{% /tab %}}
+{{% tab name="java" %}}
+```java
+@Override
+@Suspendable
+public Void call() {
+    FlowSession session = initiateFlow(party);
+    while (true) {
+        // processing code
+        session.sendAndReceive(String.class,"Here is some data");
+    }
+}
+```
+{{% /tab %}}
+{{< /tabs >}}
+
+A killed flow running the code above, will exit either when it reaches the next `sendAndReceive` or straight away if the flow is already suspended due to the `sendAndReceive` call.
+
+If your flow is not making thorough use of suspendable functions, you will need to check the status of the flow manually to cooperate with the kill flow request.
+
+This is done by checking the `isKilled` flag of a flow. A simple example can be found below:
+
+{{< tabs name="tabs-27" >}}
+{{% tab name="kotlin" %}}
+```kotlin
+@Suspendable
+override fun call() {
+    while (true) {
+        if (isKilled) {
+            throw KilledFlowException(runId)
+        }
+        // processing code
+    }
+}
+```
+{{% /tab %}}
+{{% tab name="java" %}}
+```java
+@Override
+@Suspendable
+public Void call() {
+    while (true) {
+        if (isKilled()) {
+            throw new KilledFlowException(getRunId());
+        }
+        // processing code
+    }
+}
+```
+{{% /tab %}}
+{{< /tabs >}}
+
+The loop is escaped by checking the `isKilled` flag and throwing an exception if the flow has been killed.
+
+There are also two overloads of `checkFlowIsNotKilled` that simplify the code above:
+
+{{< tabs name="tabs-28" >}}
+{{% tab name="kotlin" %}}
+```kotlin
+@Suspendable
+override fun call() {
+    while (true) {
+        checkFlowIsNotKilled()
+        // processing code
+    }
+}
+```
+{{% /tab %}}
+{{% tab name="java" %}}
+```java
+@Override
+@Suspendable
+public Void call() {
+    while (true) {
+        checkFlowIsNotKilled();
+        // processing code
+    }
+}
+```
+{{% /tab %}}
+{{< /tabs >}}
+
+The other overload takes in a message to add to the returned `KilledFlowException`.
+
+{{< note >}}
+If a section of a flow is processing-heavy and does not include any calls to suspendable functions, consider moving it into an [external operation](#calling-external-systems-inside-of-flows). Killing a flow that is suspended while performing an external operation does not require any special handling within the flow.
+{{< /note >}}
