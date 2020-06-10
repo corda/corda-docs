@@ -642,7 +642,7 @@ you can observe a successful retrieval of revocation lists from the registered n
 Identity Manager Service is not operating (using the CRL endpoint health check tool provided by CENM). However, operations that require
 additional calls, such as signing a new CRL from the Signing Service, may not be possible to perform.
 
-Although we have observed errors during the tests where the Network Map Service would fail to validate 
+Although we have observed errors during the tests where the Network Map Service would fail to validate
 the registered Notary's certificate, we considered this to be an unrelated issue.
 
 #### CRL configuration
@@ -894,12 +894,17 @@ shell {
 
 ```
 
-### Admin RPC
-To use the RPC API in the Identity Manager Service, you must define a configuration property called `adminListener`.
-Example:
-```docker
-adminListener = {
-    port = 10000
+### Admin RPC Interface
+
+To enable the CENM CLI to send commands to the Identity Manager Service,
+you must enable the RPC API by defining a configuration property called `adminListener`.
+
+For example add the following to the service configuration:
+
+```guess
+...
+adminListener {
+    port = 5050
     reconnect = true
     ssl {
         keyStore {
@@ -912,11 +917,34 @@ adminListener = {
         }
     }
 }
+...
 ```
+
+{{< note >}}
+The reconnect parameter can be omitted if desired, in which case it will default to `reconnect = true`.
+{{< /note >}}
 
 {{% important %}}
 If the `adminListener` property is present in the configuration, this means that the service must only be used via Admin RPC. In this case, the `shell` configuration property will be disabled. The `shell` and `adminListener` properties cannot be used in the configuration at the same time.
 {{% /important %}}
+
+The admin RPC interface requires an authentication and authorisation service to verify
+requests, which must be configured below in a `authServiceConfig` block. Typically
+this is provided automatically by the Zone service (via an Angel service),
+however an example is provided below for reference:
+
+```guess
+authServiceConfig {
+    host = <auth service host>
+    port = <auth service port>
+    trustStore = {
+        location = /path/to/trustroot.jks
+        password = <key store password>
+    }
+    issuer = <issuer>
+    leeway = <leeway duration>
+}
+```
 
 ## Obfuscated configuration files
 

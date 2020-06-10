@@ -269,11 +269,9 @@ production environment configuration.
 Using a local java keystore in a production system is strongly discouraged.
 
 {{< /note >}}
-More detailed descriptions of how to configure a signing key can be found in the
-{{< warning >}}`Configuration Parameters`_{{< /warning >}}
 
- section
-below.
+More detailed descriptions of how to configure a signing key can be found in the
+`Configuration Parameters` section below.
 
 
 ### Data Sources
@@ -2002,12 +2000,17 @@ Non CA Plugin’s configuration file must be in the same directory as the servic
 
 See [EJBCA Sample Plugin](ejbca-plugin.md) for sample open source CA implementation.
 
-### Admin RPC
-To use the RPC API in the Signing Service, you must define a configuration property called `adminListener`.
-Example:
-```docker
-adminListener = {
-    port = 10000
+### Admin RPC Interface
+
+To enable the CENM CLI to send commands to the Signing Service,
+you must enable the RPC API by defining a configuration property called `adminListener`.
+
+For example add the following to the service configuration:
+
+```guess
+...
+adminListener {
+    port = 5050
     reconnect = true
     ssl {
         keyStore {
@@ -2020,11 +2023,34 @@ adminListener = {
         }
     }
 }
+...
 ```
+
+{{< note >}}
+The reconnect parameter can be omitted if desired, in which case it will default to `reconnect = true`.
+{{< /note >}}
 
 {{% important %}}
 If the `adminListener` property is present in the configuration, this means that the service must only be used via Admin RPC. In this case, the `shell` configuration property will be disabled. The `shell` and `adminListener` properties cannot be used in the configuration at the same time.
 {{% /important %}}
+
+The admin RPC interface requires an authentication and authorisation service to verify
+requests, which must be configured below in a `authServiceConfig` block. Typically
+this is provided automatically by the Zone service (via an Angel service),
+however an example is provided below for reference:
+
+```guess
+authServiceConfig {
+    host = <auth service host>
+    port = <auth service port>
+    trustStore = {
+        location = /path/to/trustroot.jks
+        password = <key store password>
+    }
+    issuer = <issuer>
+    leeway = <leeway duration>
+}
+```
 
 ## Obfuscated configuration files
 

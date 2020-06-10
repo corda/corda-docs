@@ -337,23 +337,47 @@ All inter-service communication can be configured with SSL support. See [Configu
 {{< /note >}}
 
 
-#### Admin RPC Server
+#### Admin RPC Interface
 
-The Network Map has an optional RPC interface which can be used to administrate the
-service from a remote user interface. This RPC interface is configured separately
-to the service to service interface configured above.
-
-The configuration block `adminListener` can be used to define the properties of this
+To enable the CENM CLI to send commands to the Network Map Service,
+you must enable the RPC API by defining a configuration block called `adminListener`.
+The configuration block `adminListener` is used to define the properties of this
 listener, such as the port it listens on as well as the retrying and logging behaviour.
-The admin interface requires an authentication and authorisation service to verify
-requests, which must be configured below in a `authServiceConfig` block:
+For example add the following to the service configuration:
 
 ```guess
 ...
 adminListener {
     port = 5050
     reconnect = true
+    ssl {
+        keyStore {
+            location = exampleSslKeyStore.jks
+            password = "password"
+        }
+        trustStore {
+            location = exampleSslTrustStore.jks
+            password = "trustpass"
+        }
+    }
 }
+...
+```
+
+{{< note >}}
+The reconnect parameter can be omitted if desired, in which case it will default to `reconnect = true`.
+{{< /note >}}
+
+{{% important %}}
+If the `adminListener` property is present in the configuration, this means that the service must only be used via Admin RPC. In this case, the `shell` configuration property will be disabled. The `shell` and `adminListener` properties cannot be used in the configuration at the same time.
+{{% /important %}}
+
+The admin RPC interface requires an authentication and authorisation service to verify
+requests, which must be configured below in a `authServiceConfig` block. Typically
+this is provided automatically by the Zone service (via an Angel service),
+however an example is provided below for reference:
+
+```guess
 authServiceConfig {
     host = <auth service host>
     port = <auth service port>
@@ -361,16 +385,10 @@ authServiceConfig {
         location = /path/to/trustroot.jks
         password = <key store password>
     }
-    audience = <audience>
     issuer = <issuer>
     leeway = <leeway duration>
 }
-...
 ```
-
-{{< note >}}
-The reconnect parameter can be omitted if desired, in which case it will default to port 5050 with `reconnect = true`.
-{{< /note >}}
 
 ### Identity Manager & Revocation Communication
 
