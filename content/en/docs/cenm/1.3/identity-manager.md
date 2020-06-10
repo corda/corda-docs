@@ -63,25 +63,20 @@ The main elements that need to be configured for the Identity Manager are:
     * [CSR Signing Mechanism](#csr-signing-mechanism)
     * [Issuance Internal Server](#issuance-internal-server)
     * [Restricting a node’s Corda version (optional)](#restricting-a-node-s-corda-version-optional)
-
-
 * [Revocation workflow (optional)](#revocation-workflow-optional)
     * [CRR Approval Mechanism](#crr-approval-mechanism)
     * [CRR Signing Mechanism](#crr-signing-mechanism)
     * [Revocation Internal Server](#revocation-internal-server)
-
+* [Admin RPC Interface](#admin-rpc-interface)
 * [HA Endpoint (optional)](#ha-endpoint)
     * [Caching Proxy Setup](#caching-proxy-setup)
     * [Caching Proxy Limitations](#caching-proxy-limitations)
     * [Application Gateway Setup](#application-gateway-setup)
     * [System Configuration And Behavior](#system-configuration-and-behavior)
 
-* [Admin RPC](#admin-rpc)
-
 
 {{< note >}}
 See [Identity Manager Configuration Parameters](config-identity-manager-parameters.md) for a detailed explanation about each possible parameter.
-
 {{< /note >}}
 
 ### Address
@@ -539,7 +534,58 @@ All inter-service communication can be configured with SSL support. See [Configu
 
 {{< /note >}}
 
-#### HA Endpoint
+### Admin RPC Interface
+
+To enable the CENM CLI to send commands to the Identity Manager Service,
+you must enable the RPC API by defining a configuration property called `adminListener`.
+
+For example add the following to the service configuration:
+
+```guess
+...
+adminListener {
+    port = 5050
+    reconnect = true
+    ssl {
+        keyStore {
+            location = exampleSslKeyStore.jks
+            password = "password"
+        }
+        trustStore {
+            location = exampleSslTrustStore.jks
+            password = "trustpass"
+        }
+    }
+}
+...
+```
+
+See [Identity Manager Configuration Parameters](config-identity-manager-parameters.md#admin-rpc-interface)
+for a detailed explanation on configuring the admin listener.
+
+The admin RPC interface requires an authentication and authorisation service to verify
+requests, which must be configured below in a `authServiceConfig` block. Typically
+this is provided automatically by the Zone service (via an Angel service)
+
+The admin RPC interface requires an authentication and authorisation service to verify
+requests, which must be configured below in a `authServiceConfig` block. Typically
+this is provided automatically by the [Zone Service](zone-service.md) (via an Angel Service),
+however an example is provided below for reference:
+
+```guess
+authServiceConfig {
+    host = <auth service host>
+    port = <auth service port>
+    trustStore = {
+        location = /path/to/trustroot.jks
+        password = <key store password>
+    }
+    issuer = <issuer>
+    leeway = <leeway duration>
+}
+```
+
+### HA Endpoint
 
 The crucial role that the Identity Manager Service plays in the communication between nodes, and in particular the
 importance of the Certificate Revocation List (CRL) during flow execution, creates the need for high availability
@@ -808,9 +854,6 @@ shell {
 
 ```
 
-[identity-manager-test-valid.conf](https://github.com/corda/network-services/blob/release/1.2/services/src/test/resources/v1.1-configs/identity-manager/identity-manager-test-valid.conf)
-
-
 #### Production Configuration
 
 The example below shows a more production-like configuration of the Identity Manager. It is configured with an Issuance
@@ -893,59 +936,3 @@ shell {
 }
 
 ```
-
-### Admin RPC Interface
-
-To enable the CENM CLI to send commands to the Identity Manager Service,
-you must enable the RPC API by defining a configuration property called `adminListener`.
-
-For example add the following to the service configuration:
-
-```guess
-...
-adminListener {
-    port = 5050
-    reconnect = true
-    ssl {
-        keyStore {
-            location = exampleSslKeyStore.jks
-            password = "password"
-        }
-        trustStore {
-            location = exampleSslTrustStore.jks
-            password = "trustpass"
-        }
-    }
-}
-...
-```
-
-{{< note >}}
-The reconnect parameter can be omitted if desired, in which case it will default to `reconnect = true`.
-{{< /note >}}
-
-{{% important %}}
-If the `adminListener` property is present in the configuration, this means that the service must only be used via Admin RPC. In this case, the `shell` configuration property will be disabled. The `shell` and `adminListener` properties cannot be used in the configuration at the same time.
-{{% /important %}}
-
-The admin RPC interface requires an authentication and authorisation service to verify
-requests, which must be configured below in a `authServiceConfig` block. Typically
-this is provided automatically by the Zone service (via an Angel service),
-however an example is provided below for reference:
-
-```guess
-authServiceConfig {
-    host = <auth service host>
-    port = <auth service port>
-    trustStore = {
-        location = /path/to/trustroot.jks
-        password = <key store password>
-    }
-    issuer = <issuer>
-    leeway = <leeway duration>
-}
-```
-
-## Obfuscated configuration files
-
-To view the latest changes to the obfuscated configuration files, see [Obfuscation configuration file changes](obfuscated-config-file-changes.md).

@@ -108,7 +108,7 @@ Similar to the Identity Manager the main elements that need to be configured for
 * [ENM Internal Server](#enm-internal-server)
 * [Identity Manager & Revocation Communication](#identity-manager-revocation-communication)
 * [Restricting A Node’s Corda Version (optional)](#restricting-a-node-s-corda-version-optional)
-* [Admin RPC](#admin-rpc)
+* [Admin RPC Interface](#admin-rpc-interface)
 
 
 ### Address
