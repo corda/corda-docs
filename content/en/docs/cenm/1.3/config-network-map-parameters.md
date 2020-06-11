@@ -100,8 +100,8 @@ of the Corda API. Value must be equal to the one specified in Network Parameters
 
 
 * **newPKIOnly**:
-*(Optional - defaults to false)* A boolean that determines whether node info publishing should be rejected for all nodes running an outdated
-version of Corda that does not support the new PKI (arbitrary length certificate chains).
+*(Optional - defaults to false)* A boolean parameter that determines whether node info publishing should be rejected for all nodes running an outdated
+version of Corda that does not support the new PKI structure (arbitrary length certificate chains).
 
 * **adminListener**:
   To use the RPC API in the Identity Manager Service, you must define a configuration property called `adminListener`.
@@ -129,8 +129,8 @@ If the `adminListener` property is present in the configuration, this means that
   * **trustStore**:
   Trust store configuration for the SSL PKI root of trust.
     * **location**:
-    The location in the file system of the keystore containing the SSL PKI root of trust.
+    The location in the file system of the keystore containing the Auth service root of trust.
     * **password**:
     The password for the trust root keystore.
-  * **issuer**: The \"iss\" claim in the JWT - needs to be set to the same value as in the Auth Service's configuration. Required unless authentication is disabled.
+  * **issuer**: The \"iss\" claim in the JWT - you must set the same value as in the Auth Service's configuration. Required unless authentication is disabled.
   * **leeway**: Defines the amount of time, in seconds, allowed when checking JSON Web Token (JWT) issuance and expiration times. Required unless authentication is disabled. We recommend a default time of **10 seconds**.

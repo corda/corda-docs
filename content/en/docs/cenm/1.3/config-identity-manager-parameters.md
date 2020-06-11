@@ -31,7 +31,7 @@ See [CENM Database Configuration](config-database.md)
 
 * **shell**:
   *(Optional)* See [Shell Configuration Parameters](config-shell.md) for more information. Note that
-               we are planning to deprecate the shell and the recommended path for interacting with CENM services 
+               we are planning to deprecate the shell and the recommended path for interacting with CENM services
                is the admin RPC interface detailed below.
 
 
@@ -110,7 +110,7 @@ It is needed as this URL is encoded in certificates issued by the Identity Manag
   * **versionInfoValidation**:
   *(Optional)* Configuration for the validation of node version info during CSR submission.
   * **minimumPlatformVersion**:
-  *(Optional - defaults to -1)* The minimum platform version of Corda that a node needs to run, to successfully submit Certificate Signing Requests. The platform
+  *(Optional - defaults to `-1`)* The minimum platform version of Corda that a node needs to run on, in order to successfully submit Certificate Signing Requests. The platform
   version is an integer value that increments with each release where any of the public APIs of the entire Corda platform are changed. Setting this to a value lower than 1
   disables this behaviour - in that case, the Identity Manager Service does not check whether that platform version is passed from the node.
 
@@ -119,7 +119,7 @@ It is needed as this URL is encoded in certificates issued by the Identity Manag
   {{< /important >}}
 
   * **newPKIOnly**:
-  *(Optional - defaults to false)* A boolean that determines whether Certificate Signing Request (CSR) should be rejected for all nodes running an outdated version of Corda that does not support the new PKI (arbitrary length certificate chains).
+  *(Optional - defaults to `false`)* A boolean parameter that determines whether Certificate Signing Request (CSR) should be rejected for all nodes running an outdated version of Corda that does not support the new PKI structure (arbitrary length certificate chains).
 * **“revocation workflow”**:
   * **crlCacheTimeout**:
   The number  of times the Revocation Workflow Processor needs to synchronise Certificate Revocation Requests (CRR) statuses, as well as the duration after the CRL cache in Revocation Web Service is cleared.
@@ -151,10 +151,10 @@ If the `adminListener` property is present in the configuration, this means that
   * **trustStore**:
   Trust store configuration for the SSL PKI root of trust.
     * **location**:
-    The location in the file system of the keystore containing the SSL PKI root of trust.
+    The location in the file system of the keystore containing the Auth service root of trust.
     * **password**:
     The password for the trust root keystore.
-  * **issuer**: The \"iss\" claim in the JWT - needs to be set to the same value as in the Auth Service's configuration. Required unless authentication is disabled.
+  * **issuer**: The \"iss\" claim in the JWT - you must set the same value as in the Auth Service's configuration. Required unless authentication is disabled.
   * **leeway**: Defines the amount of time, in seconds, allowed when checking JSON Web Token (JWT) issuance and expiration times. Required unless authentication is disabled. We recommend a default time of **10 seconds**.
 
 ## Obfuscated configuration files
