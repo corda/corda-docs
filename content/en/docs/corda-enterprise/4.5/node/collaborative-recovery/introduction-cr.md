@@ -25,9 +25,11 @@ weight: 100
 
 ## Introducing Collaborative Recovery
 
-Collaborative Recovery is a CorDapp-based solution that helps you retrieve lost data in a disaster recovery scenario where all other strategies have been exhausted.
+Collaborative Recovery is a secure, privacy-oriented solution that helps you identify and retrieve data if you ever encounter a disaster recovery scenario.
 
-With a coordinated approach, you can use Collaborative Recovery to detect potential ledger inconsistencies and recover any missing ledger data from parties you have transacted with on the Business Network. For this solution to be effective, the Collaborative Recovery CorDapps must be deployed to every node with which you may transact. This means that as well as installing locally, you must try to make Collaborative Recovery part of the overall disaster recovery policy for your Business Network.
+Once you have installed the required CorDapps, you can safely use Collaborative Recovery to detect potential ledger inconsistencies and recover any missing data from parties you have transacted with. The feature runs in the background, acting as an additional layer of security when using Corda.
+
+As the name suggests, this is a collaborative method for recovering data. For maximum peace of mind, you should seek agreement across your Business Network to make this feature part of the overall disaster recovery policy.
 
 {{< note >}}
 
@@ -48,16 +50,15 @@ Before installing and using the Collaborative Recovery CorDapps, you need to kno
 3. Monitor for inconsistencies in your node's data. You do this by scheduling regular reconciliation flows using the LedgerSync CorDapp.
 4. In a disaster recovery scenario, follow your agreed DR policy. Try to recover data using backups first.
 5. If your other procedures cannot recover your data, initiate data recovery flows using:
-    * LedgerRecover (Automatic) for automatic data recovery. Usually this is most effective when there is only a minor data loss.
-    * LedgerRecover (Manual) for manual data recovery. In this path, you need to manually extract and add data back onto the network.
+    * LedgerRecover (Automatic) for automatic data recovery. Usually this is most effective when there is only a minor loss of data.
+    * LedgerRecover (Manual) for manual data recovery. In this path, you need to manually export and import data back onto the network.
 6. Validate that the data has been recovered.
-7. Review disaster recovery policy.
+7. Review the disaster recovery policy.
 
 ## When to use Collaborative Recovery
 
-Collaborative Recovery is a final, last resort option to recover your data. Whilst it provides tools to detect and recover missing ledger data, it's
-not sufficient as a disaster recovery strategy on its own. You must use Collaborative Recovery in conjunction with conventional DR approaches,
-such as backups and replication.
+Collaborative Recovery is a last-resort option to recover your data. Whilst it provides tools to detect and recover missing ledger data, it's
+not sufficient as a disaster recovery strategy on its own. You must use Collaborative Recovery in conjunction with conventional disaster recovery strategies, such as backups and replication.
 
 Ideally, you should never need to use Collaborative Recovery. To protect the data on your node, each node you transact with should be part of a robust disaster recovery plan, agreed at the Business Network level. This strategy should mean you have backups include the following:
 
@@ -87,17 +88,15 @@ Collaborative Recovery allows Corda nodes to retrieve missing ledger data from o
 
 You **cannot** recover these assets using Collaborative Recovery:
 
-* Confidential identities. Private keys can't be recovered from other peers by definition. The states, that belong to those keys
-can be recovered though, but only if the proof of owning the key has been shared with the counterparty when the transaction happened.
+* Confidential identities. Private keys can't be recovered from other peers by definition. The states that belong to those keys
+can be recovered however, if the proof of owning the key was shared with the counterparty when the transaction happened.
 * Node identity / TLS keys.
 * Node and CorDapp configuration files.
 * CorDapp jars.
 * MQ data.
-* Self issued but never transacted states. However such states can be unilaterally reissued onto the ledger, as issuances
-don't require notarization.
+* Self-issued but never transacted states. However, such states can be unilaterally reissued onto the ledger, as issuances don't require notarization.
 * Off-ledger tables.
-* Observed transactions. Transactions that have been shared as a part of **Observers** functionality
-will have to be reprovisioned separately.
+* Observed transactions. Transactions that have been shared as a part of **Observers** functionality have to be reprovisioned separately.
 * Scheduled states.
 * Any ledger data that has been shared with parties that are not available on the network anymore.  
 
@@ -105,7 +104,7 @@ will have to be reprovisioned separately.
 
 Due to the nature of decentralised systems, Collaborative Recovery cannot provide Recovery Point Objective (RPO) and Recovery Time Objective (RTO) guarantees.
 
-RPOs cannot be guaranteed because of factors beyond Corda's control. For example, some data might be unrecoverable due to a counterparty not being a part of the network anymore.
+The amount of data that can be recovered cannot be guaranteed in cases where the data is not exclusively under the control of a single operator. For example, some data might be unrecoverable due to a counterparty not being a part of the network anymore.
 
 The amount of time required for recovery can't be guaranteed as peers might be temporarily unavailable or have low bandwidth.
 
@@ -118,55 +117,57 @@ Collaborative Recovery is made up of two CorDapps - LedgerSync and LedgerRecover
 ### LedgerSync
 
 LedgerSync is a CorDapp that highlights the differences between the common ledger data held by two nodes in the same Business Network.
-A peer running the CorDapp is alerted to any missing transactions. This procedure is called **Reconciliation**.
+A peer running the CorDapp can be alerted to missing transactions. This procedure is called **Reconciliation**.
 
 
 {{< note >}}
-
-LedgerSync relies on the user to provide a list of the parties to reconcile with. This can be used as an integration point with custom membership management systems.
-
+LedgerSync relies on the user to provide a list of the parties with which it should attempt to perform reconciliations. This can be used as an integration point with custom membership management systems.
 {{< /note >}}
 
-LedgerSync uses Efficient Set Reconciliation Algorithm Without Prior Context for peer-to-peer reconciliations. It has been designed to efficiently reconcile large sets of data with small amount or no differences at all. Generally speaking, the amount of data you can expect to transfer is proportional to the size of the difference and not the total number of items in the data set. For this reason, LedgerSync introduces only a minimal network overhead even for a large data sets.
+LedgerSync has been designed to efficiently reconcile large sets of data with small amount or no differences at all (based on [Efficient Set Reconciliation Algorithm Without Prior Context]( https://www.ics.uci.edu/~eppstein/pubs/EppGooUye-SIGCOMM-11.pdf)). Generally speaking, the amount of data you can expect to transfer is proportional to the size of the difference and not the total number of items in the data set. For this reason, LedgerSync introduces only a minimal network overhead, even for a large data sets.
 
 LedgerSync has been designed with privacy in mind. Parties never share any real data. Instead they share *Invertible Bloom Filters* that contain obfuscated data only and can't be decoded by a party unilaterally. Furthermore, LedgerSync prevents privacy leaks by allowing only parties that participated in a transaction to report that the transaction is missing from the initiator's ledger.
 
 LedgerSync can operate on schedule as well as on demand. It utilises bounded flow pools to limit the number of concurrent
 inbound / outbound reconciliations and also supports different throttling techniques to prevent the functionality from being abused.
 
-A high level peer to peer reconciliation flow is depicted in the diagram below. LedgerSync can run multiple of these concurrently
-up to the limit configured by the user.
+A high level peer to peer reconciliation flow is depicted in the diagram below. LedgerSync can run multiple reconciliations concurrently, up to the limit configured by the user.
 
-![Peer To Peer Reconciliation Flow](./resources/ledger-sync-flow.png)
+![Peer To Peer Reconciliation Flow](../../resources/collaborative-recovery/ledger-sync-flow.png)
 
 ### LedgerRecover
 
 LedgerRecover helps to recover missing transactions, attachments and network parameters based on the outputs of LedgerSync.
 LedgerRecover can be operated in manual and automatic modes.
 
-> While LedgerSync can be used on its own (for example as a diagnostic utility), LedgerRecover can be used only on top of LedgerSync.
+{{< note >}}
+While LedgerSync can be used on its own (for example as a diagnostic utility), LedgerRecover can be used only on top of LedgerSync.
+{{< /note >}}
 
 ### Automatic
 
-Automatic LedgerRecover has been designed to recover a small amount of ledger data, that would have a little to no impact
+Automatic LedgerRecover has been designed to recover small amounts of ledger data, that would have a little to no impact
 on the responding node's performance. Automatic LedgerRecover is built on top of Corda's `SendTransactionFlow` and `ReceiveTransactionFlow`.
 These flows handle resolution of attachments, network parameters and transaction backchains out-of-the-box. Before entering recovery,
-the responder should always verify the eligibility of the requester seeing the requested transactions. Only the transactions
-where both of the parties are participants (along with their backchains) will be allowed for recovery. Automatic LedgerRecover
+the responder verifies the eligibility of the requester seeing the requested transactions.
+
+Only transactions, along with their backchains, where both counterparties are participants will be allowed for recovery. Automatic LedgerRecover
 supports different types of throttling to prevent accidental abuse of the functionality.
 
 A high level peer to peer automatic recovery flow is depicted in the diagram below.
 
-![Peer to Peer Automatic Recovery Flow](./resources/automatic-ledger-recover-flow.png)
+![Peer to Peer Automatic Recovery Flow](../../resources/collaborative-recovery/automatic-ledger-recover-flow.png)
 
-> Even though the recovery has the word "automatic" in its name, it can only be started manually.
+{{< attention >}}
+Even though the recovery has the word "automatic" in its name, it can only be started manually.
 This is to prevent the participants from abusing this functionality and overloading the network.
+{{< /attention >}}
 
 ### Manual
 
 Manual LedgerRecover has been designed for larger volumes of data and for cases when the recovery request requires manual approval.
 During a manual recovery flow, an initiating party would make a request to kick off a manual recovery process.
-Each party (the initiator and responder) persists a record of this request. The responder would then manually investigate the recovery request,
+Each party (the initiator and responder) persists a record of this request. The responder then manually investigates the recovery request,
 export the data to the filesystem, and pass it to the requester. This process would be carried out off-ledger without
 relying on the Corda messaging layer, after which the requester would manually import the data into their vault.
 
@@ -175,7 +176,7 @@ it has been stopped halfway through.
 
 A high level peer to peer manual recovery flow is depicted in the diagram below.
 
-![Peer to Peer Manual Recovery Flow](./resources/manual-ledger-recover-flow.png)
+![Peer to Peer Manual Recovery Flow](../../resources/collaborative-recovery/manual-ledger-recover-flow.png)
 
 ### Supported DR Scenarios
 
@@ -191,7 +192,7 @@ If you are using other R3 Corda Enterprise libraries, you may need to take extra
 
 ### Tokens SDK - fully compatible
 
-Collaborative Recovery is fully compatible with the [Tokens](https://github.com/corda/token-sdk)
+Collaborative Recovery is fully compatible with the [Tokens](../../cordapps/token-sdk)
 SDK.
 
 ### Accounts SDK - compatible with limitations
@@ -206,6 +207,6 @@ It is currently not possible to recover the issuance transaction containing an `
 
 ### Finance - not compatible
 
-Collaborative Recovery is *not* compatible with the [legacy](https://docs.corda.net/api-stability-guarantees.html) Corda Finance module.
-This is due to the way Confidential Identities are used as a part of the `CashPaymentFlow`.
-Please consider avoiding Corda Finance in the favour of Tokens and Accounts SDKs.
+Collaborative Recovery is *not* compatible with the legacy Corda Finance module. This is due to the way Confidential Identities are used as a part of the `CashPaymentFlow`.
+
+In general lease consider avoiding Corda Finance in favour of [Tokens](../../cordapps/token-skd) and Accounts SDKs.

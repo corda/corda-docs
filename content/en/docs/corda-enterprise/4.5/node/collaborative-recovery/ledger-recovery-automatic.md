@@ -131,7 +131,9 @@ flow start AutomaticLedgerRecoverFlow party: "O=PartyB, L=London, C=GB"
 ### FailAutomaticRecoveryFlow
 This flow is used by a party to mark an automatic recovery process as failed. The initiating party marks their recovery request as `FAILED`. Failed `RecoveryRequest`s remain as records in the `CR_RECOVERY_REQUEST` table for record-keeping and querying.
 
-> Note: This flow should be run after running `killFlow`, see [Killing Automatic Recovery Flows](#Killing-Automatic-Recovery-Flows) below for details.
+{{< note >}}
+This flow should be run after running `killFlow`, see [Killing Automatic Recovery Flows](#Killing-Automatic-Recovery-Flows) below for details.
+{{< /note >}}
 
 #### Parameters
 * `requestId` - The `UUID` representing the automatic `RecoveryRequest` we wish to mark as failed.

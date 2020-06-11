@@ -18,7 +18,7 @@ weight: 200
 
 **Who this documentation is for:**
 * Node operators
-* Business Network Operators 
+* Business Network Operators
 
 In a disaster recovery scenario, you need to be sure you can recover data from the nodes you have transacted with on each Business Network you are a part of.
 
@@ -29,13 +29,15 @@ Once you have this agreement in place on your Business Network, you can create t
 
 ## Wrapping Flows
 
-The Collaborative recovery CorDapps use flows to initiate and execute the recovery process. Before this can happen, you need validation that the parties specified as input to each Disaster Recovery flow are members of the Business Network.
+The Collaborative Recovery CorDapps use flows to initiate and execute the recovery process. Before this can happen, you need validation that the parties specified as input to each Disaster Recovery flow are members of the Business Network.
 
 To validate these parties, you need to write and distribute simple wrapping flows for these reconciliation and recovery flows:
 
 - [ScheduleReconciliationFlow](ledger-sync.md#schedule-reconciliation-flow) - This flow schedules regular reconciliation checks
 - [AutomaticRecoveryFlow](ledger-recovery-automatic.md#automatic-ledger-recover-flow) to initiate automatic data recovery
 - [InitiateManualRecoveryFlow](ledger-recovery-manual.md#initiate-manual-recovery-flow) to initiate manual data recovery.
+
+These wrapping flows should be bundled into a single CorDapp that can be distributed to relevant parties on your network.
 
 ## Example Flows
 
@@ -430,24 +432,19 @@ to export, transfer and eventually import the missing transaction data.
 
 ```
 
-### Scheduling Recurring Reconciliation
+## Schedule Recurring Reconciliation
 
-As mentioned previously, a recovering node - or a node that may be missing transaction data - will have no way of knowing which
-parties on the network they have previously transacted with. As such, reconciliation should be conducted on a regular basis to
-enable the node operator to determine whether or not their vault data is consistent with that of all other parties on the network.
+It is best practice to prevent against loss of data during a disaster by scheduling reconciliation checks across your network. This allows every node to ensure they have a backup record of each node they have transacted with. While everyone's data remains secure, discrepencies between parties can be safely detected. You can use collaborative recovery to schedule reconciliation flows, so you can be sure your vault data is consistent with that of all other parties on the network.
 
-The flow in the snippet below represents a wrapping flow that schedules reconciliation with every member of a Business Network
-on a recurring basis. In doing so, a node operator will be informed in a timely manner of any discrepancies between their vault data
-and that of counterparties.
+The flow in the snippet below represents a wrapping flow that schedules reconciliation with every member of a Business Network on a recurring basis. Using this wrapper means you can can safely see when discrepancies occur between your vault data and those of counterparties.
 
-It is important to note that communicating with all nodes on the network will impose network load. Smaller networks may be able to
-schedule reconciliation more frequently, while larger networks may elect to reconcile less frequently or potentially with a random
-subset of available peers. The implementation below reconciles with all parties (likely on a smaller network) once daily. Node operators
-must also determine whether or not they wish to recover during operating business hours OR as a routine maintenance activity to be
-performed where there is reduced network traffic.
+Communicating with all nodes on the network imposes network load. If you are on a smaller network, you may be able to schedule reconciliation more frequently. For larger networks, you can reconcile less frequently or potentially with a random subset of available peers.
 
-> Note: In general a node's vault is expected to be consistent with the network (such is the major benefit of DLT). This process
-> is similar to running database replication technology - an added layer of resiliency and reliability for on-ledger data.
+The implementation below reconciles with all parties (best for a smaller network) once daily. As a node operator, you must also determine whether or not you wish to run reconciliation during operating business hours, or as a routine maintenance activity to be performed when there is reduced network traffic.
+
+{{< note >}}
+In general a node's vault is expected to be consistent with the network (such is the major benefit of DLT). This process is similar to running database replication technology - an added layer of resiliency and reliability for on-ledger data.
+{{< /note >}}
 
 ```kotlin
 // Kotlin
@@ -473,8 +470,8 @@ performed where there is reduced network traffic.
             val signedTx = serviceHub.signInitialTransaction(txBuilder)
             subFlow(FinalityFlow(signedTx, listOf()))
 
-            // PART 2: Reconcile With All Members of The Business Network
-            // Retrieve the list of identities with which you COULD have shared transaction data
+            // PART 2: Reconcile With all Members of The Business Network
+            // Retrieve the list of identities with which you could have shared transaction data
             val businessNetworkMembers: List<Party> = getMembers()
 
             // Initiate a subFlow to kick off recovery with all Business Network members

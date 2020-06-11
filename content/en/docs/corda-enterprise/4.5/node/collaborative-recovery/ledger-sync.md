@@ -267,9 +267,9 @@ The status of a reconciliation is only stored/updated in this table when a recon
     This status indicates that the reconciliation with another party was manually stopped via the `StopReconciliationForPartyFlow`.
 
 
-## JMX Metrics
+## JMX metrics
 
-A Corda node running the **LedgerSync** CorDapp will expose the following metrics via JMX.
+A Corda node running the **LedgerSync** CorDapp exposes the following metrics via JMX.
 
 ### `ReconciliationStatus`
 
