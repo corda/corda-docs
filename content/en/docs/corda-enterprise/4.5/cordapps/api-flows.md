@@ -1881,7 +1881,7 @@ A killed flow running the code above, will exit either when it reaches the next 
 
 If your flow has functions that are not marked as `@suspendable`, you may need to check the status of the flow manually to cooperate with the kill flow request.
 
-To do so, check the `isKilled` flag of the flow. Use the example below to see how this is done:
+To do so, add a check on the `isKilled` flag of the flow. Use the example below to see how this is done:
 
 
 {{< tabs name="tabs-27" >}}
@@ -1914,7 +1914,7 @@ public Void call() {
 {{% /tab %}}
 {{< /tabs >}}
 
-The function exits the loop by checking the isKilled flag and throwing an exception if the flow has been killed.
+The function in the example above exits the loop by checking the `isKilled` flag and throwing an exception if the flow has been killed.
 
 There are also two overloads of `checkFlowIsNotKilled` that simplify the code above:
 
