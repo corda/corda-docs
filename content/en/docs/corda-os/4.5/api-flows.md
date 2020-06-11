@@ -2246,28 +2246,26 @@ To resolve such issues, you can kill a flow - this will effectively "cancel" tha
 
 Killing a flow will gracefully terminate the flow. When you kill a flow, the following sequence of events occurs:
 
-- An `UnexpectedFlowEndException` is propagated to any nodes the flow is interacting with.
-- The flow releases its resources and any soft locks that it reserved.
-- An exception is returned to the calling client (as a `FlowKilledException` unless another exception is specified).
+1. An `UnexpectedFlowEndException` is propagated to any nodes the flow is interacting with.
+2. The flow releases its resources and any soft locks that it reserved.
+3. An exception is returned to the calling client (as a `FlowKilledException` unless another exception is specified).
 
 A flow can be killed through the following means:
 
 - `flow kill` shell command.
 - `CordaRPCOps.killFlow` when writing a RPC client.
 
-{{< note >}}
-Exceptions are only propagated between flows (either from a flow initiator to its responder, or vice versa) when there is an active session established between them. A session is considered active if there are further calls to functions that interact with it within the flow's execution, such as `send`, `receive`, and `sendAndReceive`. If a flow’s counter party flow is killed, it only receives an `UnexceptedFlowEndException` once it interacts with the failed session again.
-{{< /note >}}
+#### Exceptions
 
-{{< note >}}
+Exceptions are only propagated between flows (either from a flow initiator to its responder, or vice versa) when there is an active session established between them. A session is considered active if there are further calls to functions that interact with it within the flow's execution, such as `send`, `receive`, and `sendAndReceive`. If a flow’s counter party flow is killed, it only receives an `UnexceptedFlowEndException` once it interacts with the failed session again.
+
 A `FlowKilledException` is propagated to client that started the initiating flow. The `KilledFlowException` cannot be caught unless manually thrown as documented below in [Cooperating with a killed flow](#cooperating-with-a-killed-flow).
-{{< /note >}}
 
 ### Cooperating with a killed flow
 
-Killing a flow requires cooperation from the flow. To achieve this, your flow must include exit points that allow it to terminate when killed.
+To allow for a killed flow to terminate when the kill flow command has been executed, at the time of writing the flow you must ensure that the flow includes exit points.
 
-All suspendable functions (functions annotated with `@Suspendable`) already take this into account and check if a flow has been killed. This allows a killed flow to terminate when reaching a suspendable function. The flow will also exit if it is currently suspended. 
+All suspendable functions (functions annotated with `@Suspendable`) already take this into account and check if a flow has been killed. This allows a killed flow to terminate when reaching a suspendable function. The flow will also exit if it is currently suspended.
 
 An example of this is shown below:
 
@@ -2301,9 +2299,9 @@ public Void call() {
 
 A killed flow running the code above, will exit either when it reaches the next `sendAndReceive` or straight away if the flow is already suspended due to the `sendAndReceive` call.
 
-If your flow is not making thorough use of suspendable functions, you will need to check the status of the flow manually to cooperate with the kill flow request.
+If your flow has functions that are not marked as `@suspendable`, you may need to check the status of the flow manually to cooperate with the kill flow request.
 
-This is done by checking the `isKilled` flag of a flow. A simple example can be found below:
+To do so, check the `isKilled` flag of the flow. Use the example below to see how this is done:
 
 {{< tabs name="tabs-35" >}}
 {{% tab name="kotlin" %}}
@@ -2335,7 +2333,7 @@ public Void call() {
 {{% /tab %}}
 {{< /tabs >}}
 
-The loop is escaped by checking the `isKilled` flag and throwing an exception if the flow has been killed.
+The function exits the loop by checking the isKilled flag and throwing an exception if the flow has been killed.
 
 There are also two overloads of `checkFlowIsNotKilled` that simplify the code above:
 
