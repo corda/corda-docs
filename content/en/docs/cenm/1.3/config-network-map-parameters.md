@@ -31,9 +31,9 @@ See [CENM Database Configuration](config-database.md)
 Details on how the service will communicate with the rest of the ENM deployment.
 <!-- Is ENM spelt out ealier in this doc?-->
   * **port**:
-  Port that the service will bind to and other ENM components will connect to.
+  The port that the service will bind to, and other CENM components will connect to.
   * **verbose**:
-  *(Optional)* Enables verbose logging for the socket layer
+  *(Optional)* Enables verbose logging for the socket layer.
   * **reconnect**:
   Informs whether a client should attempt to reconnect if the connection is dropped.
   * **ssl**:
@@ -45,31 +45,31 @@ How often nodes registering with the network map should check back for new entri
 * **identityManager**:
 Details where the issuance service is on the network
   * **host**:
-  The host the Identity Manager is running on
+  The host the Identity Manager Service is running on.
   * **port**:
-  The port that its enmListener is bound to
+  The port that its `enmListener` is bound to.
   * **ssl**:
-  See [SSL Settings](config-ssl.md)
+  See [SSL Settings](config-ssl.md) for details.
 * **revocation**:
 Details where the revocation service is on the network
   * **host**:
-  The host that the Identity Manager is running on
+  The host that the Identity Manager Service is running on.
   * **port**:
-  The port that its enmListener is bound to
+  The port that its `enmListener` is bound to.
   * **ssl**:
   See [SSL Settings](config-ssl.md)
 * **localSigner**:
 *(Optional)* Configuration of the local signer for the Network Map service. Useful for debugging, testing or when HSM support is not available.
   * **keyStore**:
-  Configuration for key store containing the Network Map key pair.
+  Configuration for key store containing the Network Map Service key pair.
     * **file**:
-    Path to the key store file containing the signing keys for the Network Map service.
+    The path to the key store file containing the signing keys for the Network Map Service.
     * **password**:
-    Key store password.
+    The key store password.
     * **keyAlias**:
-    Key alias under which the key can be found in the key store.
+    The key alias under which the key can be found in the key store.
     * **keyPassword**:
-    Password for the ‘keyAlias’ key entry within the key store.
+    The password for the ‘keyAlias’ key entry within the key store.
   * **signInterval**:
   The number of times the signing process should be triggered (in milliseconds).
   * **timeout**:
@@ -109,11 +109,11 @@ version of Corda that does not support the new PKI (arbitrary length certificate
   * **port**:
     Port number to listen to for Admin RPC connections.
   * **verbose**:
-    *(Optional)* Enables verbose logging for the socket layer. Defaults to false.
+    *(Optional)* Enables verbose logging for the socket layer. Defaults to `false`.
   * **reconnect**:
-    *(Optional)* Determines if a client should attempt to reconnect if the connection is dropped. Defaults to true.
+    *(Optional)* Determines if a client should attempt to reconnect if the connection is dropped. Defaults to `true`.
   * **ssl**:
-    See [SSL Settings](config-ssl.md)
+    See [SSL Settings](config-ssl.md) for details.
 
 {{% important %}}
 If the `adminListener` property is present in the configuration, this means that the service must only be used via Admin RPC. In this case, the `shell` configuration property will be disabled. The `shell` and `adminListener` properties cannot be used in the configuration at the same time.
@@ -129,8 +129,8 @@ If the `adminListener` property is present in the configuration, this means that
   * **trustStore**:
   Trust store configuration for the SSL PKI root of trust.
     * **location**:
-    Location on the file system of the keystore containing the SSL PKI root of trust.
+    The location in the file system of the keystore containing the SSL PKI root of trust.
     * **password**:
-    password for the trust root keystore.
+    The password for the trust root keystore.
   * **issuer**: The \"iss\" claim in the JWT - needs to be set to the same value as in the Auth Service's configuration. Required unless authentication is disabled.
   * **leeway**: Defines the amount of time, in seconds, allowed when checking JSON Web Token (JWT) issuance and expiration times. Required unless authentication is disabled. We recommend a default time of **10 seconds**.

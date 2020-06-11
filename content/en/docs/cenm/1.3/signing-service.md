@@ -746,29 +746,29 @@ string and is used only within the configuration to map the service locations to
 * **enmService**:
 The connection details for the CENM service that acts as the data source
   * **host**:
-  Host name (or IP address) that the CENM service is running on
+  The host name (or IP address) that the CENM service is running on.
   * **port**:
-  Port that the CENM service is listening on (for inter-ENM communication)
+  The port that the CENM service is listening on (for inter-ENM communication).
   * **verbose**:
-  Boolean representing whether debug information for the IPC between the Signer and the remote service
+  A boolean parameter that determines whether debug information for the IPC between the Signing Service and the remote service
   should be displayed.
   * **ssl**:
   *(Optional)* SSL Information for connection with the CENM service.
     * **keyStore**:
-    Key store configuration for the Signing Service SSL key pair.
+    The key store configuration for the Signing Service SSL key pair.
     * **location**:
-    Location on the file system of the keystore containing the SSL public / private keypair
+    The location in the file system of the keystore containing the SSL public / private key pair.
     of the Signing Service.
     * **password**:
-    password for the keyStore
+    The password for the keystore.
     * **keyPassword**:
-    *(Optional)* Password for the keypair, can be omitted if the same as the keystore.
+    *(Optional)* The password for the key pair - can be omitted if it is the same as the keystore password.
 * **trustStore**:
 Trust store configuration for the SSL PKI root of trust.
   * **location**:
-  Location on the file system of the keystore containing the SSL PKI root of trust.
+  The location in the file system of the keystore containing the SSL PKI root of trust.
   * **password**:
-  password for the trust root keystore.
+  The password for the trust root keystore.
 
 
 
@@ -1973,7 +1973,7 @@ See [EJBCA Sample Plugin](ejbca-plugin.md) for sample open source CA implementat
 
 ### Admin RPC Interface
 
-To enable the CENM CLI to send commands to the Signing Service,
+To enable the CENM Command-Line Interface (CLI) tool to send commands to the Signing Service,
 you must enable the RPC API by defining a configuration property called `adminListener`.
 
 For example, add the following to the service configuration:
