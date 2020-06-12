@@ -129,7 +129,7 @@ If the `adminListener` property is present in the configuration, this means that
   * **trustStore**:
   Trust store configuration for the SSL PKI root of trust.
     * **location**:
-    The location in the file system of the keystore containing the Auth service root of trust.
+    The location in the file system of the keystore containing the Auth Service root of trust.
     * **password**:
     The password for the trust root keystore.
   * **issuer**: The \"iss\" claim in the JWT - you must set the same value as in the Auth Service's configuration. Required unless authentication is disabled.

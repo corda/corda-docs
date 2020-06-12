@@ -68,7 +68,7 @@ Signing Service can be used to manage several networks/sub-zones.
 
 Due to security concerns, the signing service should be hosted on private premises, **not** in a cloud environment. As
 mentioned above, the only communication requirements are outgoing connections to the CENM services as data sources
-or outgoing connection to SMR service configured as data source which then connects to CENM services (Identity Manager and Network Maps), and outgoing connections to the HSMs
+or outgoing connection to SMR Service configured as data source which then connects to CENM services (Identity Manager and Network Maps), and outgoing connections to the HSMs
 for the configured signing keys. The overall flow of communication can be seen in the below diagram:
 
 ![signing service communication](/en/images/signing-service-communication.png "signing service communication")
@@ -130,7 +130,7 @@ output all tasks that can be run along with their schedule, if applicable.
 
 ### Perform A Health Check
 
-To verify that all configured CENM data sources or a single SMR service data source are reachable by the Signing Service, a health check can be performed
+To verify that all configured CENM data sources or a single SMR Service data source are reachable by the Signing Service, a health check can be performed
 by running the `run clientHealthCheck`. This will iteratively run through each service, sending a simple ping message
 and verifying a successful response. Any unsuccessful connection attempts will be displayed to the console. This method
 is especially useful after the initial setup to verify that the Signing and CENM services have been configured
@@ -301,7 +301,7 @@ data and persisting the signed data needs to be defined. This is ENM location of
 Material Retriever Service.
 
 {{< note >}}
-Communication with the configured SMR service location can be configured to use SSL for a secure, encrypted
+Communication with the configured SMR Service location can be configured to use SSL for a secure, encrypted
 connection. This is strongly recommended for production deployments. See [Configuring the ENM services to use SSL](enm-with-ssl.md) for more
 information.
 
@@ -784,15 +784,15 @@ Locations, then `nonCaSmrLocation` replaces non CA related inputs of `serviceLoc
 
 
 * **caSmrLocation**:
-The connection details for the CA part of SMR service that acts as the data source
+The connection details for the CA part of SMR Service that acts as the data source
 
 
 * **host**:
-Host name (or IP address) that the CA part of SMR service is running on
+Host name (or IP address) that the CA part of SMR Service is running on
 
 
 * **port**:
-Port that the CA part of SMR service is listening on (for inter-ENM communication)
+Port that the CA part of SMR Service is listening on (for inter-ENM communication)
 
 
 * **verbose**:
@@ -801,7 +801,7 @@ should be displayed.
 
 
 * **ssl**:
-*(Optional)* SSL Information for connection with the CA part of SMR service.
+*(Optional)* SSL Information for connection with the CA part of SMR Service.
 
 
 * **keyStore**:
@@ -842,7 +842,7 @@ password for the trust root keystore.
 
 
 * **nonCaSmrLocation**:
-Same as per **caSmrLocation**, just for the non CA part of the SMR service
+Same as per **caSmrLocation**, just for the non CA part of the SMR Service
 
 
 
@@ -1401,7 +1401,7 @@ SMR Service started
 
 ### SMR Configuration
 
-The configuration of the SMR service consists of the following two components:
+The configuration of the SMR Service consists of the following two components:
 
 
 * [CENM service locations](#cenm-service-locations) which determine SMR’s data sources
@@ -1415,7 +1415,7 @@ defined. One data source could be potentially used across multiple material mana
 as a map of human-readable aliases (referenced by the material management task configuration) to ENM service locations.
 
 {{< note >}}
-Communication with the configured SMR service location can be configured to use SSL for a secure, encrypted
+Communication with the configured SMR Service location can be configured to use SSL for a secure, encrypted
 connection. This is strongly recommended for production deployments. See [Configuring the ENM services to use SSL](enm-with-ssl.md) for more
 information.
 
@@ -1576,7 +1576,7 @@ class must implement `CASigningPlugin` or `NonCASigningPlugin` interface dependi
 it will handle.
 
 Both interfaces extend common `StartablePlugin` interface containing a single method `start()`. The method is run by
-SMR service upon the service start-up and it’s intended to contain plugin’s initialization code (e.g. a database
+SMR Service upon the service start-up and it’s intended to contain plugin’s initialization code (e.g. a database
 connection initialization).
 
 ```java
