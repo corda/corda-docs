@@ -189,7 +189,7 @@ and Revocation services cannot be known by the upgrader.
 {{< warning >}}
 If you require private network functionality or node certificate revocation checking then the configuration
 should be updated to include the appropriate settings. See the *Doorman & Revocation Communication* section
-of the [Network Map Service](network-map.md) doc for more information.
+of the [Network Map Service](network-map.md) document for more information.
 
 {{< /warning >}}
 
@@ -213,7 +213,7 @@ configuration modification. See [Signing Services](signing-service.md) for more 
 
 When setting network parameters, the Network Map Service cannot validate the proposed notary certificates using the Doorman database.
 Hence the trusted root certificate now needs to be passed during setting of parameters.
-See the “Setting the Network Parameters” section of the [Network Map Service](network-map.md) doc for more information.
+See the “Setting the Network Parameters” section of the [Network Map Service](network-map.md) document for more information.
 
 
 ## 0.1 to 0.2.1
