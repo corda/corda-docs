@@ -24,7 +24,7 @@ the previous release, see [Upgrading Corda Enterprise Network Manager](upgrade-n
 * CENM is now built against Corda 4.3; this has no implications on supported versions of Corda,
   but does update dependencies of the built code.
 * Introduce Angel and Zone Services
-  * Default SMR plugin now requires authentication service configuration
+  * Default SMR plugin now requires Auth Service configuration
 
 ## CENM 1.2
 
