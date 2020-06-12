@@ -375,7 +375,7 @@ The `reconnect` parameter is optional - it will default to `reconnect = true` if
 If the `adminListener` property is present in the configuration, this means that the service must only be used via Admin RPC. In this case, the `shell` configuration property will be disabled. The `shell` and `adminListener` properties cannot be used in the configuration at the same time.
 {{% /important %}}
 
-The admin RPC interface requires an authentication and authorisation service to verify
+The admin RPC interface requires an Auth Service to verify
 requests, which must be configured below in a `authServiceConfig` block. Typically
 this is provided automatically by the Zone Service (via an Angel Service),
 however an example is provided below for reference:

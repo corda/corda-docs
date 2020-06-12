@@ -142,7 +142,7 @@ If the `adminListener` property is present in the configuration, this means that
 {{% /important %}}
 
 * **authServiceConfig**:
-  The admin RPC interface requires an authentication and authorisation service to verify
+  The admin RPC interface requires an Auth Service to verify
   requests, which must be configured below in a `authServiceConfig` block. Typically
   this is provided automatically by the [Zone Service](zone-service.md) (via an Angel Service),
   however the parameters are detailed below for reference:
