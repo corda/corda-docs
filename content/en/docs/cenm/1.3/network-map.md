@@ -315,7 +315,7 @@ Enabling this option requires communication with the Revocation service to be co
 
 {{< /note >}}
 
-### ENM Internal Server
+### CENM Internal Server
 
 To enable communication between the Network Map Service and other network management services, such as Revocation and
 Identity Manager servers, upon start up the Network Map Service will create an internal long running listening server.
@@ -336,7 +336,7 @@ The `reconnect` parameter is optional - it will default to `reconnect = true` if
 {{< /note >}}
 
 {{< note >}}
-All inter-service communication can be configured with SSL support. See [Configuring the ENM services to use SSL](enm-with-ssl.md).
+All inter-service communication can be configured with SSL support. See [Configuring the CENM services to use SSL](enm-with-ssl.md).
 {{< /note >}}
 
 
@@ -426,7 +426,7 @@ The `host` should correspond to the host part of the `address` value in the Iden
 the service’s configuration. See [Network Map Configuration Parameters](config-network-map-parameters.md) for more information.
 
 {{< note >}}
-All inter-service communication can be configured with SSL support. See [Configuring the ENM services to use SSL](enm-with-ssl.md)
+All inter-service communication can be configured with SSL support. See [Configuring the CENM services to use SSL](enm-with-ssl.md)
 
 {{< /note >}}
 

@@ -93,7 +93,7 @@ The Zone Service also sets the Sub Zone ID (`authObjectId`) for the Network Map 
 
 ### Signing Services configuration
 
-The service locations for the Signing Services are set by the Zone Service using the external addresses and the ENM ports configured for the Identity Manager Service and Network Map Service. Any service locations provided in Signing Services configurations, sent to the Zone Service, are overwritten.
+The service locations for the Signing Services are set by the Zone Service using the external addresses and the CENM ports configured for the Identity Manager Service and Network Map Service. Any service locations provided in Signing Services configurations, sent to the Zone Service, are overwritten.
 
 The SSL client settings used when connecting to these services are set uniformly
 across all service locations, and are taken from the first of any service location

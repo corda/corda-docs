@@ -21,7 +21,7 @@ title: Release notes
 * TODO: Describe obfuscator update work
 
 * Angel and Zone Services have been introduced to manage configuration of other
-  ENM services. The Zone Service stores configuration values provided by an
+  CENM services. The Zone Service stores configuration values provided by an
   operator via a web or command line user interface, and these are retrieved
   by an Angel Service deployed alongside the Identity Manager or Network Map
   Services. For further information on these services see
@@ -245,7 +245,7 @@ customized with the configuration file. See [Public Key Infrastructure (PKI) Too
 **Full End to End SSL communication**
 
 All CENM components now communicate over SSL with one another, this completes the removal of the “database as message
-queue” of older versions. See [Configuring the ENM services to use SSL](enm-with-ssl.md) for more information.
+queue” of older versions. See [Configuring the CENM services to use SSL](enm-with-ssl.md) for more information.
 
 **Security And Performance Fixes**
 

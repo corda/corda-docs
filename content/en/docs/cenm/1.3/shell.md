@@ -170,7 +170,7 @@ The current supported commands that can be run from the shell are:
     @RunCommand
     fun purgeAllStagedNodeInfos()
 
-    @Description(description = "Test connections to the configured ENM services",
+    @Description(description = "Test connections to the configured CENM services",
                  example = "run clientHealthCheck")
     @RunCommand
     fun clientHealthCheck()
@@ -272,7 +272,7 @@ The current supported commands that can be run from the shell are:
     @RunCommand
     fun signer(name: String)
 
-    @Description(description = "Test connections to the configured ENM services",
+    @Description(description = "Test connections to the configured CENM services",
                  example = "run clientHealthCheck")
     @RunCommand
     fun clientHealthCheck()

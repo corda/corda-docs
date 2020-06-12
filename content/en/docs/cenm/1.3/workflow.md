@@ -16,7 +16,7 @@ title: Workflow
 # Workflow
 
 The certificate signing request and certificate revocation request workflow can be extended by custom workflow plugin.
-This can be used to synchronise statuses and interact between the ENM workflow and external workflow/ticketing system
+This can be used to synchronise statuses and interact between the CENM workflow and external workflow/ticketing system
 like JIRA.
 
 
@@ -107,7 +107,7 @@ workflows {
 ## Creating a workflow plugin
 
 The workflow plugin must extend `WorkflowPlugin` for certificate signing request or certificate revocation request respectively, issuance and revocation workflows
-can be configured with specific plugin classes as per the configuration shown above. The plugin will need to be made available to the ENM process by including the plugin `.jar` in the classpath.
+can be configured with specific plugin classes as per the configuration shown above. The plugin will need to be made available to the CENM process by including the plugin `.jar` in the classpath.
 This can be done by specifying the `.jar` path via the `pluginJar` configuration option.
 
 {{< note >}}

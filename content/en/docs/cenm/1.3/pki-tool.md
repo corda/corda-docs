@@ -460,7 +460,7 @@ This will create a `.jar` called `azure-keyvault-with-deps.jar` which can be ref
 
 ##### Generating SSL Keys
 
-As outlined in the [Configuring the ENM services to use SSL](enm-with-ssl.md) doc, all inter-service CENM communication can be configured to encrypt their
+As outlined in the [Configuring the CENM services to use SSL](enm-with-ssl.md) doc, all inter-service CENM communication can be configured to encrypt their
 messages via SSL. This feature requires the operator to provide a set of SSL key pairs and certificates to each service,
 which can be generated using the PKI tool.
 

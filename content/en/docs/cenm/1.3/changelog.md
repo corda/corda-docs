@@ -92,7 +92,7 @@ the future versioning of both independently.
 * Removed bundled mssql jdbc driver
 
 
-## ENM 0.4
+## CENM 0.4
 
 
 * Fixed Jira synchronisation issue for the rejected CSR/CRRs.

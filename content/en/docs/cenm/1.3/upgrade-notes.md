@@ -151,7 +151,7 @@ Once this has been done the following steps should be followed to upgrade the se
 
 * Stop the current service to prevent new information being persisted to the old database.
 * Use the 0.3 utility `.jar` to migrate the data from the old database to the new database.
-* Swap out the old `.jar` for the new 0.3 ENM jar and updated the service configuration to point to the new database.
+* Swap out the old `.jar` for the new 0.3 CENM jar and updated the service configuration to point to the new database.
 * Restart the service.
 
 For example for the Doorman service:
@@ -164,7 +164,7 @@ via the above process they will be fully functional:
 
 ![separated services](/en/images/separated-services.png "separated services")
 
-### Other Required Changes
+### Other required changes
 
 Separation of the schemas has also introduced some necessary modifications to existing processes and configuration
 files. Most Notably:
@@ -177,9 +177,9 @@ id during its registration request to the Doorman (if configured on the node sid
 separation of Doorman and the Network Map Service is that when a node submits its NodeInfo to a Network Map Service,
 the Network Map Service needs to communicate with the Doorman service as it can no longer do the direct lookup of a
 node’s private network membership from within the Doorman database. This is facilitated via a new internal *ENM server* that
-lives within each ENM service.
+lives within each CENM service.
 
-In case of a deployment scenario involving ENM upgrade from version prior to 0.3, the configuration file for the
+In case of a deployment scenario involving CENM upgrade from version prior to 0.3, the configuration file for the
 The Network Map Service can be automatically upgraded using the configuration upgrade tool or the `--config-is-old` flag.
 In the case of the Network Map Service, the configuration parameters `privateNetworkAutoEnrolment` and `checkRevocation`
 are defaulted to false, therefore switching this behaviour off. This is because the exact endpoints for the Doorman

@@ -74,7 +74,7 @@ for the configured signing keys. The overall flow of communication can be seen i
 ![signing service communication](/en/images/signing-service-communication.png "signing service communication")
 {{< note >}}
 All inter-service communication can be configured with SSL support to ensure the connection is encrypted. See
-[Configuring the ENM services to use SSL](enm-with-ssl.md)
+[Configuring the CENM services to use SSL](enm-with-ssl.md)
 
 {{< /note >}}
 {{< note >}}
@@ -154,7 +154,7 @@ The configuration for the Signing Service consists of the following sections:
 #### Shell Configuration
 
 The Signing Service is interacted with via the shell, which is configured at the top level of the configuration file. This
-shell is similar to the interactive shell available in other ENM services and is configured in a similar way. See
+shell is similar to the interactive shell available in other CENM services and is configured in a similar way. See
 [Shell Configuration](shell.md#shell-config) for more information on how to configure the shell.
 
 
@@ -281,12 +281,12 @@ More detailed descriptions of how to configure a signing key can be found in the
 
 For each signing task, the data source for getting the unsigned data and persisting the signed data needs to be defined.
 Similarly to the signing keys above, one data source could potentially be used across multiple signing tasks, hence they
-are configured as a map of human-readable aliases (referenced by the signing task configuration) to ENM service
+are configured as a map of human-readable aliases (referenced by the signing task configuration) to CENM service
 locations.
 
 {{< note >}}
 Communication with the configured service locations can be configured to use SSL for a secure, encrypted
-connection. This is strongly recommended for production deployments. See [Configuring the ENM services to use SSL](enm-with-ssl.md) for more
+connection. This is strongly recommended for production deployments. See [Configuring the CENM services to use SSL](enm-with-ssl.md) for more
 information.
 
 {{< /note >}}
@@ -294,15 +294,15 @@ information.
 #### Indirect data source via SMR Service Location
 
 For all CA related signing tasks (CSRs and CRLs), a global data source for getting the unsigned data and persisting the
-signed data needs to be defined. This is ENM location of CA related part of Signable Material Retriever Service.
+signed data needs to be defined. This is CENM location of CA related part of Signable Material Retriever Service.
 
 For all non CA related signing tasks (Network Maps and Network Parameters), a global data source for getting the unsigned
-data and persisting the signed data needs to be defined. This is ENM location of non CA related part of Signable
+data and persisting the signed data needs to be defined. This is CENM location of non CA related part of Signable
 Material Retriever Service.
 
 {{< note >}}
 Communication with the configured SMR Service location can be configured to use SSL for a secure, encrypted
-connection. This is strongly recommended for production deployments. See [Configuring the ENM services to use SSL](enm-with-ssl.md) for more
+connection. This is strongly recommended for production deployments. See [Configuring the CENM services to use SSL](enm-with-ssl.md) for more
 information.
 
 {{< /note >}}
@@ -480,7 +480,7 @@ below for the expected format.
 
 
 * **serviceLocations**:
-Map of human-readable aliases (string) to ENM service location configurations. Should contain all
+Map of human-readable aliases (string) to CENM service location configurations. Should contain all
 services that are used within the signing processes defined in the signers map. See the
 [service location map entry example](#service-location-map-entry-example) below for the expected format.
 
@@ -492,7 +492,7 @@ service location configuration.
 
 * **nonCaSmrLocation**:
 *(Optional, use instead of non CA related serviceLocations)* Non CA part of Signable Material
-Retriever ENM service location configuration.
+Retriever CENM service location configuration.
 
 
 * **signers**:
@@ -954,7 +954,7 @@ signingKeys = {
 }
 
 ##########################################################
-# All ENM service endpoints for fetching/persisting data #
+# All CENM service endpoints for fetching/persisting data #
 ##########################################################
 serviceLocations = {
     "identity-manager" = {
@@ -1182,7 +1182,7 @@ signingKeys = {
 }
 
 ##########################################################
-# All ENM service endpoints for fetching/persisting data #
+# All CENM service endpoints for fetching/persisting data #
 ##########################################################
 caSmrLocation = {
     host = localhost
@@ -1286,7 +1286,7 @@ signingKeys = {
 }
 
 ##########################################################
-# All ENM service endpoints for fetching/persisting data #
+# All CENM service endpoints for fetching/persisting data #
 ##########################################################
 caSmrLocation = {
     host = localhost
@@ -1412,11 +1412,11 @@ The configuration of the SMR Service consists of the following two components:
 
 For each material management task, the data source for getting the unsigned data and persisting signed data must be
 defined. One data source could be potentially used across multiple material management tasks, hence they are configured
-as a map of human-readable aliases (referenced by the material management task configuration) to ENM service locations.
+as a map of human-readable aliases (referenced by the material management task configuration) to CENM service locations.
 
 {{< note >}}
 Communication with the configured SMR Service location can be configured to use SSL for a secure, encrypted
-connection. This is strongly recommended for production deployments. See [Configuring the ENM services to use SSL](enm-with-ssl.md) for more
+connection. This is strongly recommended for production deployments. See [Configuring the CENM services to use SSL](enm-with-ssl.md) for more
 information.
 
 {{< /note >}}

@@ -323,8 +323,8 @@ external signing service.
 
 Similarly to the other Enterprise Network Manager (ENM) services, the Identity Manager is designed to be able to communicate between other services
 such as the Network Map and Signing services. Both the Issuance and, optionally, the Revocation workflows have their own
-internal listening socket interface that is created on startup which can receive and respond to messages from other ENM services.
-For example, the Revocation workflow’s ENM listener can respond to messages from the Network Map regarding certificate
+internal listening socket interface that is created on startup which can receive and respond to messages from other CENM services.
+For example, the Revocation workflow’s CENM listener can respond to messages from the Network Map regarding certificate
 statuses of current participants which the Network Map Service will then use when refreshing the latest Network Map.
 
 To configure this internal server, the configuration block `enmListener` should be added within the Issuance
@@ -350,7 +350,7 @@ This parameter can be omitted if desired, in which case it will default to port 
 
 {{< /note >}}
 {{< note >}}
-All inter-service communication can be configured with SSL support. See [Configuring the ENM services to use SSL](enm-with-ssl.md).
+All inter-service communication can be configured with SSL support. See [Configuring the CENM services to use SSL](enm-with-ssl.md).
 
 {{< /note >}}
 
@@ -530,7 +530,7 @@ This parameter can be omitted if desired, in which case it will default to port 
 
 {{< /note >}}
 {{< note >}}
-All inter-service communication can be configured with SSL support. See [Configuring the ENM services to use SSL](enm-with-ssl.md).
+All inter-service communication can be configured with SSL support. See [Configuring the CENM services to use SSL](enm-with-ssl.md).
 
 {{< /note >}}
 

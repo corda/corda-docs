@@ -28,8 +28,7 @@ See [CENM Database Configuration](config-database.md)
 * **shell**:
 *(Optional)*  See [Shell Configuration Parameters](config-shell.md)
 * **enmListener**:
-Details on how the service will communicate with the rest of the ENM deployment.
-<!-- Is ENM spelt out ealier in this doc?-->
+Details on how the service will communicate with the rest of the CENM deployment.
   * **port**:
   The port that the service will bind to, and other CENM components will connect to.
   * **verbose**:

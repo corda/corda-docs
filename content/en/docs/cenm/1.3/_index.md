@@ -26,7 +26,7 @@ The *Corda Enterprise Network Manager* provides three main services:
 * [Signing Services](signing-service.md) - Provides a way to sign approved requests to join the network (CSRs) or revoke a certificate  (CRRs) as well as changes to the network map.
  <!-- CSRs and CRRs - are these spelt out anywhere? if not, spell these out here followed by the abbreviations in brackets as shown above/ -->
 
-For a quick start guide on running the ENM services see [Enterprise Network Manager Quick-Start Guide](quick-start.md).
+For a quick start guide on running the CENM services see [Enterprise Network Manager Quick-Start Guide](quick-start.md).
 
 
 Concepts and Overview
@@ -80,7 +80,7 @@ Configuration
 * [Identity Manager Configuration Parameters](config-identity-manager-parameters.md)
 * [Network Map Configuration Parameters](config-network-map-parameters.md)
 * [Network Parameters](config-network-parameters.md)
-* [Configuring the ENM services to use SSL](enm-with-ssl.md)
+* [Configuring the CENM services to use SSL](enm-with-ssl.md)
 * [Workflow](workflow.md)
 
 
