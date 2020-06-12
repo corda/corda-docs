@@ -1522,7 +1522,7 @@ serviceLocations = {
 }
 
 materialManagementTasks = {
-    # Assuming Signer Service configuration contains alias "CSR" in "signers" map.
+    # Assuming Signing Service configuration contains alias "CSR" in "signers" map.
     "CSR" = {
         type = CSR
         location = "identity-manager"
@@ -1532,7 +1532,7 @@ materialManagementTasks = {
         pluginJar = "plugin/smr-default-plugin-ca-1.2.0.jar"
         pluginClass = "com.r3.enm.smrplugins.defaultplugin.ca.CASMRSigningPlugin"
     }
-    # Assuming Signer Service configuration contains alias "CRL" in "signers" map.
+    # Assuming Signing Service configuration contains alias "CRL" in "signers" map.
     "CRL" = {
         type = CRL
         location = "revocation"
@@ -1542,7 +1542,7 @@ materialManagementTasks = {
         pluginJar = "plugin/smr-default-plugin-ca-1.2.0.jar"
         pluginClass = "com.r3.enm.smrplugins.defaultplugin.ca.CASMRSigningPlugin"
     }
-    # Assuming Signer Service configuration contains alias "NetMap" in "signers" map.
+    # Assuming Signing Service configuration contains alias "NetMap" in "signers" map.
     "NetMap" = {
         type = NETWORK_MAP
         location = "network-map"
@@ -1552,7 +1552,7 @@ materialManagementTasks = {
         pluginJar = "plugin/smr-default-plugin-nonca-1.2.0.jar"
         pluginClass = "com.r3.enm.smrplugins.defaultplugin.nonca.NonCASMRSigningPlugin"
     }
-    # Assuming Signer Service configuration contains alias "Params" in "signers" map.
+    # Assuming Signing Service configuration contains alias "Params" in "signers" map.
     "Params" = {
         type = NETWORK_PARAMETERS
         location = "network-map"

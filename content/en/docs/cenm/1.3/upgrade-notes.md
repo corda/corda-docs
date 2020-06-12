@@ -48,7 +48,7 @@ We also strongly recommend cross referencing with the [Changelog](changelog.md) 
 >
 > The upgrade process is otherwise just a drop-in replacement of the existing JARs with `<service>-1.2.jar`.
 > Ensure you stop the services before replacing the JAR files.
-> Network Map and Signer services may not shut down properly when using shell command `shutdown`, ensure that there are no
+> Network Map and Signing Services may not shut down properly when using shell command `shutdown`, ensure that there are no
 > orphan processes running after shout down. This may specifically impact the services using H2 database,
 > as an orphan process locks a H2 database file.
 
