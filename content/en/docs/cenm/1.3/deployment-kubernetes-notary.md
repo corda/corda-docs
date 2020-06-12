@@ -49,7 +49,7 @@ helm install notary notary --set shell.password="superDifficultPassword"
 | `dataSourceProperties.dataSource.user`               | Notary database connection details | `sa` |
 | `dataSourceProperties.dataSource.dataSourceClassName`   | Notary database connection details | `org.h2.jdbcx.JdbcDataSource` |
 | `cordaJarMx`                  | Initial value for memory allocation (GB) | `1` |
-| `jarPath`                     | Path to a folder which contains Notary jar files | `bin` |
+| `jarPath`                     | Path to a folder which contains Notary `.jar` files | `bin` |
 | `configPath`                  | Path to a folder which contains Notary configuration file | `etc` |
 
 For additional information on database connection details refer to the [Corda database documentation](../../corda-os/4.4/corda-configuration-file.md#configuration-file-fields).

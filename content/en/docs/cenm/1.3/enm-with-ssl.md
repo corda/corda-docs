@@ -243,7 +243,7 @@ revocation = {
 
 The following configuration files configure a small test deployment of the ENM suite of tools on a single machine.
 This is why all of the services are binding to localhost and can refer to a central location for the PKI and
-SSL certificates as well as the JAR files.
+SSL certificates as well as the `.jar` files.
 
 
 ### Identity Manager and Revocation Service

@@ -141,7 +141,7 @@ that should be included here are:
 
 
 * `driverClassName` - the DB driver class name (e.g *com.microsoft.sqlserver.jdbc.SQLServerDriver* for Microsoft SQL Server, *org.postgresql.Driver* for postgres)
-* `jdbcDriver` - the path to the appropriate JDBC driver jar (e.g *path/to/mssql-jdbc-7.2.2.jre8.jar*)
+* `jdbcDriver` - the path to the appropriate JDBC driver `.jar` (e.g *path/to/mssql-jdbc-7.2.2.jre8.jar*)
 * `url` - the connection string for the DB
 * `user` - the username for the DB
 * `password` - the password for the DB

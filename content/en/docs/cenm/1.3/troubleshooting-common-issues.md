@@ -157,9 +157,9 @@ When starting up SMR Service it throws `java.lang.NoClassDefFoundError`.
 
 ### Solution
 
-Make sure that the given ".jar" file path in the SMR config under `pluginJar` property is correct.
+Make sure that the given `.jar` file path in the SMR config under `pluginJar` property is correct.
 Similarly check class names correctly (i.e. copy & paste rather than manually typing), as they must match exactly.
-Also make sure that the given ".jar" file does not attempt to use invalid or non-existent dependencies.
+Also make sure that the given `.jar` file does not attempt to use invalid or non-existent dependencies.
 
-If a class in the ".jar" file tries to import a class that does not exist the SMR will not be able to load the JAR
+If a class in the `.jar` file tries to import a class that does not exist the SMR will not be able to load the `.jar`
 and throw this error.

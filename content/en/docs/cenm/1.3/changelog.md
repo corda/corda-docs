@@ -87,7 +87,7 @@ the future versioning of both independently.
 * Added contextual logging mechanism.
 * Moved private network management tools into the Network Map interactive shell.
 * Added multi-phase config parsing.
-* Separated Identity Manager, Network Map, Signing Service into stand-alone JARs.
+* Separated Identity Manager, Network Map, Signing Service into stand-alone `.jar` files.
 * Renaming of Doorman to Identity Manager.
 * Removed bundled mssql jdbc driver
 
@@ -100,6 +100,6 @@ the future versioning of both independently.
 * Added certificate signing request rejection reasons to the node’s rejection response.
 * Added certificate signing request rejection reasons handling for the JIRA workflow.
 * Signing Service -> Doorman socket based communication added.
-* Added client and server health check tools to the utilities JAR
+* Added client and server health check tools to the utilities `.jar`
 * Change of the naming convention Enterprise Zone Manager -> Enterprise Network Manager.
 * Added packageOwnership map to the network parameters config

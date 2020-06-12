@@ -31,8 +31,8 @@ We also strongly recommend cross referencing with the [Changelog](changelog.md) 
   Ensure the Identity Manager is configured to perform this migration
   by setting ``runMigration`` property to ``true``.
 
-  The upgrade process is otherwise just a drop-in replacement of the existing ".jar" files with ``<service>-1.2.1.jar``.
-  Ensure you stop the service before replacing the ".jar" files.
+  The upgrade process is otherwise just a drop-in replacement of the existing `.jar` files with ``<service>-1.2.1.jar``.
+  Ensure you stop the service before replacing the `.jar` files.
   Ensure that there are no orphan processes running after shout down.
 
 ## 1.1 to 1.2.1
@@ -46,8 +46,8 @@ We also strongly recommend cross referencing with the [Changelog](changelog.md) 
 > upon each service startup. Ensure the Identity Manager and Network Map are configured to perform this migration
 > by setting `runMigration` property to `true`.
 >
-> The upgrade process is otherwise just a drop-in replacement of the existing ".jar" files with `<service>-1.2.jar`.
-> Ensure you stop the services before replacing the ".jar" files.
+> The upgrade process is otherwise just a drop-in replacement of the existing `.jar` files with `<service>-1.2.jar`.
+> Ensure you stop the services before replacing the `.jar` files.
 > Network Map and Signing Services may not shut down properly when using shell command `shutdown`, ensure that there are no
 > orphan processes running after shout down. This may specifically impact the services using H2 database,
 > as an orphan process locks a H2 database file.
@@ -78,7 +78,7 @@ database {
  }
 ```
 
-This step doesn’t relate to Signing Service as it doesn’t use a database.The upgrade process is just a drop-in replacement of the existing ".jar" files with `<service>-1.1.1.jar`.
+This step doesn’t relate to Signing Service as it doesn’t use a database.The upgrade process is just a drop-in replacement of the existing `.jar` files with `<service>-1.1.1.jar`.
 Ensure to stop the services before replacing the `.jar` files.
 * **Dynamic loading of HSM `.jar` files**
 CENM 1.1 supports multiple HSMs, however due to to the proprietary nature of the HSM libraries, the release does
@@ -108,7 +108,7 @@ as opposed to a command-line tool with one-shot execution. Signing tasks are con
 supplied to the new Signing Service on start-up. Configure the Signing Service to perform any existing
 signing tasks by referencing the Signing Service documentation.
 * **SQL Server**If you’re currently using Microsoft SQL server then, in previous versions of CENM, this worked out of the
-box because the JDBC driver jar was shipped as part of the CENM distributable. This is no longer the case
+box because the JDBC driver `.jar` was shipped as part of the CENM distributable. This is no longer the case
 as CENM expands to support more databases it becomes impractical to do this, it also allows upgrading the
 driver version to be done without shipping a new version of CENM.Using the new database configuration section, you should configure you persistence layer as follows:```guess
 database {
@@ -150,8 +150,8 @@ Once this has been done the following steps should be followed to upgrade the se
 
 
 * Stop the current service to prevent new information being persisted to the old DB.
-* Use the 0.3 utility jar to migrate the data from the old DB to the new DB.
-* Swap out the old jar for the new 0.3 ENM jar and updated the service configuration to point to the new DB.
+* Use the 0.3 utility `.jar` to migrate the data from the old DB to the new DB.
+* Swap out the old `.jar` for the new 0.3 ENM jar and updated the service configuration to point to the new DB.
 * Restart the service.
 
 For example for the Doorman service:
@@ -226,7 +226,7 @@ There are two ways to upgrade your old 0.1 network services environment:
 
 ### Without Upgrading Your Configuration
 
-The 0.2.1 Doorman/Network Map Service and Signing Service ".jar" files will work in place of their 0.1 counterparts, but
+The 0.2.1 Doorman/Network Map Service and Signing Service `.jar` files will work in place of their 0.1 counterparts, but
 require an additional `--config-is-old` command line flag to be passed upon startup. This allows you to use you old
 configuration files without and further steps. For example:
 

@@ -45,7 +45,7 @@ CENM currently supports the following databases:
 * Oracle 11gR2 (Oracle JDBC 6)
 * Oracle 12cR2 (Oracle JDBC 8)
 
-The appropriate JDBC driver JAR file must be provided and its location should be specified in the service configuration.
+The appropriate JDBC driver `.jar` file must be provided and its location should be specified in the service configuration.
 
 {{< warning >}}
 H2 database should only be used for testing. The JDBC driver is shipped as part of the service `.jar` files and does not require an external JDBC driver. It is not supported for use in production.

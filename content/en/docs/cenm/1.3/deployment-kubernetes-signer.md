@@ -63,7 +63,7 @@ The name needs to be a valid X500 name and commas need to be escaped by a backsl
 | `shell.user`                                 | Signing Service SSH user | `signer` |
 | `shell.password`                             | Signing Service SSH password | `signerP` |
 | `cordaJarMx`                                 | Initial value for memory allocation | `1` |
-| `jarPath`                                    | Path to a folder which contains Signing Service ".jar" files | `bin` |
+| `jarPath`                                    | Path to a folder which contains Signing Service `.jar` files | `bin` |
 | `configPath`                                 | Path to a folder which contains Signing Service configuration file | `etc` |
 | `pki.certificates.tlscrlsigner.subject`      | Subject of the certificate for signing the CRL for the Corda Node’s TLS-level certificate (alias: tlscrlsigner) | `CN=Test TLS Signer Certificate, OU=HQ, O=HoldCo LLC, L=New York, C=US` |
 | `pki.certificates.tlscrlsigner.crl.issuer`   | Issuer of the certificate for signing the CRL for the Corda Node’s TLS-level certificate (alias tlscrlsigner) | `CN=Corda TLS Signer Certificate, OU=Corda, O=R3 HoldCo LLC, L=New York, C=US` |

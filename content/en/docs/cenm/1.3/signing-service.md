@@ -192,10 +192,10 @@ See the [Example Signing Service Configuration](#example-signing-service-configu
 
 ##### Azure Key Vault
 
-To keep inline with the other HSMs, the Azure Key Vault client jar needs to provided as above. Unlike the other HSMs,
+To keep inline with the other HSMs, the Azure Key Vault client `.jar` needs to provided as above. Unlike the other HSMs,
 there are many dependent libraries. The top-level dependencies are `azure-keyvault` and `adal4j`, however these both
 have transitive dependencies that need to be included. That is, either all jars need to be provided separately (via a
-comma-separated list) or an uber jar needs to be provided.
+comma-separated list) or an uber `.jar` needs to be provided.
 
 The gradle script below will build an uber jar. First copy the following text in to a new file called build.gradle
 anywhere on your file system. Please do not change any of your existing build.gradle files.
@@ -232,7 +232,7 @@ or if gradle is not on the path but gradlew is in the current directory then run
 ./gradlew shadowJar
 ```
 
-This will create a jar called `azure-keyvault-with-deps.jar` which can be referenced in the configuration.
+This will create a `.jar` called `azure-keyvault-with-deps.jar` which can be referenced in the configuration.
 
 
 #### Global Certificate Store
@@ -691,7 +691,7 @@ First of all AWS CloudHSM requires a UNIX client running on the machine. It will
 For detailed documentation about setting up the client please visit Amazon’s
 [Getting Started with AWS CloudHSM](https://docs.aws.amazon.com/cloudhsm/latest/userguide/getting-started.html).
 After the client is installed the shared library should be under the folder `/opt/cloudhsm/lib` so this should be
-used when configuring the `hsmLibraries` property in the configuration. The jar can be found under `/opt/cloudhsm/java/cloudhsm-<version>.jar`
+used when configuring the `hsmLibraries` property in the configuration. The `.jar` can be found under `/opt/cloudhsm/java/cloudhsm-<version>.jar`
 by default.
 
 
@@ -1453,11 +1453,11 @@ accepted format.
 
 
 * **pluginJar**:
-The absolute path to signing plugin JAR file
+The absolute path to signing plugin `.jar` file
 
 
 * **pluginClass**:
-The class that will be loaded from plugin JAR file and will be its entry point from SMR
+The class that will be loaded from plugin `.jar` file and will be its entry point from SMR
 
 
 
@@ -1922,7 +1922,7 @@ public final class NMSigningData {
 ### Default Signing Plugins
 
 SMR ships with plugins for the CENM provided Signing Service. The only requirement is to provide
-the plugins’ JAR paths, classes to instantiate and configurations.
+the plugins’ `.jar` paths, classes to instantiate and configurations.
 
 
 #### CA Default Signing Plugin
@@ -1941,7 +1941,7 @@ enmListener = {
 ```
 
 {{< note >}}
-CA Plugin’s configuration file must be in the same directory as the service’s JAR file and must be named
+CA Plugin’s configuration file must be in the same directory as the service’s `.jar` file and must be named
 “plugin-ca.conf”
 
 {{< /note >}}
@@ -1962,7 +1962,7 @@ enmListener = {
 ```
 
 {{< note >}}
-Non CA Plugin’s configuration file must be in the same directory as the service’s JAR file and must be named
+Non CA Plugin’s configuration file must be in the same directory as the service’s `.jar` file and must be named
 “plugin-non-ca.conf”
 
 {{< /note >}}
