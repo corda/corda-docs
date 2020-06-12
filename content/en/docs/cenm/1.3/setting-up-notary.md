@@ -18,9 +18,9 @@ title: Setting Up A Notary Node
 A notary node is a well known and trusted node that provides uniqueness consensus. Because of this, creating and running a notary node is
 slightly more involved compared with a regular node.
 
-The network map service broadcasts information (stored in the network parameters file) that every participant in the network needs to
+The Network Map Service broadcasts information (stored in the network parameters file) that every participant in the network needs to
 agree on. One piece of information is the list of notaries. Because all notaries within this list need to be well known and trusted,
-the process of adding a new one requires some manual intervention on the network map service side.
+the process of adding a new one requires some manual intervention on the Network Map Service side.
 
 
 ## Configuration
@@ -58,9 +58,9 @@ The steps to integrate the notary node into the network are:
 
 * Register the node with the Identity Manager
 * Generate the node info file
-* Copy the node info file to the network map service
-* Update the network parameters file on the network map service to reference the new node info file
-* Start (or restart) the network map service
+* Copy the node info file to the Network Map Service
+* Update the network parameters file on the Network Map Service to reference the new node info file
+* Start (or restart) the Network Map Service
 * Start the notary node as normal
 
 

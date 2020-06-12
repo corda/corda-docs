@@ -28,7 +28,7 @@ configuration file and, once registered with both, interacts with other nodes an
 RPC clients. This is summarised below:
 
 ![node zone view](/en/images/node-zone-view.png "node zone view")
-The node is unaware of other sub zones, seeing only those nodes registered with the network map service it itself has
+The node is unaware of other sub zones, seeing only those nodes registered with the Network Map Service it itself has
 registered with.
 
 

@@ -20,20 +20,20 @@ title: Network Map Service
 
 ## Purpose
 
-The network map service acts as a directory for all participants on the network. It is responsible for recording
+The Network Map Service acts as a directory for all participants on the network. It is responsible for recording
 essential information of each participant such as connection address and available services. See
 [Network Map Overview](network-map-overview.md) for an in-depth explanation.
 
 
 ## Running The Network Map Service
 
-The network map service currently has to be initialised in two stages. First, the network parameters for the global
+The Network Map Service currently has to be initialised in two stages. First, the network parameters for the global
 network have to be loaded into the database. Once complete, the service can be started.
 
 
 ### Setting the Network Parameters
 
-The initial network parameters file can be loaded into the network map service database using the
+The initial network parameters file can be loaded into the Network Map Service database using the
 `--set-network-parameters` flag. The complete list of flags required to set the network parameters is as follows:
 
 
@@ -77,7 +77,7 @@ Saved initial network parameters to be signed:
 
 ### Starting The Network Map Service
 
-The network map service can now be started via:
+The Network Map Service can now be started via:
 
 ```bash
 java -jar network-map-<VERSION>.jar --config-file <CONFIG_FILE>
@@ -96,7 +96,7 @@ If not specified it will default to the current working directory (the directory
 
 ## Configuration
 
-Similar to the Identity Manager the main elements that need to be configured for the network map service are:
+Similar to the Identity Manager the main elements that need to be configured for the Network Map Service are:
 
 
 * [Address](#address)
@@ -276,7 +276,7 @@ via the external signing service.
 
 The Network Map Service configuration contains a single required top-level parameter `pollingInterval`. This
 determines how often the server should poll the database for newly signed network map and parameter changes. It also
-determines how often nodes should poll the network map service for a new network map (by including this value in the
+determines how often nodes should poll the Network Map Service for a new network map (by including this value in the
 HTTP response header).
 
 It takes a numerical value and represents the number of milliseconds between each refresh. An example of how this should
@@ -582,7 +582,7 @@ packageOwnership = [
 
 ## Node’s host IP address
 
-The network map service provides an endpoint that can be used to determine the IP address of the querying host. This is
+The Network Map Service provides an endpoint that can be used to determine the IP address of the querying host. This is
 useful especially when dealing with node’s deployment in environments with IP address translation.
 
 
