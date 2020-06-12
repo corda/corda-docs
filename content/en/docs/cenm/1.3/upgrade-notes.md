@@ -229,7 +229,7 @@ There are two ways to upgrade your old 0.1 network services environment:
 
 The 0.2.1 Doorman/Network Map Service and Signing Service `.jar` files will work in place of their 0.1 counterparts, but
 require an additional `--config-is-old` command-line flag to be passed upon start-up. This allows you to use you old
-configuration files without and further steps. For example:
+configuration files without any further steps. For example:
 
 ```bash
 java -jar doorman-0.1.jar --config-file doorman-0.1.conf --config-is-old
