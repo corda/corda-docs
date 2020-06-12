@@ -194,7 +194,7 @@ of the [Network Map Service](network-map.md) doc for more information.
 
 
 
-#### The Network Map signing service requires a configuration update to specify communication the Network Map Service
+#### The Network Map signing service requires a configuration update to specify communication with the Network Map Service
 
 The release modifies the Network Map Signing Service to request data through the Network Map Service rather than going
 directly to the database. Therefore the configuration needs to change to remove the redundant DB configuration and
@@ -239,7 +239,7 @@ java -jar doorman-0.1.jar --config-file doorman-0.1.conf --config-is-old
 
 You can also use the configuration file upgrade tool to create a new config file from your old 0.1 file.
 
-The new ".jar" file can then be run with the new configuration file with no extra steps or command line arguments.
+The new `.jar` file can then be run with the new configuration file with no extra steps or command-line arguments.
 
 
 ## 0.2(.0) to 0.2.1
