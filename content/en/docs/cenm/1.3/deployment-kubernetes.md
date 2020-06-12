@@ -59,8 +59,7 @@ Each service runs in its own dedicated Kubernetes pod.
 The CENM network is bootstrapped with PKI certificates, and sample X.500 subject names are provided as defaults
 (for example, the Identity Manager Service certificate subject is
 “CN=Test Identity Manager Service Certificate, OU=HQ, O=HoldCo LLC, L=New York, C=US”).
-These can be configured in the Signer Helm chart. For more information about Signer
-Helm chart refer to [Signer](deployment-kubernetes-signer.md).
+These can be configured in the [Signing Service Helm chart](deployment-kubernetes-signer.md).
 
 There are two ways of bootstrapping a new CENM environment:
 
@@ -441,7 +440,7 @@ helm install notary notary --set notaryPublicIP=[use IP from step 2]
 helm install nmap nmap
 helm install farm farm --set idmanPublicIP=[use IP from step 3]
 
-# Run these commands to display allocated public IP for NetworkMap:
+# Run these commands to display allocated public IP for Network Map Service:
 kubectl get svc --namespace cenm nmap --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"
 ```
 
@@ -455,10 +454,10 @@ The Docker images used for the Kubernetes deployment are listed below for refere
 |-------------------|------------------------------------|-----|
 | Identity Manager  | acrcenm.azurecr.io/nmap/nmap       | 1.3 |
 | Network Map       | acrcenm.azurecr.io/nmap/nmap       | 1.3 |
-| Signer            | acrcenm.azurecr.io/signer/signer   | 1.3 |
-| Zone service      | acrcenm.azurecr.io/zone/zone       | 1.3 |
-| Auth service      | acrcenm.azurecr.io/auth/auth       | 1.3 |
-| Farm service      | acrcenm.azurecr.io/farm/farm       | 1.3 |
+| Signing           | acrcenm.azurecr.io/signer/signer   | 1.3 |
+| Zone              | acrcenm.azurecr.io/zone/zone       | 1.3 |
+| Auth              | acrcenm.azurecr.io/auth/auth       | 1.3 |
+| Farm              | acrcenm.azurecr.io/farm/farm       | 1.3 |
 | PKI Tool          | acrcenm.azurecr.io/pkitool/pkitool | 1.3 |
 | Notary            | acrcenm.azurecr.io/notary/notary   | 1.3 |
 

@@ -796,7 +796,7 @@ Port that the CA part of SMR service is listening on (for inter-ENM communicatio
 
 
 * **verbose**:
-Boolean representing whether debug information for the IPC between the Signer and the remote service
+Boolean representing whether debug information for the IPC between the Signing Service and the remote service
 should be displayed.
 
 

@@ -92,7 +92,7 @@ is not anticipated, customers are encouraged to deploy all notaries in a high av
 * We have expanded our HSM supported list to include AWS Cloud HSM
 * Default log file paths now include the name of the service (i.e. “network-map”) that generates them,
 so if multiple services run from the same folder, their dump log filenames do not collide.
-* Shell interface (Signer and Identity Manager services) no longer provide Java scripting permissions.
+* Shell interface (Signing and Identity Manager Services) no longer provide Java scripting permissions.
 * Remove private network maps - this functionality was never completed, and the changes should not be user visible. This
 does not yet remove them from the database schema, which will be in a future release. Related quarantined and staging
 node info tables are not used as of CENM 1.1.
@@ -122,7 +122,7 @@ use ‘database.runMigration’ instead.
 ### Security Improvements
 
 
-* Shell interface (Signer and Identity Manager services) no longer allow access to commands which allow scripting
+* Shell interface (Signing Service and Identity Manager services) no longer allow access to commands which allow scripting
 
 of Java.
 
