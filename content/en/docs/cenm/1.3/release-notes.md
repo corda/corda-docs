@@ -20,12 +20,12 @@ title: Release notes
 
 * TODO: Describe obfuscator update work
 
-* Angel and Zone services have been introduced to manage configuration of other
-  ENM services. The Zone service stores configuration values provided by an
+* Angel and Zone Services have been introduced to manage configuration of other
+  ENM services. The Zone Service stores configuration values provided by an
   operator via a web or command line user interface, and these are retrieved
-  by an Angel service deployed alongside the Identity Manager or Network Map
-  services. For further information on these services see
-  [Angel service](angel-service.md) and [Zone service](zone-service.md).
+  by an Angel Service deployed alongside the Identity Manager or Network Map
+  Services. For further information on these services see
+  [Angel Service](angel-service.md) and [Zone Service](zone-service.md).
 
 ## Release 1.2.2
 

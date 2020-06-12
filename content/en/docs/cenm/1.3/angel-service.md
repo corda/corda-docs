@@ -14,14 +14,14 @@ title: Angel Service
 
 ## Introduction
 
-The Angel service is an adapter, which manages the lifecycle of other
+The Angel Service is an adapter, which manages the lifecycle of other
 services such as the Network Map Service or the Identity Manager Service, to make them more
 compatible with packaging tools such as Docker. You do not need to run this service directly
 as it is typically packaged in a Docker image and it is run via Docker.
 
 ## Running the Angel Service
 
-To run the Angel service, you must specify the following:
+To run the Angel Service, you must specify the following:
 
 - The service to be run.
 - The hostname/IP of the Zone Service.
