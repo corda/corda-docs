@@ -31,9 +31,9 @@ java -DdefaultLogLevel=TRACE -DconsoleLogLevel=TRACE -jar <enm-service-jar>.jar 
 ```
 
 
-### Verifying an ENM service is running and responsive
+### Verifying an service is running and responsive
 
-As well as the service logs, the ENM services provide the following endpoints which can be used to determine the current
+As well as the service logs, the CENM services provide the following endpoints which can be used to determine the current
 status of the service (whether it is executing and if it is reachable):
 
 
@@ -86,7 +86,7 @@ Identity Manager communication is correctly configured for the Network Map Servi
 
 ### Issue
 
-The CENM service (Network Map, Identity Manager or Signer) hangs on startup and throws a *HikariPool* related exception:
+A Network Map, Identity Manager or Signing Service hangs on startup and throws a *HikariPool* related exception:
 
 ```guess
 [ERROR] 2018-11-19T15:50:54,327Z [main] ConsolePrint.uncaughtException - Unexpected Error: Failed to initialize pool: Connection reset
@@ -152,14 +152,14 @@ retried using an exponential backoff strategy, doubling the wait period after ea
 
 ### Issue
 
-When starting up SMR service it throws `java.lang.NoClassDefFoundError`.
+When starting up SMR Service it throws `java.lang.NoClassDefFoundError`.
 
 
 ### Solution
 
-Make sure that the given JAR file path in the SMR config under `pluginJar` property is correct.
+Make sure that the given ".jar" file path in the SMR config under `pluginJar` property is correct.
 Similarly check class names correctly (i.e. copy & paste rather than manually typing), as they must match exactly.
-Also make sure that the given JAR file does not attempt to use invalid or non-existent dependencies.
+Also make sure that the given ".jar" file does not attempt to use invalid or non-existent dependencies.
 
-If a class in the JAR file tries to import a class that does not exist the SMR will not be able to load the JAR
+If a class in the ".jar" file tries to import a class that does not exist the SMR will not be able to load the JAR
 and throw this error.
