@@ -842,7 +842,7 @@ password for the trust root keystore.
 
 
 * **nonCaSmrLocation**:
-Same as per **caSmrLocation**, just for the non CA part of the SMR Service
+Same as per **caSmrLocation**, just for the non-CA part of the SMR Service.
 
 
 
