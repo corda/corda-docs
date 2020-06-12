@@ -29,7 +29,7 @@ If you and counterparties on your Business Network (BN) plan to use collaborativ
 
 How frequently you should run reconciliation checks depends on the size of your network. Since reconciliation flows carry some memory overheads, smaller networks may be able to schedule more regular reconciliation actions. For a larger network, you can implement a lighter schedule of reconciliations, or you could choose to reconcile more regularly, but with a random subset of available peers. This would give you an indication of the general health of data in the BN.
 
-Since some recovery flows have been designed to be run manually, you can set alerts that tell you when reconciliation differences occur. When you recieve the alert, you can implement manual recovery with each of the highlighted parties.
+Since some recovery flows have been designed to be run manually, you can set alerts that tell you when reconciliation differences occur. When you receive the alert, you can implement manual recovery with each of the highlighted parties.
 
 ## Monitor reconciliation and receive alerts using metrics
 

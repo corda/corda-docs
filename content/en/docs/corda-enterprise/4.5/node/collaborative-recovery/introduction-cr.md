@@ -25,9 +25,9 @@ weight: 100
 
 ## Introducing Collaborative Recovery
 
-Collaborative Recovery is a secure, privacy-oriented solution that helps you identify and retrieve data if you ever encounter a disaster recovery scenario.
+Collaborative Recovery is a secure, privacy-oriented solution that helps you identify and retrieve data if you ever encounter a disaster recovery scenario on your Business Network.
 
-Once you have installed the required CorDapps, you can safely use Collaborative Recovery to detect potential ledger inconsistencies and recover any missing data from parties you have transacted with. The feature runs in the background, acting as an additional layer of security when using Corda.
+Once you have installed the required CorDapps, you can safely use Collaborative Recovery to detect potential ledger inconsistencies and recover any missing data from parties you have transacted with. Designed to ensure the continued security and privacy of Corda, this feature runs in the background, acting as an additional layer of security when using Corda.
 
 As the name suggests, this is a collaborative method for recovering data. For maximum peace of mind, you should seek agreement across your Business Network to make this feature part of the overall disaster recovery policy.
 
@@ -44,6 +44,8 @@ Before installing and using the Collaborative Recovery CorDapps, you need to kno
 * How and when the LedgerSync and LedgerRecover CorDapps should be used.
 
 ### Main stages of Collaborative Recovery
+
+There are seven stages in the Collaborative Recovery process. You should perform steps 1-3 as a precaution. The rest only need to be done in the unlikely event of a disaster recovery situation: 
 
 1. Agree to add and enforce Collaborative Recovery at the Business Network level.
 2. Validate the nodes you may transact with by creating wrapping flows for Collaborative Recovery CorDapp flows.
@@ -116,7 +118,7 @@ Collaborative Recovery is made up of two CorDapps - LedgerSync and LedgerRecover
 
 ### LedgerSync
 
-LedgerSync is a CorDapp that highlights the differences between the common ledger data held by two nodes in the same Business Network.
+LedgerSync is a CorDapp that safely, and privately highlights the differences between the common ledger data held by two nodes in the same Business Network.
 A peer running the CorDapp can be alerted to missing transactions. This procedure is called **Reconciliation**.
 
 
@@ -126,7 +128,7 @@ LedgerSync relies on the user to provide a list of the parties with which it sho
 
 LedgerSync has been designed to efficiently reconcile large sets of data with small amount or no differences at all (based on [Efficient Set Reconciliation Algorithm Without Prior Context]( https://www.ics.uci.edu/~eppstein/pubs/EppGooUye-SIGCOMM-11.pdf)). Generally speaking, the amount of data you can expect to transfer is proportional to the size of the difference and not the total number of items in the data set. For this reason, LedgerSync introduces only a minimal network overhead, even for a large data sets.
 
-LedgerSync has been designed with privacy in mind. Parties never share any real data. Instead they share *Invertible Bloom Filters* that contain obfuscated data only and can't be decoded by a party unilaterally. Furthermore, LedgerSync prevents privacy leaks by allowing only parties that participated in a transaction to report that the transaction is missing from the initiator's ledger.
+LedgerSync has been designed with privacy in mind. Parties never share any real data. Instead they share **Invertible Bloom Filters** that contain obfuscated data only and can't be decoded by a party unilaterally. Furthermore, LedgerSync prevents privacy leaks by allowing only parties that participated in a transaction to report that the transaction is missing from the initiator's ledger.
 
 LedgerSync can operate on schedule as well as on demand. It utilises bounded flow pools to limit the number of concurrent
 inbound / outbound reconciliations and also supports different throttling techniques to prevent the functionality from being abused.
