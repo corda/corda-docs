@@ -31,7 +31,7 @@ java -DdefaultLogLevel=TRACE -DconsoleLogLevel=TRACE -jar <enm-service-jar>.jar 
 ```
 
 
-### Verifying an service is running and responsive
+### Verifying a service is running and responsive
 
 As well as the service logs, the CENM services provide the following endpoints which can be used to determine the current
 status of the service (whether it is executing and if it is reachable):
