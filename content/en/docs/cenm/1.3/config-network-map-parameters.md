@@ -56,7 +56,7 @@ Details where the revocation service is on the network
   * **port**:
   The port that its `enmListener` is bound to.
   * **ssl**:
-  See [SSL Settings](config-ssl.md)
+  See [SSL Settings](config-ssl.md) for details.
 * **localSigner**:
 *(Optional)* Configuration of the local signer for the Network Map Service. Useful for debugging, testing or when HSM support is not available.
   * **keyStore**:
