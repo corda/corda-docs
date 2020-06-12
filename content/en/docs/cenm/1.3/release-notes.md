@@ -82,7 +82,7 @@ with CENM 1.1.
 **Notary Whitelist**
 
 For high availability (HA) notaries only, the network map will now fetch the node info automatically from the
-identity manager, rather than requiring that the files are copied in manually. Support for non-HA notaries
+Identity Manager Service, rather than requiring that the files are copied in manually. Support for non-HA notaries
 is not anticipated, customers are encouraged to deploy all notaries in a high availability configuration.
 
 
