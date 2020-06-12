@@ -17,7 +17,7 @@ title: Network Map Overview
 
 # Network Map Overview
 
-The network map is a collection of signed `NodeInfo` objects. Each NodeInfo is signed by the node it represents and
+The network map is a collection of signed `NodeInfo` objects. Each `NodeInfo` is signed by the node it represents and
 thus cannot be tampered with. It forms the set of reachable nodes in a network. A node can receive these objects from
 two sources:
 
@@ -31,7 +31,7 @@ to agree on to remain in sync.
 {{< note >}}
 In Corda 3 no implementation of the HTTP network map server is provided. This is because the details of how
 a network manages its membership (the databases, ticketing workflows, HSM hardware etc) is expected to vary
-between operators, so we provide a simple REST based protocol for uploading/downloading NodeInfos and managing
+between operators, so we provide a simple REST based protocol for uploading/downloading `NodeInfo`s and managing
 network parameters. A future version of Corda may provide a simple “stub” implementation for running test zones.
 In Corda 3 the right way to run a test network is through distribution of the relevant files via your own mechanisms.
 We provide a tool to automate the bulk of this task (see below).
@@ -124,7 +124,7 @@ part of this network. For example, a simple way to do this is to use rsync.
 
 Usually, test networks have a structure that is known ahead of time. For the creation of such networks we provide a
 `network-bootstrapper` tool. This tool pre-generates node configuration directories if given the IP addresses/domain
-names of each machine in the network. The generated node directories contain the NodeInfos for every other node on
+names of each machine in the network. The generated node directories contain the `NodeInfo`s for every other node on
 the network, along with the network parameters file and identity certificates. Generated nodes do not need to all be
 online at once - an offline node that isn’t being interacted with doesn’t impact the network in any way. So a test
 cluster generated like this can be sized for the maximum size you may need, and then scaled up and down as necessary.

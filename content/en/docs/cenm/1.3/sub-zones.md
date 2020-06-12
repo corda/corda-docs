@@ -43,7 +43,7 @@ Signing infrastructure is omitted for brevity
 {{< /note >}}
 In this example the zone operator is operating two public sub zones, each with a different min platform version (the
 other network parameters shared by the two zones are omitted for brevity). Each sub zone has a single notary, operated
-by the zone operator, whose nodeInfo is included in the whitelist of the network parameters representing that zone.
+by the zone operator, whose node info is included in the whitelist of the network parameters representing that zone.
 
 Interesting features
 
