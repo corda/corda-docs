@@ -16,8 +16,8 @@ title: Upgrading Corda Enterprise Network Manager
 
 # Upgrading Corda Enterprise Network Manager
 
-These notes provide instructions for upgrading your network management (Doorman, Network Map or Revocation) service or
-signing service from previous versions to the newest version. Please consult the relevant release notes of the release
+These notes provide instructions for upgrading your network management (Identity Manager, Network Map, Doorman or Revocation) service or
+Signing Service from previous versions to the newest version. Please consult the relevant release notes of the release
 in question. If not specified, you may assume the versions you are currently using are still in force.
 
 We also strongly recommend cross referencing with the [Changelog](changelog.md) to confirm changes.
@@ -31,8 +31,8 @@ We also strongly recommend cross referencing with the [Changelog](changelog.md) 
   Ensure the Identity Manager is configured to perform this migration
   by setting ``runMigration`` property to ``true``.
 
-  The upgrade process is otherwise just a drop-in replacement of the existing JARs with ``<service>-1.2.1.jar``.
-  Ensure you stop the service before replacing the JAR files.
+  The upgrade process is otherwise just a drop-in replacement of the existing ".jar" files with ``<service>-1.2.1.jar``.
+  Ensure you stop the service before replacing the ".jar" files.
   Ensure that there are no orphan processes running after shout down.
 
 ## 1.1 to 1.2.1
@@ -46,8 +46,8 @@ We also strongly recommend cross referencing with the [Changelog](changelog.md) 
 > upon each service startup. Ensure the Identity Manager and Network Map are configured to perform this migration
 > by setting `runMigration` property to `true`.
 >
-> The upgrade process is otherwise just a drop-in replacement of the existing JARs with `<service>-1.2.jar`.
-> Ensure you stop the services before replacing the JAR files.
+> The upgrade process is otherwise just a drop-in replacement of the existing ".jar" files with `<service>-1.2.jar`.
+> Ensure you stop the services before replacing the ".jar" files.
 > Network Map and Signing Services may not shut down properly when using shell command `shutdown`, ensure that there are no
 > orphan processes running after shout down. This may specifically impact the services using H2 database,
 > as an orphan process locks a H2 database file.
@@ -76,8 +76,8 @@ database {
  }
 ```
 
-This step doesn’t relate to Signing Service as it doesn’t use a database.The upgrade process is just a drop-in replacement of the existing JARs with `<service>-1.1.1.jar`.
-Ensure to stop the services before replacing the JAR files.
+This step doesn’t relate to Signing Service as it doesn’t use a database.The upgrade process is just a drop-in replacement of the existing ".jar" files with `<service>-1.1.1.jar`.
+Ensure to stop the services before replacing the ".jar" files.
 * **Dynamic loading of HSM Jars**CENM 1.1 now supports multiple HSMs, however due to to the proprietary nature of the HSM libraries, the release does
 not work out of the box with these HSMs. The relevant libraries need to be provided by the user and referenced in the
 configuration of the relevant component (Signing Service or PKI Tool). See the relevant docs at [Signing Services](signing-service.md)
@@ -90,12 +90,12 @@ CENM 1.0 introduces an overhauled Signing Service, official PostgreSQL support a
 Identity Manager (formerly Doorman) and Network Map Services.
 
 
-* **Identity Manager**The Doorman is now known as the Identity Manager. To upgrade, replace the Doorman JAR with the Identity
-Manager JAR, and run the service, having migrated the config file to be 1.0 compliant. The config file
+* **Identity Manager**The Doorman is now known as the Identity Manager. To upgrade, replace the Doorman ".jar" file with the Identity
+Manager ".jar" file, and run the service, having migrated the config file to be 1.0 compliant. The config file
 has been re-worked and as such, the service is no longer backwards compatible with pre-1.0 config files.
 Currently, config file migrations must be performed manually. Refer to the Identity Manager documentation
 for further guidance.
-* **Network Map**The Network Map upgrade process is similar to the Identity Manager’s. Replace the existing Network Map JAR
+* **Network Map**The Network Map upgrade process is similar to the Identity Manager’s. Replace the existing Network Map ".jar" file
 with the 1.0 counterpart and re-start the service. The Network Map config file has also been re-worked. Pre-1.0
 configs must be migrated to be compatible with 1.0. Refer to the Network Map documentation for further guidance.
 * **Signing Service**The Signing Service is now a long-running service in the same vein as the Identity Manager and Network Map,
@@ -127,7 +127,7 @@ database {
 
 * **Config Files**CENM 1.0 Identity Manager and Network Map Services are not backwards compatible with 0.x Doorman and Network Map
 config files. 0.2.2 and 0.3 / 0.4 config files can be migrated to 1.0 using the [Config migration tool](tool-config-migration.md).
-Using the generated 1.0 configs, the services can be upgraded by: stopping the services, swapping out the JAR and
+Using the generated 1.0 configs, the services can be upgraded by: stopping the services, swapping out the ".jar" file and
 config files and restarting the services.
 
 
@@ -140,7 +140,7 @@ the data should first be migrated.
 
 ### Migration Of Existing Data
 
-To upgrade an existing Doorman or Network Map instance, a new DB instance must first be created for the service to use.
+To upgrade an existing Doorman or Network Map Service, a new DB instance must first be created for the service to use.
 Once this has been done the following steps should be followed to upgrade the service:
 
 
@@ -168,8 +168,8 @@ files. Most Notably:
 
 If a node is a member of a private network, the current implementation of Corda only passes the node’s private network
 id during its registration request to the Doorman (if configured on the node side). A consequence of this design and the
-separation of Doorman and the Network Map Service is that when a node submits its NodeInfo to a network map instance,
-the network map instance needs to communicate with the Doorman service as it can no longer do the direct lookup of a
+separation of Doorman and the Network Map Service is that when a node submits its NodeInfo to a Network Map Service,
+the Network Map Service needs to communicate with the Doorman service as it can no longer do the direct lookup of a
 node’s private network membership from within the Doorman DB. This is facilitated via a new internal *ENM server* that
 lives within each ENM service.
 
@@ -221,7 +221,7 @@ There are two ways to upgrade your old 0.1 network services environment:
 
 ### Without Upgrading Your Configuration
 
-The 0.2.1 Doorman/Network Map Service and Signing Service JARs will work in place of their 0.1 counterparts, but
+The 0.2.1 Doorman/Network Map Service and Signing Service ".jar" files will work in place of their 0.1 counterparts, but
 require an additional `--config-is-old` command line flag to be passed upon startup. This allows you to use you old
 configuration files without and further steps. For example:
 
@@ -234,7 +234,7 @@ java -jar doorman-0.1.jar --config-file doorman-0.1.conf --config-is-old
 
 You can also use the configuration file upgrade tool to create a new config file from your old 0.1 file.
 
-The new JAR can then be run with the new configuration file with no extra steps or command line arguments.
+The new ".jar" file can then be run with the new configuration file with no extra steps or command line arguments.
 
 
 ## 0.2(.0) to 0.2.1
