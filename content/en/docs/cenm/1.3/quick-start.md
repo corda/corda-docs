@@ -194,7 +194,7 @@ workflows {
 ```
 
 {{< note >}}
-The example uses a local H2 database. You can modify this to point to a separate DB instance by modifying the `database` section.
+The example uses a local H2 database. You can modify this to point to a separate database instance by modifying the `database` section.
 See the “Database properties” section of [Identity Manager Service](identity-manager.md) for more information.
 {{< /note >}}
 
@@ -329,7 +329,7 @@ checkRevocation = false
 ```
 
 {{< note >}}
-This example uses a local H2 database. You can modify this to point to a separate DB instance by modifying the `database` section. See the “Database properties” section of [Network Map Service](network-map.md) for more information.
+This example uses a local H2 database. You can modify this to point to a separate database instance by modifying the `database` section. See the “Database properties” section of [Network Map Service](network-map.md) for more information.
 
 {{< /note >}}
 

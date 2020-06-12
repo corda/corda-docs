@@ -442,7 +442,7 @@ Ensure that the JDBC connection properties match the SQL Server setup, especiall
 
 ### Oracle
 
-See below an example CENM service configuration file for Oracle DB - initial deployment with administrative permissions:
+See below an example CENM service configuration file for Oracle database - initial deployment with administrative permissions:
 
 ```groovy
 database = {
@@ -455,7 +455,7 @@ database = {
 }
 ```
 
-See below an example CENM service configuration file for Oracle DB - CENM service instance database user with restrictive permissions:
+See below an example CENM service configuration file for Oracle database - CENM service instance database user with restrictive permissions:
 
 ```groovy
 database = {

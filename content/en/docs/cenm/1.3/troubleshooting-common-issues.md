@@ -106,7 +106,7 @@ java -Djava.security.egd=file:/dev/./urandom -jar identitymanager.jar --config-f
 
 ### Explanation
 
-This issue *should* be Linux specific. During the establishing of the DB connection certain DB APIs (such as JDBC) use
+This issue *should* be Linux specific. During the establishing of the database connection certain database APIs (such as JDBC) use
 random number generation via `java.security.SecureRandom` API. This API uses `/dev/random` which checks if there is
 enough available estimated entropy. If it thinks that there is not enough then it will block whilst more is generated.
 Depending on the underlying system and API usage this can cause a progressive slow down of random number generation.
@@ -131,8 +131,8 @@ resulting in an error within the local signer log file.
 
 There are multiple possible causes for this. The most likely candidates are:
 
-**DB overloaded and causing the signing process to dramatically slow**
-The DB instance should be inspected to verify that machine is adequately sized and no unknown processes are utilising
+**database overloaded and causing the signing process to dramatically slow**
+The database instance should be inspected to verify that machine is adequately sized and no unknown processes are utilising
 IO.
 
 **Signing process is working as intended but timeout is configured too low**

@@ -139,7 +139,7 @@ Using the generated 1.0 configurations, the services can be upgraded by stopping
 ## 0.2.X to 0.3
 
 The major change in 0.3 was the separation of the Network Map and Doorman database schemas. Prior to the schema
-separation change, the Network Map heavily utilised the Doorman DB tables. To upgrade a 0.2.X Doorman and Network Map,
+separation change, the Network Map heavily utilised the Doorman database tables. To upgrade a 0.2.X Doorman and Network Map,
 the data should first be migrated.
 
 
@@ -149,17 +149,18 @@ To upgrade an existing Doorman or Network Map Service, a new database instance m
 Once this has been done the following steps should be followed to upgrade the service:
 
 
-* Stop the current service to prevent new information being persisted to the old DB.
-* Use the 0.3 utility `.jar` to migrate the data from the old DB to the new DB.
-* Swap out the old `.jar` for the new 0.3 ENM jar and updated the service configuration to point to the new DB.
+* Stop the current service to prevent new information being persisted to the old database.
+* Use the 0.3 utility `.jar` to migrate the data from the old database to the new database.
+* Swap out the old `.jar` for the new 0.3 ENM jar and updated the service configuration to point to the new database.
 * Restart the service.
 
 For example for the Doorman service:
 
 ![doorman migration](/en/images/doorman-migration.png "doorman migration")
-These steps should be followed for both the Doorman and Network Map Services. This step is *non-destructive* - it
-should leave the old DB untouched, only copying the data across to the new DBs. Once both services have been migrated
-via the above steps they should be fully functional:
+
+These steps should be followed for both the Doorman and Network Map Services. This process is *non-destructive* - it
+should leave the old database untouched, only copying the data across to the new databases. Once both services have been migrated
+via the above process they will be fully functional:
 
 ![separated services](/en/images/separated-services.png "separated services")
 
@@ -175,7 +176,7 @@ If a node is a member of a private network, the current implementation of Corda 
 id during its registration request to the Doorman (if configured on the node side). A consequence of this design and the
 separation of Doorman and the Network Map Service is that when a node submits its NodeInfo to a Network Map Service,
 the Network Map Service needs to communicate with the Doorman service as it can no longer do the direct lookup of a
-node’s private network membership from within the Doorman DB. This is facilitated via a new internal *ENM server* that
+node’s private network membership from within the Doorman database. This is facilitated via a new internal *ENM server* that
 lives within each ENM service.
 
 In case of a deployment scenario involving ENM upgrade from version prior to 0.3, the configuration file for the
@@ -197,7 +198,7 @@ of the [Network Map Service](network-map.md) doc for more information.
 #### The Network Map signing service requires a configuration update to specify communication with the Network Map Service
 
 The release modifies the Network Map Signing Service to request data through the Network Map Service rather than going
-directly to the database. Therefore the configuration needs to change to remove the redundant DB configuration and
+directly to the database. Therefore the configuration needs to change to remove the redundant database configuration and
 instead adding the service endpoint. As this information cannot be known by the config upgrader, this has to be added
 manually. See [Signing Services](signing-service.md) for more information on how to configure this.
 
@@ -210,7 +211,7 @@ configuration modification. See [Signing Services](signing-service.md) for more 
 
 #### Setting the network parameters requires passing the root certificate
 
-When setting network parameters, the Network Map Service cannot validate the proposed notary certificates using the Doorman DB.
+When setting network parameters, the Network Map Service cannot validate the proposed notary certificates using the Doorman database.
 Hence the trusted root certificate now needs to be passed during setting of parameters.
 See the “Setting the Network Parameters” section of the [Network Map Service](network-map.md) doc for more information.
 

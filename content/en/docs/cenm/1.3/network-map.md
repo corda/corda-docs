@@ -140,11 +140,11 @@ connection settings must be included within the `database` configuration block i
 that should be included here are:
 
 
-* `driverClassName` - the DB driver class name (e.g *com.microsoft.sqlserver.jdbc.SQLServerDriver* for Microsoft SQL Server, *org.postgresql.Driver* for postgres)
+* `driverClassName` - the database driver class name (e.g *com.microsoft.sqlserver.jdbc.SQLServerDriver* for Microsoft SQL Server, *org.postgresql.Driver* for postgres)
 * `jdbcDriver` - the path to the appropriate JDBC driver `.jar` (e.g *path/to/mssql-jdbc-7.2.2.jre8.jar*)
-* `url` - the connection string for the DB
-* `user` - the username for the DB
-* `password` - the password for the DB
+* `url` - the connection string for the database
+* `user` - the username for the database
+* `password` - the password for the database
 
 
 #### Database Setup
@@ -153,7 +153,7 @@ The database can either be setup prior to running the Network Map Service or, al
 prepared on startup via the built-in migrations. To enable the running of database migrations on startup set the
 `runMigration` parameter within the `database` configuration to true.
 
-If the Network Map Service is being run using the same DB instance as the Identity Manager Service then the Network Map
+If the Network Map Service is being run using the same database instance as the Identity Manager Service then the Network Map
 schema name must be specified via the `schema` parameter within the `database` configuration block:
 
 ```guess
@@ -166,7 +166,7 @@ database {
 
 {{< note >}}
 Due to the way the migrations are defined, if the Identity Manager and Network Map Services are using the same
-DB instance then they *must* use separate DB schemas. For more information regarding the supported databases
+database instance then they *must* use separate database schemas. For more information regarding the supported databases
 along with the schema see [CENM Databases](database-set-up.md).
 
 {{< /note >}}

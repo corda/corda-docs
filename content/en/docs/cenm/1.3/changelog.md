@@ -65,7 +65,7 @@ party Jars have to be provided by the user and referenced within the configurati
 * Added logic for logging config files with the value “<{hidden}>” for password keys, preventing sensitive data
 from ending up in the services’ logs.
 * Added additional port availability checks for enmListener ports and address of services specified in the config file.
-* Added Oracle DB support (versions 12cR2 and 11gR2).
+* Added Oracle database support (versions 12cR2 and 11gR2).
 * Added config migration tool (v0.2.2 / v0.3+ config files to v1.1 configs).
 * Removed invalid mention of DSA keys within the package ownership documentation for Network Parameters. Corda does not
 support DSA keys.
@@ -75,7 +75,7 @@ support DSA keys.
 
 
 * CSR and CRR workflow logic rewritten according to the new design.
-The new implementation removes DB queries over a large data sets and separates workflow-related logic from other parts of the system.
+The new implementation removes database queries over a large data sets and separates workflow-related logic from other parts of the system.
 * Private network persistence layer refactored by encapsulating entity classes within the DAO.
 * Removed redundant call between Signing Service and Revocation Service when signing a new CRL.
 * Separated the Network Map REST protocol from the plain-text endpoints used for debugging to support
@@ -96,7 +96,7 @@ the future versioning of both independently.
 
 
 * Fixed Jira synchronisation issue for the rejected CSR/CRRs.
-* Fixed the remark field length restriction in the CSR/CRR DB. In the past it was 256 characters causing some issues in JIRA.
+* Fixed the remark field length restriction in the CSR/CRR database. In the past it was 256 characters causing some issues in JIRA.
 * Added certificate signing request rejection reasons to the node’s rejection response.
 * Added certificate signing request rejection reasons handling for the JIRA workflow.
 * Signing Service -> Doorman socket based communication added.

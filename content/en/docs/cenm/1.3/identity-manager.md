@@ -105,11 +105,11 @@ Requests (CSRs) and (optionally) Certificate Revocation Requests (CRRs). The con
 the `database` configuration block in the configuration file. The main options that should be included here are:
 
 
-* `driverClassName` - the DB driver class name (e.g *com.microsoft.sqlserver.jdbc.SQLServerDriver* for Microsoft SQL Server, *org.postgresql.Driver* for postgres)
+* `driverClassName` - the database driver class name (e.g *com.microsoft.sqlserver.jdbc.SQLServerDriver* for Microsoft SQL Server, *org.postgresql.Driver* for postgres)
 * `jdbcDriver` - the path to the appropriate JDBC driver `.jar` (e.g *path/to/mssql-jdbc-7.2.2.jre8.jar*)
-* `url` - the connection string for the DB
-* `user` - the username for the DB
-* `password` - the password for the DB
+* `url` - the connection string for the database
+* `user` - the username for the database
+* `password` - the password for the database
 
 
 #### Database Setup
@@ -117,7 +117,7 @@ the `database` configuration block in the configuration file. The main options t
 The database can either be setup prior to running the Identity Manager Service or, alternatively, it can be
 automatically prepared on startup via the built-in migrations. To enable the running of database migrations on startup
 the optional `runMigration` parameter within the `database` configuration should be set to true. Additionally, if
-the Identity Manager Service is being run using the same DB instance as an accompanying Network Map Service then the
+the Identity Manager Service is being run using the same database instance as an accompanying Network Map Service then the
 Identity Manager schema name must be specified via the `schema` parameter within the `database` configuration block:
 
 ```guess
@@ -130,7 +130,7 @@ database {
 
 {{< note >}}
 Due to the way the migrations are defined, if the Identity Manager and Network Map Services are using the same
-DB instance then they *must* use separate DB schemas. For more information regarding the supported databases
+database instance then they *must* use separate database schemas. For more information regarding the supported databases
 along with the schema see [CENM Databases](database-set-up.md).
 
 {{< /note >}}

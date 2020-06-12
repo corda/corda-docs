@@ -33,7 +33,7 @@ CENM 1.2.2 introduces fixes to known issues in CENM 1.2.
 
 Fixed issues
 
-* Using `csr_token` as part of a node registration causes the registration to fail when the Identity Manager is set up to use a supported version of Oracle DB.
+* Using `csr_token` as part of a node registration causes the registration to fail when the Identity Manager is set up to use a supported version of Oracle database.
 * Creating and signing the CRL fails when upgrading from CENM 0.4 if the existing revoked certificates lacked a revocation reason.
 
 ## Release 1.2
@@ -158,7 +158,7 @@ Identity Manager upgrade from CENM 0.4 causes JIRA Workflow Plugin to lose all p
 ## Release 1.1
 
 The R3 Network Services team is excited to announce the release of CENM 1.1,
-introducing support for a number of additional HSMs as well as adding support for Oracle DB.
+introducing support for a number of additional HSMs as well as adding support for Oracle database.
 For deployments of pre-1.0 CENM a migration tool has been added to rewrite legacy
 configurations to be compatible with 1.1.
 
@@ -167,7 +167,7 @@ configurations to be compatible with 1.1.
 
 **Oracle Database Support**
 
-Support has been added for Oracle DB versions 12cR2 and 11gR2 as a backend data store.
+Support has been added for Oracle database versions 12cR2 and 11gR2 as a backend data store.
 For full setup instructions see [CENM Databases](database-set-up.md).
 
 **Configuration Migration Tool**

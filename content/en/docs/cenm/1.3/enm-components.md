@@ -99,7 +99,7 @@ The Identity Manager and Network Map(s) require their own persistence layer. The
 environments:
 
 
-* Oracle DB
+* Oracle database
 * Postgres
 * SQL Server
 
