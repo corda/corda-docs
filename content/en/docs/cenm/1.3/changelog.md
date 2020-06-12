@@ -50,7 +50,7 @@ As part of this the *privateNetworkAutoEnrolment* configuration option has been 
 * Changed the way configuration parsing deals with missing imports to now treat this as an error
 rather than just ignore the missing file.
 * Added validation rule checking the availability and validity of sshd port specified in service config.
-* Added support for additional database config properties.
+* Added support for additional database configuration properties.
 * Added sql command to H2 db URL string such that exclusive locks are not acquired as with H2 db version <1.4.198 some sql commands
 are not supported, which is rooted in the former. Previously an internal error occurred when using H2 and trying to issue
 a CRR due to unsupported sql commands. Note that this issue has been fixed in later H2 db versions.
@@ -62,11 +62,11 @@ the Network Map. This provides a solution to the scenario whereby a node gets st
 *Troubleshooting Common Issues* section).
 * Added dynamic loading of HSM Jars. When using the Signing Service or PKI tool in conjunction with a HSM, the third
 party Jars have to be provided by the user and referenced within the configuration file.
-* Added logic for logging config files with the value “<{hidden}>” for password keys, preventing sensitive data
+* Added logic for logging configuration files with the value “<{hidden}>” for password keys, preventing sensitive data
 from ending up in the services’ logs.
-* Added additional port availability checks for enmListener ports and address of services specified in the config file.
+* Added additional port availability checks for enmListener ports and address of services specified in the configuration file.
 * Added Oracle database support (versions 12cR2 and 11gR2).
-* Added config migration tool (v0.2.2 / v0.3+ config files to v1.1 configs).
+* Added configuration migration tool (v0.2.2 / v0.3+ configuration files to v1.1 configurations).
 * Removed invalid mention of DSA keys within the package ownership documentation for Network Parameters. Corda does not
 support DSA keys.
 
@@ -83,10 +83,10 @@ the future versioning of both independently.
 * Added JSON plain text REST endpoints.
 * Added support for dynamically loadable JDBC drivers.
 * Added Postgresql as an officially supported database that the CENM is tested against.
-* Added support for manually specifying the epoch value within a network parameter config file.
+* Added support for manually specifying the epoch value within a network parameter configuration file.
 * Added contextual logging mechanism.
 * Moved private network management tools into the Network Map interactive shell.
-* Added multi-phase config parsing.
+* Added multi-phase configuration parsing.
 * Separated Identity Manager, Network Map, Signing Service into stand-alone `.jar` files.
 * Renaming of Doorman to Identity Manager.
 * Removed bundled mssql jdbc driver

@@ -42,9 +42,9 @@ In this guide, we use placeholder values for external endpoints (for example, `<
 They depend on the machine in which the service is running and should be replaced with the correct values.
 
 If you are running the network locally, this value will match the `address` parameter
-within the Identity Manager config file but if you are deploying the network in a
+within the Identity Manager configuration file but if you are deploying the network in a
 cloud environment, this value should be the external address of your machine along
-with any port defined in the `address` config parameter.
+with any port defined in the `address` configuration parameter.
 
 {{< /note >}}
 
@@ -138,7 +138,7 @@ This will produce the following set of files:
 * `key-stores/corda-network-map-keys.jks` - Contains the key pairs for the Network Map Service which are used for signing the Network Map and Network Parameters
 * `trust-stores/network-root-truststore.jks` - Contains the network root certificate and the TLS CRL signing certificate which are used by nodes to verify that responses from other participants on the network are valid
 
-If you run the PKI tool with the alternative example config with CRL enabled, a
+If you run the PKI tool with the alternative example configuration with CRL enabled, a
 further set of CRL files will be created under the `crl-stores/` folder.
 Although these files are not required to get a basic network up and running,
 additional functionalities such as certificate revocation support, will be
@@ -468,7 +468,7 @@ java -jar bundled.jar -f identity-manager.conf
 Upon successful startup, you should see the following details printed to the console:
 
 ```guess
-Deduced Identity Manager Service from provided config file...
+Deduced Identity Manager Service from provided configuration file...
 Binding Shell SSHD server on port <SHELL_PORT>
 Network management web services started on <IDENTITY_MANAGER_ADDRESS> with [RegistrationWebService, CertificateRevocationWebService, MonitoringWebService]
 ```

@@ -140,7 +140,7 @@ take the form of locally stored Java key store files, and contain no private key
 
 {{< note >}}
 A generated certificate will only be stored in a certificate store if explicitly specified via the `includeIn`
-config parameter, or alternatively via the `defaultCertificatesStore` config parameter.
+config parameter, or alternatively via the `defaultCertificatesStore` configuration parameter.
 
 {{< /note >}}
 
@@ -410,7 +410,7 @@ hsmLibraries = [
 ]
 ```
 
-See the example configurations below to see these config blocks being used in a complete file.
+See the example configurations below to see these configuration blocks being used in a complete file.
 
 
 ###### Azure Key Vault

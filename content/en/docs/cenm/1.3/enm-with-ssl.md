@@ -64,7 +64,7 @@ outside of a testing environment.
 
 ## Configuration
 
-In general CENM components are configured with SSL via the inclusion of an `ssl` config block
+In general CENM components are configured with SSL via the inclusion of an `ssl` configuration block
 #. The SSL settings themselves, locations of keystores and passwords
 #. The enabling of individual communication channels to use SSL.
 
@@ -161,7 +161,7 @@ enmListener {
 ```
 
 This will include the `Network Map` as well as both the `Issuance` and `Revocation` workflows inside the Identity
-Manager. Leaving these configuration blocks out of the respective config files will mean that each CENM listening server
+Manager. Leaving these configuration blocks out of the respective configuration files will mean that each CENM listening server
 will be created without SSL and default to the following ports:
 
 
@@ -173,7 +173,7 @@ will be created without SSL and default to the following ports:
 ### Client Side Enablement
 
 Those CENM services which need to talk to other services as a client are configured similarly to the above, on a
-per-service basis. For example, the Network Map is configured to talk to the Identity Manager thusly:
+per-service basis. For example, the Network Map is configured to talk to the Identity Manager Service:
 
 ```docker
 networkMap = {
@@ -200,8 +200,8 @@ resulting in an unsuccessful connection.
 For some services, such as the Network Map, it is possible multiple SSL configuration blocks within the configuration
 file. It is considered to be most secure if each of these connections use a unique set of SSL keys, however in some
 situations it may be desirable to use the same SSL keys and certificates across multiple connections. To avoid
-repetition within the config files and improve readability the SSL configuration block can be extracted out to a
-separate file and then dynamically included within the config file. For example, the SSL settings below can be extracted
+repetition within the configuration files and improve readability the SSL configuration block can be extracted out to a
+separate file and then dynamically included within the configuration file. For example, the SSL settings below can be extracted
 to the file `ssl-settings.conf`:
 
 ```docker
@@ -217,7 +217,7 @@ ssl = {
 }
 ```
 
-and then included in the Network Map config file thusly:
+and then included in the Network Map Service configuration file as below:
 
 ```docker
 ...
@@ -378,7 +378,7 @@ revocation {
     host = "example-identity-manager-host"
     port = 5052
     reconnect = true
-    # example revocation communication config without SSL
+    # example revocation communication configuration without SSL
 }
 
 checkRevocation = true

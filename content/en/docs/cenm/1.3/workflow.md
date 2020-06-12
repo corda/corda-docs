@@ -22,7 +22,7 @@ like JIRA.
 
 ## Adding workflow plugin
 
-The workflow plugin can be configured via config file.
+The workflow plugin can be configured via configuration file.
 
 For certificate signing request:
 

@@ -103,7 +103,7 @@ the logs files do not conflict.
 * Add new command to Network Map shell to view list of nodes that have accepted (or haven’t) a given parameters update
 (“view nodesAcceptedParametersUpdate accepted: <true/false>, parametersHash: <parameters update hash value>”),
 which can help to monitor the procedure of [Updating the network parameters](updating-network-parameters.md).
-* Add working directory argument for CENM services, which is a path prefix for config and certificate files.
+* Add working directory argument for CENM services, which is a path prefix for configuration and certificate files.
 * Add `run networkParametersRegistration`, `run flagDay` and `run cancelUpdate` commands to the Network Map
 service shell, to enable running flag days without restarting the service. See [Updating the network parameters](updating-network-parameters.md) for
 full details.
@@ -210,7 +210,7 @@ stores. Please ensure key passwords match the key store password to avoid this i
 is 1.1.
 * Config migration tool does not generate a `shell` configuration section, and therefore the generated configurations may not be usable as-is.
 This is intentional in order as the operator needs to make decisions on this configuration, for example password.
-* PKI tool reports “Error whilst attempt to read config lines.” if it cannot find a configuration file, rather than a more specific error message.
+* PKI tool reports “Error whilst attempt to read configuration lines.” if it cannot find a configuration file, rather than a more specific error message.
 
 
 ## Release 1.0
@@ -289,7 +289,7 @@ in a configuration file or remembering the correct start up flag.
 
 **Config Debugability**
 
-Added multi-phase parsing of config files. Parsing and validation errors are now batched before being presented to
+Added multi-phase parsing of configuration files. Parsing and validation errors are now batched before being presented to
 the user, eliminating the frustration from having to address errors one by one.
 
 **Security And Performance Fixes**
@@ -327,7 +327,7 @@ for example by viewing the current set of nodes within the public network, or vi
 Requests that are awaiting approval. See the [Embedded Shell](shell.md) documentation for more information.
 
 Added support for overriding the default “increment previous value by 1” behaviour for epoch values during network
-parameter updates/initialisation. This allows a user to specify the epoch within the parameter config file and it
+parameter updates/initialisation. This allows a user to specify the epoch within the parameter configuration file and it
 facilitates arbitrary jumps in epoch values. This is necessary for the day-to-day management of multiple sub-zones as
 well as the merging of one sub-zone into another.
 
@@ -339,7 +339,7 @@ in a configuration file or remembering the correct start up flag.
 
 **Config Debugability**
 
-Added multi-phase parsing of config files. Parsing and validation errors are now batched before being presented to
+Added multi-phase parsing of configuration files. Parsing and validation errors are now batched before being presented to
 the user, eliminating the frustration from having to address errors one by one.
 
 The service-based architecture requires tooling around service state monitoring. Currently (i.e. with the 0.3 release),

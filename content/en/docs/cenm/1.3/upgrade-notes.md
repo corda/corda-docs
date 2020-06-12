@@ -104,7 +104,7 @@ The Network Map Service upgrade process is similar to that for the Identity Mana
 with its CENM 1.0 counterpart, and restart the service. The Network Map Service configuration file has also been re-worked.
 Configurations predating CENM 1.0 must be migrated to be compatible with CENM 1.0. Refer to the Network Map Service documentation for further guidance.
 * **Signing Service**The Signing Service is now a long-running service in the same vein as the Identity Manager and Network Map,
-as opposed to a command-line tool with one-shot execution. Signing tasks are configurable via the config file
+as opposed to a command-line tool with one-shot execution. Signing tasks are configurable via the configuration file
 supplied to the new Signing Service on start-up. Configure the Signing Service to perform any existing
 signing tasks by referencing the Signing Service documentation.
 * **SQL Server**If you’re currently using Microsoft SQL server then, in previous versions of CENM, this worked out of the
@@ -199,7 +199,7 @@ of the [Network Map Service](network-map.md) doc for more information.
 
 The release modifies the Network Map Signing Service to request data through the Network Map Service rather than going
 directly to the database. Therefore the configuration needs to change to remove the redundant database configuration and
-instead adding the service endpoint. As this information cannot be known by the config upgrader, this has to be added
+instead adding the service endpoint. As this information cannot be known by the configuration upgrader, this has to be added
 manually. See [Signing Services](signing-service.md) for more information on how to configure this.
 
 
@@ -238,7 +238,7 @@ java -jar doorman-0.1.jar --config-file doorman-0.1.conf --config-is-old
 
 ### Upgrading Your Configuration File
 
-You can also use the configuration file upgrade tool to create a new config file from your old 0.1 file.
+You can also use the configuration file upgrade tool to create a new configuration file from your old 0.1 file.
 
 The new `.jar` file can then be run with the new configuration file with no extra steps or command-line arguments.
 

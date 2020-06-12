@@ -77,9 +77,9 @@ ssh -p [portNumber] [host] -l [user]
 Where:
 
 
-* `[portNumber]` is the port number specified by the `shell.sshdPort` config parameter
+* `[portNumber]` is the port number specified by the `shell.sshdPort` configuration parameter
 * `[host]` is the service’s host (e.g. `localhost` if running the service locally)
-* `[user]` is the username specified by the `shell.user` config parameter
+* `[user]` is the username specified by the `shell.user` configuration parameter
 
 The password will be requested after a connection is established.
 

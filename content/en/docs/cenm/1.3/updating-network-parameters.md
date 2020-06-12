@@ -31,7 +31,7 @@ Typical update process is as follows:
 > * Stop the Network Map Service.
 > * Run it with `--set-network-parameters` flag, along with the network truststore related flags. See the ‘Setting
 > the Network Parameters’ section within the [Network Map Service](network-map.md) doc for more information. The network parameters
-> file must have `parametersUpdate` config block:```guess
+> file must have `parametersUpdate` configuration block:```guess
 > parametersUpdate {
 >     description = "Important update"
 >     updateDeadline = "2017-08-31T05:10:36.297Z" # ISO-8601 time, substitute it with update deadline
@@ -167,8 +167,8 @@ And the location of that file can be specified with: `--set-network-parameters`.
 Note that when reading from file:
 
 
-* `epoch` will be initialised to 1, unless a different value is specified within the config file
+* `epoch` will be initialised to 1, unless a different value is specified within the configuration file
 * `modifiedTime` will be the network map startup time
 
 `epoch` will increase by one every time the network parameters are updated, however larger jumps can be achieved by
-manually setting the next epoch value within the config file..
+manually setting the next epoch value within the configuration file..
