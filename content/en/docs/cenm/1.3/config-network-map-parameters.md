@@ -105,7 +105,7 @@ version of Corda that does not support the new PKI structure (arbitrary length c
 
 * **adminListener**:
   To use the RPC API in the Identity Manager Service, you must define a configuration property called `adminListener`.
-  You can add `port`, `reconnect`, and `verbose`. Also, this property has an SSL field - see: [SSL Settings](config-ssl.md).
+  You can add `port`, `reconnect`, and `verbose`. Also, this property has an SSL field - see [SSL Settings](config-ssl.md) for more information.
   * **port**:
     Port number to listen to for Admin RPC connections.
   * **verbose**:
