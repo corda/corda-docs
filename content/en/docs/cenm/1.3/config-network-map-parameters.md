@@ -59,7 +59,7 @@ Details where the revocation service is on the network
   * **ssl**:
   See [SSL Settings](config-ssl.md)
 * **localSigner**:
-*(Optional)* Configuration of the local signer for the Network Map service. Useful for debugging, testing or when HSM support is not available.
+*(Optional)* Configuration of the local signer for the Network Map Service. Useful for debugging, testing or when HSM support is not available.
   * **keyStore**:
   Configuration for key store containing the Network Map Service key pair.
     * **file**:

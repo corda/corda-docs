@@ -52,7 +52,7 @@ This is an internal feature. Running a network with multiple sub-zones is not a 
 {{< /note >}}
 Where the zone as a whole is defined by the unique set of identities, a sub zone is a sub grouping of those entities
 that agree to a common set of parameters that define the global consensus mechanisms for all members. This functionality
-is offered by one or more Network Map services.
+is offered by one or more Network Map Services.
 
 Sub Zones are currently categorised in relation to the mechanism a zone operator has in place for the process of
 setting the network parameters for it.

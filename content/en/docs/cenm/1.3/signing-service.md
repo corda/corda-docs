@@ -385,14 +385,14 @@ Listed below are the steps involved in signing an example Network Parameter upda
 data types are very similar.
 
 
-* A network operator issues a Network Parameter update via the appropriate Network Map service. At this point, as the
+* A network operator issues a Network Parameter update via the appropriate Network Map Service. At this point, as the
 update is unsigned, it will not be broadcast to the network.
 
 The parameter update is ready to be signed.
 
 
 * A privileged user accesses the Signing Service via ssh and runs the pre-configured Network Parameter signing task for
-the given Network Map service.
+the given Network Map Service.
 * A connection to the Network Map or Signable Material Retriever service is established and the unsigned Network Parameter update is
 fetched and displayed to the user.
 * The user confirms that the changes are correct and should be signed.
@@ -402,7 +402,7 @@ exact format of this authentication will depend on the configured signing key th
 commences using the configured signing key. If their privileges are not sufficient then the signing task will prompt
 for another user to be authenticated, repeating this process until the configured HSM authentication threshold has
 been exceeded.
-* The Network Parameter update is signed then persisted back to the appropriate Network Map service or Signable Material Retriever service. When the Network
+* The Network Parameter update is signed then persisted back to the appropriate Network Map Service or Signable Material Retriever service. When the Network
 Map is next updated and signed, the newly signed parameter update will be included and therefore broadcast to the
 network participants.
 

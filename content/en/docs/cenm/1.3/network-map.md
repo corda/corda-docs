@@ -118,7 +118,7 @@ See [Network Map Configuration Parameters](config-network-map-parameters.md) for
 
 The `address` parameter must be included in the top level of the configuration and represents the host and port
 number that the Network Map Service will bind to upon startup. The host can either be the IP address or the hostname of
-the machine that Network Map service is running on. For example:
+the machine that Network Map Service is running on. For example:
 
 ```guess
 address = "<SERVER_IP/SERVER_HOST>:<PORT_NUMBER>"
@@ -135,7 +135,7 @@ connect to Network Map.
 
 ### Database
 
-The Network Map service is backed by a SQL database which it uses to store the network map along with node infos. The
+The Network Map Service is backed by a SQL database which it uses to store the network map along with node infos. The
 connection settings must be included within the `database` configuration block in the configuration file. The main options
 that should be included here are:
 
@@ -149,11 +149,11 @@ that should be included here are:
 
 #### Database Setup
 
-The database can either be setup prior to running the Network Map service or, alternatively, it can be automatically
+The database can either be setup prior to running the Network Map Service or, alternatively, it can be automatically
 prepared on startup via the built-in migrations. To enable the running of database migrations on startup set the
 `runMigration` parameter within the `database` configuration to true.
 
-If the Network Map service is being run using the same DB instance as the Identity Manager service then the Network Map
+If the Network Map Service is being run using the same DB instance as the Identity Manager service then the Network Map
 schema name must be specified via the `schema` parameter within the `database` configuration block:
 
 ```guess
@@ -165,7 +165,7 @@ database {
 ```
 
 {{< note >}}
-Due to the way the migrations are defined, if the Identity Manager and Network Map services are using the same
+Due to the way the migrations are defined, if the Identity Manager and Network Map Services are using the same
 DB instance then they *must* use separate DB schemas. For more information regarding the supported databases
 along with the schema see [CENM Databases](database-set-up.md).
 
@@ -190,7 +190,7 @@ database {
 
 #### Example
 
-An example configuration for a Network Map service using a Microsoft SQL Service database, configured to run the
+An example configuration for a Network Map Service using a Microsoft SQL Service database, configured to run the
 migrations on startup is:
 
 ```guess
@@ -274,7 +274,7 @@ via the external signing service.
 
 ### Cache Timeout
 
-The Network Map service configuration contains a single required top-level parameter `pollingInterval`. This
+The Network Map Service configuration contains a single required top-level parameter `pollingInterval`. This
 determines how often the server should poll the database for newly signed network map and parameter changes. It also
 determines how often nodes should poll the network map service for a new network map (by including this value in the
 HTTP response header).
@@ -292,13 +292,13 @@ pollingInterval = 600000
 ### Node Certificate Revocation Checking
 
 In cases when the certificate revocation list infrastructure (See [Certificate Revocation List](certificate-revocation.md) for more information)
-is provided, the additional validation for the node’s certificates can be enabled in the Network Map service. This is
+is provided, the additional validation for the node’s certificates can be enabled in the Network Map Service. This is
 achieved via the top-level `checkRevocation` flag set in the configuration file. This ensures that any node within the
 Network Map has a valid, trusted certificate.
 
 Setting this flag will result in the nodes legal identities certificate paths being validated against the certificate
 revocation lists whenever the Network Map is updated. Any node that has a revoked certificate will be removed from the
-Network Map. The certificates are also checked when the node submits its information to the Network Map service to
+Network Map. The certificates are also checked when the node submits its information to the Network Map Service to
 publish for the first time.
 
 An example of how this should be added to the configuration file is:
@@ -317,8 +317,8 @@ Enabling this option requires communication with the Revocation service to be co
 
 ### ENM Internal Server
 
-To enable communication between the Network Map service and other network management services, such as Revocation and
-Identity Manager servers, upon start up the Network Map service will create an internal long running listening server.
+To enable communication between the Network Map Service and other network management services, such as Revocation and
+Identity Manager servers, upon start up the Network Map Service will create an internal long running listening server.
 The configuration block `enmListener` can be used to define the properties of this
 listener, such as the port it listens on as well as the retrying and logging behaviour.
 
@@ -403,7 +403,7 @@ Running a network with one or more private networks is not a supported configura
 {{< /warning >}}
 
 
-The Network Map service may need to speak to both the Identity Manager and Revocation services. For example, the Network
+The Network Map Service may need to speak to both the Identity Manager and Revocation services. For example, the Network
 Map service may need to communicate with the Revocation service for CRL related information.
 This is configured via the `identityManager` and `revocation` configuration options within the `networkMap`
 configuration block:
@@ -461,7 +461,7 @@ with a minimum version less than this will not work unless the nodes are running
 {{< /note >}}
 {{< note >}}
 The minimum version configuration options should, in general, be kept consistent between the Identity Manager
-and Network Map service
+and Network Map Service
 
 {{< /note >}}
 
@@ -537,7 +537,7 @@ is advisable to register the notaries with the Identity Manager service and gene
 starting the network map.
 
 The network parameters should contain reference to the notaries node info files. The notary node info files should be
-copied over to the Network Map service.
+copied over to the Network Map Service.
 
 
 ### Example Network Parameters File

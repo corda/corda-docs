@@ -68,7 +68,7 @@ Use latest patched version (1.1.1 or higher) of the services (JAR/ZIP files) ins
 
 {{< /note >}}
 
-* **Identity Manager, Network Map and Signing Service**Ensure Identity Manager and Network Map service will be configure to upgrade the database upon startup.
+* **Identity Manager, Network Map and Signing Service**Ensure Identity Manager and Network Map Service will be configure to upgrade the database upon startup.
 In the configuration files of Identity Manager and Network Map set `runMigration` property to `true` e.g.:```guess
 database {
     runMigration = true
@@ -87,7 +87,7 @@ and [Public Key Infrastructure (PKI) Tool](pki-tool.md) for more information.
 ## 0.3+ to 1.0
 
 CENM 1.0 introduces an overhauled Signing Service, official PostgreSQL support and re-worked config files for
-Identity Manager (formerly Doorman) and Network Map services.
+Identity Manager (formerly Doorman) and Network Map Services.
 
 
 * **Identity Manager**The Doorman is now known as the Identity Manager. To upgrade, replace the Doorman JAR with the Identity
@@ -125,7 +125,7 @@ database {
 ```
 
 
-* **Config Files**CENM 1.0 Identity Manager and Network Map services are not backwards compatible with 0.x Doorman and Network Map
+* **Config Files**CENM 1.0 Identity Manager and Network Map Services are not backwards compatible with 0.x Doorman and Network Map
 config files. 0.2.2 and 0.3 / 0.4 config files can be migrated to 1.0 using the [Config migration tool](tool-config-migration.md).
 Using the generated 1.0 configs, the services can be upgraded by: stopping the services, swapping out the JAR and
 config files and restarting the services.
@@ -152,7 +152,7 @@ Once this has been done the following steps should be followed to upgrade the se
 For example for the Doorman service:
 
 ![doorman migration](/en/images/doorman-migration.png "doorman migration")
-These steps should be followed for both the Doorman and Network Map services. This step is *non-destructive* - it
+These steps should be followed for both the Doorman and Network Map Services. This step is *non-destructive* - it
 should leave the old DB untouched, only copying the data across to the new DBs. Once both services have been migrated
 via the above steps they should be fully functional:
 
@@ -168,14 +168,14 @@ files. Most Notably:
 
 If a node is a member of a private network, the current implementation of Corda only passes the node’s private network
 id during its registration request to the Doorman (if configured on the node side). A consequence of this design and the
-separation of Doorman and the Network Map service is that when a node submits its NodeInfo to a network map instance,
+separation of Doorman and the Network Map Service is that when a node submits its NodeInfo to a network map instance,
 the network map instance needs to communicate with the Doorman service as it can no longer do the direct lookup of a
 node’s private network membership from within the Doorman DB. This is facilitated via a new internal *ENM server* that
 lives within each ENM service.
 
 In case of a deployment scenario involving ENM upgrade from version prior to 0.3, the configuration file for the
-Network Map service can be automatically upgraded using the config upgrader tool or the `--config-is-old` flag.
-In the case of the Network Map service, the config parameters `privateNetworkAutoEnrolment` and `checkRevocation`
+Network Map Service can be automatically upgraded using the config upgrader tool or the `--config-is-old` flag.
+In the case of the Network Map Service, the config parameters `privateNetworkAutoEnrolment` and `checkRevocation`
 are defaulted to false, therefore switching this behaviour off. This is because the exact endpoints for the Doorman
 and Revocation services cannot be known by the upgrader.
 
@@ -189,9 +189,9 @@ of the [Network Map Service](network-map.md) doc for more information.
 
 
 
-#### The Network Map signing service requires a configuration update to specify communication the Network Map service
+#### The Network Map signing service requires a configuration update to specify communication the Network Map Service
 
-The release modifies the Network Map Signing Service to request data through the Network Map service rather than going
+The release modifies the Network Map Signing Service to request data through the Network Map Service rather than going
 directly to the database. Therefore the configuration needs to change to remove the redundant DB configuration and
 instead adding the service endpoint. As this information cannot be known by the config upgrader, this has to be added
 manually. See [Signing Services](signing-service.md) for more information on how to configure this.
@@ -205,7 +205,7 @@ configuration modification. See [Signing Services](signing-service.md) for more 
 
 #### Setting the network parameters requires passing the root certificate
 
-When setting network parameters, the Network Map service cannot validate the proposed notary certificates using the Doorman DB.
+When setting network parameters, the Network Map Service cannot validate the proposed notary certificates using the Doorman DB.
 Hence the trusted root certificate now needs to be passed during setting of parameters.
 See the “Setting the Network Parameters” section of the [Network Map Service](network-map.md) doc for more information.
 

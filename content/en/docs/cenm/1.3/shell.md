@@ -101,7 +101,7 @@ of commands:
 
 The list of available commands in each subsection can be viewed by executing either `view` or `run` from the shell.
 A shell command can by run by executing the type of the command followed by the command name
-(`[view|run] <COMMAND_NAME>`). For example, to view all notaries within the Network Map service:
+(`[view|run] <COMMAND_NAME>`). For example, to view all notaries within the Network Map Service:
 
 ```bash
 view notaries

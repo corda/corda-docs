@@ -117,7 +117,7 @@ the `database` configuration block in the configuration file. The main options t
 The database can either be setup prior to running the Identity Manager service or, alternatively, it can be
 automatically prepared on startup via the built-in migrations. To enable the running of database migrations on startup
 the optional `runMigration` parameter within the `database` configuration should be set to true. Additionally, if
-the Identity Manager service is being run using the same DB instance as an accompanying Network Map service then the
+the Identity Manager service is being run using the same DB instance as an accompanying Network Map Service then the
 Identity Manager schema name must be specified via the `schema` parameter within the `database` configuration block:
 
 ```guess
@@ -129,7 +129,7 @@ database {
 ```
 
 {{< note >}}
-Due to the way the migrations are defined, if the Identity Manager and Network Map services are using the same
+Due to the way the migrations are defined, if the Identity Manager and Network Map Services are using the same
 DB instance then they *must* use separate DB schemas. For more information regarding the supported databases
 along with the schema see [CENM Databases](database-set-up.md).
 
@@ -325,7 +325,7 @@ Similarly to the other Enterprise Network Manager (ENM) services, the Identity M
 such as the Network Map and Signing services. Both the Issuance and, optionally, the Revocation workflows have their own
 internal listening socket interface that is created on startup which can receive and respond to messages from other ENM services.
 For example, the Revocation workflow’s ENM listener can respond to messages from the Network Map regarding certificate
-statuses of current participants which the Network Map service will then use when refreshing the latest Network Map.
+statuses of current participants which the Network Map Service will then use when refreshing the latest Network Map.
 
 To configure this internal server, the configuration block `enmListener` should be added within the Issuance
 workflow’s configuration:
@@ -365,7 +365,7 @@ have access to certain features.
 
 {{< note >}}
 This serves a similar purpose to the *minimumPlatformVersion* within the network parameters and also within
-the Network Map service configuration. However, unlike the other two options, as it prevents an outdated node
+the Network Map Service configuration. However, unlike the other two options, as it prevents an outdated node
 from successfully submitting a CSR in the first place it prevents any version related issues at the earliest
 possible step. Relying solely on the Network Parameters platform version gate can result in an outdated node
 successfully receiving a certificate to join the network despite not being able to (and thus needing to
