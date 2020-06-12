@@ -66,7 +66,7 @@ The steps to integrate the notary node into the network are:
 
 ### Create Notary Node And Register With The Identity Manager
 
-Ensuring that the Identity Manager service is successfully running, start the notary node for registration.
+Ensuring that the Identity Manager Service is successfully running, start the notary node for registration.
 
 ```bash
 java -jar corda.jar --config-file <NODE_CONF_FILE> --initial-registration --network-root-truststore-password <TRUST_STORE_PASSWORD> --network-root-truststore <PATH_TO_TRUST_STORE>

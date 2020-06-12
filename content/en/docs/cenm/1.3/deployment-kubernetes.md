@@ -186,7 +186,7 @@ networkServices {
 ```
 
 Replacing placeholder values as follows:
-  * the `doormanURL` property is the public IP address and port of the Identity Manager service
+  * the `doormanURL` property is the public IP address and port of the Identity Manager Service
   * the `networkMapURL` is the pubic IP address and port of the Network Map Service.
 
 Next, upload the `network-root-truststore.jks` to your Corda node.

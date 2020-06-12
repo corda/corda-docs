@@ -18,7 +18,7 @@ title: Identity Manager Configuration Parameters
 
 # Identity Manager Configuration Parameters
 
-The Configuration references for the Identity Manager service are given below:
+The Configuration references for the Identity Manager Service are given below:
 
 
 * **address**:
@@ -36,7 +36,7 @@ See [CENM Database Configuration](config-database.md)
 
 
 * **localSigner**:
-*(Optional)* Configuration of the local signer for the Identity Manager service. Useful for debugging, testing or when Hardware Security Module (HSM) support is not available.
+*(Optional)* Configuration of the local signer for the Identity Manager Service. Useful for debugging, testing or when Hardware Security Module (HSM) support is not available.
 
 
   * **keyStore**:

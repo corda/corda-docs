@@ -48,7 +48,7 @@ by the zone operator, whose nodeInfo is included in the whitelist of the network
 Interesting features
 
 
-* All nodes are registered with the zone’s Identity Manager service. *(This includes the notaries)*
+* All nodes are registered with the zone’s Identity Manager Service. *(This includes the notaries)*
 * Each sub zone is represented by a network map, each with its own database and network parameters file
 * Node 1 is on the “older” sub zone using a minimum platform version of 3, it is unaware Nodes 2 and 3 even exist
 (just as they are unaware of it) but can use Notary 1.

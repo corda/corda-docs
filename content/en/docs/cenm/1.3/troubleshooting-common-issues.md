@@ -40,7 +40,7 @@ status of the service (whether it is executing and if it is reachable):
 {{< table >}}
 
 |**Service**|**Request Type**|**Endpoint**|**Return Value**|
-|Identity Manager service|GET|`/status`|Status information of the Identity Manager deployment.|
+|Identity Manager Service|GET|`/status`|Status information of the Identity Manager deployment.|
 |Network Map Service|GET|`/network-map/my-hostname`|IP address of the caller.|
 |Revocation Workflow (sub-service of Identity Manager)|GET|`/status`|Status information of the Identity Manager deployment.|
 
@@ -66,7 +66,7 @@ There are a few different reasons why this could be:
 * The publishing of the node info was successfully, but the updated network map has not been signed yet.
 * There was an issue with the node info publishing such as the node’s certificate was not valid.
 * The publishing of a node info is still in progress, and the Network Map Service is awaiting a response from the
-Identity Manager service.
+Identity Manager Service.
 
 To verify that issue 1 is not the culprit - verify that the Network Map signing process is still successfully running
 periodically. Unless the Network Map Service is configured for testing, it should have an external signing process

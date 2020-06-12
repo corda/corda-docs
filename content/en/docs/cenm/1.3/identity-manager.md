@@ -100,7 +100,7 @@ IP/DNS name to connect to Identity Manager.
 
 ### Database
 
-The Identity Manager service is backed by a SQL database which it uses to store information such as Certificate Signing
+The Identity Manager Service is backed by a SQL database which it uses to store information such as Certificate Signing
 Requests (CSRs) and (optionally) Certificate Revocation Requests (CRRs). The connection settings must be included within
 the `database` configuration block in the configuration file. The main options that should be included here are:
 
@@ -114,10 +114,10 @@ the `database` configuration block in the configuration file. The main options t
 
 #### Database Setup
 
-The database can either be setup prior to running the Identity Manager service or, alternatively, it can be
+The database can either be setup prior to running the Identity Manager Service or, alternatively, it can be
 automatically prepared on startup via the built-in migrations. To enable the running of database migrations on startup
 the optional `runMigration` parameter within the `database` configuration should be set to true. Additionally, if
-the Identity Manager service is being run using the same DB instance as an accompanying Network Map Service then the
+the Identity Manager Service is being run using the same DB instance as an accompanying Network Map Service then the
 Identity Manager schema name must be specified via the `schema` parameter within the `database` configuration block:
 
 ```guess
@@ -154,7 +154,7 @@ database {
 
 #### Example
 
-An example configuration for an Identity Manager service using a Microsoft SQL Server database, configured to run the
+An example configuration for an Identity Manager Service using a Microsoft SQL Server database, configured to run the
 migrations on startup is:
 
 ```guess
@@ -239,7 +239,7 @@ workflows {
 
 ##### JIRA Workflow
 
-The Identity Manager service can use JIRA to manage the certificate signing request approval work flow. This can be
+The Identity Manager Service can use JIRA to manage the certificate signing request approval work flow. This can be
 enabled by referencing the JIRA CSR workflow plugin within the configuration file along with the associated configuration
 parameters:
 
@@ -394,7 +394,7 @@ with a minimum version less than this will not work unless the nodes are running
 
 ### Revocation Workflow (optional)
 
-The Revocation workflow is the second of the two main components in the Identity Manager service. It is an optional
+The Revocation workflow is the second of the two main components in the Identity Manager Service. It is an optional
 component that is responsible for handling incoming Certificate Revocation Requests (CRRs) to revoke a node’s
 certificate (acquired via a previously approved CSR) as well as hosting the Certificate Revocation Lists (CRLs) to
 enable the participants on the network to verify the validity of other’s certificates.

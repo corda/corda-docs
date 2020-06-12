@@ -153,7 +153,7 @@ The database can either be setup prior to running the Network Map Service or, al
 prepared on startup via the built-in migrations. To enable the running of database migrations on startup set the
 `runMigration` parameter within the `database` configuration to true.
 
-If the Network Map Service is being run using the same DB instance as the Identity Manager service then the Network Map
+If the Network Map Service is being run using the same DB instance as the Identity Manager Service then the Network Map
 schema name must be specified via the `schema` parameter within the `database` configuration block:
 
 ```guess
@@ -441,7 +441,7 @@ that join the network have access to certain features.
 
 {{< note >}}
 This serves a similar purpose to the *minimumPlatformVersion* within the network parameters and also within
-the Identity Manager service configuration. Publishing of the node info is the second step to joining the
+the Identity Manager Service configuration. Publishing of the node info is the second step to joining the
 network, after obtaining a certificate from the Identity Manager, so this option provides another gate of
 security and peace of mind to the network operator.
 
@@ -533,7 +533,7 @@ shell {
 
 Along with the above configuration, a *network-parameters* configuration file also needs to be created. This defines the
 basic settings for communication across the network along with references to the notaries node info files. Therefore it
-is advisable to register the notaries with the Identity Manager service and generate their node info files prior to
+is advisable to register the notaries with the Identity Manager Service and generate their node info files prior to
 starting the network map.
 
 The network parameters should contain reference to the notaries node info files. The notary node info files should be

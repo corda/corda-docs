@@ -122,7 +122,7 @@ use ‘database.runMigration’ instead.
 ### Security Improvements
 
 
-* Shell interface (Signing Service and Identity Manager services) no longer allow access to commands which allow scripting
+* Shell interface (Signing Service and Identity Manager Services) no longer allow access to commands which allow scripting
 
 of Java.
 
@@ -132,7 +132,7 @@ of Java.
 
 * Identity Manager’s WorkflowPlugin keeps trying to create new request in an external system,
 until the request is REJECTED or APPROVED. This means the external system needs to internally record which requests
-are currently being processed and reject surplus creation attempts. The Identity Manager service records this in logs
+are currently being processed and reject surplus creation attempts. The Identity Manager Service records this in logs
 as warning: “There is already a ticket: ‘<TICKET ID>’ corresponding to *Request ID* = <VALUE>, not creating a new one.”
 
 ## Release 1.1.3
