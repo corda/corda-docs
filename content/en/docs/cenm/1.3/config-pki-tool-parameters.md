@@ -148,7 +148,7 @@ Currently, 3 authentication modes are supported:
 * **password**:
 Only relevant if mode is `PASSWORD` or mode is `KEY_FILE`. It specifies either the password credential for the
 associated user or the password to the key file, depending on the selected mode. If not specified in the
-configuration file, it will be prompted on the command line.
+configuration file, it will be prompted on the command-line.
 
 
 * **keyFilePath**:

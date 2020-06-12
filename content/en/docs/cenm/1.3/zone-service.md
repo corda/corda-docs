@@ -40,7 +40,7 @@ by the Angel Service for the appropriate Network Map Service.
 ## Running the Zone Service
 
 The Zone Service does not have a configuration file, and is configured entirely
-from the command line. To run the Zone Service, use a command like the one shown in the example below:
+from the command-line. To run the Zone Service, use a command like the one shown in the example below:
 
 ```bash
 java -jar zone.jar --enm-listener-port=5061 --url=\"jdbc:h2:file:/opt/zone/zone-persistence;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=10000;WRITE_DELAY=0;AUTO_SERVER_PORT=0\" --user=testuser --password=password --admin-listener-port=5063 --driver-class-name=org.h2.jdbcx.JdbcDataSource --auth-host=auth-service --auth-port=8081 --auth-trust-store-location=certificates/corda-ssl-trust-store.jks --auth-trust-store-password=trustpass --auth-issuer=http://test --auth-leeway=10 --run-migration=true

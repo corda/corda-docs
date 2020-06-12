@@ -54,7 +54,7 @@ The full list of arguments you can use when starting the Angel Service are descr
 
 ## Configuration
 
-The Angel Service is configured via the command line and it downloads the configuration of the managed service from the Zone Service.
+The Angel Service is configured via the command-line and it downloads the configuration of the managed service from the Zone Service.
 
 **Workflow**
 

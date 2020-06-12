@@ -22,7 +22,7 @@ title: Release notes
 
 * Angel and Zone Services have been introduced to manage configuration of other
   CENM services. The Zone Service stores configuration values provided by an
-  operator via a web or command line user interface, and these are retrieved
+  operator via a web or command-line user interface, and these are retrieved
   by an Angel Service deployed alongside the Identity Manager or Network Map
   Services. For further information on these services see
   [Angel Service](angel-service.md) and [Zone Service](zone-service.md).

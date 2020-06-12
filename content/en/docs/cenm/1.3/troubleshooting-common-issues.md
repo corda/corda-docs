@@ -24,7 +24,7 @@ title: Troubleshooting Common Issues
 
 ### Enabling debug/trace logging
 
-Each service can be configured to run with a deeper log level via command line flags passed at start-up:
+Each service can be configured to run with a deeper log level via command-line flags passed at start-up:
 
 ```bash
 java -DdefaultLogLevel=TRACE -DconsoleLogLevel=TRACE -jar <enm-service-jar>.jar --config-file <config file>

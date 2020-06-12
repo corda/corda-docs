@@ -107,7 +107,7 @@ A shell command can by run by executing the type of the command followed by the 
 view notaries
 ```
 
-More information, including an command line example, for each command can be acquired by using the built-in `man`
+More information, including an command-line example, for each command can be acquired by using the built-in `man`
 functionality (`man <COMMAND_NAME>`). For example, to find out more about the view all notaries command listed above:
 
 ```bash

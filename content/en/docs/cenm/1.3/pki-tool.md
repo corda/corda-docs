@@ -57,7 +57,7 @@ For more information about X.500 Name constraints, see the `Node naming` section
 
 ## Running the PKI Tool
 
-The tool is designed to be executed from the command line, where the entire certificate hierarchy is specified in the
+The tool is designed to be executed from the command-line, where the entire certificate hierarchy is specified in the
 configuration file:
 
 ```bash
