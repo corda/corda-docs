@@ -56,10 +56,7 @@ We also strongly recommend cross referencing with the [Changelog](changelog.md) 
 
 ## 1.0 to 1.2
 
->
-> See the upgrade note for 1.1 to 1.2.
-
-
+See the upgrade note for 1.1 to 1.2.
 
 ## 1.0 to 1.1
 
@@ -68,7 +65,9 @@ Use latest patched version (1.1.1 or higher) of the services (JAR/ZIP files) ins
 
 {{< /note >}}
 
-* **Identity Manager, Network Map and Signing Service**Ensure Identity Manager and Network Map Service will be configure to upgrade the database upon start-up.
+### Identity Manager, Network Map and Signing Service
+
+Ensure Identity Manager and Network Map Services will be configured to upgrade the databases upon start-up.
 In the configuration files of the Identity Manager Service and the Network Map Service, set `runMigration` property to `true` - for example: 
 
 ```guess
@@ -78,14 +77,15 @@ database {
  }
 ```
 
-This step doesn’t relate to Signing Service as it doesn’t use a database.The upgrade process is just a drop-in replacement of the existing `.jar` files with `<service>-1.1.1.jar`.
-Ensure to stop the services before replacing the `.jar` files.
-* **Dynamic loading of HSM `.jar` files**
+This step doesn’t relate to Signing Service as it doesn’t use a database. The upgrade process is just a drop-in replacement of the existing `.jar` files with `<service>-1.1.1.jar`.
+Ensure the services are not running before replacing the `.jar` files.
+
+### Dynamic loading of HSM `.jar` files
+
 CENM 1.1 supports multiple HSMs, however due to to the proprietary nature of the HSM libraries, the release does
 not work with these HSMs "out of the box". The user must provide the relevant libraries and reference them in the
 configuration of the relevant component (Signing Service or PKI Tool). For more information, see [Signing Services](signing-service.md).
 and [Public Key Infrastructure (PKI) Tool](pki-tool.md) for more information.
-
 
 ## 0.3+ to 1.0
 
@@ -93,24 +93,35 @@ CENM 1.0 introduces an overhauled Signing Service, official PostgreSQL support, 
 Identity Manager (formerly Doorman) and Network Map Services.
 
 
-* **Identity Manager Service** 
+### Identity Manager Service
+
 The Doorman is now known as the Identity Manager Service. To upgrade, replace the Doorman `.jar` file with the Identity
 Manager Service `.jar` file, and run the service, having migrated the configuration file to be CENM 1.0 compliant. The configuration file
 has been re-worked - as a result, the service is no longer backward-compatible with pre-1.0 configuration files.
 Currently, configuration file migrations must be performed manually. Refer to the Identity Manager Service documentation
 for further guidance.
-* **Network Map Service**
+
+### Network Map Service
+
 The Network Map Service upgrade process is similar to that for the Identity Manager Service. Replace the existing Network Map Service `.jar` file
 with its CENM 1.0 counterpart, and restart the service. The Network Map Service configuration file has also been re-worked.
 Configurations predating CENM 1.0 must be migrated to be compatible with CENM 1.0. Refer to the Network Map Service documentation for further guidance.
-* **Signing Service**The Signing Service is now a long-running service in the same vein as the Identity Manager and Network Map,
+
+### Signing Service
+
+The Signing Service is now a long-running service in the same vein as the Identity Manager and Network Map,
 as opposed to a command-line tool with one-shot execution. Signing tasks are configurable via the configuration file
 supplied to the new Signing Service on start-up. Configure the Signing Service to perform any existing
 signing tasks by referencing the Signing Service documentation.
-* **SQL Server**If you’re currently using Microsoft SQL server then, in previous versions of CENM, this worked out of the
+
+### SQL Server
+
+If you’re currently using Microsoft SQL server then, in previous versions of CENM, this worked out of the
 box because the JDBC driver `.jar` was shipped as part of the CENM distributable. This is no longer the case
 as CENM expands to support more databases it becomes impractical to do this, it also allows upgrading the
-driver version to be done without shipping a new version of CENM.Using the new database configuration section, you should configure you persistence layer as follows:```guess
+driver version to be done without shipping a new version of CENM.Using the new database configuration section, you should configure you persistence layer as follows:
+
+```guess
 database {
     ...
     jdbcDriver = "/path/to/sqljdbc_7.2/enu/mssql-jdbc-7.2.2.jre8.jar"
@@ -120,7 +131,11 @@ database {
 ```
 
 
-* **PostgreSQL**PostgreSQL is now officially supported as a tested and verified alternative.To use PostgreSQL, configure the persistence layer as follows:```guess
+### PostgreSQL
+
+PostgreSQL is now officially supported as a tested and verified alternative.To use PostgreSQL, configure the persistence layer as follows:
+
+```guess
 database {
     ...
     jdbcDriver = "/path/to/postgresql-42.2.5.jar"
@@ -130,7 +145,8 @@ database {
 ```
 
 
-* **Configuration files**
+### Configuration files
+
 CENM 1.0 Identity Manager and Network Map Services are not backward-compatible with configuration files for Doorman and Network Map Service versions 0.x.
 Version 0.2.2 and 0.3 / 0.4 configuration files can be migrated to CENM 1.0 using the [configuration migration tool](tool-config-migration.md).
 Using the generated 1.0 configurations, the services can be upgraded by stopping the services, swapping out the `.jar` file and configuration files, and restarting the services.
