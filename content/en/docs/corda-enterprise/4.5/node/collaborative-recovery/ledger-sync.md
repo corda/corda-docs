@@ -88,7 +88,7 @@ maxAllowedReconciliationRequestsPerTimeWindow = 1000
 
 ## Flows
 
-All reconciliation tasks are carried out using flows. You will find the list flows exposed by LedgerSync, and their parameters, below.
+All reconciliation tasks are carried out using flows. You can see the list flows exposed by LedgerSync, and their parameters, below.
 
 ### `ScheduleReconciliationFlow`
 
@@ -153,9 +153,8 @@ Gets the status of the reconciliation for the given party.
 
 #### Example Usage(s)
 
-*   ```
-    flow start GetReconciliationStatusForPartyFlow party: "O=PartyA, L=London, C=GB", isRequester: true
-    ```
+`flow start GetReconciliationStatusForPartyFlow party: "O=PartyA, L=London, C=GB", isRequester: true`
+
 
 #### Parameters
 
@@ -164,7 +163,7 @@ Gets the status of the reconciliation for the given party.
 
 #### Return Type
 
-* A `ReconciliationStatus` object, or `null` if there was no reconciliation found for the given parameters.
+A `ReconciliationStatus` object, or `null` if there was no reconciliation found for the given parameters.
 
 ### `RefreshReconciliationStatusesFlow`
 
@@ -174,15 +173,15 @@ You need to refresh a reconciliation's status in the case where some, or all, of
 
 #### Example Usage(s)
 
-*   `flow start RefreshReconciliationStatusesFlow`
+`flow start RefreshReconciliationStatusesFlow`
 
 #### Parameters
 
-* None
+None
 
 #### Return Type
 
-* None
+None
 
 ### `StopReconciliationForPartyFlow`
 
@@ -190,15 +189,15 @@ Sets the status of an outgoing or incoming reconciliation request to `STOPPED`, 
 
 #### Example Usage(s)
 
-*   `flow start StopReconciliationForPartyFlow`
+`flow start StopReconciliationForPartyFlow`
 
 #### Parameters
 
-* `party` - The legal identity of the node for whom you want to stop the reconciliation.
+`party` - The legal identity of the node for whom you want to stop the reconciliation.
 
 #### Return Type
 
-* None
+None
 
 ## Related DB Tables
 
@@ -232,7 +231,7 @@ The status of a reconciliation is only stored/updated in this table when a recon
 
 {{< /table >}}
 
-**&dagger;** `last_successful_XXX` columns are only updated when a reconciliation involving the given party completed _successfully_, and so do NOT necessarily represent the most recently run reconciliation. This means that it is possible for these columns to indicate success, when the most recently run reconciliation actually failed.
+**&dagger;** `last_successful_XXX` columns are only updated when a reconciliation involving the given party completed *successfully*, and so do NOT necessarily represent the most recently run reconciliation. This means that it is possible for these columns to indicate success, when the most recently run reconciliation actually failed.
 
 **&Dagger;** Possible values for `status` columns are:
 
@@ -252,7 +251,7 @@ The status of a reconciliation is only stored/updated in this table when a recon
 
     **Applies to:** `last_reconciliation_status` **only**.
 
-    This status indicates that the reconciliation with another party is _in progress_, meaning that the process has actually started and is pending completion.
+    This status indicates that the reconciliation with another party is *in progress*, meaning that the process has actually started and is pending completion.
 
 * `FAILED`
 
@@ -277,11 +276,11 @@ Gets the `ReconciliationStatus` for the specified party. If there is no such rec
 
 #### Parameters
 
-* `party` - The legal identity of the node for which you want the status.
+`party` - The legal identity of the node for which you want the status.
 
 #### Return Type
 
-* A `ReconciliationStatus` object, or `null` if there is no reconciliation ongoing with the specified party.
+A `ReconciliationStatus` object, or `null` if there is no reconciliation ongoing with the specified party.
 
 ### `FailedParties`
 
@@ -289,11 +288,11 @@ Gets a list of party names where their reconciliations have failed.
 
 #### Parameters
 
-* None.
+None.
 
 #### Return Type
 
-* A list of party names.
+A list of party names.
 
 ### `PartiesWithDifference`
 
@@ -301,11 +300,11 @@ Gets a list of party names where their reconciliations have reported differences
 
 #### Parameters
 
-* None.
+None.
 
 #### Return Type
 
-* A list of party names.
+A list of party names.
 
 ### `NumberOfScheduledReconciliations`
 
@@ -313,11 +312,11 @@ Gets the number of reconciliations that are currently scheduled for execution.
 
 #### Parameters
 
-* None.
+None.
 
 #### Return Type
 
-* The number of reconciliations.
+The number of reconciliations.
 
 ### `NumberOfReconciliationsInProgress`
 
@@ -325,11 +324,11 @@ Gets the number of reconciliations that are currently executing.
 
 #### Parameters
 
-* None.
+None.
 
 #### Return Type
 
-* The number of reconciliations.
+The number of reconciliations.
 
 ###`NumberOfFailedReconciliations`
 
@@ -337,11 +336,11 @@ Gets the number of reconciliations that have failed.
 
 #### Parameters
 
-* None.
+None.
 
 #### Return Type
 
-* The number of reconciliations.
+The number of reconciliations.
 
 ### `NumberOfReconciliationsWithDifferences`
 
@@ -349,11 +348,11 @@ Gets the number of reconciliations where differences were found.
 
 #### Parameters
 
-* None.
+None.
 
 #### Return Type
 
-* The number of reconciliations.
+The number of reconciliations.
 
 ### `NumberOfReconciliationsWithoutDifferences`
 
@@ -363,11 +362,11 @@ Gets the number of reconciliations where differences were NOT found.
 
 #### Parameters
 
-* None.
+None.
 
 #### Return Type
 
-* The number of reconciliations.
+The number of reconciliations.
 
 
 ## Log Messages
@@ -517,7 +516,7 @@ Flow completed with result: ReconciliationStatus(
 2.  The other party's node does not have the **LedgerSync** CorDapp installed.
 3.  An unforeseen problem was encountered when your node tried to persist an updated status to its database for the reconciliation.
 
-In all cases, it may be necessary to _kill_ the flow. See below for the details of this process.
+In all cases, it may be necessary to *kill* the flow. See below for the details of this process.
 
 * **An error occurred**. &mdash; It is possible that an unforeseen error occurred while processing either the initiating (on your node), or the responding (on the other party's node), flows. In such an event, you will need to inspect the node logs for the cause and may need to re-run the reconciliation.
 
@@ -528,7 +527,7 @@ If differences were found during the reconciliation, the next step will be to pe
 
 #### Killing Reconciliation Flows
 
-As indicated in steps above, it may be necessary to kill a reconciliation flow. This is a _two-step process_. The first step is to use the Corda RPC command `killFlow`.  For this, you'll need the **state machine run id** of the flow to kill. This can be obtained from the output when you run `GetReconciliationStatusForPartyFlow` (see above).
+As indicated in steps above, it may be necessary to kill a reconciliation flow. This is a _two-step process_. The first step is to use the Corda RPC command `killFlow`.  For this, you'll need the **state machine run id** of the flow to kill. This can be obtained from the output when you run `GetReconciliationStatusForPartyFlow`.
 
 ```
 sh
@@ -542,34 +541,35 @@ sh
 run killFlow id: c243222b-1940-45df-8828-a8496196d274
 ```
 
-The result of running `killFlow` should look as follows.
+The result of running `killFlow` should look like this:
 
 ```
 [ERROR] 14:14:32+0000 [flow-worker] corda.flow. - Flow interrupted while waiting for events, aborting immediately {fiber-id=10000004, flow-id=54010768-0e49-4c0b-a996-978cf80ab3d9, invocation_id=e957b4af-f479-4aa0-96ac-9177627bd9ab, invocation_timestamp=2020-02-28T14:02:00.488Z, origin=com.r3.dr.ledgersync.app.services.ReconciliationService, session_id=e957b4af-f479-4aa0-96ac-9177627bd9ab, session_timestamp=2020-02-28T14:02:00.488Z, thread-id=443}
 ```
 
-The next step, which must be run _after_ `killFlow`, is to run the `StopReconciliationForPartyFlow` flow to update the status of the reconciliation from `IN_PROGRESS` to `STOPPED`. Not completing this step will prevent the reconciliation scheduler from being able to do reconciliations with that other party and it will also result in a spot in the scheduler's execution pool being permanently occupied by a reconciliation that does not exist.
+The next step, which must be run *after* `killFlow`, is to run the `StopReconciliationForPartyFlow` flow to update the status of the reconciliation from `IN_PROGRESS` to `STOPPED`. Not completing this step will prevent the reconciliation scheduler from being able to do reconciliations with that other party and it will also result in a spot in the scheduler's execution pool being permanently occupied by a reconciliation that does not exist.
 
 ```
 sh
 flow start StopReconciliationForPartyFlow party: "O=PartyB, L=London, C=GB"
 ```
 
-The result of running the previous flow should look as follows.
+The result of running the previous flow should look as follows:
 
 ```
 Flow completed with result: kotlin.Unit
 ```
 
-And if you run the `GetReconciliationStatusForPartyFlow` flow again as follows,
+And if you run the `GetReconciliationStatusForPartyFlow` flow again as follows:
 
 ```
 sh
 flow start GetReconciliationStatusForPartyFlow party: "O=PartyB, L=London, C=GB", isRequester: true
 ```
 
-you should see the `lastReconciliationStatus` status set to `STOPPED`.
+You should see the `lastReconciliationStatus` status set to `STOPPED`.
 
+Sample output, reformatted for readability:
 ```
 Flow completed with result: ReconciliationStatus(
     partyName="O=PartyB, L=London, C=GB",

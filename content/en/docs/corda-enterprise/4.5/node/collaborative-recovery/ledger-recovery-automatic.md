@@ -29,7 +29,7 @@ LedgerRecover can be configured, like other CorDapps, by creating a configuratio
 You can adjust LedgerRecover behaviour using the configuration parameters set out in the table below. If the configuration parameter is not specified, or the configuration file is not present, the default value(s) is used.
 
 **Example configuration file contents:**
-<!-- 'ini' is used since it provides reasonable syntax highlighting. GitHub does not have hocon language support in markdown.  -->
+
 ```ini
 maxAllowedTransactions = 30
 maxAllowedSizeInBytes = 3000000
@@ -42,7 +42,7 @@ timeWindowForMaxAllowedRequests = 1h
 
 |Configuration Parameter|Default Value|Acceptable Value(s)|Description|
 |-|:-:|:-:|-|
-|`maxAllowedTransactions`|`30`|`1` to `100`| Maximum number of allowed transactions per recovery request.*|
+|`maxAllowedTransactions`|`30`|`1` to `1000`| Maximum number of allowed transactions per recovery request.*|
 |<a id="max-allowed-size">`maxAllowedSizeInBytes`</a>|`3000000`|`1` to `10000000`|Use this configuration parameter in conjunction with `timeWindowForMaxAllowedSize` to control the total size of transactions the node will send as a response to a recovery request from another party/node within a given amount of time (sliding time window). For example: 1000000 bytes per 1 minute. **&Dagger;**|
 |`timeWindowForMaxAllowedSize` **&dagger;**|`1h`|`1m` to `24h`|Use this configuration parameter in conjunction with `maxAllowedSizeInBytes` to control the total size of transactions the node will send as a response to a recovery request from another party/node within a given amount of time (sliding time window). For example: 1000000 bytes per 1 minute. **&Dagger;**|
 |`maxAllowedRequests`|`30`|`1` to `100`|Use this configuration parameter in conjunction with `timeWindowForMaxAllowedRequests` to control how often a node will initiate or respond to recovery requests from another party/node within a given amount of time (sliding time window). For example: 10 requests per 1 minute.|
@@ -56,9 +56,10 @@ timeWindowForMaxAllowedRequests = 1h
 
 ## Flows
 
-You use flows to initiate and monitor the automatic ledger recovery process. Each flow you can use is detailed in this section, along with its parameters, return type, Commmand Line interface and examples.
+You need to use flows to initiate and monitor the automatic ledger recovery process. Each flow you can use is detailed in this section, along with its parameters, return type, Commmand Line interface and examples.
 
 Available Flows:
+
 * **AutomaticLedgerRecoverFlow**: Initiates an Automatic Recovery process with a counterparty.
 * **FailAutomaticRecoveryFlow**: Marks an automatic recovery process as failed.
 * **ShowInitiatedAutomaticRecoveryProgressFlow**: Returns the number of transactions received against number of total transactions requested on the latest automatic recovery request.
@@ -79,13 +80,13 @@ Successful execution will persist a record of this `RecoveryRequest` in a custom
 
 Before a record of the `RecoveryRequest` is persisted by the requester, the following will be checked:
 
-- The list of requested transactions is not empty.
-- The number of transactions requested does not exceed the configured limit.
-- The number of recovery request within a timeframe does not exceed the configured limit (for example, 3 requests per 1 hour).
-- The total number of transactions requested for recovery within a timeframe does not exceed the configured limit (for example, 30 transactions per 1 hour).
-- There is no current `RecoveryRequest` where the requesting node has the same role (e.g. listed as the requester of the recovery).
+* The list of requested transactions is not empty.
+* The number of transactions requested does not exceed the configured limit.
+* The number of recovery request within a timeframe does not exceed the configured limit (for example, 3 requests per 1 hour).
+* The total number of transactions requested for recovery within a timeframe does not exceed the configured limit (for example, 30 transactions per 1 hour).
+* There is no current `RecoveryRequest` where the requesting node has the same role (e.g. listed as the requester of the recovery).
 
-After persisting a record of the `RecoveryRequest`, the requester will send its list of transactions it needs recovered to the responding party. The responder will conduct the same verifications, as well as assuring that the requesting party is entitled to that transaction data. This is required to prevent privacy leaks and it means that _both_ parties must be either a participant to the transactions requested OR the transactions requested are part of those transactions' respective back-chains.
+After persisting a record of the `RecoveryRequest`, the requester will send its list of transactions it needs recovered to the responding party. The responder will conduct the same verifications, as well as assuring that the requesting party is entitled to that transaction data. This is required to prevent privacy leaks and it means that *both* parties must be either a participant to the transactions requested OR the transactions requested are part of those transactions' respective back-chains.
 
 The verifications above are implemented to ensure that private ledger data is not erroneously or maliciously transmitted in the context of `LedgerRecover`.
 
@@ -121,6 +122,7 @@ flow start AutomaticLedgerRecoverFlow party: "O=PartyB, L=London, C=GB"
 ```
 
 #### Exceptions
+
 * `AutomaticRecoveryException` - Thrown if the corresponding `ReconciliationStatus` shows no differences, if there are no transactions to recover or if the received transaction was not included in the list of requested transactions.
 * `TransactionLimitExceededException` - Thrown if the number of requested transactions per request exceeds the configured limit.
 * `RequestLimitExceededException` - Thrown if the number of requests within a timeframe exceeds the configured limit.
@@ -129,6 +131,7 @@ flow start AutomaticLedgerRecoverFlow party: "O=PartyB, L=London, C=GB"
 * `RecoveryRequestVerificationException` - Thrown by the responder node if the `RecoveryRequest` received from the requesting node includes transactions which they are not permitted to request.
 
 ### FailAutomaticRecoveryFlow
+
 This flow is used by a party to mark an automatic recovery process as failed. The initiating party marks their recovery request as `FAILED`. Failed `RecoveryRequest`s remain as records in the `CR_RECOVERY_REQUEST` table for record-keeping and querying.
 
 {{< note >}}
@@ -136,10 +139,12 @@ This flow should be run after running `killFlow`, see [Killing Automatic Recover
 {{< /note >}}
 
 #### Parameters
+
 * `requestId` - The `UUID` representing the automatic `RecoveryRequest` we wish to mark as failed.
 * `failReason` - A message indicating the reason we are marking this `RecoveryRequest` as `FAILED`.
 
 #### Return Type
+
 * None
 
 #### Command Line Interface
@@ -155,6 +160,7 @@ flow start FailAutomaticRecoveryFlow requestId: a5b3d634-9d34-47e8-9733-64db7511
 ```
 
 #### Exceptions
+
 * `RecoveryNotFoundException` - Thrown if the `RecoveryRequest` is not found.
 * `AutomaticRecoveryException` - Thrown if the `RecoveryRequest` is not automatic or if it's not `IN_PROGRESS`.
 
@@ -163,9 +169,11 @@ flow start FailAutomaticRecoveryFlow requestId: a5b3d634-9d34-47e8-9733-64db7511
 Returns the progress (number of transactions received against number of total transactions requested) on the latest automatic recovery request initiated by the node.
 
 #### Parameters
+
 * `party` - The legal identity of the node from whom we are recovering transactions.
 
 #### Return Type
+
 * `RecoveryProgress` - Simple data class representing the number of transactions received (`done`) of the total number of transactions requested (`total`):
 
 ###### Example output:
@@ -187,6 +195,7 @@ flow start ShowInitiatedAutomaticRecoveryProgressFlow party: "O=PartyB, L=London
 ```
 
 #### Exceptions
+
 * `RecoveryNotFoundException` - Thrown if no automatic `RecoveryRequest` is not found that is initiated by this node.
 
 ### GetRecoveryRequestsFlow
@@ -207,6 +216,9 @@ Retrieves `RecoveryRequest`s optionally filtered by the provided parameters.
 
 ##### Example output:
 
+This sample output has been formatted for readability:
+
+```
     Flow completed with result: [
         RecoveryRequest(
             recoveryID=80edc8fc-088c-4367-acb4-cc4d6f0d44c7,
@@ -224,8 +236,7 @@ Retrieves `RecoveryRequest`s optionally filtered by the provided parameters.
             stateMachineRunId=[b2510d34-dc58-45a9-b754-3b90268ff5c7]
         )
     ]
-
-> Note: The output has been reformatted for ease of readability.
+```
 
 #### Command Line Interface
 
@@ -271,6 +282,8 @@ Retrieves the current `RecoveryRequest` with a counterparty.
 
 ###### Example output:
 
+This sample output has been formatted for readability:
+```
     RecoveryRequest(
         recoveryID=80edc8fc-088c-4367-acb4-cc4d6f0d44c7,
         party=O=PartyB, L=London, C=GB,
@@ -286,8 +299,8 @@ Retrieves the current `RecoveryRequest` with a counterparty.
         isManual=false,
         stateMachineRunId=[b2510d34-dc58-45a9-b754-3b90268ff5c7]
     )
+```
 
-> Note: The output has been reformatted for ease of readability.
 
 #### Command Line Interface
 
@@ -315,6 +328,8 @@ This flow fetches all `RecoveryLog`s associated with a specific `RecoveryRequest
 
 ###### Example output:
 
+This sample output has been formatted for readability:
+```
     Flow completed with result: [
         RecoveryLog(
             id=38ef35a9-a437-412f-9057-4d087057153f,
@@ -361,8 +376,8 @@ This flow fetches all `RecoveryLog`s associated with a specific `RecoveryRequest
         time=1583102333001
         )
     ]
+```
 
-> Note: The output has been reformatted for ease of readability.
 
 #### Command Line Interface
 
@@ -418,7 +433,9 @@ Some information regarding the progress of recovery can be found in a node's `CR
 
 The JMX metrics for **LedgerRecover** automatic recovery are identical to those of [Manual LedgerRecover](ledger-recovery-manual.md#JMX-Metrics).
 
-> Note: The metrics do not distinguish between automatic and manual recoveries, the results returned are aggregated over both types.
+{{< note >}}
+The metrics do not distinguish between automatic and manual recoveries, the results returned are aggregated over both types.
+{{< /note >}}
 
 ## System Requirements
 
@@ -492,7 +509,7 @@ If the responder node (node B) throws an exception it is very likely for one of 
 
 #### Killing Automatic Recovery Flows
 
-As indicated in steps above, it may be necessary to kill an Automatic **LedgerRecover** flow. This is a _two-step process_.
+As indicated in steps above, it may be necessary to kill an Automatic **LedgerRecover** flow. This is a *two-step process*.
 
 ##### Step 1
 
@@ -530,6 +547,8 @@ flow start GetRecoveryRequestsFlow party: "O=PartyB, L=London, C=GB", isRequeste
 
 you should see the `RecoveryStatusFlag` status set to `FAILED`.
 
+Sample output, reformatted for readability:
+```
     Flow completed with result: [
         RecoveryRequest(
             recoveryID=80edc8fc-088c-4367-acb4-cc4d6f0d44c7,
@@ -547,5 +566,4 @@ you should see the `RecoveryStatusFlag` status set to `FAILED`.
             stateMachineRunId=[b2510d34-dc58-45a9-b754-3b90268ff5c7]
         )
     ]
-
-> Note: The output has been reformatted for ease of readability.
+```

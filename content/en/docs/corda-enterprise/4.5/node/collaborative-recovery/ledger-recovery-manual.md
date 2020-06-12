@@ -80,10 +80,12 @@ The verifications above are implemented to ensure that private ledger data is no
 
 * `RecoveryRequest` - This flow returns the entire `RecoveryRequest` object that has been successfully persisted by the initiating node. This will be displayed in the console as follows:
 
+```
 RecoveryRequest(recoveryID=e769be7d-deb1-46dd-98fc-fe09e6e172b3, party=O=PartyB, L=London, C=GB, isRequester=true, timeStarted=1582643485140, timeFinished=null,
 requestedTransactionIDs=[4F2F2AFB66670C6F7A4BF0BA201609A70DE49C87C29C8C2ABB19CE55DF251F01, E6156EBA7EEB23802CF2B5D0FE53601B849F0EC0F0326B440957636D3B08E462,
 87391C19593CFEEC9F804921790388C869C38496B400522E7D23BD8BD3138494, 4A1C94374E8C27A3ED8760DF32F13ECA6FED464B9EF0C19CCB6C203B76101E06], recoveryStatusFlag=REQUESTED,
 failureReason='', isManual=true, stateMachineRunId=null)
+```
 
 #### Command Line Interface
 
@@ -103,7 +105,7 @@ This should only be done when:
 * the counterparty has exported and delivered a file containing the transactions to be recovered
 * you have successfully imported those transactions into the vault.
 
-This will be done automatically by the responding party after running `ExportTransactionsFlow` and automatically by the initiating party after running `ImportTransactionsFlow`.
+This is done automatically by the responding party after running `ExportTransactionsFlow` and automatically by the initiating party after running `ImportTransactionsFlow`.
 
 In this process, the initiating party marks their `RecoveryRequest` as complete. This flow does not update the `counterParty`.
 
@@ -122,8 +124,8 @@ In this process, the initiating party marks their `RecoveryRequest` as complete.
 
 #### Exceptions
 
-* `ManualRecoveryException` - This exception will be thrown by the initiating node if there is no `RecoveryRequest` with the ID specified OR if a `RecoveryRequest` is found but is not in a 'requested' status.
-* `DatabaseServiceException` - This will be thrown by the either the initiating nodes if the above flow checks fail for the same reasons - if there is no `RecoveryRequest` with the counterparty specified OR if a `RecoveryRequest` is found but is not in progress.
+* `ManualRecoveryException` - This exception is thrown by the initiating node if there is no `RecoveryRequest` with the ID specified OR if a `RecoveryRequest` is found but is not in a 'requested' status.
+* `DatabaseServiceException` - This exception is thrown by the either the initiating nodes if the above flow checks fail for the same reasons - if there is no `RecoveryRequest` with the counterparty specified or if a `RecoveryRequest` is found but is not in progress.
 
 
 ### FailManualRecoveryFlow
@@ -132,6 +134,7 @@ This flow is used by a party to fail a manual recovery process with a counter pa
 They then ask the counter party to do the same, sending them the `requestId` and the `failReason`. Failed `RecoveryRequests` remain as records in the `CR_RECOVERY_REQUEST` table for record-keeping and querying.
 
 #### Parameters
+
 * `requestId` - A `String` representing the `UUID` of the manual `RecoveryRequest` you wish to mark as failed.
 * `failReason` - A message indicating the reason you are failing this `RecoveryRequest`.
   An example of an acceptable `failReason` would be:
@@ -247,13 +250,13 @@ Example Output:
 
 #### Exceptions
 
-* `ManualRecoveryException` - This exception will be thrown by the node initiating this flow for any of the following reasons:
-    * The `RecoveryRequest` does not exist,
-    * They are not the designated responder,
-    * The `RecoveryRequest` is not designated as being manual,
-    * Or the `RecoveryRequest` is not in the state `Requested` (which it should be by default after running `InitiateManualRecoveryFlow`).
-    * `VaultExporterException` - This will be thrown if there isn't a sufficient amount of disk space available to persist the `VaultArchive`. This exception   will also be thrown if any of the requested artifacts (transaction Ids, attachments or network parameters) do not exist in the vault.
-    * `RecoveryRequestVerificationException` - This will be thrown by the responding node if the `RecoveryRequest` received from the initiating node includes transactions which they are not permitted to view.
+`ManualRecoveryException` - This exception will be thrown by the node initiating this flow for any of the following reasons:
+  * The `RecoveryRequest` does not exist,
+  * They are not the designated responder,
+  * The `RecoveryRequest` is not designated as being manual,
+  * Or the `RecoveryRequest` is not in the state `Requested` (which it should be by default after running `InitiateManualRecoveryFlow`).
+  * `VaultExporterException` - This will be thrown if there isn't a sufficient amount of disk space available to persist the `VaultArchive`. This exception   will also be thrown if any of the requested artifacts (transaction Ids, attachments or network parameters) do not exist in the vault.
+  * `RecoveryRequestVerificationException` - This will be thrown by the responding node if the `RecoveryRequest` received from the initiating node includes transactions which they are not permitted to view.
 
 
 ### ImportTransactionsFlow
@@ -359,32 +362,32 @@ This endpoint returns a list of `CordaX500Name`s as `String`s representing the i
 
 This endpoint returns the number of nodes on the network with whom you have initiated a `RecoveryRequest` which has subsequently failed.
 
-* #### `NumberOfFailedRecoveriesAsRecipient`
+#### `NumberOfFailedRecoveriesAsRecipient`
 
     This endpoint returns the number of nodes on the network who have initiated or attempted to initiate a `RecoveryRequest` with us, which has subsequently failed.
 
-* #### `NumberOfInProgressRecoveriesAsInitiator`
+#### `NumberOfInProgressRecoveriesAsInitiator`
 
     This endpoint returns the number of nodes on the network with whom you have initiated a `RecoveryRequest` that is currently in progress.
 
-* #### `NumberOfInProgressRecoveriesAsRecipient`
+#### `NumberOfInProgressRecoveriesAsRecipient`
 
     This endpoint returns the number of nodes on the network who have initiated or a `RecoveryRequest` with us which is still in progress.
 
-* #### `NumberOfCompletedRecoveriesAsInitiator`
+#### `NumberOfCompletedRecoveriesAsInitiator`
 
     This endpoint returns the number of nodes on the network with whom you have initiated a `RecoveryRequest` that has been completed.
 
-* #### `NumberOfCompletedRecoveriesAsRecipient`
+#### `NumberOfCompletedRecoveriesAsRecipient`
 
     This endpoint returns the number of nodes on the network who have initiated or a `RecoveryRequest` with us that has been completed.
 
-* #### `NumberOfRequestedRecoveriesAsInitiator`
+#### `NumberOfRequestedRecoveriesAsInitiator`
 
     This endpoint returns the number of nodes on the network with whom you have initiated a `RecoveryRequest` which has been persisted in an
     initial state with the status - `requested`.
 
-* #### `NumberOfRequestedRecoveriesAsRecipient`
+#### `NumberOfRequestedRecoveriesAsRecipient`
 
     This endpoint returns the number of nodes on the network who have attempted to initiate a `RecoveryRequest` with us which has been persisted
     in an initial state with the status - `requested`.
@@ -396,9 +399,9 @@ generally provide information as to the progress of the flow in which they were 
 
 ## Example Workflow
 
-In this section, you will walk through the complete execution of a manual recovery process. This workflow represents the **happy path** or the ideal steps / outcomes that will take place during recovery.
+In this section, you will walk through the complete execution of a manual recovery process. This workflow represents the **happy path** or the ideal steps and outcomes that will take place during recovery.
 
-You will also see excerpts explicitly titled **Unhappy path** that describe the scenarios in which a given step might fail, and what actions to take to get back onto the happy path.
+You can also see excerpts explicitly titled **Unhappy path** that describe the scenarios in which a given step might fail, and what actions to take to get back onto the happy path.
 
 In this walk-through, the following assumptions are made:
 
@@ -414,14 +417,16 @@ In this walk-through, the following assumptions are made:
 
 To kick off a manual recovery process, The initiating node should execute the `InitiateManualRecoveryFlow` using the following command.
 
-    flow start InitiateManualRecoveryFlow party: "O=PartyB, L=London, C=GB"
+`flow start InitiateManualRecoveryFlow party: "O=PartyB, L=London, C=GB"`
 
 When run successfully this flow will persist a `RecoveryRequest` in the `CR_RECOVERY_REQUEST` table of the both initiating and counterparty nodes based on the previously conducted reconciliation. Further operations described will update this record with the current progress. The following will be logged to the CRaSh shell. The node operator should take note of the `recoveryID` for future operations.
 
+```
     RecoveryRequest(recoveryID=e769be7d-deb1-46dd-98fc-fe09e6e172b3, party=O=PartyB, L=London, C=GB, isRequester=true, timeStarted=1582643485140, timeFinished=null,
     requestedTransactionIDs=[4F2F2AFB66670C6F7A4BF0BA201609A70DE49C87C29C8C2ABB19CE55DF251F01, E6156EBA7EEB23802CF2B5D0FE53601B849F0EC0F0326B440957636D3B08E462,
     87391C19593CFEEC9F804921790388C869C38496B400522E7D23BD8BD3138494, 4A1C94374E8C27A3ED8760DF32F13ECA6FED464B9EF0C19CCB6C203B76101E06], recoveryStatusFlag=REQUESTED,
     failureReason='', isManual=true, stateMachineRunId=null)
+```
 
 #### Unhappy path - Exception is thrown by the initiating node
 
@@ -443,7 +448,7 @@ request that the counterparty use `FailManualRecoveryRequest` to invalidate the 
 
 Based on the governing rules of the Corda network in which nodes are deployed, the node operator of the counterparty may be expected to be monitoring the exposed JMX endpoints so that they may understand when a valid `RecoveryRequest` has been initiated with them. Once a record of the `RecoveryRequest` has been successfully persisted on both the initiating and responding nodes (reflected via the monitored JMX attributes), the node operator of the responding party needs to create a `VaultArchive` containing all of the requested ledger data. They can do so using the following command:
 
-    flow start ExportTransactionsFlow requestId: "e769be7d-deb1-46dd-98fc-fe09e6e172b3", path: "/var/folders/vault_archives"
+`flow start ExportTransactionsFlow requestId: "e769be7d-deb1-46dd-98fc-fe09e6e172b3", path: "/var/folders/vault_archives"`
 
 Once completed successfully the `RecoveryRequest` record will be marked as complete on the responding node (the node on which the `ExportTransactionsFlow` flow was run).
 
@@ -471,9 +476,11 @@ Corda does not attempt to solve the problem of securely and privately transmitti
 This is the final step in the **happy path** for manual ledger recovery. In this step, it is assumed that the initiating node has received a copy of the `VaultArchive` which is now stored in a known location
 accessible via the Corda node. The initiating party should run `ImportTransactionsFlow` to read the `VaultArchive` data and load it into the vault using the following command:
 
-    flow start ImportTransactionsFlow requestId: "e769be7d-deb1-46dd-98fc-fe09e6e172b3", path: "/var/folders/vault_archives    
+`flow start ImportTransactionsFlow requestId: "e769be7d-deb1-46dd-98fc-fe09e6e172b3", path: "/var/folders/vault_archives`  
 
->Note: The path must be adjusted to reflect where the `VaultArchive` is saved on the responding node's file system.
+{{< note >}}
+The path must be adjusted to reflect where the `VaultArchive` is saved on the responding node's file system.
+{{< /note >}}
 
 When run successfully the initiating node should have successfully recovered their vault and be able to transact with the counterparty with whom they were recovering. `ReconciliationStatus` will be refreshed
 automatically after a successful import.
