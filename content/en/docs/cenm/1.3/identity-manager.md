@@ -82,7 +82,7 @@ See [Identity Manager Configuration Parameters](config-identity-manager-paramete
 ### Address
 
 The `address` parameter must be included in the top level of the configuration and represents the host and port
-number that the Identity Service will bind to upon startup. The host can either be the IP address or the hostname of
+number that the Identity Service will bind to upon start-up. The host can either be the IP address or the hostname of
 the machine that Identity Manager is running on. For example:
 
 ```guess
@@ -115,7 +115,7 @@ the `database` configuration block in the configuration file. The main options t
 #### Database Setup
 
 The database can either be setup prior to running the Identity Manager Service or, alternatively, it can be
-automatically prepared on startup via the built-in migrations. To enable the running of database migrations on startup
+automatically prepared on start-up via the built-in migrations. To enable the running of database migrations on start-up
 the optional `runMigration` parameter within the `database` configuration should be set to true. Additionally, if
 the Identity Manager Service is being run using the same database instance as an accompanying Network Map Service then the
 Identity Manager schema name must be specified via the `schema` parameter within the `database` configuration block:
@@ -155,7 +155,7 @@ database {
 #### Example
 
 An example configuration for an Identity Manager Service using a Microsoft SQL Server database, configured to run the
-migrations on startup is:
+migrations on start-up is:
 
 ```guess
 database {
@@ -323,7 +323,7 @@ external signing service.
 
 Similarly to the other Enterprise Network Manager (ENM) services, the Identity Manager is designed to be able to communicate between other services
 such as the Network Map and Signing services. Both the Issuance and, optionally, the Revocation workflows have their own
-internal listening socket interface that is created on startup which can receive and respond to messages from other CENM services.
+internal listening socket interface that is created on start-up which can receive and respond to messages from other CENM services.
 For example, the Revocation workflow’s CENM listener can respond to messages from the Network Map regarding certificate
 statuses of current participants which the Network Map Service will then use when refreshing the latest Network Map.
 

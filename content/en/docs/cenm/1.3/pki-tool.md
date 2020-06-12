@@ -69,7 +69,7 @@ java -jar pkitool.jar --config-file <CONFIG_FILE>
 
 By default, a check will be done on the proposed certificate hierarchy before any generation steps to ensure that CRL
 information is present for all entities. If this is not required then this check can be disabled by passing the
-`--ignore-missing-crl` or `-i` startup flag:
+`--ignore-missing-crl` or `-i` start-up flag:
 
 ```bash
 java -jar pkitool-<VERSION>.jar --ignore-missing-crl --config-file <CONFIG_FILE>

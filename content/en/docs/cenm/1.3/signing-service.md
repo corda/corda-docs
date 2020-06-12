@@ -375,7 +375,7 @@ execution, or a string consisting of a number followed by the units suffix as ab
 
 {{< note >}}
 Attempting to configure a non-schedulable signing task (e.g. signing via HSM requiring manual user
-authentication) will result in an error upon service startup.
+authentication) will result in an error upon service start-up.
 
 {{< /note >}}
 

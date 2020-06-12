@@ -35,7 +35,7 @@ Note: At least one of 1, 2 and 3 has to be provided.
 
 ## Running Tool
 
-At startup, the Certificate Revocation Request Submission Tool takes only one command line argument: `--submission-url`,
+At start-up, the Certificate Revocation Request Submission Tool takes only one command line argument: `--submission-url`,
 that should be followed by the url to the certificate revocation request submission endpoint.
 
 Example:

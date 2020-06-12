@@ -58,7 +58,7 @@ The Angel Service is configured via the command line and it downloads the config
 
 **Workflow**
 
-1. On startup, the Angel Service requests the configuration for its managed service from the Zone Service, providing the authentication token to identify itself.
+1. On start-up, the Angel Service requests the configuration for its managed service from the Zone Service, providing the authentication token to identify itself.
 2. It then performs basic validation of the configuration, writes it to disk, and starts the managed service.
 3. Following this, at regular intervals, it polls the Zone Service for changes to the configuration, and if any are found:
     1. It backs up the existing configuration.

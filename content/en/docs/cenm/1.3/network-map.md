@@ -117,7 +117,7 @@ See [Network Map Configuration Parameters](config-network-map-parameters.md) for
 ### Address
 
 The `address` parameter must be included in the top level of the configuration and represents the host and port
-number that the Network Map Service will bind to upon startup. The host can either be the IP address or the hostname of
+number that the Network Map Service will bind to upon start-up. The host can either be the IP address or the hostname of
 the machine that Network Map Service is running on. For example:
 
 ```guess
@@ -150,7 +150,7 @@ that should be included here are:
 #### Database Setup
 
 The database can either be setup prior to running the Network Map Service or, alternatively, it can be automatically
-prepared on startup via the built-in migrations. To enable the running of database migrations on startup set the
+prepared on start-up via the built-in migrations. To enable the running of database migrations on start-up set the
 `runMigration` parameter within the `database` configuration to true.
 
 If the Network Map Service is being run using the same database instance as the Identity Manager Service then the Network Map
@@ -191,7 +191,7 @@ database {
 #### Example
 
 An example configuration for a Network Map Service using a Microsoft SQL Service database, configured to run the
-migrations on startup is:
+migrations on start-up is:
 
 ```guess
 database {

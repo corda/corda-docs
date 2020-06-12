@@ -47,7 +47,7 @@ shell {
 
 ### Local Mode
 
-The service can be configured to boot straight into the local shell upon startup by setting the `shell.localShell`
+The service can be configured to boot straight into the local shell upon start-up by setting the `shell.localShell`
 optional configuration parameter to be true:
 
 ```guess

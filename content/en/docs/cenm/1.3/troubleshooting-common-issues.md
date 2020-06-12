@@ -24,7 +24,7 @@ title: Troubleshooting Common Issues
 
 ### Enabling debug/trace logging
 
-Each service can be configured to run with a deeper log level via command line flags passed at startup:
+Each service can be configured to run with a deeper log level via command line flags passed at start-up:
 
 ```bash
 java -DdefaultLogLevel=TRACE -DconsoleLogLevel=TRACE -jar <enm-service-jar>.jar --config-file <config file>
@@ -81,12 +81,12 @@ retried after a short break. See the “Identity Manager Communication” sectio
 Identity Manager communication is correctly configured for the Network Map Service.
 
 
-## The CENM Service hangs on startup
+## The CENM Service hangs on start-up
 
 
 ### Issue
 
-A Network Map, Identity Manager or Signing Service hangs on startup and throws a *HikariPool* related exception:
+A Network Map, Identity Manager or Signing Service hangs on start-up and throws a *HikariPool* related exception:
 
 ```guess
 [ERROR] 2018-11-19T15:50:54,327Z [main] ConsolePrint.uncaughtException - Unexpected Error: Failed to initialize pool: Connection reset
@@ -147,7 +147,7 @@ above linked docs for defaults). If this timeout limit is reached then an error 
 retried using an exponential backoff strategy, doubling the wait period after each failure.
 
 
-## SMR Service throws `java.lang.NoClassDefFoundError` on startup
+## SMR Service throws `java.lang.NoClassDefFoundError` on start-up
 
 
 ### Issue

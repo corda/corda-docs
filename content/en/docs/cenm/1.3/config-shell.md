@@ -38,4 +38,4 @@ The password for connecting to the shell via SSH.
 
 
 * **localShell**:
-*(Optional)* Boot straight into shell upon startup
+*(Optional)* Boot straight into shell upon start-up

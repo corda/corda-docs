@@ -206,7 +206,7 @@ Start the Identity Manager Service via:
 java -jar identitymanager.jar --config-file identity-manager.conf
 ```
 
-You will see the following message printed to the console if your startup is successful:
+You will see the following message printed to the console if your start-up is successful:
 
 ```guess
 Binding Shell SSHD server on port <SHELL_PORT>
@@ -388,7 +388,7 @@ You can start the Network Map Service via:
 java -jar networkmap.jar --config-file network-map.conf
 ```
 
-Upon successful startup, you will see the following details printed to the console:
+Upon successful start-up, you will see the following details printed to the console:
 
 ```guess
 Binding Shell SSHD server on port <SHELL_PORT>
@@ -446,7 +446,7 @@ For example, you can run Identity Manager and Network Map in parallel:
 java -jar bundled.jar -f identity-manager.conf -f network-map.conf -S IDENTITY_MANAGER -S NETWORK_MAP
 ```
 
-Upon successful startup, you will see the following details printed to the console:
+Upon successful start-up, you will see the following details printed to the console:
 
 ```guess
 Binding Shell SSHD server on port <SHELL_PORT>
@@ -465,7 +465,7 @@ For example, you can implicitly run the Identity Manager service:
 java -jar bundled.jar -f identity-manager.conf
 ```
 
-Upon successful startup, you should see the following details printed to the console:
+Upon successful start-up, you should see the following details printed to the console:
 
 ```guess
 Deduced Identity Manager Service from provided configuration file...

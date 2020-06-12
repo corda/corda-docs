@@ -41,7 +41,7 @@ We provide a tool to automate the bulk of this task (see below).
 ## HTTP network map protocol
 
 If the node is configured to connect with a network using the `networkServices` section of the config, then it first uploads its own signed `NodeInfo`
-to the server at the `networkMapUrl` (and each time it changes on startup) and then proceeds to download the entire network map from
+to the server at the `networkMapUrl` (and each time it changes on start-up) and then proceeds to download the entire network map from
 the same server. The network map consists of a list of `NodeInfo` hashes. The node periodically polls for the network map
 (based on the HTTP cache expiry header) and any new entries are downloaded and cached. Entries which no longer exist are deleted from the node’s cache.
 
@@ -117,7 +117,7 @@ signed `NodeInfo` object that the Network Map Service vends. These are automatic
 be used to supplement or replace the HTTP network map. If the same node is advertised through both mechanisms then the
 latest one is taken.
 
-On startup the node generates its own signed node info file, filename of the format `nodeInfo-${hash}`. It can also be
+On start-up the node generates its own signed node info file, filename of the format `nodeInfo-${hash}`. It can also be
 generated using the `--just-generate-node-info` command line flag without starting the node. To create a simple network
 without the HTTP Network Map Service simply place this file in the `additional-node-infos` directory of every node that’s
 part of this network. For example, a simple way to do this is to use rsync.
@@ -141,7 +141,7 @@ them. The operator signs a data structure that contains the values and they are 
 Tools are provided to gain user opt-in consent to a new version of the parameters and ensure everyone switches to them
 at the same time.
 
-If the node is using the HTTP Network Map Service then on first startup it will download the signed network parameters,
+If the node is using the HTTP Network Map Service then on first start-up it will download the signed network parameters,
 cache it in a `network-parameters` file and apply them on the node.
 
 

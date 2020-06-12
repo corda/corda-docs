@@ -168,7 +168,7 @@ Note that when reading from file:
 
 
 * `epoch` will be initialised to 1, unless a different value is specified within the configuration file
-* `modifiedTime` will be the network map startup time
+* `modifiedTime` will be the network map start-up time
 
 `epoch` will increase by one every time the network parameters are updated, however larger jumps can be achieved by
 manually setting the next epoch value within the configuration file..

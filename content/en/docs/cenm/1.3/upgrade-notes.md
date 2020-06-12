@@ -27,7 +27,7 @@ We also strongly recommend cross referencing with the [Changelog](changelog.md) 
  **Identity Manager**
 
   The release includes changes to database schemas (see [Changelog](changelog.md)) for Oracle databases;
-  new columns are created automatically upon each service startup.
+  new columns are created automatically upon each service start-up.
   Ensure the Identity Manager is configured to perform this migration
   by setting ``runMigration`` property to ``true``.
 
@@ -43,7 +43,7 @@ We also strongly recommend cross referencing with the [Changelog](changelog.md) 
 
 >
 > The release includes changes to database schemas (see [Changelog](changelog.md)); new columns are created automatically
-> upon each service startup. Ensure the Identity Manager and Network Map are configured to perform this migration
+> upon each service start-up. Ensure the Identity Manager and Network Map are configured to perform this migration
 > by setting `runMigration` property to `true`.
 >
 > The upgrade process is otherwise just a drop-in replacement of the existing `.jar` files with `<service>-1.2.jar`.
@@ -68,7 +68,7 @@ Use latest patched version (1.1.1 or higher) of the services (JAR/ZIP files) ins
 
 {{< /note >}}
 
-* **Identity Manager, Network Map and Signing Service**Ensure Identity Manager and Network Map Service will be configure to upgrade the database upon startup.
+* **Identity Manager, Network Map and Signing Service**Ensure Identity Manager and Network Map Service will be configure to upgrade the database upon start-up.
 In the configuration files of the Identity Manager Service and the Network Map Service, set `runMigration` property to `true` - for example: 
 
 ```guess
@@ -228,7 +228,7 @@ There are two ways to upgrade your old 0.1 network services environment:
 ### Without Upgrading Your Configuration
 
 The 0.2.1 Doorman/Network Map Service and Signing Service `.jar` files will work in place of their 0.1 counterparts, but
-require an additional `--config-is-old` command line flag to be passed upon startup. This allows you to use you old
+require an additional `--config-is-old` command line flag to be passed upon start-up. This allows you to use you old
 configuration files without and further steps. For example:
 
 ```bash

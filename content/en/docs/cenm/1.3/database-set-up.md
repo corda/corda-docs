@@ -263,7 +263,7 @@ If you provide a custom schema name (different from the user name), then the las
 
 The general steps for creating database schemas are listed below, followed by specific instructions for Oracle.
 
-1. Deploy the CENM services first with database administrator credentials, specified in the `database.user` and `database.password` configuration files. If the schema exists and you have administrative permissions, the Liquibase migrations will run on startup and automatically create the tables under the schema.
+1. Deploy the CENM services first with database administrator credentials, specified in the `database.user` and `database.password` configuration files. If the schema exists and you have administrative permissions, the Liquibase migrations will run on start-up and automatically create the tables under the schema.
 
 2. After you create the tables, substitute the database user and password settings in the service configuration file with the CENM service instance user credentials with restricted permissions.
 
