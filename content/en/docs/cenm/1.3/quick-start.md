@@ -15,7 +15,7 @@ title: CENM test environment quick start guide
 ---
 
 
-# Quick start guide to manual deployment of a CENM trial environment
+# Quick start guide to manual deployment of a CENM test environment
 
 ## Introduction
 
