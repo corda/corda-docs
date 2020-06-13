@@ -40,7 +40,7 @@ by the Angel Service for the appropriate Network Map Service.
 ## Running the Zone Service
 
 The Zone Service does not have a configuration file, and is configured entirely
-from the command line. To run the Zone Service, use a command like the one shown in the example below:
+from the command-line. To run the Zone Service, use a command like the one shown in the example below:
 
 ```bash
 java -jar zone.jar --enm-listener-port=5061 --url=\"jdbc:h2:file:/opt/zone/zone-persistence;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=10000;WRITE_DELAY=0;AUTO_SERVER_PORT=0\" --user=testuser --password=password --admin-listener-port=5063 --driver-class-name=org.h2.jdbcx.JdbcDataSource --auth-host=auth-service --auth-port=8081 --auth-trust-store-location=certificates/corda-ssl-trust-store.jks --auth-trust-store-password=trustpass --auth-issuer=http://test --auth-leeway=10 --run-migration=true
@@ -62,13 +62,13 @@ The full list of configuration options follows below:
 - `--user`: The user for the Zone Service's database.
 - `--password`: The password for the Zone Service's database.
 - `--admin-listener-port`: The port where Angel Services connect to the Zone Service.
-- `--disable-authentication`: Allows you to disable authentication via the [Auth Service](auth-service.md). Only use this option in development environments. Defaults to `false` if no value is provided.
-- `--auth-host`: The hostname of the Auth Service. Required unless authentication is disabled.
-- `--auth-port`: The port number of the Auth Service. Required unless authentication is disabled.
-- `--auth-trust-store-location`: The location of the Auth Service trust root keystore. Required unless authentication is disabled.
-- `--auth-trust-store-password`: The password for the Auth Service trust root keystore. Required unless authentication is disabled.
-- `--auth-issuer`: The \"iss\" claim in the JWT - needs to be set to the same value as in the Auth Service's configuration. Required unless authentication is disabled.
-- `--auth-leeway`: Defines the amount of time, in seconds, allowed when checking JSON Web Token (JWT) issuance and expiration times. Required unless authentication is disabled. We recommend a default time of **10 seconds**.
+- `--disable-authentication`: Allows you to disable authentication and authorisation via the [Auth Service](auth-service.md). Only use this option in development environments. Defaults to `false` if no value is provided.
+- `--auth-host`: The hostname of the Auth Service. Required unless authentication and authorisation are disabled.
+- `--auth-port`: The port number of the Auth Service. Required unless authentication and authorisation are disabled.
+- `--auth-trust-store-location`: The location of the Auth Service trust root keystore. Required unless authentication and authorisation are disabled.
+- `--auth-trust-store-password`: The password for the Auth Service trust root keystore. Required unless authentication and authorisation are disabled.
+- `--auth-issuer`: The \"iss\" claim in the JWT - you must set the same value as in the Auth Service's configuration. Required unless authentication and authorisation are disabled.
+- `--auth-leeway`: Defines the amount of time, in seconds, allowed when checking JSON Web Token (JWT) issuance and expiration times. Required unless authentication and authorisation are disabled. We recommend a default time of **10 seconds**.
 - `--working-dir`: Defines the working directory to the specified directory. The service will look for files in that directory. This means certificates, configuration files etc. should be under the working directory. If not specified it will default to the current working directory (the directory from which the service has been started).
 
 ## Configurations for other CENM services
@@ -77,13 +77,13 @@ To ensure consistency and correctness of the configurations it sends to other CE
 
 ### Identity Manager Service configuration
 
-The Zone Service sets the authentication configuration for the Identity Manager Service based on the Auth Service configuration options provided when running the Zone Service (see the previous section).
+The Zone Service sets the Auth Service configuration for the Identity Manager Service based on the Auth Service configuration options provided when running the Zone Service (see the previous section).
 
-The authentication trust store location and password must match on the hosts of the Zone Service and the Identity Manager Service. It is recommended that the trust store location is set as a relative path to the working directory on each host (for example, `certificates/auth-trust-store.jks`) rather than as an absolute path.
+The Auth Service trust store location and password must match on the hosts of the Zone Service and the Identity Manager Service. It is recommended that the trust store location is set as a relative path to the working directory on each host (for example, `certificates/auth-trust-store.jks`) rather than as an absolute path.
 
-{{ <note> }}
-The shell UI used in CENM 1.2 (and below) is not supported in combination with the authentication functionality in CENM 1.3, so configurations *must not* specify a shell configuration or they will be rejected by the respected services.
-{{ </note> }}
+{{< note >}}
+The shell UI used in CENM 1.2 (and below) is not supported in combination with the RPC API functionality in CENM 1.3, so configurations *must not* specify a shell configuration or they will be rejected by the respected services.
+{{< /note >}}
 
 ### Network Map Service configuration
 
@@ -93,7 +93,7 @@ The Zone Service also sets the Sub Zone ID (`authObjectId`) for the Network Map 
 
 ### Signing Services configuration
 
-The service locations for the Signing Services are set by the Zone Service using the external addresses and the ENM ports configured for the Identity Manager Service and Network Map Service. Any service locations provided in Signing Services configurations, sent to the Zone Service, are overwritten.
+The service locations for the Signing Services are set by the Zone Service using the external addresses and the CENM ports configured for the Identity Manager Service and Network Map Service. Any service locations provided in Signing Services configurations, sent to the Zone Service, are overwritten.
 
 The SSL client settings used when connecting to these services are set uniformly
 across all service locations, and are taken from the first of any service location

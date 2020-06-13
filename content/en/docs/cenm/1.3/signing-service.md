@@ -68,13 +68,13 @@ Signing Service can be used to manage several networks/sub-zones.
 
 Due to security concerns, the signing service should be hosted on private premises, **not** in a cloud environment. As
 mentioned above, the only communication requirements are outgoing connections to the CENM services as data sources
-or outgoing connection to SMR service configured as data source which then connects to CENM services (Identity Manager and Network Maps), and outgoing connections to the HSMs
+or outgoing connection to SMR Service configured as data source which then connects to CENM services (Identity Manager and Network Maps), and outgoing connections to the HSMs
 for the configured signing keys. The overall flow of communication can be seen in the below diagram:
 
 ![signing service communication](/en/images/signing-service-communication.png "signing service communication")
 {{< note >}}
 All inter-service communication can be configured with SSL support to ensure the connection is encrypted. See
-[Configuring the ENM services to use SSL](enm-with-ssl.md)
+[Configuring the CENM services to use SSL](enm-with-ssl.md)
 
 {{< /note >}}
 {{< note >}}
@@ -130,7 +130,7 @@ output all tasks that can be run along with their schedule, if applicable.
 
 ### Perform A Health Check
 
-To verify that all configured CENM data sources or a single SMR service data source are reachable by the Signing Service, a health check can be performed
+To verify that all configured CENM data sources or a single SMR Service data source are reachable by the Signing Service, a health check can be performed
 by running the `run clientHealthCheck`. This will iteratively run through each service, sending a simple ping message
 and verifying a successful response. Any unsuccessful connection attempts will be displayed to the console. This method
 is especially useful after the initial setup to verify that the Signing and CENM services have been configured
@@ -154,7 +154,7 @@ The configuration for the Signing Service consists of the following sections:
 #### Shell Configuration
 
 The Signing Service is interacted with via the shell, which is configured at the top level of the configuration file. This
-shell is similar to the interactive shell available in other ENM services and is configured in a similar way. See
+shell is similar to the interactive shell available in other CENM services and is configured in a similar way. See
 [Shell Configuration](shell.md#shell-config) for more information on how to configure the shell.
 
 
@@ -192,10 +192,10 @@ See the [Example Signing Service Configuration](#example-signing-service-configu
 
 ##### Azure Key Vault
 
-To keep inline with the other HSMs, the Azure Key Vault client jar needs to provided as above. Unlike the other HSMs,
+To keep inline with the other HSMs, the Azure Key Vault client `.jar` needs to provided as above. Unlike the other HSMs,
 there are many dependent libraries. The top-level dependencies are `azure-keyvault` and `adal4j`, however these both
 have transitive dependencies that need to be included. That is, either all jars need to be provided separately (via a
-comma-separated list) or an uber jar needs to be provided.
+comma-separated list) or an uber `.jar` needs to be provided.
 
 The gradle script below will build an uber jar. First copy the following text in to a new file called build.gradle
 anywhere on your file system. Please do not change any of your existing build.gradle files.
@@ -232,7 +232,7 @@ or if gradle is not on the path but gradlew is in the current directory then run
 ./gradlew shadowJar
 ```
 
-This will create a jar called `azure-keyvault-with-deps.jar` which can be referenced in the configuration.
+This will create a `.jar` called `azure-keyvault-with-deps.jar` which can be referenced in the configuration.
 
 
 #### Global Certificate Store
@@ -269,11 +269,9 @@ production environment configuration.
 Using a local java keystore in a production system is strongly discouraged.
 
 {{< /note >}}
-More detailed descriptions of how to configure a signing key can be found in the
-{{< warning >}}`Configuration Parameters`_{{< /warning >}}
 
- section
-below.
+More detailed descriptions of how to configure a signing key can be found in the
+`Configuration Parameters` section below.
 
 
 ### Data Sources
@@ -283,12 +281,12 @@ below.
 
 For each signing task, the data source for getting the unsigned data and persisting the signed data needs to be defined.
 Similarly to the signing keys above, one data source could potentially be used across multiple signing tasks, hence they
-are configured as a map of human-readable aliases (referenced by the signing task configuration) to ENM service
+are configured as a map of human-readable aliases (referenced by the signing task configuration) to CENM service
 locations.
 
 {{< note >}}
 Communication with the configured service locations can be configured to use SSL for a secure, encrypted
-connection. This is strongly recommended for production deployments. See [Configuring the ENM services to use SSL](enm-with-ssl.md) for more
+connection. This is strongly recommended for production deployments. See [Configuring the CENM services to use SSL](enm-with-ssl.md) for more
 information.
 
 {{< /note >}}
@@ -296,15 +294,15 @@ information.
 #### Indirect data source via SMR Service Location
 
 For all CA related signing tasks (CSRs and CRLs), a global data source for getting the unsigned data and persisting the
-signed data needs to be defined. This is ENM location of CA related part of Signable Material Retriever Service.
+signed data needs to be defined. This is CENM location of CA related part of Signable Material Retriever Service.
 
 For all non CA related signing tasks (Network Maps and Network Parameters), a global data source for getting the unsigned
-data and persisting the signed data needs to be defined. This is ENM location of non CA related part of Signable
+data and persisting the signed data needs to be defined. This is CENM location of non CA related part of Signable
 Material Retriever Service.
 
 {{< note >}}
-Communication with the configured SMR service location can be configured to use SSL for a secure, encrypted
-connection. This is strongly recommended for production deployments. See [Configuring the ENM services to use SSL](enm-with-ssl.md) for more
+Communication with the configured SMR Service location can be configured to use SSL for a secure, encrypted
+connection. This is strongly recommended for production deployments. See [Configuring the CENM services to use SSL](enm-with-ssl.md) for more
 information.
 
 {{< /note >}}
@@ -377,7 +375,7 @@ execution, or a string consisting of a number followed by the units suffix as ab
 
 {{< note >}}
 Attempting to configure a non-schedulable signing task (e.g. signing via HSM requiring manual user
-authentication) will result in an error upon service startup.
+authentication) will result in an error upon service start-up.
 
 {{< /note >}}
 
@@ -387,14 +385,14 @@ Listed below are the steps involved in signing an example Network Parameter upda
 data types are very similar.
 
 
-* A network operator issues a Network Parameter update via the appropriate Network Map service. At this point, as the
+* A network operator issues a Network Parameter update via the appropriate Network Map Service. At this point, as the
 update is unsigned, it will not be broadcast to the network.
 
 The parameter update is ready to be signed.
 
 
 * A privileged user accesses the Signing Service via ssh and runs the pre-configured Network Parameter signing task for
-the given Network Map service.
+the given Network Map Service.
 * A connection to the Network Map or Signable Material Retriever service is established and the unsigned Network Parameter update is
 fetched and displayed to the user.
 * The user confirms that the changes are correct and should be signed.
@@ -404,7 +402,7 @@ exact format of this authentication will depend on the configured signing key th
 commences using the configured signing key. If their privileges are not sufficient then the signing task will prompt
 for another user to be authenticated, repeating this process until the configured HSM authentication threshold has
 been exceeded.
-* The Network Parameter update is signed then persisted back to the appropriate Network Map service or Signable Material Retriever service. When the Network
+* The Network Parameter update is signed then persisted back to the appropriate Network Map Service or Signable Material Retriever service. When the Network
 Map is next updated and signed, the newly signed parameter update will be included and therefore broadcast to the
 network participants.
 
@@ -482,7 +480,7 @@ below for the expected format.
 
 
 * **serviceLocations**:
-Map of human-readable aliases (string) to ENM service location configurations. Should contain all
+Map of human-readable aliases (string) to CENM service location configurations. Should contain all
 services that are used within the signing processes defined in the signers map. See the
 [service location map entry example](#service-location-map-entry-example) below for the expected format.
 
@@ -494,7 +492,7 @@ service location configuration.
 
 * **nonCaSmrLocation**:
 *(Optional, use instead of non CA related serviceLocations)* Non CA part of Signable Material
-Retriever ENM service location configuration.
+Retriever CENM service location configuration.
 
 
 * **signers**:
@@ -693,7 +691,7 @@ First of all AWS CloudHSM requires a UNIX client running on the machine. It will
 For detailed documentation about setting up the client please visit Amazon’s
 [Getting Started with AWS CloudHSM](https://docs.aws.amazon.com/cloudhsm/latest/userguide/getting-started.html).
 After the client is installed the shared library should be under the folder `/opt/cloudhsm/lib` so this should be
-used when configuring the `hsmLibraries` property in the configuration. The jar can be found under `/opt/cloudhsm/java/cloudhsm-<version>.jar`
+used when configuring the `hsmLibraries` property in the configuration. The `.jar` can be found under `/opt/cloudhsm/java/cloudhsm-<version>.jar`
 by default.
 
 
@@ -747,59 +745,30 @@ string and is used only within the configuration to map the service locations to
 
 * **enmService**:
 The connection details for the CENM service that acts as the data source
-
-
-* **host**:
-Host name (or IP address) that the CENM service is running on
-
-
-* **port**:
-Port that the CENM service is listening on (for inter-ENM communication)
-
-
-* **verbose**:
-Boolean representing whether debug information for the IPC between the Signer and the remote service
-should be displayed.
-
-
-* **ssl**:
-*(Optional)* SSL Information for connection with the CENM service.
-
-
-* **keyStore**:
-Key store configuration for the Signing Service SSL key pair.
-
-
-* **location**:
-Location on the file system of the keystore containing the SSL public / private keypair
-of the Signing Service.
-
-
-* **password**:
-password for the keyStore
-
-
-* **keyPassword**:
-*(Optional)* Password for the keypair, can be omitted if the same as the keystore.
-
-
-
-
+  * **host**:
+  The host name (or IP address) that the CENM service is running on.
+  * **port**:
+  The port that the CENM service is listening on (for inter-ENM communication).
+  * **verbose**:
+  A boolean parameter that determines whether debug information for the IPC between the Signing Service and the remote service
+  should be displayed.
+  * **ssl**:
+  *(Optional)* SSL Information for connection with the CENM service.
+    * **keyStore**:
+    The key store configuration for the Signing Service SSL key pair.
+    * **location**:
+    The location in the file system of the keystore containing the SSL public / private key pair.
+    of the Signing Service.
+    * **password**:
+    The password for the keystore.
+    * **keyPassword**:
+    *(Optional)* The password for the key pair - can be omitted if it is the same as the keystore password.
 * **trustStore**:
 Trust store configuration for the SSL PKI root of trust.
-
-
-* **location**:
-Location on the file system of the keystore containing the SSL PKI root of trust.
-
-
-* **password**:
-password for the trust root keystore.
-
-
-
-
-
+  * **location**:
+  The location in the file system of the keystore containing the SSL PKI root of trust.
+  * **password**:
+  The password for the trust root keystore.
 
 
 
@@ -815,24 +784,24 @@ Locations, then `nonCaSmrLocation` replaces non CA related inputs of `serviceLoc
 
 
 * **caSmrLocation**:
-The connection details for the CA part of SMR service that acts as the data source
+The connection details for the CA part of SMR Service that acts as the data source
 
 
 * **host**:
-Host name (or IP address) that the CA part of SMR service is running on
+Host name (or IP address) that the CA part of SMR Service is running on
 
 
 * **port**:
-Port that the CA part of SMR service is listening on (for inter-ENM communication)
+Port that the CA part of SMR Service is listening on (for inter-ENM communication)
 
 
 * **verbose**:
-Boolean representing whether debug information for the IPC between the Signer and the remote service
+Boolean representing whether debug information for the IPC between the Signing Service and the remote service
 should be displayed.
 
 
 * **ssl**:
-*(Optional)* SSL Information for connection with the CA part of SMR service.
+*(Optional)* SSL Information for connection with the CA part of SMR Service.
 
 
 * **keyStore**:
@@ -873,7 +842,7 @@ password for the trust root keystore.
 
 
 * **nonCaSmrLocation**:
-Same as per **caSmrLocation**, just for the non CA part of the SMR service
+Same as per **caSmrLocation**, just for the non-CA part of the SMR Service.
 
 
 
@@ -985,7 +954,7 @@ signingKeys = {
 }
 
 ##########################################################
-# All ENM service endpoints for fetching/persisting data #
+# All CENM service endpoints for fetching/persisting data #
 ##########################################################
 serviceLocations = {
     "identity-manager" = {
@@ -1213,7 +1182,7 @@ signingKeys = {
 }
 
 ##########################################################
-# All ENM service endpoints for fetching/persisting data #
+# All CENM service endpoints for fetching/persisting data #
 ##########################################################
 caSmrLocation = {
     host = localhost
@@ -1317,7 +1286,7 @@ signingKeys = {
 }
 
 ##########################################################
-# All ENM service endpoints for fetching/persisting data #
+# All CENM service endpoints for fetching/persisting data #
 ##########################################################
 caSmrLocation = {
     host = localhost
@@ -1432,7 +1401,7 @@ SMR Service started
 
 ### SMR Configuration
 
-The configuration of the SMR service consists of the following two components:
+The configuration of the SMR Service consists of the following two components:
 
 
 * [CENM service locations](#cenm-service-locations) which determine SMR’s data sources
@@ -1443,11 +1412,11 @@ The configuration of the SMR service consists of the following two components:
 
 For each material management task, the data source for getting the unsigned data and persisting signed data must be
 defined. One data source could be potentially used across multiple material management tasks, hence they are configured
-as a map of human-readable aliases (referenced by the material management task configuration) to ENM service locations.
+as a map of human-readable aliases (referenced by the material management task configuration) to CENM service locations.
 
 {{< note >}}
-Communication with the configured SMR service location can be configured to use SSL for a secure, encrypted
-connection. This is strongly recommended for production deployments. See [Configuring the ENM services to use SSL](enm-with-ssl.md) for more
+Communication with the configured SMR Service location can be configured to use SSL for a secure, encrypted
+connection. This is strongly recommended for production deployments. See [Configuring the CENM services to use SSL](enm-with-ssl.md) for more
 information.
 
 {{< /note >}}
@@ -1484,11 +1453,11 @@ accepted format.
 
 
 * **pluginJar**:
-The absolute path to signing plugin JAR file
+The absolute path to signing plugin `.jar` file
 
 
 * **pluginClass**:
-The class that will be loaded from plugin JAR file and will be its entry point from SMR
+The class that will be loaded from plugin `.jar` file and will be its entry point from SMR
 
 
 
@@ -1553,7 +1522,7 @@ serviceLocations = {
 }
 
 materialManagementTasks = {
-    # Assuming Signer Service configuration contains alias "CSR" in "signers" map.
+    # Assuming Signing Service configuration contains alias "CSR" in "signers" map.
     "CSR" = {
         type = CSR
         location = "identity-manager"
@@ -1563,7 +1532,7 @@ materialManagementTasks = {
         pluginJar = "plugin/smr-default-plugin-ca-1.2.0.jar"
         pluginClass = "com.r3.enm.smrplugins.defaultplugin.ca.CASMRSigningPlugin"
     }
-    # Assuming Signer Service configuration contains alias "CRL" in "signers" map.
+    # Assuming Signing Service configuration contains alias "CRL" in "signers" map.
     "CRL" = {
         type = CRL
         location = "revocation"
@@ -1573,7 +1542,7 @@ materialManagementTasks = {
         pluginJar = "plugin/smr-default-plugin-ca-1.2.0.jar"
         pluginClass = "com.r3.enm.smrplugins.defaultplugin.ca.CASMRSigningPlugin"
     }
-    # Assuming Signer Service configuration contains alias "NetMap" in "signers" map.
+    # Assuming Signing Service configuration contains alias "NetMap" in "signers" map.
     "NetMap" = {
         type = NETWORK_MAP
         location = "network-map"
@@ -1583,7 +1552,7 @@ materialManagementTasks = {
         pluginJar = "plugin/smr-default-plugin-nonca-1.2.0.jar"
         pluginClass = "com.r3.enm.smrplugins.defaultplugin.nonca.NonCASMRSigningPlugin"
     }
-    # Assuming Signer Service configuration contains alias "Params" in "signers" map.
+    # Assuming Signing Service configuration contains alias "Params" in "signers" map.
     "Params" = {
         type = NETWORK_PARAMETERS
         location = "network-map"
@@ -1607,7 +1576,7 @@ class must implement `CASigningPlugin` or `NonCASigningPlugin` interface dependi
 it will handle.
 
 Both interfaces extend common `StartablePlugin` interface containing a single method `start()`. The method is run by
-SMR service upon the service start-up and it’s intended to contain plugin’s initialization code (e.g. a database
+SMR Service upon the service start-up and it’s intended to contain plugin’s initialization code (e.g. a database
 connection initialization).
 
 ```java
@@ -1953,7 +1922,7 @@ public final class NMSigningData {
 ### Default Signing Plugins
 
 SMR ships with plugins for the CENM provided Signing Service. The only requirement is to provide
-the plugins’ JAR paths, classes to instantiate and configurations.
+the plugins’ `.jar` paths, classes to instantiate and configurations.
 
 
 #### CA Default Signing Plugin
@@ -1972,7 +1941,7 @@ enmListener = {
 ```
 
 {{< note >}}
-CA Plugin’s configuration file must be in the same directory as the service’s JAR file and must be named
+CA Plugin’s configuration file must be in the same directory as the service’s `.jar` file and must be named
 “plugin-ca.conf”
 
 {{< /note >}}
@@ -1993,7 +1962,7 @@ enmListener = {
 ```
 
 {{< note >}}
-Non CA Plugin’s configuration file must be in the same directory as the service’s JAR file and must be named
+Non CA Plugin’s configuration file must be in the same directory as the service’s `.jar` file and must be named
 “plugin-non-ca.conf”
 
 {{< /note >}}
@@ -2001,6 +1970,58 @@ Non CA Plugin’s configuration file must be in the same directory as the servic
 ### Other Sample Plugins
 
 See [EJBCA Sample Plugin](ejbca-plugin.md) for sample open source CA implementation.
+
+### Admin RPC Interface
+
+To enable the CENM Command-Line Interface (CLI) tool to send commands to the Signing Service,
+you must enable the RPC API by defining a configuration property called `adminListener`.
+
+For example, add the following to the service configuration:
+
+```guess
+...
+adminListener {
+    port = 5050
+    reconnect = true
+    ssl {
+        keyStore {
+            location = exampleSslKeyStore.jks
+            password = "password"
+        }
+        trustStore {
+            location = exampleSslTrustStore.jks
+            password = "trustpass"
+        }
+    }
+}
+...
+```
+
+{{< note >}}
+The `reconnect` parameter is optional - it will default to `reconnect = true` if not set.
+{{< /note >}}
+
+{{% important %}}
+If the `adminListener` property is present in the configuration, this means that the service must only be used via Admin RPC. In this case, the `shell` configuration property will be disabled. The `shell` and `adminListener` properties cannot be used in the configuration at the same time.
+{{% /important %}}
+
+The admin RPC interface requires an Auth Service to verify
+requests, which must be configured below in a `authServiceConfig` block. Typically
+this is provided automatically by the Zone Service (via an Angel Service),
+however an example is provided below for reference:
+
+```guess
+authServiceConfig {
+    host = <auth service host>
+    port = <auth service port>
+    trustStore = {
+        location = /path/to/trustroot.jks
+        password = <key store password>
+    }
+    issuer = <issuer>
+    leeway = <leeway duration>
+}
+```
 
 ## Obfuscated configuration files
 

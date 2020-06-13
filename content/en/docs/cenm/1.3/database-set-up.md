@@ -45,7 +45,7 @@ CENM currently supports the following databases:
 * Oracle 11gR2 (Oracle JDBC 6)
 * Oracle 12cR2 (Oracle JDBC 8)
 
-The appropriate JDBC driver JAR file must be provided and its location should be specified in the service configuration.
+The appropriate JDBC driver `.jar` file must be provided and its location should be specified in the service configuration.
 
 {{< warning >}}
 H2 database should only be used for testing. The JDBC driver is shipped as part of the service `.jar` files and does not require an external JDBC driver. It is not supported for use in production.
@@ -263,7 +263,7 @@ If you provide a custom schema name (different from the user name), then the las
 
 The general steps for creating database schemas are listed below, followed by specific instructions for Oracle.
 
-1. Deploy the CENM services first with database administrator credentials, specified in the `database.user` and `database.password` configuration files. If the schema exists and you have administrative permissions, the Liquibase migrations will run on startup and automatically create the tables under the schema.
+1. Deploy the CENM services first with database administrator credentials, specified in the `database.user` and `database.password` configuration files. If the schema exists and you have administrative permissions, the Liquibase migrations will run on start-up and automatically create the tables under the schema.
 
 2. After you create the tables, substitute the database user and password settings in the service configuration file with the CENM service instance user credentials with restricted permissions.
 
@@ -442,7 +442,7 @@ Ensure that the JDBC connection properties match the SQL Server setup, especiall
 
 ### Oracle
 
-See below an example CENM service configuration file for Oracle DB - initial deployment with administrative permissions:
+See below an example CENM service configuration file for Oracle database - initial deployment with administrative permissions:
 
 ```groovy
 database = {
@@ -455,7 +455,7 @@ database = {
 }
 ```
 
-See below an example CENM service configuration file for Oracle DB - CENM service instance database user with restrictive permissions:
+See below an example CENM service configuration file for Oracle database - CENM service instance database user with restrictive permissions:
 
 ```groovy
 database = {

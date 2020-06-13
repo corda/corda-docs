@@ -99,7 +99,7 @@ The Identity Manager and Network Map(s) require their own persistence layer. The
 environments:
 
 
-* Oracle DB
+* Oracle database
 * Postgres
 * SQL Server
 
@@ -110,7 +110,7 @@ For details of supported versions and configuration, see [CENM Databases](databa
 
 The certificates and keys that represent the network’s PKI will be stored within an HSM. To prevent any breach of the
 systems integrity being able to generate a signed certificate the signers should be operated from an isolated network.
-By design, they only have the ability to talk *to* the other ENM components, they can never be asked to sign something.
+By design, they only have the ability to talk *to* the other CENM components, they can never be asked to sign something.
 
 In addition, signing a CRR or CSR, and potentially the Network Parameters, *should* require a human to interact with
 the HSM via some manual authentication mechanism.

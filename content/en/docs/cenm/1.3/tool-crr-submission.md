@@ -18,7 +18,7 @@ title: Certificate Revocation Request Submission Tool
 # Certificate Revocation Request Submission Tool
 
 The purpose of the Certificate Revocation Request (CRR) Submission Tool is to facilitate the process of creating a CRR.
-The tool is designed with the support line in mind, and assumes it is for internal (i.e. within the Identity Manager service managing company) usage.
+The tool is designed with the support line in mind, and assumes it is for internal (i.e. within the Identity Manager Service managing company) usage.
 
 It retrieves all the necessary data (for the CRR submission) throughout the execution process by asking the user for particular inputs.
 The expected input from the user is following:
@@ -35,7 +35,7 @@ Note: At least one of 1, 2 and 3 has to be provided.
 
 ## Running Tool
 
-At startup, the Certificate Revocation Request Submission Tool takes only one command line argument: `--submission-url`,
+At start-up, the Certificate Revocation Request Submission Tool takes only one command-line argument: `--submission-url`,
 that should be followed by the url to the certificate revocation request submission endpoint.
 
 Example:

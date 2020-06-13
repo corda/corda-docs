@@ -63,28 +63,26 @@ The main elements that need to be configured for the Identity Manager are:
     * [CSR Signing Mechanism](#csr-signing-mechanism)
     * [Issuance Internal Server](#issuance-internal-server)
     * [Restricting a node’s Corda version (optional)](#restricting-a-node-s-corda-version-optional)
-
-
 * [Revocation workflow (optional)](#revocation-workflow-optional)
     * [CRR Approval Mechanism](#crr-approval-mechanism)
     * [CRR Signing Mechanism](#crr-signing-mechanism)
     * [Revocation Internal Server](#revocation-internal-server)
-
+* [Admin RPC Interface](#admin-rpc-interface)
 * [HA Endpoint (optional)](#ha-endpoint)
     * [Caching Proxy Setup](#caching-proxy-setup)
     * [Caching Proxy Limitations](#caching-proxy-limitations)
     * [Application Gateway Setup](#application-gateway-setup)
     * [System Configuration And Behavior](#system-configuration-and-behavior)
 
+
 {{< note >}}
 See [Identity Manager Configuration Parameters](config-identity-manager-parameters.md) for a detailed explanation about each possible parameter.
-
 {{< /note >}}
 
 ### Address
 
 The `address` parameter must be included in the top level of the configuration and represents the host and port
-number that the Identity Service will bind to upon startup. The host can either be the IP address or the hostname of
+number that the Identity Service will bind to upon start-up. The host can either be the IP address or the hostname of
 the machine that Identity Manager is running on. For example:
 
 ```guess
@@ -102,24 +100,24 @@ IP/DNS name to connect to Identity Manager.
 
 ### Database
 
-The Identity Manager service is backed by a SQL database which it uses to store information such as Certificate Signing
+The Identity Manager Service is backed by a SQL database which it uses to store information such as Certificate Signing
 Requests (CSRs) and (optionally) Certificate Revocation Requests (CRRs). The connection settings must be included within
 the `database` configuration block in the configuration file. The main options that should be included here are:
 
 
-* `driverClassName` - the DB driver class name (e.g *com.microsoft.sqlserver.jdbc.SQLServerDriver* for Microsoft SQL Server, *org.postgresql.Driver* for postgres)
-* `jdbcDriver` - the path to the appropriate JDBC driver jar (e.g *path/to/mssql-jdbc-7.2.2.jre8.jar*)
-* `url` - the connection string for the DB
-* `user` - the username for the DB
-* `password` - the password for the DB
+* `driverClassName` - the database driver class name (e.g *com.microsoft.sqlserver.jdbc.SQLServerDriver* for Microsoft SQL Server, *org.postgresql.Driver* for postgres)
+* `jdbcDriver` - the path to the appropriate JDBC driver `.jar` (e.g *path/to/mssql-jdbc-7.2.2.jre8.jar*)
+* `url` - the connection string for the database
+* `user` - the username for the database
+* `password` - the password for the database
 
 
 #### Database Setup
 
-The database can either be setup prior to running the Identity Manager service or, alternatively, it can be
-automatically prepared on startup via the built-in migrations. To enable the running of database migrations on startup
+The database can either be setup prior to running the Identity Manager Service or, alternatively, it can be
+automatically prepared on start-up via the built-in migrations. To enable the running of database migrations on start-up
 the optional `runMigration` parameter within the `database` configuration should be set to true. Additionally, if
-the Identity Manager service is being run using the same DB instance as an accompanying Network Map service then the
+the Identity Manager Service is being run using the same database instance as an accompanying Network Map Service then the
 Identity Manager schema name must be specified via the `schema` parameter within the `database` configuration block:
 
 ```guess
@@ -131,8 +129,8 @@ database {
 ```
 
 {{< note >}}
-Due to the way the migrations are defined, if the Identity Manager and Network Map services are using the same
-DB instance then they *must* use separate DB schemas. For more information regarding the supported databases
+Due to the way the migrations are defined, if the Identity Manager and Network Map Services are using the same
+database instance then they *must* use separate database schemas. For more information regarding the supported databases
 along with the schema see [CENM Databases](database-set-up.md).
 
 {{< /note >}}
@@ -156,8 +154,8 @@ database {
 
 #### Example
 
-An example configuration for an Identity Manager service using a Microsoft SQL Server database, configured to run the
-migrations on startup is:
+An example configuration for an Identity Manager Service using a Microsoft SQL Server database, configured to run the
+migrations on start-up is:
 
 ```guess
 database {
@@ -241,7 +239,7 @@ workflows {
 
 ##### JIRA Workflow
 
-The Identity Manager service can use JIRA to manage the certificate signing request approval work flow. This can be
+The Identity Manager Service can use JIRA to manage the certificate signing request approval work flow. This can be
 enabled by referencing the JIRA CSR workflow plugin within the configuration file along with the associated configuration
 parameters:
 
@@ -325,9 +323,9 @@ external signing service.
 
 Similarly to the other Enterprise Network Manager (ENM) services, the Identity Manager is designed to be able to communicate between other services
 such as the Network Map and Signing services. Both the Issuance and, optionally, the Revocation workflows have their own
-internal listening socket interface that is created on startup which can receive and respond to messages from other ENM services.
-For example, the Revocation workflow’s ENM listener can respond to messages from the Network Map regarding certificate
-statuses of current participants which the Network Map service will then use when refreshing the latest Network Map.
+internal listening socket interface that is created on start-up which can receive and respond to messages from other CENM services.
+For example, the Revocation workflow’s CENM listener can respond to messages from the Network Map regarding certificate
+statuses of current participants which the Network Map Service will then use when refreshing the latest Network Map.
 
 To configure this internal server, the configuration block `enmListener` should be added within the Issuance
 workflow’s configuration:
@@ -352,7 +350,7 @@ This parameter can be omitted if desired, in which case it will default to port 
 
 {{< /note >}}
 {{< note >}}
-All inter-service communication can be configured with SSL support. See [Configuring the ENM services to use SSL](enm-with-ssl.md).
+All inter-service communication can be configured with SSL support. See [Configuring the CENM services to use SSL](enm-with-ssl.md).
 
 {{< /note >}}
 
@@ -367,7 +365,7 @@ have access to certain features.
 
 {{< note >}}
 This serves a similar purpose to the *minimumPlatformVersion* within the network parameters and also within
-the Network Map service configuration. However, unlike the other two options, as it prevents an outdated node
+the Network Map Service configuration. However, unlike the other two options, as it prevents an outdated node
 from successfully submitting a CSR in the first place it prevents any version related issues at the earliest
 possible step. Relying solely on the Network Parameters platform version gate can result in an outdated node
 successfully receiving a certificate to join the network despite not being able to (and thus needing to
@@ -396,7 +394,7 @@ with a minimum version less than this will not work unless the nodes are running
 
 ### Revocation Workflow (optional)
 
-The Revocation workflow is the second of the two main components in the Identity Manager service. It is an optional
+The Revocation workflow is the second of the two main components in the Identity Manager Service. It is an optional
 component that is responsible for handling incoming Certificate Revocation Requests (CRRs) to revoke a node’s
 certificate (acquired via a previously approved CSR) as well as hosting the Certificate Revocation Lists (CRLs) to
 enable the participants on the network to verify the validity of other’s certificates.
@@ -532,11 +530,65 @@ This parameter can be omitted if desired, in which case it will default to port 
 
 {{< /note >}}
 {{< note >}}
-All inter-service communication can be configured with SSL support. See [Configuring the ENM services to use SSL](enm-with-ssl.md).
+All inter-service communication can be configured with SSL support. See [Configuring the CENM services to use SSL](enm-with-ssl.md).
 
 {{< /note >}}
 
-#### HA Endpoint
+
+### Admin RPC Interface
+
+To enable the CENM Command-Line Interface (CLI) tool to send commands to the Identity Manager Service,
+you must enable the RPC API by defining a configuration block called `adminListener`.
+The configuration block `adminListener` is used to define the properties of this
+listener, such as the port it listens on as well as the retrying and logging behaviour.
+For example, add the following to the service configuration:
+
+```guess
+...
+adminListener {
+    port = 5050
+    reconnect = true
+    ssl {
+        keyStore {
+            location = exampleSslKeyStore.jks
+            password = "password"
+        }
+        trustStore {
+            location = exampleSslTrustStore.jks
+            password = "trustpass"
+        }
+    }
+}
+...
+```
+
+{{< note >}}
+The `reconnect` parameter is optional - it will default to `reconnect = true` if not set.
+{{< /note >}}
+
+{{% important %}}
+If the `adminListener` property is present in the configuration, this means that the service must only be used via Admin RPC. In this case, the `shell` configuration property will be disabled. The `shell` and `adminListener` properties cannot be used in the configuration at the same time.
+{{% /important %}}
+
+The admin RPC interface requires an Auth Service to verify
+requests, which must be configured below in a `authServiceConfig` block. Typically
+this is provided automatically by the Zone Service (via an Angel Service),
+however an example is provided below for reference:
+
+```guess
+authServiceConfig {
+    host = <auth service host>
+    port = <auth service port>
+    trustStore = {
+        location = /path/to/trustroot.jks
+        password = <key store password>
+    }
+    issuer = <issuer>
+    leeway = <leeway duration>
+}
+```
+
+### HA Endpoint
 
 The crucial role that the Identity Manager Service plays in the communication between nodes, and in particular the
 importance of the Certificate Revocation List (CRL) during flow execution, creates the need for high availability
@@ -639,7 +691,7 @@ you can observe a successful retrieval of revocation lists from the registered n
 Identity Manager Service is not operating (using the CRL endpoint health check tool provided by CENM). However, operations that require
 additional calls, such as signing a new CRL from the Signing Service, may not be possible to perform.
 
-Although we have observed errors during the tests where the Network Map Service would fail to validate 
+Although we have observed errors during the tests where the Network Map Service would fail to validate
 the registered Notary's certificate, we considered this to be an unrelated issue.
 
 #### CRL configuration
@@ -805,9 +857,6 @@ shell {
 
 ```
 
-[identity-manager-test-valid.conf](https://github.com/corda/network-services/blob/release/1.2/services/src/test/resources/v1.1-configs/identity-manager/identity-manager-test-valid.conf)
-
-
 #### Production Configuration
 
 The example below shows a more production-like configuration of the Identity Manager. It is configured with an Issuance
@@ -890,9 +939,3 @@ shell {
 }
 
 ```
-
-[identity-manager-prod-valid.conf](https://github.com/corda/network-services/blob/release/1.2/services/src/test/resources/v1.1-configs/identity-manager/identity-manager-prod-valid.conf)
-
-## Obfuscated configuration files
-
-To view the latest changes to the obfuscated configuration files, see [Obfuscation configuration file changes](obfuscated-config-file-changes.md).

@@ -14,14 +14,14 @@ title: Angel Service
 
 ## Introduction
 
-The Angel service is an adapter, which manages the lifecycle of other
+The Angel Service is an adapter, which manages the lifecycle of other
 services such as the Network Map Service or the Identity Manager Service, to make them more
 compatible with packaging tools such as Docker. You do not need to run this service directly
 as it is typically packaged in a Docker image and it is run via Docker.
 
 ## Running the Angel Service
 
-To run the Angel service, you must specify the following:
+To run the Angel Service, you must specify the following:
 
 - The service to be run.
 - The hostname/IP of the Zone Service.
@@ -40,7 +40,7 @@ java -jar angel-<VERSION>.jar --zone-host zone.example.org --zone-port 5050 --to
 
 The full list of arguments you can use when starting the Angel Service are described below:
 
--   `--jar-name`: The name of the service JAR file. Optional.
+-   `--jar-name`: The name of the service `.jar` file. Optional.
 -   `--webservice-host`: The IP address for the Angel webservice to bind to. Optional.
 -   `--webservice-port`: The port for the Angel web service to run. Optional, but must be specified for the web service to be started.
 -   `--zone-host`: The host or IP address of the Zone Service.
@@ -54,11 +54,11 @@ The full list of arguments you can use when starting the Angel Service are descr
 
 ## Configuration
 
-The Angel Service is configured via the command line and it downloads the configuration of the managed service from the Zone Service.
+The Angel Service is configured via the command-line and it downloads the configuration of the managed service from the Zone Service.
 
 **Workflow**
 
-1. On startup, the Angel Service requests the configuration for its managed service from the Zone Service, providing the authentication token to identify itself.
+1. On start-up, the Angel Service requests the configuration for its managed service from the Zone Service, providing the authentication token to identify itself.
 2. It then performs basic validation of the configuration, writes it to disk, and starts the managed service.
 3. Following this, at regular intervals, it polls the Zone Service for changes to the configuration, and if any are found:
     1. It backs up the existing configuration.

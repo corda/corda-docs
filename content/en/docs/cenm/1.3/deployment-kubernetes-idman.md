@@ -51,7 +51,7 @@ helm install idman idman --set shell.password="superDifficultPassword"
 | `database.password`           | Identity Manager database connection details | `example-db-password` |
 | `database.runMigration`       | Identity Manager database connection details | `true` |
 | `cordaJarMx`                  | Initial value for memory allocation | `1` |
-| `jarPath`                     | Path to a folder which contains Identity Manager jar files | `bin` |
+| `jarPath`                     | Path to a folder which contains Identity Manager `.jar` files | `bin` |
 | `configPath`                  | Path to a folder which contains Identity Manager configuration file | `etc` |
 
 For additional information on database connection details refer to the official documentation: [database documentation](config-database.md).

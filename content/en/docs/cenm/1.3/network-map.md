@@ -20,20 +20,20 @@ title: Network Map Service
 
 ## Purpose
 
-The network map service acts as a directory for all participants on the network. It is responsible for recording
+The Network Map Service acts as a directory for all participants on the network. It is responsible for recording
 essential information of each participant such as connection address and available services. See
 [Network Map Overview](network-map-overview.md) for an in-depth explanation.
 
 
 ## Running The Network Map Service
 
-The network map service currently has to be initialised in two stages. First, the network parameters for the global
+The Network Map Service currently has to be initialised in two stages. First, the network parameters for the global
 network have to be loaded into the database. Once complete, the service can be started.
 
 
 ### Setting the Network Parameters
 
-The initial network parameters file can be loaded into the network map service database using the
+The initial network parameters file can be loaded into the Network Map Service database using the
 `--set-network-parameters` flag. The complete list of flags required to set the network parameters is as follows:
 
 
@@ -77,7 +77,7 @@ Saved initial network parameters to be signed:
 
 ### Starting The Network Map Service
 
-The network map service can now be started via:
+The Network Map Service can now be started via:
 
 ```bash
 java -jar network-map-<VERSION>.jar --config-file <CONFIG_FILE>
@@ -96,7 +96,7 @@ If not specified it will default to the current working directory (the directory
 
 ## Configuration
 
-Similar to the Identity Manager the main elements that need to be configured for the network map service are:
+Similar to the Identity Manager the main elements that need to be configured for the Network Map Service are:
 
 
 * [Address](#address)
@@ -108,13 +108,17 @@ Similar to the Identity Manager the main elements that need to be configured for
 * [ENM Internal Server](#enm-internal-server)
 * [Identity Manager & Revocation Communication](#identity-manager-revocation-communication)
 * [Restricting A Node’s Corda Version (optional)](#restricting-a-node-s-corda-version-optional)
+* [Admin RPC Interface](#admin-rpc-interface)
 
+{{< note >}}
+See [Network Map Configuration Parameters](config-network-map-parameters.md) for a detailed explanation about each possible parameter.
+{{< /note >}}
 
 ### Address
 
 The `address` parameter must be included in the top level of the configuration and represents the host and port
-number that the Network Map Service will bind to upon startup. The host can either be the IP address or the hostname of
-the machine that Network Map service is running on. For example:
+number that the Network Map Service will bind to upon start-up. The host can either be the IP address or the hostname of
+the machine that Network Map Service is running on. For example:
 
 ```guess
 address = "<SERVER_IP/SERVER_HOST>:<PORT_NUMBER>"
@@ -131,25 +135,25 @@ connect to Network Map.
 
 ### Database
 
-The Network Map service is backed by a SQL database which it uses to store the network map along with node infos. The
+The Network Map Service is backed by a SQL database which it uses to store the network map along with node infos. The
 connection settings must be included within the `database` configuration block in the configuration file. The main options
 that should be included here are:
 
 
-* `driverClassName` - the DB driver class name (e.g *com.microsoft.sqlserver.jdbc.SQLServerDriver* for Microsoft SQL Server, *org.postgresql.Driver* for postgres)
-* `jdbcDriver` - the path to the appropriate JDBC driver jar (e.g *path/to/mssql-jdbc-7.2.2.jre8.jar*)
-* `url` - the connection string for the DB
-* `user` - the username for the DB
-* `password` - the password for the DB
+* `driverClassName` - the database driver class name (e.g *com.microsoft.sqlserver.jdbc.SQLServerDriver* for Microsoft SQL Server, *org.postgresql.Driver* for postgres)
+* `jdbcDriver` - the path to the appropriate JDBC driver `.jar` (e.g *path/to/mssql-jdbc-7.2.2.jre8.jar*)
+* `url` - the connection string for the database
+* `user` - the username for the database
+* `password` - the password for the database
 
 
 #### Database Setup
 
-The database can either be setup prior to running the Network Map service or, alternatively, it can be automatically
-prepared on startup via the built-in migrations. To enable the running of database migrations on startup set the
+The database can either be setup prior to running the Network Map Service or, alternatively, it can be automatically
+prepared on start-up via the built-in migrations. To enable the running of database migrations on start-up set the
 `runMigration` parameter within the `database` configuration to true.
 
-If the Network Map service is being run using the same DB instance as the Identity Manager service then the Network Map
+If the Network Map Service is being run using the same database instance as the Identity Manager Service then the Network Map
 schema name must be specified via the `schema` parameter within the `database` configuration block:
 
 ```guess
@@ -161,8 +165,8 @@ database {
 ```
 
 {{< note >}}
-Due to the way the migrations are defined, if the Identity Manager and Network Map services are using the same
-DB instance then they *must* use separate DB schemas. For more information regarding the supported databases
+Due to the way the migrations are defined, if the Identity Manager and Network Map Services are using the same
+database instance then they *must* use separate database schemas. For more information regarding the supported databases
 along with the schema see [CENM Databases](database-set-up.md).
 
 {{< /note >}}
@@ -186,8 +190,8 @@ database {
 
 #### Example
 
-An example configuration for a Network Map service using a Microsoft SQL Service database, configured to run the
-migrations on startup is:
+An example configuration for a Network Map Service using a Microsoft SQL Service database, configured to run the
+migrations on start-up is:
 
 ```guess
 database {
@@ -270,9 +274,9 @@ via the external signing service.
 
 ### Cache Timeout
 
-The Network Map service configuration contains a single required top-level parameter `pollingInterval`. This
+The Network Map Service configuration contains a single required top-level parameter `pollingInterval`. This
 determines how often the server should poll the database for newly signed network map and parameter changes. It also
-determines how often nodes should poll the network map service for a new network map (by including this value in the
+determines how often nodes should poll the Network Map Service for a new network map (by including this value in the
 HTTP response header).
 
 It takes a numerical value and represents the number of milliseconds between each refresh. An example of how this should
@@ -288,13 +292,13 @@ pollingInterval = 600000
 ### Node Certificate Revocation Checking
 
 In cases when the certificate revocation list infrastructure (See [Certificate Revocation List](certificate-revocation.md) for more information)
-is provided, the additional validation for the node’s certificates can be enabled in the Network Map service. This is
+is provided, the additional validation for the node’s certificates can be enabled in the Network Map Service. This is
 achieved via the top-level `checkRevocation` flag set in the configuration file. This ensures that any node within the
 Network Map has a valid, trusted certificate.
 
 Setting this flag will result in the nodes legal identities certificate paths being validated against the certificate
 revocation lists whenever the Network Map is updated. Any node that has a revoked certificate will be removed from the
-Network Map. The certificates are also checked when the node submits its information to the Network Map service to
+Network Map. The certificates are also checked when the node submits its information to the Network Map Service to
 publish for the first time.
 
 An example of how this should be added to the configuration file is:
@@ -311,10 +315,10 @@ Enabling this option requires communication with the Revocation service to be co
 
 {{< /note >}}
 
-### ENM Internal Server
+### CENM Internal Server
 
-To enable communication between the Network Map service and other network management services, such as Revocation and
-Identity Manager servers, upon start up the Network Map service will create an internal long running listening server.
+To enable communication between the Network Map Service and other network management services, such as Revocation and
+Identity Manager servers, upon start up the Network Map Service will create an internal long running listening server.
 The configuration block `enmListener` can be used to define the properties of this
 listener, such as the port it listens on as well as the retrying and logging behaviour.
 
@@ -328,31 +332,55 @@ enmListener {
 ```
 
 {{< note >}}
-The reconnect parameter can be omitted if desired, in which case it will default to port 5050 with `reconnect = true`.
+The `reconnect` parameter is optional - it will default to `reconnect = true` if not set.
 {{< /note >}}
 
 {{< note >}}
-All inter-service communication can be configured with SSL support. See [Configuring the ENM services to use SSL](enm-with-ssl.md).
+All inter-service communication can be configured with SSL support. See [Configuring the CENM services to use SSL](enm-with-ssl.md).
 {{< /note >}}
 
 
-#### Admin RPC Server
+### Admin RPC Interface
 
-The Network Map has an optional RPC interface which can be used to administrate the
-service from a remote user interface. This RPC interface is configured separately
-to the service to service interface configured above.
-
-The configuration block `adminListener` can be used to define the properties of this
+To enable the CENM Command-Line Interface (CLI) tool to send commands to the Network Map Service,
+you must enable the RPC API by defining a configuration block called `adminListener`.
+The configuration block `adminListener` is used to define the properties of this
 listener, such as the port it listens on as well as the retrying and logging behaviour.
-The admin interface requires an authentication and authorisation service to verify
-requests, which must be configured below in a `authServiceConfig` block:
+For example, add the following to the service configuration:
 
 ```guess
 ...
 adminListener {
     port = 5050
     reconnect = true
+    ssl {
+        keyStore {
+            location = exampleSslKeyStore.jks
+            password = "password"
+        }
+        trustStore {
+            location = exampleSslTrustStore.jks
+            password = "trustpass"
+        }
+    }
 }
+...
+```
+
+{{< note >}}
+The `reconnect` parameter is optional - it will default to `reconnect = true` if not set.
+{{< /note >}}
+
+{{% important %}}
+If the `adminListener` property is present in the configuration, this means that the service must only be used via Admin RPC. In this case, the `shell` configuration property will be disabled. The `shell` and `adminListener` properties cannot be used in the configuration at the same time.
+{{% /important %}}
+
+The admin RPC interface requires an Auth Service to verify
+requests, which must be configured below in a `authServiceConfig` block. Typically
+this is provided automatically by the Zone Service (via an Angel Service),
+however an example is provided below for reference:
+
+```guess
 authServiceConfig {
     host = <auth service host>
     port = <auth service port>
@@ -360,16 +388,10 @@ authServiceConfig {
         location = /path/to/trustroot.jks
         password = <key store password>
     }
-    audience = <audience>
     issuer = <issuer>
     leeway = <leeway duration>
 }
-...
 ```
-
-{{< note >}}
-The reconnect parameter can be omitted if desired, in which case it will default to port 5050 with `reconnect = true`.
-{{< /note >}}
 
 ### Identity Manager & Revocation Communication
 
@@ -381,7 +403,7 @@ Running a network with one or more private networks is not a supported configura
 {{< /warning >}}
 
 
-The Network Map service may need to speak to both the Identity Manager and Revocation services. For example, the Network
+The Network Map Service may need to speak to both the Identity Manager and Revocation services. For example, the Network
 Map service may need to communicate with the Revocation service for CRL related information.
 This is configured via the `identityManager` and `revocation` configuration options within the `networkMap`
 configuration block:
@@ -404,7 +426,7 @@ The `host` should correspond to the host part of the `address` value in the Iden
 the service’s configuration. See [Network Map Configuration Parameters](config-network-map-parameters.md) for more information.
 
 {{< note >}}
-All inter-service communication can be configured with SSL support. See [Configuring the ENM services to use SSL](enm-with-ssl.md)
+All inter-service communication can be configured with SSL support. See [Configuring the CENM services to use SSL](enm-with-ssl.md)
 
 {{< /note >}}
 
@@ -419,7 +441,7 @@ that join the network have access to certain features.
 
 {{< note >}}
 This serves a similar purpose to the *minimumPlatformVersion* within the network parameters and also within
-the Identity Manager service configuration. Publishing of the node info is the second step to joining the
+the Identity Manager Service configuration. Publishing of the node info is the second step to joining the
 network, after obtaining a certificate from the Identity Manager, so this option provides another gate of
 security and peace of mind to the network operator.
 
@@ -439,9 +461,33 @@ with a minimum version less than this will not work unless the nodes are running
 {{< /note >}}
 {{< note >}}
 The minimum version configuration options should, in general, be kept consistent between the Identity Manager
-and Network Map service
+and Network Map Service
 
 {{< /note >}}
+
+### Admin RPC
+To use the RPC API in the Network Map Service, you must define a configuration property called `adminListener`.
+Example:
+```docker
+adminListener = {
+    port = 10000
+    reconnect = true
+    ssl {
+        keyStore {
+            location = exampleSslKeyStore.jks
+            password = "password"
+        }
+        trustStore {
+            location = exampleSslTrustStore.jks
+            password = "trustpass"
+        }
+    }
+}
+```
+
+{{% important %}}
+If the `adminListener` property is present in the configuration, this means that the service must only be used via Admin RPC. In this case, the `shell` configuration property will be disabled. The `shell` and `adminListener` properties cannot be used in the configuration at the same time.
+{{% /important %}}
 
 ### Example Configuration
 
@@ -482,18 +528,16 @@ shell {
 
 ```
 
-[network-map-test-valid.conf](https://github.com/corda/network-services/blob/release/1.2/services/src/test/resources/v1.1-configs/network-map/network-map-test-valid.conf)
-
 
 ## Network Parameters
 
 Along with the above configuration, a *network-parameters* configuration file also needs to be created. This defines the
 basic settings for communication across the network along with references to the notaries node info files. Therefore it
-is advisable to register the notaries with the Identity Manager service and generate their node info files prior to
+is advisable to register the notaries with the Identity Manager Service and generate their node info files prior to
 starting the network map.
 
 The network parameters should contain reference to the notaries node info files. The notary node info files should be
-copied over to the Network Map service.
+copied over to the Network Map Service.
 
 
 ### Example Network Parameters File
@@ -538,7 +582,7 @@ packageOwnership = [
 
 ## Node’s host IP address
 
-The network map service provides an endpoint that can be used to determine the IP address of the querying host. This is
+The Network Map Service provides an endpoint that can be used to determine the IP address of the querying host. This is
 useful especially when dealing with node’s deployment in environments with IP address translation.
 
 
@@ -547,6 +591,7 @@ useful especially when dealing with node’s deployment in environments with IP 
 |GET|/network-map/my-hostname|Returns the IP address of the requestor.|
 
 {{< /table >}}
+
 
 ## Obfuscated configuration files
 
