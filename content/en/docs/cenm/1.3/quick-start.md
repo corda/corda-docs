@@ -11,7 +11,7 @@ tags:
 - quick
 - start
 - trial
-title: CENM trial environment quick start guide
+title: CENM test environment quick start guide
 ---
 
 
