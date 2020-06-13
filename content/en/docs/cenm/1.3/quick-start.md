@@ -25,13 +25,26 @@ consisting of the following:
 * Network Map service
 * [Notary Service](../../corda-enterprise/4.5/notary/running-a-notary.md)
 
+{{% important %}}
+The deployment outlined here is significantly simplified compared to a full production
+deployment.
+{{% /important %}}
+
+For a full production environment you would need to modify this deployment to add:
+
+* A Signing Service deployment to replace the local signer.
+* A Zone Service deployment to manage configuration deployment.
+* Angel Services around the Identity Manager, Network Map and Signing Services to fetch configurations from the Zone service.
+* An Auth Service deployment to handle user authentication and authorisation.
+* A Farm Service deployment to gateway from the user interface (CLI) to the back-end services.
+
 ### Pre-Requisites
 
 Ensure you have copies of the following files (provided by R3), before creating your network:
 
-* Identity Manager distribution zip
-* Network Map distribution zip
-* PKI Tool distribution zip *(for PKI generation)*
+* Identity Manager distribution `.zip`
+* Network Map distribution `.zip`
+* PKI Tool distribution `.zip` *(for PKI generation)*
 * A Corda `.jar` *(for the Notary node)*
 * 3 Machines set up with Java 8 installed *(if not running locally).*
 
