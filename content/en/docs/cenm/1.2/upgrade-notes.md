@@ -17,7 +17,7 @@ title: Upgrading Corda Enterprise Network Manager
 
 # Upgrading Corda Enterprise Network Manager
 
-This document provides instructions for upgrading your network management service - Identity Manager Service (formerly Doorman), Network Map Service, or Revocation Service - or
+This document provides instructions for upgrading your network management suite - Identity Manager Service (formerly Doorman), Network Map Service, or Revocation Service - or
 Signing Service from previous versions to the newest version. Please consult the relevant release notes of the release
 in question. If not specified, you may assume the versions you are currently using are still in force.
 
