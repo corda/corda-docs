@@ -11,11 +11,11 @@ tags:
 - quick
 - start
 - trial
-title: Trial Quick Start Guide
+title: CENM trial environment quick start guide
 ---
 
 
-# Quick Start Guide to Manual Deployment of CENM Trial
+# Quick start guide to manual deployment of a CENM trial environment
 
 ## Introduction
 
