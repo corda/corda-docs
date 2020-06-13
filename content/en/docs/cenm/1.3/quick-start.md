@@ -10,11 +10,12 @@ menu:
 tags:
 - quick
 - start
-title: Enterprise Network Manager - Quick Start Guide
+- trial
+title: Trial Quick Start Guide
 ---
 
 
-# Quick Start Guide to Manual Deployment of CENM
+# Quick Start Guide to Manual Deployment of CENM Trial
 
 ## Introduction
 
