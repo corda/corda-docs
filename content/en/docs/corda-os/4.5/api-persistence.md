@@ -611,7 +611,7 @@ For examples on testing `@CordaService` implementations, see the oracle example 
 
 ### Restricted control of connections
 
-Corda restricts the functions available by the `Connection` returned by `jdbcSession` in order to prevent a flow's underlying database transaction from being tampered with, which would likely lead to errors within the flow.
+Corda restricts the functions available by the `Connection` returned by `jdbcSession`. This is to prevent a flow's underlying database transaction from being tampered with, which would likely lead to errors within the flow.
 
 Calling `jdbcSession` returns a `RestrictedConnection` which prevents calls to the following functions:
 
@@ -679,17 +679,17 @@ public class FooSchemaV1 extends MappedSchema {
 object FooSchema
 
 object FooSchemaV1 : MappedSchema(
-    schemaFamily = FooSchema.javaClass, 
-    version = 1, 
+    schemaFamily = FooSchema.javaClass,
+    version = 1,
     mappedTypes = listOf(PersistentFoo::class.java)
 ) {
     @Entity
     @Table(name = "foos")
     class PersistentFoo(
-        @Id 
-        @Column(name = "foo_id") 
-        var fooId: String, 
-        @Column(name = "foo_data") 
+        @Id
+        @Column(name = "foo_id")
+        var fooId: String,
+        @Column(name = "foo_data")
         var fooData: String
     ) : Serializable
 }
@@ -763,7 +763,7 @@ Cannot be used within the lambda function passed to `withEntityManager`.
 
 ### Restricted control of entity managers
 
-Corda restricts the functions available by the `EntityManager` returned by `withEntityManager` in order to prevent a flow's underlying database transaction from being tampered with, which would likely lead to errors within the flow.
+Corda restricts the functions available by the `EntityManager` returned by `withEntityManager`. This is to prevent a flow's underlying database transaction from being tampered with, which would likely lead to errors within the flow.
 
 The `withEntityManager` function provides an object that adheres to the `EntityManager` interface but with two differences:
 
@@ -798,7 +798,7 @@ When you call `withEntityManager`, an intermediate database session is created t
 
 A `withEntityManager` block has 3 outcomes:
 
-- __Completes successfully__: The intermediate session is automatically flushed to the underlying transaction. 
+- __Completes successfully__: The intermediate session is automatically flushed to the underlying transaction.
 - __Throws a database error__: The intermediate session is automatically rolled back.
 - __Throws a non-database error__: The intermediate session is not flushed to the underlying transaction.
 
@@ -806,7 +806,7 @@ A `withEntityManager` block has 3 outcomes:
 For the behaviour described above to occur, a flow does not need to manually flush or rollback an intermediate session.
 
 {{< /note >}}
-  
+
 Changes are committed to the database when the transaction is committed.
 
 {{< note >}}
@@ -870,7 +870,7 @@ You can handle database errors that occur within a `withEntityManager` by catchi
   getServiceHub().withEntityManager(entityManager -> {
       entityManager.persist(entity);
       try {
-          // Manually trigger a flush on the intermediate session 
+          // Manually trigger a flush on the intermediate session
           entityManager.flush();
       } catch (PersistenceException e) {
           // Exception thrown due to constraint violation
@@ -885,7 +885,7 @@ You can handle database errors that occur within a `withEntityManager` by catchi
   serviceHub.withEntityManager {
       persist(entity)
       try {
-          // Manually trigger a flush on the intermediate session 
+          // Manually trigger a flush on the intermediate session
           flush()
       } catch (e: PersistenceException) {
           // Exception thrown due to constraint violation
@@ -918,7 +918,7 @@ An example of flushing a session to survive a non-database error:
 try {
     getServiceHub().withEntityManager(entityManager -> {
         entityManager.persist(entity);
-        // Manually trigger a flush on the intermediate session 
+        // Manually trigger a flush on the intermediate session
         entityManager.flush();
         throw new RuntimeException("Non-database error");
     });
@@ -933,7 +933,7 @@ try {
 try {
     serviceHub.withEntityManager {
         persist(entity)
-        // Manually trigger a flush on the intermediate session 
+        // Manually trigger a flush on the intermediate session
         flush()
         throw RuntimeException("Non-database error")
     }
