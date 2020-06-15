@@ -832,6 +832,7 @@ You can handle database errors that occur within a `withEntityManager` by catchi
   ```java
   getServiceHub().withEntityManager(entityManager -> {
       entityManager.persist(entity);
+      // try inside withEntityManager block
       try {
           // Manually trigger a flush on the intermediate session
           entityManager.flush();
@@ -847,6 +848,7 @@ You can handle database errors that occur within a `withEntityManager` by catchi
   ```kotlin
   serviceHub.withEntityManager {
       persist(entity)
+      // try inside withEntityManager block
       try {
           // Manually trigger a flush on the intermediate session
           flush()
