@@ -1,12 +1,11 @@
 ---
 aliases:
 - /pki-guide.html
-- /releases/release-1.2/pki-guide.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-2:
-    identifier: cenm-1-2-pki-guide
-    parent: cenm-1-2-public-key-infrastructure
+  cenm-1-3:
+    identifier: cenm-1-3-pki-guide
+    parent: cenm-1-3-public-key-infrastructure
     weight: 310
 tags:
 - pki
@@ -36,7 +35,7 @@ Certificates can become invalid due to different reasons (e.g. keys being compro
 
 To be able to know whether a certificate has been revoked, each CA maintains a Certificate Revocation List (CRL).
 That CRL needs to be published such that it can be accessed by anybody who may participate in the network. By
-default the CRL is exposed via the Identity Manager service, although it is recommended that this endpoint is
+default the CRL is exposed via the Identity Manager Service, although it is recommended that this endpoint is
 wrapped in a caching HTTP proxy. This proxy layer can be behind a load balancer, providing high availability for
 delivery of the CRL.
 
@@ -51,8 +50,8 @@ The tool generates the keys in the desired key store(s) and outputs a set of cer
 
 Corda nodes operate with the following assumptions on the certificates hierarchy:
 
-> 
-> 
+>
+>
 > * There are two certificates each corresponding to Identity Manager and Network Map.
 > * They need to have the common root certificate, which is present in the node’s trust store.
 > The length of the certificate chain can be arbitrary. As such, there can be any number of certificates between the Identity Manager and Network Map certificates as long
@@ -126,8 +125,8 @@ static (i.e. file based) certificate revocation list signing is required.
 
 With all of those in mind we can see the certificate revocation list of the TLS chain validation process as follows:
 
-> 
-> 
+>
+>
 > * The Root CA certificate is self-signed and trusted (i.e. present in the node’s trust store). As such it does not require any certificate revocation list validation.
 > * The Subordinate CA certificate is validated by checking the certificate revocation list signed by the Root CA. In the diagram from previous section, it is given as a static file called `root.crl`.
 > * The Identity Manager CA certificate is validated by checking the certificate revocation list signed by the Subordinate CA. In the diagram from previous section, it is given as a static file called `subordinate.crl`.

@@ -1,12 +1,11 @@
 ---
 aliases:
 - /shell.html
-- /releases/release-1.2/shell.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-2:
-    identifier: cenm-1-2-shell
-    parent: cenm-1-2-tools-and-utilities
+  cenm-1-3:
+    identifier: cenm-1-3-shell
+    parent: cenm-1-3-tools-and-utilities
     weight: 290
 tags:
 - shell
@@ -48,7 +47,7 @@ shell {
 
 ### Local Mode
 
-The service can be configured to boot straight into the local shell upon startup by setting the `shell.localShell`
+The service can be configured to boot straight into the local shell upon start-up by setting the `shell.localShell`
 optional configuration parameter to be true:
 
 ```guess
@@ -78,9 +77,9 @@ ssh -p [portNumber] [host] -l [user]
 Where:
 
 
-* `[portNumber]` is the port number specified by the `shell.sshdPort` config parameter
+* `[portNumber]` is the port number specified by the `shell.sshdPort` configuration parameter
 * `[host]` is the service’s host (e.g. `localhost` if running the service locally)
-* `[user]` is the username specified by the `shell.user` config parameter
+* `[user]` is the username specified by the `shell.user` configuration parameter
 
 The password will be requested after a connection is established.
 
@@ -102,13 +101,13 @@ of commands:
 
 The list of available commands in each subsection can be viewed by executing either `view` or `run` from the shell.
 A shell command can by run by executing the type of the command followed by the command name
-(`[view|run] <COMMAND_NAME>`). For example, to view all notaries within the Network Map service:
+(`[view|run] <COMMAND_NAME>`). For example, to view all notaries within the Network Map Service:
 
 ```bash
 view notaries
 ```
 
-More information, including an command line example, for each command can be acquired by using the built-in `man`
+More information, including an command-line example, for each command can be acquired by using the built-in `man`
 functionality (`man <COMMAND_NAME>`). For example, to find out more about the view all notaries command listed above:
 
 ```bash
@@ -171,7 +170,7 @@ The current supported commands that can be run from the shell are:
     @RunCommand
     fun purgeAllStagedNodeInfos()
 
-    @Description(description = "Test connections to the configured ENM services",
+    @Description(description = "Test connections to the configured CENM services",
                  example = "run clientHealthCheck")
     @RunCommand
     fun clientHealthCheck()
@@ -273,7 +272,7 @@ The current supported commands that can be run from the shell are:
     @RunCommand
     fun signer(name: String)
 
-    @Description(description = "Test connections to the configured ENM services",
+    @Description(description = "Test connections to the configured CENM services",
                  example = "run clientHealthCheck")
     @RunCommand
     fun clientHealthCheck()
@@ -281,5 +280,3 @@ The current supported commands that can be run from the shell are:
 ```
 
 [SignerShellCommands.kt](https://github.com/corda/network-services/blob/release/1.2/services/src/main/kotlin/com/r3/enm/services/signer/shell/SignerShellCommands.kt)
-
-

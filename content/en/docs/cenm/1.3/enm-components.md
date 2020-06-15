@@ -1,12 +1,11 @@
 ---
 aliases:
 - /enm-components.html
-- /releases/release-1.2/enm-components.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-2:
-    identifier: cenm-1-2-enm-components
-    parent: cenm-1-2-concepts-and-overview
+  cenm-1-3:
+    identifier: cenm-1-3-enm-components
+    parent: cenm-1-3-concepts-and-overview
     weight: 30
 tags:
 - enm
@@ -100,7 +99,7 @@ The Identity Manager and Network Map(s) require their own persistence layer. The
 environments:
 
 
-* Oracle DB
+* Oracle database
 * Postgres
 * SQL Server
 
@@ -111,7 +110,7 @@ For details of supported versions and configuration, see [CENM Databases](databa
 
 The certificates and keys that represent the network’s PKI will be stored within an HSM. To prevent any breach of the
 systems integrity being able to generate a signed certificate the signers should be operated from an isolated network.
-By design, they only have the ability to talk *to* the other ENM components, they can never be asked to sign something.
+By design, they only have the ability to talk *to* the other CENM components, they can never be asked to sign something.
 
 In addition, signing a CRR or CSR, and potentially the Network Parameters, *should* require a human to interact with
 the HSM via some manual authentication mechanism.
@@ -125,4 +124,3 @@ Run by entities who wish to join the network, a node submits it’s Legal Identi
 On success, it will receive a PKI certificate linking that legal identity with its public key. It will then use that
 certificate to sign it’s Node Info (detailing it’s externally addressable location on the internet) and submit that to
 the Network Map.
-

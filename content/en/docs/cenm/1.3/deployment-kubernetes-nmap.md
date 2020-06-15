@@ -1,13 +1,13 @@
 ---
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-2:
+  cenm-1-3:
     parent: cenm-1-3-deployment-kubernetes
 tags:
 - config
 - kubernetes
 title: CENM Network Map Helm chart
-weight: 300
+weight: 200
 ---
 
 # CENM Network Map Helm Chart
@@ -51,7 +51,7 @@ helm install nmap nmap --set shell.password="superDifficultPassword"
 | `database.password`           | Network Map database connection details | `example-db-password` |
 | `database.runMigration`       | Network Map database connection details | `true` |
 | `cordaJarMx`                  | Initial value for memory allocation (GB) | `1` |
-| `jarPath`                     | Path to a folder which contains Network Map jar files | `bin` |
+| `jarPath`                     | Path to a folder which contains Network Map `.jar` files | `bin` |
 | `configPath`                  | Path to a folder which contains Network Map configuration file | `etc` |
 
 For additional information on database connection details refer to the official documentation: [database documentation](config-database.md).

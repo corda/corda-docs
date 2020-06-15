@@ -1,12 +1,11 @@
 ---
 aliases:
 - /tools-index.html
-- /releases/release-1.2/tools-index.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-2:
-    identifier: cenm-1-2-tools-index
-    parent: cenm-1-2-tools-and-utilities
+  cenm-1-3:
+    identifier: cenm-1-3-tools-index
+    parent: cenm-1-3-tools-and-utilities
     weight: 280
 tags:
 - tools
@@ -43,6 +42,3 @@ A small number of tools are available to help with setting up, running and testi
 
 * [Config Obfuscation Tool]([Config Obfuscation Tool](../../corda-enterprise/4.5/tools-config-obfuscator.md)
 * [CRL Endpoint Check Tool](crl-endpoint-check-tool.md)
-
-
-

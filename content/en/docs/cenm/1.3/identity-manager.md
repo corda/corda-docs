@@ -1,9 +1,9 @@
 ---
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-2:
-    identifier: cenm-1-2-identity-manager
-    parent: cenm-1-2-operations
+  cenm-1-3:
+    identifier: cenm-1-3-identity-manager
+    parent: cenm-1-3-operations
     weight: 130
 tags:
 - identity
@@ -22,7 +22,7 @@ The Identity Manager Service acts as the gatekeeper to the network. It is formed
 
 
 * **Issuance**: Responsible for issuing certificates to new nodes wanting to join the network.
-* **Revocation**: *(Optional)* Responsible for handling certificate revocation requests as well as hosting the CRLendpoints that are used by participants to check a certificate’s revocation status.
+* **Revocation**: *(Optional)* Responsible for handling certificate revocation requests as well as hosting the CRL endpoints that are used by participants to check a certificate’s revocation status.
 
 
 ## Running The Identity Manager Service
@@ -40,7 +40,7 @@ Optional parameter:
 ```
 
 This will set the working directory to the specified folder. The service will look for files in that folder. This means
-certificates, config files etc. should be under the working directory.
+certificates, configuration files etc. should be under the working directory.
 If not specified it will default to the current working directory (the directory from which the service has been started).
 
 On success you should see a message similar to:
@@ -63,24 +63,26 @@ The main elements that need to be configured for the Identity Manager are:
     * [CSR Signing Mechanism](#csr-signing-mechanism)
     * [Issuance Internal Server](#issuance-internal-server)
     * [Restricting a node’s Corda version (optional)](#restricting-a-node-s-corda-version-optional)
-
-
 * [Revocation workflow (optional)](#revocation-workflow-optional)
     * [CRR Approval Mechanism](#crr-approval-mechanism)
     * [CRR Signing Mechanism](#crr-signing-mechanism)
     * [Revocation Internal Server](#revocation-internal-server)
-
+* [Admin RPC Interface](#admin-rpc-interface)
+* [HA Endpoint (optional)](#ha-endpoint)
+    * [Caching Proxy Setup](#caching-proxy-setup)
+    * [Caching Proxy Limitations](#caching-proxy-limitations)
+    * [Application Gateway Setup](#application-gateway-setup)
+    * [System Configuration And Behavior](#system-configuration-and-behavior)
 
 
 {{< note >}}
 See [Identity Manager Configuration Parameters](config-identity-manager-parameters.md) for a detailed explanation about each possible parameter.
-
 {{< /note >}}
 
 ### Address
 
 The `address` parameter must be included in the top level of the configuration and represents the host and port
-number that the Identity Service will bind to upon startup. The host can either be the IP address or the hostname of
+number that the Identity Service will bind to upon start-up. The host can either be the IP address or the hostname of
 the machine that Identity Manager is running on. For example:
 
 ```guess
@@ -98,24 +100,24 @@ IP/DNS name to connect to Identity Manager.
 
 ### Database
 
-The Identity Manager service is backed by a SQL database which it uses to store information such as Certificate Signing
+The Identity Manager Service is backed by a SQL database which it uses to store information such as Certificate Signing
 Requests (CSRs) and (optionally) Certificate Revocation Requests (CRRs). The connection settings must be included within
-the `database` configuration block in the config file. The main options that should be included here are:
+the `database` configuration block in the configuration file. The main options that should be included here are:
 
 
-* `driverClassName` - the DB driver class name (e.g *com.microsoft.sqlserver.jdbc.SQLServerDriver* for Microsoft SQL Server, *org.postgresql.Driver* for postgres)
-* `jdbcDriver` - the path to the appropriate JDBC driver jar (e.g *path/to/mssql-jdbc-7.2.2.jre8.jar*)
-* `url` - the connection string for the DB
-* `user` - the username for the DB
-* `password` - the password for the DB
+* `driverClassName` - the database driver class name (e.g *com.microsoft.sqlserver.jdbc.SQLServerDriver* for Microsoft SQL Server, *org.postgresql.Driver* for postgres)
+* `jdbcDriver` - the path to the appropriate JDBC driver `.jar` (e.g *path/to/mssql-jdbc-7.2.2.jre8.jar*)
+* `url` - the connection string for the database
+* `user` - the username for the database
+* `password` - the password for the database
 
 
 #### Database Setup
 
-The database can either be setup prior to running the Identity Manager service or, alternatively, it can be
-automatically prepared on startup via the built-in migrations. To enable the running of database migrations on startup
+The database can either be setup prior to running the Identity Manager Service or, alternatively, it can be
+automatically prepared on start-up via the built-in migrations. To enable the running of database migrations on start-up
 the optional `runMigration` parameter within the `database` configuration should be set to true. Additionally, if
-the Identity Manager service is being run using the same DB instance as an accompanying Network Map service then the
+the Identity Manager Service is being run using the same database instance as an accompanying Network Map Service then the
 Identity Manager schema name must be specified via the `schema` parameter within the `database` configuration block:
 
 ```guess
@@ -127,15 +129,15 @@ database {
 ```
 
 {{< note >}}
-Due to the way the migrations are defined, if the Identity Manager and Network Map services are using the same
-DB instance then they *must* use separate DB schemas. For more information regarding the supported databases
+Due to the way the migrations are defined, if the Identity Manager and Network Map Services are using the same
+database instance then they *must* use separate database schemas. For more information regarding the supported databases
 along with the schema see [CENM Databases](database-set-up.md).
 
 {{< /note >}}
 
 #### Additional Properties
 
-Additional database properties can be loaded by including an optional *additionalProperties* config block. In CENM 1.0
+Additional database properties can be loaded by including an optional *additionalProperties* configuration block. In CENM 1.0
 these are restricted to HikariCP configuration settings.
 
 ```guess
@@ -152,8 +154,8 @@ database {
 
 #### Example
 
-An example configuration for an Identity Manager service using a Microsoft SQL Server database, configured to run the
-migrations on startup is:
+An example configuration for an Identity Manager Service using a Microsoft SQL Server database, configured to run the
+migrations on start-up is:
 
 ```guess
 database {
@@ -191,7 +193,7 @@ CSR gets approval as well as how the desired certificate is signed.
 Before a certificate can be issued to a new node, its CSR first needs to be approved. The mechanism by which approval is
 granted can vary from a basic automatic approval approach to a more manual, production grade approach like JIRA
 integration. The approval mechanism is configured by specifying the plugin class responsible for handling CSR approvals
-within the Issuance workflow inside the Identity Manager’s config file. The CENM currently ships with two included
+within the Issuance workflow inside the Identity Manager’s configuration file. The CENM currently ships with two included
 plugins:
 
 
@@ -220,7 +222,7 @@ This should only be enabled in a test environment
 {{< /warning >}}
 
 
-This mechanism can be enabled by referencing the auto approval workflow plugin within the config file:
+This mechanism can be enabled by referencing the auto approval workflow plugin within the configuration file:
 
 ```guess
 workflows {
@@ -237,8 +239,8 @@ workflows {
 
 ##### JIRA Workflow
 
-The Identity Manager service can use JIRA to manage the certificate signing request approval work flow. This can be
-enabled by referencing the JIRA CSR workflow plugin within the config file along with the associated configuration
+The Identity Manager Service can use JIRA to manage the certificate signing request approval work flow. This can be
+enabled by referencing the JIRA CSR workflow plugin within the configuration file along with the associated configuration
 parameters:
 
 ```guess
@@ -288,7 +290,7 @@ In order for the local signer to function, it needs to be able to access Identit
 which should have been previously generated (see [Certificate Hierarchy Guide](pki-guide.md) for more information). The local signer uses local
 key stores which should include the necessary signing keys along with their full certificate chains.
 
-To enable the local signer, the top level `localSigner` configuration block should be added to the config file:
+To enable the local signer, the top level `localSigner` configuration block should be added to the configuration file:
 
 ```guess
 localSigner {
@@ -321,12 +323,12 @@ external signing service.
 
 Similarly to the other Enterprise Network Manager (ENM) services, the Identity Manager is designed to be able to communicate between other services
 such as the Network Map and Signing services. Both the Issuance and, optionally, the Revocation workflows have their own
-internal listening socket interface that is created on startup which can receive and respond to messages from other ENM services.
-For example, the Revocation workflow’s ENM listener can respond to messages from the Network Map regarding certificate
-statuses of current participants which the Network Map service will then use when refreshing the latest Network Map.
+internal listening socket interface that is created on start-up which can receive and respond to messages from other CENM services.
+For example, the Revocation workflow’s CENM listener can respond to messages from the Network Map regarding certificate
+statuses of current participants which the Network Map Service will then use when refreshing the latest Network Map.
 
 To configure this internal server, the configuration block `enmListener` should be added within the Issuance
-workflow’s config:
+workflow’s configuration:
 
 ```guess
 workflows {
@@ -348,7 +350,7 @@ This parameter can be omitted if desired, in which case it will default to port 
 
 {{< /note >}}
 {{< note >}}
-All inter-service communication can be configured with SSL support. See [Configuring the ENM services to use SSL](enm-with-ssl.md).
+All inter-service communication can be configured with SSL support. See [Configuring the CENM services to use SSL](enm-with-ssl.md).
 
 {{< /note >}}
 
@@ -363,7 +365,7 @@ have access to certain features.
 
 {{< note >}}
 This serves a similar purpose to the *minimumPlatformVersion* within the network parameters and also within
-the Network Map service configuration. However, unlike the other two options, as it prevents an outdated node
+the Network Map Service configuration. However, unlike the other two options, as it prevents an outdated node
 from successfully submitting a CSR in the first place it prevents any version related issues at the earliest
 possible step. Relying solely on the Network Parameters platform version gate can result in an outdated node
 successfully receiving a certificate to join the network despite not being able to (and thus needing to
@@ -392,7 +394,7 @@ with a minimum version less than this will not work unless the nodes are running
 
 ### Revocation Workflow (optional)
 
-The Revocation workflow is the second of the two main components in the Identity Manager service. It is an optional
+The Revocation workflow is the second of the two main components in the Identity Manager Service. It is an optional
 component that is responsible for handling incoming Certificate Revocation Requests (CRRs) to revoke a node’s
 certificate (acquired via a previously approved CSR) as well as hosting the Certificate Revocation Lists (CRLs) to
 enable the participants on the network to verify the validity of other’s certificates.
@@ -405,7 +407,7 @@ Similarly to the Issuance workflow, the Revocation workflow determines how a CRR
 In order to revoke a node’s certificate and therefore be evicted from the network, a CRR needs to be approved and signed
 by the network operator. The method by which the CRR is approved is, similar to the Issuance workflow, configured by
 specifying the plugin class responsible for the handling of the CRRs within the Revocation workflow inside the Identity
-Manager’s config file. The CENM ships with two included plugins:
+Manager’s configuration file. The CENM ships with two included plugins:
 
 
 * Auto approval
@@ -433,7 +435,7 @@ This should only be enabled in a test environment
 {{< /warning >}}
 
 
-This mechanism can be enabled by referencing the auto approval workflow plugin within the config file:
+This mechanism can be enabled by referencing the auto approval workflow plugin within the configuration file:
 
 ```guess
 workflows {
@@ -451,7 +453,7 @@ workflows {
 ##### JIRA Workflow
 
 The Issuance workflow can alternatively use JIRA to manage CRR approval. This can be enabled by referencing the JIRA
-CRR workflow plugin within the config file along with the associated configuration parameters:
+CRR workflow plugin within the configuration file along with the associated configuration parameters:
 
 ```guess
 workflows {
@@ -506,7 +508,7 @@ external signing service.
 
 Similarly to the Issuance workflow, the Revocation workflow is configured with an internal listening server to enable
 communication between other services such as the Network Map and Signing services.  To configure this, the configuration
-block `enmListener` should be added within the Revocation workflow’s config:
+block `enmListener` should be added within the Revocation workflow’s configuration:
 
 ```guess
 workflows {
@@ -528,13 +530,173 @@ This parameter can be omitted if desired, in which case it will default to port 
 
 {{< /note >}}
 {{< note >}}
-All inter-service communication can be configured with SSL support. See [Configuring the ENM services to use SSL](enm-with-ssl.md).
+All inter-service communication can be configured with SSL support. See [Configuring the CENM services to use SSL](enm-with-ssl.md).
 
 {{< /note >}}
 
-#### CRL Configuration
 
-There are an additional two parameters that need to be specified with the revocation workflow config block:
+### Admin RPC Interface
+
+To enable the CENM Command-Line Interface (CLI) tool to send commands to the Identity Manager Service,
+you must enable the RPC API by defining a configuration block called `adminListener`.
+The configuration block `adminListener` is used to define the properties of this
+listener, such as the port it listens on as well as the retrying and logging behaviour.
+For example, add the following to the service configuration:
+
+```guess
+...
+adminListener {
+    port = 5050
+    reconnect = true
+    ssl {
+        keyStore {
+            location = exampleSslKeyStore.jks
+            password = "password"
+        }
+        trustStore {
+            location = exampleSslTrustStore.jks
+            password = "trustpass"
+        }
+    }
+}
+...
+```
+
+{{< note >}}
+The `reconnect` parameter is optional - it will default to `reconnect = true` if not set.
+{{< /note >}}
+
+{{% important %}}
+If the `adminListener` property is present in the configuration, this means that the service must only be used via Admin RPC. In this case, the `shell` configuration property will be disabled. The `shell` and `adminListener` properties cannot be used in the configuration at the same time.
+{{% /important %}}
+
+The admin RPC interface requires an Auth Service to verify
+requests, which must be configured below in a `authServiceConfig` block. Typically
+this is provided automatically by the Zone Service (via an Angel Service),
+however an example is provided below for reference:
+
+```guess
+authServiceConfig {
+    host = <auth service host>
+    port = <auth service port>
+    trustStore = {
+        location = /path/to/trustroot.jks
+        password = <key store password>
+    }
+    issuer = <issuer>
+    leeway = <leeway duration>
+}
+```
+
+### HA Endpoint
+
+The crucial role that the Identity Manager Service plays in the communication between nodes, and in particular the
+importance of the Certificate Revocation List (CRL) during flow execution, creates the need for high availability
+even when the Identity Manager Service is unresponsive. The suggested approach is made of a load balancing gateway and as an entry point,
+redirecting CRL requests to a pool of caching proxies, which ultimately redirect to the Identity Manager Service
+or use their cached CRL values if it is down.
+
+R3 have verified a solution using [Azure Application Gateway](https://docs.microsoft.com/en-us/azure/application-gateway/overview) and [Nginx](https://www.nginx.com), although the concepts applied should be similar for other solutions.
+
+##### Caching Proxy Setup
+
+Most of the reverse-proxy configuration provided in this document is straightforward, however the caching configuration requires
+a few tweaks. Instead of operating as a normal cache that uses its stored values for purely performance benefits, this cache
+needs to be updated frequently and to store the content for as long as the Identity Manager Service is not responsive.
+
+For this reason, the validity period of the value is set to a very small amount (1 second). This forces all calls, which
+are not within the same second, to attempt a redirection to the Identity Manager Service for a fresh response.
+Simultaneously, Nginx is configured to use the stale content in case the server times out or fails with an error, ignoring
+the aforementioned time window.
+
+Moreover, Nginx by default deletes cached files that have not been accessed within the specified timeout,
+forcing the use of the timeout variable when specifying the `proxy_cache_path` to make sure that the cache
+is not cleared even if the CRL hasn't been requested for a while.
+
+As a result of this implementation, you can choose to use an alternative method to
+expire the cached responses and to return an error after some time - for example,
+by making the proxy's health check to query its cached values for their updated
+time, and to declare itself unavailable if needed.
+
+A part of this configuration is shown below:
+
+```guess
+...
+
+http {
+    ...
+
+    # enabling caching
+    # timeout set to 10 days of stale value
+    proxy_cache_path /var/cache/nginx keys_zone=mycache:10m max_size=1g loader_threshold=300 loader_files=200 inactive=240h;
+
+    # server group for load balancing
+    upstream idman {
+	  ...
+    }
+
+    ...
+
+    server {
+	...
+
+        location / {
+            proxy_pass          http://idman;
+            proxy_set_header    Host $host;
+            proxy_buffering     on;
+
+            proxy_cache mycache;
+            proxy_cache_methods GET HEAD;
+            # just one sec validity "forces" to hit backend
+            proxy_cache_valid 200 1s;
+            # use stale result in case of unreachable Identity Manager
+            proxy_cache_use_stale error timeout;
+        }
+    }
+}
+```
+
+See the [Nginx documentation](https://nginx.org/en/docs/) for additional information.
+
+##### Caching Proxy Limitations
+
+Based on the configuration mentioned above, if there is no expiry routine set in place, the call
+will always return a value if it has managed to save one at any point in time. This effectively means that
+the system can operate as normal without a running Identity Manager Service as long as the CRL is valid.
+
+When multiple caching proxies are defined, in rare cases there could be inconsistencies among their cached values.
+Some of the instances may contain outdated cached values because they were not hit after a CRL update,
+or they may not contain a value at all due to a lack of hits after they were spawn. For this reason, we recommend that you use a shared mounted volume as
+the cache directory in order to make sure that all the cached responses are the same, and that there are no CRL inconsistencies across proxy instances.
+You can do that easily by, for example, using a Kubernetes cluster for managing the proxy containers.
+
+The cache of each proxy instance (or all of them, if they are using a shared volume) is refreshed as soon as a request to this proxy is made.
+A frequent polling interval should be set in order to avoid a scenario where an
+Identity Manager Service is live long enough to receive a new signed CRL but
+fails again before the proxies fetch and cache the updated CRL.
+
+##### Application Gateway setup
+
+The Application Gateway setup is very straightforward and for the most part follows the default configuration that Azure provides.
+However, a custom health check probe may need to be added if we want proxies to declare themselves unavailable, for example
+if the cached values are too old to use and the Identity Manager Service is not responding.
+
+##### System configuration and behavior
+
+After configuring the proxy and the Application Gateway, all the configuration files and certificates that would point to
+the Identity Manager Service CRL endpoint must be pointing to the Gateway endpoint instead.
+
+After you've made these changes and you have spun up a CENM ecosystem with an Identity Manager Service, a Network Map Service, a Signing Service, and Nodes,
+you can observe a successful retrieval of revocation lists from the registered nodes even when the
+Identity Manager Service is not operating (using the CRL endpoint health check tool provided by CENM). However, operations that require
+additional calls, such as signing a new CRL from the Signing Service, may not be possible to perform.
+
+Although we have observed errors during the tests where the Network Map Service would fail to validate
+the registered Notary's certificate, we considered this to be an unrelated issue.
+
+#### CRL configuration
+
+There are two additional parameters that need to be specified with the revocation workflow configuration block:
 
 
 * **crlCacheTimeout**:
@@ -608,7 +770,7 @@ choose to make that empty list available to node operators as a convenience.
 {{< attention >}}
 
 There is of course no obligation of a zone to provide the empty list infrastructure. However it is still
-a required element of the config that can be set to any invalid string should they wish to not provide it.
+a required element of the configuration that can be set to any invalid string should they wish to not provide it.
 
 
 {{< /attention >}}
@@ -695,14 +857,10 @@ shell {
 
 ```
 
-[identity-manager-test-valid.conf](https://github.com/corda/network-services/blob/release/1.2/services/src/test/resources/v1.1-configs/identity-manager/identity-manager-test-valid.conf)
-
-
 #### Production Configuration
 
-Below is an example of a more production-like configuration of the Identity Manager. It is configured with a Issuance
-and Revocation workflow, using JIRA workflows for CSR/CRR approvals, no local signer and also using SSL for secure
-communication between ENM services. In this scenario, all approved requests would be signed using an external signing
+The example below shows a more production-like configuration of the Identity Manager. It is configured with an Issuance
+and Revocation workflow, using JIRA workflows for CSR/CRR approvals, no local signer, and using SSL for secure communication between CENM services. In this scenario, all approved requests would be signed using an external signing
 service (see [Signing Services](signing-service.md)).
 
 ```docker
@@ -781,5 +939,3 @@ shell {
 }
 
 ```
-
-[identity-manager-prod-valid.conf](https://github.com/corda/network-services/blob/release/1.2/services/src/test/resources/v1.1-configs/identity-manager/identity-manager-prod-valid.conf)

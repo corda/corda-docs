@@ -9,7 +9,6 @@ tags:
 title: HA Utilities
 ---
 
-
 # HA Utilities
 
 Setting up multiple nodes behind shared Corda Firewall require preparation of various keystores and config files, which can be time consuming and error prone.

@@ -1,62 +1,94 @@
 ---
 aliases:
 - /quick-start.html
-- /releases/release-1.2/quick-start.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-2:
-    identifier: cenm-1-2-quick-start
-    parent: cenm-1-2-operations
+  cenm-1-3:
+    identifier: cenm-1-3-quick-start
+    parent: cenm-1-3-operations
     weight: 120
 tags:
 - quick
 - start
-title: Enterprise Network Manager Quick-Start Guide
+- trial
+title: CENM test environment quick start guide
 ---
 
 
-# Enterprise Network Manager Quick-Start Guide
+# Quick start guide to manual deployment of a CENM test environment
 
+## Introduction
 
+This guide provides a set of simple steps for creating a permissioned Corda network
+consisting of the following:
 
-## Overview
+* Identity Manager service
+* Network Map service
+* [Notary Service](../../corda-enterprise/4.5/notary/running-a-notary.md)
 
-The following is a simple step by step guide for creating a subzone, consisting of an **Identity Manager service**,
-**Network Map service** and **Notary node**.
+{{% important %}}
+The deployment outlined here is significantly simplified compared to a full production
+deployment.
+{{% /important %}}
 
+For a full production environment you would need to modify this deployment to add:
 
-## Pre-Requisites
+* A Signing Service deployment to replace the local signer.
+* A Zone Service deployment to manage configuration deployment.
+* Angel Services around the Identity Manager, Network Map and Signing Services to fetch configurations from the Zone service.
+* An Auth Service deployment to handle user authentication and authorisation.
+* A Farm Service deployment to gateway from the user interface (CLI) to the back-end services.
 
+### Pre-Requisites
 
-* The Identity Manager distribution zip
-* The Network Map distribution zip
-* The PKI Tool distribution zip *(for PKI generation)*
-* A Corda jar *(for the Notary node)*
-* 3 Machines setup with java 8 installed *(if not running locally)*.
+Ensure you have copies of the following files (provided by R3), before creating your network:
+
+* Identity Manager distribution `.zip`
+* Network Map distribution `.zip`
+* PKI Tool distribution `.zip` *(for PKI generation)*
+* A Corda `.jar` *(for the Notary node)*
+* 3 Machines set up with Java 8 installed *(if not running locally).*
 
 {{< note >}}
-Throughout this guide placeholder values for external endpoints are used (e.g. `<IDENTITY_MANAGER_ADDRESS>`).
-These are dependent on the machine in which the service is running and should be replaced with the correct values.
-For example, if running the network locally then this value will be the exact value of the `address` parameter
-within the Identity Manager config file. Alternatively, if deploying the network in a cloud environment then this
-value should be the external address of the machine along with any port defined in the `address` config parameter.
+Due to known issues when executing transactions between nodes, using Java `8u252` subversion is not recommended.
+
+In this guide, we use placeholder values for external endpoints (for example, `<IDENTITY_MANAGER_ADDRESS>`).
+They depend on the machine in which the service is running and should be replaced with the correct values.
+
+If you are running the network locally, this value will match the `address` parameter
+within the Identity Manager configuration file but if you are deploying the network in a
+cloud environment, this value should be the external address of your machine along
+with any port defined in the `address` configuration parameter.
 
 {{< /note >}}
 
-## Steps
+## Process
 
+To create your permissioned network takes several steps:
+
+1. Generate the PKI
+2. Start Identity Manager service
+3. Register the Notary with the Identity Manager
+4. Sign the notary's identity
+5. Set initial network parameters
+6. Start the Network Map service
+7. Start the Notary
+
+These are described in detail below:
 
 ### Generate the PKI
 
-Before starting any services, the PKI first needs to be generated. This involves creating the certificates and key pairs
-for all ENM services and determines what entities the nodes will trust. More information on the certificate hierarchy
-is available in the [Certificate Hierarchy Guide](pki-guide.md) doc.
+You need to generate the PKI (key pairs and certificates each service will use)
+first before starting any services.
 
+{{< note >}}
+For more information on the certificate hierarchy, see [Certificate Hierarchy Guide](pki-guide.md).
+{{< /note >}}
 
 #### Example Configuration
 
-The following is an example configuration file (`pki-generation.conf`) using the placeholder
-`<IDENTITY_MANAGER_ADDRESS>` value. This should be replaced with the actual value.
+In the example below, the configuration file (`pki-generation.conf`) uses a placeholder value for
+`<IDENTITY_MANAGER_ADDRESS>` which you should replace with the external IP/hostname of the Identity Manager service.
 
 ```guess
 certificates = {
@@ -85,10 +117,10 @@ certificates = {
 }
 ```
 
-The above configuration is useful as, currently, if the certificates within the PKI are generated without the CRL
-extension then they cannot be updated a later date. This means that if the PKI is generated without CRL extensions then
-certificate revocation cannot be used. If certificate revocation will not be needed then the following simplified config
-can be used:
+This configuration is useful if you want to generate the certificates in the PKI
+without CRL extensions, which is simpler however you cannot update them later or
+use certificate revocation. If you do not need to use certificate revocation,
+use the following configuration:
 
 ```guess
 certificates = {
@@ -101,47 +133,43 @@ certificates = {
 ```
 
 {{< note >}}
-The passwords for the key stores are defaulted to “password” and the passwords for the trust stores are
-defaulted to “trustpass”. These can be changed in the configuration (see [Public Key Infrastructure (PKI) Tool](pki-tool.md)).
-
+The passwords for the key stores are defaulted to “password” and the passwords for the trust stores are defaulted to “trustpass”. To change them in the configuration setting, see [Public Key Infrastructure (PKI) Tool](pki-tool.md)).
 {{< /note >}}
 
-#### Running The Tool
+#### Run the PKI Tool
 
-The required certificate stores and key pairs can be generated using the [Public Key Infrastructure (PKI) Tool](pki-tool.md). The PKI tool distribution zip
-archive should be extracted to a chosen location, after which it can be run via:
+This step generates the required certificate stores and key pairs using the
+[Public Key Infrastructure (PKI) Tool](pki-tool.md). You will need to
+extract the PKI tool distribution zip archive to a chosen location, and run it
+using a command such as:
 
-```bash
-java -jar pkitool.jar --config-file pki-generation.conf
-```
+    ```bash
+    java -jar pkitool.jar --config-file pki-generation.conf
+    ```
 
-This will produce a set of files, including the following:
+This will produce the following set of files:
+* `key-stores/corda-identity-manager-keys.jks` - Contains the key pairs for the Identity Manager Service which are used for signing Certificate Signing Requests (CSRs) and Certificate Revocation Requests (CRRs)
+* `key-stores/corda-network-map-keys.jks` - Contains the key pairs for the Network Map Service which are used for signing the Network Map and Network Parameters
+* `trust-stores/network-root-truststore.jks` - Contains the network root certificate and the TLS CRL signing certificate which are used by nodes to verify that responses from other participants on the network are valid
 
+If you run the PKI tool with the alternative example configuration with CRL enabled, a
+further set of CRL files will be created under the `crl-stores/` folder.
+Although these files are not required to get a basic network up and running,
+additional functionalities such as certificate revocation support, will be
+available for you to use when required.
 
-* `key-stores/corda-identity-manager-keys.jks` - Contains the key pairs for the Identity Manager service *(used for
-signing CSRs and CRRs)*
-* `key-stores/corda-network-map-keys.jks` - Contains the key pairs for the Network Map service *(used for signing the
-Network Map and Network Parameters)*
-* `trust-stores/network-root-truststore.jks` - Contains the network root certificate and the TLS CRL signer
-certificate *(used by nodes to verify that responses from other participants on the network are valid)*
+### Start the Identity Manager Service
 
-If the PKI tool was ran with the first example config then a further set of crl files will have been created. Although
-not needed to get a basic network up and running, these extra parts of the PKI can be used at a later date to make use
-of more advanced features such as as certificate revocation support.
-
-
-### Start the Identity Manager service
-
-Before running the service, the Identity Manager jar along with the `corda-identity-manager-keys.jks` file should be
-copied over to the Identity Manager machine (or directory location if running locally).
-
+Extract the Zip archive containing the Identity Manager, then copy the
+`key-stores/corda-identity-manager-keys.jks` generated by the PKI tool
+to the Identity Manager host (or directory location if running locally).
 
 #### Example Configuration
 
-The following is an example configuration (`identity-manager.conf`) for the Identity Manager service, using automatic
+This example provides a sample configuration (`identity-manager.conf`) for the Identity Manager Service, using automatic
 approval and local signing for CSRs:
 
-```docker
+```guess
 address = "localhost:10000"
 
 database {
@@ -164,8 +192,7 @@ localSigner {
     }
     keyAlias = "cordaidentitymanagerca"
     signInterval = 10000
-    # This CRL parameter is not strictly needed. However if it is omitted then
-    # revocation cannot be used in the future so it makes sense to leave it in.
+    # This CRL parameter is not strictly needed. However if it is omitted, then revocation cannot be used in the future so it makes sense to leave it in.
     crlDistributionUrl = "http://"${address}"/certificate-revocation-list/doorman"
 }
 
@@ -178,48 +205,41 @@ workflows {
         }
     }
 }
-
 ```
 
-[identity-manager-test-minimum-valid.conf](https://github.com/corda/network-services/blob/release/1.2/services/src/test/resources/v1.1-configs/identity-manager/identity-manager-test-minimum-valid.conf)
-
 {{< note >}}
-The example uses a local h2 database. You can modify this to point to an separate DB instance by modifying the
-`database` section. See the “Database properties” section of [Identity Manager Service](identity-manager.md) for more
-information.
-
+The example uses a local H2 database. You can modify this to point to a separate database instance by modifying the `database` section.
+See the “Database properties” section of [Identity Manager Service](identity-manager.md) for more information.
 {{< /note >}}
 
-#### Running The Service
+### Run The Service
 
-The Identity Manager service can then be ran via:
+Start the Identity Manager Service via:
 
 ```bash
 java -jar identitymanager.jar --config-file identity-manager.conf
 ```
 
-Upon a successful startup the following should be printed to the console:
+You will see the following message printed to the console if your start-up is successful:
 
 ```guess
 Binding Shell SSHD server on port <SHELL_PORT>
 Network management web services started on <IDENTITY_MANAGER_ADDRESS> with [RegistrationWebService, MonitoringWebService]
 ```
 
-
 ### Register your Notary with the Identity Manager
 
-Before the Network Map service can be initialised the Notary nodes first need to register with the Identity Manager.
-This is because the list of trusted notaries is stored within the Network Parameters, which in turn need to be passed to
-the Network Map service during initialisation.
+You need to register the Notary with the Identity Manager Service before the Network
+Map Service can be initialised. This is because the list of trusted notaries is
+stored within the Network Parameters, which have to be passed to the Network Map Service during initialisation.
 
-The truststore containing the network root certificate (`network-root-truststore.jks`) should first be copied over to
-the Notary machine along with a valid Corda jar (e.g. Corda OS 4.0).
-
+Copy the `trust-stores/network-root-truststore.jks` generated by the PKI tool
+to the Notary host (or directory location if running locally),
+along with a valid Corda `.jar` (e.g. Corda OS 4.5).
 
 #### Example Configuration
 
-The following is an example `node.conf` file, with dummy values for the end points. These endpoints are dependent on
-the setup of the machines so should be replaced with their true values (e.g. IPs addresses for machines).
+This is an example `node.conf` file, with dummy values for the endpoints. As these endpoints are dependent on the setup of the machines, replace them with their true values (e.g. external IP addresses for machines).
 
 ```guess
 myLegalName="O=NotaryA,L=London,C=GB"
@@ -255,45 +275,44 @@ rpcSettings {
 }
 ```
 
+#### Node Registration
 
-#### Running Registration
+On first run you need to run the Corda node with the `--initial-registration`
+parameter, as shown below:
 
 ```bash
 java -jar corda.jar --initial-registration --network-root-truststore-password trustpass --network-root-truststore network-root-truststore.jks
 ```
 
-This step should result in the node successfully registering with the Identity Manager, creating a node info file in the
-process. This node info file is needed to initialise the network parameters, so should be copied over to the Network Map
-machine.
+This will result in the node registering with the Identity Manager, creating a node info file in the
+process. In a production environment we would typically use a separate Signing service
+and manually sign CSRs, however for this quick start the Identity Manager is
+configured to use a local signer.
 
-{{< note >}}
-The `--initial-registration` flag was deprecated in the most recent Corda version in favour of
-`initial-registration` which may result in a warning being printed.
+Copy the node info generated file to the Network Map machine, as it is needed for
+initialising the network parameters.
 
-{{< /note >}}
+    {{< note >}}
+    The `--initial-registration` flag was deprecated in the most recent Corda version in favour of `initial-registration` which may result in a warning being printed.
+    {{< /note >}}
 
-### Set the initial network parameters
+### Network Map First Run
 
-Before initialising the parameters, the `corda-network-map-keys.jks` and `network-root-truststore.jks` files should
-be copied over to the Network Map machine, along with the Network Map distribution zip which should also be unpacked.
+Copy the `corda-network-map-keys.jks` and `network-root-truststore.jks`
+files over to the Network Map host, along with the Network Map zip
+archive which you will need to unpack.
 
-The network parameters are a set of values that every node participating in the zone needs to agree on and use to
-correctly communicate with each other. Therefore they need to be set before the Network Map service can be started.
-They are set via running the Network Map jar in a special “set network parameters” mode which requires a parameter
-configuration file to be passed. Therefore this step requires both a Network Map service configuration and a network
-parameters configuration. See [Updating the network parameters](updating-network-parameters.md) for more information around the processing of setting
-and updating the parameters.
+Before starting the Network Map Service, you will need to set initial
+network parameters. The network parameters are a set of values that every
+node participating in the zone needs to agree on and use to correctly
+communicate with each other. Setting the parameters is covered below, after
+configuration of the service.
 
+#### Example Service Configuration
 
-#### Example Configuration
+This is a sample configuration (`network-map.conf`) for the Network Map Service, using automatic approval and local signing for updates to the network map and parameters:
 
-
-##### Service
-
-The following is an example configuration (`network-map.conf`) for the Network Map service, using automatic approval
-and local signing for updates to the network map and parameters:
-
-```docker
+```guess
 address = "localhost:20000"
 
 database {
@@ -323,19 +342,15 @@ checkRevocation = false
 
 ```
 
-[network-map-test-minimum-valid.conf](https://github.com/corda/network-services/blob/release/1.2/services/src/test/resources/v1.1-configs/network-map/network-map-test-minimum-valid.conf)
-
 {{< note >}}
-The example uses a local h2 database. You can modify this to point to an separate DB instance by modifying the
-`database` section. See the “Database properties” section of [Network Map Service](network-map.md) for more information.
+This example uses a local H2 database. You can modify this to point to a separate database instance by modifying the `database` section. See the “Database properties” section of [Network Map Service](network-map.md) for more information.
 
 {{< /note >}}
 
-##### Network Parameters
+#### Example Network Parameters Configuration
 
-The following is an example configuration file (`network-parameters.conf`) that is passed to the service when setting
-the network parameters. Note that the <NOTARY_NODE_INFO_FILENAME> should correspond to the node info file copied across
-during the previous step ([Register your Notary with the Identity Manager](#register-your-notary-with-the-identity-manager)).
+This is a sample configuration file (`network-parameters.conf`) that is passed to the service when you set the network parameters. The <NOTARY_NODE_INFO_FILENAME> should correspond to the node info file copied across while [registering the Notary with the Identity Manager](#register-your-notary-with-the-identity-manager).
+The configured path should be relative to the Network Map working directory.
 
 ```guess
 notaries : [
@@ -350,17 +365,16 @@ maxTransactionSize = 10485760
 eventHorizonDays = 30
 ```
 
-
 #### Setting the initial network parameters
 
-The following command should initialise the network parameters, including the Notary node that was registered in the
-previous step:
+To set the network parameters we pass additional arguments when starting the
+Network Map Service, as below:
 
 ```bash
 java -jar networkmap.jar --config-file network-map.conf --set-network-parameters network-parameters.conf --network-truststore network-root-truststore.jks --truststore-password trustpass --root-alias cordarootca
 ```
 
-Upon successfully setting the initial parameters the following should be displayed to the console:
+Upon successfully setting the initial parameters, you will see the following details displayed to the console:
 
 ```guess
 Saved initial network parameters to be signed:
@@ -378,76 +392,75 @@ NetworkParameters {
 }
 ```
 
+See [Updating the network parameters](updating-network-parameters.md) for more information on the process for setting and updating the parameters.
 
-### Start the Network Map service
+### Start the Network Map Service
 
-The Network Map service can then be ran via:
+You can start the Network Map Service via:
 
 ```bash
 java -jar networkmap.jar --config-file network-map.conf
 ```
 
-Upon a successful startup the following should be printed to the console:
+Upon successful start-up, you will see the following details printed to the console:
 
 ```guess
 Binding Shell SSHD server on port <SHELL_PORT>
 Network management web services started on <NETWORK_MAP_ADDRESS> with [NetworkMapWebService, MonitoringWebService]
 ```
 
-
 ### Start your Notary service
 
-The two main components of the Network should now be fully functional and hence the Notary node can be started:
+The two main components of your network should now be fully functional and hence the Notary node can be started:
 
 ```bash
 java -jar corda.jar
 ```
 
-
 ## Further steps
 
-Nodes should now be able to register and join the network. To do this they will need to have a node configuration file
+Nodes will now be able to register and join the network. To do this they will need to have a node configuration file
 similar to the example Notary configuration above (including the correct Network Map and Identity Manager endpoints) as
 well as a copy of the `network-root-truststore.jks` file.
 
-Each service can be inspected by utilising the interactive shell. For example, given the above configurations, the
-Network Map shell can be accessed by connecting to the Network Map service via ssh, using the username, password and
-port configured in the example `network-map.conf`. For example, if running a network locally then the following can be
-used:
+You can inspect each service via its interactive shell. For example, for the above configurations, the
+Network Map shell can be accessed by connecting to the Network Map service via `ssh`, using the following:
+* username
+* password
+* port
+as shown in the example `network-map.conf`.
+
+Use the following command if running a network locally:
 
 ```bash
 ssh testuser@localhost -p 20002
 ```
-
-The above guide also assumes the simplest possible settings for all services. The services can be configured to run with
-more features, in particular:
-
+Note: For the purpose of this exercise, the simplest settings have been used for all the services. However, you can configure them to run with more features, such as the following:
 
 * Certificate revocation support (“Revocation workflow ” section within [Identity Manager Service](identity-manager.md))
 * More advanced CSR approval workflows (“Certificate approval mechanism” section within [Identity Manager Service](identity-manager.md))
-* External signing of CSRs/Network Map updates including HSM integration ([Signing Services](signing-service.md))
+* External signing of CSRs/Network Map updates including HSM integration ([Signing Service](signing-service.md))
 
-See the configuration sections within the [Identity Manager Service](identity-manager.md) and [Network Map Service](network-map.md) docs to learn more.
-
+{{< note >}}For more information, see the configuration sections within [Identity Manager Service](identity-manager.md) and [Network Map Service](network-map.md). {{< /note >}}
 
 ## Bundled Service alternative
 
-Steps mentioned above can be simplifed by using one service which bundles multiple services together.
-The only new requirement is Bundled Service distribution zip. Service configuration files remain unchanged.
+You can simplify the steps mentioned above by using a single service which bundles multiple services together.
+* To do this, download Bundled Service distribution ".zip" file. The Service configuration files will remain unchanged.
 
-Standard run command form is generalised for running multiple services:
+The standard run command form is generalised for running multiple services:
 
 ```bash
 java -jar bundled.jar -f <conf_1> ... -f <conf_n> -S <service_1> ... -S <service_n>
 ```
 
-For instance, one can run Identity Manager and Network Map in parallel:
+For example, you can run Identity Manager and Network Map in parallel:
 
 ```bash
 java -jar bundled.jar -f identity-manager.conf -f network-map.conf -S IDENTITY_MANAGER -S NETWORK_MAP
 ```
 
-Upon successful startup the following should be printed to the console:
+Upon successful start-up, you will see the following details printed to the console:
 
 ```guess
 Binding Shell SSHD server on port <SHELL_PORT>
@@ -456,23 +469,20 @@ Binding Shell SSHD server on port <SHELL_PORT>
 Network management web services started on <NETWORK_MAP_ADDRESS> with [NetworkMapWebService, MonitoringWebService]
 ```
 
+### Backward compatibility
 
-### Backwards compatibility
+You could also run this service as a template for one of the services you want to run. The Bundled service deduces which service to run from the configuration file, making this feature backward compatible with CENM 1.1.
 
-There is also possibility of running this service as template for one of the services you want to run. Bundled
-service deduces which service to run from configuration file, making this feature backwards compatible with CENM 1.1.
-
-For instance, one can implicitly run Identity Manager:
+For example, you can implicitly run the Identity Manager service:
 
 ```bash
 java -jar bundled.jar -f identity-manager.conf
 ```
 
-Upon successful startup the following should be printed to the console:
+Upon successful start-up, you should see the following details printed to the console:
 
 ```guess
-Deduced Identity Manager service from provided config file...
+Deduced Identity Manager Service from provided configuration file...
 Binding Shell SSHD server on port <SHELL_PORT>
 Network management web services started on <IDENTITY_MANAGER_ADDRESS> with [RegistrationWebService, CertificateRevocationWebService, MonitoringWebService]
 ```
-

@@ -33,10 +33,13 @@ The following formula can be helpful in estimating the maximum disk space requir
 
 ```none
 Bytes Required = (Number of transactions * 1952 bytes)
-+ (Number of transactions * States per transaction * 276 bytes)
++ (Number of transactions * States per transaction * 294 bytes)
 + (Number of transactions * Percentage of transactions retried * 1823 bytes)
 ```
 
+{{< note >}}
+The formula assumes that you are using UTF-8 string encoding. This is mandatory if you are using Cockroach DB, but other options are available for other backends. Other string encoding formats may increase the storage requirements.
+{{< /note >}}
 
 * “Number of transactions” indicates the total number of transactions required to be notarised.
 * “States per transaction” indicates the average number of states per transaction. This will depend on the CorDapp.
@@ -53,9 +56,9 @@ that the disk space requirements given are always the maximum, meaning actual sp
 
 |Notarised transations|States per transaction|Percentage of transations retried|Max space required (gigabytes)|
 |-----------------------|--------------------------|-------------------------------------|---------------------------------|
-|1 million|1|0%|1.98|
-|10 million|2|1%|20.75|
-|1 billion|4|2%|2332.46|
+|1 million|1|0%|2.09|
+|10 million|2|1%|23.82|
+|1 billion|4|2%|2947.13|
 
 {{< /table >}}
 

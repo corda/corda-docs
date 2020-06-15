@@ -1,12 +1,11 @@
 ---
 aliases:
 - /pki-tool.html
-- /releases/release-1.2/pki-tool.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-2:
-    identifier: cenm-1-2-pki-tool
-    parent: cenm-1-2-tools-index
+  cenm-1-3:
+    identifier: cenm-1-3-pki-tool
+    parent: cenm-1-3-tools-index
     weight: 1010
 tags:
 - pki
@@ -44,6 +43,7 @@ separate HSM to only existing as offline shards distributed across different geo
 
 The PKI Tool is a CENM provided utility that can be used to generate a Corda compliant hierarchy.
 
+For more information about X.500 Name constraints, see the `Node naming` section in the [Corda documentation](../../corda-os/3.4/generating-a-node.md).
 
 ## Features
 
@@ -57,7 +57,7 @@ The PKI Tool is a CENM provided utility that can be used to generate a Corda com
 
 ## Running the PKI Tool
 
-The tool is designed to be executed from the command line, where the entire certificate hierarchy is specified in the
+The tool is designed to be executed from the command-line, where the entire certificate hierarchy is specified in the
 configuration file:
 
 ```bash
@@ -69,7 +69,7 @@ java -jar pkitool.jar --config-file <CONFIG_FILE>
 
 By default, a check will be done on the proposed certificate hierarchy before any generation steps to ensure that CRL
 information is present for all entities. If this is not required then this check can be disabled by passing the
-`--ignore-missing-crl` or `-i` startup flag:
+`--ignore-missing-crl` or `-i` start-up flag:
 
 ```bash
 java -jar pkitool-<VERSION>.jar --ignore-missing-crl --config-file <CONFIG_FILE>
@@ -140,7 +140,7 @@ take the form of locally stored Java key store files, and contain no private key
 
 {{< note >}}
 A generated certificate will only be stored in a certificate store if explicitly specified via the `includeIn`
-config parameter, or alternatively via the `defaultCertificatesStore` config parameter.
+config parameter, or alternatively via the `defaultCertificatesStore` configuration parameter.
 
 {{< /note >}}
 
@@ -410,15 +410,15 @@ hsmLibraries = [
 ]
 ```
 
-See the example configurations below to see these config blocks being used in a complete file.
+See the example configurations below to see these configuration blocks being used in a complete file.
 
 
 ###### Azure Key Vault
 
-To keep inline with the other HSMs, the Azure Key Vault client jar needs to provided as above. Unlike the other HSMs,
+To keep inline with the other HSMs, the Azure Key Vault client `.jar` needs to provided as above. Unlike the other HSMs,
 there are many dependent libraries. The top-level dependencies are `azure-keyvault` and `adal4j`, however these both
 have transitive dependencies that need to be included. That is, either all jars need to be provided separately (via a
-comma-separated list) or an uber jar needs to be provided.
+comma-separated list) or an uber `.jar` needs to be provided.
 
 The gradle script below will build an uber jar. First copy the following text in to a new file called build.gradle
 anywhere on your file system. Please do not change any of your existing build.gradle files.
@@ -455,12 +455,12 @@ or if gradle is not on the path but gradlew is in the current directory then run
 ./gradlew shadowJar
 ```
 
-This will create a jar called `azure-keyvault-with-deps.jar` which can be referenced in the config.
+This will create a `.jar` called `azure-keyvault-with-deps.jar` which can be referenced in the config.
 
 
 ##### Generating SSL Keys
 
-As outlined in the [Configuring the ENM services to use SSL](enm-with-ssl.md) doc, all inter-service CENM communication can be configured to encrypt their
+As outlined in the [Configuring the CENM services to use SSL](enm-with-ssl.md) doc, all inter-service CENM communication can be configured to encrypt their
 messages via SSL. This feature requires the operator to provide a set of SSL key pairs and certificates to each service,
 which can be generated using the PKI tool.
 
@@ -1146,4 +1146,3 @@ certificates = {
 ```
 
 [pki-tool-aws-cloud-hsm.conf](https://github.com/corda/network-services/blob/release/1.2/pki-tool/src/test/resources/configs/pki-tool-aws-cloud-hsm.conf)
-

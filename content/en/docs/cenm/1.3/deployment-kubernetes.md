@@ -1,11 +1,11 @@
 ---
 aliases:
 - /deployment-kubernetes.html
-- /releases/release-1.2/deployment-kubernetes.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-2:
-    parent: cenm-1-2-operations
+  cenm-1-3:
+    identifier: cenm-1-3-deployment-kubernetes
+    parent: cenm-1-3-operations
 tags:
 - config
 - kubernetes
@@ -13,160 +13,107 @@ title: CENM Deployment with Docker, Kubernetes, and Helm charts
 weight: 20
 ---
 
-# CENM Deployment with Docker, Kubernetes and Helm charts
+# CENM Deployment with Docker, Kubernetes, and Helm charts
 
-- [CENM Deployment with Docker, Kubernetes and Helm charts](#cenm-deployment-with-docker-kubernetes-and-helm-charts)
-  - [Docker images and JDK supported](#docker-images-and-jdk-supported)
-  - [Helm charts](#helm-charts)
-  - [Kubernetes services supported](#kubernetes-services-supported)
-  - [General information about this deployment](#general-information-about-this-deployment)
-  - [Deploying your network](#deploying-your-network)
-    - [Prerequisite](#prerequisite)
-      - [(1) Install dependencies](#1-install-dependencies)
-      - [(2) Set up and connect to a cluster on Azure](#2-set-up-and-connect-to-a-cluster-on-azure)
-      - [(3) Create storage class and namespace](#3-create-storage-class-and-namespace)
-      - [(4) Download helm charts and installation scripts](#4-download-helm-charts-and-installation-scripts)
-    - [Option 1: Bootstrapping by allocating new external IP addresses](#option-1-bootstrapping-by-allocating-new-external-ip-addresses)
-    - [Option 2: Bootstrapping by reusing already allocated external IP addresses](#option-2-bootstrapping-by-reusing-already-allocated-external-ip-addresses)
-    - [Option 3: Bootstrapping manually](#option-3-bootstrapping-manually)
-  - [Interacting with your network](#interacting-with-your-network)
-    - [Access the interactive shell of the network services and notary](#access-the-interactive-shell-of-the-network-services-and-notary)
-    - [How to join your network](#how-to-join-your-network)
-    - [Display logs](#display-logs)
-    - [Display configuration files used for each CENM service](#display-configuration-files-used-for-each-cenm-service)
-      - [Overwriting default configuration](#overwriting-default-configuration)
-    - [Unwinding your environnement](#unwinding-your-environnement)
-      - [Unwinding the whole environment (including IPs)](#unwinding-the-whole-environment-including-ips)
-  - [Managing your network](#managing-your-network)
-    - [Updating network parameters](#updating-network-parameters)
-    - [Running flag day](#running-flag-day)
-    - [Canceling network parameters update](#canceling-network-parameters-update)
+## Introduction
 
-### Docker images and JDK supported
+This deployment guide provides a set of simple steps for deploying Corda Enterprise Network Manager (CENM)
+on a Kubernetes cluster in Azure Cloud.
+The deployment uses Bash scripts and Helm templates provided with CENM Docker images.
 
-> CENM docker images are based on `azul/zulu-openjdk:8u242`
+### Who is this deployment guide for?
 
-Each CENM service has dedicated docker image. They are designed to be minimal and optimized to run on Kubernetes cluster.
-They are **not** designed to run as standalone docker containers. They are stored in acrcenm.azurecr.io container repository:
+This deployment guide is intended for use by either of the following types of CENM users:
 
-| CENM service     | Docker image URL                   | Tag |
-| ---------------- | ---------------------------------- | --- |
-| Identity Manager | acrcenm.azurecr.io/idman/idman     | 1.2 |
-| Network Map      | acrcenm.azurecr.io/nmap/nmap       | 1.2 |
-| PKI Tool         | acrcenm.azurecr.io/pkitool/pkitool | 1.2 |
-| Signer           | acrcenm.azurecr.io/signer/signer   | 1.2 |
-| Notary           | acrcenm.azurecr.io/notary/notary   | 1.2 |
+* Any user with a moderate understanding of Kubernetes who wants to create a CENM network using default configurations.
+* Software developers who wish to run a representative network in their development cycle.
 
-All helm charts by default use CENM docker images version 1.2.
+### Prerequisites
 
-> Mixing different CENM components releases (major.minor) is not supported.
+The reference deployment for Corda Enterprise Network Manager runs on [Kubernetes](https://kubernetes.io/) hosted on Microsoft Azure Cloud.
+Microsoft Azure provides a dedicated service to deploy a Kubernetes cluster - [Azure Kubernetes Service (AKS)](https://docs.microsoft.com/en-us/azure/aks/).
+You must have an active Azure subscription to be able to deploy CENM.
+The next section [Deploy your network](#Deploy-your-network) contains links to the official Microsoft installation guide.
+The Kubernetes cluster must have access to a private Docker repository to obtain CENM Docker images.
 
-### Helm charts
+Your local machine operating system should be Linux, Mac OS, or a Unix-compatible environment for Windows
+(for example, [Cygwin](https://www.cygwin.com/)) as the deployment uses Bash scripts.
+The deployment process is driven from your local machine using a Bash script and several third-party tools:
+[Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest),
+[Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) and [Helm](https://helm.sh/).
+The following section [Deploy your network](#Deploy-your-network) provides links to official installation guides of the required tools.
+In addition, the CENM Command-Line Interface (CLI) tool is required so you can connect to, and manage CENM (however, this is not required for deployment).
 
-#### Requirements
+### Compatibility
 
-The following requirements are needed in order to deploy CENM correctly:
+The deployment scripts are compatible with Corda Enterprise Network Manager version 1.3 only.
+The deployed network runs on Kubernetes minimum version 1.8 and Helm minimum version 3.1.1.
 
-- [Helm](https://helm.sh/) >=3.1.1
-- [Kubernetes](https://kubernetes.io/) >=1.8
+## Deployment
 
-#### Usage notes
+### Deployment overview
 
-- These charts are supposed to be a reference installation.
-- They allow to configure several variables related to each CENM service.
+The provided deployment runs all CENM services run inside a single, dedicated Kubernetes namespace (default name:`cenm`).
+Each service runs in its own dedicated Kubernetes pod.
 
-#### Compatibility
-
-These charts are compatible with Corda Enterprise Network Manager (CENM) version 1.2. Earlier CENM releases are not supported.
-
-Each CENM service has its own dedicated folder with more detailed documentation.
-
-| Helm Chart                                         |
-| -------------------------------------------------- |
-| [Identity Manager](deployment-kubernetes-idman.md) |
-| [Signer](deployment-kubernetes-signer.md)          |
-| [Network Map](deployment-kubernetes-nmap.md)       |
-| [Corda Notary](deployment-kubernetes-notary.md)    |
-
-The charts are currently developed and tested against
-[Azure Kubernetes Service (AKS)](https://azure.microsoft.com/en-gb/services/kubernetes-service/).
-
-## General information about this deployment
-
-All CENM 1.2 services run inside a single, dedicated Kubernetes namespace (the default name is `cenm`). Each service runs in its own dedicated Kubernetes pod.
-
-The CENM network is bootstrapped with PKI certificates which default to sample
-X.500 subject names (e.g. Identity Manager certificate subject is
+The CENM network is bootstrapped with PKI certificates, and sample X.500 subject names are provided as defaults
+(for example, the Identity Manager Service certificate subject is
 “CN=Test Identity Manager Service Certificate, OU=HQ, O=HoldCo LLC, L=New York, C=US”).
-The subject names of the whole PKI Certificate Hierarchy can be configured in
-the Signer Helm chart. For more information about Signer helm chart refer to
-[Signer](deployment-kubernetes-signer.md).
+These can be configured in the [Signing Service Helm chart](deployment-kubernetes-signer.md).
 
-There are three ways of bootstrapping a new CENM environment:
+There are two ways of bootstrapping a new CENM environment:
 
-1. scripted (`bootstrap.cenm`) with **allocating new** public IP addresses
-2. scripted (`bootstrap.cenm`) with  **reusing** already allocated public IP addresses
-3. manually run each helm command
+- Scripted (`bootstrap.cenm`) with **allocating new** public IP addresses.
+- Scripted (`bootstrap.cenm`) with  **reusing** already allocated public IP addresses.
 
-In case of initial bootstrap process it is recommended to use the first method.
+Use the first method for the initial bootstrap process, where there are no allocated endpoints for the services.
+The bootstrapping process uses default values stored in the `values.yaml` file of each Helm chart.
 
-> The first two bootstrapping methods uses default values stored in values.yaml file in each helm chart. To fully customize new environment use third method.
+{{< note >}}
+The Identity Manager Service requires its public IP address or hostname to be known in advance of certificate generation, as its URL is set as the endpoint for the CRL in certificates.
+{{< /note >}}
 
-Note: Identity Manager and Notary require their public IPs to be known in advance as this is required while running PKI Tool (part of Signer helm chart) and Notary registration.
+It could take a few minutes to allocate a new IP address. For subsequent deployments, you should be able to reuse existing external IP addresses.
 
-Be aware that it might take a few minutes to allocate new IP address. In case of subsequent bootstrapping it is possible to reuse existing external IP addresses. NetworkMap and Signer have their public IP addresses allocated while bootstrapping and they don't need to be known in ahead of time.
+The Network Map Service and the Signing Services have their public IP addresses allocated while bootstrapping and they do not need to be known ahead of time.
 
-Public IP addresses are allocated using Kubernetes ```Service``` defined with ```type: LoadBalancer```
+Public IP addresses are allocated as Kubernetes `LoadBalancer` services.
 
-### Memory requirements
+### Deploy your network
 
-The following table represents memory requirements for each CENM component based on default value of ```cordaJarMx``` from ```values.yaml``` in each chart:
+The deployment steps are given below:
 
-| Component         | cordaJarMx (GB) | max memory for service JVM (-Xmx) (GB) | K8s requests (GB) | K8s limits (GB) |
-| ----------------- | --------------- | -------------------------------------- | ----------------- | --------------- |
-| Identity Manager  |  1              | cordaJarMx                             | cordaJarMx        | cordaJarMx + 2  |
-| Signer            |  1              | cordaJarMx                             | cordaJarMx        | cordaJarMx + 2  |
-| Network Map       |  1              | cordaJarMx                             | cordaJarMx        | cordaJarMx + 2  |
-| Notary            |  3              | cordaJarMx                             | cordaJarMx        | cordaJarMx + 2  |
+#### 1. Install tools on your local machine
 
-> Note: Kubernetes cluster should have at least 6 GB of free memory available to all CENM services.
+- Install [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/).
 
-## Deploying your network
-
-### Prerequisite
-
-Before proceeding you will need the following:
-
-1. all required dependencies installed
-2. an AKS cluster up and running and access to it from your local machine
-3. a storage class (```cenm```) and new namespace (```cenm```) with the correct RBAC permissions.
-4. obtain the helm charts and deployment scripts
-
-#### (1) Install dependencies
-
-- Install [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 - Install [helm](https://helm.sh/docs/intro/install/)
 
-Ensure that `helm version` gives you `version` field with any value greater than or equal to 3.1.1 - for instance:
+    Ensure that the value in the `version` field for `helm version` is equal to or greater than 3.1.1,
+    as shown in the example below:
 
-```bash
-version.BuildInfo{Version:"v3.1.2", GitCommit:"afe70585407b420d0097d07b21c47dc511525ac8", GitTreeState:"clean", GoVersion:"go1.13.8"}
-```
+    ```bash
+    version.BuildInfo{Version:"v3.1.2", GitCommit:"afe70585407b420d0097d07b21c47dc511525ac8", GitTreeState:"clean", GoVersion:"go1.13.8"}
+    ```
+- Download CENM Command-Line Interface (CLI) tool so you can manage CENM services.
 
-#### (2) Set up and connect to a cluster on Azure
+#### 2. Set up the Kubernetes cluster
 
-- Create a cluster on Azure. Microsoft provide a [quick start guide](https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough)
-  although note you will need a Kubernetes cluster with at least 6 GB of free memory available to all CENM services.
+- Install [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest) on your machine.
 
-- Ensure you have [Azure CLI installed](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest) on your machine
-- Ensure you have your cluster subscription [as your active subscription](https://docs.microsoft.com/en-us/cli/azure/account?view=azure-cli-latest#az-account-set)
-- [Connect to your cluster](https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough-portal#connect-to-the-cluster)
+- Create a cluster on Azure, following Microsoft's [quick start guide](https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough).
+  CENM requires a Kubernetes cluster with at least 10 GB of free memory available to all CENM services.
 
-#### (3) Create storage class and namespace
+- Check that you have your cluster subscription [as your active subscription](https://docs.microsoft.com/en-us/cli/azure/account?view=azure-cli-latest#az-account-set).
+
+- Connect to [your cluster](https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough-portal#connect-to-the-cluster)
+  from your local machine.
+
+#### 3. Create storage class and namespace
 
 Run the following instruction once the previous points have been cleared:
 
-`All examples below are using namespace **cenm**`
+`All the examples below use the namespace **cenm**`
 
 ```bash
 kubectl apply -f deployment/k8s/cenm.yaml
@@ -174,89 +121,62 @@ export nameSpace=cenm
 kubectl config set-context $(kubectl config current-context) --namespace=${nameSpace}
 ```
 
-You can verify this with `kubectl get ns`
+You can verify this with the command `kubectl get ns`.
 
-#### (4) Download helm charts and installation scripts
+#### 4. Download CENM deployment scripts
 
-You can find the files required in the following steps on the [CENM deployment repo](https://github.com/corda/cenm-deployment).
+You can find the files required for the following steps in [CENM deployment repo](https://github.com/corda/cenm-deployment).
 
-----
+#### 5. Bootstrap CENM
+**Option 1.** Bootstrap by allocating new external IP addresses
 
-### Option 1: Bootstrapping by allocating new external IP addresses
+Before bootstrapping CENM, you should read the license agreement. You can do so by running `./bootstrap.cenm`.
+The example below includes the `--ACCEPT_LICENSE Y` argument, which you should only specify if you accept the license agreement.
 
-To bootstrap new CENM environment with allocating new, external IP run:
+Run the following command to bootstrap a new CENM environment by allocating a new external IP:
 
 ```bash
 cd network-services/deployment/k8s/helm
-./bootstrap.cenm
+./bootstrap.cenm `--ACCEPT_LICENSE Y`
 ```
 
-> Note: obtaining IP addresses might take up to 10 minutes
+{{< note >}} The allocation of a loadbalancer to provide a public IP can take a significant amount of time (for example, even 10 minutes). {{< /note >}}
 
-The script exits after all bootstrapping processes on Kubernetes cluster have been started. The process will continue to run on the cluster after the script has exited. You can monitor the completion of the deployment with:
+The script exits after all bootstrapping processes on the Kubernetes cluster have been started.
+The process will continue to run on the cluster after the script has exited. You can monitor the completion of the deployment by running the following commands:
 
 ``` bash
 kubectl get pods -o wide
 ```
 
-### Option 2: Bootstrapping by reusing already allocated external IP addresses
+ **Option 2.**  Bootstrap by reusing already allocated external IP addresses
 
-It is possible that external IPs have been already allocated - in this case it is possible to reuse them by specifying their services names:
+If your external IPs have been already allocated you can reuse them by specifying their services names:
 
 ```bash
 cd network-services/deployment/k8s/helm
 ./bootstrap.cenm -i idman-ip -n notary-ip
 ```
 
-### Option 3: Bootstrapping manually
+## Network operations
 
-There are several helm commands used to bootstrap new CENM environment, each one creates one CENM service (signer, identity manager, etc). They need to be run in the correct order.
-
-```bash
-cd network-services/deployment/k8s/helm
-
-# these helm charts trigger public IP allocation
-helm install idman-ip idman-ip
-helm install notary-ip notary-ip
-
-# run these commands to display allocated public IP addresses:
-kubectl get svc --namespace cenm idman-ip --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"   # step 1
-kubectl get svc --namespace cenm notary-ip --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"  # step 2
-
-# these helm charts bootstrap CENM
-helm install signer signer --set idmanPublicIP=[use IP from step 1]
-helm install idman idman
-helm install notary notary --set notaryPublicIP=[use IP from step 2]
-helm install nmap nmap
-
-# run these commands to display allocated public IP addresses for Signer and NetworkMap:
-kubectl get svc --namespace cenm signer --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"
-kubectl get svc --namespace cenm nmap --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"
-```
-
-## Interacting with your network
-
-### Access the interactive shell of the network services and notary
-
-To access Identity Manager, Signer, Network Map or Notary use the following instruction:
+Use CENM CLI Tool to access to Farm Service:
 
 ```bash
-ssh -p <shell.sshdPort> -l <shell.user> <IP Address>
+./cenm context login -s -u <USER> -p <PASSWORD> http://<FARM-SERVICE-IP>:8080
 ```
 
-- IP addresses are dynamically allocated for each deployment and can be found with `kubectl get svc`
-- ssh port and user are specified in [Helm charts configurations](#Helm-charts) for each service
-- you will be asked a password for each service, which can be found [Helm charts configurations](#Helm-charts) for each service
+The Farm Service allows you to perform all network operations on the Identity Manager Service, the Network Map Service, and the Signing Services.
+The IP address is dynamically allocated for each deployment and can be found with `kubectl get svc`.
+Use the following command to ensure that you are pointing at the correct namespace:
 
-Note: make sure that you are pointing at the correct namespace - check with:
+  ```bash
+  kubectl config current-context && kubectl config view --minify --output 'jsonpath={..namespace}' && echo`)
+  ```
 
-```bash
-kubectl config current-context && kubectl config view --minify --output 'jsonpath={..namespace}' && echo`)
-```
+### Join your network
 
-### How to join your network
-
-To configure Corda node to connect to the CENM services, edit the following properties in your `node.conf` file:
+Edit the following properties in your `node.conf` file to configure Corda node to connect to the CENM services:
 
 ```bash
 networkServices {
@@ -265,54 +185,62 @@ networkServices {
 }
 ```
 
-- the `doormanURL` property is the public IP address and port of the Identity Manager service.
-- the `networkMapURL` is the pubic IP address and port of the Network Map service.
+Replacing placeholder values as follows:
+  * the `doormanURL` property is the public IP address and port of the Identity Manager Service
+  * the `networkMapURL` is the pubic IP address and port of the Network Map Service.
 
-Note: to obtain public IPs of Identity Manager and Network Map use:
+Next, upload the `network-root-truststore.jks` to your Corda node.
+You can download it locally from the CENM Signing Service, using the following command:
+
+```bash
+kubectl cp <namespace>/<signer-pod>:DATA/trust-stores/network-root-truststore.jks network-root-truststore.jks
+```
+
+Namespace is typically `cenm` for this deployment.
+
+Run the following command to obtain public IPs of Identity Manager and Network Map:
 
 ```bash
 kubectl get svc idman-ip notary-ip
 ```
 
-Also upload the `network-root-truststore.jks` to your Corda node. You can download it locally from CENM Signer using the following command:
-
-```bash
-kubectl cp <name-space>/<signer-pod>:DATA/trust-stores/network-root-truststore.jks network-root-truststore.jks
-```
-
-Namespace is set to `cenm` in this deployment, to obtain the pod name for the signer use:
+Run the command below to obtain the pod name for the Signer:
 
 ```bash
 kubectl get pods -o wide`
 ```
 
-Truststore password can be found in the `signer/files/pki.conf`, the default value used in this helm chart:  `trust-store-password`
+You will find the truststore password in the `signer/files/pki.conf`, where the default value used in this Helm chart is `trust-store-password`.
 
-For more details about joining CENM network see: [Joining an existing compatibility zone](https://docs.corda.net/releases/release-V4.3/joining-a-compatibility-zone.html?highlight=registration#joining-an-existing-compatibility-zone)
+{{< note >}} For more details about joining a CENM network, see:
+[Joining an existing compatibility zone](https://docs.corda.net/docs/corda-os/joining-a-compatibility-zone.html).
+{{< /note >}}
 
 ### Display logs
 
-Each CENM service has dedicated sidecar to displays live logs from ```log/``` folder.
+Each CENM service has a dedicated sidecar to display live logs from the ```log/``` folder.
 
-To display logs use the following command:
+Use the following command to display logs:
 
-```bash
-kubectl logs -c logs <pod-name>
-```
+  ```bash
+  kubectl logs -c logs <pod-name>
+  ```
 
-To display live logs use the following command:
+Use the following command to display live logs:
 
-```bash
-kubectl logs -c logs -f <pod-name>
-```
+  ```bash
+  kubectl logs -c logs -f <pod-name>
+  ```
 
-### Display configuration files used for each CENM service
+Display configuration files used for each CENM service
 
-Each service stores configuration file in ```etc/``` folder in a pod. I.e.: to display what is in the Identity Manager ```etc/``` folder run these commands:
+Each service stores configuration files in ```etc/``` folder in a pod.
+Run the following commands to display what is in the Identity Manager Service ```etc/``` folder :
 
 ```bash
 kubectl exec -it <pod name> -- ls -al etc/
 Defaulting container name to main.
+
 Use 'kubectl describe pod/idman-7699c544dc-bq9lr -n cenm' to see all of the containers in this pod.
 total 10
 drwxrwxrwx 2 corda corda    0 Feb 11 09:29 .
@@ -321,6 +249,7 @@ drwxr-xr-x 1 corda corda 4096 Feb 11 09:29 ..
 
 kubectl exec -it <pod name> -- cat etc/idman.conf
 Defaulting container name to main.
+
 Use 'kubectl describe pod/idman-7699c544dc-bq9lr -n cenm6' to see all of the containers in this pod.
 
 address = "0.0.0.0:10000"
@@ -328,94 +257,208 @@ database {
 ...
 ```
 
-#### Overwriting default configuration
+### Update network parameters
 
-Default setting used in CENM services configuration values can be altered by:
+Use CENM CLI tool command to update the network parameters.
 
-1. changing values in values.yaml
-1. preparing another yaml file with new values and passing it with ```-f``` flag (i.e.: ```helm install -f myvalues.yaml idman```)
-1. individual parameters passed with ```--set``` (such as ```helm install --set foo=bar idman```)
-1. any combination of the above (i.e.: ```helm install -f myvalues.yaml --set foo=bar idman```)
+See the official CENM documentation for more information about the list of available [network parameters](./config-network-parameters.html)
+and instructions on [updating network parameters](./updating-network-parameters.html).
 
-For more information refer to the official helm documentation: https://helm.sh/docs/chart_template_guide/values_files/
+### Run flag day
 
-### Unwinding your environnement
+Use the following CENM Command-Line Interface (CLI) tool command to run a Flag Day:
 
-There are two ways to destroy CENM environment:
+{{< note >}} For the changes to be advertised to the nodes, the new network map must be signed by the Signing Service.
+This operation is scheduled to take place at regular intervals (by default, once every 10 seconds), as defined in the network map configuration.
+{{< /note >}}
 
-- destroy the whole environment
-- destroy all CENM objects without deleting allocated external IP addresses
+## Delete Network
+There are two ways to delete your permissioned network (intended for development
+environments, which are rebuilt regularly), as follows:
 
-#### Unwinding the whole environment (including IPs)
+- delete the whole environment including IPs
+- delete all CENM objects without deleting allocated external IP addresses
+
+### Delete the whole environment including IPs
 
 ```bash
 helm delete nmap notary idman signer notary-ip idman-ip
 ```
 
-#### Unwinding the whole environment without deleting IPs
+### Delete the whole environment without deleting IPs
 
-If you run several ephemeral test network in your development cycle you might want to keep your IP addresses to speed up the process:
+If you run several ephemeral test networks in your development cycle, you might want to keep your IP addresses to speed up the process:
 
 ```bash
 helm delete nmap notary idman signer
 ```
 
-## Managing your network
+## Deployment Customisation
 
-### Updating network parameters
+The Kubernetes scripts provided are intended to be customised depending on customer requirements.
+The following sections describes how to customise various aspects of the deployment.
 
-CENM 1.2 allows to update network parameters without restarting Network Map. Take the following steps to update network parameters:
+### Using Azure Key Vault
 
-- Login to Network Map pod and edit `etc/network-parameters-update-example.conf` file:
+The deployment process provides built-in support for Azure Key Vault in order to secure the key stores
+generated by the PKI tool.
 
-```bash
-kubectl exec -it [name of nmap pod] bash
-vim etc/network-parameters-update-example.conf
-[update the file, save and exit]
+Once you have created an Azure Key Vault that you want to use, perform the following steps:
+
+1. Modify the HSM pod configuration to contain the required library `.jar` files.
+2. Modify PKI `values.yaml` configuration file.
+3. Modify Signing Service `values.yaml` configuration file.
+4. Start the deployment as normal. The deployment may take more time than usual this way, due to the communication with the key vault.
+
+#### Modifying the HSM pod configuration
+
+The HSM pod is a helper pod, which loads a defined Docker image and attempts to load the folder containing the HSM-related
+files as a volume for the other pods to use. Follow the steps below:
+1. [Create the library jar](#azure-key-vault).
+2. Create a Docker image containing the `.jar` file and the `.pkcs12` file used as the key store path.
+
+The Docker image and the directory where these files are stored must be specified in the relevant variables in the HSM `values.yaml` file.
+Note that you may need to add permissions to your cluster to download the Docker image successfully.
+
+#### Modify PKI configuration
+
+You must modify the following values in the `values.yaml` file:
+
+`pkiJar.configFile: pki-azure.conf`
+`signingKeys.keyStore.keyVaultUrl: <your vault url>`
+`signingKeys.credentials.clientId: <the client ID that will access the vault>`
+`signingKeys.credentials.keyStorePassword: <the password of the .pkcs12 file>`
+`signingKeys.credentials.keyStoreAlias: <the alias of the .pkcs12 file>`
+
+#### Modify Signing Service configuration
+
+You must modify the following values in the `values.yaml` file:
+
+`signerJar.configFile: signer-azure.conf`
+`signingKeys.keyStore.keyVaultUrl: <your vault url>`
+`signingKeys.credentials.clientId: <the client ID that will access the vault>`
+`signingKeys.credentials.keyStorePassword: <the password of the .pkcs12 file>`
+`signingKeys.credentials.keyStoreAlias: <the alias of the .pkcs12 file>`
+
+### Service Chart Settings
+
+There are a number of settings provided on each Helm chart, which allow easy customisation of
+common options. Each CENM service has its own dedicated page with more detailed documentation:
+
+* [Identity Manager](deployment-kubernetes-idman.md)
+* [Network Map](deployment-kubernetes-nmap.md)
+* [Signer](deployment-kubernetes-signer.md)
+* Farm Service - documentation not available yet
+* Auth Service - documentation not available yet
+* Zone Service - documentation not available yet
+* [Corda Notary](deployment-kubernetes-notary.md)
+
+### Overriding Service Configuration
+
+The default settings used in a CENM service's configuration values can be altered as described in
+[Helm guide](https://helm.sh/docs/chart_template_guide/values_files/).
+In brief this can be achieved by:
+* Create a separate yaml file with new values and pass it with `-f` flag: `helm install -f myvalues.yaml idman`, or;
+* Override individual parameters using `--set`, such as `helm install --set foo=bar idman`, or;
+* Any combination of the above, for example ```helm install -f myvalues.yaml --set foo=bar idman```
+
+### External database support
+
+You can configure the services to use an external database. We strongly recommend this for production deployments.
+The database used by each service is configured via JDBC URL and is defined in the `values.yml` file for
+the Helm chart of the respective service - for example, `idman/values.yml` for the Identity Manager Service.
+In the `values.yml` file, edit the database section of the configuration to change the JDBC URL, user, and password.
+
+The deployed service already contains JDBC drivers for PostgreSQL and SQLServer.
+For an Oracle database, you need to extend the Docker images for the service by adding
+the Oracle JDBC driver `.jar` file to the ` /opt/${USER}/drivers/` directory.
+
+{{< note >}}
+The bootstrap script cannot be used with an external database.
+ Instead, you should run each Helm chart manually by specifying the correct database URL.
+{{< /note >}}
+
+Example settings for connection to a PostgreSQL database follow below:
+
+```guess
+database:
+  driverClassName: "org.postgresql.Driver"
+  url: "jdbc:postgresql://<HOST>:<PORT>/<DATABASE>"
+  user: "<USER>"
+  password: "<PASSWORD>"
+  runMigration: "true"
 ```
 
-- Connect to Network Map ssh console:
+In this example, `<HOST>` is a placeholder for the host name of the server, `<PORT>` is a placeholder for the port number the server is listening on (typically `5432` for PostgreSQL),
+`<DATABASE>` is a placeholder for the database name, and `<USER>` and `<PASSWORD>` are placeholders for the access credentials of the database user.
+
+### Memory Allocation
+
+Default memory settings used should be adequate for most deployments, but may need to be increased for
+networks with large numbers of nodes (over a thousand). The `cordaJarMx` value for each Helm chart
+(in `values.yaml`) is passed to the JVM as the `-Xmx` value, and is specified in GB. Each Pod requests
+memory sufficient for this value, with a limit 2GB higher than the value.
+
+All services except the Notary use 1GB of RAM as their default `cordaJarMx`, while Notary defaults to 3GB.
+
+## Manual bootstrap
+
+For production deployments, you can use the bootstrap script to provide a baseline.
+However, for additional flexibility you may wish to deploy each Helm chart individually.
+There are several Helm commands which are used to bootstrap a new CENM environment,
+where each command creates a CENM service consisting of the following:
+
+* Signer
+* Identity Manager
+* Network Map
+* Auth Service
+* Farm Service
+* Notary
+
+They need to be run in the correct order, as shown below:
 
 ```bash
-ssh -p [nmap ssh port] -l nmap [nmap public IP address]
+cd network-services/deployment/k8s/helm
+
+# These Helm charts trigger public IP allocation
+helm install idman-ip idman-ip
+helm install notary-ip notary-ip
+helm install farm-ip farm-ip
+
+# Run these commands to display allocated public IP addresses:
+kubectl get svc --namespace cenm idman-ip --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"   # step 1
+kubectl get svc --namespace cenm notary-ip --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"  # step 2
+kubectl get svc --namespace cenm farm-ip --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"  # step 3
+
+# These Helm charts bootstrap CENM
+helm install auth auth
+helm install zone zone
+helm install nmap nmap
+helm install signer signer
+helm install idman idman --set idmanPublicIP=[use IP from step 1]
+helm install notary notary --set notaryPublicIP=[use IP from step 2]
+helm install nmap nmap
+helm install farm farm --set idmanPublicIP=[use IP from step 3]
+
+# Run these commands to display allocated public IP for Network Map Service:
+kubectl get svc --namespace cenm nmap --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"
 ```
 
-and run the following commands:
+## Appendix A: Docker Images
 
-```bash
-run networkParametersRegistration networkParametersFile: etc/network-parameters-update-example.conf, \
-networkTrustStore: DATA/trust-stores/network-root-truststore.jks, \
-trustStorePassword: trust-store-password, \
-rootAlias: cordarootca
+The Docker images used for the Kubernetes deployment are listed below for reference:
 
-```
+{{< table >}}
 
-### Running flag day
+| Service           | Image Name                         | Tag |
+|-------------------|------------------------------------|-----|
+| Identity Manager  | acrcenm.azurecr.io/nmap/nmap       | 1.3 |
+| Network Map       | acrcenm.azurecr.io/nmap/nmap       | 1.3 |
+| Signing           | acrcenm.azurecr.io/signer/signer   | 1.3 |
+| Zone              | acrcenm.azurecr.io/zone/zone       | 1.3 |
+| Auth              | acrcenm.azurecr.io/auth/auth       | 1.3 |
+| Farm              | acrcenm.azurecr.io/farm/farm       | 1.3 |
+| PKI Tool          | acrcenm.azurecr.io/pkitool/pkitool | 1.3 |
+| Notary            | acrcenm.azurecr.io/notary/notary   | 1.3 |
 
-Once the set date/time has passed run the following in the Network Map ssh console:
-
-```bash
-run flagDay
-```
-
-> Note: For the changes to be advertised to the nodes the new network map has to be signed by signer and it is scheduled according to its configuration.
-
-### Canceling network parameters update
-
-To cancel flag day:
-
-```bash
-run cancelUpdate
-```
-
-> Note: The following files are part of the default deployment:
-
-```bash
-etc/network-parameters-update-example.conf
-DATA/trust-stores/network-root-truststore.jks
-```
-
-Visit CENM official documentation for more information about network parameters:
-
-- [Updating Network Parameters](./updating-network-parameters.html)
-- [Network Parameters List](./config-network-parameters.html)
+{{< /table >}}

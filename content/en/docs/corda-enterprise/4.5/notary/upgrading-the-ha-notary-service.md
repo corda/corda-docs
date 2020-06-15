@@ -15,13 +15,66 @@ weight: 9
 
 # Upgrading the notary to a new version of Corda Enterprise
 
+## Version 4.5
+
+We've introduced the `notary_double_spends` table and added an index to the `notary_request_log` table. The `notary_double_spend` table contains information about attempted double-spend transactions.
+
+Upgrade steps:
+
+1. Back up your DB cluster.
+2. Test to ensure that you can restore from backup.
+3. Add the new table and indexes to a database in your cluster. It will be replicated to all other databases in the cluster. If you experience problems when the notary worker is restarted, perform a rolling upgrade on the notary worker nodes as detailed in the [node upgrade guide](../node-upgrade-notes.md).
+
+### JPA notary using a CockroachDB database
+
+To upgrade a CockroachDB database, run the following command:
+
+```
+create index on notary_request_log (consuming_transaction_id)
+
+create table notary_double_spends (
+    state_ref varchar(73) not null,
+    request_timestamp timestamp not null,
+    consuming_transaction_id varchar(64) not null,
+    constraint id4 primary key (state_ref, consuming_transaction_id),
+    index (state_ref, request_timestamp, consuming_transaction_id)
+    );
+```
+
+### JPA notary using an Oracle RAC database
+
+To upgrade an Oracle RAC database, run the following commands:
+
+1. Create the new notary table using the following command:
+
+    ```
+    create table corda_adm.notary_double_spends (
+      state_ref varchar(73) not null,
+      request_timestamp timestamp not null,
+      consuming_transaction_id varchar(64) not null,
+      constraint id4 primary key (state_ref)
+      );
+    ```
+
+2. Once the table has been created, add indexes using the following commands:
+
+    ```sql
+    create index tx_idx on corda_adm.notary_request_log(consuming_transaction_id)
+
+    create index state_ts_tx_idx on corda_adm.notary_double_spends (state_ref,request_timestamp,consuming_transaction_id)
+    ```
+
+3. Lastly, grant access rights to the table:
+
+    ```sql
+    GRANT SELECT, INSERT ON corda_adm.notary_double_spends TO corda_pdb_user;
+    ```
 
 ## Version 4.4
 
 The `notary_request_log` table was extended to include the X500 name of the worker node that processed the request.
 
 Upgrade steps:
-
 
 * Backup your DB Cluster.
 * Test you can restore from backup.

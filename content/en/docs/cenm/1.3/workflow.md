@@ -1,12 +1,11 @@
 ---
 aliases:
 - /workflow.html
-- /releases/release-1.2/workflow.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-2:
-    identifier: cenm-1-2-workflow
-    parent: cenm-1-2-configuration
+  cenm-1-3:
+    identifier: cenm-1-3-workflow
+    parent: cenm-1-3-configuration
     weight: 260
 tags:
 - workflow
@@ -17,13 +16,13 @@ title: Workflow
 # Workflow
 
 The certificate signing request and certificate revocation request workflow can be extended by custom workflow plugin.
-This can be used to synchronise statuses and interact between the ENM workflow and external workflow/ticketing system
+This can be used to synchronise statuses and interact between the CENM workflow and external workflow/ticketing system
 like JIRA.
 
 
 ## Adding workflow plugin
 
-The workflow plugin can be configured via config file.
+The workflow plugin can be configured via configuration file.
 
 For certificate signing request:
 
@@ -108,8 +107,8 @@ workflows {
 ## Creating a workflow plugin
 
 The workflow plugin must extend `WorkflowPlugin` for certificate signing request or certificate revocation request respectively, issuance and revocation workflows
-can be configured with specific plugin classes as per the configuration shown above. The plugin will need to be made available to the ENM process by including the plugin jar in the classpath.
-This can be done by specifying the jar path via the `pluginJar` configuration option.
+can be configured with specific plugin classes as per the configuration shown above. The plugin will need to be made available to the CENM process by including the plugin `.jar` in the classpath.
+This can be done by specifying the `.jar` path via the `pluginJar` configuration option.
 
 {{< note >}}
 For release 1.0 only a simple issuance and optional revocation workflow pair are supported.
@@ -457,4 +456,3 @@ HTTP Response header:
 Response Body:
 
 Rejection reason code: 8. Description: On a Sanctions Watchlist. Additional remark: No additional remark.”
-

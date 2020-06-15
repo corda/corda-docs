@@ -1,23 +1,22 @@
 ---
 aliases:
 - /enm-with-ssl.html
-- /releases/release-1.2/enm-with-ssl.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-2:
-    identifier: cenm-1-2-enm-with-ssl
-    parent: cenm-1-2-configuration
+  cenm-1-3:
+    identifier: cenm-1-3-enm-with-ssl
+    parent: cenm-1-3-configuration
     weight: 250
 tags:
 - enm
 - ssl
-title: Configuring the ENM services to use SSL
+title: Configuring the CENM services to use SSL
 ---
 
 
-# Configuring the ENM services to use SSL
+# Configuring the CENM services to use SSL
 
-The following components of the ENM suite can all be configured to encrypt their inter-process communication channels.
+The following components of the CENM suite can all be configured to encrypt their inter-process communication channels.
 
 
 * Identity Manager (containing previously named Doorman and Revocation services)
@@ -33,7 +32,7 @@ is shown in the following diagram
 
 For SSL to work some PKI infrastructure must be in place. We recommend generating a self signed root key that can
 then be used to sign a key for each service. This way, all that needs distributing to the machines hosting the JVMs
-running the ENM components is a keystore containing the trust root (the Certificate representing the root key) and a
+running the CENM components is a keystore containing the trust root (the Certificate representing the root key) and a
 keystore containing the keypair generated for that service.
 
 The SSL handshake will, when one component talks to another, check that the exchanged keys have a certificate chain
@@ -65,7 +64,7 @@ outside of a testing environment.
 
 ## Configuration
 
-In general ENM components are configured with SSL via the inclusion of an `ssl` config block
+In general CENM components are configured with SSL via the inclusion of an `ssl` configuration block
 #. The SSL settings themselves, locations of keystores and passwords
 #. The enabling of individual communication channels to use SSL.
 
@@ -77,12 +76,12 @@ service must configure SSL for that communication stream.
 {{< /warning >}}
 
 
-SSL enablement *could* be mixed within a single ENM deployment, with only a select set of channels encrypted,
+SSL enablement *could* be mixed within a single CENM deployment, with only a select set of channels encrypted,
 but it will almost certainly be easier to roll it out as a whole.
 
 {{< note >}}
-By client, we are referring to elements of the ENM suite talking to another that is listening for such
-messaging. This does not refer to, and has no impact on, the interaction of the ENM tools and Corda nodes
+By client, we are referring to elements of the CENM suite talking to another that is listening for such
+messaging. This does not refer to, and has no impact on, the interaction of the CENM tools and Corda nodes
 acting as clients of the network.
 
 {{< /note >}}
@@ -111,12 +110,12 @@ The `keyStore` contains the public and private keypair of the service signed by 
 
 {{< important >}}
 The root key should not be in this keystore, only the keypair and the associated certificate associated
-with this ENM service.
+with this CENM service.
 
 
 {{< /important >}}
 
-The `trustStore` contains the root key’s certificate. This is, in effect, common across the entire ENM deployment
+The `trustStore` contains the root key’s certificate. This is, in effect, common across the entire CENM deployment
 as it is this that enables the various components to trust one another checking that the certificate presented
 chains back to this root certificate.
 
@@ -149,7 +148,7 @@ ssl = {
 
 ### Server Side Enablement
 
-Those services that open ports for other ENM components to talk to can enable SSL by including the above settings within
+Those services that open ports for other CENM components to talk to can enable SSL by including the above settings within
 their `enmListener` configuration block:
 
 ```docker
@@ -162,7 +161,7 @@ enmListener {
 ```
 
 This will include the `Network Map` as well as both the `Issuance` and `Revocation` workflows inside the Identity
-Manager. Leaving these configuration blocks out of the respective config files will mean that each ENM listening server
+Manager. Leaving these configuration blocks out of the respective configuration files will mean that each CENM listening server
 will be created without SSL and default to the following ports:
 
 
@@ -173,8 +172,8 @@ will be created without SSL and default to the following ports:
 
 ### Client Side Enablement
 
-Those ENM services which need to talk to other services as a client are configured similarly to the above, on a
-per-service basis. For example, the Network Map is configured to talk to the Identity Manager thusly:
+Those CENM services which need to talk to other services as a client are configured similarly to the above, on a
+per-service basis. For example, the Network Map is configured to talk to the Identity Manager Service:
 
 ```docker
 networkMap = {
@@ -201,8 +200,8 @@ resulting in an unsuccessful connection.
 For some services, such as the Network Map, it is possible multiple SSL configuration blocks within the configuration
 file. It is considered to be most secure if each of these connections use a unique set of SSL keys, however in some
 situations it may be desirable to use the same SSL keys and certificates across multiple connections. To avoid
-repetition within the config files and improve readability the SSL configuration block can be extracted out to a
-separate file and then dynamically included within the config file. For example, the SSL settings below can be extracted
+repetition within the configuration files and improve readability the SSL configuration block can be extracted out to a
+separate file and then dynamically included within the configuration file. For example, the SSL settings below can be extracted
 to the file `ssl-settings.conf`:
 
 ```docker
@@ -218,7 +217,7 @@ ssl = {
 }
 ```
 
-and then included in the Network Map config file thusly:
+and then included in the Network Map Service configuration file as below:
 
 ```docker
 ...
@@ -242,9 +241,9 @@ revocation = {
 
 ## An Example
 
-The following configuration files configure a small test deployment of the ENM suite of tools on a single machine.
+The following configuration files configure a small test deployment of the CENM suite of tools on a single machine.
 This is why all of the services are binding to localhost and can refer to a central location for the PKI and
-SSL certificates as well as the JAR files.
+SSL certificates as well as the `.jar` files.
 
 
 ### Identity Manager and Revocation Service
@@ -379,7 +378,7 @@ revocation {
     host = "example-identity-manager-host"
     port = 5052
     reconnect = true
-    # example revocation communication config without SSL
+    # example revocation communication configuration without SSL
 }
 
 checkRevocation = true
@@ -556,7 +555,7 @@ signingKeys = {
 }
 
 ##########################################################
-# All ENM service endpoints for fetching/persisting data #
+# All CENM service endpoints for fetching/persisting data #
 ##########################################################
 caSmrLocation = {
     host = localhost
@@ -624,4 +623,3 @@ signers = {
 ```
 
 [signer-prod-valid.conf](https://github.com/corda/network-services/blob/release/1.2/services/src/test/resources/v1.1-configs/signer/signer-prod-valid.conf)
-

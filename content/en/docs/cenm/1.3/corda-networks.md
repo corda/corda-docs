@@ -1,12 +1,11 @@
 ---
 aliases:
 - /corda-networks.html
-- /releases/release-1.2/corda-networks.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-2:
-    identifier: cenm-1-2-corda-networks
-    parent: cenm-1-2-concepts-and-overview
+  cenm-1-3:
+    identifier: cenm-1-3-corda-networks
+    parent: cenm-1-3-concepts-and-overview
     weight: 20
 tags:
 - corda
@@ -53,7 +52,7 @@ This is an internal feature. Running a network with multiple sub-zones is not a 
 {{< /note >}}
 Where the zone as a whole is defined by the unique set of identities, a sub zone is a sub grouping of those entities
 that agree to a common set of parameters that define the global consensus mechanisms for all members. This functionality
-is offered by one or more Network Map services.
+is offered by one or more Network Map Services.
 
 Sub Zones are currently categorised in relation to the mechanism a zone operator has in place for the process of
 setting the network parameters for it.
@@ -86,7 +85,7 @@ For more information, see [Sub Zones](sub-zones.md)
 
 ### Operating a Segregated Sub Zone
 
-From the perspective of a mature ENM deployment, operating a sub zone post ENM 0.3 is the same as operating a single
+From the perspective of a mature CENM deployment, operating a sub zone post CENM 0.3 is the same as operating a single
 network under the old paradigm where there was only the one zone.
 
 Each Network Map that represents a segregated sub zone is configured separately from the others as a distinct entity
@@ -94,11 +93,9 @@ unaware of one another
 
 Each Network Map requires
 
-> 
-> 
+>
+>
 > * A configuration file
 > * A starting set of network parameters
 > * One or more notaries for inclusion in the whitelist
 > * A signing service configured to sign the network map and network parameters
-
-

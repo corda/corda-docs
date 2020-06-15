@@ -1,12 +1,11 @@
 ---
 aliases:
 - /certificate-revocation.html
-- /releases/release-1.2/certificate-revocation.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-2:
-    identifier: cenm-1-2-certificate-revocation
-    parent: cenm-1-2-concepts-and-overview
+  cenm-1-3:
+    identifier: cenm-1-3-certificate-revocation
+    parent: cenm-1-3-concepts-and-overview
     weight: 60
 tags:
 - certificate
@@ -76,52 +75,52 @@ certificates it issues. Since this requirement cannot always be met, especially 
 When you submit the certification revocation requests, the following fields should be present in the request payload:
 
 
-* **certificateSerialNumber**: 
+* **certificateSerialNumber**:
 Serial number of the certificate that is to be revoked.
 
 
-* **csrRequestId**: 
+* **csrRequestId**:
 Certificate signing request identifier associated with the certificate that is to be revoked.
 
 
-* **legalName**: 
+* **legalName**:
 Legal name associated with the certificate that is to be revoked.
 
 
-* **reason**: 
+* **reason**:
 Revocation reason (as specified in the java.security.cert.CRLReason). The following values are allowed:
 
 
-  * **KEY_COMPROMISE**: 
+  * **KEY_COMPROMISE**:
 Known or suspected that the certificate subject’s private key has been compromised. It applies to end-entity certificates only.
 
 
-  * **CA_COMPROMISE**: 
+  * **CA_COMPROMISE**:
   Known or suspected that the certificate subject’s private key has been compromised. It applies to certificate authority (CA) certificates only.
 
 
-  * **AFFILIATION_CHANGED**: 
+  * **AFFILIATION_CHANGED**:
   The subject’s name or other information has changed.
 
 
-  * **SUPERSEDED**: 
+  * **SUPERSEDED**:
   The certificate has been superseded.
 
 
-  * **CESSATION_OF_OPERATION**: 
+  * **CESSATION_OF_OPERATION**:
   The certificate is no longer needed.
 
 
-  * **PRIVILEGE_WITHDRAWN**: 
+  * **PRIVILEGE_WITHDRAWN**:
   The privileges granted to the subject of the certificate have been withdrawn.
 
 
 
 
-* **reporter**: 
+* **reporter**:
 Issuer of this certificate revocation request.
 
-Corda AMQP serialization framework is used as the serialization framework. 
+Corda AMQP serialization framework is used as the serialization framework.
 
 {{< note >}} It is assumed that those endpoints are used by dedicated tools that support this kind of data encoding, because of the proprietary serialization mechanism. {{< /note >}}
 
@@ -141,4 +140,3 @@ CRLs contain a field called "next update”, after which the CRL is no longer va
 {{< note >}} See [Signing Services](signing-service.md) for details on building and signing CRLs, and especially the “updatePeriod”
 configuration field which is used to determine the next update deadline. See also [CRL Endpoint Check Tool](crl-endpoint-check-tool.md)
 for more information how to check CRLs’ update deadlines. {{< /note >}}
-
