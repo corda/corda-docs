@@ -26,37 +26,12 @@ Welcome to the Corda 4.5 release notes. Please read these carefully to understan
 
 #### RestrictedEntityManager and RestrictedConnection
 
-To improve reliability and prevent user errors, we have modified the database access provided via the JDBC and EntityManager to block access to methods that may corrupt flow checkpointing. As a result, it is now impossible to mistakenly call rollback inside the raw vault observer transaction, or to close the database connection prematurely. The full list of blocked methods is listed below:
+To improve reliability and prevent user errors, we have modified the database access provided via JDBC and `EntityManager`s to block access to functions that may corrupt flow checkpointing. As a result, it is now impossible to mistakenly call rollback inside the raw vault observer transaction, or to close the database connection prematurely. 
 
-For `RestrictedConnection`:
-``` kotlin
-- abort(executor: Executor?)
-- clearWarnings()
-- close()
-- commit()
-- setSavepoint() methods
-- releaseSavepoint(savepoint: Savepoint?)
-- rollback() methods
-- setCatalog(catalog : String?)
-- setTransactionIsolation(level: Int)
-- setTypeMap(map: MutableMap<String, Class<*>>?)
-- setHoldability(holdability: Int)
-- setSchema(schema: String?)
-- setNetworkTimeout(executor: Executor?, milliseconds: Int)
-- setAutoCommit(autoCommit: Boolean)
-- setReadOnly(readOnly: Boolean)
-```
+The full list of blocked functions can be found below:
 
-For `RestrictedEntityManager`:
-``` kotlin
-- close()
-- clear()
-- getMetamodel()
-- getTransaction()
-- joinTransaction()
-- lock() methods
-- setProperty(propertyName: String?, value: Any?)
-```
+- [Restricted connections](api-persistence.md#restricted-control-of-connections).
+- [Restricted entity managers](api-persistence.md#restricted-control-of-entity-managers).
 
 ## Corda 4.4
 
