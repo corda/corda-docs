@@ -132,7 +132,7 @@ These tests stress components in a single node, without any dependencies on othe
 
 #### Empty Flow
 
-The `EmptyFlow` test is part of the `perftest-cordapp` CorDapp. As its name suggests, it does not do anything - its purpose is to provide a timing for the overhead involved in starting a flow, such as RPC handling, deserialisation of the request, starting/winding down a flow, and sending the response. Note that a flow that requires inputs via RPC might have a larger overhead as these might need to be deserialised.
+The `EmptyFlow` test is part of the `perftest-cordapp` CorDapp. As its name suggests, this flow is empty and does not have any effect of its own - its purpose is to provide a timing for the overhead involved in starting a flow, such as RPC handling, deserialisation of the request, starting/winding down a flow, and sending the response. Note that a flow that requires inputs via RPC might have a larger overhead as these might need to be deserialised.
 
 
 #### Issuance
@@ -150,15 +150,15 @@ This is a set of flows (`CashIssueAndPaymentFlow` and `CashIssueAndPaymentNoSele
 
 * Use of coin selection: the flows can either just pay the issued cash, or use coin selection to select the cash to pay. This
 is used to isolate coin selection issues from general transaction performance.
-* Anonymous identities: the flows can turn anonymous identities on.. This means that a new private/public key pair will be
-generated for each transaction, allowing to measure the resulting overhead.
+* Anonymous identities: the flows can turn anonymous identities on. This means that a new private/public key pair will be
+generated for each transaction, allowing you to measure the resulting overhead.
 
 To test the throughput a single node can achieve, this flow is run against a single node from all JMeter servers. In order
 to measure network throughput, it can also be run against all nodes from their respective JMeter server.
 
 #### Advanced Flows
 
-The issue and pay flows create a somewhat realistic load but still have a very uniform, artificial usage pattern of resources.
+The `issue` and `pay` flows create a somewhat realistic load but still have a very uniform, artificial usage pattern of resources.
 Therefore, more advanced test flows/test plans have been developed that allow to issue a large amount of cash once and
 then start to break it up in smaller payments, allowing the following settings to be tweaked:
 
@@ -172,4 +172,3 @@ Advanced tests also include testing - for example, connecting to the target node
 #### Atomic swap flows
 
 This is a set of flows (`SwapStockForCashFlow` and `SwapSpecificStockForCashFlow`) that are part of the `settlement-perftest-cordapp` CorDapp. These flows can be used to swap assets between multiple nodes in a single atomic transaction. They can be used to exercise the performance of scenarios, where a node has to communicate with many other nodes in order to complete a transaction.
-
