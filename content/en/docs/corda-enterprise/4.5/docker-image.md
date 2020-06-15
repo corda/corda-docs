@@ -10,6 +10,10 @@ title: Official Corda Docker Image
 
 # Official Corda Docker Image
 
+{{< note >}}
+Note: Before running any Corda Docker images, you must accept the license agreement and indicate that you have done this by setting the environment variable `ACCEPT_LICENSE` to `YES` or `Y`. If you do not do this, none of the images will start.
+{{< /note >}}
+
 ## Running a node connected to a Compatibility Zone in Docker
 
 {{< note >}}
