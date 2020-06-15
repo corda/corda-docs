@@ -87,13 +87,15 @@ Corda performance test samplers. On top of that, it supports opening SSH tunnels
 instances.
 
 
-### Performance Test CorDapp
+### Performance Test CorDapps
 
-The performance test suite contains a performance test CorDapp (`perftest-cordapp.jar`) that is roughly modelled on the
-finance CorDapp shipped with Corda Enterprise. It contains a number of flows that issue tokens, and pay them to other
-parties. There are flows that e.g. issue and pay tokens with or without using coin selection, or create arbitrary
+The performance test suite contains two CorDapps that can be used for performance testing:
+*  A performance test CorDapp called `perftest-cordapp.jar`, which is roughly modelled on the
+finance CorDapp shipped with Corda Enterprise. It contains a number of flows that issue tokens and pay these to other
+parties. For example, there are flows that issue and pay tokens with or without using coin selection, or others that create arbitrary
 numbers of change output or coin input states to test the behaviour of the system when using various transaction sizes
 and shapes.
+* A performance test CorDapp called `settlement-perftest-cordapp`, which models a digital asset exchange, where assets can be issued to nodes, transferred bilaterally between them, and exchanged in batch via atomic swap transactions. This CorDapp can be used to exercise scenarios of flows running across multiple nodes.
 
 
 ### Basic Performance Test Set-Up
@@ -105,8 +107,7 @@ is running in server mode.
 
 The driving app sits outside the network and connects to the JMeter servers through SSH tunnels. In the basic test
 measuring the throughput of a node, the test definition instructs all JMeter servers to open RPC connections to one node,
-thus saturating the RPC handler and driving the node as hard as possible. The test typically e.g. issues cash on the node
-(no interaction with other nodes) or sends cash to a second node which requires sending P2P messages back and forth.
+thus saturating the RPC handler and driving the node as hard as possible. The test might invoke a flow that can be completed locally (for example, cash issuance) or it might require exchanging P2P messages with other nodes (for example, cash payment).
 
 ![jmeter network overview](../resources/jmeter-network-overview.png "jmeter network overview")
 
@@ -131,43 +132,34 @@ These tests stress components in a single node, without any dependencies on othe
 
 #### Empty Flow
 
-This test starts a flow that does nothing - this gives us a timing for the overhead involved in starting a flow, i.e. RPC
-handling, deserialization of the request, starting/winding down a flow and sending the response. Note that a flow that
-requires inputs via RPC might have a larger overhead as these might need to be deserialised.
+The `EmptyFlow` test is part of the `perftest-cordapp` CorDapp. As its name suggests, it does not do anything - its purpose is to provide a timing for the overhead involved in starting a flow, such as RPC handling, deserialisation of the request, starting/winding down a flow, and sending the response. Note that a flow that requires inputs via RPC might have a larger overhead as these might need to be deserialised.
 
 
 #### Issuance
 
-A node issuing tokens to itself. In addition to the parts used above, this also loads/starts the CorDapp, creates states
-in the vault and thus uses persistence to the database.
+The `CashIssueFlow` test is part of the `perftest-cordapp` CorDapp. It issues cash to the same node where the flow is invoked. In addition, it loads/starts the CorDapp, creates states in the vault, and thus uses persistence to the database.
 
 
 ### Inter-Node Performance
 
-These are flows that are closer to modelling real world loads to varying degrees.
+These are flows that are, to varying degrees, closer to modelling real-world loads.
 
+#### Issue and Pay Flows
 
-#### Issue and Pay Flow
+This is a set of flows (`CashIssueAndPaymentFlow` and `CashIssueAndPaymentNoSelection`) that are part of the `perftest-cordapp` CorDapp. They make the node under test issue some cash to itself, and then pay it to a second node. This involves initiating a transaction with the target node, and then having the transaction notarised by a network notary, thus creating a load that is similar to what a node would do under real-world conditions. These flows have a few variations that can be controlled through the test definition:
 
-This flow makes the node under test issue some cash to itself and then pays it to a second node. This involves initiating
-a transaction with the target node, and then having the transaction notarised by a network notary, thus creating a load that
-is similar to what a node will do under real world conditions. This flow has a few variations that can be controlled via
-the test definition:
-
-
-* Use coin selection - the flow can either just pay the issued cash or use coin selection to select the cash to pay (this
-is used to isolate coin selection issues from general transaction performance)
-* Anonymous identities - the flow can turn on anonymous identities. This means that a new private/public key pair will be
-generated for each transaction, allowing to measure the overhead this introduces.
+* Use of coin selection: the flows can either just pay the issued cash, or use coin selection to select the cash to pay. This
+is used to isolate coin selection issues from general transaction performance.
+* Anonymous identities: the flows can turn anonymous identities on.. This means that a new private/public key pair will be
+generated for each transaction, allowing to measure the resulting overhead.
 
 To test the throughput a single node can achieve, this flow is run against a single node from all JMeter servers. In order
 to measure network throughput, it can also be run against all nodes from their respective JMeter server.
 
-
 #### Advanced Flows
 
-The issue and pay flow creates a somewhat realistic load but still has a very uniform, artificial usage pattern of resources.
-Therefore more advanced test flows/test plans have been developed that allow to issue a large amount of cash once and
+The issue and pay flows create a somewhat realistic load but still have a very uniform, artificial usage pattern of resources.
+Therefore, more advanced test flows/test plans have been developed that allow to issue a large amount of cash once and
 then start to break it up in smaller payments, allowing the following settings to be tweaked:
 
 
@@ -175,5 +167,9 @@ then start to break it up in smaller payments, allowing the following settings t
 * Number of change states created per transaction (i.e. the number of output states of the transaction)
 * Number of input states to a new transaction (i.e. pay a larger sums from change shards of the previous transaction).
 
-Advanced tests also include testing e.g. connecting to the target node via float/firewall.
+Advanced tests also include testing - for example, connecting to the target node via float/firewall.
+
+#### Atomic swap flows
+
+This is a set of flows (`SwapStockForCashFlow` and `SwapSpecificStockForCashFlow`) that are part of the `settlement-perftest-cordapp` CorDapp. These flows can be used to swap assets between multiple nodes in a single atomic transaction. They can be used to exercise the performance of scenarios, where a node has to communicate with many other nodes in order to complete a transaction.
 
