@@ -33,7 +33,7 @@ To delpoy the one-click developer test environment on Azure, you need the follow
 
    This will be the location your cluster and deployment coordinators are deployed to.
 
-   Due to Azure Side service restriction this resource group must be located in East US.
+   Due to a service restriction on the Azure side, this resource group must be located in East US.
 3. A Service Principal with contributor rights for your resource group. 
 
    In particular, you will need a **Service Principal Client Id**, a **Service Principal Tenant**, and a **Service Principal Client Secret**. Contact your subscription owner for more detail.
@@ -73,33 +73,33 @@ To delpoy the one-click developer test environment on Azure, you need the follow
 
 1. Open your Azure CENM Deployment Template in Deploy Mode.
 
-1. Select appropriate **Subscription** and **Resource Group**. 
+2. Select appropriate **Subscription** and **Resource Group**. 
 
-1. Enter a value for **Cluster Name**.
+3. Enter a value for **Cluster Name**.
 
-1. Enter values for **Service Principal Client Id**, **Service Principal Tenant**, and **Service Principal Client Secret**.
+4. Enter values for **Service Principal Client Id**, **Service Principal Tenant**, and **Service Principal Client Secret**.
 
-1. Enter a value for **Deloyment Name**.
+5. Enter a value for **Deloyment Name**.
 
-1. Enter values for **Artifactory Username** and **Artifactory Password**.
+6. Enter values for **Artifactory Username** and **Artifactory Password**.
 
-1. Set **ACCEPT_LICENSE** to `YES`.
+7. Set **ACCEPT_LICENSE** to `YES`.
 
-1. Select the terms and conditions checkbox.
+8. Select the terms and conditions checkbox.
 
-1. Click **Purchase** and wait while the cluster and containers deploy. This can take around 20 minutes.
+9. Click **Purchase** and wait while the cluster and containers deploy. This can take around 20 minutes.
 
-1. Return to the resource group. The resouce group should now contain a cluster (Kubernetes service) with the cluster name you set and a delpoyment (container instances) with the deployment name you set.
+10. Return to the resource group. The resouce group should now contain a cluster (Kubernetes service) with the cluster name you set and a delpoyment (container instances) with the deployment name you set.
 
-1. Click the the container group with the name deployment name. In this example it is `cenm`. 
+11. Click the the container group with the name deployment name. In this example it is `cenm`. 
 
     ![resource-group]
 
-1. In the left-hand column, click **Containers**
+12. In the left-hand column, click **Containers**
 
     ![containers]
 
-1. Here you should see a single container called `cenm-deployer`. Click `cenm-deployer` and then click **Logs**. From here you can monitor the deployment of your CENM instance.
+13. Here you should see a single container called **cenm-deployer**. Click **cenm-deployer** and then click **Logs**. From here you can monitor the deployment of your CENM instance.
 
 Once the deployer has finished deploying CENM, it will display the `Network_Map` URL and the `Doorman` URL. These can be added to a `node.conf` for a Corda Node to allow you to start using your CENM instance.
 
