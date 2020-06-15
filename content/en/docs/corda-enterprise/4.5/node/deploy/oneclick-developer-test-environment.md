@@ -91,11 +91,11 @@ To delpoy the one-click developer test environment on Azure, you need the follow
 
 1. Return to the resource group. The resouce group should now contain a cluster (Kubernetes service) with the cluster name you set and a delpoyment (container instances) with the deployment name you set.
 
-1. Click the the container group with the name deployment name. In this example it is `Cenm`. 
+1. Click the the container group with the name deployment name. In this example it is `cenm`. 
 
     ![resource-group]
 
-1. In the left hand column click **Containers**
+1. In the left-hand column, click **Containers**
 
     ![containers]
 
@@ -107,21 +107,21 @@ Once the deployer has finished deploying CENM, it will display the `Network_Map`
 
 To deploy a Corda Node into an existing CENM network, you will need a copy of the root trust store for that network. For more details, see [How to join your network](../../../../cenm/1.2/deployment-kubernetes.md#how-to-join-your-network).
 
-1. Copy the trust root store into your CorDapp project root .
+1. Copy the trust root store into your CorDapp project root.
 2. Add the `trustRootStoreFile` parameter to the `buildDockerFile` task, as described in [Generating CorDapp images with Gradle](#generating-cordapp-images-with-gradle). 
-3. Generate the image and push it to your private Azure repo.
+3. Generate the image and push it to your private Azure repository.
 4. Open the “Node to External Network” template in a deploy mode and fill out the required fields.
 
-   a. For Network Map and Doorman URs, use the URLS found in the logs of the CENM deployment.
+   a. For Network Map and Doorman URLs, use the URLs found in the logs of the CENM deployment.
 
-   b.  The trust root password used by test envrioments is  `trust-store-password`.
-5. Once finished you can find the `node-deployer` job inside of the container group with the deployment name.
+   b.  The trust root password used by test environments is `trust-store-password`.
+5. Once finished, you can find the `node-deployer` job inside of the container group with the deployment name.
 
 ## Deploying CENM and Corda Nodes at the same time
 
-1. Open your Azure One Click Deployment Template in Deploy Mode
+1. Open your Azure One Click Deployment Template in Deploy Mode.
 
-1. Select appropriate **Subscription** and **Resource Group**. 
+1. Select the appropriate **Subscription** and **Resource Group**. 
 
 1. Enter a value for **Cluster Name**.
 
