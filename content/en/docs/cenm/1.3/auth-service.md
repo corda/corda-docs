@@ -69,8 +69,8 @@ Environment variables:
 
 * Config file.
 * jwt signing key (RSA keypair) in a jks file.
-* SSL certificate in a jks file.
-* baseline jar that contains the set of permissions available in the deployment and optionally predefined roles.
+* SSL certificate in a `.jks` file.
+* baseline `.jar` that contains the set of permissions available in the deployment and optionally predefined roles.
   * You can also be copy this into a folder inside the working directory called `plugins` to avoid having to specify it in the config file.
 
 ## Configure the auth service
