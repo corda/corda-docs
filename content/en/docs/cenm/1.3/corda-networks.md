@@ -91,9 +91,9 @@ network under the old paradigm where there was only the one zone.
 Each Network Map that represents a segregated sub zone is configured separately from the others as a distinct entity
 unaware of one another
 
-Each Network Map requires
+Each Network Map Service requires:
 
-* A configuration file
-* A starting set of network parameters
-* One or more notaries for inclusion in the whitelist
-* A signing service configured to sign the network map and network parameters
+* A configuration file.
+* A starting set of network parameters.
+* One or more notaries for inclusion in the whitelist.
+* A signing service configured to sign the network map and network parameters.

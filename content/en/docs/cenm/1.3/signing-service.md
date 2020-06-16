@@ -111,7 +111,7 @@ The service can then be accessed via ssh, either locally on the machine or from 
 closed network that the service is being run on.
 
 
-### Executing A Signing Task
+### Executing a Signing task
 
 Once the configured service is up and running, a user can execute a signing task via the interactive shell via the `run
 signer name: <SIGNING_TASK_ALIAS>` command. This will execute the task, prompting the user for signing key
@@ -122,13 +122,13 @@ Any configured task can be run through the shell, even automated scheduled tasks
 
 {{< /note >}}
 
-### Viewing Available Signing Tasks
+### Viewing available Signing tasks
 
 A user can see what signing tasks are available by executing the `view signers` command within the shell. This will
 output all tasks that can be run along with their schedule, if applicable.
 
 
-### Performing A Health Check
+### Performing a health check
 
 To verify that all configured CENM data sources or a single SMR Service data source are reachable by the Signing Service, a health check can be performed
 by running the `run clientHealthCheck`. This will iteratively run through each service, sending a simple ping message
@@ -324,7 +324,7 @@ Each signing task maps to exactly one of four possibly data types:
 * **Network Parameters** - signing new Network Parameters and Network Parameter Updates
 
 
-#### Scheduling Signing Tasks
+#### Scheduling Signing tasks
 
 A signing task can be configured to automatically run on a set schedule, providing *no manual user input is required*.
 That is, the signing key that is configured for the task requires no user input to authenticate (e.g. keyfile or
@@ -448,7 +448,7 @@ List of configurations for any third party HSM libraries.
 
 
   * **jars**:
-  List of paths for the HSM Jars.
+  List of paths for the HSM `.jar` files.
 
 
 * **sharedLibDir**:
@@ -780,31 +780,31 @@ Locations, then `nonCaSmrLocation` replaces non CA related inputs of `serviceLoc
 
 
 * **caSmrLocation**:
-The connection details for the CA part of SMR Service that acts as the data source
+The connection details for the CA part of Signable Material Retriever (SMR) Service that acts as the data source
   * **host**:
-  Host name (or IP address) that the CA part of SMR service is running on
+  Host name (or IP address) that the CA part of SMR service is running on.
   * **port**:
-  Port that the CA part of SMR service is listening on (for inter-ENM communication)
+  Port that the CA part of SMR service is listening on (for inter-CENM communication).
   * **verbose**:
-  Boolean representing whether debug information for the IPC between the Signer and the remote service
+  A boolean parameter representing whether debug information for the IPC between the Signing Service and the remote service
   should be displayed.
   * **ssl**:
-  *(Optional)* SSL Information for connection with the CA part of SMR service.
+  *(Optional)* SSL Information for connection with the CA part of the SMR service.
     * **keyStore**:
-    Key store configuration for the Signing Service SSL key pair.
+    Keystore configuration for the Signing Service SSL key pair.
       * **location**:
-      Location on the file system of the keystore containing the SSL public / private keypair
+      Location on the file system of the keystore containing the SSL public / private key pair
       of the Signing Service.
       * **password**:
-      password for the keyStore
+      Password for the keystore.
       * **keyPassword**:
-      *(Optional)* Password for the keypair, can be omitted if the same as the keystore.
+      *(Optional)* Password for the key pair - can be omitted if it is the same as the keystore password.
     * **trustStore**:
-    Trust store configuration for the SSL PKI root of trust.
+    Truststore configuration for the SSL PKI root of trust.
       * **location**:
-      Location on the file system of the keystore containing the SSL PKI root of trust.
+      Location in the file system of the keystore containing the SSL PKI root of trust.
       * **password**:
-      password for the trust root keystore.
+      Password for the trust root keystore.
 * **nonCaSmrLocation**:
 Same as per **caSmrLocation**, just for the non-CA part of the SMR Service.
 
@@ -841,8 +841,8 @@ hosted on.
 * **updatePeriod**:
 Relevant only if type is `CRL`. This represents the millisecond duration between CRL updates and is baked into the
 generated CRL via the `nextUpdate` X509 field. For users of this CRL, this defines two key pieces of information:
-  * When the next CRL should be available, which is used by some libraries for cache invalidation.
-  * When the current CRL has expired and is therefore obsolete.
+  * Defines when the next CRL should be available - used by some libraries for cache invalidation.
+  * Defines when the current CRL has expired and is therefore obsolete.
 
 
 To ensure that the transition from an old CRL to a new one, this value should always be set to a time period much
@@ -868,7 +868,7 @@ signing key using `PASSWORD` or `KEY_FILE` authentication with the password prec
 
   * **interval**:
   The duration interval between signing executions. Either a number representing the millisecond duration
-  or a string duration with unit suffix. See above [scheduling signing tasks](#scheduling-signing-tasks) section on accepted format.
+  or a string duration with unit suffix. See the [scheduling signing tasks](#scheduling-signing-tasks) section above for information about the accepted format.
 
 
 
@@ -1407,7 +1407,7 @@ The schedule for automated execution of the material management task.
 
   * **interval**:
   The duration interval between signing executions. Either a number representing the millisecond
-  duration or a string duration with unit suffix. See below scheduling signing tasks section on
+  duration or a string duration with unit suffix. See the scheduling signing tasks section below for information about the
   accepted format.
 
 

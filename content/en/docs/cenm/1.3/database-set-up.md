@@ -558,7 +558,7 @@ The list of tables created by the Network Map Service follows below:
 <SCHEMA_NAME>.REVINFO
 ```
 
-## Clearing the Database
+## Clearing the database
 
 Clearing the database will depend on the exact database that you are running.
 

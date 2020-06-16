@@ -137,9 +137,9 @@ HSM username. This user needs the appropriate permissions for key generation and
 * **mode**:
 Currently, 3 authentication modes are supported:
 
-* `PASSWORD` - User’s password as set-up in the HSM.
-* `CARD_READER` - Smart card reader authentication.
-* `KEY_FILE` - Key file based authentication.
+* `PASSWORD` - user password as specified in the HSM.
+* `CARD_READER` - smart card reader authentication.
+* `KEY_FILE` - key file based authentication.
 
 
 
@@ -438,7 +438,7 @@ Certificate revocation list specific configuration.
 
   * **issuer**:
   The issuer (given in the X500 name format) that should be included in the `Issuing Distribution Point` CRL
-  extension. Only applicable if the `indirectIssuer` is set to true above, in which case this must be set to the
+  extension. Only applicable if the `indirectIssuer` is set to `true` above, in which case this must be set to the
   same value as the entity’s subject.
 
 
@@ -447,7 +447,7 @@ Certificate revocation list specific configuration.
 
 
   * **revocations**:
-  List of revocation data (Optional). Each entry in the list should take the following format:
+  *(Optional)* List of revocation data. Each entry in the list must be in the following format:
 
 
   * **certificateSerialNumber**:
