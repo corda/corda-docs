@@ -222,18 +222,21 @@ Java heap memory available to them, which you can do when running them individua
 
 ### docker-compose
 
-If you created your nodes using [Dockerform](generating-a-node.md), the `docker-compose.yml` file has been created and configured appropriately. Navigate to `build/nodes` directory and run `docker-compose up`
-command. This will start up nodes inside a new, internal network.
-After the nodes are started, you can use the `docker ps` command to see how the ports are mapped.
-
+If you created your nodes using [Dockerform](generating-a-node.md), the `docker-compose.yml` file has been created and configured appropriately. Navigate to `build/nodes` directory and run the `docker-compose up` command. This will start up nodes inside a new, internal network. After the nodes are started, you can use the `docker ps` command to see how the ports are mapped.
 
 {{< warning >}}
 You need both `Docker` and `docker-compose` installed and enabled to use this method. Docker CE
 (Community Edition) is sufficient. Please refer to [Docker CE documentation](https://www.docker.com/community-edition)
 and [Docker Compose documentation](https://docs.docker.com/compose/install/) for installation instructions for all
 major operating systems.
-
 {{< /warning >}}
+
+{{< note >}}
+Before running any Corda Enterprise Docker images, you must accept the license agreement and indicate that you have done this by setting the environment variable `ACCEPT_LICENSE` to `YES` or `Y` on your machine. If you do not do this, none of the images will start.
+
+As an alternative, you can specify this parameter when running the `docker-compose up` command, for example:
+`ACCEPT_LICENSE=Y docker-compose up`
+{{< /note >}}
 
 ## Starting all nodes at once on a remote machine from the command line
 

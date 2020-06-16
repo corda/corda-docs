@@ -310,6 +310,11 @@ This command creates the nodes in the `build/nodes` directory. A node directory 
 
 ### Tasks using the Dockerform plug-in
 
+You need both `Docker` and `docker-compose` installed and enabled to use this method. Docker CE
+(Community Edition) is sufficient. Please refer to [Docker CE documentation](https://www.docker.com/community-edition)
+and [Docker Compose documentation](https://docs.docker.com/compose/install/) for installation instructions for all
+major operating systems.
+
 Dockerform supports the following configuration options for each node:
 
 * `name`
@@ -342,6 +347,13 @@ Make sure to use Corda gradle plugin version 5.0.10 or above. If you do not spec
 {{< /note >}}
 
 The Docker image associated with each node can be configured in the `Dockerform` task. This will initialise *every* node in the `Dockerform` task with the specified Docker image. If you need nodes with different Docker images, you can edit the `docker-compose.yml` file with your preferred image.
+
+{{< note >}}
+Before running any Corda Enterprise Docker images, you must accept the license agreement and indicate that you have done this by setting the environment variable `ACCEPT_LICENSE` to `YES` or `Y` on your machine. If you do not do this, none of the images will start.
+
+As an alternative, you can specify this parameter when running the `docker-compose up` command, for example:
+`ACCEPT_LICENSE=Y docker-compose up`
+{{< /note >}}
 
 #### Specify an external database
 
