@@ -24,9 +24,9 @@ Corda Enterprise nodes record metering data regardless of whether the Metering C
 
 The Metering Collection Tool provides a mechanism for collecting metering data from both normal nodes and notaries running Corda Enterprise.
 
-The tool provides several flows:
+The tool uses the following flows:
 
-* The `MeteringCollectionFlow` flow is used to collect metering data from a node using the node's shell (or connecting to it using the external shell). It takes the following arguments: a time window over which to collect data; optionally, a set of CorDapps to filter the data by. The flow output represents both the total count of metering events that match filter in the time window, and a breakdown of these events by the commands involved and the signing entities. This flow has been kept for invocation from the shell while its usage via RPC has been deprecated, use `NodeMeteringCollectionFlow` instead. This flow gathers data from the "current" node - the node where it was initiated.
+* The `MeteringCollectionFlow` flow is used to collect metering data from a node by using the node's shell or by connecting to it using the external shell. You need to specify, as an argument, the time window over which the flow will be collecting metering data. Optionally, you can also specify a set of CorDapps to filter the data by. The flow output represents both the total count of metering events that match the filter within the time window, and a breakdown of these events by the commands involved and the signing entities. This flow can be invoked from the shell but its usage via RPC has been deprecated (use the `NodeMeteringCollectionFlow` flow instead). This flow gathers data from the "current" node - the node where it was initiated.
 * The `NodeMeteringCollectionFlow` flow is used to collect metering data from a node connecting to it via RPC. It takes in a time window over which to collect data, and optionally a set of CorDapps to filter the data by. It outputs both the total count of metering events that match filter in the time window, and a breakdown of these events by the commands involved and the signing entities. This flow gathers data from the "current" node - the node where it was initiated.
 * The `FilteredMeteringCollectionFlow` flow is analogous to the `NodeMeteringCollectionFlow` flow except that it collects data from another node in the network. For that reason, it requires an additional parameter that specifies the party running the node where metering data is to be collected from. This flow gathers data from a node in the network that is different from the one where the was initiated.
 * The `AggregatedMeteringCollectionFlow` flow is used to collect aggregated metering data from other nodes in the network. It takes in a time window and the party running the node where metering data will be collected from. It outputs only the total count of signing events that happened on that node in the specified time window. This flow gathers data from a node in the network that is different from the one where the was initiated.
@@ -43,7 +43,7 @@ The `NotaryCollectionFlow` flow does not allow the collection of metering data f
 
 ## Installation
 
-The Metering Collection Tool is distributed as part of Corda Enterprise 4.5 with the name `corda-tools-metering-collector-4.5.jar`. This `.jar` file must be placed in the `cordapps` directory of the node.
+The Metering Collection Tool is distributed as part of Corda Enterprise 4.5 with the name `corda-tools-metering-collector-4.5.jar`. You must place this `.jar` file in the `cordapps` directory of the node.
 
 ## Metering data
 
