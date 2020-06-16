@@ -222,8 +222,7 @@ Java heap memory available to them, which you can do when running them individua
 
 ### docker-compose
 
-If you created your nodes using [Dockerform](generating-a-node.md), the `docker-compose.yml` file and corresponding `Dockerfile` for
-nodes has been created and configured appropriately. Navigate to `build/nodes` directory and run `docker-compose up`
+If you created your nodes using [Dockerform](generating-a-node.md), the `docker-compose.yml` file has been created and configured appropriately. Navigate to `build/nodes` directory and run `docker-compose up`
 command. This will start up nodes inside a new, internal network.
 After the nodes are started, you can use the `docker ps` command to see how the ports are mapped.
 
@@ -238,7 +237,7 @@ major operating systems.
 
 ## Starting all nodes at once on a remote machine from the command line
 
-By default, a [Cordform](generating-a-node.md) task expects the nodes it generates to be run on the same machine where they were generated.
+By default, a [Cordform](generating-a-node.md) task will run all the generated nodes on the same host machine.
 In order to run the nodes remotely, you can deploy them locally and then copy them to a remote server.
 If after copying the nodes to the remote machine you encounter errors related to a `localhost` resolution, you should follow the additional steps below.
 

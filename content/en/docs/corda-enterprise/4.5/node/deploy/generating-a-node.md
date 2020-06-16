@@ -366,7 +366,7 @@ Dockerform supports the following configuration options for each node:
 * `rpcUsers`
 * `useTestClock`
 
-You do not need to specify the node ports because every node has a separate container so no ports conflicts will occur. Every node will expose port `10003` for RPC connections.
+You do not need to specify the node ports because every node has a separate container so no ports conflicts will occur. Every node will expose port `10003` for RPC connections. Docker will then map these to available ports on your host machine.
 
 The web servers of the nodes will not be started. Instead, you should interact with each node via its shell over SSH - see the [node configuration options](../setup/corda-configuration-file.md) for more information.
 
@@ -386,7 +386,7 @@ node {
 ```
 
 {{< note >}}
-Make sure to use Corda gradle plugin version 5.0.10 or above. If you do not specify the sshd port number for a node, it will use the default value `2222`.
+Make sure to use Corda gradle plugin version 5.0.10 or above. If you do not specify the `sshd` port number for a node, it will use the default value `2222`. Please run the `docker ps` command to check the allocated port on your host that maps to this port.
 {{< /note >}}
 
 The Docker image associated with each node can be configured in the `Dockerform` task. This will initialise *every* node in the `Dockerform` task with the specified Docker image. If you need nodes with different Docker images, you can edit the `docker-compose.yml` file with your preferred image.
