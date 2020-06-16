@@ -12,7 +12,9 @@ title: Metering Collection Tool
 
 # Metering Collection Tool
 
-The Metering Collection Tool is used to collect metering data from a Corda Enterprise node. This page describes how the node records metering data, and how to run the collection tool in order to collect that data.
+The Metering Collection Tool is used to collect metering data from a Corda Enterprise node.
+
+On this page you can learn how the node records metering data and how to run the collection tool in order to collect that data.
 
 {{< note >}}
 Corda Enterprise nodes record metering data regardless of whether the Metering Collection Tool is installed on the node.
@@ -24,17 +26,17 @@ The Metering Collection Tool provides a mechanism for collecting metering data f
 
 The tool provides several flows:
 
-* `MeteringCollectionFlow` is used to collect metering data from a node using the node's shell (or connecting to it with the external shell). It takes in a time window over which to collect data, and optionally a set of CorDapps to filter the data by. It outputs both the total count of metering events that match filter in the time window, and a breakdown of these events by the commands involved and the signing entities. This flow has been kept for invocation from the shell while its usage via RPC has been deprecated, use `NodeMeteringCollectionFlow` instead.
-* `NodeMeteringCollectionFlow` is used to collect metering data from a node connecting to it via RPC. It takes in a time window over which to collect data, and optionally a set of CorDapps to filter the data by. It outputs both the total count of metering events that match filter in the time
+* The `MeteringCollectionFlow` flow is used to collect metering data from a node using the node's shell (or connecting to it using the external shell). It takes the following arguments: a time window over which to collect data; optionally, a set of CorDapps to filter the data by. The flow output represents both the total count of metering events that match filter in the time window, and a breakdown of these events by the commands involved and the signing entities. This flow has been kept for invocation from the shell while its usage via RPC has been deprecated, use `NodeMeteringCollectionFlow` instead.
+* The `NodeMeteringCollectionFlow` flow is used to collect metering data from a node connecting to it via RPC. It takes in a time window over which to collect data, and optionally a set of CorDapps to filter the data by. It outputs both the total count of metering events that match filter in the time
 window, and a breakdown of these events by the commands involved and the signing entities.
-* `FilteredMeteringCollectionFlow` is analogue to `NodeMeteringCollectionFlow` except that collects data from another node in the network, hence requires, as an additional parameter, the party running the node where metering data will be collected from.
-* `AggregatedMeteringCollectionFlow` is used to collect aggregated metering data from other nodes in the network. It takes in a time window and the party running the node where metering data will be collected from. It outputs only the total count of signing events that happened on that node in the specified time window.
-* `MultiFilteredCollectionFlow` is analogous of `FilteredMeteringCollectionFlow` except that allows to collect data from multiple nodes in the network sequentially in a single flow and returns the result as a JSON string. It is meant to be only used from the node shell while there is a dedicated method,
+* The `FilteredMeteringCollectionFlow` flow is analogous to the `NodeMeteringCollectionFlow` flow except that it collects data from another node in the network. For that reason, it requires an additional parameter that specifies the party running the node where metering data is to be collected from.
+* The `AggregatedMeteringCollectionFlow` flow is used to collect aggregated metering data from other nodes in the network. It takes in a time window and the party running the node where metering data will be collected from. It outputs only the total count of signing events that happened on that node in the specified time window.
+* The `MultiFilteredCollectionFlow` flow is analogous to `FilteredMeteringCollectionFlow` except that allows to collect data from multiple nodes in the network sequentially in a single flow and returns the result as a JSON string. It is meant to be only used from the node shell while there is a dedicated method,
 `FilteredMeteringCollectionFlow#multiCollect`, for running collection from multiple nodes in parallel using from an RPC client.
-* `MultiAggregatedCollectionFlow` is analogous of `AggregatedMeteringCollectionFlow` except that allows to collect data from multiple nodes in the network sequentially in a single flow and returns the result as a JSON string. It is meant to be only used from the node shell while there is a dedicated method,
+* The `MultiAggregatedCollectionFlow` flow is analogous to the `AggregatedMeteringCollectionFlow` flow, except that allows to collect data from multiple nodes in the network sequentially in a single flow and returns the result as a JSON string. It is meant to be only used from the node shell while there is a dedicated method,
 `AggregatedMeteringCollectionFlow#multiCollect`, for running collection from multiple nodes in parallel using from an RPC client.
-* `NotaryCollectionFlow` is used to collect metering data from notaries. It takes in a time window over which to collect the data. It outputs a total count of notarisation requests over that interval, along with a breakdown of requests against the parties that made them.
-* `RetrieveCordappDataFlow` is a utility flow to extract CorDapp hashes and signing keys for a given CorDapp name, in the correct format for use in the `NodeMeteringCollectionFlow` filter. The flow provides information about the versions and vendors of the returned CorDapps so that the correct CorDapp data can be selected.
+* The `NotaryCollectionFlow` flow is used to collect metering data from notaries. It takes in a time window over which to collect the data. It outputs a total count of notarisation requests over that interval, along with a breakdown of requests against the parties that made them.
+* The `RetrieveCordappDataFlow` flow is a utility flow to extract CorDapp hashes and signing keys for a given CorDapp name, in the correct format for use in the `NodeMeteringCollectionFlow` filter. The flow provides information about the versions and vendors of the returned CorDapps so that the correct CorDapp data can be selected.
 
 
 {{< warning >}}
