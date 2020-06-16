@@ -15,7 +15,6 @@ weight: 6
 
 The components to be started in a deployment are:
 
-
 * Float
 * Node
 * Bridge
@@ -84,5 +83,3 @@ You should see the following output in the Float log:
 ```shell
 Now listening for incoming connections on VM-Of-Float-Public-IP:Port
 ```
-
-
