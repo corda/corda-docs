@@ -158,7 +158,7 @@ to measure network throughput, it can also be run against all nodes from their r
 
 #### Advanced Flows
 
-The `issue` and `pay` flows create a somewhat realistic load but still have a very uniform, artificial usage pattern of resources.
+The `CashIssueFlow`, `CashIssueAndPaymentFlow`, and `CashIssueAndPaymentNoSelection` flows create a somewhat realistic load but still have a very uniform, artificial usage pattern of resources.
 Therefore, more advanced test flows/test plans have been developed that allow to issue a large amount of cash once and
 then start to break it up in smaller payments, allowing the following settings to be tweaked:
 
