@@ -45,7 +45,7 @@ Before installing and using the Collaborative Recovery CorDapps, you need to kno
 
 ### Main stages of Collaborative Recovery
 
-There are seven stages in the Collaborative Recovery process. You should perform steps 1-3 as a precaution. The rest only need to be done in the unlikely event of a disaster recovery situation: 
+There are seven stages in the Collaborative Recovery process. You should perform steps 1-3 as a precaution. The rest only need to be done in the unlikely event of a disaster recovery situation:
 
 1. Agree to add and enforce Collaborative Recovery at the Business Network level.
 2. Validate the nodes you may transact with by creating wrapping flows for Collaborative Recovery CorDapp flows.
@@ -74,7 +74,7 @@ If you find yourself in this position, or if your other disaster recovery proced
 
 ## Who can use Collaborative Recovery
 
-Collaborative Recovery applications have a minimum platform version of 6 and are compatible only with Corda Enterprise nodes.  
+Collaborative Recovery applications have a minimum platform version of 6 and are compatible only with [Corda Enterprise](../../#corda-enterprise-vs-corda-open-source:-feature-comparison) nodes.  
 
 Collaborative Recovery is an Enterprise, CorDapp-level solution and is not shipped as a part of Corda itself. Only nodes that have the DR CorDapps installed can participate in Collaborative Recovery. In mixed networks that consist of both Open Source and Enterprise nodes, only the Enterprise nodes of the right version that have the Collaborative Recovery CorDapps installed will be able to participate in Collaborative Recovery.  
 
@@ -181,7 +181,7 @@ A high level peer to peer manual recovery flow is depicted in the diagram below.
 
 ### Supported DR Scenarios
 
-LedgerSync and LedgerRecover can only support cases when the ledger is self-consistent, so there can be no holes or broken references within the chain of transactions. If you restore from a backup that should roll your ledger back to a self-consistent state. 
+LedgerSync and LedgerRecover can only support cases when the ledger is self-consistent, so there can be no holes or broken references within the chain of transactions. If you restore from a backup that should roll your ledger back to a self-consistent state.
 For example this might happen when a transaction has not reached the node due to the issues with the infrastructure or when
 the node has been recovered from a backup that was behind the current state of the network.
 

@@ -84,11 +84,11 @@ maxAllowedReconciliationRequestsPerTimeWindow = 1000
 
 {{< /table >}}
 
-**&dagger;** Duration value. Supported values are the same as the _time portion_ of a duration represented by ISO_8601. For example: `1H`, `3S`, `5H3M2S`, etc... Spaces between or around time elements are tolerated, e.g. `1H 30M`, but other characters are not. The units can be represented in uppercase, or lowercase (i.e. `H` or `h`, `M` or `m`, `S` or `s`).
+**&dagger;** Duration value. Supported values are the same as the *time portion* of a duration represented by ISO_8601. For example: `1H`, `3S`, `5H3M2S`, etc... Spaces between or around time elements are tolerated, e.g. `1H 30M`, but other characters are not. The units can be represented in uppercase, or lowercase (i.e. `H` or `h`, `M` or `m`, `S` or `s`).
 
 ## Flows
 
-All reconciliation tasks are carried out using flows. You can see the list flows exposed by LedgerSync, and their parameters, below.
+All reconciliation tasks are carried out using flows. You can see the list flows exposed by LedgerSync, and their parameters, below:
 
 ### `ScheduleReconciliationFlow`
 
@@ -101,8 +101,8 @@ When you request a reconciliation to be performed with a party, if the execution
 It is not possible to perform reconciliations under the following conditions:
 
 * The party being reconciled against has the same identity as the node where you're starting the reconciliation (A party can't reconcile with itself).
-* There is already an _outgoing_ reconciliation scheduled/ongoing with the other party.
-* There is already an _incoming_ reconciliation ongoing _from_ the other party.
+* There is already an *outgoing* reconciliation scheduled/ongoing with the other party.
+* There is already an *incoming* reconciliation ongoing *from* the other party.
 
 This flow returns immediately after the reconciliation jobs are added to the scheduler's queue. To get the status of a given reconciliation, see the related flows below.
 
