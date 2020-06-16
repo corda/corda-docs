@@ -47,7 +47,7 @@ In addition, the CENM Command-Line Interface (CLI) tool is required so you can c
 ### Compatibility
 
 The deployment scripts are compatible with Corda Enterprise Network Manager version 1.3 only.
-The deployed network runs on Kubernetes minimum version 1.8 and Helm minimum version 3.1.1.
+The deployed network runs on Kubernetes minimum version 1.16.9 and Helm minimum version 3.1.1.
 
 ## Deployment
 
@@ -123,6 +123,7 @@ kubectl config set-context $(kubectl config current-context) --namespace=${nameS
 
 You can verify this with the command `kubectl get ns`.
 
+
 #### 4. Download CENM deployment scripts
 
 You can find the files required for the following steps in [CENM deployment repo](https://github.com/corda/cenm-deployment).
@@ -137,7 +138,7 @@ Run the following command to bootstrap a new CENM environment by allocating a ne
 
 ```bash
 cd network-services/deployment/k8s/helm
-./bootstrap.cenm `--ACCEPT_LICENSE Y`
+./bootstrap.cenm --ACCEPT_LICENSE Y
 ```
 
 {{< note >}} The allocation of a loadbalancer to provide a public IP can take a significant amount of time (for example, even 10 minutes). {{< /note >}}
@@ -173,6 +174,11 @@ Use the following command to ensure that you are pointing at the correct namespa
   ```bash
   kubectl config current-context && kubectl config view --minify --output 'jsonpath={..namespace}' && echo`)
   ```
+
+## Assigning permissions to users
+
+Login to web application ``http://<FARM-SERVICE-IP>:8080/admin`` using admin user and credentials.
+The CENM network has no permissions assigned to Main Zone by default, you need to assign them manually.
 
 ### Join your network
 
@@ -272,6 +278,11 @@ Use the following CENM Command-Line Interface (CLI) tool command to run a Flag D
 This operation is scheduled to take place at regular intervals (by default, once every 10 seconds), as defined in the network map configuration.
 {{< /note >}}
 
+### Signing Service configuration
+
+The Signing Service is not managed by the Angel Service in this deployment, therefore any CENM Command-Line Interface (CLI) tool commands trying to change the Signing Service configuration will take no effect.
+To change the Singing Service configuration, you must log in to a Kubernetes pod, update the configuration file, and restart the service.
+
 ## Delete Network
 There are two ways to delete your permissioned network (intended for development
 environments, which are rebuilt regularly), as follows:
@@ -361,6 +372,8 @@ In brief this can be achieved by:
 * Create a separate yaml file with new values and pass it with `-f` flag: `helm install -f myvalues.yaml idman`, or;
 * Override individual parameters using `--set`, such as `helm install --set foo=bar idman`, or;
 * Any combination of the above, for example ```helm install -f myvalues.yaml --set foo=bar idman```
+
+You cannot override the passwords to security certificates keys and keystores.
 
 ### External database support
 
