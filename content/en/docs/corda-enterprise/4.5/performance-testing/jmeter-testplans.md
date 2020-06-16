@@ -53,18 +53,14 @@ a running total for the run.Like the Aggregate Report, but also offers to tools 
 ## Included Testplans
 
 Two testplans are included with the performance test suite, to be found in the `Sample Testplans` directory in the zip
-file. Note that both testplans are examples how they can look and are not runnable out of the box - you need to supply
-values for host names, party/notary names, RPC credentials and so on for your Corda installation.
+file. Note that both test plans are templates only and you cannot run them directly - first you need to set
+the appropriate values for your Corda installation, such as host names, party/notary names, RPC credentials, and so on.
 
-`Example Flow Request.jmx`This is a very simple testplan that has one thread group that just runs cash self issue. Everything is configured
-directly on the sampler’s page - just enter the details of your installed Corda node here and you should be good
-to go. The structure of this test plan is a good place to start to create your own test plans.`NightlyBenchmarkSample.jmx`This is a copy of the test plan that is used for performance testing Corda Enterprise at R3. This plan has a lot of
-different tests, each in its own thread group. All the thread groups will be run one after another. These different
-tests show use of all the different sampler clients described in [JMeter Samplers](jmeter-samplers.md).
-This testplan uses variables to avoid repetition of values that might require changing. You need to enter the
-appropriate values for your Corda network installation here to get the plan working.A useful way to try out bits of the plan is to load it in an interactive JMeter session and disable most of the
-thread groups in order to only run a few tests. (Thread groups can be enabled/disabled in the right-click context
-menu).
+* `Example Flow Request.jmx`: this is a very simple test plan that has one thread group that just runs self-issues cash. Everything is configured directly on the sampler’s page - you only need to enter the details of your installed Corda node.
+to go. The structure of this test plan is a good place to start creating your own test plans.
+* * `NightlyBenchmarkSample.jmx`: this is a copy of the test plan that is used for performance testing of Corda Enterprise at R3. This plan has a lot of different tests, each in its own thread group. All thread groups are run one after another. These different tests show the usage of all the different sampler clients described in [JMeter Samplers](jmeter-samplers.md). This test plan uses variables to avoid the repetition of values that might require changing. To get the test plan working, you must provide the appropriate values for your Corda network installation. A useful way to try out some parts of the test plan is to load it in an interactive JMeter session, and to disable most of the thread groups in order to only run a few tests. You can enable/disable thread groups from the right-click menu.
+
+
 ## Creating Testplans
 
 The JMeter GUI can be used to create and try out new testplans. The easiest way of doing this to take a copy of an

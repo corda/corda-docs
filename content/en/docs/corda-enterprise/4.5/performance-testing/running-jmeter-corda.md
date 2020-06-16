@@ -8,6 +8,9 @@ tags:
 title: Running JMeter Corda
 ---
 
+{{< note >}}
+All mentions of `jmeter-corda.jar` on this page refer to the `jmeter-corda-<version>-capsule.jar` - see [Obtaining and Installing the Performance Test Suite](installation.html) for more information.
+{{< /note >}}
 
 # Running JMeter Corda
 
@@ -25,21 +28,22 @@ java -jar jmeter-corda-jar <wrapper arguments> -- <jmeter arguments>
 
 ## JMeter Corda Wrapper Arguments
 
-The JMeter Corda wrappper understands the following optional arguments:
+The JMeter Corda wrapper understands the following optional arguments:
 
-`-?`, `-h`, `--help`This will print a help text for the JMeter Corda wrapper arguments and also trigger printing of the JMeter help
-text`-Xssh`This tells the wrapper to set up SSH tunnels. It takes a list of host names as argument. See [SSH Tunnel Set-Up](#ssh-tunnel) for
-details.`-XsshUser`User name to use for remote servers if creating SSH tunnels. This defaults to the current user name.`-XadditionalSearchPaths`A semicolon separated list of directories containing class files or JAR files that JMeter should consider for finding
-samplers or plug-ins. The wrapper sets up a default search path that contains the samplers included in the JAR and
-the required plug-ins to talk to Corda. Any custom samplers to be used in tests need to be included here.`-XjmeterProperties`Path to a JMeter properties file. JMeter always needs configuration via a properties file - there is a `jmeter.properties`
-file included in the jmeter-corda.jar that sets sensible defaults. The wrapper will make JMeter use the pre-packed
-properties if this option is not set.`-XserverRmiMappings`Port mappings for the remote method invocation tunnels when setting up SSH tunnels. See [SSH Tunnel Set-Up](#ssh-tunnel) for details.These arguments have to come first on the command line. They can be followed by a double dash and JMeter arguments
-that will be fed through to JMeter. The wrapper will add some arguments to the list passed on to JMeter and does disallow
-some arguments. Some JMeter arguments used/discussed on this page are:
+* `-?`, `-h`, `--help`: use any of these options to print a help text for JMeter and the JMeter Corda wrapper arguments.
+* `-Xssh`: use this argument to instruct the wrapper to set up SSH tunnels. You should provide a list of host names as parameters. See [SSH Tunnel Set-Up](#ssh-tunnel) for details.
+* `-XsshUser`: the user name to use for remote servers if creating SSH tunnels. This defaults to the current user name.
+* `-XadditionalSearchPaths`: a list of directories that contain class files or `.jar` files that JMeter should consider for finding samplers or plug-ins. The wrapper sets up a default search path that contains the samplers included in the `.jar` file, and the plug-ins required to communicate with Corda. You must add to this list any custom samplers that you intend to use in tests. Multiple entries in the list must be separated by a semicolon.
+* `-XjmeterProperties`: the path to a JMeter properties file. JMeter always needs configuration via a properties file - there is a `jmeter.properties` file included in the `jmeter-corda.jar`, which sets sensible default values. If this option is not set, the wrapper will make JMeter use these pre-defined default values.
+* `-XserverRmiMappings`: the port mappings required for the remote method invocation tunnels when setting up SSH tunnels. See [SSH Tunnel Set-Up](#ssh-tunnel) for details. 
 
-`-p`This is the way of telling JMeter what properties file to use. This will **always** be set by the wrapper code and
-must **not** be set on the command line. Use the `-XjmeterProperties` argument to the wrapper instead.`-s`This makes JMeter run in server mode, i.e. it will run headless and wait for instructions from a client via remote
+In your command on the command prompt, you must place these arguments first. They can be followed by a double dash and JMeter arguments that will be fed through to JMeter. The wrapper will add some arguments to the list passed on to JMeter. Also, the wrapper does not accept certain arguments. Some JMeter arguments used/discussed on this page are:
+
+* `-p`: this argument instructs JMeter what properties file to use. This will **always** be set by the wrapper code - 
+you must **not** set it in your command on the command prompt. Use the `-XjmeterProperties` argument to the wrapper instead.
+* `-s`: this argument makes JMeter run in server mode - it will run headless and wait for instructions from a client via remote
 method invocation. See also [Installing JMeter server](installation.md#jmeter-server).
+
 ## Running the JMeter GUI
 
 By default, JMeter Corda will start up as client in GUI mode. The GUI allows to view/create test plans, and run tests
@@ -62,10 +66,12 @@ This allows to run performance tests excluding any influences from GUI rendering
 to run performance tests in an automated manner, e.g. as part of a nightly build. This is controlled by JMeter arguments
 passed through to the JMeter instances. The relevant arguments are:
 
-`-n`This will run a JMeter client in headless mode. This requires to also pass a test definition via `-t` and an output
-file via `-l`.`-t <testplan.jmx>`Provide a testplan xml file to load and run.`-l <results.jtl>`Path to an output jtl file to be written - this is a JMeter specific CSV format.`-r`Run via RMI against the remote servers configured in the JMeter properties file. Without this option, JMeter
-will run the testplan locally.Example:
-
+* `-n`: this argument instructs a JMeter client to run in headless mode. This requires to also pass a test definition via `-t` and an output
+file via `-l`.
+* `-t <testplan.jmx>`: a test plan `.xml` file to load and run.
+* `-l <results.jtl>`: the path to an output `.jtl` file to be written with the results of the test.
+* `-r`: this argument instructs JMeter to run via RMI (Remote Method Invocation) against the remote servers configured in the JMeter properties file. Without this option, JMeter
+will run the test plan locally. For example:
 ```kotlin
 java -jar jmeter-corda.jar -Xssh node1.mydomain.com node2.mydomain.com -- -n -t /home/<user>/tesplan.jmx -l /home/<user>/results.jtl -r
 ```
@@ -178,11 +184,13 @@ is expected to be served up by the Putty SSH agent [Pageant](https://www.ssh.com
 
 #### Running without SSH tunnels
 
-If SSH tunneling is not required, the list of actual host names needs to be in the JMeter properties file as property
-`remote_hosts`, or can be passed in with the JMeter argument `-R`:
-
-`jmeter.properties``remote_hosts=node1.mydomain.com,node2.mydomain.com``java -jar jmeter-corda.jar -- -Rnode1.mydomain.com,node2.mydomain.com`None of the Corda provided SSH code options need to be configured, so the server command line should just include the
-`-s` option, and the client command line would be:
+If SSH tunnelling is not required, the list of actual host names needs to be in the JMeter properties file as a property 
+called `remote_hosts` (for example, `remote_hosts=node1.mydomain.com,node2.mydomain.com`), or it can be passed in with the JMeter argument `-R`:
+```
+java -jar jmeter-corda.jar -- -Rnode1.mydomain.com,node2.mydomain.com
+```
+You are not required to configure any of the SSH code options provided with Corda. As a result, your server-side command on the command prompt should only include the 
+`-s` option, and your client-side command should follow the example below:
 
 ```kotlin
 java -jar jmeter-corda.jar -XjmeterProperties <property file including hostnames> [-- <jmeter arguments>]
