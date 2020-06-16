@@ -248,7 +248,7 @@ ext.jolokia_version = "1.6.1"
 
 #### Package namespace ownership
 
-To configure [package namespace ownership](env-dev.md#package-namespace-ownership), use the optional `networkParameterOverrides` and `packageOwnership` blocks, in a similar way to how the configuration file is used in [Network Bootstrapper](network-bootstrapper.md). For example:
+To configure [package namespace ownership](env-dev.md#package-namespace-ownership), use the optional `networkParameterOverrides` and `packageOwnership` blocks, in a similar way to how the configuration file is used by the [Network Bootstrapper](network-bootstrapper.md) tool. For example:
 
 ```groovy
 task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['jar']) {
@@ -314,11 +314,10 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['jar']) {
     //...
 ```
 
-Contracts classes from signed CorDapp `.jar` files will be checked by signature constraints by default.
-You can force them to be checked by zone constraints by adding contract class names to `includeWhitelist` entry,
-the list will generate *include_whitelist.txt* file used internally by network-bootstrapper tool.
-Refer to api-contract-constraints to understand implication of different constraint types before adding `includeWhitelist` to `deployNodes` task.
-The snippet below configures contracts classes from Finance CorDapp to be verified using zone constraints instead of signature constraints:
+Contracts classes from signed CorDapp `.jar` files are checked by signature constraints by default.
+You can force them to be checked by zone constraints by adding contract class names to the `includeWhitelist` entry - the list will generate an `include_whitelist.txt` file used internally by the [Network Bootstrapper](network-bootstrapper.md) tool.
+Before you add `includeWhitelist` to the `deployNodes` task, see [Contract Constraints](../../cordapps/api-contract-constraints.md) to understand the implications of using different constraint types.
+The snippet below configures contracts classes from the Finance CorDapp to be verified using zone constraints instead of signature constraints:
 
 ```groovy
 task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['jar']) {
@@ -326,13 +325,10 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['jar']) {
     //...
 ```
 
-
-
 #### Specify a custom web server
 
-By default, any node listing a web port will use the default development web server, which is not production-ready. You
-can use your own web server `.jar` file instead by using the `webserverJar` argument in a `Cordform` `node` configuration
-block:
+By default, any node listing a web port will use the default development web server, which is not production-ready. You can use the `.jar` file of your own web server instead by including the `webserverJar` argument in a `Cordform` `node` configuration
+block, as shown in the example below:
 
 ```groovy
 node {
@@ -342,29 +338,24 @@ node {
 }
 ```
 
-The web server `.jar` file will be copied into the node’s `build` directory with the name `corda-webserver.jar`.
+The web server's `.jar` file will be copied into the node’s `build` directory with the name `corda-webserver.jar`.
 
 
 {{< warning >}}
-This is an experimental feature. There is currently no support for reading the web server’s port from the
-node’s `node.conf` file.
-
+This is an experimental feature. There is currently no support for reading the web server’s port from the `node.conf` file of the node.
 {{< /warning >}}
 
 
 #### Run the Cordform task
 
-To create the nodes defined in our `deployNodes` task, run the following command in a terminal window from the root of the project where the `deployNodes` task is defined:
+To create the nodes defined in the `deployNodes` task example above, run the following command in a command prompt or a terminal window, from the root of the project where the `deployNodes` task is defined:
 
 * Linux/macOS: `./gradlew deployNodes`
 * Windows: `gradlew.bat deployNodes`
 
-This will create the nodes in the `build/nodes` directory. There will be a node directory generated for each node defined in the `deployNodes` task, plus a `runnodes` shell script (or batch file on Windows) to run all the nodes at once
-for testing and development purposes. If you make any changes to your CorDapp source or `deployNodes` task, you will need to re-run the task to see the changes take effect.
-
+This command creates the nodes in the `build/nodes` directory. A node directory is generated for each node defined in the `deployNodes` task, plus a `runnodes` shell script (or a batch file on Windows) to run all the nodes at once for testing and development purposes. If you make any changes to your CorDapp source or `deployNodes` task, you will need to re-run the task to see the changes take effect.
 
 ### The Dockerform task
-
 
 Dockerform supports the following configuration options for each node:
 
