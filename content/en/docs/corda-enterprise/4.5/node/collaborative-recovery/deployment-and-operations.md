@@ -71,7 +71,9 @@ Collaborative Recovery CorDapps rely on the following DB tables:
     * `CR_RECOVERY_LOG`
 
 The DB tables are managed via Liquibase migration scripts that are shipped as a part of the Collaborative Recovery CorDapps.
-No manual schema alterations should be performed at any time. The table schemas should be managed using the
+{{< note >}}
+No manual schema alterations should be performed at any time.
+{{< /note >}}
 [Database Management Tool](../operating/node-database.html#database-management-tool)
 that is shipped as a part of Corda Enterprise.
 

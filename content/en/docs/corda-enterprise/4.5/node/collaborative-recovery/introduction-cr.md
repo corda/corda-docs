@@ -162,7 +162,6 @@ A high level peer to peer automatic recovery flow is depicted in the diagram bel
 
 {{< attention >}}
 Even though the recovery has the word "automatic" in its name, it can only be started manually.
-This is to prevent the participants from abusing this functionality and overloading the network.
 {{< /attention >}}
 
 ### Manual
@@ -170,7 +169,7 @@ This is to prevent the participants from abusing this functionality and overload
 Manual LedgerRecover has been designed for larger volumes of data and for cases when the recovery request requires manual approval.
 During a manual recovery flow, an initiating party would make a request to kick off a manual recovery process.
 Each party (the initiator and responder) persists a record of this request. The responder then manually investigates the recovery request,
-export the data to the filesystem, and pass it to the requester. This process would be carried out off-ledger without
+export the data to the filesystem, and pass it to the requester. The process of passing data to the requester must be carried out off-ledger without
 relying on the Corda messaging layer, after which the requester would manually import the data into their vault.
 
 Manual LedgerRecover ensures ledger consistency - importing data would not lead to an inconsistent ledger even if
@@ -182,11 +181,11 @@ A high level peer to peer manual recovery flow is depicted in the diagram below.
 
 ### Supported DR Scenarios
 
-Currently LedgerSync and LedgerRecover reliably support only cases when *the top of the chain is missing*.
+LedgerSync and LedgerRecover can only support cases when the ledger is self-consistent, so there can be no holes or broken references within the chain of transactions. If you restore from a backup that should roll your ledger back to a self-consistent state. 
 For example this might happen when a transaction has not reached the node due to the issues with the infrastructure or when
 the node has been recovered from a backup that was behind the current state of the network.
 
-Scenarios such as when a node's database is manually tampered with are not fully supported at the moment.  
+Scenarios such as when a node's database is manually tampered with are not fully supported in Version 1.2.  
 
 ## Compatibility with other Corda Enterprise libraries
 
