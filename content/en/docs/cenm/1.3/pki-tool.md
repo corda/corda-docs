@@ -525,10 +525,54 @@ keyStores = {
         file = "./key-stores/tls-crl-signer-key-store.jks"
         password = "key-password"
     }
+    "corda-ssl-auth-keys" = {
+         type = LOCAL
+         file = "./key-stores/ssl-auth-key-store.jks"
+         password = "password"
+    }
+    "corda-ssl-farm-keys" = {
+         type = LOCAL
+         file = "./key-stores/corda-ssl-farm-keys.jks"
+         password = "key-password"
+    }
+    "corda-ssl-farm-private-keys" = {
+         type = LOCAL
+         file = "./key-stores/corda-ssl-farm-private-keys.jks"
+         password = "key-password"
+    }
+    "corda-ssl-identity-manager-keys" = {
+        type = LOCAL
+        file = "./key-stores/ssl-identity-manager-key-store.jks"
+        password = "key-password"
+    }
+    "corda-ssl-network-map-keys" = {
+        type = LOCAL
+        file = "./key-stores/ssl-network-map-key-store.jks"
+        password = "key-password"
+    }
+    "corda-ssl-root-keys" = {
+        type = LOCAL
+        file = "./key-stores/ssl-root-key-store.jks"
+        password = "key-password"
+    }
+    "corda-ssl-signer-keys" = {
+        type = LOCAL
+        file = "./key-stores/ssl-signer-key-store.jks"
+        password = "key-password"
+    }
+    "corda-ssl-zone-keys" = {
+        type = LOCAL
+        file = "./key-stores/corda-ssl-zone-keys.jks"
+        password = "key-password"
+    }
 }
 certificatesStores = {
     "network-root-trust-store" = {
         file = "./trust-stores/network-root-truststore.jks"
+        password = "trust-store-password"
+    }
+    "corda-ssl-trust-store" = {
+        file = "./trust-stores/corda-ssl-trust-store.jks"
         password = "trust-store-password"
     }
 }
@@ -571,6 +615,25 @@ certificates = {
         crl = {
             crlDistributionUrl = "http://127.0.0.1/certificate-revocation-list/root"
             file = "./crl-files/root.crl"
+        }
+    },
+    "cordasslrootca" = {
+        key = {
+            type = LOCAL
+            includeIn = ["corda-ssl-root-keys"]
+            algorithm = "ECDSA_SECP256R1_SHA256"
+            password = "key-password"
+        }
+        isSelfSigned = true
+        keyUsages = [DIGITAL_SIGNATURE, KEY_CERT_SIGN, CRL_SIGN]
+        keyPurposes = [SERVER_AUTH, CLIENT_AUTH]
+        validDays = 7300
+        issuesCertificates = true
+        subject = "CN=Test SSL Root CA Certificate, OU=HQ, O=HoldCo LLC, L=New York, C=US"
+        includeIn = ["corda-ssl-trust-store"]
+        crl = {
+            crlDistributionUrl = "http://127.0.0.1/certificate-revocation-list/sslroot"
+            file = "./crl-files/sslroot.crl"
         }
     },
     "cordasubordinateca" = {
@@ -639,12 +702,121 @@ certificates = {
         role = NETWORK_MAP
         issuesCertificates = false
         subject = "CN=Test Network Parameters Service Certificate, OU=HQ, O=HoldCo LLC, L=New York, C=US"
-    }
+    },
+    "cordasslidentitymanager" = {
+        key = {
+            type = LOCAL
+            includeIn = ["corda-ssl-identity-manager-keys"]
+            algorithm = "ECDSA_SECP256R1_SHA256"
+            password = "key-password"
+        }
+        isSelfSigned = false
+        signedBy = "cordasslrootca"
+        keyUsages = [DIGITAL_SIGNATURE, KEY_CERT_SIGN, CRL_SIGN]
+        keyPurposes = [SERVER_AUTH, CLIENT_AUTH]
+        validDays = 7300
+        issuesCertificates = false
+        subject = "CN=Test Identity Manager SSL Certificate, OU=HQ, O=HoldCo LLC, L=New York, C=US"
+        includeIn = ["corda-ssl-trust-store"]
+    },
+    "cordasslnetworkmap" = {
+        key = {
+            type = LOCAL
+            includeIn = ["corda-ssl-network-map-keys"]
+            algorithm = "ECDSA_SECP256R1_SHA256"
+            password = "password"
+        }
+        isSelfSigned = false
+        signedBy = "cordasslrootca"
+        keyUsages = [DIGITAL_SIGNATURE, KEY_CERT_SIGN, CRL_SIGN]
+        keyPurposes = [SERVER_AUTH, CLIENT_AUTH]
+        validDays = 7300
+        issuesCertificates = false
+        subject = "CN=Test Network Map SSL Certificate, OU=HQ, O=HoldCo LLC, L=New York, C=US"
+        includeIn = ["corda-ssl-trust-store"]
+    },
+    "cordasslsigner" = {
+        key = {
+            type = LOCAL
+            includeIn = ["corda-ssl-signer-keys"]
+            algorithm = "ECDSA_SECP256R1_SHA256"
+            password = "key-password"
+        }
+        isSelfSigned = false
+        signedBy = "cordasslrootca"
+        keyUsages = [DIGITAL_SIGNATURE, KEY_CERT_SIGN, CRL_SIGN]
+        keyPurposes = [SERVER_AUTH, CLIENT_AUTH]
+        validDays = 7300
+        issuesCertificates = false
+        subject = "CN=Test Signer SSL Certificate, OU=HQ, O=HoldCo LLC, L=New York, C=US"
+        includeIn = ["corda-ssl-trust-store"]
+    },
+    "cordasslauth" = {
+        key = {
+            type = LOCAL
+            includeIn = ["corda-ssl-auth-keys"]
+            algorithm = "ECDSA_SECP256R1_SHA256"
+            password = "key-password"
+        }
+        isSelfSigned = false
+        signedBy = "cordasslrootca"
+        keyUsages = [DIGITAL_SIGNATURE, KEY_CERT_SIGN, CRL_SIGN]
+        keyPurposes = [SERVER_AUTH, CLIENT_AUTH]
+        validDays = 7300
+        issuesCertificates = false
+        subject = "CN=Test Auth SSL Certificate, OU=HQ, O=HoldCo LLC, L=New York, C=US"
+        includeIn = ["corda-ssl-trust-store"]
+    },
+    "cordasslfarm" = {
+       key = {
+            type = LOCAL
+            includeIn = ["corda-ssl-farm-keys"]
+            algorithm = "ECDSA_SECP256R1_SHA256"
+            password = "key-password"
+        }
+        isSelfSigned = false
+        signedBy = "cordasslrootca"
+        keyUsages = [DIGITAL_SIGNATURE]
+        keyPurposes = [SERVER_AUTH, CLIENT_AUTH]
+        validDays = 7300
+        issuesCertificates = false
+        subject = "CN=Test Farm TLS Signer Certificate, OU=Corda, O=R3 HoldCo LLC, L=New York, C=US"
+        includeIn = ["corda-ssl-trust-store"]
+    },
+    "cordasslfarm-private" = {
+        key = {
+             type = LOCAL
+             includeIn = ["corda-ssl-farm-private-keys"]
+             algorithm = "ECDSA_SECP256R1_SHA256"
+             password = "key-password"
+         }
+         isSelfSigned = false
+         signedBy = "cordasslrootca"
+         keyUsages = [DIGITAL_SIGNATURE]
+         keyPurposes = [SERVER_AUTH, CLIENT_AUTH]
+         validDays = 7300
+         issuesCertificates = false
+         subject = "CN=Test Farm Private TLS Signer Certificate, OU=Corda, O=R3 HoldCo LLC, L=New York, C=US"
+         includeIn = ["corda-ssl-trust-store"]
+     },
+     "cordasslzone" = {
+         key = {
+             type = LOCAL
+             includeIn = ["corda-ssl-zone-keys"]
+             algorithm = "ECDSA_SECP256R1_SHA256"
+             password = "key-password"
+         }
+         isSelfSigned = false
+         signedBy = "cordasslrootca"
+         keyUsages = [DIGITAL_SIGNATURE, KEY_CERT_SIGN, CRL_SIGN]
+         keyPurposes = [SERVER_AUTH, CLIENT_AUTH]
+         validDays = 7300
+         issuesCertificates = false
+         subject = "CN=Test Zone SSL Certificate, OU=HQ, O=HoldCo LLC, L=New York, C=US"
+         includeIn = ["corda-ssl-trust-store"]
+     }
 }
 ```
-
-[pki-tool-local-full.conf](https://github.com/corda/network-services/blob/release/1.2/pki-tool/src/test/resources/configs/pki-tool-local-full.conf)
-
 
 #### Local Configuration
 
