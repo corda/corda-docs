@@ -30,16 +30,18 @@ To create a local node manually, make a new directory and add the following file
 
 The remaining node files and directories will be generated at runtime. These are described in the [Node folder structure](../setup/corda-configuration-file.md) section.
 
-## Use the Cordform and Dockerform gradle plug-ins to automatically create a set of local nodes
+## Use Cordform and Dockerform to create a set of local nodes automatically
 
 Corda provides two `gradle` plug-ins called `Cordform` and `Dockerform`. They both allow you to run tasks that automatically generate and configure a local set of nodes for testing and demonstration purposes.
 
-* A `Cordform` task creates nodes in the `build/nodes` directory. `Cordform` tasks require you to manually deploy each Corda node and database separately. The example `Cordform` task used in this document creates three nodes: `Notary`, `PartyA`, and `PartyB`, however you are free to spin up more nodes, specify what nodes you need on the network, change node names, and update node configurations.
+* A `Cordform` task creates nodes in the `build/nodes` directory. The example `Cordform` task used in this document creates three nodes: `Notary`, `PartyA`, and `PartyB`, however you are free to spin up more nodes, specify what nodes you need on the network, change node names, and update node configurations.
 * Nodes deployed via `Dockerform` use Docker containers. A `Dockerform` task is similar to `Cordform` but it provides an extra file that enables you to easily spin up nodes using `docker-compose`. This creates a `docker-compose` file that enables you to run a single command to control the deployment of Corda nodes and databases (instead of deploying each node/database manually).
 
-{{< note >}}
-Unlike `Cordform` tasks, `Dockerform` tasks require Docker to be installed on the local host.
-{{< /note >}}
+### Specific requirements
+
+* `Cordform` tasks require you to deploy each Corda node and database separately.
+* `Dockerform` tasks require Docker to be installed on the local host.
+
 
 ### Tasks using the Cordform plug-in
 
@@ -584,7 +586,7 @@ task prepareDockerNodes(type: net.corda.plugins.Dockerform, dependsOn: ['jar']) 
             deploy = false
         }
         cordapps.clear()
-      sshdPort 2222
+        sshdPort 2222
     }
     node {
         name "O=PartyA,L=London,C=GB"
@@ -624,7 +626,11 @@ If you do not specify the sshd port number for a node, it will use the default v
 This command creates the nodes in the `build/nodes` directory. A node directory is generated for each node defined in the `prepareDockerNodes` task. The task also creates a `docker-compose.yml` file in the `build/nodes` directory.
 
 {{< note >}}
+**External database configuration**
+
 If you configure an external database, a `Postgres_Dockerfile` file and `Postgres_init.sh` file are also generated in the `build` directory. If you make any changes to your CorDapp source or `prepareDockerNodes` task, you will need to re-run the task to see the changes take effect.
+
+If the external database is not defined and configured properly, as described in [specifying an external database](#specify-an-external-database), the files `Postgres_Dockerfile` and `Postgres_init.sh` will not be generated.
 
 In this case, each Corda node is associated with a Postgres database. Only one Corda node can connect to the same database. While there is no maximum number of nodes you can deploy with `Dockerform`, you are constrained by the maximum available resources on the machine running this task, as well as the overhead introduced by every Docker container that is started. All the started nodes run in the same Docker overlay network.
 
@@ -632,25 +638,3 @@ The connection settings to the Postgres database are provided to each node throu
 
 Note that this feature is not designed for users to access the database via elevated or admin rights - you must only use such configuration changes for testing/development purposes.
 {{< /note >}}
-
-3. Edit the generated `docker-compose.yml` file to change the ports, as shown in the example below:
-
-```groovy
-version: '3'
-services:
-  notary:
-    build: /Users/<USER>/Projects/json-cordapp/workflows-java/build/nodes/Notary
-    ports:
-      - "10002"
-      - "10003"
-  partya:
-    build: /Users/<USER>/Projects/json-cordapp/workflows-java/build/nodes/PartyA
-    ports:
-      - "10002"
-      - "10003"
-  partyb:
-    build: /Users/<USER>/Projects/json-cordapp/workflows-java/build/nodes/PartyB
-    ports:
-      - "10002"
-      - "10003"
-```
