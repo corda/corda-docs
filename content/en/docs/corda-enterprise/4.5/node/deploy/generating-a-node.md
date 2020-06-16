@@ -118,6 +118,10 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['jar']) {
 }
 ```
 
+{{< note >}}
+Make sure to use Corda gradle plugin version 5.0.10 or above.
+{{< /note >}}
+
 The configuration values used in the example are described below.
 
 #### Required configuration
