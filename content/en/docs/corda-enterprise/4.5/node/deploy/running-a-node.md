@@ -61,6 +61,7 @@ $ export CONFIG_OBFUSCATION_SEED=my-seed; export CONFIG_OBFUSCATION_PASSPHRASE=m
 ```
 {{< /note >}}
 
+
 ### Setting JVM arguments
 
 There are several ways to set JVM arguments for the node process (particularly the garbage collector and the memory settings).
