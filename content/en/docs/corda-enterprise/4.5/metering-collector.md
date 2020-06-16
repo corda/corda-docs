@@ -26,18 +26,16 @@ The Metering Collection Tool provides a mechanism for collecting metering data f
 
 The tool provides several flows:
 
-* The `MeteringCollectionFlow` flow is used to collect metering data from a node using the node's shell (or connecting to it using the external shell). It takes the following arguments: a time window over which to collect data; optionally, a set of CorDapps to filter the data by. The flow output represents both the total count of metering events that match filter in the time window, and a breakdown of these events by the commands involved and the signing entities. This flow has been kept for invocation from the shell while its usage via RPC has been deprecated, use `NodeMeteringCollectionFlow` instead.
-* The `NodeMeteringCollectionFlow` flow is used to collect metering data from a node connecting to it via RPC. It takes in a time window over which to collect data, and optionally a set of CorDapps to filter the data by. It outputs both the total count of metering events that match filter in the time
-window, and a breakdown of these events by the commands involved and the signing entities.
-* The `FilteredMeteringCollectionFlow` flow is analogous to the `NodeMeteringCollectionFlow` flow except that it collects data from another node in the network. For that reason, it requires an additional parameter that specifies the party running the node where metering data is to be collected from.
-* The `AggregatedMeteringCollectionFlow` flow is used to collect aggregated metering data from other nodes in the network. It takes in a time window and the party running the node where metering data will be collected from. It outputs only the total count of signing events that happened on that node in the specified time window.
+* The `MeteringCollectionFlow` flow is used to collect metering data from a node using the node's shell (or connecting to it using the external shell). It takes the following arguments: a time window over which to collect data; optionally, a set of CorDapps to filter the data by. The flow output represents both the total count of metering events that match filter in the time window, and a breakdown of these events by the commands involved and the signing entities. This flow has been kept for invocation from the shell while its usage via RPC has been deprecated, use `NodeMeteringCollectionFlow` instead. This flow gathers data from the "current" node - the node where it was initiated.
+* The `NodeMeteringCollectionFlow` flow is used to collect metering data from a node connecting to it via RPC. It takes in a time window over which to collect data, and optionally a set of CorDapps to filter the data by. It outputs both the total count of metering events that match filter in the time window, and a breakdown of these events by the commands involved and the signing entities. This flow gathers data from the "current" node - the node where it was initiated.
+* The `FilteredMeteringCollectionFlow` flow is analogous to the `NodeMeteringCollectionFlow` flow except that it collects data from another node in the network. For that reason, it requires an additional parameter that specifies the party running the node where metering data is to be collected from. This flow gathers data from a node in the network that is different from the one where the was initiated.
+* The `AggregatedMeteringCollectionFlow` flow is used to collect aggregated metering data from other nodes in the network. It takes in a time window and the party running the node where metering data will be collected from. It outputs only the total count of signing events that happened on that node in the specified time window. This flow gathers data from a node in the network that is different from the one where the was initiated.
 * The `MultiFilteredCollectionFlow` flow is analogous to `FilteredMeteringCollectionFlow` except that allows to collect data from multiple nodes in the network sequentially in a single flow and returns the result as a JSON string. It is meant to be only used from the node shell while there is a dedicated method,
 `FilteredMeteringCollectionFlow#multiCollect`, for running collection from multiple nodes in parallel using from an RPC client.
 * The `MultiAggregatedCollectionFlow` flow is analogous to the `AggregatedMeteringCollectionFlow` flow, except that allows to collect data from multiple nodes in the network sequentially in a single flow and returns the result as a JSON string. It is meant to be only used from the node shell while there is a dedicated method,
 `AggregatedMeteringCollectionFlow#multiCollect`, for running collection from multiple nodes in parallel using from an RPC client.
 * The `NotaryCollectionFlow` flow is used to collect metering data from notaries. It takes in a time window over which to collect the data. It outputs a total count of notarisation requests over that interval, along with a breakdown of requests against the parties that made them.
 * The `RetrieveCordappDataFlow` flow is a utility flow to extract CorDapp hashes and signing keys for a given CorDapp name, in the correct format for use in the `NodeMeteringCollectionFlow` filter. The flow provides information about the versions and vendors of the returned CorDapps so that the correct CorDapp data can be selected.
-
 
 {{< warning >}}
 The `NotaryCollectionFlow` flow does not allow the collection of metering data for notaries configured in high-availability mode.
@@ -101,6 +99,12 @@ result in your configuration being ignored and default values being applied (whi
 {{< /warning >}}
 
 ## Use procedures
+
+This section provides instructions on how to use each of the flows that the Metering Collection Tool uses.
+
+{{< note >}}
+In the list of flows below, the `FilteredMeteringCollectionFlow` flow and the `AggregatedMeteringCollectionFlow` flow gather data from a node in the network that is different from the one where they were initiated. The `NodeMeteringCollectionFlow` flow and the `MeteringCollectionFlow` flow collect metering data from the "current" node - the node where they were initiated.
+{{< /note >}}
 
 ### Using `MeteringCollectionFlow`
 
