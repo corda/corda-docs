@@ -36,10 +36,10 @@ The remaining node files and directories will be generated at runtime. These are
 
 ## Use the Cordform and Dockerform gradle plug-ins to automatically create a set of local nodes
 
-Corda provides two `gradle` plug-ins called `Cordform` and `Dockerform`. They both allow you to run tasks that automatically generate and configure a local set of nodes for testing and demos.
+Corda provides two `gradle` plug-ins called `Cordform` and `Dockerform`. They both allow you to run tasks that automatically generate and configure a local set of nodes for testing and demonstration purposes.
 
-* A `Cordform` task creates three nodes in the `build/nodes` directory: `Notary`, `PartyA`, and `PartyB`. `Cordform` tasks require you to manually deploy each Corda node and database separately.
-* A `Dockerform` task is similar to `Cordform` but it provides an extra file that enables you to easily spin up nodes using `docker-compose`. This creates a `docker-compose` file that enables you to run a single command to control the deployment of Corda nodes and databases (instead of deploying each node/database manually).
+* A `Cordform` task creates nodes in the `build/nodes` directory. `Cordform` tasks require you to manually deploy each Corda node and database separately. The example `Cordform` task used in this document creates three nodes: `Notary`, `PartyA`, and `PartyB`, however you are free to spin up more nodes, specify what nodes you need on the network, change node names, and update node configurations.
+* Nodes deployed via `Dockerform` use Docker containers. A `Dockerform` task is similar to `Cordform` but it provides an extra file that enables you to easily spin up nodes using `docker-compose`. This creates a `docker-compose` file that enables you to run a single command to control the deployment of Corda nodes and databases (instead of deploying each node/database manually).
 
 {{< note >}}
 Unlike `Cordform` tasks, `Dockerform` tasks require Docker to be installed on the local host.
@@ -47,7 +47,7 @@ Unlike `Cordform` tasks, `Dockerform` tasks require Docker to be installed on th
 
 ### Tasks using the Cordform plug-in
 
-Run this task to create the following three nodes in the `build/nodes` directory:
+Run this example task to create the following three nodes in the `build/nodes` directory:
 
 A `Notary` node, which:
 * Provides a validating Notary service.
@@ -61,6 +61,10 @@ A `Notary` node, which:
 * Has an RPC (Remote Procedure Call) user (`user1`), which enables you to log in the node via RPC.
 
 All three nodes also include any CorDapps defined in the project's source directories, even if these CorDapps are not listed in each node's `cordapps` setting. As a result, if you run the `deployNodes` task from the template CorDapp, for example, it will automatically build and add the template CorDapp to each node.
+
+{{< note >}}
+The three nodes described here are just an example. `Cordform` allows you specify any number of nodes and you can define their configurations and names as needed.
+{{< /note >}}
 
 The following example, as defined in the [Kotlin CorDapp Template](https://github.com/corda/cordapp-template-kotlin/blob/release-V4/build.gradle#L120), shows a `Cordform` task called `deployNodes` that creates the three nodes described above: `Notary`, `PartyA`, and `PartyB`.
 
@@ -155,7 +159,7 @@ rpcSettings {
 
 * `notary` &lt;config&gt; - use this configuration option to specify the node as a Notary node. **Required**> for Notary nodes. For more information, see [Notary](../setup/corda-configuration-file.md#corda-configuration-file-notary).
 
-* `devMode` &lt;boolean&gt; - use this configuration option to enable development mode when you set its value to `true`. For more informatio, see [devMode](../setup/corda-configuration-file.md#corda-configuration-file-dev-mode). For example:
+* `devMode` &lt;boolean&gt; - use this configuration option to enable development mode when you set its value to `true`. For more information, see [devMode](../setup/corda-configuration-file.md#corda-configuration-file-dev-mode). For example:
 
 ```kotlin
 devMode true
@@ -241,13 +245,6 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['jar']) {
         drivers = ext.drivers + ['lib/my_specific_jar.jar']
     }
 }
-```
-
-The Cordform task automatically copies a Jolokia agent `.jar` file into the `drivers` sub-directory of each generated node. The version of this `.jar` file
-defaults to `1.6.0`. You can change this by setting the `jolokia_version` property anywhere in your `build.gradle` file - for example:
-
-```groovy
-ext.jolokia_version = "1.6.1"
 ```
 
 #### Package namespace ownership
@@ -595,6 +592,10 @@ To make the database files persistent across multiple `docker-compose` runs, you
 #### Run the Dockerform task
 
 To run the Dockerform task, follow the steps below.
+
+{{< note >}}
+The node configuration described here is just an example. `Dockerform` allows you specify any number of nodes and you can define their configurations and names as needed.
+{{< /note >}}
 
 1. Open the `build.gradle` file of your Cordapp project and add a new gradle task, as shown in the example below.
 
