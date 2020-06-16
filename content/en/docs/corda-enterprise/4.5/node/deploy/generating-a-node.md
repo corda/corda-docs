@@ -207,7 +207,7 @@ To extend node configuration beyond the properties defined in the `deployNodes` 
 If you add a property to the additional configuration file that has already been created by the `deployNodes` task, both properties will be present in generated node configuration.
 {{< /note >}}
 
-Alternatively, you can also add the path to the additional configuration file while running the Gradle task via the `-PconfigFile` command-line option. However, this will result in the same configuration file being applied to all nodes.
+Alternatively, you can also add the path to the additional configuration file while running the gradle task via the `-PconfigFile` command-line option. However, this will result in the same configuration file being applied to all nodes.
 
 Following on from the previous example, the `PartyB` node in the next example below has additional configuration options added from a file called `none-b.conf`:
 
@@ -271,7 +271,7 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['jar']) {
 The default Cordform behaviour is to deploy CorDapp `.jar` files “as built”.
 
 * Prior to Corda 4.0, all CorDapp `.jar` files were unsigned.
-* As of Corda 4.0, CorDapp `.jar` files created by the Gradle `cordapp` plug-in are signed by a Corda development certificate by default.
+* As of Corda 4.0, CorDapp `.jar` files created by the gradle `cordapp` plug-in are signed by a Corda development certificate by default.
 
 You can use the Cordform `signing` entry to override and customise the signing of CorDapp `.jar` files.
 Signing a CorDapp enables its contract classes to use signature constraints instead of other types of constraints, such as [Contract Constraints](../../cordapps/api-contract-constraints.md).
@@ -292,7 +292,7 @@ You can use the following parameters in the `signing` entry:
     * `keyalg` - the method to use when generating a name-value pair. The default value is `RSA` because Corda does not support `DSA`. Only use this option when `generateKeystore` is set to `true` (see below).
 * `generateKeystore` - the flag to generate a keystore. The default value is `false`. If set to `true`, an "ad hoc" keystore is created and its key is used instead of the default Corda development key or any external key. The same `options` to specify an external keystore are used to define the newly created keystore. In addition,
 `dname` and `keyalg` are required. Other options are described in [GenKey task](https://ant.apache.org/manual/Tasks/genkey.html). If the existing keystore is already present, the task will reuse it. However if the file is inside the `build` directory,
-then it will be deleted when the Gradle `clean` task is run.
+then it will be deleted when the gradle `clean` task is run.
 
 The example below shows the minimal set of `options` required to create a dummy keystore:
 
@@ -359,99 +359,29 @@ This command creates the nodes in the `build/nodes` directory. A node directory 
 
 Dockerform supports the following configuration options for each node:
 
-
 * `name`
 * `notary`
 * `cordapps`
 * `rpcUsers`
 * `useTestClock`
 
-There is no need to specify the nodes' ports, as every node has a separate container, so no ports conflict will occur. Every node will expose port `10003` for RPC connections.
+You do not need to specify the node ports because every node has a separate container so no ports conflicts will occur. Every node will expose port `10003` for RPC connections.
 
-The nodes' web servers will not be started. Instead, you should interact with each node via its shell over SSH (see the node configuration options). You have to enable the shell by adding the following line to each node’s `node.conf` file:
+The web servers of the nodes will not be started. Instead, you should interact with each node via its shell over SSH - see the [node configuration options](../setup/corda-configuration-file.md) for more information.
 
+To enable the shell, add the following line to each node’s `node.conf` file:
 
 `sshd { port = <NUMBER> }`
 
-
 Where `<NUMBER>` is the port you want to open to SSH into the shell.
 
-
-The Docker image associated with each node can be configured in the `Dockerform` task. This will initialise *each* node in the `Dockerform` task with the specified Docker image. If you need nodes with different Docker images, you can edit the `docker-compose.yml` file with your preferred image.
-
-To run the Dockerform task, follow these steps:
-
-* Open the `build.gradle` file of your Cordapp project and add a new gradle task:
-```groovy
-task prepareDockerNodes(type: net.corda.plugins.Dockerform, dependsOn: ['jar']) {
-    nodeDefaults {
-        cordapp project(":contracts-java")
-    }
-    node {
-        name "O=Notary,L=London,C=GB"
-        notary = [validating : false]
-        p2pPort 10002
-        rpcSettings {
-            address("localhost:10003")
-            adminAddress("localhost:10023")
-        }
-        projectCordapp {
-            deploy = false
-        }
-        cordapps.clear()
-    }
-    node {
-        name "O=PartyA,L=London,C=GB"
-        p2pPort 10002
-        rpcSettings {
-            address("localhost:10003")
-            adminAddress("localhost:10023")
-        }
-        rpcUsers = [[user: "user1", "password": "test", "permissions": ["ALL"]]]
-    }
-    node {
-        name "O=PartyB,L=New York,C=US"
-        p2pPort 10002
-        rpcSettings {
-            address("localhost:10003")
-            adminAddress("localhost:10023")
-        }
-        rpcUsers = [[user: "user1", "password": "test", "permissions": ["ALL"]]]
-    }
-
-    // This property needs to be outside the node {...} elements
-    dockerImage = "corda/corda-zulu-java1.8-4.4"
-}
-```
-
-* Run `./gradlew prepareDockerNodes` to generate the `build` directory. This folder contains the node files and a `docker-compose.yml` file.
-* Edit the generated `docker-compose.yml` file to change the ports:
-```groovy
-version: '3'
-services:
-  notary:
-    build: /Users/<USER>/Projects/json-cordapp/workflows-java/build/nodes/Notary
-    ports:
-      - "10002"
-      - "10003"
-  partya:
-    build: /Users/<USER>/Projects/json-cordapp/workflows-java/build/nodes/PartyA
-    ports:
-      - "10002"
-      - "10003"
-  partyb:
-    build: /Users/<USER>/Projects/json-cordapp/workflows-java/build/nodes/PartyB
-    ports:
-      - "10002"
-      - "10003"
-```
-
+The Docker image associated with each node can be configured in the `Dockerform` task. This will initialise *every* node in the `Dockerform` task with the specified Docker image. If you need nodes with different Docker images, you can edit the `docker-compose.yml` file with your preferred image.
 
 #### Specify an external database
 
 You can configure `Dockerform` to use a standalone database to test with non-H2 databases. For example, to use PostgresSQL, you need to make the following changes to your Cordapp project:
 
-* Create a file called `postgres.gradle` in your Cordapp directory and insert the following code block:
+1. Create a file called `postgres.gradle` in your Cordapp directory, and insert the following code block:
 
 ```groovy
 ext {
@@ -601,9 +531,7 @@ EOSQL
 }
 ```
 
-In the `build.gradle` file:
-* Add the gradle task `generateInitScripts` to `dependsOn` list of `prepareDockerNodes` task;
-* Add the `dockerConfig` element and initialise it with `postgres` block as follows:
+2. In the `build.gradle` file, add the gradle task `generateInitScripts` to the `dependsOn` list of the `prepareDockerNodes` task, add the `dockerConfig` element, and initialise it with the `postgres` block. An example is shown below:
 
 ```groovy
 task prepareDockerNodes(type: net.corda.plugins.Dockerform, dependsOn: ['jar',  'generateInitScripts']) {
@@ -619,17 +547,17 @@ task prepareDockerNodes(type: net.corda.plugins.Dockerform, dependsOn: ['jar',  
 }
 ```
 
-The `postgres.gradle` file includes:
-* A gradle task `generateInitScripts` to generate the Postgres Docker image files;
-* A set of variables to initialise the Postgres Docker image.
+The `postgres.gradle` file includes the following:
+* A gradle task called `generateInitScripts` used to generate the Postgres Docker image files.
+* A set of variables used to initialise the Postgres Docker image.
 
-Two files are necessary to setup the external database, which are placed in the `build` directory:
-* `Postgres_Dockerfile` :  a wrapper for the base Postgres Docker image;
-* `Postgres_init.sh` :  a shell script to initialise the database.
+To set up the external database, you must place the following two files in the `build` directory:
+* `Postgres_Dockerfile` -  a wrapper for the base Postgres Docker image.
+* `Postgres_init.sh` -  a shell script to initialise the database.
 
-The `Postgres_Dockerfile` is referenced in the `docker-compose.yml` file, and allows for a number of arguments to configure the Docker image.
+The `Postgres_Dockerfile` is referenced in the `docker-compose.yml` file and allows for a number of arguments for configuring the Docker image.
 
-The following parameters can be configured in the `postgres.gradle` file:
+You can use the following configuration parameters in the `postgres.gradle` file:
 
 | Parameter              | Description                                       |
 |------------------------|---------------------------------------------------|
@@ -645,25 +573,90 @@ The following parameters can be configured in the `postgres.gradle` file:
 | dbDockerfile           | Wrapper of base Postgres Docker image             |
 | dbDataVolume           | Path to database files for Postgres Docker image  |
 
-
-To make the database files persistent across multiple `docker-compose` runs, you need to set the parameter `dbDataVolume`. If this variable is commented out, the database files will be removed after every `docker-compose` run.
+To make the database files persistent across multiple `docker-compose` runs, you must set the `dbDataVolume` parameter. If this variable is commented out, the database files will be removed after every `docker-compose` run.
 
 #### Run the Dockerform task
 
-To create the nodes defined in our `prepareDockerNodes` gradle task, run the following command in a terminal window from the root of the project where the `prepareDockerNodes` task is defined:
+To run the Dockerform task, follow the steps below.
+
+1. Open the `build.gradle` file of your Cordapp project and add a new gradle task:
+```groovy
+task prepareDockerNodes(type: net.corda.plugins.Dockerform, dependsOn: ['jar']) {
+    nodeDefaults {
+        cordapp project(":contracts-java")
+    }
+    node {
+        name "O=Notary,L=London,C=GB"
+        notary = [validating : false]
+        p2pPort 10002
+        rpcSettings {
+            address("localhost:10003")
+            adminAddress("localhost:10023")
+        }
+        projectCordapp {
+            deploy = false
+        }
+        cordapps.clear()
+    }
+    node {
+        name "O=PartyA,L=London,C=GB"
+        p2pPort 10002
+        rpcSettings {
+            address("localhost:10003")
+            adminAddress("localhost:10023")
+        }
+        rpcUsers = [[user: "user1", "password": "test", "permissions": ["ALL"]]]
+    }
+    node {
+        name "O=PartyB,L=New York,C=US"
+        p2pPort 10002
+        rpcSettings {
+            address("localhost:10003")
+            adminAddress("localhost:10023")
+        }
+        rpcUsers = [[user: "user1", "password": "test", "permissions": ["ALL"]]]
+    }
+
+    // This property needs to be outside the node {...} elements
+    dockerImage = "corda/corda-zulu-java1.8-4.4"
+}
+```
+
+2. To create the nodes defined in the `prepareDockerNodes` gradle task added in the first step, run the following command in a command prompt or a terminal window, from the root of the project where the `prepareDockerNodes` task is defined:
 
 * Linux/macOS: `./gradlew prepareDockerNodes`
 * Windows: `gradlew.bat prepareDockerNodes`
 
-This will create the nodes in the `build/nodes` directory. There will be a node directory generated for each node defined in the `prepareDockerNodes` task. The task will also create a `docker-compose.yml` file in the `build/nodes` directory.
+This command creates the nodes in the `build/nodes` directory. A node directory is generated for each node defined in the `prepareDockerNodes` task. The task also creates a `docker-compose.yml` file in the `build/nodes` directory.
 
-If you configure an external database as detailed above, a `Postgres_Dockerfile` file and `Postgres_init.sh` file will be generated in the `build` directory. If you make any changes to your CorDapp source or `prepareDockerNodes` task, you will need to re-run the task to see the changes take effect.
+{{< note >}}
+If you configure an external database, a `Postgres_Dockerfile` file and `Postgres_init.sh` file are also generated in the `build` directory. If you make any changes to your CorDapp source or `prepareDockerNodes` task, you will need to re-run the task to see the changes take effect.
 
-Each Corda node will be associated with a Postgres database. There will not be two or more Corda nodes connecting to the same database. While there is no maximum number of nodes you can deploy with `Dockerform`, you are constrained by the maximum available resources on the machine running this task as well as the overhead introduced by each started Docker container. All the started nodes run in the same Docker overlay network.
+In this case, each Corda node is associated with a Postgres database. Only one Corda node can connect to the same database. While there is no maximum number of nodes you can deploy with `Dockerform`, you are constrained by the maximum available resources on the machine running this task, as well as the overhead introduced by every Docker container that is started. All the started nodes run in the same Docker overlay network.
 
 The connection settings to the Postgres database are provided to each node through the `postgres.gradle` file. The Postgres JDBC driver is provided via Maven as part of the `cordaDrive` gradle configuration, which is also specified in the dependencies block of the `postgres.gradle` file.
 
-
-{{< note >}}
-We have not designed this feature for users to access the database via elevated or admin rights - you must only use such configuration changes for testing/development purposes.
+Note that this feature is not designed for users to access the database via elevated or admin rights - you must only use such configuration changes for testing/development purposes.
 {{< /note >}}
+
+3. Edit the generated `docker-compose.yml` file to change the ports, as shown in the example below:
+
+```groovy
+version: '3'
+services:
+  notary:
+    build: /Users/<USER>/Projects/json-cordapp/workflows-java/build/nodes/Notary
+    ports:
+      - "10002"
+      - "10003"
+  partya:
+    build: /Users/<USER>/Projects/json-cordapp/workflows-java/build/nodes/PartyA
+    ports:
+      - "10002"
+      - "10003"
+  partyb:
+    build: /Users/<USER>/Projects/json-cordapp/workflows-java/build/nodes/PartyB
+    ports:
+      - "10002"
+      - "10003"
+```
