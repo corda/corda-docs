@@ -355,7 +355,7 @@ To create the nodes defined in the `deployNodes` task example above, run the fol
 
 This command creates the nodes in the `build/nodes` directory. A node directory is generated for each node defined in the `deployNodes` task, plus a `runnodes` shell script (or a batch file on Windows) to run all the nodes at once for testing and development purposes. If you make any changes to your CorDapp source or `deployNodes` task, you will need to re-run the task to see the changes take effect.
 
-### The Dockerform task
+### Tasks using the Dockerform plug-in
 
 Dockerform supports the following configuration options for each node:
 
@@ -369,11 +369,24 @@ You do not need to specify the node ports because every node has a separate cont
 
 The web servers of the nodes will not be started. Instead, you should interact with each node via its shell over SSH - see the [node configuration options](../setup/corda-configuration-file.md) for more information.
 
-To enable the shell, add the following line to each node’s `node.conf` file:
+To enable the shell, yon need to set the `sshdPort` number for each node in the gradle task - this is explained in the section [run the Dockerform task](#run-the-dockerform-task) further below. For example:
 
-`sshd { port = <NUMBER> }`
+```groovy
+node {
+    name "O=PartyA,L=London,C=GB"
+    p2pPort 10002
+    rpcSettings {
+        address("localhost:10003")
+        adminAddress("localhost:10023")
+    }
+    rpcUsers = [[user: "user1", "password": "test", "permissions": ["ALL"]]]
+    sshdPort 2223
+}
+```
 
-Where `<NUMBER>` is the port you want to open to SSH into the shell.
+{{< note >}}
+Make sure to use Corda gradle plugin version 5.0.10 or above. If you do not specify the sshd port number for a node, it will use the default value `2222`.
+{{< /note >}}
 
 The Docker image associated with each node can be configured in the `Dockerform` task. This will initialise *every* node in the `Dockerform` task with the specified Docker image. If you need nodes with different Docker images, you can edit the `docker-compose.yml` file with your preferred image.
 
@@ -579,7 +592,12 @@ To make the database files persistent across multiple `docker-compose` runs, you
 
 To run the Dockerform task, follow the steps below.
 
-1. Open the `build.gradle` file of your Cordapp project and add a new gradle task:
+1. Open the `build.gradle` file of your Cordapp project and add a new gradle task, as shown in the example below.
+
+{{< note >}}
+Make sure to use Corda gradle plugin version 5.0.10 or above.
+{{< /note >}}
+
 ```groovy
 task prepareDockerNodes(type: net.corda.plugins.Dockerform, dependsOn: ['jar']) {
     nodeDefaults {
@@ -597,6 +615,7 @@ task prepareDockerNodes(type: net.corda.plugins.Dockerform, dependsOn: ['jar']) 
             deploy = false
         }
         cordapps.clear()
+      sshdPort 2222
     }
     node {
         name "O=PartyA,L=London,C=GB"
@@ -606,6 +625,7 @@ task prepareDockerNodes(type: net.corda.plugins.Dockerform, dependsOn: ['jar']) 
             adminAddress("localhost:10023")
         }
         rpcUsers = [[user: "user1", "password": "test", "permissions": ["ALL"]]]
+        sshdPort 2223
     }
     node {
         name "O=PartyB,L=New York,C=US"
@@ -615,12 +635,17 @@ task prepareDockerNodes(type: net.corda.plugins.Dockerform, dependsOn: ['jar']) 
             adminAddress("localhost:10023")
         }
         rpcUsers = [[user: "user1", "password": "test", "permissions": ["ALL"]]]
+        sshdPort 2224
     }
 
     // This property needs to be outside the node {...} elements
     dockerImage = "corda/corda-zulu-java1.8-4.4"
 }
 ```
+
+{{< note >}}
+If you do not specify the sshd port number for a node, it will use the default value `2222`.
+{{< /note >}}
 
 2. To create the nodes defined in the `prepareDockerNodes` gradle task added in the first step, run the following command in a command prompt or a terminal window, from the root of the project where the `prepareDockerNodes` task is defined:
 
