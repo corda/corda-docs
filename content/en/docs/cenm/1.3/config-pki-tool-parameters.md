@@ -31,12 +31,12 @@ alias (for referencing throughout the rest of the config) to certificate store c
 config takes the following form:
 
 
-* **file**:
-Certificate store file location. If the file does not exist it will be created automatically.
+  * **file**:
+  Certificate store file location. If the file does not exist it will be created automatically.
 
 
-* **password**:
-Certificate store password. If not specified, the `defaultPassword` attribute is going to be used.
+  * **password**:
+  Certificate store password. If not specified, the `defaultPassword` attribute is going to be used.
 
 
 
@@ -137,11 +137,9 @@ HSM username. This user needs the appropriate permissions for key generation and
 * **mode**:
 Currently, 3 authentication modes are supported:
 
->
->
-> * `PASSWORD` - User’s password as set-up in the HSM.
-> * `CARD_READER` - Smart card reader authentication.
-> * `KEY_FILE` - Key file based authentication.
+* `PASSWORD` - user password as specified in the HSM.
+* `CARD_READER` - smart card reader authentication.
+* `KEY_FILE` - key file based authentication.
 
 
 
@@ -354,17 +352,15 @@ it will result in the certificate being generated without a role extension.
 Possible usages of the keys associated with the certificate (Optional). This is an array of values from the
 following set:
 
->
->
-> * `DIGITAL_SIGNATURE`
-> * `NON_REPUDIATION`
-> * `KEY_ENCIPHERMENT`
-> * `DATA_ENCIPHERMENT`
-> * `KEY_AGREEMENT`
-> * `KEY_CERT_SIGN`
-> * `CRL_SIGN`
-> * `ENCIPHER_ONLY`
-> * `DECIPHER_ONLY`
+* `DIGITAL_SIGNATURE`
+* `NON_REPUDIATION`
+* `KEY_ENCIPHERMENT`
+* `DATA_ENCIPHERMENT`
+* `KEY_AGREEMENT`
+* `KEY_CERT_SIGN`
+* `CRL_SIGN`
+* `ENCIPHER_ONLY`
+* `DECIPHER_ONLY`
 
 
 Default value: [`DIGITAL_SIGNATURE`, `KEY_CERT_SIGN`, `CRL_SIGN`].
@@ -374,28 +370,26 @@ Default value: [`DIGITAL_SIGNATURE`, `KEY_CERT_SIGN`, `CRL_SIGN`].
 Possible extended usages of the keys associated with the certificate (Optional). This is an array of values from the
 following set:
 
->
->
-> * `ANY_EXTENDED_KEY_USAGE`
-> * `SERVER_AUTH`
-> * `CLIENT_AUTH`
-> * `CODE_SIGNING`
-> * `EMAIL_PROTECTION`
-> * `IPSEC_END_SYSTEM`
-> * `IPSEC_TUNNEL`
-> * `IPSEC_USER`
-> * `IPSEC_TIME_STAMPING`
-> * `OCSP_SIGNING`
-> * `DVCS`
-> * `SBGP_CERT_A_A_SERVER_AUTH`
-> * `SCVP_RESPONDER`
-> * `EAP_OVER_PPP`
-> * `EAP_OVER_LAN`
-> * `SCVP_SERVER`
-> * `SCVP_CLIENT`
-> * `IPSEC_IKE`
-> * `CAPWAP_AC`
-> * `CAPWAP_WTP`
+* `ANY_EXTENDED_KEY_USAGE`
+* `SERVER_AUTH`
+* `CLIENT_AUTH`
+* `CODE_SIGNING`
+* `EMAIL_PROTECTION`
+* `IPSEC_END_SYSTEM`
+* `IPSEC_TUNNEL`
+* `IPSEC_USER`
+* `IPSEC_TIME_STAMPING`
+* `OCSP_SIGNING`
+* `DVCS`
+* `SBGP_CERT_A_A_SERVER_AUTH`
+* `SCVP_RESPONDER`
+* `EAP_OVER_PPP`
+* `EAP_OVER_LAN`
+* `SCVP_SERVER`
+* `SCVP_CLIENT`
+* `IPSEC_IKE`
+* `CAPWAP_AC`
+* `CAPWAP_WTP`
 
 
 Default value: [`SERVER_AUTH`, `CLIENT_AUTH`].
@@ -427,54 +421,52 @@ Issuer’s certificate URL (Optional).
 Certificate revocation list specific configuration.
 
 
-* **validDays**:
-Validity period of the certificate revocation list. Default value: `3650`.
+  * **validDays**:
+  Validity period of the certificate revocation list. Default value: `3650`.
 
 
-* **crlDistributionUrl**:
-Certificate revocation list distribution URL.
+  * **crlDistributionUrl**:
+  Certificate revocation list distribution URL.
 
 
-* **indirectIssuer**:
-Flag denoting whether the generated certificate revocation list is intended to be used as the CRL for another
-CA. This information is baked into the CRL via the `indirectCRL` flag inside the
-`Issuing Distribution Point` extension. Has a default value of `false`, meaning that the generated CRL is
-intended to be used as the CRL for all certificates issued by the current entity.
+  * **indirectIssuer**:
+  Flag denoting whether the generated certificate revocation list is intended to be used as the CRL for another
+  CA. This information is baked into the CRL via the `indirectCRL` flag inside the
+  `Issuing Distribution Point` extension. Has a default value of `false`, meaning that the generated CRL is
+  intended to be used as the CRL for all certificates issued by the current entity.
 
 
-* **issuer**:
-The issuer (given in the X500 name format) that should be included in the `Issuing Distribution Point` CRL
-extension. Only applicable if the `indirectIssuer` is set to true above, in which case this must be set to the
-same value as the entity’s subject.
+  * **issuer**:
+  The issuer (given in the X500 name format) that should be included in the `Issuing Distribution Point` CRL
+  extension. Only applicable if the `indirectIssuer` is set to `true` above, in which case this must be set to the
+  same value as the entity’s subject.
 
 
-* **file**:
-Location of the file where the encoded bytes of the certificate revocation list are to be stored.
+  * **file**:
+  Location of the file where the encoded bytes of the certificate revocation list are to be stored.
 
 
-* **revocations**:
-List of revocation data (Optional). Each entry in the list should take the following format:
+  * **revocations**:
+  *(Optional)* List of revocation data. Each entry in the list must be in the following format:
 
 
-* **certificateSerialNumber**:
-Serial number of the revoked certificate.
+  * **certificateSerialNumber**:
+  Serial number of the revoked certificate.
 
 
-* **dateInMillis**:
-Certificate revocation time.
+  * **dateInMillis**:
+  Certificate revocation time.
 
 
-* **reason**:
-Reason for the certificate revocation. The allowed value is one of the following:
+  * **reason**:
+  Reason for the certificate revocation. The allowed value is one of the following:
 
->
->
-> * `KEY_COMPROMISE`
-> * `CA_COMPROMISE`
-> * `AFFILIATION_CHANGED`
-> * `SUPERSEDED`
-> * `CESSATION_OF_OPERATION`
-> * `PRIVILEGE_WITHDRAWN`
+    * `KEY_COMPROMISE`
+    * `CA_COMPROMISE`
+    * `AFFILIATION_CHANGED`
+    * `SUPERSEDED`
+    * `CESSATION_OF_OPERATION`
+    * `PRIVILEGE_WITHDRAWN`
 
 
 
