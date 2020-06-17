@@ -59,56 +59,36 @@ Environment variables:
   * Defaults to "--verbose"
 
 
-
 ### Install using the .jar file
 
 1. Add the file `accounts-application.jar` to your CENM working directory.
 2. Configure the Auth service using the command line.  
 
-### Minimum required files
+### Prepare for configuration
 
-* Config file.
-* `jwt` signing key (RSA keypair) in a jks file. This can be generated with the following command line command: 
+Before you can configure the Auth service, you need to prepare SSL certificates, create signing keys and add your baseline permissions `.jar` file so that new permissions can be added to the Auth service.
+
+To do this:
+
+1. Create a SSL certificate in a `.jks` file using the [CENM PKI tool](PKI-tool).
+
+2. Generate a `jwt` signing key (RSA keypair) in a jks file with the following command line command:
 `keytool -genkeypair -alias mytest -keyalg RSA -keypass mypass -keystore mytest.jks -storepass mypass`.
-* SSL certificate in a `.jks` file.
-* baseline `.jar` that contains the set of permissions available in the deployment and optionally predefined roles.
-  * You can also be copy this into a folder inside the working directory called `plugins` to avoid having to specify it in the config file.
+
+3. Ensure you have your A baseline `.jar` file that contains the set of permissions available in the deployment and optionally predefined roles. This is shipped as part of CENM via Artifcatory. For example, the file for CENM 1.3 is called `accounts-baseline-cenm-1.3.0.jar`. You can also copy this into a folder inside the working directory called `plugins` to avoid having to specify it in the config file.
 
 ## Configure the auth service
 
-As you configure the Auth service, you need to set up its connection to your FARM Service. Make sure you know:
+To deploy the Auth service, you need to create a configuration file.
+
+When you create your config file, you establish its connection to your [FARM Service](farm-service). Make sure you know:
 
 * Your FARM service ID.
-* Your FARM service secret.  
-
-You can configure the Auth Service using the command line.
-
-Command line arguments:
-
-* `[-f, --config-file]` Path of the service config file.
-* `[-o, --obfuscated]` Indicates an obfuscated config.
-* `[--seed]` Optional seed for config deobfuscation.
-* `[-v, --verbose]` Redirect all log output to the console. Also sets logging level to INFO.
-* `[--logging-level]` Sets logging level. Accepts Log4j Levels.
-
-Initial user **initializer**: This command group allows configuration of the initial admin user. Both options are required when any of them is in use.
-* `[--initial-user-name]` Sets the name of the user.
-* `[--initial-user-password]` Sets the password of the user.
-
-* `[--restore-admin-capability]` ()**initializer**) If all admin users are locked out, for example because of password policy, this option unlocks them.
-
-Reset user (**initializer**): Use this command group to reset, re-enable, and unlock a user. You can also sets a user's password or force the user to become an administrator. Administrators can create and edit other users, but cannot access CENM services directly.
-
-* `[--reset-user-username]` Username to be reset.
-* `[--reset-user-password]` New password for the user being reset.
-* `[--reset-user-admin]` Flag to enable forcing the user to be admin.
-
-* `[--keep-running]` Enables the application to keep running after any of the **initializer** arguments have been supplied.
-
+* Your FARM service secret.
 
 In the sample below, you can see the initial configuration process:
 
-1. Database configuration. Add the name, address and login credentials for the SQL database that supports the Auth service.
+1. [Database configuration](database-set-up). Add the name, address and login credentials for the SQL database that supports the Auth service.
 
 2. JSON Web Key configuration. Set the username, password, and location of the RSA keypair store for signing. The location must be the absolute path.
 
@@ -227,3 +207,29 @@ baseline {
     }
 }
 ```
+
+### Manage your configuration
+
+You can manage the Auth Service configuration using the command line.
+
+Command line arguments:
+
+* `[-f, --config-file]` Path of the service config file.
+* `[-o, --obfuscated]` Indicates an obfuscated config.
+* `[--seed]` Optional seed for config deobfuscation.
+* `[-v, --verbose]` Redirect all log output to the console. Also sets logging level to INFO.
+* `[--logging-level]` Sets logging level. Accepts Log4j Levels.
+
+Initial user **initializer**: This command group allows configuration of the initial admin user. Both options are required when any of them is in use.
+* `[--initial-user-name]` Sets the name of the user.
+* `[--initial-user-password]` Sets the password of the user.
+
+* `[--restore-admin-capability]` ()**initializer**) If all admin users are locked out, for example because of password policy, this option unlocks them.
+
+Reset user (**initializer**): Use this command group to reset, re-enable, and unlock a user. You can also sets a user's password or force the user to become an administrator. Administrators can create and edit other users, but cannot access CENM services directly.
+
+* `[--reset-user-username]` Username to be reset.
+* `[--reset-user-password]` New password for the user being reset.
+* `[--reset-user-admin]` Flag to enable forcing the user to be admin.
+
+* `[--keep-running]` Enables the application to keep running after any of the **initializer** arguments have been supplied.
