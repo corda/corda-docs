@@ -72,7 +72,7 @@ The full list of blocked functions can be found below:
 #### Updated Dockerform task
 
 
-We have updated our `Dockerform` [local development task](`generating-a-node.md`) to default to using PostgreSQL as the chosen node database.
+We have updated our `Dockerform` [local development task](`generating-a-node.md`) plug-in to use PostgreSQL as the chosen external database.
 
 
 ## Corda 4.4
