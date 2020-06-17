@@ -30,15 +30,29 @@ With the User Management tool, you can:
 
 ### Who can use it
 
-You can only use the User Admin tool if you are registered to use the tool as an Administrator. If you are the first person using the tool in your organisation, you need to request access from your contact at R3.
+You can only use the User Admin tool if you are registered to use the tool as an Administrator. If you are the first person using the tool in your organisation, you need to request access from your network owner's organization.
 
-## Install the CENM User Admin tool
+## Access the CENM User Admin tool
 
-To install the User Admin tool, you first need to request the installation file from your contact at R3. You also need a temporary login to set up your first administrator.
+You access the User Admin tool from the location of your [FARM service](gateway-service#manage-your-configuration) instance. Enter the full address of your FARM service, followed by `/admin` into a web browser.
 
-To install Network User Manager:
+For example:
+`http://10.230.41.12/admin`
 
-[STEPS REQUIRED HERE]
+### First login
+
+Your initialisation credentials for logging in for the first time are established using the `--initial-user-name` and `--initial-user-password` commands when managing the configuration of the [Auth Service](auth-service). 
+
+If you do not have these, you need to access them from the operator who configured your Auth Service.
+
+{{< important >}}
+For security reasons, you must *delete* the original admin user once you have accessed the Admin tool.
+{{< /important >}}
+
+1. Login with the initilisation credentials.
+2. Create your own account as an **Administrator**.
+3. Login with your new credentials.
+4. Delete the initialisation account.
 
 ## Change your password
 
