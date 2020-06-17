@@ -1,11 +1,14 @@
 ---
 date: '2020-04-07T12:00:00Z'
-menu: []
+menu:
+  corda-enterprise-4-5:
+    parent: corda-enterprise-4-5-cordapps
 tags:
 - secure
 - coding
 - guidelines
 title: Secure coding guidelines
+weight: 6
 ---
 
 
@@ -58,4 +61,3 @@ in the foot. Things to watch out for:
 fields are changing except the intended fields!
 * Accidentally catching and discarding exceptions that might be thrown by validation logic.
 * Calling into other contracts via virtual methods if you don’t know what those other contracts are or might do.
-

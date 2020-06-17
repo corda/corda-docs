@@ -8,6 +8,7 @@ tags:
 - contract
 - constraints
 title: Contract Constraints
+weight: 10
 ---
 
 
@@ -445,4 +446,3 @@ See generating-a-node for detailed instructions.
 You are specifying the fully-qualified name of the contract incorrectly. For example, you’ve defined `MyContract` in
 the package `com.mycompany.myapp.contracts`, but the fully-qualified contract name you pass to the
 `TransactionBuilder` is `com.mycompany.myapp.MyContract` (instead of `com.mycompany.myapp.contracts.MyContract`).
-

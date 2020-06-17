@@ -12,11 +12,11 @@ menu:
 tags:
 - concepts
 - ledger
-title: The ledger
+title: Ledger
 ---
 
 
-# The ledger
+# Ledger
 
 ## Summary
 
@@ -27,7 +27,7 @@ title: The ledger
 
 {{% vimeo 213812040 %}}
 
-## The Ledger Data
+## Ledger Data
 
 In Corda, there is **no single central store of data**. Instead, each node maintains its own database of those facts that it is aware of.
 

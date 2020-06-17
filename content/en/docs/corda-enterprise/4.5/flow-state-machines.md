@@ -1,11 +1,14 @@
 ---
 date: '2020-04-07T12:00:00Z'
-menu: []
+menu:
+  corda-enterprise-4-5:
+    parent: corda-enterprise-4-5-cordapps-flows
 tags:
 - flow
 - state
 - machines
 title: Writing flows
+weight: 7
 ---
 
 
@@ -854,4 +857,3 @@ problems (e.g. the other side doesn’t know the trade)
 For example to implement human transaction authorisations
 * A standard library of flows that can be easily sub-classed by local developers in order to integrate internal
 reporting logic, or anything else that might be required as part of a communications lifecycle
-

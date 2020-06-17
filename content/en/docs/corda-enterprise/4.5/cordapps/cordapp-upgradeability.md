@@ -6,11 +6,11 @@ menu:
 tags:
 - cordapp
 - upgradeability
-title: CorDapp Upgradeability Guarantees
+title: CorDapp upgradeability guarantees
 weight: 5
 ---
 
-# CorDapp Upgradeability Guarantees
+# CorDapp upgradeability guarantees
 
 ## Corda 4.0
 

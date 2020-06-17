@@ -1,14 +1,19 @@
 ---
 date: '2020-04-07T12:00:00Z'
-menu: []
+menu:
+  corda-enterprise-4-5:
+    identifier: "corda-enterprise-4-5-features-versions"
+    name: "Corda features and versions"
+    parent: corda-enterprise-4-5-upgrading-and-tools
 tags:
 - features
 - versions
-title: Corda Features to Versions
+title: Corda features and versions
+weight: 2
 ---
 
 
-# Corda Features to Versions
+# Corda features and versions
 
 New versions of Corda introduce new features. These fall into one of three categories which have subtle but important implications for
 node owners, application developers and network operators.
@@ -57,4 +62,3 @@ of Corda as well as opt in to newer features should they happen to be available 
 |Underlying Support for Accounts|5|4|4.3|4.3|
 
 {{< /table >}}
-

@@ -8,7 +8,7 @@ tags:
 - database
 - tables
 title: Database tables
-weight: 3
+weight: 50
 ---
 
 # Database tables
@@ -35,9 +35,9 @@ data could lead to unexpected behaviour and inconsistent views of the ledger.
 ## Network map
 
 
-### Node Infos
+### Node info
 
-These are tables that store the NodeInfo of other network participants.
+These are tables that store the node info of other network participants.
 They are just a local cache that is kept in sync with the network map server.
 By calling `rpc.clearNetworkMapCache()` all these tables will be cleared and recreated from the network map server.
 
@@ -590,4 +590,3 @@ These are [Liquibase](https://www.liquibase.org) proprietary tables used by Cord
 |LOCKEDBY||
 
 {{< /table >}}
-

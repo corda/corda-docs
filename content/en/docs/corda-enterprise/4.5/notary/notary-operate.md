@@ -9,7 +9,7 @@ tags:
 - notary
 - operate
 title: Operating a notary
-weight: 11
+weight: 120
 ---
 
 
@@ -26,6 +26,3 @@ weight: 11
 * [Handling flag days](handling-flag-days.md)
 * [Scaling A Notary Cluster](scaling-a-notary-cluster.md)
 * [Upgrading the notary to a new version of Corda Enterprise](upgrading-the-ha-notary-service.md)
-
-
-

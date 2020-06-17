@@ -8,7 +8,7 @@ tags:
 - core
 - types
 title: 'Core types in the Corda API'
-weight: 15
+weight: 130
 ---
 
 # API: Core types
@@ -54,5 +54,3 @@ Signature verification is performed in two stages:
 * The public keys corresponding to the signatures are matched against the leaves of the composite key tree in question,
 and the total combined weight of all children is calculated for every intermediary node. If all thresholds are satisfied,
 the composite key requirement is considered to be met.
-
-

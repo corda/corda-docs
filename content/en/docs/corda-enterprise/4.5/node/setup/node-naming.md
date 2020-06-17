@@ -3,13 +3,13 @@ date: '2020-04-07T12:00:00Z'
 menu:
   corda-enterprise-4-5:
     identifier: corda-enterprise-4-5-corda-nodes-configuring
-    name: "Configuring a Node"
+    name: "Configuring a node"
     parent: corda-enterprise-4-5-corda-nodes
 tags:
 - node
 - naming
 title: Node identity
-weight: 3
+weight: 40
 ---
 
 # Node identity
@@ -86,6 +86,3 @@ Mappings to external identifiers such as Companies House nos., LEI, BIC, etc. sh
 certificate extensions. These values may change for operational reasons, without the identity they’re associated with
 necessarily changing, and their inclusion in the distinguished name would cause significant logistical complications.
 The OID and format for these extensions will be described in a further specification.
-
-
-

@@ -6,12 +6,12 @@ menu:
 tags:
 - network
 - map
-title: The network map
+title: Network map
 weight: 3
 ---
 
 
-# The network map
+# Network map
 
 
 The network map is a collection of signed `NodeInfo` objects. Each NodeInfo is signed by the node it represents and
@@ -294,4 +294,3 @@ java -jar corda.jar clear-network-cache
 or call RPC method *clearNetworkMapCache* (it can be invoked through the node’s shell as *run clearNetworkMapCache*, for more information on
 how to log into node’s shell see shell). As we are testing and hardening the implementation this step shouldn’t be required.
 After cleaning the cache, network map data is restored on the next poll from the server or filesystem.
-

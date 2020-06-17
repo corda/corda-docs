@@ -1,21 +1,24 @@
 ---
 date: '2020-04-07T12:00:00Z'
-menu: []
+menu:
+  corda-enterprise-4-5:
+    parent: corda-enterprise-4-5-corda-networks
 tags:
 - docker
 - image
-title: Official Corda Docker Image
+title: Official Corda Docker image
+weight: 7
 ---
 
 
-# Official Corda Docker Image
+# Official Corda Docker image
 
 ## Running a node connected to a Compatibility Zone in Docker
 
 {{< note >}}
 Requirements: A valid node.conf and a valid set of certificates - (signed by the CZ)
-
 {{< /note >}}
+
 In this example, the certificates are stored at `/home/user/cordaBase/certificates`, the node configuration is in `/home/user/cordaBase/config/node.conf` and the CorDapps to run are in `/path/to/cordapps`
 
 ```shell

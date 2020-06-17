@@ -1,18 +1,13 @@
 ---
-aliases:
-- /head/node-administration.html
-- /HEAD/node-administration.html
-- /node-administration.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-node-administration
-    parent: corda-os-4-5-corda-nodes-index
-    weight: 1050
+  corda-enterprise-4-5:
+    parent: corda-enterprise-4-5-corda-nodes
 tags:
 - node
 - administration
 title: Node administration
+weight: 75
 ---
 
 
@@ -33,11 +28,82 @@ It may be the case that you require to amend the log level of a particular subse
 closer look at hibernate activity). So, for more bespoke logging configuration, the logger settings can be completely overridden
 with a [Log4j2](https://logging.apache.org/log4j/2.x) configuration file assigned to the `log4j.configurationFile` system property.
 
+Additionally, detailed logging around interactions with the database or HSM can be enabled by setting the `logging-level` to `TRACE` and will
+be printed out in a separate file (name will be prefixed with *details*) in the same location as the other log files. This type of logging is better
+structured to allow for log processing by 3rd party tools. MDC is also enabled for it. Currently, the following statement types are supported:
+
+
+*
+    * fields: *action*, *id*, *uploader*
+    * actions: *loading*, *loaded*, *store_start*, *store_created*, *store_updated*, *query_start*, *query_end*, *query_version_start*, *query_version_end*
+
+
+*
+    * fields: *action*, *type*, *criteria*, *pagination*, *sorting*
+    * actions: *query_start*, *query_end*
+
+
+*
+    * fields: *action*, *alias*, *scheme*, *found*, *algorithm*, *id*, *path*, *authState*
+    * actions: *generate_key_pair_start*, *generate_key_pair_end*, *key_lookup_start*, *key_lookup_end*, *key_get_start*, *key_get_end*, *signing_start*, *signing_end*, *get_signer*, *create_client*, *key_import*, *authenticate_start*, *authenticate_end*, *keystore_load_start*, *keystore_load_end*
+
+
+*
+    * fields: *action*, *flowId*, *flow*, *state*, *flowState*, *subFlows*, *subFlowStack*, *exception*, *reason*, *error*, *suspends*, *session*, *errorState*, *numberOfSuspends*
+    * actions: *start*, *add_and_start*, *create_from_checkpoint*, *retry_safe_point*, *propagate_error*, *remove*
+
+
+*
+    * fields: *action*, *flowId*, *size*, *platformVersion*, *id*, *to*, *from*
+    * actions: *send*, *receive*
+
+
+*
+    * fields: *action*, *party*
+    * actions: *save_start*, *save_end*
+
+
+*
+    * fields: *action*, *className*, *status*
+    * actions: *save_start*, *save_end*
+
+
+*
+    * fields: *action*, *refs*
+    * actions: *loading*, *loaded*
+
+
+*
+    * fields: *action*, *flowId*, *id*, *appName*, *message*, flowVersion`, *recipient*
+    * actions: *send_initial_message*, *send_existing_message*
+
+
+*
+    * fields: *action*, *flowId*
+    * actions: *rollback*
+
+
+
+
+### Example detailed log lines
+
+```none
+[TRACE] 2019-07-18T15:39:29,741Z Flow(action=start;logic=net.corda.finance.internal.CashConfigDataFlow@2000e5f3;flowId=5eae65e6-a2c9-4eb8-a984-2b7f6877d2ee) {actor_id=user1, actor_owning_identity=O=PartyA, L=London, C=GB, actor_store_id=NODE_CONFIG, invocation_id=9ea253f7-72f9-40cc-a85e-727d0f3bbb42, invocation_timestamp=2019-07-18T15:39:29.718Z, origin=user1, session_id=881e4323-4353-43c3-b2e7-2146ffc32095, session_timestamp=2019-07-18T15:39:28.663Z}
+[TRACE] 2019-07-18T15:39:29,828Z Flow(action=add_and_start;flowId=5eae65e6-a2c9-4eb8-a984-2b7f6877d2ee;flowState=Unstarted(flowStart=Explicit, frozenFlowLogic=4596BC25EB7986B7C0AB31F70A1DCC6628955983D5EB489B6C73AE6B6A849970);session={};subFlowStack=[Inlined(flowClass=class net.corda.finance.internal.CashConfigDataFlow, subFlowVersion=CorDappFlow(platformVersion=5, corDappName=corda-finance-workflows-5.0-SNAPSHOT, corDappHash=AD8EC11D5FF082D000245CEFB8F236EF231AAA5CC2E023DBED72B72A750B60D2), isEnabledTimedFlow=false)];errorState=Clean;numberOfSuspends=0) {actor_id=user1, actor_owning_identity=O=PartyA, L=London, C=GB, actor_store_id=NODE_CONFIG, invocation_id=9ea253f7-72f9-40cc-a85e-727d0f3bbb42, invocation_timestamp=2019-07-18T15:39:29.718Z, origin=user1, session_id=881e4323-4353-43c3-b2e7-2146ffc32095, session_timestamp=2019-07-18T15:39:28.663Z}
+[TRACE] 2019-07-18T15:39:29,966Z Flow(action=remove;flowId=5eae65e6-a2c9-4eb8-a984-2b7f6877d2ee;reason=OrderlyFinish(flowReturnValue=CashConfiguration(issuableCurrencies=[], supportedCurrencies=[USD, GBP, CHF, EUR]))) {actor_id=user1, actor_owning_identity=O=PartyA, L=London, C=GB, actor_store_id=NODE_CONFIG, fiber-id=10000001, flow-id=5eae65e6-a2c9-4eb8-a984-2b7f6877d2ee, invocation_id=9ea253f7-72f9-40cc-a85e-727d0f3bbb42, invocation_timestamp=2019-07-18T15:39:29.718Z, origin=user1, session_id=881e4323-4353-43c3-b2e7-2146ffc32095, session_timestamp=2019-07-18T15:39:28.663Z, thread-id=219}
+[TRACE] 2019-07-18T15:39:49,606Z Message(action=receive;size=2232;id=N-D-1338028259437713213--5426630988224494415-0-0;platformVersion=5;from=O=Notary, L=New York, C=US) {}
+[TRACE] 2019-07-18T15:39:49,729Z Party(action=save;party=Anonymous(DL55FjJhasWWssQAFimPrwCMpzn5BHXX4CFS7yDuBPs3c1)) {actor_id=user1, actor_owning_identity=O=PartyA, L=London, C=GB, actor_store_id=NODE_CONFIG, fiber-id=10000002, flow-id=9fa62b8d-7229-478a-9a6c-0e0b8e9e3afb, invocation_id=7240b531-512a-4042-b5a9-45aa3ca5e62b, invocation_timestamp=2019-07-18T15:39:46.084Z, origin=user1, session_id=881e4323-4353-43c3-b2e7-2146ffc32095, session_timestamp=2019-07-18T15:39:28.663Z, thread-id=279, tx_id=C4EF4FD371B5E5839901A28DADF7BECFB745BFE274EA1EE5C8DBEEDC3BA5BA23}
+```
+
 The node is using log4j2 asynchronous logging by default (configured via log4j2 properties file in its resources)
 to ensure that log message flushing is not slowing down the actual processing.
 If you need to switch to synchronous logging (e.g. for debugging/testing purposes), you can override this behaviour
 by adding `-DLog4jContextSelector=org.apache.logging.log4j.core.selector.ClassLoaderContextSelector` to the node’s
-command line or to the `jvmArgs` section of the node configuration (see [Node configuration](corda-configuration-file.md)).
+command line or to the `jvmArgs` section of the node configuration (see corda-configuration-file).
+Additionally, you need to override the log4j2 configuration file by specifying `-Dlog4j.configurationFile=<log4j2 config>`.
+The configuration file can be taken from the `config/dev` folder in [Corda Open Source repository](https://github.com/corda/corda).
+When using synchronous logging with `RollingRandomAccessFile` appenders in the configuration file, make sure that they DO NOT
+have `immediateFlush=false` setting.
 
 
 {{< warning >}}
@@ -94,14 +160,16 @@ Node can be configured to run SSH server. See [Node shell](shell.md) for details
 ## Database access
 
 When running a node backed with a H2 database, the node can be configured to expose the database over a socket
-(see [Database access when running H2](node-database-access-h2.md)).
+(see node-database-access-h2).
 
-Note that in production, exposing the database via the node is not recommended.
+Note that in a production set up, it is highly recommended to use an enterprise grade database, and access to the
+database should be via the usual database tools mechanisms, including access control and restrictions.
 
 
 ## Monitoring your node
 
 This section covers monitoring performance and health of a node in Corda Enterprise with Jolokia and Graphite. General best practices for monitoring (e.g. setting up TCP checks for the ports the node communicates on, database health checks etc.) are not covered here but should be followed.
+
 
 
 ### Monitoring via Jolokia
@@ -142,7 +210,7 @@ The format of the driver name needs to be `jolokia-jvm-{VERSION}-agent.jar` wher
 The following JMX statistics are exported:
 
 
-* Corda specific metrics: flow information (total started, finished, in-flight; flow duration by flow type), attachments (count)
+* Corda specific metrics: see node-metrics for a list
 * Apache Artemis metrics: queue information for P2P and RPC services
 * JVM statistics: classloading, garbage collection, memory, runtime, threading, operating system
 
@@ -162,25 +230,43 @@ To pass a security policy use `java -Dcapsule.jvm.args=-javaagent:./drivers/jolo
 
 ### Notes for development use
 
-When running in dev mode, Hibernate statistics are also available via the Jolkia interface. These are disabled otherwise
+When running in dev mode, Hibernate statistics are also available via the Jolokia interface. These are disabled otherwise
 due to expensive run-time costs. They can be turned on and off explicitly regardless of dev mode via the
-`exportHibernateJMXStatistics` flag on the [database configuration](corda-configuration-file.md#database-properties-ref).
+`exportHibernateJMXStatistics` flag on the [database configuration](../setup/corda-configuration-file.md#database-properties-ref).
 
-When starting Corda nodes using Cordformation runner (see [Running nodes locally](running-a-node.md)), you should see a startup message similar to the following:
+When starting Corda nodes using Cordformation runner (see running-a-node), you should see a startup message similar to the following:
 **Jolokia: Agent started with URL http://127.0.0.1:7005/jolokia/**
 
 When starting Corda nodes using the ‘driver DSL’, you should see a startup message in the logs similar to the following:
-**Starting out-of-process Node USA Bank Corp, debug port is not enabled, jolokia monitoring port is 7005 {}**
+**Starting out-of-process Node USA Bank Corp, debug port is not enabled, Jolokia monitoring port is 7005 {}**
 
 The following diagram illustrates Corda flow metrics visualized using hawtio:
 
 ![hawtio jmx](/en/images/hawtio-jmx.png "hawtio jmx")
 
+### Monitoring via Graphite
+
+Corda nodes alternatively support publishing metrics collected via the Codahale metrics library directly to a graphite
+server. This needs to be configured in the node configuration file:
+
+```kotlin
+graphiteOptions = {
+  prefix = "<node specific prefix>"
+  server = <host name of the graphite server>
+  port = <pickle receiver port on the graphite server>
+}
+```
+
+The prefix should clearly indicate the node where the metrics are coming from, as this will be the top level discrimator in the graphite metric hierarchy.
+The graphite server must be running with python pickle transport enabled. Please refer to the documentation on
+[https://graphiteapp.org](https://graphiteapp.org) on how to install and run a graphite server.  Note that the default pickle receiver port on Graphite is 2004.
+
+
 
 ## Memory usage and tuning
 
 All garbage collected programs can run faster if you give them more memory, as they need to collect less
-frequently. As a default JVM will happily consume all the memory on your system if you let it, Corda is
+frequently. As a default JVM will happily consume all the memory on your system if you let it, in *development mode* Corda is
 configured with a 512mb Java heap by default. When other overheads are added, this yields
 a total memory usage of about 800mb for a node (the overheads come from things like compiled code, metadata,
 off-heap buffers, thread stacks, etc).
@@ -193,13 +279,25 @@ node is running out of memory, you can give it more by running the node like thi
 The example command above would give a 1 gigabyte Java heap.
 
 {{< note >}}
+When `devMode` is explicitly  <sup>[\[1\]](#node/operating/node-administration-id2) set to `false` the node memory size will be enlarged to 4G. This behaviour can be overridden by setting a custom memory size in the configuration file.
+
+{{< /note >}}
+
+
+<a name="node/operating/node-administration-id2"></a>
+
+\[1\]
+If `devMode` is not explicitly configured but resolved to `false` based on OS environment, the default heap size remains 512mb.
+
+
+{{< note >}}
 Unfortunately the JVM does not let you limit the total memory usage of Java program, just the heap size.
 
 {{< /note >}}
 A node which is running out of memory is expected to stop immediately to preserve ledger consistency and avoid flaws in operations.
 Note that it’s a responsibility of a client application to handle RPC reconnection in case this happens. It’s also advised to have
 necessary JVM monitoring and restart infrastructure in place.
-See [Setting JVM arguments](running-a-node.md#setting-jvm-args) for further details on JVM out-of-memory related parameters.
+See [Setting JVM arguments](../deploy/running-a-node.md#setting-jvm-args) for further details on JVM out-of-memory related parameters.
 
 
 
@@ -215,7 +313,7 @@ keyStorePassword = ${KEY_PASS}
 trustStorePassword = ${TRUST_PASS}
 p2pAddress = "localhost:12345"
 devMode = false
- networkServices {
+networkServices {
     doormanURL = "https://cz.example.com"
     networkMapURL = "https://cz.example.com"
 }
@@ -254,6 +352,34 @@ SET KEY_PASS=mypassword & SET TRUST_PASS=mypassword & java -jar corda.jar
 
 {{< warning >}}
 If this approach is taken, the passwords will appear in the windows command prompt history.
+
+{{< /warning >}}
+
+
+
+## Obfuscating sensitive data
+
+Instead of hiding sensitive data using environment variables, another option is to use configuration obfuscation. Corda ships with a tools-config-obfuscator which allows the user to censor string properties in the configuration file. The config would look something like this:
+
+```kotlin
+keyStorePassword = "<{Kwby0G9c/+jxJM+c7Vaiow==:pdy+UaakdFSmmh8WWuBOoQ==}>"
+trustStorePassword = "<{Kwby0G9c/+jxJM+c7Vaiow==:pdy+UaakdFSmmh8WWuBOoQ==}>"
+p2pAddress = "localhost:12345"
+devMode = false
+```
+
+The values for `keyStorePassword` and `trustStorePassword` in the above example are encrypted, using a key that is tied to the hosting machine’s primary hardware address. The implications of this is that:
+
+
+
+* The configuration file is rendered unusable on other machines without manually decrypting obfuscated fields beforehand (since the hardware address would be different).
+* Sensitive data is unreadable without additional processing.
+* It becomes harder for adversaries to trawl for passwords and sensitive data on disk.
+
+
+
+{{< warning >}}
+This method does not offer full protection. An adversary who knows the intrinsics of the obfuscation method used, can still decipher the sensitive bits.
 
 {{< /warning >}}
 
@@ -349,8 +475,8 @@ that were received over the network.
 A Contract CorDapp (an attachment) received over the network, is only allowed to be evaluated if there are other Contract
 CorDapps installed in the node that have been signed by at least one of the received CorDapp’s keys.
 
-See [Signature Constraints](api-contract-constraints.md#signature-constraints) and
-[Signing CorDapps for use with Signature Constraints](api-contract-constraints.md#signing-cordapps-for-use-with-signature-constraints) for more information
+See [Signature Constraints](../../cordapps/api-contract-constraints.md#signature-constraints) and
+[Signing CorDapps for use with Signature Constraints](../../cordapps/api-contract-constraints.md#signing-cordapps-for-use-with-signature-constraints) for more information
 
 {{< /note >}}
 

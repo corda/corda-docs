@@ -2,6 +2,7 @@
 date: '2020-04-07T12:00:00Z'
 menu: []
 title: Frequently-Asked-Questions
+weight: 150
 ---
 
 
@@ -33,8 +34,3 @@ Frequently asked questions for anything notary related:
     * [What happens on multiple successful responses caused by retrying?](notary-failover.md#what-happens-on-multiple-successful-responses-caused-by-retrying)
     * [Is it possible to receive a success and failure because of retrying?](notary-failover.md#is-it-possible-to-receive-a-success-and-failure-because-of-retrying)
     * [If there is a network outage/partition, how does this affect the notary?](notary-failover.md#if-there-is-a-network-outage-partition-how-does-this-affect-the-notary)
-
-
-
-
-

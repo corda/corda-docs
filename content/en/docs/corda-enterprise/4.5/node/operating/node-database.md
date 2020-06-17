@@ -3,7 +3,7 @@ date: '2020-04-07T12:00:00Z'
 menu:
   corda-enterprise-4-5:
     identifier: corda-enterprise-4-5-corda-nodes-operating-db
-    name: "Understanding the Node database"
+    name: "Understanding the node database"
     parent: corda-enterprise-4-5-corda-nodes-operating
 tags:
 - node
@@ -31,10 +31,10 @@ Depending on how the schema objects are created, a Corda node can connect to the
 
 
 
-* **restricted permissions**This grants the database user access to DML execution only (to manipulate data itself e.g. select/delete rows),
+* **restricted permissions** This grants the database user access to DML execution only (to manipulate data itself e.g. select/delete rows),
 and a database administrator needs to create database schema objects before running the Corda node.
 This permission set is recommended for a Corda node in a production environment (including hot-cold-deployment).
-* **administrative permissions**This grants the database user full access to a Corda node, such that it can execute both DDL statements
+* **administrative permissions** This grants the database user full access to a Corda node, such that it can execute both DDL statements
 (to define data structures/schema content e.g. tables) and DML queries (to manipulate data itself e.g. select/delete rows).
 This permission set is more permissive and should be used with caution in production environments.
 A Corda node with full control of the database schema can create or upgrade schema objects automatically upon node startup.

@@ -7,7 +7,7 @@ tags:
 - cipher
 - suites
 title: Cipher suites supported by Corda
-weight: 7
+weight: 10
 ---
 
 
@@ -166,4 +166,3 @@ ECDSA and RSA algorithms.
 |NO||
 
 {{< /table >}}
-

@@ -7,7 +7,7 @@ tags:
 - node
 - commandline
 title: Node command-line options
-weight: 6
+weight: 70
 ---
 
 
@@ -58,4 +58,3 @@ To enable remote debugging of the node, run the node with the following JVM argu
 `java -Dcapsule.jvm.args="-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005" -jar corda.jar`
 
 This will allow you to attach a debugger to your node on port 5005.
-

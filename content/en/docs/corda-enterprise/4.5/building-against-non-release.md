@@ -1,11 +1,15 @@
 ---
 date: '2020-04-07T12:00:00Z'
-menu: []
+menu:
+  corda-enterprise-4-5:
+    parent: corda-enterprise-4-5-cordapps
+
 tags:
 - building
 - against
 - release
 title: Building CorDapps against a non-release branch
+weight: 11
 ---
 
 
@@ -55,6 +59,3 @@ time may differ. If you are using an unstable release and need help debugging an
 * In your CorDapp’s root `build.gradle` file:
 * Update `ext.corda_release_version` to the `corda_release_version` noted down earlier
 * Update `corda_gradle_plugins_version` to the `gradlePluginsVersion` noted down earlier
-
-
-

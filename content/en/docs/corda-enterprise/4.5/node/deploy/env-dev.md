@@ -9,7 +9,7 @@ tags:
 - env
 - dev
 title: Deploying in a development environment
-weight: 4
+weight: 50
 ---
 
 
@@ -405,6 +405,3 @@ in the given file. See [Overriding network parameters via a file](#overriding-ne
 ### Sub-commands
 
 `install-shell-extensions`: Install `bootstrapper` alias and auto completion for bash and zsh. See [shell extensions for CLI applications](../operating/cli-application-shell-extensions.html) for more info.
-
-
-
