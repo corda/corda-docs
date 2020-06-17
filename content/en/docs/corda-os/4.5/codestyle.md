@@ -252,10 +252,9 @@ migration.
 * Adding support for new supported backends and modules.
 * Changing the Gradle build DSL.
 
-You should additionally update the changelog if a change is risky or may in some way be of interest to users, even if
+You should additionally update the [Release Notes](release-notes.md) if a change is risky or may in some way be of interest to users, even if
 not directly visible.
 
 Because this is a developer platform, *many* changes are user visible. That means *many* PRs will require docsite changes.
 When you review a PR that doesn’t change the docsite, you should be asking yourself “why does this PR not require docs
 changes” rather than the other way around (“does this PR require changes”), which is easier to forget about.
-

@@ -48,7 +48,6 @@ CENM Releases
 
 * [Release notes](release-notes.md)
 * [Upgrading Corda Enterprise Network Manager](upgrade-notes.md)
-* [Changelog](changelog.md)
 
 
 
