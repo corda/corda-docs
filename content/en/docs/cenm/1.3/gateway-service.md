@@ -23,7 +23,7 @@ Once installed and configured, users interact with the FARM service when they wa
 
 ## Install the FARM service
 
-You can install the FARM service by installing the FARM service .jar file:
+You can install the FARM service by installing the FARM service `.jar` file:
 
 `java -jar farm-application.jar -f config.conf`
 
