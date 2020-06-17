@@ -128,7 +128,9 @@ If the other party being reconciled with is too busy, the scheduler will make nu
 
 Reconciliation is bound by the `maxMessageSize` [network parameter](../../network/network-map.html#network-parameters). This means that if there is a very large number of differences between two nodes, it may not be possible to perform the reconciliation. In that event, the reconciliation would fail with `MaxMessageSizeExceededException`. You can see this in the logs, or by calling `GetReconciliationStatusForPartyFlow`.
 
+{{< attention >}}
 When you request a reconciliation to be performed with a party, if the execution pool is full, the reconciliation will be delayed until an open spot in the pool becomes available. If the node is restarted, and the reconciliation job has not entered the execution pool prior to the restart, the job will be lost and will need to be re-requested by calling this flow again.
+{{< /attention >}}
 
 It is not possible to perform reconciliations under the following conditions:
 
