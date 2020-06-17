@@ -232,6 +232,50 @@ Sets the status of an outgoing or incoming reconciliation request to `STOPPED`, 
 
 None
 
+### `IsReconciliationScheduledForPartyFlow`
+
+This testing flow is used to determine whether the given `Party` has an on-going, _outgoing_, reconciliation in the scheduler. It is not useful for getting the status of a reconciliation. It is only useful for checking if the scheduler is aware of it, not whether it is currently executing.
+
+{{< note >}}
+This is, and all flows in `com.r3.dr.ledgersync.app.flows.internal`, are used for debugging and testing purposes, and should not be used directly by your CorDapps. Its behaviour is implementation specific, and is subject to change without notice.
+{{< /note >}}
+
+#### Example Usage(s)
+
+```
+flow start IsReconciliationScheduledForPartyFlow party: "O=PartyA, L=London, C=GB"
+```
+
+#### Parameters
+
+`party` - The legal identity of the node for whom you want to get the scheduling status.
+
+#### Return Type
+
+`true` if there is an _outgoing_ reconciliation for the `Party` in the scheduler. `false` otherwise.
+
+
+### `IsRespondingToReconciliationForPartyFlow`
+
+This testing flow is used to determine whether the given `Party` has an on-going, _incoming_, reconciliation in the scheduler. It is not useful for getting the status of a reconciliation. It is only useful for checking if the scheduler is aware of it, not whether it is currently executing.
+
+{{< note >}}
+This is, and all flows in `com.r3.dr.ledgersync.app.flows.internal`, are used for debugging and testing purposes, and should not be used directly by your CorDapps. Its behaviour is implementation specific, and is subject to change without notice.
+{{< /note >}}
+
+#### Example Usage(s)
+
+```
+flow start IsRespondingToReconciliationForPartyFlow party: "O=PartyA, L=London, C=GB"
+```
+#### Parameters
+
+`party` - The legal identity of the node for whom you want to get the scheduling status.
+
+#### Return Type
+
+`true` if there is an _incoming_ reconciliation for the `Party` in the scheduler. `false` otherwise.
+
 ## Related DB Tables
 
 Do not edit or change the contents of the LedgerSync database table(s).
