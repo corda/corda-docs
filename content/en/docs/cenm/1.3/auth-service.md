@@ -68,7 +68,8 @@ Environment variables:
 ### Minimum required files
 
 * Config file.
-* jwt signing key (RSA keypair) in a jks file.
+* `jwt` signing key (RSA keypair) in a jks file. This can be generated with the following command line command: 
+`keytool -genkeypair -alias mytest -keyalg RSA -keypass mypass -keystore mytest.jks -storepass mypass`.
 * SSL certificate in a `.jks` file.
 * baseline `.jar` that contains the set of permissions available in the deployment and optionally predefined roles.
   * You can also be copy this into a folder inside the working directory called `plugins` to avoid having to specify it in the config file.
