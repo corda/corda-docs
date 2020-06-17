@@ -109,7 +109,7 @@ In the sample below, you can see the initial configuration process:
 
 1. Database configuration. Add the name, address and login credentials for the SQL database that supports the Auth service.
 
-2. JSAON Web Key configuration. Set the username, password, and location of the RSA keypair store for singing. The location must be the absolute path.
+2. JSON Web Key configuration. Set the username, password, and location of the RSA keypair store for signing. The location must be the absolute path.
 
 3. Configure the connection to the FARM service. Add the ID, secret, and scope of services that you use when setting up the FARM service.
 
