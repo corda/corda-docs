@@ -28,7 +28,7 @@ All reconciliations are added to a bounded execution pool, which are configurabl
 
 This means the node that requested the reconciliation will be notified if the responding node has transactions that the requesting node does not. The responding node will not be notified if the requesting node has transactions that the responding node does not.
 
-![Peer To Peer Reconciliation Flow](./resources/ledger-sync-flow.png)
+![Ledger Sync Flow](../../resources/collaborative-recovery/ledger-sync-flow.png)
 
 ## System Requirements
 
@@ -36,7 +36,7 @@ System requirements for LedgerSync are mainly dependent on the size of your vaul
 
 Overall memory usage will be dependent on the number of transactions in the vault, and the number of participants (parties) involved in each transaction.
 
-Use the table below for a guide to how much memory may be required for the scenarios described in this section. This is a guideline only. There are many variables in any given Corda network that can affect the amount of heap space used, but this should give you an idea.
+Use the table below for a guide to how much memory may be required for the scenarios described in this section. This is a guideline only. There are many variables in any given network using Corda that can affect the amount of heap space used, but this should give you a general sense of the requirements:
 
 {{< table >}}
 
@@ -70,22 +70,50 @@ timeWindowForReconciliationRequestLimit = 1h
 maxAllowedReconciliationRequestsPerTimeWindow = 1000
 ```
 
-### Details of Configuration Parameters
+### Details of Configuration parameters
 
 {{< table >}}
 
+
 |Configuration Parameter|Default Value|Acceptable Value(s)|Description|
-| :---: | :---: | :---: | --- |
+|-|:-:|:-:|-|
 |`maxNumberOfIbfFilterFlows`|`5`|`1` to `15`|When **LedgerSync** attempts to reconcile with another party it exchanges a number of "Invertible Bloom Filters" in order to accurately estimate the number of ledger differences. This configuration parameter is used to limit the number of these exchanges in order to prevent intentional/accidental abuse of the responding node's flow.|
 |`maxNumberOfParallelReconciliationRequests`|`3`|`1` to `10`|Limits the configured node to the specified maximum number of active concurrent (parallel) reconciliations. |
 |`maxReconciliationRetryAttemptTimeout` **&dagger;**|`1h`|`0s` or more|When the configured node's execution pool for reconciliations is full, it will reject any _incoming_ reconciliation requests by throwing an exception to the requester, indicating that it is too busy to handle the request. This configuration parameter is used to control how long the requesting node will keep retrying the reconciliation. Back-pressure is applied to keep the node from retrying excessively over short periods. |
 |`timeWindowForReconciliationRequestLimit` **&dagger;**|`1h`|`0s` or more|Use this configuration parameter in conjunction with `maxAllowedReconciliationRequestsPerTimeWindow` to control how often a node will respond to reconciliation requests from another party/node within a given amount of time (sliding time window). For example: 10 responses per 1 minute. Note that this limit is not preserved over node restarts.|
 |`maxAllowedReconciliationRequestsPerTimeWindow`|`1000`|`0` to `2147483647`|Use this configuration parameter in conjunction with `timeWindowForReconciliationRequestLimit` to control how often a node will respond to reconciliation requests from another party/node within a given amount of time (sliding time window). For example: 10 responses per 1 minute. Note that this limit is not preserved over node restarts.|
+|`transactionReaderPageSize`|`100`|`10` to `10000000`|During initialization, the vault is read in batches (or pages) of rows to optimize DB read performance. This controls the batch/page size used during that operation.|
+|`transactionReaderPoolSize`|`10`|`5` to `1000`|The number of threads to use when deserializing transaction data during initialization.|
+
 
 {{< /table >}}
 
 **&dagger;** Duration value. Supported values are the same as the *time portion* of a duration represented by ISO_8601. For example: `1H`, `3S`, `5H3M2S`, etc... Spaces between or around time elements are tolerated, e.g. `1H 30M`, but other characters are not. The units can be represented in uppercase, or lowercase (i.e. `H` or `h`, `M` or `m`, `S` or `s`).
 
+## Support for Confidential Identities in LedgerSync
+
+If you are using [Corda Confidential Identities](../../cordapps/api-confidential-identity), LedgerSync requires additional configuration in order to support your environment.
+
+Use this additional configuration step to ensure that confidential identities on your node are properly mapped to known identities where they have been shared with your node when new transactions are processed. This is important when reconciling with another party as only transactions with known identities can be reconciled.
+
+In order for reconciliations involving confidential identities to work, the confidential owning key for those identities must have already been shared between the involved Corda nodes prior to the data loss.
+
+To add the configuration:
+
+1. Deploy the ledger-sync-confidential-identities JAR file to `<corda_node_dir>/cordapps/config/`.
+
+2. Edit the node configuration file `<corda_node_dir>/node.conf`, adding the following flow override:
+
+```
+flowOverrides {
+    overrides=[
+        {
+            initiator="com.r3.corda.lib.ci.workflows.SyncKeyMappingInitiator"
+            responder="com.r3.dr.ledgergraph.ci.flows.CustomSyncKeyMappingResponder"
+        }
+    ]
+}
+```
 ## Flows
 
 All reconciliation tasks are carried out using flows. You can see the list flows exposed by LedgerSync, and their parameters, below:
@@ -94,7 +122,11 @@ All reconciliation tasks are carried out using flows. You can see the list flows
 
 This flow starts an outgoing reconciliation from the current node with each of the specified parties. The reconciliation is added as a job to an internal queue for eventual execution. When the reconciliation starts depends on whether there are other ongoing reconciliations and whether the configured maximum for concurrent reconciliations has been exceeded.
 
-If the other party being reconciled with is too busy, the scheduler will make numerous (depends on the node's **LedgerSync** configuration, see the `maxReconciliationRetryAttemptTimeout` configuration parameter above) attempts to perform the reconciliation with an appropriate fallback so as not to overwhelm the other party's node with repeated attempts.
+The flow will first check that the node is self-consistent - a check facilitated by the Collaborative Recovery CorDapps. An in-memory representation of vault data is built to ensure all transactions and dependencies are correctly recorded vault tables. The in-memory representation is built using only the necessary transaction metadata - not the underlying transaction data. This allows the constructed graph to contain an arbitrarily large of transactions without impacting node performance.
+
+If the other party being reconciled with is too busy, the scheduler will make numerous attempts to perform the reconciliation with an appropriate fallback so as not to overwhelm the other party's node with repeated attempts. The number of attempts depends on the node's LedgerSync configuration, see the `maxReconciliationRetryAttemptTimeout` configuration parameter in the table above.
+
+Reconciliation is bound by the `maxMessageSize` [network parameter](../../network/network-map.html#network-parameters). This means that if there is a very large number of differences between two nodes, it may not be possible to perform the reconciliation. In that event, the reconciliation would fail with `MaxMessageSizeExceededException`. You can see this in the logs, or by calling `GetReconciliationStatusForPartyFlow`.
 
 When you request a reconciliation to be performed with a party, if the execution pool is full, the reconciliation will be delayed until an open spot in the pool becomes available. If the node is restarted, and the reconciliation job has not entered the execution pool prior to the restart, the job will be lost and will need to be re-requested by calling this flow again.
 
@@ -102,9 +134,10 @@ It is not possible to perform reconciliations under the following conditions:
 
 * The party being reconciled against has the same identity as the node where you're starting the reconciliation (A party can't reconcile with itself).
 * There is already an *outgoing* reconciliation scheduled/ongoing with the other party.
-* There is already an *incoming* reconciliation ongoing *from* the other party.
 
 This flow returns immediately after the reconciliation jobs are added to the scheduler's queue. To get the status of a given reconciliation, see the related flows below.
+
+If ScheduleReconciliationFlow returns without successfully scheduling reconciliation activity, you, the node operator, should review the logs. In this case the node is either still performing self-consistency checks (which may be the case if the node was started recently) or the node may have experienced a disaster resulting in inconsistent vault data. If this is the case, the node must be restored from backup to a consistent state before proceeding. To confirm if inconsistencies have been detected in vault data, please check the following exposed [JMX metrics](#jmx-metrics) - getLedgerGraphIsInitialized, getLedgerGraphIsSelfConsistent, getLedgerGraphErrors.
 
 #### Example Usage
 

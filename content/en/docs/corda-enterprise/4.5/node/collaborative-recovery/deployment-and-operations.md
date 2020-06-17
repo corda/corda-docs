@@ -20,12 +20,12 @@ weight: 300
 * Business Network Operators (BNOs)
 * Corda developers
 
-You can use the Collaborative Recovery CorDapps to automate the process of recovering or reconciling data in a disaster recovery scenario. Use this guide to help you establish effective schedules for data reconciliation, and best practices for retrieving data in the unlikely event of a disaster.
+You can use the Collaborative Recovery CorDapps to automate the process of recovering or reconciling data in a disaster recovery scenario. Follow this guide to help you establish effective schedules for data reconciliation, and best practices for retrieving data in the unlikely event of a disaster.
 
 
 ## Schedule reconciliation
 
-If you and counterparties on your Business Network (BN) plan to use collaborative recovery as part of your disaster planning, it's a good idea to schedule regular reconciliation checks using the **LedgerSync CorDapp**. You can achieve this by implementing a small layer to schedule and integrate ledger syncing with your Business Network services. For practical steps on scheduling recovery, use the [LedgerSync guide](ledger-sync.md).
+If you and counterparties on your Business Network (BN) plan to use collaborative recovery as part of your disaster planning, it's a good idea to schedule regular reconciliation checks using the [LedgerSync CorDapp](ledger-sync#`ScheduleReconciliationFlow`). You can achieve this by implementing a small layer to schedule and integrate ledger syncing with your Business Network services. For practical steps on scheduling recovery, use the [LedgerSync guide](ledger-sync.md).
 
 How frequently you should run reconciliation checks depends on the size of your network. Since reconciliation flows carry some memory overheads, smaller networks may be able to schedule more regular reconciliation actions. For a larger network, you can implement a lighter schedule of reconciliations, or you could choose to reconcile more regularly, but with a random subset of available peers. This would give you an indication of the general health of data in the BN.
 

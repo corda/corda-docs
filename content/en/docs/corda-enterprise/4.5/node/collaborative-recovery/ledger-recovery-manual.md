@@ -20,7 +20,7 @@ weight: 500
 * Business Network Operators (BNOs)
 * Corda developers
 
-In a disaster recovery scenario, if you have been unable to use the automated LedgerRecover process to recover lost data, you can attempt the recovery with the Manual LedgerRecover approach. In this situation, you and the other node operators involved in the process initiate and execute the LedgerRecover (Manual)[workflows](#workflowsection) manually.
+In a disaster recovery scenario, if you have been unable to use the automated `LedgerRecover` process to recover lost data, you can attempt the recovery with the manual `LedgerRecover` approach. In this situation, you and the other node operators involved in the process initiate and execute the LedgerRecover (Manual)[workflows](#workflowsection) manually.
 
 As these processes are managed on a discretionary basis, restrictions on the size, duration or other criteria used with an automatic recovery process are not applied. However, you should be extremely careful when accepting and executing manually initiated `RecoveryRequests`, even more so when the requested
 set of transactions IDs is extremely large.
@@ -35,6 +35,16 @@ Manual Recovery processes executed via the LedgerRecover CorDapp require partici
 
 Corda nodes are also expected to have backups from which they are able to partially restore the contents of their vault to a state that is self-consistent, meaning that all available transactions and dependencies are correctly recorded in the vault and all appropriate tables. These tables may not be current, and may be missing records of some transactions due to a disaster scenario.
 
+## Configuration parameters
+
+{{< table >}}
+
+| Configuration parameter   | Header Two     | Acceptable values |
+| :------------- | :------------- | :---------------- |
+| `manualExportTransactionsBatchSize` | 100      | 100 to 100000 |
+| `manualImportNumberOfTransactionsToCommitAfter` | 1000 | 1000 to 10000 |
+
+{{< /table >}}
 
 ## Flows
 
@@ -266,6 +276,14 @@ This flow fetches a `RecoveryRequest` with a specified ID from the database. The
 If the import fails - the flow will fail the recovery request. Otherwise, the request is marked as complete and recovery has been successfully facilitated with the counterparty.
 
 This flow uses existing Corda mechanisms to import transaction data back into the vault. This means that recovered transactions will trigger the same events as "new" transactions. Applications subscribing to vault observable fields will receive duplicate updates. External systems relying on LedgerData are expected to be able to handle receipt of duplicated updates resulting from recovery processes.
+
+{{< attention >}}
+
+Importing transaction data triggers the same events as receipt of *new* transactions. This means the recorded time stamp of any *new* transactions will be the *new* time at which they were recorded, not the original time. This is expected behaviour. Nodes do not rely on subjective local time. The only source of truth with respect to time is a notary signature over a time window.
+
+{{< /attention >}}
+
+Applications subscribing to vault observable fields will receive duplicate updates. External systems relying on LedgerData are expected to be able to handle receipt of duplicated updates resulting from recovery processes.
 
 This flow will also trigger a refresh of reconciliation statuses with all counterparties.
 

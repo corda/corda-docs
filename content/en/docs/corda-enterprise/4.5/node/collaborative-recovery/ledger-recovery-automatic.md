@@ -24,7 +24,7 @@ In a disaster recovery scenario, you can use LedgerRecover to either automatical
 
 ## Configuration Parameters
 
-LedgerRecover can be configured, like other CorDapps, by creating a configuration file named after the LedgerRecover configuration JAR file. For example, if the LedgerRecover JAR file is called `ledger-recover-1.0.jar`, the configuration file would be `<corda_node_dir>/cordapps/config/ledger-recover-1.0.conf`.
+LedgerRecover can be configured, [like other CorDapps](../../cordapps/cordapp-build-systems), by creating a configuration file named after the LedgerRecover configuration JAR file. For example, if the LedgerRecover JAR file is called `ledger-recover-1.0.jar`, the configuration file would be `<corda_node_dir>/cordapps/config/ledger-recover-1.0.conf`.
 
 You can adjust LedgerRecover behaviour using the configuration parameters set out in the table below. If the configuration parameter is not specified, or the configuration file is not present, the default value(s) is used.
 
@@ -40,6 +40,8 @@ timeWindowForMaxAllowedRequests = 1h
 
 **Details of Configuration Parameters:**
 
+{{< table >}}
+
 |Configuration Parameter|Default Value|Acceptable Value(s)|Description|
 |-|:-:|:-:|-|
 |`maxAllowedTransactions`|`30`|`1` to `1000`| Maximum number of allowed transactions per recovery request.*|
@@ -47,8 +49,14 @@ timeWindowForMaxAllowedRequests = 1h
 |`timeWindowForMaxAllowedSize` **&dagger;**|`1h`|`1m` to `24h`|Use this configuration parameter in conjunction with `maxAllowedSizeInBytes` to control the total size of transactions the node will send as a response to a recovery request from another party/node within a given amount of time (sliding time window). For example: 1000000 bytes per 1 minute. **&Dagger;**|
 |`maxAllowedRequests`|`30`|`1` to `100`|Use this configuration parameter in conjunction with `timeWindowForMaxAllowedRequests` to control how often a node will initiate or respond to recovery requests from another party/node within a given amount of time (sliding time window). For example: 10 requests per 1 minute.|
 |`timeWindowForMaxAllowedRequests` **&dagger;**|`1h`|`1m` to `24h`|Use this configuration parameter in conjunction with `maxAllowedRequests` to control how often a node will initiate or respond to recovery requests from another party/node within a given amount of time (sliding time window). For example: 10 requests per 1 minute.|
+|`manualExportTransactionsBatchSize`|`100`|`100` to `100000`|Defines the number of transactions that will be read as a batch during manual export. Consider changing this to improve manual export performance. This property has a conservative default value to not to exceed the `WHERE value IN(...)` limit, which is different for different databases. Check your DB vendor's documentation before changing.|
+|`manualImportNumberOfTransactionsToCommitAfter`|`1000`|`1000` to `10000`|Defines the number of transactions to import after which a DB commit will be performed during manual import.|
 
-\* Number of transactions is used as an estimate for the total size of transaction data on the requester node, as actual size of data is not known by them before recovery.
+{{< /table >}}
+
+{{< note >}}
+Number of transactions is used as an estimate for the total size of transaction data on the requester node, as actual size of data is not known by them before recovery.
+{{< /note >}}
 
 **&dagger;** Duration value. Supported values are the same as the _time portion_ of a duration represented by ISO_8601. For example: `1H`, `3S`, `5H3M2S`, etc... Spaces between or around time elements are tolerated, e.g. `1H 30M`, but other characters are not. The units can be represented in uppercase, or lowercase (i.e. `H` or `h`, `M` or `m`, `S` or `s`).
 
@@ -92,6 +100,12 @@ The verifications above are implemented to ensure that private ledger data is no
 
 Each Transaction is then sent back to and received by the requester using an extended version of the standard SendTransaction/ReceiveTransaction Corda platform flows. Sending and receipt of the transactions and associated artifacts (backchain transactions, attachments, network parameters) are logged in the `CR_RECOVERY_LOG` table. As the exact size of data to be sent becomes measurable at this stage, this is also where limits to the amount of data sent are applied and the requests get throttled, if applicable.
 
+{{< attention >}}
+
+Importing transaction data triggers the same events as receipt of *new* transactions. This means the recorded time stamp of any *new* transactions will be the *new* time at which they were recorded, not the original time. This is expected behaviour. Nodes do not rely on subjective local time. The only source of truth with respect to time is a notary signature over a time window.
+
+{{< /attention >}}
+
 The `RecoveryRequest` is then marked as `COMPLETED` on both requester and responder nodes in case of success, otherwise will be marked as `FAILED` and the reason for any failure will also be persisted.
 
 In case of failure, the usage of standard Corda flows for transmission of artifacts prevents the ledger from becoming inconsistent. This holds true even if the transmission has been stopped half way through.
@@ -102,7 +116,7 @@ Upon successful completion of the Automatic **LedgerRecover** all `Reconciliatio
 When recovered transactions are persisted they will trigger the same events as it did when the transaction was originally persisted (before the disaster). If users are subscribing to vault-observable feeds (see [documentation on updates](https://docs.corda.net/api/kotlin/corda/net.corda.core.node.services/-vault-service/updates.html)) they will receive duplicate updates.
 {{< /note >}}
 
-#### AutomaticLedgerRecoverFlow - Parameters
+#### Parameters
 
 * `party` - The legal identity of the node from whom we will be recovering transactions. This parameter is not nullable.
 
@@ -245,15 +259,15 @@ flow start GetRecoveryRequestsFlow
 ```
 
 ```shell script
-flow start GetRecoveryRequestsFlow party: "O=PartyB, L=London, C=GB"
+flow start GetRecoveryRequestsFlow party: "O=PartyB, L=London, C=GB", isRequester: null, statuses: null
 ```
 
 ```shell script
-flow start GetRecoveryRequestsFlow party: null, isRequester: true
+flow start GetRecoveryRequestsFlow party: null, isRequester: true, statuses: null
 ```
 
 ```shell script
-flow start GetRecoveryRequestsFlow party: "O=PartyB, L=London, C=GB", isRequester: true
+flow start GetRecoveryRequestsFlow party: "O=PartyB, L=London, C=GB", isRequester: true, statuses: null
 ```
 
 ```shell script
@@ -313,6 +327,8 @@ Example:
 ```
 flow start GetCurrentRecoveryRequestWithPartyFlow party: "PartyA, L=London, C=GB", isRequester: true
 ```
+
+Exceptions: `MultipleRecoveryRecordsException` - Thrown if there are more than one current recoveries in the node's database.
 
 ### GetRecoveryLogsFlow
 
