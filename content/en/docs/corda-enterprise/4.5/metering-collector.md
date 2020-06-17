@@ -26,16 +26,14 @@ The Metering Collection Tool provides a mechanism for collecting metering data f
 
 The tool uses the following flows:
 
-* The `MeteringCollectionFlow` flow is used to collect metering data from a node by using the node's shell or by connecting to it using the external shell. You need to specify, as an argument, the time window over which the flow will be collecting metering data. Optionally, you can also specify a set of CorDapps to filter the data by. The flow output represents both the total count of metering events that match the filter within the time window, and a breakdown of these events by the commands involved and the signing entities. This flow can be invoked from the shell but its usage via RPC has been deprecated (use the `NodeMeteringCollectionFlow` flow instead). This flow gathers data from the "current" node - the node where it was initiated.
-* The `NodeMeteringCollectionFlow` flow is used to collect metering data from a node connecting to it via RPC. It takes in a time window over which to collect data, and optionally a set of CorDapps to filter the data by. It outputs both the total count of metering events that match filter in the time window, and a breakdown of these events by the commands involved and the signing entities. This flow gathers data from the "current" node - the node where it was initiated.
-* The `FilteredMeteringCollectionFlow` flow is analogous to the `NodeMeteringCollectionFlow` flow except that it collects data from another node in the network. For that reason, it requires an additional parameter that specifies the party running the node where metering data is to be collected from. This flow gathers data from a node in the network that is different from the one where the was initiated.
-* The `AggregatedMeteringCollectionFlow` flow is used to collect aggregated metering data from other nodes in the network. It takes in a time window and the party running the node where metering data will be collected from. It outputs only the total count of signing events that happened on that node in the specified time window. This flow gathers data from a node in the network that is different from the one where the was initiated.
-* The `MultiFilteredCollectionFlow` flow is analogous to `FilteredMeteringCollectionFlow` except that allows to collect data from multiple nodes in the network sequentially in a single flow and returns the result as a JSON string. It is meant to be only used from the node shell while there is a dedicated method,
-`FilteredMeteringCollectionFlow#multiCollect`, for running collection from multiple nodes in parallel using from an RPC client.
-* The `MultiAggregatedCollectionFlow` flow is analogous to the `AggregatedMeteringCollectionFlow` flow, except that allows to collect data from multiple nodes in the network sequentially in a single flow and returns the result as a JSON string. It is meant to be only used from the node shell while there is a dedicated method,
-`AggregatedMeteringCollectionFlow#multiCollect`, for running collection from multiple nodes in parallel using from an RPC client.
-* The `NotaryCollectionFlow` flow is used to collect metering data from notaries. It takes in a time window over which to collect the data. It outputs a total count of notarisation requests over that interval, along with a breakdown of requests against the parties that made them.
-* The `RetrieveCordappDataFlow` flow is a utility flow to extract CorDapp hashes and signing keys for a given CorDapp name, in the correct format for use in the `NodeMeteringCollectionFlow` filter. The flow provides information about the versions and vendors of the returned CorDapps so that the correct CorDapp data can be selected.
+* Use the `MeteringCollectionFlow` flow to collect metering data from a node by using the node's shell. You must specify, as an argument, the time window over which the flow will be collecting metering data. You can also specify a set of CorDapps to filter the data by. The flow output represents both the total count of metering events that match the filter within the time window, and a breakdown of these events based on the commands involved and the signing entities. You can invoke this flow from the shell, however its usage via RPC has been deprecated - you can use the `NodeMeteringCollectionFlow` flow instead. This flow gathers data from the "current" node - the node where it was initiated.
+* Use the `NodeMeteringCollectionFlow` flow to collect metering data from a node by connecting to it via RPC. You must specify, as an argument, the time window over which the flow will be collecting metering data. You can also specify a set of CorDapps to filter the data by. The flow output represents both the total count of metering events that match the filter within the time window, and a breakdown of these events based on the commands involved and the signing entities. This flow gathers data from the "current" node - the node where it was initiated.
+* The `FilteredMeteringCollectionFlow` flow is similar to the `NodeMeteringCollectionFlow` flow with the only difference being that `FilteredMeteringCollectionFlow` collects data from another node on the network - a node that is different from the one where the flow was initiated. For that reason, it requires an additional argument where you must specify the party running the node where metering data is to be collected from.
+* Use the `AggregatedMeteringCollectionFlow` flow to collect aggregated metering data from other nodes on the network - nodes that are different from the one where it was initiated. You must specify, as arguments, the time window over which the flow will be collecting metering data as well as the party running the node where metering data will be collected from. The flow output represents the total count of signing events that happened on the monitored nodes during the specified time window.
+* The `MultiFilteredCollectionFlow` flow is similar to the `FilteredMeteringCollectionFlow` flow with the only difference being that `MultiFilteredCollectionFlow` collects data from multiple nodes on the network sequentially in a single flow, and returns the result as a `JSON` string. You can use this flow from the node shell only. You can use the dedicated method `FilteredMeteringCollectionFlow#multiCollect` to collect metering data from multiple nodes in parallel by using an RPC client to connect to the nodes.
+* The `MultiAggregatedCollectionFlow` flow is similar to the `AggregatedMeteringCollectionFlow` flow with the only difference being that `MultiAggregatedCollectionFlow` collects data from multiple nodes on the network sequentially in a single flow, and returns the result as a `JSON` string. You can use this flow from the node shell only. You can use the dedicated method `AggregatedMeteringCollectionFlow#multiCollect` to collect metering data from multiple nodes in parallel by using an RPC client to connect to the nodes.
+* Use the `NotaryCollectionFlow` flow to collect metering data from notaries. You must specify, as an argument, the time window over which the flow will be collecting metering data. The flow output represents the total count of notarisation requests during the specified time window, along with a breakdown of these requests filtered by the parties that made them.
+* The `RetrieveCordappDataFlow` flow is a utility flow you can use to extract CorDapp hashes and signing keys for a given CorDapp name, in the correct format, for use in the `NodeMeteringCollectionFlow` flow filter (see above). This flow provides information about the versions and vendors of the returned CorDapps so that the correct CorDapp data can be selected.
 
 {{< warning >}}
 The `NotaryCollectionFlow` flow does not allow the collection of metering data for notaries configured in high-availability mode.
@@ -43,7 +41,7 @@ The `NotaryCollectionFlow` flow does not allow the collection of metering data f
 
 ## Installation
 
-The Metering Collection Tool is distributed as part of Corda Enterprise 4.5 with the name `corda-tools-metering-collector-4.5.jar`. You must place this `.jar` file in the `cordapps` directory of the node.
+The Metering Collection Tool is distributed as part of Corda Enterprise 4.5 under the name `corda-tools-metering-collector-4.5.jar`. You must place this `.jar` file in the `cordapps` directory of the node.
 
 ## Metering data
 
@@ -59,7 +57,7 @@ and who made them.
 ### Sharing of metering data
 <a name="sharing-metering"></a>
 
-The Metering Collection Tool also contains responder flows that can be used by other nodes in the network to collect metering from the node where
+The Metering Collection Tool also contains responder flows that can be used by other nodes on the network to collect metering from the node where
 this CorDapp is installed. This feature has to be enabled by the node operator deploying a
 [CorDapp configuration file](/docs/corda-os/4.5/cordapp-build-systems.html#cordapp-configuration-files) for this CorDapp,
 if no configuration file is deployed, metering data won't be shared with any other network party.
@@ -103,7 +101,7 @@ result in your configuration being ignored and default values being applied (whi
 This section provides instructions on how to use each of the flows that the Metering Collection Tool uses.
 
 {{< note >}}
-In the list of flows below, the `FilteredMeteringCollectionFlow` flow and the `AggregatedMeteringCollectionFlow` flow gather data from a node in the network that is different from the one where they were initiated. The `NodeMeteringCollectionFlow` flow and the `MeteringCollectionFlow` flow collect metering data from the "current" node - the node where they were initiated.
+In the list of flows below, the `FilteredMeteringCollectionFlow` flow and the `AggregatedMeteringCollectionFlow` flow gather data from a node or nodes on the network different from the node where the respective flow was initiated. The `NodeMeteringCollectionFlow` flow and the `MeteringCollectionFlow` flow collect metering data from the "current" node - the node where each of the flows was initiated.
 {{< /note >}}
 
 ### Using `MeteringCollectionFlow`
@@ -240,7 +238,7 @@ val nodeMeteringData = client.use("rpcUsername", "rpcPassword") { conn: CordaRPC
 ### Using `AggregatedMeteringCollectionFlow`
 <a name="using-AggregatedMeteringCollectionFlow"></a>
 
-This flow allows for collection of aggregated metering data from a remote node in the network. Aggregated meterings only contain the total number
+This flow allows for collection of aggregated metering data from a remote node on the network. Aggregated meterings only contain the total number
 of signing event that happened in a given time period, without any additional information (signer public key, contract command or transaction type).
 Note that the resulting data will depends on what the node operator decided to share with you in his [CorDapp configuration](#sharing-metering), in particular your X500 name needs to be present in his list of `network_collectors`, otherwise the invocation of
 this flow will throw `PermissionDeniedException`.
@@ -306,8 +304,8 @@ val data = client.use("rpcUsername", "rpcPassword") { conn: CordaRPCConnection -
 ### Using `FilteredMeteringCollectionFlow`
 <a name="using-FilteredMeteringCollectionFlow"></a>
 
-This flow allows for collection of metering data from a remote node in the network. It is analogous to `NodeMeteringCollectionFlow` except
-that it collects metering from a remote node in the network.
+This flow allows for collection of metering data from a remote node on the network. It is analogous to `NodeMeteringCollectionFlow` except
+that it collects metering from a remote node on the network.
 Note that the resulting data will depends on what the node operator decided to share with you in his [CorDapp configuration](#sharing-metering),
 if this is not the case you will receive an object with an empty `entries` list. In order for the Metering Collection Tool to distinguish between the case
 where there were no metering data on the collected node and the case where the node operator did not whitelist it,
@@ -472,7 +470,7 @@ val corDappData =
 
 ### Collection from multiple nodes
 
-To address the common use case of having to collect metering data from multiple nodes in the network, two different mechanisms are available:
+To address the common use case of having to collect metering data from multiple nodes on the network, two different mechanisms are available:
 
 - multiple nodes collection via RPC
 - multiple nodes collection via node shell
@@ -483,7 +481,7 @@ Two methods are available:
 - `FilteredMeteringCollectionFlow.multiCollect`
 - `AggregatedMeteringCollectionFlow.multicollect`
 
-both of them start multiple parallel flows on the collector node, each of them collecting metering from a different node in the network, a timeout
+both of them start multiple parallel flows on the collector node, each of them collecting metering from a different node on the network, a timeout
 can be specified so that all flows that do not terminate within the timeout are simply cancelled and only the data from the flows that completed successfully will be processed.
 
 The methods take as a parameter a callback will be invoked, once for each destination node, as soon as the relative flow returns, the callback takes as parameters
