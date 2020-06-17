@@ -24,18 +24,60 @@ Welcome to the Corda 4.5 release notes. Please read these carefully to understan
 
 ### Changes for developers in Corda 4.5
 
+
+#### Improved `killFlow` operations
+
+We have improved the existing [killFlow RPC operation](https://api.corda.net/api/corda-os/4.5/html/api/kotlin/corda/net.corda.core.messaging/-corda-r-p-c-ops/kill-flow.html), which allows node operators to terminate flows manually - in several ways:
+
+* When a flow is terminated, any counterparty that has an open flow session with the flow in question is notified that the flow has ended unexpectedly
+
+* Any vault soft-locks held by a flow are released when the flow is terminated
+
+* A flow can now check programmatically whether its termination has been requested. This allows a looping flow to use this API to ensure it doesn't loop indefinitely when a termination has been requested. Previously, the flow would wait until it reached the next checkpoint to decide whether to terminate, allowing deadlocks to occur (e.g. if the flow was caught in an infinite loop)
+
+
+#### New flow APIs
+
+
+We have introduced new flow framework APIs (`sendAll`/`sendAllMap`), which can be used to send messages to multiple counterparties with improved performance. Previously, a flow was able to send messages to multiple counterparties by invoking the `send` operation multiple times, once for each counterparty. These new APIs can now be used to achieve the same with better performance, which comes from a smaller number of suspensions and checkpoints. So, they reduce the time taken to send messages and improve the performance of flows that involve multiple counterparties. Note that existing CorDapps will have to be updated to benefit from the new API.
+
+
+#### Error code knowledge base
+
+
+Error reports generated in Corda stack traces will include (starting from Corda 4.5 onwards) a unique code linked to a knowledge base in our documentation.
+
+When a documented error is encountered, users can access the [knowledge base page](error-codes.md) to get more information about the error. This replaces the error codes based on stack trace hashes that had been introduced in earlier versions of Corda.
+
+NB: the knowledge base will be populated over time, as new error conditions are reported and investigated.
+
+
+#### Excluding JARs from Quasar instrumentation
+
+
+Corda uses Quasar to instrument flows, which makes it possible to resume a flow from a checkpoint. However, this Quasar instrumentation causes out of memory exceptions to occur when certain JARs are loaded as dependencies.
+
+We have therefore added a new node configuration option (`quasarExcludePackages`) that allows users to list packages to be excluded from Quasar instrumentation.
+
+
 #### RestrictedEntityManager and RestrictedConnection
 
-To improve reliability and prevent user errors, we have modified the database access provided via JDBC and `EntityManager`s to block access to functions that may corrupt flow checkpointing. As a result, it is now impossible to mistakenly call rollback inside the raw vault observer transaction, or to close the database connection prematurely. 
+To improve reliability and prevent user errors, we have modified the database access provided via JDBC and `EntityManager` to block access to functions that may corrupt flow checkpointing. As a result, it is now impossible to mistakenly call rollback inside the raw vault observer transaction, or to close the database connection prematurely.
 
 The full list of blocked functions can be found below:
 
 - [Restricted connections](api-persistence.md#restricted-control-of-connections).
 - [Restricted entity managers](api-persistence.md#restricted-control-of-entity-managers).
 
+#### Updated Dockerform task
+
+
+We have updated our `Dockerform` [local development task](`generating-a-node.md`) to default to using PostgreSQL as the chosen node database.
+
+
 ## Corda 4.4
 
-Corda 4.4 lays the foundation of a new open-core approach for the Corda codebase. This involved a refactoring of the main functional components of Corda. Please consult [the CorDapp overview](cordapps/cordapp-overview.md) to get an overview of the practical impact on CorDapp development.
+Corda 4.4 lays the foundation of a new open-core approach for the Corda codebase. This involved a refactoring of the main functional components of Corda. Please consult cordapp-overview.rst to get an overview of the practical impact on CorDapp development.
 
 Furthermore, Corda 4.4 introduces improvements to the flow framework API, a new diagnostic `ServiceHub` call and includes a number of security enhancements.
 
@@ -905,7 +947,6 @@ will have no impact on any deployed configurations.
 
 ### Miscellaneous changes
 
-To learn more about smaller changes, please read the [Changelog](changelog.md).
+To learn more about smaller changes, please read the [Changelog](https://docs.corda.net/docs/corda-os/4.0/changelog.html).
 
 Finally, we have added some new jokes. Thank you and good night!
-
