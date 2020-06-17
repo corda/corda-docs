@@ -10,7 +10,7 @@ tags:
 - node operator
 
 
-title: Adding Corda Collaborative Recovery across your network
+title: Implementing Corda Collaborative Recovery across your network
 weight: 200
 ---
 
@@ -18,40 +18,40 @@ weight: 200
 
 **Who this documentation is for:**
 * Node operators
-* Business Network Operators
+* Business Network Operators (BNOs)
 
 In a disaster recovery scenario, you need to be sure you can recover data from the nodes you have transacted with on each Business Network you are a part of.
 
-Unless Business Network Operators (BNOs) make Collaborative Recovery part of the disaster recovery plan for their network, Collaborative Recovery cannot be used. If you are a node operator, you need to seek an agreement at the governance level with all relevant BNOs before implementing collaborative recovery on your own node.
+Unless Business Network Operators (BNOs) make Collaborative Recovery part of the disaster recovery plan for their network, Collaborative Recovery cannot be used. If you are a node operator, you need to seek an agreement at the governance level with all relevant BNOs before implementing Collaborative Recovery on your own node.
 
 Once you have this agreement in place on your Business Network, you can create the wrapping flows that make recovery possible with all participants.
 
 
 ## Wrapping flows
 
-The Collaborative Recovery CorDapps use flows to initiate and execute the recovery process. Before this can happen, you need validation that the parties specified as input to each Disaster Recovery flow are members of the Business Network.
+The Collaborative Recovery CorDapps use flows to initiate and execute the recovery process. Before this can happen, you need validation that the parties specified as input to each disaster recovery flow are members of the Business Network.
 
 To validate these parties, you need to write and distribute simple wrapping flows for these reconciliation and recovery flows:
 
-- [ScheduleReconciliationFlow](ledger-sync.md#schedule-reconciliation-flow) - This flow schedules regular reconciliation checks
-- [AutomaticRecoveryFlow](ledger-recovery-automatic.md#automatic-ledger-recover-flow) to initiate automatic data recovery
-- [InitiateManualRecoveryFlow](ledger-recovery-manual.md#initiate-manual-recovery-flow) to initiate manual data recovery.
+- [ScheduleReconciliationFlow](ledger-sync.md#schedule-reconciliation-flow) - This flow schedules regular reconciliation checks.
+- [AutomaticRecoveryFlow](ledger-recovery-automatic.md#automatic-ledger-recover-flow) - This flow initiates automatic data recovery.
+- [InitiateManualRecoveryFlow](ledger-recovery-manual.md#initiate-manual-recovery-flow) - This flow initiates manual data recovery.
 
 These wrapping flows should be bundled into a single CorDapp that can be distributed to relevant parties on your network.
 
 ## Example flows
 
-How you implement the wrapping flows will depend on your own requirements and those of your Business Network. In the following examples you will find reference implementations of Business Network enabled Disaster Recovery flows. You can use them as the basis to create wrapping flows appropriate to your own Business Networks.
+How you implement the wrapping flows will depend on your own requirements and those of your Business Network. In the following examples, you will find reference implementations of Business Network-enabled Disaster Recovery flows. You can use these as the basis to create wrapping flows appropriate to your own Business Networks.
 
 ### Initiating Business Network-enabled flows
 
-Each flow in the examples below contains the private function `getMembers`. The implementation of this function is the responsibility of either the node operator or Business Network operator. It is used throughout the snippets to demonstrate how membership of a party might be validated using a retrieved list of Business Network members.
+Each flow in the examples below contains the private function `getMembers`. The implementation of this function is the responsibility of either the node operator or Business Network operator. It is used throughout the code snippets to demonstrate how membership of a party might be validated using a retrieved list of Business Network members.
 
 ### Business Network-initiated LedgerSync
 
-In order to determine whether or not ledger data is synchronized with the rest of the network after a disaster scenario, use `ScheduleReconciliationFlow` to schedule and eventually execute reconciliation with a specified list of parties. In this case, that list will be verified using a retrieved set of the Business Network members.
+In order to determine whether or not ledger data is synchronised with the rest of the network after a disaster scenario, use `ScheduleReconciliationFlow` to schedule and eventually execute reconciliation with a specified list of parties. In this case, that list will be verified using a retrieved set of the Business Network members.
 
-In order to enable overriding of the ledger-sync reconciliation responder flows, they must be manually specified
+In order to enable overriding of the LedgerSync reconciliation responder flows, they must be manually specified
 in the configuration of the responding node. This can be done by adding the following config block to the node.conf.
 
 ```none
@@ -190,9 +190,9 @@ After reconciling with all necessary parties, the node operator should then proc
 
 The simplest form of recovering ledger data is executed using `AutomaticLedgerRecover` which, on the
 basis of a previous reconciliation record or `ReconciliationStatus`, uses built-in Corda processes
-to request and retrieve the appropriate transactions from a counter party.
+to request and retrieve the appropriate transactions from a counterparty.
 
-For more information on this process and how it may be further configured please checkout the
+For more information on this process and how it may be further configured, see the
 [docs](ledger-recovery-automatic.md).
 
 
@@ -311,7 +311,7 @@ For more information on this process and how it may be further configured please
 
 ### Business Network-enabled manual recovery
 
-Another option available to node operators is to initiate manual recovery of ledger data. The snippet below
+Another option available to node operators is to initiate manual recovery of ledger data. The code snippet below
 outlines a simple wrapping flow that initiates manual recovery, persisting a record or `RecoveryRequest`
 on both the initiating and responding nodes.
 
@@ -434,16 +434,16 @@ to export, transfer and eventually import the missing transaction data.
 
 ## Schedule recurring reconciliation
 
-It is best practice to prevent against loss of data during a disaster by scheduling reconciliation checks across your network. This allows every node to ensure they have a backup record of each node they have transacted with. While everyone's data remains secure, discrepencies between parties can be safely detected. You can use collaborative recovery to schedule reconciliation flows, so you can be sure your vault data is consistent with that of all other parties on the network.
+It is best practice to prevent against loss of data during a disaster by scheduling reconciliation checks across your network. This allows every node to ensure they have a backup record of each node they have transacted with. While everyone's data remains secure, discrepancies between parties can be safely detected. You can use Collaborative Recovery to schedule reconciliation flows, so you can be sure your vault data is consistent with that of all other parties on the network.
 
-The flow in the snippet below represents a wrapping flow that schedules reconciliation with every member of a Business Network on a recurring basis. Using this wrapper means you can can safely see when discrepancies occur between your vault data and those of counterparties.
+The flow in the code snippet below represents a wrapping flow that schedules reconciliation with every member of a Business Network on a recurring basis. Using this wrapper means you can safely see when discrepancies occur between your vault data and those of counterparties.
 
 Communicating with all nodes on the network imposes network load. If you are on a smaller network, you may be able to schedule reconciliation more frequently. For larger networks, you can reconcile less frequently or potentially with a random subset of available peers.
 
 The implementation below reconciles with all parties (best for a smaller network) once daily. As a node operator, you must also determine whether or not you wish to run reconciliation during operating business hours, or as a routine maintenance activity to be performed when there is reduced network traffic.
 
 {{< note >}}
-In general a node's vault is expected to be consistent with the network (such is the major benefit of DLT). This process is similar to running database replication technology - an added layer of resiliency and reliability for on-ledger data.
+In general, a node's vault is expected to be consistent with the network (such is the major benefit of DLT). This process is similar to running database replication technology - an added layer of resiliency and reliability for on-ledger data.
 {{< /note >}}
 
 ```kotlin
