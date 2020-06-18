@@ -79,25 +79,27 @@ You can update the Network Map admin address using a command like this: `./cenm 
 
 8. [Set up any notaries](../../notaries) required for your network, and update your network parameters. This process includes steps you would follow for any **Flag Day** network update:
 
-    a. Fetch the node infos file from the notary.
+    a. Fetch the node info file from the notary.
 
     b. Upload the node info file to the Network Map - command: `cenm netmap upload-node-info -f nodeInfo`.
 
-    c. Update network parameters in the Network Map to include the notary information - command: `cenm netmap netparams update submit -p config/parameters.conf`.
+    c. Edit the network parameters configuration to add the notary to the list, specifying the path to the node info file from step b, and to set an update deadline in the near future. For example, 5 minutes from now.
 
-    d. Advertise the network parameter update to the network - command: `cenm netmap netparams update advertise`.
+    d. Update network parameters in the Network Map to include the notary information - command: `cenm netmap netparams update submit -p config/parameters.conf`.
 
-    e. Fetch the unsigned network parameters - command: `cenm signer netmap netparams unsigned`.
+    e. Advertise the network parameter update to the network - command: `cenm netmap netparams update advertise`.
 
-    f. Sign the updated network parameters - command: `cenm signer netmap netparams sign -h <hash>`.
+    f. Fetch the unsigned network parameters - command: `cenm signer netmap netparams unsigned`.
 
-    g. Accept the update from inside the notary nodes.  
+    g. Sign the updated network parameters - command: `cenm signer netmap netparams sign -h <hash>`.
 
-    h. Execute the network parameter updates - command: `cenm netmap netparams update execute`.
+    h. Accept the update from inside the notary.
 
-    i. Fetch the unsigned Network Map - command: `cenm signer netmap unsigned`.
+    i. Execute the network parameter updates - command: `cenm netmap netparams update execute`.
 
-    j. Sign the Network Map - command: `cenm signer netmap sign -h <hash>`.
+    j. Fetch the unsigned Network Map - command: `cenm signer netmap unsigned`.
+
+    k. Sign the Network Map - command: `cenm signer netmap sign -h <hash>`.
 
 
 ### Get Help in the CLI
