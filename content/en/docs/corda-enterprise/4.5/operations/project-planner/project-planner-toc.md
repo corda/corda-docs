@@ -32,10 +32,13 @@ Recommend a VM running a DB rather than a native cloud database.
 We are very WRITE heavy on the database.
 
 
+* = doc content
+- = new doc
+
 - Planning a Corda Deployment
     * What is your role?
-        * CorDapp Developer
-        * BNO
+        * CorDapp developer
+        * Business Network Operators
         * Joining an existing network
     * What is your deployment strategy?
         * Cloud
@@ -45,14 +48,15 @@ We are very WRITE heavy on the database.
         * Operating system reqs
         * Machine reqs
     * Testing Environment requirements
-    * UAT Environment requirements
 - Business network members
     * Access to testing environments
-    - Production sizing requirements
+    * Production sizing requirements
         * On-prem
         * Cloud
 - Business network operators
     * If you are developing CorDapps as well, go read that
-    - UAT Environment
-    - QA Environment
-    - Production environment
+    * UAT Environment
+    * QA Environment
+    * Production environment
+    * Security (HSM)
+

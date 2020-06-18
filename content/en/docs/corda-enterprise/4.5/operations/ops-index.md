@@ -4,7 +4,6 @@ menu:
   corda-enterprise-4-5:
     identifier: corda-enterprise-4-5-operations-guide
     name: "Corda Operations and Deployment"
-    parent: corda-enterprise-4-5-corda-nodes-notary-operate
 tags:
 - operations
 - deployment
@@ -15,8 +14,19 @@ weight: 10
 
 # Corda Enterprise Operations Guide
 
-- Project Planner Documentation
+The Corda Operations Guide is intended to assist users of Corda Enterprise in planning, deploying, and operating an
+instance of Corda Enterprise.
 
-- Operations and Deployment Guide
+There are three distinct sections:
 
-- Monitoring and Logging
+- Project planner documentation
+
+- Operations and deployment guide
+
+- Monitoring and logging
+
+## Project planner documentation
+
+The project planner documentation advises users on the requirements of their deployment.
+
+`other technical writers to add their headings here`
