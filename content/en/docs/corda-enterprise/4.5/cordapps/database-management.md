@@ -379,4 +379,3 @@ itself does not do the conversion automatically.
 As we can see, we have one changeset for Oracle and one for the other database types. The dbms check will ensure the proper changeset is executed.
 Each database has it’s own specifics, so when creating scripts for a CorDapp, it is recommended that you test your scripts against each supported
 database.
-

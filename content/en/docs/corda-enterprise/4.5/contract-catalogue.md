@@ -1,10 +1,15 @@
 ---
 date: '2020-04-07T12:00:00Z'
-menu: []
+menu:
+  corda-enterprise-4-5:
+    identifier: corda-enterprise-4-5-contract-catalogue
+    name: "Contract catalogue"
+    parent: corda-enterprise-4-5-component-library-index
 tags:
 - contract
 - catalogue
 title: Contract catalogue
+weight: 10
 ---
 
 
@@ -88,4 +93,3 @@ commands as long as they apply to different terms, but could not have an `Issue`
 Netting of obligations supports close-out netting (which can be triggered by either obligor or beneficiary, but is
 limited to bilateral netting), and payment netting (which requires signatures from all involved parties, but supports
 multilateral netting).
-

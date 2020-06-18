@@ -8,19 +8,19 @@ tags:
 - database
 - developer
 title: Simplified database schema setup for development
-weight: 1
+weight: 20
 ---
 
 
 # Simplified database schema setup for development
 
 This document provides instructions on how to create database schema
-and configure a Corda node suitable for development and testing purposes.
+and configure a Corda node that is suitable for development and testing purposes.
 This setup allows the auto-creation of database objects by the node upon startup
 by connecting to a database with a user with **administrative permissions**.
-Please refer to [Database schema setup](node-database-admin.md) if you are setting Corda database in production environment.
+Please refer to [Database schema setup](node-database-admin.md) if you are setting up a Corda database in a production environment.
 
-The instructions cover all commercial 3rd party database vendors supported by Corda Enteprise
+The instructions cover all commercial third-party database vendors supported by Corda Enteprise
 (Azure SQL, SQL Server, Oracle and PostgreSQL), and the default embedded H2 database:
 
 
@@ -614,6 +614,3 @@ To remove node and CorDapp specific tables run the following SQL script:
 DROP SCHEMA IF EXISTS "my_schema" CASCADE;
 DROP OWNED BY "my_user";
 ```
-
-
-

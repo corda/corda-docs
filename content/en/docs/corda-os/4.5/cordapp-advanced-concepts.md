@@ -13,12 +13,12 @@ tags:
 - cordapp
 - advanced
 - concepts
-title: Advanced CorDapp Concepts
+title: Advanced CorDapp concepts
 ---
 
 
 
-# Advanced CorDapp Concepts
+# Advanced CorDapp concepts
 
 
 At the heart of the Corda design and security model is the idea that a transaction is valid if and only if all the `verify()` functions in
@@ -434,5 +434,3 @@ The *finance* CorDapp is a sample and should not normally be used in production 
 the app developer requires some code, they can just copy it under their own namespace.
 
 {{< /warning >}}
-
-

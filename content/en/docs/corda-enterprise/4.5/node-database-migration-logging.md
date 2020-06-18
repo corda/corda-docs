@@ -1,17 +1,20 @@
 ---
 date: '2020-04-07T12:00:00Z'
-menu: []
+menu:
+  corda-enterprise-4-5:
+    parent: corda-enterprise-4-5-corda-nodes-operating-db
 tags:
 - node
 - database
 - migration
 - logging
-title: Database Schema Migration Logging
+title: Database schema migration logging
+weight: 40
 ---
 
 
 
-# Database Schema Migration Logging
+# Database schema migration logging
 
 Database migrations for the Corda node’s internal database objects are recorded in the node’s default log file.
 
@@ -206,4 +209,3 @@ java -jar -Dlog4j.configurationFile=log4j2.xml,path_to_custom_file.xml corda.jar
 ```
 
 Enabling custom logging is also described in node-administration-logging.
-

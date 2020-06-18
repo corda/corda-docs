@@ -9,12 +9,12 @@ tags:
 - corda
 - firewall
 - component
-title: Firewall Component Overview
-weight: 2
+title: Firewall component overview
+weight: 20
 ---
 
 
-# Firewall Component Overview
+# Firewall component overview
 
 The Corda Firewall (bridge/float) component is designed for enterprise deployments and acts as an application level
 firewall and protocol break on all internet facing endpoints. The `corda-firewall.jar` encapsulates the peer
@@ -760,6 +760,3 @@ Corda Firewall been tested to support 100 concurrent connections which are inten
 moment there were around 1 GB of data in flight.
 
 If necessary, memory allocated to Corda Firewall can be changed using `custom.jvmArgs` configuration file option.
-
-
-

@@ -8,7 +8,7 @@ tags:
 - cordapp
 - samples
 title: CorDapp samples
-weight: 13
+weight: 15
 ---
 
 # CorDapp samples
@@ -34,4 +34,3 @@ If you would like to see flow activity on the nodes type in the node terminal `f
 
 {{< /note >}}
 Please report any bugs with the samples on [GitHub](https://github.com/corda/corda/issues).
-

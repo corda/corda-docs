@@ -6,7 +6,7 @@ menu:
 tags:
 - messaging
 title: Networking and messaging
-weight: 15
+weight: 140
 ---
 
 
@@ -138,6 +138,3 @@ with the advertised X.500 legal name from the network map service.
 
 *
     * Connect to the P2P broker using the `SystemUsers/Peer` user and a doorman signed certificate. The authentication is performed based on the root CA.
-
-
-

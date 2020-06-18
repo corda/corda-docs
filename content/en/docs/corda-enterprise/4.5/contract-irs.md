@@ -1,10 +1,15 @@
 ---
 date: '2020-04-07T12:00:00Z'
-menu: []
+menu:
+  corda-enterprise-4-5:
+    identifier: corda-enterprise-4-5-contract-irs
+    name: "Interest rate swaps"
+    parent: corda-enterprise-4-5-component-library-index
 tags:
 - contract
 - irs
 title: Interest rate swaps
+weight: 30
 ---
 
 

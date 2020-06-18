@@ -11,7 +11,7 @@ tags:
 - service
 - overview
 title: Corda Enterprise notary service overview
-weight: 8
+weight: 90
 ---
 
 
@@ -113,4 +113,3 @@ to configure unique worker aliases. See ../corda-configuration-file for more inf
 ## Expected data volume
 
 Non-validating notaries store roughly one kilobyte per transaction.
-

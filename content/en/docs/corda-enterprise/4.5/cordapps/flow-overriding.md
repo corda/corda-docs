@@ -234,5 +234,3 @@ it would be possible to invoke either `BaseInitiator` or `NotaryOnlyInitiator` a
 You must ensure the sequence of sends/receives/subFlows in a subclass are compatible with the parent.
 
 {{< /warning >}}
-
-

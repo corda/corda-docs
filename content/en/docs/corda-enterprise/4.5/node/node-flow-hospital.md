@@ -8,7 +8,7 @@ tags:
 - flow
 - hospital
 title: Flow Hospital
-weight: 7
+weight: 80
 ---
 
 
@@ -114,4 +114,3 @@ status (for example, to only display errored flows):
 ![flowTriageView](/en/images/flowTriageView.png "flowTriageView")
 As of Corda Enterprise 4.4, this UI is informational only (read-only). Future versions of Corda will extend the basic functionality to enable
 operational controls such as manual recovery and retry, and cancellation of errored flows.
-

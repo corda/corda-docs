@@ -7,7 +7,7 @@ tags:
 - version
 - compatibility
 title: Corda and Corda Enterprise compatibility
-weight: 2
+weight: 3
 ---
 
 

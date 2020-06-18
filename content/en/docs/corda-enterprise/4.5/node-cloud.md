@@ -1,10 +1,13 @@
 ---
 date: '2020-04-07T12:00:00Z'
-menu: []
+menu:
+  corda-enterprise-4-5:
+    parent: corda-enterprise-4-5-corda-networks
 tags:
 - node
 - cloud
 title: Corda Enterprise cloud images
+weight: 8
 ---
 
 
@@ -146,4 +149,3 @@ You can check the status of the `corda` service by running:
 ```shell
 sudo systemctl status corda
 ```
-

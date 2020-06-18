@@ -1,10 +1,13 @@
 ---
 date: '2020-04-07T12:00:00Z'
-menu: []
+menu:
+  corda-enterprise-4-5:
+    parent: corda-enterprise-4-5-cordapps-contracts
 tags:
 - contract
 - upgrade
 title: Upgrading contracts
+weight: 20
 ---
 
 

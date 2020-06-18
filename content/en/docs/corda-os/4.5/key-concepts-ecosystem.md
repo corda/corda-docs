@@ -12,11 +12,11 @@ menu:
 tags:
 - concepts
 - ecosystem
-title: The network
+title: Network
 ---
 
 
-# The network
+# Network
 
 ## Summary
 

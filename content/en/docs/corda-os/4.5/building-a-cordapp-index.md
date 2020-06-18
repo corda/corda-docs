@@ -26,10 +26,8 @@ title: CorDapps
 * [CorDapp samples](building-a-cordapp-samples.md)
 * [Structuring a CorDapp](writing-a-cordapp.md)
 * [Building and installing a CorDapp](cordapp-build-systems.md)
+* [Building Building CorDapps against a non-release branch](building-against-non-release.md)
 * [Debugging a CorDapp](debugging-a-cordapp.md)
 * [Secure coding guidelines](secure-coding-guidelines.md)
 * [Configuring Responder Flows](flow-overriding.md)
 * [Flow cookbook](flow-cookbook.md)
-
-
-

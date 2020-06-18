@@ -8,7 +8,7 @@ menu:
 tags:
 - serialization
 title: Serialization
-weight: 20
+weight: 160
 ---
 
 
@@ -23,6 +23,3 @@ weight: 20
 * [JSON](json.md)
 * [Blob Inspector](blob-inspector.md)
 * [Wire format](wire-format.md)
-
-
-

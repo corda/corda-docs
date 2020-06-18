@@ -8,7 +8,7 @@ tags:
 - database
 - admin
 title: Database schema setup
-weight: 2
+weight: 30
 ---
 
 
@@ -921,4 +921,3 @@ The database collation should be *case insensitive*, refer to
 
 To allow *VARCHAR2* and *NVARCHAR2* column types to store more than 2000 characters, ensure the database instance is configured to use
 extended data types. For example, for Oracle 12.1 refer to [MAX_STRING_SIZE](https://docs.oracle.com/database/121/REFRN/GUID-D424D23B-0933-425F-BC69-9C0E6724693C.htm#REFRN10321).
-

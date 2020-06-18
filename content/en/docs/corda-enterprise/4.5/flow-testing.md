@@ -7,7 +7,7 @@ tags:
 - flow
 - testing
 title: Writing flow tests
-weight: 7
+weight: 8
 ---
 
 # Writing flow tests
@@ -141,4 +141,3 @@ directly to the `megaCorpNode.services.recordTransaction` method (note that this
 transactions are valid) inside a `database.transaction`.  All node flows run within a database transaction in the
 nodes themselves, but any time we need to use the database directly from a unit test, you need to provide a database
 transaction as shown here.
-
