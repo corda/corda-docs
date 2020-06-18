@@ -7,15 +7,16 @@ menu: []
 tags:
 - CLI
 - CENM command line interface
+- CENM command-line interface
 - shell
-title: CENM Services CLI
+title: CENM Services Command-line Interface
 ---
 
-# CENM Services Command Line Interface
+# CENM Command-line Interface
 
-The Services Command Line Interface (CLI) allows you to perform key CENM tasks remotely and securely.
+The CENM Command-line Interface (CLI) allows you to perform key CENM tasks remotely and securely.
 
-Once you have permissions to access the CENM service you require, you can use the CLI to perform tasks with the following services:
+Once you have the required permissions to access the CENM service you require, you can use the CLI to perform tasks with the following services:
 
 * Identity Manager
 * Zone management
@@ -26,43 +27,77 @@ Once you have permissions to access the CENM service you require, you can use th
 
 In order to use the CLI, you must have permission to access the CENM services you plan to use.
 
-You should have an account that can be set up by administrators using the [User Admin application](user-admin-tool.html).
+You should have an account that has been set up by a user administrator using the [User Admin application](user-admin-tool.html). This account gives you the credentials, roles, and permissions you need to access CENM services via the CLI.
+
+For the below example, the credentials of a sample CENM user are shown:
+
+Name: Alice Barthes
+Username: alice.barthes
+Password: w34rfrt45g4y65EERTR5
 
 
-### Quickstart - set up a new network with the CLI
+### Quickstart - outline of steps to set up a new network with the CLI
 
 You must set up any new network in a specific order, as some services rely on information that must be in place before they can be created.
-Most importantly, you must set the **Signing service** configuration last.
+Most importantly, you must set the **Signing service** configuration last - this is because you need to have configuration details for all the other services before you can access their signing requests.
 
-{{< note >}}
-The commands and options in these steps are explored in more detail throughout this document.
-{{< /note >}}
+In the example below, you can see the steps to set up a new network with the CLI. When setting up your own network, you need to replace the sample parameters, usernames, passwords, service addresses and other information as applicable to your deployment.
 
 To set up a new network with the CLI:
 
-1. Login:
+1. Login by setting the [context login address](#define-contexts-and-servers), your username, and password:
 
-    `./cenm context login http://localhost:8081 -u jenny-editor -p password`
+    `./cenm context login http://10.230.41.12 -u alice.barthes -p w34rfrt45g4y65EERTR5`
 
-2. Set the Identity Manager's external address. This must be the address that external parties will use to connect with the Identity Manager:
+2. Set the Identity Manager's external admin address. This must be the address that the gateway FARM service uses to communicate with the Identity Manager:
 
-    `./cenm identity-manager config set-address -a=identity-manager:5053`
+    `./cenm identity-manager config set-admin-address -a=identity-manager:5053`
 
-3. Set the Identity Manager config:
+3. Set the Identity Manager config. This command returns a **Zone token** which you should pass to your [Angel service](angel-service):
 
     `./cenm identity-manager config set -f config/identitymanager.conf --zone-token`
 
-4. Create a new subzone:
+4. Create a new subzone - including the admin address for Network Map. This must be the address that the gateway FARM service uses to communicate with the Network Map:
 
     `./cenm zone create-subzone --config-file=config/networkmap.conf --label=Subzone --label-color="#000000" --network-map-address=networkmap:8080 --network-parameters=config/params.conf`
 
-5. Set the Network Map configuration for a subzone (1 was taken from the response to the create-subzone command):
+{{< note >}}
+You can update the Network Map admin address using a command like this: `./cenm network-map config set-admin-address -a=networkmap:8081`. If you have multiple sub-zones, you need to specify which sub-zone you are updating in the command.
+{{< /note >}}
+
+5. Set the Network Map configuration for a subzone (the entry `1` below comes from the response to the create-subzone command):
 
     `./cenm netmap config set -s 1 -f config/networkmap.conf --zone-token`
 
-6. Set the Signer configuration last, as it depends on the first two service's locations for it to be complete:
+6. Set the Signer Service's external admin address. This must be the address that the gateway FARM service uses to communicate with the Identity Manager:
+
+    `./cenm signer config set-admin-address -a=signer:9087`
+
+7. Set the Signer configuration last, as it depends on the first two service's locations for it to be complete:
 
     `./cenm signer config set -f config/signer.conf --zone-token`
+
+8. [Set up any notaries](../../notaries) required for your network, and update your network parameters. This process includes steps you would follow for any **Flag Day** network update:
+
+    a. Fetch the node infos file from the notary.
+
+    b. Upload the node info file to the Network Map - command: `cenm netmap upload-node-info -f nodeInfo`.
+
+    c. Update network parameters in the Network Map to include the notary information - command: `cenm netmap netparams update submit -p config/parameters.conf`.
+
+    d. Advertise the network parameter update to the network - command: `cenm netmap netparams update advertise`.
+
+    e. Fetch the unsigned network parameters - command: `cenm signer netmap netparams unsigned`.
+
+    f. Sign the updated network parameters - command: `cenm signer netmap netparams sign -h <hash>`.
+
+    g. Accept the update from inside the notary nodes.  
+
+    h. Execute the network parameter updates - command: `cenm netmap netparams update execute`.
+
+    i. Fetch the unsigned Network Map - command: `cenm signer netmap unsigned`.
+
+    j. Sign the Network Map - command: `cenm signer netmap sign -h <hash>`.
 
 
 ### Get Help in the CLI
@@ -113,15 +148,16 @@ Network-map management features.
 
 ## Define contexts and servers
 
-Your interaction with CENM services through the CLI is managed by the Front-end Application for Remote Management (FARM) service. This service handles security checks and HTTP translation during your session, and acts as an API gateway between the CLI and CENM.
+Your interaction with CENM services through the CLI is managed by the Front-end Application for Remote Management (FARM) service. This service handles security checks and HTTP translation during your session, and acts as a gateway between the CLI and CENM.
 
-When you log in to each session, you specify the full endpoint of the FARM service instance you are accessing. You do this using the argument '<server>' in the command line. This endpoint forms the **context** for your session.
+When you log in to each session, you specify the full endpoint address of the FARM service instance you are accessing, for example: `http://10.230.41.12`. You do this using the argument `<server>` in the command line. This endpoint forms the **context** for your session.
 
-Setting a context means that your session is not interrupted by any natural time-outs in your CENM service. It also means you can switch between servers, like staging and production servers, simply by switching from one context alias to another.
+Setting a context means that your session can last for the full session duration set in your [Auth Service](auth-service) configuration, without being interrupted by any natural time-outs in your CENM service. It also means you can switch between servers, like staging and production servers, simply by switching from one context alias to another.
 
 In most commands in the CLI, you can specify the context you want to use with the command option:
 
 `-c, --use-context=<useContext>`
+
 
 ### Aliases for contexts
 
@@ -217,13 +253,13 @@ You can use the CLI to configure the following elements of the Identity Manager 
 
 ### Update the Identity Manager's service address.
 
-To update the service address of the Identity Manager, use the `set-address` command. Changing the address of the Identity Manager service also means you can update the Context of the current session to match the new address.
+To update the service address of the Identity Manager, use the `set-admin-address` command. Changing the address of the Identity Manager service also means you can update the Context of the current session to match the new address.
 
 When entering the address, you must enter `<host>-<port>`. The `port` value must be the same as the value for `adminListener` in the services configuration file. **[PLEASE CHECK THIS]**
 
 **Sample command structure**
 
-`cenm identity-manager config set-address -a=<address> [-c=<useContext>] [-o=<outputType>]`
+`cenm identity-manager config set-admin-address -a=<address> [-c=<useContext>] [-o=<outputType>]`
 
 **Options**
 
@@ -278,7 +314,7 @@ Configuration file.
 Specifies output format. Valid values are: json, pretty. Default value is pretty
 
 `--zone-token`
-Indicates that the zone token should be printed instead of the config, when using the 'pretty' output type..
+Indicates that the zone token should be printed instead of the config, when using the 'pretty' output type.
 
 
 ### Manage Identity Manager certificate signing requests
@@ -613,9 +649,9 @@ Sets which subzone to operate on. If you are operating on just one subzone you d
 
 You can use the CLI to perform the following tasks in the signer service:
 
-* Sign Identity Manager certificates.
 * See the list of pending certificate signing requests.
 * Get a full list of unsigned certificate revocation requests.
+* Sign Identity Manager certificates.
 * See pending Identity Manager certificate revocation requests.
 * Sign certificate revocation requests.
 * Get a list of unsigned network parameters.
@@ -630,9 +666,24 @@ You can use the CLI to perform the following tasks in the signer service:
 * List all signers currently configured.
 * Get zone material relating to the signer service.
 
+
+### See a list of outstanding certificate signing requests
+
+**Sample command structure**
+
+`cenm signer csr list [-c=<useContext>] [-o=<outputType>]`
+
+**Options**
+
+`-c, --use-context=<useContext>`
+Sets the context of the command - overrides the current context set.
+
+`-o, <outputType>`
+Specifies output format. Valid values are: json, pretty. Default value is `pretty`.
+
 ### Sign an Identity Manager certificate
 
-When you sign Identity Manager certficate requests using the CLI, you  need to include the ID of the request you are signing.
+When you sign Identity Manager certificate requests using the CLI, you  need to include the ID of the request you are signing.
 
 **Sample command structure**
 
@@ -650,20 +701,6 @@ Specifies output format. Valid values are: json, pretty. Default value is `prett
 
 `REQUEST_ID`
 The ID of the request you wish to sign.
-
-### See a list of outstanding certificate signing requests
-
-**Sample command structure**
-
-`cenm signer csr list [-c=<useContext>] [-o=<outputType>]`
-
-**Options**
-
-`-c, --use-context=<useContext>`
-Sets the context of the command - overrides the current context set.
-
-`-o, <outputType>`
-Specifies output format. Valid values are: json, pretty. Default value is `pretty`.
 
 ### Sign an Identity Manager certificate revocation request
 
@@ -832,7 +869,7 @@ Indicates that the zone token should be printed instead of the config, when usin
 
 **Sample command structure**
 
-`cenm signer config set-address -a=<address> [-c=<useContext>] [-o=<outputType>]`
+`cenm signer config set-admin-address -a=<address> [-c=<useContext>] [-o=<outputType>]`
 
 **Options**
 
@@ -904,9 +941,9 @@ Sets the context of the command - overrides the current context set.
 `-o, <outputType>`
 Specifies output format. Valid values are: json, pretty. Default value is `pretty`.
 
-## Network parameters and Network Map service commands
+## Network Map service commands
 
-You can use the CLI to perform the following tasks in network parameters and Network Map services:
+You can use the CLI to perform the following tasks on Network Map services:
 
 * Get network parameters.
 * Update network parameters.
@@ -1136,7 +1173,7 @@ Indicates that the zone token should be printed instead of the config, when usin
 
 **Sample command structure**
 
-`cenm netmap config set-address -a=<address> [-c=<useContext>] [-o=<outputType>] [-s=<subzoneId>]`
+`cenm netmap config set-admin-address -a=<address> [-c=<useContext>] [-o=<outputType>] [-s=<subzoneId>]`
 
 **Options**
 
