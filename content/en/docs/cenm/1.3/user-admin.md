@@ -17,7 +17,7 @@ title: CENM User Admin tool
 
 ## CENM User Admin tool
 
-The User Admin tool allows you to manage the profiles of users, groups, and administrators who need access to your network services. You can use the tool to create roles with specific permissions and assign them to users. For example, you can give a user of the Identity Manager service a role that permits them to request the revocation of a network certificate.
+The User Admin tool is a visual interface that allows you to manage the profiles of users, groups, and administrators who need access to your network services. You can use the tool to create roles with specific permissions and assign them to users. For example, you can give a user of the Identity Manager service a role that permits them to request the revocation of a network certificate.
 
 With the User Management tool, you can:
 
@@ -41,7 +41,7 @@ For example:
 
 ### First login
 
-Your initialisation credentials for logging in for the first time are established using the `--initial-user-name` and `--initial-user-password` commands when managing the configuration of the [Auth Service](auth-service). 
+Your initialisation credentials for logging in for the first time are established using the `--initial-user-name` and `--initial-user-password` commands when managing the configuration of the [Auth Service](auth-service).
 
 If you do not have these, you need to access them from the operator who configured your Auth Service.
 
