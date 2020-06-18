@@ -1,10 +1,6 @@
 ---
 date: '2020-04-07T12:00:00Z'
-menu:
-    corda-enterprise-4-5:
-        identifier: "corda-enterprise-4-5-cordapps-quickstart-running"
-        name: "Running the example CorDapp"
-        parent: corda-enterprise-4-5-cordapps-quickstart
+menu: []
 tags:
 - quickstart
 - deploy
@@ -66,4 +62,3 @@ This command displays all of the IOU states in the node’s vault. States are im
 ## Next steps
 
 After deploying the example CorDapp, the next step is to start [writing a CorDapp](./quickstart-build.html) containing your own contract, states, and flows.
-

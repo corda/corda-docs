@@ -3,19 +3,22 @@ aliases:
 - /head/tutorial-cordapp.html
 - /HEAD/tutorial-cordapp.html
 - /tutorial-cordapp.html
-date: '2020-04-07T12:00:00Z'
+- /releases/release-V4.4/tutorial-cordapp.html
+- /docs/corda-os/head/tutorial-cordapp.html
+- /docs/corda-os/tutorial-cordapp.html
+date: '2020-01-08T09:59:25Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-tutorial-cordapp
-    parent: corda-os-4-5-building-a-cordapp-index
-    weight: 1030
+  corda-enterprise-4-5:
+    parent: corda-enterprise-4-5-cordapps
 tags:
 - tutorial
 - cordapp
-title: Running the example CorDapp
+- deploy
+- quickstart
+title: Running an example CorDapp
+weight: 3
+
 ---
-
-
 
 
 # Running an example CorDapp

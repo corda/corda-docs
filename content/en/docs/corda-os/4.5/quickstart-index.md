@@ -4,11 +4,7 @@ aliases:
 - /HEAD/quickstart-index.html
 - /quickstart-index.html
 date: '2020-04-07T12:00:00Z'
-menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-quickstart-index
-    parent: corda-os-4-5-development
-    weight: 70
+menu: []
 tags:
 - quickstart
 title: Getting started developing CorDapps
@@ -60,4 +56,3 @@ Your CorDapp development environment is now complete.
 ## Next steps
 
 Now that you’ve successfully set up your CorDapp development environment, we’ll cover deploying an example CorDapp locally, before writing a CorDapp from scratch.
-
