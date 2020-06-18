@@ -77,7 +77,7 @@ You can update the Network Map admin address using a command like this: `./cenm 
 
     `./cenm signer config set -f config/signer.conf --zone-token`
 
-8. [Set up any notaries](../../notaries) required for your network, and update your network parameters. This process includes steps you would follow for any **Flag Day** network update:
+8. Set up any notaries required for your network, and update your network parameters. This process includes steps you would follow for any **Flag Day** network update:
 
     a. Fetch the node info file from the notary.
 
