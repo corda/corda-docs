@@ -12,16 +12,16 @@ tags:
 title: CENM Services Command-line Interface
 ---
 
-# CENM Command-line Interface
+# CENM Command-line Interface Tool
 
 The CENM Command-line Interface (CLI) allows you to perform key CENM tasks remotely and securely.
 
 Once you have the required permissions to access the CENM service you require, you can use the CLI to perform tasks with the following services:
 
 * Identity Manager
-* Zone management
+* Zone Service
 * Network Map
-* Signing services
+* Signing Service
 
 ## Setting up the CENM CLI
 
@@ -53,7 +53,7 @@ To set up a new network with the CLI:
 
     `./cenm identity-manager config set-admin-address -a=identity-manager:5053`
 
-3. Set the Identity Manager config. This command returns a **Zone token** which you should pass to your [Angel service](angel-service):
+3. Set the Identity Manager config. This command returns a **Zone token** which you should pass to your [Angel Service](angel-service):
 
     `./cenm identity-manager config set -f config/identitymanager.conf --zone-token`
 
@@ -69,7 +69,7 @@ You can update the Network Map admin address using a command like this: `./cenm 
 
     `./cenm netmap config set -s 1 -f config/networkmap.conf --zone-token`
 
-6. Set the Signer Service's external admin address. This must be the address that the gateway FARM service uses to communicate with the Identity Manager:
+6. Set the Signing Service's external admin address. This must be the address that the gateway FARM service uses to communicate with the Identity Manager:
 
     `./cenm signer config set-admin-address -a=signer:9087`
 
@@ -125,7 +125,7 @@ You can use the CLI to:
 * Perform tasks in Identity Manager.
 * Access the Network Map.  
 * Manage zones.
-* Perform tasks in signer services.
+* Perform tasks in Signing Services.
 
 The main commands are:
 
@@ -542,12 +542,12 @@ Sets the context of the command - overrides the current context set.
 ``-o, <outputType>``
 Specifies output format. Valid values are: json, pretty. Default value is `pretty`.
 
-## Zone manager commands
+## Zone Service commands
 
 You can use the CLI to perform the following tasks related to zone management:
 
 `status`
-To check your connectivity to the zone service.
+To check your connectivity to the Zone Service.
 
 `create-subzone`
 To create a subzone.
@@ -558,7 +558,7 @@ To list all subzones.
 `addresses`
 To list all service addresses.
 
-### Check connectivity to the zone service
+### Check connectivity to the Zone Service
 
 **Sample command structure**
 
@@ -647,9 +647,9 @@ Specifies output format. Valid values are: json, pretty. Default value is `prett
 Sets which subzone to operate on. If you are operating on just one subzone you do not need to include this option.
 
 
-## Signer service commands
+## Signing Service commands
 
-You can use the CLI to perform the following tasks in the signer service:
+You can use the CLI to perform the following tasks in the Signing Service:
 
 * See the list of pending certificate signing requests.
 * Get a full list of unsigned certificate revocation requests.
@@ -661,12 +661,12 @@ You can use the CLI to perform the following tasks in the signer service:
 * Get subzone material detailing parameters of a network.
 * See unsigned Network Map data.
 * Sign Network Map.
-* Set the signer service address.
-* Get the signer service configuration details.
-* Configure the signer service.
-* Check your connectivity to the signer service.
+* Set the Signing Service address.
+* Get the Signing Service configuration details.
+* Configure the Signing Service.
+* Check your connectivity to the Signing Service.
 * List all signers currently configured.
-* Get zone material relating to the signer service.
+* Get zone material relating to the Signing Service.
 
 
 ### See a list of outstanding certificate signing requests
@@ -845,9 +845,9 @@ Specifies output format. Valid values are: json, pretty. Default value is `prett
 `-s, --subzone-id=<subzoneId>`
 Sets which subzone to operate on. If you are operating on just one subzone you do not need to include this option.
 
-### Configure the signer service
+### Configure the Signing Service
 
-To configure the signer service, you must include a configuration file with the correct configuration data.
+To configure the Signing Service, you must include a configuration file with the correct configuration data.
 
 **Sample command structure**
 
@@ -867,7 +867,7 @@ Specifies output format. Valid values are: json, pretty. Default value is `prett
 `--zone-token`
 Indicates that the zone token should be printed instead of the config, when using the `pretty` output type.
 
-### Set the address of the signer service
+### Set the address of the Signing Service
 
 **Sample command structure**
 
@@ -884,7 +884,7 @@ Sets the context of the command to override the current context you are using.
 `-o, <outputType>`
 Specifies output format. Valid values are: json, pretty. Default value is `pretty`.
 
-### See the signer service configuration
+### See the Signing Service configuration
 
 **Sample command structure**
 
@@ -901,7 +901,7 @@ Specifies output format. Valid values are: json, pretty. Default value is `prett
 `--zone-token`
 Indicates that the zone token should be printed instead of the config, when using the `pretty` output type.
 
-### Check the connection status of the signer service
+### Check the connection status of the Signing Service
 
 **Sample command structure**
 
@@ -1007,7 +1007,7 @@ Sets which subzone to operate on. If you are operating on just one subzone you d
 
 ### Submit a new network parameters update
 
-To create a new parameters update, you must submit it to the zone service database. It can then be **Advertised**, and then **Executed** when the changes are brought into effect.
+To create a new parameters update, you must submit it to the Zone Service database. It can then be **Advertised**, and then **Executed** when the changes are brought into effect.
 
 When using this command, you must include the new parameters using the option described below.
 
@@ -1123,7 +1123,7 @@ Specifies output format. Valid values are: json, pretty. Default value is `prett
 `-s, --subzone-id=<subzoneId>`
 Sets which subzone to operate on. If you are operating on just one subzone you do not need to include this option.
 
-### See the latest update stored in the zone service
+### See the latest update stored in the Zone Service
 
 **Sample command structure**
 
