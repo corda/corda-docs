@@ -18,7 +18,7 @@ weight: 100
 
 ## Approaching an OOM error
 
- The HeapMemoryUsage attribute of the java.lang:type=Memory mbean contains a MemoryUsage (https://docs.oracle.com/javase/8/docs/api/java/lang/management/MemoryUsage.html) object that represents a snapshot of heap memory usage.
+ The `HeapMemoryUsage` attribute of the `java.lang:type=Memory` mbean contains a MemoryUsage (https://docs.oracle.com/javase/8/docs/api/java/lang/management/MemoryUsage.html) object that represents a snapshot of heap memory usage.
  The 'used' variable of this object represents the amount of memory currently used, while the 'max' value represents the maximum amount of memory that can be used for memory management. If the proportion of these two values are repeatedly over 0.85, it could indicate a condition where we are approaching an OOM error.
 
 ## High CPU usage
