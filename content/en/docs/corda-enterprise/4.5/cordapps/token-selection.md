@@ -68,13 +68,12 @@ fun addMoveFungibleTokens(
 
 ## Use in-memory selection
 
-You can use in-memory token selection in two ways:
+You can use in-memory token in much the same way...
 
-* In much the same way as DB selection, with `addMoveTokens` and `addRedeemTokens` utility functions. When doing this, you must make sure that all the checks are performed before construction of the transaction.
+* In much the same way as DB selection, you are able to call the `generateMove` method to select tokens available for the transaction being constructed.
 
-* Use the `generateMove` method by writing wrappers around `MoveTokensFlow` and `RedeemTokensFlow`.
 
-You can see examples of both approaches below.
+You can see an example of this below.
 
 ### Initialise `VaultWatcherService`
 
@@ -118,7 +117,7 @@ nodeDefaults {
 
 ## Move tokens using in-memory selection
 
-You can use in-memory selection in a very similar way to DB token selection - by calling `selectTokens`. In the example below where the only change is `LocalTokenSelector` in place of `DBTokenSelector`. Or, you can
+You can use in-memory selection in a very similar way to DB token selection - by calling `generateMove`. In the example below where the only change is `LocalTokenSelector` in place of `DBTokenSelector`.
 
 1. From your flow construct LocalTokenSelector instance:
 `val localTokenSelector = LocalTokenSelector(serviceHub)`
