@@ -17,9 +17,9 @@ title: CENM User Admin tool
 
 ## CENM User Admin tool
 
-The User Admin tool is a visual interface that allows you to manage the profiles of users, groups, and administrators who need access to your network services. You can use the tool to create roles with specific permissions and assign them to users. For example, you can give a user of the Identity Manager service a role that permits them to request the revocation of a network certificate.
+The User Admin tool is a visual interface that allows you to manage the profiles of users, groups, and administrators who need access to your network services. You can use the tool to create roles with specific permissions and assign them to users. For example, you can give a user of the Identity Manager a role that permits them to request the revocation of a network certificate.
 
-With the User Management tool, you can:
+With the User Admin tool, you can:
 
 * Add users. A user is anyone who requires access to perform network operations.
 * Add administrators. An administrator can add and manage users with the tool. For security reasons, an administrator cannot perform any network operations. Only a user can perform this task.
@@ -46,10 +46,10 @@ Your initialisation credentials for logging in for the first time are establishe
 If you do not have these, you need to access them from the operator who configured your Auth Service.
 
 {{< important >}}
-For security reasons, you must *delete* the original admin user once you have accessed the Admin tool.
+For security reasons, you must *delete* the initialising admin user account once you have accessed the User Admin tool.
 {{< /important >}}
 
-1. Login with the initilisation credentials.
+1. Login with the initialisation credentials.
 2. Create your own account as an **Administrator**.
 3. Login with your new credentials.
 4. Delete the initialisation account.
@@ -60,7 +60,7 @@ When logging into the User Admin tool as an administrator for the first time, yo
 
 To change your password:
 
-1. Login to the User Management tool. If this is your first use of the tool, or you have requested a new login, use the temporary password you have been given.
+1. Login to the User Admin tool. If this is your first use of the tool, or you have requested a new login, use the temporary password you have been given.
 
 2. On the next screen, click on the user profile button in the top right-hand corner.
 
@@ -68,7 +68,7 @@ To change your password:
 
 4. Click **Submit**.
 
-You have changed your password. You are automatically logged out of the User Management tool, and can now log back in using your new password.
+You have changed your password. You are automatically logged out of the User Admin tool, and can now log back in using your new password.
 
 
 ## Add a new user or administrator
@@ -176,7 +176,7 @@ To make changes to a group:
 
 You have made changes to your group. If you have removed a user from the group, they may lose permissions that they had been given as a group-member. You can check an individual user's roles to confirm this.
 
-### To delete a group:
+### To delete a Group:
 
 1. From any screen, click **Groups** in the left-hand menu.
     The **Groups** screen is displayed. You can see your existing groups in a card formation.
@@ -191,6 +191,7 @@ You have deleted a group. The users in the group are still active. Any roles you
 
 Roles are made up of permissions that allow users to perform tasks in CENM. You can create roles by combining the required permissions, and then assigning the role to users and/or groups.
 
+![Create a Role](resources/create_role.png)
 To create a new role:
 
 1. From any screen, click **Roles** in the left-hand menu.
@@ -221,6 +222,7 @@ You have added a new role. All users and groups assigned this role are granted i
 
 You can assign a role to additional users and groups, remove roles from users and groups, add and remove permissions in a role, and delete roles at any time.
 
+![Manage a Role](resources/edit_role.png)
 To amend the properties of a role:
 
 1. From any screen, click **Roles** in the left-hand menu.
@@ -230,6 +232,6 @@ To amend the properties of a role:
 
 3. On the **Role details** screen, add or remove users, groups, or permissions as required using the **Edit** or **Delete** icons in each field.
 
-4. Click **Submit**.
+4. Click **Save**.
 
-You have amended the properties of a role. Any changes take effect immediately. If you have removed this role from users or groups, they will no longer have permissions associated with that role. If they are logged into the system, they will be unable to perform tasks enabled by this role.
+You have amended the properties of a role. Your changes will take effect immediately. If you have removed this role from users or groups, they will no longer have permissions associated with that role. If they are logged into the system, they will be unable to perform tasks enabled by this role.
