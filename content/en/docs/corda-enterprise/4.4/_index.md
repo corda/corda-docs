@@ -23,7 +23,7 @@ When one or more Nodes are involved in a transaction, the transaction must be no
 of Node that provides uniqueness consensus by attesting that, for a given transaction, it has not already signed other
 transactions that consumes any of the proposed transaction’s input states.
 
-For all Corda release notes, see the [Release Notes](release-notes-index.md) index page.
+For all Corda release notes, see the [Release Notes](release-notes-index.md) index page. To learn how to develop on Corda, see [Corda Training](https://training.corda.net).
 
 ## Corda Enterprise
 

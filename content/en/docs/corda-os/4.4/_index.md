@@ -23,8 +23,7 @@ version: '4.4'
 </embed>
 
 
-**Want to start coding on Corda?** Familiarise yourself with the [key concepts](key-concepts.md), then read
-our [Hello, World! tutorial](hello-world-introduction.md).
+**Want to start coding on Corda?** Developers new to blockchain can get a brief overview of [blockchain basics](https://training.corda.net/fundamentals/introduction/). Next, find out [what is Corda](https://training.corda.net/key-concepts/introduction/) including design and key concepts. Finally, when you're ready to dive into code - [Get Started](https://training.corda.net/prepare-and-discover/introduction/).
 
 **Want background reading material?** The [introductory white paper](https://www.r3.com/white-papers/the-corda-platform-an-introduction-whitepaper/) describes Corda’s mission and philosophy. It’s suitable for a business
 audience. The [technical white paper](https://www.r3.com/white-papers/corda-technical-whitepaper/) describes the architecture and protocol.
