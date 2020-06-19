@@ -135,7 +135,7 @@ with a full stop. We also start comments with capital letters, even for inline c
 synonyms (e.g. `%d` and `%date`), we prefer the longer form for legibility reasons. You can configure your IDE
 to highlight these in bright yellow
 * Update the relevant .rst file(s)
-* Include the change in the [changelog](changelog.md) if the change is external and therefore visible to CorDapp
+* Include the change in the [Release Notes](release-notes.md) if the change is external and therefore visible to CorDapp
 developers and/or node operators
 * [Build the docs locally](building-the-docs.md) and check that the resulting .html files (under `docs/build/html`) for the modified
 render correctly
@@ -156,8 +156,7 @@ You should merge the changes back into Corda as follows:
 * Complete the pull-request checklist:
     * [ ] Have you run the unit, integration and smoke tests as described here? [https://docs.corda.net/head/testing.html](https://docs.corda.net/head/testing.html)
     * [ ] If you added/changed public APIs, did you write/update the JavaDocs?
-    * [ ] If the changes are of interest to application developers, have you added them to the changelog, and potentially
-release notes?
+    * [ ] If the changes are of interest to application developers, have you added them to the Release Notes?
     * [ ] If you are contributing for the first time, please read the agreement in CONTRIBUTING.md now and add to this
 Pull Request that you agree to it.
 
@@ -183,7 +182,7 @@ the [Community Maintainers](contributing-philosophy.md#community-maintainers) di
 
 
 * (Optional) Open an additional PR to add yourself to the
-[contributors list](https://github.com/corda/corda/blob/master/CONTRIBUTORS.md)> 
+[contributors list](https://github.com/corda/corda/blob/master/CONTRIBUTORS.md)>
 
 * The format is generally `firstname surname (company)`, but the company can be omitted if desired
 
@@ -234,5 +233,3 @@ By making a contribution to this project, I certify that:
     maintained indefinitely and may be redistributed consistent with
     this project or the open source license(s) involved.
 ```
-
-
