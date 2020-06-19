@@ -10,7 +10,7 @@ tags:
 - deployment
 -
 title: Corda Deployment
-weight: 10
+weight: 20
 ---
 
 # Corda Deployment

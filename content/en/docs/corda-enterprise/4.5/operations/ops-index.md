@@ -9,7 +9,7 @@ tags:
 - deployment
 -
 title: Corda Enterprise Operations Guide
-weight: 10
+weight: 100
 ---
 
 # Corda Enterprise Operations Guide
