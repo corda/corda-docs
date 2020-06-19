@@ -199,8 +199,6 @@ Responding nodes (Enterprise or Open Source) running at platform version >= 6 wi
 
 *Default:* 50
 
-
-
 `blacklistedAttachmentSigningKeys`
 
   List of SHA-256 hashes of public keys. Attachments signed by any of these public keys will not be considered as trust roots for any attachments received over the network.
