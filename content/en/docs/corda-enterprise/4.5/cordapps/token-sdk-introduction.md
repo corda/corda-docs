@@ -253,28 +253,26 @@ FungibleToken fungibleToken = new FungibleTokenBuilder()
 ```{{% /tab %}}
 {{< /tabs >}}
 
-### `NonFungilbeToken` class
+### `NonFungibleToken` class
 
 A non-fungible token cannot be split and merged, and represents a unique asset. To create a `NonFungibleToken` you must:
 
 * Define the `TokenType` - the name of the unit of your token. As the token cannot be split, the digital fraction value can only be 1.
 * Define the first `Holder` of the token type. The holder of the token must be approved by a maintainer each time the token moves from party to party.
-* Define at least one `Maintainer` with the power to authorise any changes to the token. This includes every change of `Holder` and changes of attributes if it is also an `EvolvableTokenType`.
 * Define any custom attributes of the token.
 * Define the issuer of the token using the `IssuedTokenType`.
 
 In this example, Alice issues a collectible item - a vintage baseball card (Babe Ruth) - that cannot be split into any smaller pieces, and does not have attributes that evolve over time.
 
 ```kotlin
-val issuer: Party = Alice
-    val holder: Party = Alice
-
-    val myTokenType = TokenType("BabeRuthCard", 1)
-    val myIssuedTokenType: IssuedTokenType = BabeRuthCard issuedBy issuer
-    val tenOfMyIssuedTokenType = 10 of myIssuedTokenType
-
-    // Adding a holder to a token type, creates a non-fungible token.
-    val nonFungibleToken: NonFungibleToken = myIssuedTokenType heldBy holder
+val issuer = alice.legalIdentity()
+val myTokenType = TokenType("BabeRuthCard", 1)
+val myIssuedTokenType: IssuedTokenType = myTokenType issuedBy issuer
+val myBaseBallCardToken: NonFungibleToken = NonFungibleToken(
+    token = myIssuedTokenType,
+    holder = issuer,
+    linearId = UniqueIdentifier()
+)
 ```
 
 
@@ -1286,20 +1284,19 @@ for more information.
 
 ### Build Token SDK against Corda release branch
 
-Often, in order to use the latest `token-sdk` master you will need to build against a specific Corda release branch until
-the required changes make it into a Corda release. You can build this branch with the following commands:
+You can build the Token SDK against the master branch with the following commands:
 
-    ```
-    git clone https://github.com/corda/corda
-    git fetch
-    git checkout origin release/os/4.5
-    ```
+```
+git clone https://github.com/corda/token-sdk.git
+git fetch
+git checkout origin master
+```
 
 {{< note >}}
-Check the version of Corda you wish to install. In the example above 4.5 is used.
+Checkout the version of Corda you wish to install. In the example above master is used.
 {{< /note >}}
 
-Then run a `./gradlew clean install` from the root directory.
+Then run `./gradlew clean install` from the root directory.
 
 ### Add Token SDK dependencies to an existing CorDapp
 
@@ -1341,6 +1338,7 @@ in each module of your CorDapp. For contract modules add:
 
 6. Add the following to the `deployNodes` task with the following syntax:
 
+```
     nodeDefaults {
         projectCordapp {
             deploy = false
@@ -1348,5 +1346,5 @@ in each module of your CorDapp. For contract modules add:
         cordapp("$tokens_release_group:tokens-contracts:$tokens_release_version")
         cordapp("$tokens_release_group:tokens-workflows:$tokens_release_version")
     }
-
+```
 You have installed the Token SDK.

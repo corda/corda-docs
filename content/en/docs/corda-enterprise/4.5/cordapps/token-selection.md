@@ -56,7 +56,6 @@ fun addMoveFungibleTokens(
         changeHolder: AbstractParty,
         queryCriteria: QueryCriteria? = null
 ): TransactionBuilder {
-    val selectorConfig: Selector = ConfigSelection.getPreferredSelection(serviceHub)
     // Instantiate a DatabaseTokenSelection class which you will use to select tokens
     val selector = DatabaseTokenSelection(serviceHub)
     // Use the generateMove utility on the DatabaseTokenSelection class to determine the input and output token states
@@ -81,11 +80,12 @@ You can see examples of both approaches below.
 
 To use in-memory selection, you must ensure the CorDapp `VaultWatcherService` is installed and the service is running. This comes as part of the Token SDK.
 
-To initialise this service, you must select an `indexingStrategy`. The indexing strategy is how you designate the wallet or bucket of tokens that can be selected for use in a transaction:
+To initialise this service, you must select an `indexingStrategy`. An indexing strategy is used to apply an index to recorded records of Token States in in the `VaultWatcherService`. This improves querying time (and ultimately the performance of your application). As always - you can tune different use cases for better performance by selecting the appropriate indexing strategy.
 
-* **Public_key** strategy makes a token 'bucket' from which tokens can be selected, for each public key.
-* **External_ID** strategy can be used to group states from many public keys connected to a given unique user ID. If you use **Accounts**, this strategy is ideal.
 * **Token_Only** selection strategy indexes states only using token type and identifier.
+* **External_ID** strategy can be used to group states from many public keys connected to a given unique user ID. If you use **Accounts**, this strategy is ideal because it allows for faster querying of tokens that belong to accounts.
+* **Public_key** strategy makes a token 'bucket' for each public key.
+
 
 Enter the following into your **CorDapp config**, choosing a single indexing strategy:
 
