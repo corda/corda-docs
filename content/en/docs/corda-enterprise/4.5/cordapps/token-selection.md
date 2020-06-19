@@ -37,7 +37,7 @@ You can only use in-memory selection in a multithreaded environment. This is  be
 
 In DB selection, token states must be queried from the vault and “selected” by soft locking the record in the database. This doesn’t work in a multi-threaded environment and multiple threads running at the same time may end up selecting the same token state to be spent. This will lead to the notary throwing a double-spend error.
 
-## Use Database Selection
+## Move tokens using Database Selection
 
 In the Token SDK, database (DB) selection is the default method of selection for each transaction.
 
@@ -66,14 +66,38 @@ fun addMoveFungibleTokens(
 }
 ```
 
-## Use in-memory selection
+## Move tokens using in-memory selection
 
-You can use in-memory token in much the same way...
+You can use in-memory token in much the same way as DB selection, you are able to call the `generateMove` method to select tokens available for the transaction being constructed.
 
-* In much the same way as DB selection, you are able to call the `generateMove` method to select tokens available for the transaction being constructed.
+In the example below where the only change is `LocalTokenSelector` in place of `DBTokenSelector`.
 
+You can see that the `addMoveFungibleTokens` defaults to database selection. If you wish to use in-memory selection you should write your own utility method, like this:
 
-You can see an example of this below.
+```kotlin
+@Suspendable
+@JvmOverloads
+fun addMoveFungibleTokensInMemory(
+        transactionBuilder: TransactionBuilder,
+        serviceHub: ServiceHub,
+        partiesAndAmounts: List<PartyAndAmount<TokenType>>,
+        changeHolder: AbstractParty,
+        queryCriteria: QueryCriteria? = null
+): TransactionBuilder {
+    // Instantiate a LocalTokenSelection class which you will use to select tokens
+    val selector = LocalTokenSelection(serviceHub)
+    // Use the generateMove utility on the DatabaseTokenSelection class to determine the input and output token states
+    val (inputs, outputs) = selector.generateMove(partiesAndAmounts.toPairs(), changeHolder, TokenQueryBy(queryCriteria = queryCriteria), transactionBuilder.lockId)
+    // Add those input and output token states to the transaction
+    // This step also calculates and adds the appropriate commands to the transaction so that Token contract verification rules may be applied
+    return addMoveTokens(transactionBuilder = transactionBuilder, inputs = inputs, outputs = outputs)
+}
+```
+
+{{< note >}}
+You can use generic versions of `MoveTokensFlow` or `addMoveTokens` (not `addMoveFungibleTokens`), because you already performed selection and provide input and output states directly. `addMoveFungibleTokens` must always use database selection.
+{{< /note >}}
+
 
 ### Initialise `VaultWatcherService`
 
@@ -114,41 +138,6 @@ nodeDefaults {
     }
 }
 ```
-
-## Move tokens using in-memory selection
-
-You can use in-memory selection in a very similar way to DB token selection - by calling `generateMove`. In the example below where the only change is `LocalTokenSelector` in place of `DBTokenSelector`.
-
-From your flow construct LocalTokenSelector instance:
-`val localTokenSelector = LocalTokenSelector(serviceHub)`
-
-**Call `selectTokens`**
-```
-// generate inputs, outputs with change, grouped by issuers
-Note that the addMoveFungibleTokens defaults to database selection. If you wish to use in-memory selection you should write your own utility method per the example below.
-```kotlin
-@Suspendable
-@JvmOverloads
-fun addMoveFungibleTokensInMemory(
-        transactionBuilder: TransactionBuilder,
-        serviceHub: ServiceHub,
-        partiesAndAmounts: List<PartyAndAmount<TokenType>>,
-        changeHolder: AbstractParty,
-        queryCriteria: QueryCriteria? = null
-): TransactionBuilder {
-    // Instantiate a LocalTokenSelection class which you will use to select tokens
-    val selector = LocalTokenSelection(serviceHub)
-    // Use the generateMove utility on the DatabaseTokenSelection class to determine the input and output token states
-    val (inputs, outputs) = selector.generateMove(partiesAndAmounts.toPairs(), changeHolder, TokenQueryBy(queryCriteria = queryCriteria), transactionBuilder.lockId)
-    // Add those input and output token states to the transaction
-    // This step also calculates and adds the appropriate commands to the transaction so that Token contract verification rules may be applied
-    return addMoveTokens(transactionBuilder = transactionBuilder, inputs = inputs, outputs = outputs)
-}
-```
-
-{{< note >}}
-You can use generic versions of `MoveTokensFlow` or `addMoveTokens` (not `addMoveFungibleTokens`), because you already performed selection and provide input and output states directly. `addMoveFungibleTokens` must always use database selection.
-{{< /note >}}
 
 ## Redeem tokens using `LocalTokenSelection`
 
