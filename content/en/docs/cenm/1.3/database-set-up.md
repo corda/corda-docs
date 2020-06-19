@@ -474,7 +474,7 @@ See below an example CENM services configuration file for SQL Server - initial d
 database = {
     jdbcDriver = path/to/mssql-jdbc-x.x.x.jre8.jar
     driverClassName = "com.microsoft.sqlserver.jdbc.SQLServerDriver"
-    url = "jdbc:sqlserver://<database_server>.database.windows.net:1433;databaseName=<my_database>;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30"
+    url = "jdbc:sqlserver://<host>:<port>;databaseName=my_database"
     user = my_admin_login
     password = "my_admin_password"
     schema = my_schema
