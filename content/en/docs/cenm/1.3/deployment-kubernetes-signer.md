@@ -7,7 +7,7 @@ tags:
 - config
 - kubernetes
 title: CENM Signing Service Helm chart
-weight: 300
+weight: 400
 ---
 
 # CENM Signing Service Helm Chart

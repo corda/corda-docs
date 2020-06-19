@@ -61,6 +61,7 @@ Operations
   * [CENM Network Map Helm Chart](deployment-kubernetes-nmap.md)
   * [CENM Signing Service Helm Chart](deployment-kubernetes-signer.md)
   * [CENM Notary Helm Chart](deployment-kubernetes-notary.md)
+  * [CENM Zone Service Helm Chart](deployment-kubernetes-zone.md)
 * [Zone Service](zone-service.md)
 * [Angel Service](angel-service.md)
 * [Identity Manager Service](identity-manager.md)

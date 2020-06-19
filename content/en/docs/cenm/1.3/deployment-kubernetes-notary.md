@@ -7,7 +7,7 @@ tags:
 - config
 - kubernetes
 title: CENM Notary Helm chart
-weight: 400
+weight: 300
 ---
 
 # CENM Notary Helm Chart
