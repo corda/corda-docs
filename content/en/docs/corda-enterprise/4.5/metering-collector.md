@@ -316,7 +316,7 @@ If nothing was shared, you will receive an object with an empty `entries` list. 
 If `collectedCorDapps` is returned as an empty list, this means that the requester was not authorised to collect metering data from any of the requested CorDapps. However, if `entries` is returned as an empty list but `collectedCorDapps` is not, this means that the CorDapps contained in `collectedCorDapps` have been collected but no metering data was present during the specified time window.
 {{< /note >}}
 
-The example below shows how to retrieve metering related to CorDapps with names *myCorDapp1* and *myCorDapp2* (as well as any other CorDapp with a name containining any of those two strings), connecting to a node running on the local machine, from the node ran by `O=PartyA,L=New York,C=US`, for the duration of the past 7 days:
+The example below shows how to retrieve metering related to CorDapps with names *myCorDapp1* and *myCorDapp2* (as well as any other CorDapp with a name containing any of those two strings), connecting to a node running on the local machine, from the node ran by `O=PartyA,L=New York,C=US`, for the duration of the past 7 days:
 
 {{< tabs name="tabs-FilteredMeteringCollectionFlow" >}}
 {{% tab name="java" %}}
@@ -480,14 +480,15 @@ You can use the following two methods:
 Both methods start multiple parallel flows on the collector node, each of them collecting metering data from a different node on the network. You can specify a timeout period
 so that any flows that do not terminate within the timeout are simply cancelled, and only the data from the flows that completed successfully is processed.
 
-You can specify a callback as an argument. The callback is invoked once for each destination node as soon as the relative flow returns. The callback takes as parameters
-the destination Party from which metering data has been collected, the parameters that were used for the collection (an instance of `MeteringCollectionParameters` for
-`FilteredMeteringCollectionFlow`, while a simple `MeteringCollectionTimeWindow` is used for `AggregatedMeteringCollectionFlow`) and a `Future` that is guaranteed
-to be done at the time of the callback invocation; if the flow invocation resulted in an exception, that will be rethrown inside the callback when calling `Future.get`
-and it is expected that the callback is able to handle it, if this is not the case the execution will be interrupted and all the created subflows cancelled.
+You can specify a callback as an argument. The callback is invoked once for each destination node as soon as the relative flow returns. The callback takes the following parameters:
 
+* The destination party from which metering data has been collected.
+* The parameters that were used for the collection (an instance of `MeteringCollectionParameters` is used for `FilteredMeteringCollectionFlow`, and a simple `MeteringCollectionTimeWindow` is used for `AggregatedMeteringCollectionFlow`).
+* A `Future` that is guaranteed to be done at the time of the callback invocation.
 
-The following is a code example for filtered metering collection from 2 nodes
+If the flow invocation resulted in an exception, the exception is thrown again inside the callback when calling `Future.get` and it is expected that the callback is able to handle it. In case this fails, the execution is interrupted, and all the created sub-flows are cancelled.
+
+The example below shows filtered metering collection from two nodes:
 
 {{< tabs name="tabs-FilteredMeteringCollectionFlow.multicollect" >}}
 {{% tab name="java" %}}
@@ -567,7 +568,7 @@ FilteredMeteringCollectionFlow.multiCollect(
 
 {{< /tabs >}}
 
-and this is an example for aggregated metering collection, again from 2 nodes
+The example below shows aggregated metering collection from two nodes:
 
 {{< tabs name="tabs-AggregatedMeteringCollectionFlow.multicollect" >}}
 {{% tab name="java" %}}
@@ -636,52 +637,36 @@ AggregatedMeteringCollectionFlow.multiCollect(
 
 #### Multiple nodes collection using the node shell
 
-Two flows are available:
+You can use the following two flows:
 - `MultiAggregatedCollectionFlow`
 - `MultiFilteredCollectionFlow`
 
-both of them are analogous to their single node counterparts, `AggregatedMeteringCollectionFlow` and `FilteredMeteringCollectionFlow` respectively, in regard
-of data filtering and permissions.
+As regards data filtering and permissions, both of them are identical to their single node counterparts - `AggregatedMeteringCollectionFlow` and `FilteredMeteringCollectionFlow`, respectively.
 
-They proceed sequentially through all the destination nodes, which can make the collection very slow and will cause the execution to hang indefinitely if one of the destination node is down
-or is not running the metering Collection CorDapp.
+They proceed through all the destination nodes in sequential order. This can significantly slow down the collection process and can cause the execution to hang indefinitely if one of the destination nodes is down or is not running the Metering Collection Tool CorDapp.
 
-Both of them takes the following parameter when invoked from the shell
+Both flows take the following parameters when invoked from the shell:
 
-- `dateFormat` the date format to use for parsing [start] and [end], the syntax is the syntax of [SimpleDateFormat]
-- `start` a string representing the start date from which metering data will be retrieved, the
- required format will be the one specified by [dateFormat] or the one returned by [SimpleDateFormat.getInstance],
- which defaults to your locale settings
-- `end` a string representing the end date until which metering data will be retrieved
- required format will be the one specified by [dateFormat] or the one returned by [SimpleDateFormat.getInstance],
- which defaults to your locale settings
-- `period` the period of time after `start` or before `end` that will be used for metering collection;
- "nanoseconds", "microseconds", "milliseconds", "seconds", "minutes", "hours", "days", "weeks", "months", "years" are all supported unit of measure,
- as well as any unambiguous prefix for them (for example, `1mo` will be interpreted as one month while `1m` will throw an error). Any failure in this parameter
- interpretation will raise `IllegalArgumentException`.
-- `destinations` a list X.500 names of the parties running the nodes from which metering data is to be collected. The names do not need to be
- the full qualified X.500 names since `IdentityService.partiesFromName` will be invoked on them and if more parties match input string,
- metering data will be collected from all their nodes. If this parameter is omitted collection will proceed through all the nodes present
- in the network map
- - `txTypes` a list of transaction types that will be included in the results, if it is omitted transactions of any type will be collected, see [the data filtering paragraph]("#data-filtering-shell")
- for more information about transaction types
+- `dateFormat`: The date format to use for parsing the `start` and `end` parameter values. The accepted format is [SimpleDateFormat](https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html).
+- `start`: A string representing the start date to collect metering data from. The accepted format is either [SimpleDateFormat](https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html) or the one returned by the `SimpleDateFormat.getInstance` method, which defaults to your locale settings.
+- `end`: A string representing the end date to collect metering data by. The accepted format is either [SimpleDateFormat](https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html) or the one returned by the `SimpleDateFormat.getInstance` method, which defaults to your locale settings.
+- `period`: The period of time after `start` or before `end` to be used for collecting metering data. You can use the following measuring units: `nanoseconds`, `microseconds`, `milliseconds`, `seconds`, `minutes`, `hours`, `days`, `weeks`, `months`, and `years`. You can also use any unambiguous prefix for these units - for example, `1mo` will be interpreted as one month but `1m` will cause an error as it is unclear whether you mean one month or one minute. Any failure in the interpretation of this parameter will raise an exception `IllegalArgumentException`.
+- `destinations`: A list of the X.500 names of the parties running the nodes from which metering data is to be collected. The names do not need to be the full qualified X.500 names since `IdentityService.partiesFromName` will be invoked on them and if more parties match input string,
+ metering data will be collected from all their nodes. If this parameter is omitted, metering data will be collected from all nodes present in the network map.
+ - `txTypes`: A list of transaction types to be included in the results. If this parameter is omitted, transactions of any type will be collected. See [the data filtering paragraph]("#data-filtering-shell") for more information about transaction types.
+- `filter`: This parameter is only available for `MultiFilteredCollectionFlow` and allows you to filter metering data by CorDapp. See also [the data filtering paragraph]("#data-filtering-shell").
 
-- `filter` is only available for `MultiFilteredCollectionFlow` and allows to filter metering data by CorDapp, see also [the data filtering paragraph]("#data-filtering-shell")
-
-Note that only two between `start`, `end` and `period` needs to be specified, if only `period` is provided, it will be implicitly interpreted as
-an invocation with `period` and `end` with `end` set to the current timestamp.
+{{< note >}}
+You only need to specify two out of the following three parameters: `start`, `end`, and `period`. If you only provide `period`, it is implicitly interpreted as an invocation with `period` and `end` values, where `end` is set to the current timestamp.
+{{< /note >}}
 
 {{< warning >}}
-Due to limitations of the node shell (that could be addressed in the near future), the parameter `start`, `end`, `period`, `dateFormat` needs to be wrapped within an object
-when created in the shell - for example, `start : {value: "2020-06-01 05:45"}` instead of simply `start : "2020-06-01 05:45"`
+Due to some node shell limitations, you must wrap the `start`, `end`, `period`, and `dateFormat` parameters within an object when you create them in the shell. For example, use `start : {value: "2020-06-01 05:45"}` instead of simply `start : "2020-06-01 05:45"`. These limitations will be address in a future release.
 {{< /warning >}}
 
 #### Output format
-For both of these methods, the result printed on the shell is a formatted JSON object whose keys are the X.500 names of the destination nodes and the value is
-the JSON representation of object returned from the collection (an instance  of `AggregatedNodeMeteringData` for `MultiAggregatedCollectionFlow`,
-`FilteredNodeMeteringData` for `MultiFilteredCollectionFlow`). If any of the destination node throws an exception,
-you would see it in the response object.
 
+For both methods, the result printed in the shell terminal is a formatted `JSON` object. Its keys are the X.500 names of the destination nodes, and its value is the `JSON` representation of the response object returned from the collection - an instance of `AggregatedNodeMeteringData` for `MultiAggregatedCollectionFlow`, and an instance of `FilteredNodeMeteringData` for `MultiFilteredCollectionFlow`. If any of the destination nodes throws an exception, it is shown in the response object `JSON`.
 
 #### Examples
 
@@ -715,15 +700,18 @@ Flow completed with result: {
   }
 }
 ```
-Note that even if `PartyA` threw `PermissionDeniedException` the collection continued successfully to `PartyB`.
 
-A similar result could have been obtained by the following command lines
+{{< note >}}
+In the example above, note that even though `PartyA` threw an `PermissionDeniedException` exception, the collection continued successfully to `PartyB`.
+{{< /note >}}
+
+Alternatively, you can achieve a similar result by running the following commands:
+
 ```
 flow start com.r3.corda.metering.MultiAggregatedCollectionFlow dateFormat: {value: "yyyy-MM-dd"},  period: {value: 1mon}, end : {value: "2020-05-06"}, destinations: [PartyA, PartyB]
 flow start com.r3.corda.metering.MultiAggregatedCollectionFlow dateFormat: {value: "yyyy-MM-dd"},  start: {value: "2020-04-06"}, end : {value: "2020-05-06"}, destinations: [PartyA, PartyB]
 flow start com.r3.corda.metering.MultiAggregatedCollectionFlow dateFormat: {value: "yyyy-MM-dd"},  start: {value: "2020-04-06"}, end : {value: "2020-05-06"}, destinations: [PartyA, PartyB]
 ```
-
 
 **Collecting filtered metering data for last month from `O=PartyB,L=New York,C=US` and `"O=PartyA,L=New York,C=US"`**
 
@@ -785,38 +773,43 @@ Flow completed with result: {
   }
 }
 ```
-A similar result could have been obtained by the following command lines
+Alternatively, you can achieve a similar result by running the following commands:
+
 ```
 flow start com.r3.corda.metering.MultiAggregatedCollectionFlow period: {value: 1mon}, filter: {filterBy: CORDAPP_HASHES, values: [4DF7DAC0703459E97CB040CD6194ACC0D7B53931FAFC859158B16FDD85D525B5]}
 flow start com.r3.corda.metering.MultiAggregatedCollectionFlow dateFormat: {value: "yyyy-MM-dd"},  start: {value: "2020-04-06"}, end : {value: "2020-05-06"}, destinations: [PartyA, PartyB], filter: {filterBy: CORDAPP_NAMES, values: [Finance]}, txTypes: [NORMAL]
 flow start com.r3.corda.metering.MultiAggregatedCollectionFlow dateFormat: {value: "yyyy-MM-dd"},  start: {value: "2020-04-06"}, end : {value: "2020-05-06"}, destinations: [PartyA, PartyB], filter: {filterBy: CORDAPP_NAMES, values: [Finance]}, txTypes: [NORMAL]
 ```
 
-
 ### Data filtering using the node shell
 <a name="data-filtering-shell"></a>
 
-The data filtering available from the shell is limited to filtering by CorDapp, by transaction type and by timestamp.
+When you use the node shell to filter metering data, you can only filter by CorDapp, by transaction type, and by timestamp.
 
 #### Filtering by CorDapp
 
-It is done using the `filter` parameter in `MeteringCollectionFlow`, `MultiAggregatedMeteringCollectionFlow` and `MultiFilteredMeteringCollectionFlow`. The `filter` parameter requires an object created by the parameter `filterBy` that specify the type of filter and `values`, which is an array of strings that represents the filter argument. The following is a list of filters available for `filterBy`:
+To filter metering data by CorDapp, use the `filter` parameter in the `MeteringCollectionFlow`, `MultiAggregatedMeteringCollectionFlow`, and `MultiFilteredMeteringCollectionFlow` flows.
 
+This parameter requires an object created by the `filterBy` parameter that specifies the type of filter and the filter `values` - an array of strings that represents the filter argument. The following example shows a list of filters available for `filterBy`:
 
 {{< table >}}
 
 |`filterBy` criteria|Description|Data Collected|`Filter` requirement|
 |-----------------------|-----------------------------------------------------------|------------------------------------------------|-------------------------------------------------------------|
 |NONE|Returns data for all CorDapps|All data for a node|None|
-|CORDAPP_NAMES|Returns data for CorDapps matching specified names|Data for all versions of a CorDapp|List of names, as specified in CorDapp build information|
-|CORDAPP_HASHES|Returns data for any CorDapp with jar hash in list|Data for particular CorDapp versions|List of SHA256 hashes of CorDapp `.jar` files|
-|SIGNING_KEYS|Returns data for all CorDapps signed with any key in list|Data for particular owner(s) of CorDapps|List of SHA256 hashes of public keys used to sign `.jar` files|
+|CORDAPP_NAMES|Returns data for CorDapps matching the specified names|Data for all versions of a CorDapp|List of names, as specified in the CorDapp build information|
+|CORDAPP_HASHES|Returns data for any CorDapp in the list with a `.jar` hash|Data for particular CorDapp versions|List of SHA256 hashes of CorDapp `.jar` files|
+|SIGNING_KEYS|Returns data for all CorDapps in the list signed with any key|Data for particular Cordapp owner(s)|List of SHA256 hashes of public keys used to sign `.jar` files|
 
 {{< /table >}}
 
 #### Filtering by transaction type
-It is done using the `txTypes` parameter in `MultiAggregatedMeteringCollectionFlow` and `MultiFilteredMeteringCollectionFlow`, it takes an array with all the types that will be included.
-The available transaction types are:
+
+To filter metering data by transaction type, use the `txTypes` parameter in the `MultiAggregatedMeteringCollectionFlow` and `MultiFilteredMeteringCollectionFlow` flows.
+
+This parameter takes an array with all the types that will be included.
+
+The available transaction types are as follows:
 
 - `NORMAL`
 - `CONTRACT_UPGRADE`
@@ -824,21 +817,19 @@ The available transaction types are:
 - `UNKNOWN`
 
 {{< note >}}
-`NORMAL`, `CONTRACT_UPGRADE` and `NOTARY_CHANGE` corresponds to transactions that cause a ledger update, while `UNKNOWN` are transactions that do not cause a ledger update.
+The transaction types `NORMAL`, `CONTRACT_UPGRADE`, and `NOTARY_CHANGE` correspond to transactions that cause a ledger update, while the `UNKNOWN` transaction type corresponds to transactions that do not cause a ledger update.
 {{< /note >}}
 
 ### Data filtering using the RPC API
 <a name="data-filtering-rpc"></a>
 
-Data filtering is available for `NodeMeteringCollectionFlow`, `AggregatedMeteringCollectionFlow` and `FilteredMeteringCollectionFlow`
+You can use data filtering via the RPC API for the `NodeMeteringCollectionFlow`, `AggregatedMeteringCollectionFlow`, and `FilteredMeteringCollectionFlow` flows.
 
 {{< note >}}
-Filtering by CorDapp is forbidden for `AggregatedMeteringCollectionFlow` and, if such a filter is provided (either directly or as part of a boolean filter) `WrongParameterException` will be raised.
+Filtering by CorDapp is forbidden for the `AggregatedMeteringCollectionFlow` flow - if you provide such a filter, either directly or as part of a boolean filter, an exception `WrongParameterException` will be thrown.
 {{< /note >}}
 
-{{< note >}}
-All the following classes belongs to package `com.r3.corda.metering.filter`
-{{< /note >}}
+All classes listed below belong to the `com.r3.corda.metering.filter` package.
 
 {{< table >}}
 
@@ -848,9 +839,9 @@ All the following classes belongs to package `com.r3.corda.metering.filter`
 | ```Filter.And``` | Represents the logical `and` of the filters provided as constructor parameters |
 | ```Filter.ByTimeStamp.Since``` | Matches only the meterings with a later timestamp than the one provided |
 | ```Filter.ByTimeStamp.Until``` | Matches only the meterings with an earlier timestamp than the one provided |
-| ```Filter.ByCorDapp.ByName``` | Matches only the meterings related to signing events generated by a CorDapp whose name contains the provided string |
-| ```Filter.ByCorDapp.ByJarHash``` | Matches only the meterings related to signing events generated by a CorDapp whose jar hash matches the one provided |
-| ```Filter.ByCorDapp.ByJarSignature``` | Matches only the meterings related to signing events generated by a CorDapp whose `.jar` file was signed with the provided public key |
+| ```Filter.ByCorDapp.ByName``` | Matches only the meterings related to signing events generated by a CorDapp with a name that contains the provided string |
+| ```Filter.ByCorDapp.ByJarHash``` | Matches only the meterings related to signing events generated by a CorDapp with a `.jar` hash that matches the one provided |
+| ```Filter.ByCorDapp.ByJarSignature``` | Matches only the meterings related to signing events generated by a CorDapp with a `.jar` file that was signed with the provided public key |
 | ```Filter.ByCorDapp.ByTransactionType``` | Matches only the meterings related to transactions of the specified transaction type (helpers are available to specify ledger-updating transactions and non-ledger-updating transactions) |
 
 {{< /table >}}
