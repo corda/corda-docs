@@ -18,7 +18,7 @@ title: Selection in the Token SDK
 
 # Token selection using the Token SDK
 
-When you move or redeem tokens using the Token SDK, you can choose which reserve of tokens you want to use, and how much from each reserve, in any given transaction.
+When you move or redeem tokens using the Token SDK, you can choose which balance of tokens you want to use, and how much from each reserve, in any given transaction.
 
 This process is called **Selection**.
 
