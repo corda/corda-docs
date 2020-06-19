@@ -161,13 +161,13 @@ cd network-services/deployment/k8s/helm
 
 ## Network operations
 
-Use CENM CLI Tool to access to Farm Service:
+Use CENM Command Line Interface (CLI) Tool to access the FARM Service:
 
 ```bash
 ./cenm context login -s -u <USER> -p <PASSWORD> http://<FARM-SERVICE-IP>:8080
 ```
 
-The Farm Service allows you to perform all network operations on the Identity Manager Service, the Network Map Service, and the Signing Services.
+The FARM Service is a gateway between the Auth Service and front end services in CENM. It allows you to perform all network operations on the Identity Manager Service, the Network Map Service, and the Signing Services.
 The IP address is dynamically allocated for each deployment and can be found with `kubectl get svc`.
 Use the following command to ensure that you are pointing at the correct namespace:
 
@@ -359,7 +359,7 @@ common options. Each CENM service has its own dedicated page with more detailed 
 * [Identity Manager](deployment-kubernetes-idman.md)
 * [Network Map](deployment-kubernetes-nmap.md)
 * [Signer](deployment-kubernetes-signer.md)
-* Farm Service - documentation not available yet
+* FARM Service - documentation not available yet
 * Auth Service - documentation not available yet
 * Zone Service - documentation not available yet
 * [Corda Notary](deployment-kubernetes-notary.md)
@@ -425,7 +425,7 @@ where each command creates a CENM service consisting of the following:
 * Identity Manager
 * Network Map
 * Auth Service
-* Farm Service
+* FARM Service
 * Notary
 
 They need to be run in the correct order, as shown below:

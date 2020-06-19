@@ -10,11 +10,11 @@ menu:
 tags:
 - signing
 - service
-title: Signing Services
+title: Signing and SMR Services
 ---
 
 
-# Signing Services
+# Signing and SMR Services
 
 
 
@@ -273,15 +273,29 @@ More detailed descriptions of how to configure a signing key can be found in the
 `Configuration Parameters` section below.
 
 
-### Data Sources
+### Data sources
 
+You must configure a service location for each signing task. The tasks retrieve
+unsigned material from these defined locations, and then push the signed material back to the
+same location once signed.
 
-#### Direct CENM Service Locations
+Service locations either directly connect to the service which manages the material
+(i.e. CSRs, Network Map) or via the SMR Service (which enables routing different
+material to different services via plugins).
 
-For each signing task, the data source for getting the unsigned data and persisting the signed data needs to be defined.
-Similarly to the signing keys above, one data source could potentially be used across multiple signing tasks, hence they
-are configured as a map of human-readable aliases (referenced by the signing task configuration) to CENM service
-locations.
+#### Direct CENM service locations
+
+Typically pairs of Network Map and Network Parameters signing tasks will share the same Network Map
+Service, and likewise CSR and CRL singing tasks will share a common Identity Manager Service. To make this
+simpler, service locations are configured as a map of service location aliases (referenced by the
+signing task configuration) to CENM service locations.
+
+The Zone Service provides these service locations automatically from the configured locations of Identity Manager
+and Network Map Services. These service locations use aliases with a well-defined syntax, as follows:
+
+* Identity Manager Service issuance workflow: `issuance`
+* Identity Manager Service revocation workflow: `revocation`
+* Network Map Service: `network-map-<subzone ID>`
 
 {{< note >}}
 Communication with the configured service locations can be configured to use SSL for a secure, encrypted
@@ -923,7 +937,7 @@ serviceLocations = {
         port = 5050
         verbose = true
     },
-    "network-map" = {
+    "network-map-1" = {
         host = localhost
         port = 5053
         verbose = true
@@ -962,7 +976,7 @@ signers = {
     "Example Network Map Signer" = {
         type = NETWORK_MAP
         signingKeyAlias = "NetworkMapLocal"
-        serviceLocationAlias = "network-map"
+        serviceLocationAlias = "network-map-1"
         schedule {
             interval = 1minute
         }
@@ -970,7 +984,7 @@ signers = {
     "Example Network Parameters Signer" = {
         type = NETWORK_PARAMETERS
         signingKeyAlias = "NetworkMapLocal"
-        serviceLocationAlias = "network-map"
+        serviceLocationAlias = "network-map-1"
         schedule {
             interval = 10minute
         }
@@ -1450,7 +1464,7 @@ serviceLocations = {
             }
         }
     },
-    "network-map" = {
+    "network-map-1" = {
         host = localhost
         port = 5050
         verbose = true
