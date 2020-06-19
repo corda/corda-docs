@@ -191,6 +191,16 @@ The available configuration fields are listed below in alphabetic order.
 
   *Default:* 1024
 
+`backchainFetchBatchSize`
+
+This is an optimisation for sharing transaction backchains. Corda Enterprise nodes can request backchain items in bulk instead of one at a time. This field specifies the size of the batch. The value is just an integer indicating the maximum number of states that can be requested at a time during backchain resolution.
+
+Responding nodes (Enterprise or Open Source) running at platform version >= 6 will supply backchain items in bulk up to half of the network’s allowed maximum message size. The minimum is one item and items exceeding the limit are sent in subsequent batches. Nodes running on older platform versions will still supply backchain items one at a time.
+
+*Default:* 50
+
+
+
 `blacklistedAttachmentSigningKeys`
 
   List of SHA-256 hashes of public keys. Attachments signed by any of these public keys will not be considered as trust roots for any attachments received over the network.
