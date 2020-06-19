@@ -119,43 +119,31 @@ nodeDefaults {
 
 You can use in-memory selection in a very similar way to DB token selection - by calling `generateMove`. In the example below where the only change is `LocalTokenSelector` in place of `DBTokenSelector`.
 
-1. From your flow construct LocalTokenSelector instance:
+From your flow construct LocalTokenSelector instance:
 `val localTokenSelector = LocalTokenSelector(serviceHub)`
 
-2. Choose your preferred way of using in-memory selection to move the token: by calling `selectTokens` or using `generateMove` method to return a list of inputs and list of output states that can be passed to `addMove` or `MoveTokensFlow`.
-
 **Call `selectTokens`**
-
-```kotlin
-val transactionBuilder: TransactionBuilder = ...
-val participantSessions: List<FlowSession> = ...
-val observerSessions: List<FlowSession> = ...
-val requiredAmount: Amount<TokenType> = ...
-val queryBy: TokenQueryBy = ...  // See section below on queries
-// Just select states for spend, without output and change calculation
-val selectedStates: List<StateAndRef<FungibleToken>> = localTokenSelector.selectStates(
-    lockID = transactionBuilder.lockId, // Defaults to FlowLogic.currentTopLevel?.runId?.uuid ?: UUID.randomUUID()
-    requiredAmount = requiredAmount,
-    queryBy = queryBy)
-```
-
-**Use `generateMove` method**
-
 ```
 // generate inputs, outputs with change, grouped by issuers
-val partiesAndAmounts: List<PartyAndAmount<TokenType>> = ... // List of parties that should receive amount of TokenType
-val changeHolder: AbstractParty = ... // Party that should receive change
-val (inputs, outputs) = localTokenSelector.generateMove(
-    lockId = transactionBuilder.lockId, // Defaults to FlowLogic.currentTopLevel?.runId?.uuid ?: UUID.randomUUID()
-    partiesAndAmounts = partiesAndAmounts,
-    changeHolder = changeHolder,
-    queryBy = queryBy)
-
-// Call subflow
-subflow(MoveTokensFlow(inputs, outputs, participantSessions, observerSessions))
-// or use utilities functions
-//... implement some business specific logic
-addMoveTokens(transactionBuilder, inputs, outputs)
+Note that the addMoveFungibleTokens defaults to database selection. If you wish to use in-memory selection you should write your own utility method per the example below.
+```kotlin
+@Suspendable
+@JvmOverloads
+fun addMoveFungibleTokensInMemory(
+        transactionBuilder: TransactionBuilder,
+        serviceHub: ServiceHub,
+        partiesAndAmounts: List<PartyAndAmount<TokenType>>,
+        changeHolder: AbstractParty,
+        queryCriteria: QueryCriteria? = null
+): TransactionBuilder {
+    // Instantiate a LocalTokenSelection class which you will use to select tokens
+    val selector = LocalTokenSelection(serviceHub)
+    // Use the generateMove utility on the DatabaseTokenSelection class to determine the input and output token states
+    val (inputs, outputs) = selector.generateMove(partiesAndAmounts.toPairs(), changeHolder, TokenQueryBy(queryCriteria = queryCriteria), transactionBuilder.lockId)
+    // Add those input and output token states to the transaction
+    // This step also calculates and adds the appropriate commands to the transaction so that Token contract verification rules may be applied
+    return addMoveTokens(transactionBuilder = transactionBuilder, inputs = inputs, outputs = outputs)
+}
 ```
 
 {{< note >}}
