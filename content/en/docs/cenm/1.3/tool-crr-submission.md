@@ -30,7 +30,7 @@ The expected input from the user is following:
 * Revocation Reason (select one from the displayed list)
 * Reporter (name or identifier of the person issuing the revocation request).
 
-Note: At least one of 1, 2 and 3 has to be provided.
+{{< note >}} You must provide a value for at least one of the first three input options. {{< /note >}}
 
 
 ## Running Tool

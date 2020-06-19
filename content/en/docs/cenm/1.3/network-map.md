@@ -29,9 +29,17 @@ essential information of each participant such as connection address and availab
 
 The Network Map Service currently has to be initialised in two stages. First, the network parameters for the global
 network have to be loaded into the database. Once complete, the service can be started.
+As of CENM 1.3, the initial bootstrap is managed via the Zone Service for the
+network, along with the Angel Service of the Network Map Services. Service
+restarts are handled automatically.
 
 
 ### Setting the Network Parameters
+
+{{< warning >}}
+The options below have been replaced with the Admin RPC commands.
+They are listed here for reference only and will be removed in a future release of CENM.
+{{< /warning >}}
 
 The initial network parameters file can be loaded into the Network Map Service database using the
 `--set-network-parameters` flag. The complete list of flags required to set the network parameters is as follows:
@@ -40,22 +48,14 @@ The initial network parameters file can be loaded into the Network Map Service d
 * **[–set-network-parameters] or [-s]**:
 This flag specifies that you wish to set or update the network parameters, and
 should be followed by the new network parameters configuration file.
-
-
 * **[–network-truststore] or [-t]**:
 This is used to define the network trustStore, which should contain the root
 certificate (similar to the *network-root-truststore.jks* file for Corda nodes). This is needed to validate that the
 notaries that have been set in the network parameters have a valid certificate issued by the Identity Manager.
-
-
 * **[–truststore-password] or [-p]**:
 The password for the above trustStore.
-
-
 * **[–root-alias] or [-a]**:
 The alias for the root certificate within the above trustStore.
-
-
 
 An example of setting the network parameters is:
 
@@ -74,10 +74,10 @@ Saved initial network parameters to be signed:
 ...
 ```
 
-
 ### Starting The Network Map Service
 
-The Network Map Service can now be started via:
+Once you have set the network parameters, you can start the Network Map Service 
+manually by running the following command:
 
 ```bash
 java -jar network-map-<VERSION>.jar --config-file <CONFIG_FILE>
