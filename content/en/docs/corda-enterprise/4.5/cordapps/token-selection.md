@@ -1,8 +1,9 @@
 ---
 date: '2020-05-10T12:00:00Z'
 menu:
-corda-enterprise-4-5:
-parent: corda-enterprise-4-5-cordapps-token-sdk
+  corda-enterprise-4-5:
+    parent: corda-enterprise-4-5-token-sdk
+weight: 100
 tags:
 - Token SDK
 - Selection
@@ -24,17 +25,26 @@ This process is called **Selection**.
 You can write flows for moving your tokens that allow selection from either:
 
 * The database which stores token data.
-* In-memory data, which is like a cache of a party's current token data.
+* In-memory data, which is like a cache of a node's current token data.
 
 **In-memory selection** is a much faster method of choosing the right token reserves to use in a transaction. However, you may decide you prefer **Database** selection as it keeps the database as the only active source of truth for your tokens.
 
+## Token selection with multithreaded SMM
+
+A multithreaded environment is characterised by running tokens with Corda Enterprise where the number of flow workers is configured to be > 1.
+
+You can only use in-memory selection in a multithreaded environment. This is  because a cache of available tokens balances are maintained for querying in the JVM. This means the query time to select available tokens is extremely fast, preventing the need for soft-locking tokens in the DB. Tokens are simply selected, added to a transaction and spent.
+
+In DB selection, token states must be queried from the vault and “selected” by soft locking the record in the database. This doesn’t work in a multi-threaded environment and multiple threads running at the same time may end up selecting the same token state to be spent. This will lead to the notary throwing a double-spend error.
+
 ## Use Database Selection
 
-In the Token SDK, database selection is the default method of selection for each transaction.
+In the Token SDK, database (DB) selection is the default method of selection for each transaction.
 
-In move flows of multiple tokens using database selection, you specify the `selectionType` in the `TransactionBuilder`, along with the preferred selection source of payment.
+In move flows of multiple tokens using database selection, you specify the method of selection to modify the `TransactionBuilder`, along with the preferred selection source of payment.
 
-In the example below, multiple fungible moves would be added to a token using database selection:
+In the example below, multiple fungible token moves are added to a token using DB selection:
+
 
 ```kotlin
 @Suspendable
@@ -46,29 +56,38 @@ fun addMoveFungibleTokens(
         changeHolder: AbstractParty,
         queryCriteria: QueryCriteria? = null
 ): TransactionBuilder {
-    val selector: Selector = ConfigSelection.getPreferredSelection(serviceHub)
+    val selectorConfig: Selector = ConfigSelection.getPreferredSelection(serviceHub)
+    // Instantiate a DatabaseTokenSelection class which you will use to select tokens
     val selector = DatabaseTokenSelection(serviceHub)
+    // Use the generateMove utility on the DatabaseTokenSelection class to determine the input and output token states
     val (inputs, outputs) = selector.generateMove(partiesAndAmounts.toPairs(), changeHolder, TokenQueryBy(queryCriteria = queryCriteria), transactionBuilder.lockId)
+    // Add those input and output token states to the transaction
+    // This step also calculates and adds the appropriate commands to the transaction so that Token contract verification rules may be applied
     return addMoveTokens(transactionBuilder = transactionBuilder, inputs = inputs, outputs = outputs)
 }
 ```
 
 ## Use in-memory selection
 
-to use in-memory token selection, you need to write wrappers around `MoveTokensFlow` and
-`RedeemTokensFlow`.
+You can use in-memory token selection in two ways:
 
-You can also use that selection with `addMoveTokens` and `addRedeemTokens` utility functions. When doing this, you must make sure that all the checks are performed before construction of the transaction.
+* In much the same way as DB selection, with `addMoveTokens` and `addRedeemTokens` utility functions. When doing this, you must make sure that all the checks are performed before construction of the transaction.
 
-To use in-memory selection, you must ensure the Corda service `VaultWatcherService` is installed. This comes as part of the Token SDK.
+* Use the `generateMove` method by writing wrappers around `MoveTokensFlow` and `RedeemTokensFlow`.
 
-To initialise this service, you must select an `indexingStrategy`:
+You can see examples of both approaches below.
 
-* **Public_key** strategy makes a token bucket for each public key.
+### Initialise `VaultWatcherService`
+
+To use in-memory selection, you must ensure the CorDapp `VaultWatcherService` is installed and the service is running. This comes as part of the Token SDK.
+
+To initialise this service, you must select an `indexingStrategy`. The indexing strategy is how you designate the wallet or bucket of tokens that can be selected for use in a transaction:
+
+* **Public_key** strategy makes a token 'bucket' from which tokens can be selected, for each public key.
 * **External_ID** strategy can be used to group states from many public keys connected to a given unique user ID. If you use **Accounts**, this strategy is ideal.
 * **Token_Only** selection strategy indexes states only using token type and identifier.
 
-enter the following into your **CorDapp config**, choosing a single indexing strategy:
+Enter the following into your **CorDapp config**, choosing a single indexing strategy:
 
 ```
 stateSelection {
@@ -97,12 +116,16 @@ nodeDefaults {
 }
 ```
 
-## Move tokens using `LocalTokenSelection`
+## Move tokens using in-memory selection
+
+You can use in-memory selection in a very similar way to DB token selection - by calling `selectTokens`. In the example below where the only change is `LocalTokenSelector` in place of `DBTokenSelector`. Or, you can
 
 1. From your flow construct LocalTokenSelector instance:
 `val localTokenSelector = LocalTokenSelector(serviceHub)`
 
-2. Deceide whether to Choose states for move by calling `selectTokens`:
+2. Choose your preferred way of using in-memory selection to move the token: by calling `selectTokens` or using `generateMove` method to return a list of inputs and list of output states that can be passed to `addMove` or `MoveTokensFlow`.
+
+**Call `selectTokens`**
 
 ```kotlin
 val transactionBuilder: TransactionBuilder = ...
@@ -117,7 +140,7 @@ val selectedStates: List<StateAndRef<FungibleToken>> = localTokenSelector.select
     queryBy = queryBy)
 ```
 
-  * or using `generateMove` method to return a list of inputs and list of output states that can be passed to `addMove` or `MoveTokensFlow`:
+**Use `generateMove` method**
 
 ```
 // generate inputs, outputs with change, grouped by issuers
@@ -136,10 +159,8 @@ subflow(MoveTokensFlow(inputs, outputs, participantSessions, observerSessions))
 addMoveTokens(transactionBuilder, inputs, outputs)
 ```
 
-3. Finalize transaction, update distribution list etc, see Most common tasks.
-
 {{< note >}}
-You can use generic versions of MoveTokensFlow or addMoveTokens (not addMoveFungibleTokens), because we already performed selection and provide input and output states directly. Fungible versions will always use database selection.
+You can use generic versions of `MoveTokensFlow` or `addMoveTokens` (not `addMoveFungibleTokens`), because you already performed selection and provide input and output states directly. `addMoveFungibleTokens` must always use database selection.
 {{< /note >}}
 
 ## Redeem tokens using `LocalTokenSelection`

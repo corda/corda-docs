@@ -1,14 +1,15 @@
 ---
 date: '2020-05-10T12:00:00Z'
 menu:
-corda-enterprise-4-5:
-  name: "Token SDK"
-  parent: corda-enterprise-4-5-cordapps
+  corda-enterprise-4-5:
+    identifier: corda-enterprise-4-5-token-sdk
+    name: "Token SDK"
+    parent: corda-enterprise-4-5-cordapps
 tags:
 - building
 - against
 - release
-title: Introducing the Token SDK
+title: Token SDK
 weight: 15
 ---
 
@@ -24,7 +25,7 @@ Use this guide to:
 
 2. Design a token with the correct characteristics for its intended use.
 
-3. Create flows that issue your token correctly onto the ledger, move it from party to party, and have it redeemed and removed from the ledger.
+3. Create flows that issue your token correctly onto the ledger, move it from party to party, and have it redeemed.
 
 {{< note >}}
 
@@ -38,7 +39,7 @@ If you have developed a CorDapp that uses the Tokens SDK V1.1, you can upgrade t
 
 1. Change the V number (version number) in your CorDapp's relevant Gradle file from 1.1 to 1.2.
 
-2. Remove all references to `selection` and `money` JARS. The functions of these JARS has been moved into `workflows` in V1.2.
+2. Remove all references to `selection` and `money` `.jar` files from your build function (in many cases, Gradle). The functions of these JARS has been moved into `workflows` in V1.2.
 
 3. Recompile your CorDapp.
 
@@ -47,12 +48,12 @@ If you have developed a CorDapp that uses the Tokens SDK V1.1, you can upgrade t
 
 ## What's inside the Token SDK
 
-The Token SDK is contained in two JAR files which includes all the required dependencies for your CorDapp, including:
+The Token SDK is contained in two `.jar`  files which includes all the required dependencies for your CorDapp, including:
 
 * **Contracts**, which contains the base token types, states and contracts needed to create a token, including token type definitions for fiat and digital currencies.
 * **Workflows**, which contains the flows for issuing, moving, redeeming tokens, and selection workflows, which allow a party to select which source of fungible tokens they will use to pay with in a transaction.
 
-As the **Contracts** JAR contains the ability to define and create tokens, and the **Workflows** JAR contains the flows required to use them, you must add both JARS to your CorDapp's folder in order to use the Token SDK.
+As the **Contracts** `.jar` file contains the ability to define and create tokens, and the **Workflows** `.jar` file contains the flows required to use them, you must add both `.jar` files to your CorDapp's folder in order to use the Token SDK.
 
 ## Choose the anatomy of your token
 
@@ -62,7 +63,7 @@ Before using the SDK to create a token, you need to have a clear understanding o
 
 * **Fungible tokens** are represented by the `FungibleToken` *class* and can be split and merged – just as the assets they represent, like money or stocks - can be split and merged.
 
-* **Non-fungible** tokens are represented by the `NonFungibleTokens` *state*, and cannot be split and merged - just as the assets they represent, like physical diamonds or a house – cannot be split and merged.
+* **Non-fungible tokens** are represented by the `NonFungibleTokens` *state*, and cannot be split and merged - just as the assets they represent, like physical diamonds or a house – cannot be split and merged.
 
 * **Evolvable assets** change over time - not just in value, but in other ways, such as the condition of a car, or size of a house. These tokens are represented by the `EvolvableTokenType`
 
@@ -86,7 +87,7 @@ Use the list below to understand what needs to be included in the token you want
 
 Once you have established what type of token you want to create, you can use the Token SDK to perform the following key tasks:
 
-* **Define** your token. Using the readymade utilities contained in the contract JAR, you can define all the required attributes and custom attributes of your tokens.
+* **Define** your token. Using the readymade utilities contained in the contract `.jar` file, you can define all the required attributes and custom attributes of your tokens.
 
 * **Issue** tokens onto your ledger so they can be used as part of a transaction.
 
@@ -111,13 +112,14 @@ You can also give a `TokenType` an optional custom identifier, which is then fix
 
 An `EvolvableTokenType` has properties that can change over time. This is represented in Corda by a `LinearState`. To create and issue an `EvolvableTokenType`, you must:
 
-* Define the `TokenType` - the unit and decimal fractions.
+* Define the `TokenType` - the unit and fractional digits.
 * Define the evolvable attributes that can change over time.
 * Identify at least one signatory service that can approve the newly evolved state. This is called a `Maintainer`.
 
-In the example below, the evolvable token is for a diamond. You can see the evolvable attributes, which are the attributes included in a grading report for a diamond.
+In the example below, the evolvable token is for a diamond. You can see the evolvable attributes, which are the attributes included in a grading report for a diamond. You can also see a full [walk-through of this example](token-diamond-example) for a fuller picture.
 
-**Kotlin:**
+{{< tabs name="tabs-1234" >}}
+{{% tab name="kotlin" %}}
 ```kotlin
 /** Creating an evolveable TokenType */
 @BelongsToContract(DiamondGradingReportContract::class)
@@ -138,7 +140,9 @@ data class DiamondGradingReport(
 
 val diamond = DiamondGradingReport("1.0", DiamondGradingReport.ColorScale.A, DiamondGradingReport.ClarityScale.A, DiamondGradingReport.CutScale.A, gic.legalIdentity(), denise.legalIdentity())
 ```
-**Java:**
+{{% /tab %}}
+
+{{% tab name="java" %}}
 ```java
 public final class DiamondGradingReport extends EvolvableTokenType {
     private final BigDecimal caratWeight;
@@ -214,6 +218,8 @@ public final class DiamondGradingReport extends EvolvableTokenType {
 
 DiamondGradingReport diamond = new DiamondGradingReport("1.0", DiamondGradingReport.ColorScale.A, DiamondGradingReport.ClarityScale.A, DiamondGradingReport.CutScale.A, gic.getLegalIdentity(), denise.getLegalIdentity())
 ```
+{{% /tab %}}
+{{< /tabs >}}
 
 ### `FungibleToken` class
 
@@ -228,15 +234,15 @@ To create and issue a fungible token, you must ensure it has:
 
 Fungible tokens can be split using a flow initiated by the **Move** command. This allows a party to send some of the value of a single token to more than one recipient. Just like you can split a 10 USD bill between two people (as long as someone has change).
 
-In the below example, Alice issues a token representing a BitCoin. This token is generated using the Token SDK's built-in `money` library.
+In the below example, Alice instantiates a token representing a BitCoin. This token is generated using the Token SDK's built-in `money` library.
 
-**Kotlin:**
+{{< tabs name="tabs-1234" >}}
+{{% tab name="kotlin" %}}
 ```kotlin
 val fungibleToken = 1 of DigitalCurrency.getInstance("BTC") issuedBy aliceParty heldBy aliceParty
 ```
-
-**Java:**
-
+{{% /tab %}}
+{{% tab name="java" %}}
 ```java
 FungibleToken fungibleToken = new FungibleTokenBuilder()
         .withAmount(1)
@@ -244,39 +250,45 @@ FungibleToken fungibleToken = new FungibleTokenBuilder()
         .issuedBy(aliceParty)
         .heldBy(aliceParty)
         .buildFungibleToken();
-```
+```{{% /tab %}}
+{{< /tabs >}}
 
 ### `NonFungilbeToken` class
 
 A non-fungible token cannot be split and merged, and represents a unique asset. To create a `NonFungibleToken` you must:
 
-* Define the `TokenType` - the name of the unit of your token. As the token cannot be split, the digital fraction value can only be 1. [CHECK THIS]
+* Define the `TokenType` - the name of the unit of your token. As the token cannot be split, the digital fraction value can only be 1.
 * Define the first `Holder` of the token type. The holder of the token must be approved by a maintainer each time the token moves from party to party.
 * Define at least one `Maintainer` with the power to authorise any changes to the token. This includes every change of `Holder` and changes of attributes if it is also an `EvolvableTokenType`.
 * Define any custom attributes of the token.
 * Define the issuer of the token using the `IssuedTokenType`.
 
-In this example, Alice issues a unit of digital currency - Al-Coin (ALC) - that cannot be split into any smaller pieces than once ALC, and does not have attributes that evolve over time.
-
-**Kotlin:**
+In this example, Alice issues a collectible item - a vintage baseball card (Babe Ruth) - that cannot be split into any smaller pieces, and does not have attributes that evolve over time.
 
 ```kotlin
-val nonFungibleToken = 1 of DigitalCurrency.getInstance("ALC") heldBy aliceParty
-```
-**Java:**
+val issuer: Party = Alice
+    val holder: Party = Alice
 
-```java
-IssuedTokenType issuedRubles = new IssuedTokenType(ALICE.getParty(), DigitalCurrency.getInstance("ALC"));
-new NonFungibleToken(issuedRubles, ALICE.getParty(), new UniqueIdentifier());
+    val myTokenType = TokenType("BabeRuthCard", 1)
+    val myIssuedTokenType: IssuedTokenType = BabeRuthCard issuedBy issuer
+    val tenOfMyIssuedTokenType = 10 of myIssuedTokenType
+
+    // Adding a holder to a token type, creates a non-fungible token.
+    val nonFungibleToken: NonFungibleToken = myIssuedTokenType heldBy holder
 ```
+
 
 ## Write the flows for your token
 
 You can use the Token SDK to create flows for your tokens in the following ways:
 
 * **Utility methods** - methods by which you can compose your own flows.
-* **Sub flows** - ready made processes that need to be initiated by another flow.
+* **Subflows** - ready made processes that need to be initiated by another flow.
 * **RPC Enabled flows** - out-of-the-box flows that have been produced for testing purposes. These may not be suitable for commercial use.
+
+{{< attention >}}
+All of the utility methods, subflows and RPC enabled flows for Token SDK have been annotated with @JVMOverloads to ensure the appropriate Java constructors are generated where the source Kotlin constructor contains nullable arguments. This ensures a seamless experience when using the Tokens SDK from a Java code base.
+{{< /attention >}}
 
 ### Utility method - Issue
 
@@ -300,7 +312,7 @@ A notary `Party` must be added to the `TransactionBuilder` before this function 
 
 **Sample 1**
 
-```java
+```kotlin
 @Suspendable
 fun addIssueTokens(transactionBuilder: TransactionBuilder, outputs: List<AbstractToken>): TransactionBuilder {
     val outputGroups: Map<IssuedTokenType, List<AbstractToken>> = outputs.groupBy { it.issuedTokenType }
@@ -322,7 +334,7 @@ fun addIssueTokens(transactionBuilder: TransactionBuilder, outputs: List<Abstrac
 
 **Sample 2**
 
-```java
+```kotlin
 @Suspendable
 fun addIssueTokens(transactionBuilder: TransactionBuilder, vararg outputs: AbstractToken): TransactionBuilder {
     return addIssueTokens(transactionBuilder, outputs.toList())
@@ -331,7 +343,7 @@ fun addIssueTokens(transactionBuilder: TransactionBuilder, vararg outputs: Abstr
 
 **Sample 3**
 
-```java
+```kotlin
 @Suspendable
 fun addIssueTokens(transactionBuilder: TransactionBuilder, output: AbstractToken): TransactionBuilder {
     return addIssueTokens(transactionBuilder, listOf(output))
@@ -342,7 +354,9 @@ fun addIssueTokens(transactionBuilder: TransactionBuilder, output: AbstractToken
 
 Use the sample methods below to write flows that allow your token to be moved from party to party. This includes transactions in which the token (if fungible) is split in order to transact with multiple parties.
 
+{{< note >}}
 Check each sample before use, to make sure it is suitable for the characteristics of your token.
+{{< /note >}}
 
 ```
 @file:JvmName("MoveTokensUtilities")
@@ -372,7 +386,7 @@ import net.corda.core.transactions.TransactionBuilder
 
 Use this flow to add a set of token moves to a transaction using specific inputs and outputs.
 
-```java
+```kotlin
  */
 @Suspendable
 fun addMoveTokens(
@@ -422,7 +436,7 @@ fun addMoveTokens(
 
 **Add a single fungible token move to a transaction:**
 
-```java
+```Kotlin
 @Suspendable
 fun addMoveTokens(
         transactionBuilder: TransactionBuilder,
@@ -436,6 +450,10 @@ fun addMoveTokens(
 
 Use this method to add multiple token moves to a transaction. The [partiesAndAmounts] parameter specifies which parties should receive amounts of the token, with possible change paid to [changeHolder].
 
+{{< note >}}
+Change refers to any change due to the party using their token for something that doesn't come to the full value of the token. Like when you pay in a shop with cash, and you might get change from your $100 bill.
+{{< /note >}}
+
 You can use this method to combine multiple token amounts from different issuers if needed.
 
 To choose only tokens from one issuer, you can provide optional [queryCriteria] for move generation.
@@ -446,7 +464,7 @@ This method always uses database token selection, to use [in-memory selection](t
 
 {{< /note >}}
 
-```java
+```Kotlin
 @Suspendable
 @JvmOverloads
 fun addMoveFungibleTokens(
@@ -467,6 +485,10 @@ fun addMoveFungibleTokens(
 
 Use this method to add a single token move of `amount` to the new `holder`, with possible change paid to `changeHolder`.
 
+{{< note >}}
+Change refers to any change due to the party using their token for something that doesn't come to the full value of the token. Like when you pay in a shop with cash, and you might get change from your $100 bill.
+{{< /note >}}
+
 You can use this method to combine multiple token amounts from different issuers if needed.
 
 To choose only tokens from one issuer, you can provide optional [queryCriteria] for move generation.
@@ -477,7 +499,7 @@ This method always uses database token selection, to use in memory [token select
 
 {{< /note >}}
 
-```java
+```kotlin
 @Suspendable
 @JvmOverloads
 fun addMoveFungibleTokens(
@@ -502,7 +524,7 @@ fun addMoveFungibleTokens(
 
 Add single move of `token` to the new `holder`. Provide optional `queryCriteria` for move generation.
 
-```java
+```kotlin
  */
 @Suspendable
 @JvmOverloads
@@ -520,7 +542,10 @@ fun addMoveNonFungibleTokens(
 **Add a single token move for a non-fungible token**
 
 Add single move of token to the new holder specified using [partyAndToken] parameter.
- * Provide optional [queryCriteria] for move generation.
+
+Provide optional [queryCriteria] for move generation.
+
+```Kotlin
  */
 @Suspendable
 @JvmOverloads
@@ -532,7 +557,7 @@ fun addMoveNonFungibleTokens(
 ): TransactionBuilder {
     return generateMoveNonFungible(transactionBuilder, partyAndToken, serviceHub.vaultService, queryCriteria)
 }
-
+```
 ### Utility method - redeem
 
 Use this utility method to write flows that redeem a token and removes it from the ledger.
@@ -569,7 +594,11 @@ import net.corda.core.transactions.TransactionBuilder
 
 Use this method to write a redeeming flow of multiple `inputs` to the `transactionBuilder` with possible `changeOutput`.
 
-```java
+{{< note >}}
+Change refers to any change due to the party using their token for something that doesn't come to the full value of the token. Like when you pay in a shop with cash, and you might get change from your $100 bill.
+{{< /note >}}
+
+```kotlin
 @Suspendable
 @JvmOverloads
 fun addTokensToRedeem(
@@ -617,7 +646,7 @@ Redeem an amount of a token issued by `issuer`. Pay possible change to the `chan
 You can provide additional query criteria  using `additionalQueryCriteria`.
 
 
-```java
+```kotlin
 @Suspendable
 @JvmOverloads
 fun addFungibleTokensToRedeem(
@@ -654,7 +683,7 @@ fun addFungibleTokensToRedeem(
 
 Use this method to write a flow that redeems non-fungible `heldToken` issued by the `issuer` and add it to the `transactionBuilder`.
 
-```java
+```kotlin
 @Suspendable
 fun addNonFungibleTokensToRedeem(
         transactionBuilder: TransactionBuilder,
@@ -673,7 +702,7 @@ fun addNonFungibleTokensToRedeem(
 }
 ```
 
-## Issue, move and redeem tokens using sub flows
+## Issue, move and redeem tokens using subflows
 
 Use these ready-made subflows to issue, move and redeem tokens. These flows are triggered automatically by existing transaction flows.
 
@@ -723,7 +752,7 @@ import net.corda.core.transactions.SignedTransaction
 import net.corda.core.transactions.TransactionBuilder
 ```
 
-```java
+```kotlin
 class IssueTokensFlow
 @JvmOverloads
 constructor(
@@ -1218,7 +1247,7 @@ Depending on your plan for issuing tokens onto your network - whether you are re
 
 For each of the these steps, follow the instructions below.
 
-### Get started using the Kotlin Token SDK template
+### Create a local testing environment using the Kotlin Token SDK template
 
 To get started quickly with the Token SDK, use the **Tokens template** which is a branch on the kotlin version of the **CorDapp template**.
 
@@ -1258,14 +1287,17 @@ for more information.
 ### Build Token SDK against Corda release branch
 
 Often, in order to use the latest `token-sdk` master you will need to build against a specific Corda release branch until
-the required changes make it into a Corda release. At the time of writing tokens `1.1-SNAPSHOT` requires Corda **THIS IS OUT OF DATE - PLEASE PROVIDE CORRECT INFORMATION**
-`4.3-SNAPSHOT`. You can build this branch with the following commands:
+the required changes make it into a Corda release. You can build this branch with the following commands:
 
     ```
     git clone https://github.com/corda/corda
     git fetch
-    git checkout origin release/os/4.3
+    git checkout origin release/os/4.5
     ```
+
+{{< note >}}
+Check the version of Corda you wish to install. In the example above 4.5 is used.
+{{< /note >}}
 
 Then run a `./gradlew clean install` from the root directory.
 
@@ -1277,7 +1309,7 @@ wish to use. Set the Corda version to the one you have installed locally:
 ```
     buildscript {
         ext {
-            tokens_release_version = '1.1'
+            tokens_release_version = '1.2'
             tokens_release_group = 'com.r3.corda.lib.tokens'
         }
     }

@@ -1,11 +1,13 @@
 ---
 date: '2020-05-10T12:00:00Z'
 menu:
-    corda-enterprise-4-5:
-        parent: corda-enterprise-4-5-cordapps-token-sdk
+  corda-enterprise-4-5:
+    parent: corda-enterprise-4-5-token-sdk
+weight: 200
 tags:
-title: Diamonds as tokens - non-fungible, evolvable tokens using the Token SDK
+title: Token SDK evolvable token example
 ---
+# Diamonds as tokens - non-fungible, evolvable tokens using the Token SDK
 
 In this example workflow, the Token SDK is used to create a non-fungible, evolvable token for diamonds. A diamond cannot be split and merged, but its value and other attributes can evolve over time.
 
@@ -67,12 +69,12 @@ These are the events that take place in this workflow:
 
 GIC publishes the grading report on the diamond and shares it with Denise. According to the report, the diamond has a cut scale and color scale grading of 'A':
 
-      ```val diamond = DiamondGradingReport("1.0", DiamondGradingReport.ColorScale.A, DiamondGradingReport.ClarityScale.A, DiamondGradingReport.CutScale.A, gic.legalIdentity(), denise.legalIdentity())
-       val publishDiamondTx = gic.createEvolvableToken(diamond, notary.legalIdentity()).getOrThrow()
-       val publishedDiamond = publishDiamondTx.singleOutput<DiamondGradingReport>()
-       assertEquals(diamond, publishedDiamond.state.data, "Original diamond did not match the published diamond.")
-       assertHasTransaction(publishDiamondTx, gic, denise)
-       ```
+```val diamond = DiamondGradingReport("1.0", DiamondGradingReport.ColorScale.A, DiamondGradingReport.ClarityScale.A, DiamondGradingReport.CutScale.A, gic.legalIdentity(), denise.legalIdentity())
+val publishDiamondTx = gic.createEvolvableToken(diamond, notary.legalIdentity()).getOrThrow()
+val publishedDiamond = publishDiamondTx.singleOutput<DiamondGradingReport>()
+assertEquals(diamond, publishedDiamond.state.data, "Original diamond did not match the published diamond.")
+assertHasTransaction(publishDiamondTx, gic, denise)
+```
 
 
 ### Denise creates an ownership token
@@ -81,34 +83,35 @@ Denise creates an ownership token for the diamond, which points to the grading r
 
 Denise issues the token to Alice. Note that GIC should *not* receive a copy of this issuance. This is because the report is only about the diamond itself, not about who holds it.
 
-      ```val diamondPointer = publishedDiamond.state.data.toPointer<DiamondGradingReport>()
-       val issueTokenTx = denise.issueNonFungibleTokens(
-               token = diamondPointer,
-               issueTo = alice,
-               anonymous = true
-       ).getOrThrow()
-       // GIC should *not* receive a copy of this issuance
-       assertHasTransaction(issueTokenTx, alice)
-       assertNotHasTransaction(issueTokenTx, gic)
-       ```
+```val diamondPointer = publishedDiamond.state.data.toPointer<DiamondGradingReport>()
+val issueTokenTx = denise.issueNonFungibleTokens(
+token = diamondPointer,
+issueTo = alice,
+anonymous = true
+).getOrThrow()
+// GIC should *not* receive a copy of this issuance
+assertHasTransaction(issueTokenTx, alice)
+assertNotHasTransaction(issueTokenTx, gic)
+```
 
 ### Alice transfers ownership to Bob
 
 Alice moves the diamond token to Bob, continuing the chain of sale.
 
-       ```val moveTokenToBobTx = alice.moveNonFungibleTokens(diamondPointer, bob, anonymous = true).getOrThrow()
-       assertHasTransaction(moveTokenToBobTx, alice, bob)
-       assertNotHasTransaction(moveTokenToBobTx, gic, denise)
-       ```
+```
+val moveTokenToBobTx = alice.moveNonFungibleTokens(diamondPointer, bob, anonymous = true).getOrThrow()
+assertHasTransaction(moveTokenToBobTx, alice, bob)
+assertNotHasTransaction(moveTokenToBobTx, gic, denise)
+```
 
 ### Bob transfers ownership to Charlie
 
 Bob moves the token to Charlie, continuing the chain of sale.
 
-       ```val moveTokenToCharlieTx = bob.moveNonFungibleTokens(diamondPointer, charlie, anonymous = true).getOrThrow()
-       assertHasTransaction(moveTokenToCharlieTx, bob, charlie)
-       assertNotHasTransaction(moveTokenToCharlieTx, gic, denise, alice)
-       ```
+```val moveTokenToCharlieTx = bob.moveNonFungibleTokens(diamondPointer, charlie, anonymous = true).getOrThrow()
+assertHasTransaction(moveTokenToCharlieTx, bob, charlie)
+assertNotHasTransaction(moveTokenToCharlieTx, gic, denise, alice)
+```
 
 ### GIC amends (updates) the grading report
 
@@ -116,41 +119,41 @@ The grading report of the diamond has been updated. The diamond now has a cut sc
 
 Alice no longer holds the token for this diamond, so she does *not* receive an amended report from GIC.
 
-       ```val updatedDiamond = publishedDiamond.state.data.copy(color = DiamondGradingReport.ColorScale.B)
-       val updateDiamondTx = gic.updateEvolvableToken(publishedDiamond, updatedDiamond).getOrThrow()
-       assertHasTransaction(updateDiamondTx, gic, denise, bob, charlie)
-       assertNotHasTransaction(updateDiamondTx, alice)
-       ```
+ ```val updatedDiamond = publishedDiamond.state.data.copy(color = DiamondGradingReport.ColorScale.B)
+val updateDiamondTx = gic.updateEvolvableToken(publishedDiamond, updatedDiamond).getOrThrow()
+assertHasTransaction(updateDiamondTx, gic, denise, bob, charlie)
+assertNotHasTransaction(updateDiamondTx, alice)
+```
 
 ### Charlie redeems the token with Denise
 
 Charlie is now the owner of the real-world diamond, and wants to collect. She redeems the token with Denise. This information is only reported to Charlie and Denise. GIC, Alice, and Bob do not receive any further information regarding the diamond. This action removes the holdable token from the ledger.
 
-       ```val charlieDiamond = moveTokenToCharlieTx.tx.outputsOfType<NonFungibleToken>().first()
-       val redeemDiamondTx = charlie.redeemTokens(charlieDiamond.token.tokenType, denise).getOrThrow()
-       assertHasTransaction(redeemDiamondTx, charlie, denise)
-       assertNotHasTransaction(redeemDiamondTx, gic, alice, bob)
-       ```
+ ```val charlieDiamond = moveTokenToCharlieTx.tx.outputsOfType<NonFungibleToken>().first()
+val redeemDiamondTx = charlie.redeemTokens(charlieDiamond.token.tokenType, denise).getOrThrow()
+assertHasTransaction(redeemDiamondTx, charlie, denise)
+assertNotHasTransaction(redeemDiamondTx, gic, alice, bob)
+```
 
 ### Final positions
 
 GIC, Denise, Bob and Charlie have the latest evolvable token. Alice does not:
 
-       ```val newDiamond = updateDiamondTx.singleOutput<DiamondGradingReport>()
-       assertHasStateAndRef(newDiamond, gic, denise, bob, charlie)
-       assertNotHasStateAndRef(newDiamond, alice)
-       ```
+```val newDiamond = updateDiamondTx.singleOutput<DiamondGradingReport>()
+assertHasStateAndRef(newDiamond, gic, denise, bob, charlie)
+assertNotHasStateAndRef(newDiamond, alice)
+```
 
 Alice has an outdated (and unconsumed) evolvable token. GIC, Denise, Bob and Charlie do not:
 
-       ```val oldDiamond = publishDiamondTx.singleOutput<DiamondGradingReport>()
-       assertHasStateAndRef(oldDiamond, alice)
-       assertNotHasStateAndRef(oldDiamond, gic, denise, bob, charlie)```
+```val oldDiamond = publishDiamondTx.singleOutput<DiamondGradingReport>()
+assertHasStateAndRef(oldDiamond, alice)
+assertNotHasStateAndRef(oldDiamond, gic, denise, bob, charlie)```
 
-No one has nonfungible (discrete) tokens:
+No party has nonfungible (discrete) tokens:
 
-       ```assertNotHasStateAndRef(issueTokenTx.singleOutput<NonFungibleToken>(), gic, denise, alice, bob, charlie)
-       assertNotHasStateAndRef(moveTokenToBobTx.singleOutput<NonFungibleToken>(), gic, denise, alice, bob, charlie)
-       assertNotHasStateAndRef(moveTokenToCharlieTx.singleOutput<NonFungibleToken>(), gic, denise, alice, bob, charlie)
-   }
-   ```
+```assertNotHasStateAndRef(issueTokenTx.singleOutput<NonFungibleToken>(), gic, denise, alice, bob, charlie)
+assertNotHasStateAndRef(moveTokenToBobTx.singleOutput<NonFungibleToken>(), gic, denise, alice, bob, charlie)
+assertNotHasStateAndRef(moveTokenToCharlieTx.singleOutput<NonFungibleToken>(), gic, denise, alice, bob, charlie)
+}
+```
