@@ -2,18 +2,15 @@
 aliases:
 - /releases/4.5/node-metrics.html
 date: '2020-04-16T19:30:25Z'
-menu:
-  corda-enterprise-4-5:
-    parent: corda-enterprise-4-5-corda-nodes
+menu: []
 tags:
 - node
 - metrics
-title: Node metrics
-weight: 200
+title: Metrics
 ---
 
 
-# Node metrics
+# Metrics
 
 A Corda node exports a number of metrics for the purpose of monitoring the health of the node via JMX. This page documents the metrics
 exported by Corda.
@@ -75,15 +72,48 @@ weightPercent are only available for weight-based caches.
 |net.corda:type=Flows,name=CheckpointVolumeBytesPerSecondHist|Histogram indicating the rate at which bytes are being checkpointed|
 |net.corda:type=Flows,name=Checkpointing Rate|The rate at which checkpoint events are occurring|
 |net.corda:type=Flows,name=Error|The total number of errored flows|
+|net.corda:type=Flows,name=ErrorPerMinute|The rate at which flows are errored|
 |net.corda:type=Flows,name=Finished|The total number of completed flows (both successfully and unsuccessfully)|
 |net.corda:type=Flows,name=InFlight|The number of in flight flows|
 |net.corda:type=Flows,name=QueueSize|The current size of the queue for flows waiting to be executed|
 |net.corda:type=Flows,name=QueueSizeOnInsert|Histogram showing the queue size at the point new flows are added|
 |net.corda:type=Flows,name=Started|The total number of flows started|
+|net.corda:type=Flows,name=StartedPerMinute|The rate at which flows are started|
 |net.corda:type=Flows,name=Success|The total number of successful flows|
-|net.corda:type=Flows,component=Actions,name=<action_name>>|Histogram indicating the elapsed time to execute a particular action|
+|net.corda:type=Flows,name=<action_name>|Histogram indicating the elapsed time to execute a particular action. See the below section for more details.|
 
 {{< /table >}}
+
+### Actions
+
+
+Actions are reified IO actions to execute as part of state machine transitions. These metrics are only exposed when the relevant action gets executed for the first time.
+
+|Metric Query|Action description|
+|----------------------------------------------------------------|--------------------------------------------------------------------------------------|
+|net.corda:type=Flows,name=Actions.AcknowledgeMessages|Acknowledge messages|
+|net.corda:type=Flows,name=Actions.AddSessionBinding|Create a session binding to allow routing of incoming messages|
+|net.corda:type=Flows,name=Actions.CancelFlowTimeout|Cancel the retry timeout for a flow|
+|net.corda:type=Flows,name=Actions.CommitTransaction|Commit the current database transaction|
+|net.corda:type=Flows,name=Actions.CreateTransaction|Create a new database transaction|
+|net.corda:type=Flows,name=Actions.ExecuteAsyncOperation|Execute the specified operation|
+|net.corda:type=Flows,name=Actions.PersistCheckpoint|Persist a checkpoint|
+|net.corda:type=Flows,name=Actions.PersistDeduplicationFacts|Persist deduplication facts|
+|net.corda:type=Flows,name=Actions.PropagateErrors|Propagate error messages to sessions|
+|net.corda:type=Flows,name=Actions.ReleaseSoftLocks|Release soft locks associated with a given ID|
+|net.corda:type=Flows,name=Actions.RemoveCheckpoint|Remove a checkpoint|
+|net.corda:type=Flows,name=Actions.RemoveFlow|Remove a flow|
+|net.corda:type=Flows,name=Actions.RemoveSessionBindings|Remove session bindings|
+|net.corda:type=Flows,name=Actions.RetryFlowFromSafePoint|Retry a flow from the last checkpoint, or if there is no checkpoint, restart the flow with the same invocation details|
+|net.corda:type=Flows,name=Actions.RollbackTransaction|Roll back the current database transaction|
+|net.corda:type=Flows,name=Actions.ScheduleEvent|Schedule an event|
+|net.corda:type=Flows,name=Actions.ScheduleFlowTimeout|Schedule a flow to be retried if it does not complete within the timeout period specified in the configuration|
+|net.corda:type=Flows,name=Actions.SendExisting|Send a session message to a party with which we have an established session|
+|net.corda:type=Flows,name=Actions.SendInitial|Send an initial session message to a destination|
+|net.corda:type=Flows,name=Actions.SendMultiple|Send session messages to multiple destinations|
+|net.corda:type=Flows,name=Actions.SignalFlowHasStarted|Signal that a flow is considered started|
+|net.corda:type=Flows,name=Actions.SleepUntil|Sleep until a given amount of time|
+|net.corda:type=Flows,name=Actions.TrackTransaction|Track a transaction hash and notify the state machine once the corresponding transaction has committed|
 
 
 ## Metering
@@ -118,3 +148,19 @@ weightPercent are only available for weight-based caches.
 |net.corda:type=P2P,name=SendQueueSizeOnInsert|Histogram measuring the size of the in-memory send queue in the state machine when new messages are added|
 
 {{< /table >}}
+
+
+## Other metrics
+
+
+{{< table >}}
+
+|Metric Query|Description|
+|----------------------------------------------|-----------------------------------------------------------------------------------------------------------|
+|net.corda:type=NetworkParameter,name=UpdateProposed|Gauge with a true/false value to indicate the a network parameter has been proposed but hasn't been accepted yet|
+|net.corda:type=Transaction,name=SignDuration|Histogram measuring the duration of signing a transaction|
+
+{{< /table >}}
+
+
+
