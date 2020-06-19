@@ -8,133 +8,47 @@ menu:
 tags:
 - certificate
 - revocation
-title: Certificate Revocation List
+title: Certificate Revocation FAQ
 ---
 
 
-# Certificate Revocation List
+# Certificate Revocation FAQ
 
-The certificate revocation list (CRL) consists of certificate serial numbers of issued certificates that are no longer valid.
-It is used by nodes when they establish a TLS connection between each other and need to ensure on certificate validity.
-In order to add entries to the certificate revocation list there is the certificate revocation process that resembles
-the one from the certificate signing request (CSR).
+## What is the expected behaviour if a certificate is revoked?
 
-Note: For context on how the certificate revocation list fits into the wider context, see [Certificate Hierarchy Guide](pki-guide.md). Once added, the entries cannot be removed from the certificate revocation list.
+Once a certificate is revoked (including the signing of a new CRL), nodes on the network should identify the change quickly. In CENM 1.3, this takes around 30 seconds. In future releases this time frame is likely to increase because having every node in a network poll for changes is a poor scaling experience.
+At this point Nodes will refuse to accept signatures from the revoked certificate. As a result, any transactions that have not yet been notarised, as well as any future transactions the revoked certificate would have signed, will be invalidated.
+In addition, the Network Map Service(s) will refresh their internal cache of the CRL and will refuse to serve node info for the affected nodes. As a result, any new nodes joining the network will be completely unaware of the affected node.
 
-As with CSR, the approval workflow for revocation requests is integrated with the JIRA tool by default,
-and the submitted requests follow the same lifecycle. To support the above functionality, there are two
-externally available REST endpoints:
-* one for certificate revocation request submission
-* one for certificate revocation list retrieval
+## What is the expected behaviour if a node tries to transact to a revoked certificate (irrespective of their configuration)?
 
-Since the certificate revocation list needs to be signed, the revocation process integrates with the HSM signing service.
-<!-- What does HSM stand for? Is it spelt out anywhere else in this doc? -->
-The certificate revocation list signing process requires human interaction for which there is a separate tool.
-Once signed, the certificate revocation list will replace the current one.
+Nodes do not check certificates on transactions, only on communication. The purpose of this is to avoid scenarios where a node operator revokes their certificate to stop an attacker modifying the node operator’s states (for example, if the key was compromised), but as result it cannot modify their own states.
 
-{{< note >}}
-It is assumed that the signed certificate revocation list is always available, even if it’s empty. Nodes will refuse to make TLS connections if they cannot verify the revocation status of certificates in the remote peer’s chain. Hence, the CRL must remain available for the network to operate.
-{{< /note >}}
+## What is the expected behaviour if the CRL is not reachable due to a network error?
 
-{{< note >}}
-CRLs should be signed manually from time to time depending on it's `nextUpdate` property. Further details
-on CRL lifecycle are covered under [Lifecycle](#crl-lifecycle).
+This depends on whether the nodes are configured for hard or soft failure. However, in the recommended production setup (hard failure) any and all certificate validation will fail until the endpoint is reachable. This is addressed in the updated CENM 1.3 documentation on highly available CRL endpoints using an HTTP proxy.
 
-{{< /note >}}
+## What is the expected behaviour if the CRL expires on existing nodes and new prospect nodes?
 
-## HTTP certificate revocation protocol
+CRL expiration is treated identically as a failure to reach the CRL endpoint, and as such all validations will fail until a new CRL is signed and available from the Identity Manager Service.
 
-The set of REST end-points for the revocation service are as follows.
+## What are the CA certificates and who manages their CRL?
 
+Node CA certificates are responsible for signing the separate legal identity and TLS certificates for a node. There can be confidential identity certificates under the legal identity certificate, although this approach to confidential identities is deprecated.
+In theory, node CAs could have a CRL. In practice, there is no provision for this and it is impractical to do so. The Identity Manager Service (formerly Doorman) CRL is the CRL that covers the node CA certificates.
 
-{{< table >}}
+## What is an Identity Manager Service (formerly Doorman) CRL and what purpose does it serve?
 
-|Request method|Path|Description|
-|----------------|-----------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------|
-|POST|/certificate-revocation-request|Uploads a certificate revocation request.|
-|GET|/certificate-revocation-list/doorman|Retrieves the certificate revocation list issued by the Doorman CA. Returns an ASN.1 DER-encoded java.security.cert.X509CRL object.|
-|GET|/certificate-revocation-list/root|Retrieves the certificate revocation list issued by the Root CA. Returns an ASN.1 DER-encoded java.security.cert.X509CRL object.|
-|GET|/certificate-revocation-list/empty|Retrieves the empty certificate revocation list issued by the Root CA. Returns an ASN.1 DER-encoded java.security.cert.X509CRL object.|
+Each CRL affects certificates immediately below it, although revoking any certificate implicitly revokes any certificates signed by the revoked certificates, and so on down the hierarchy. The Identity Manager CRL therefore contains a list of revoked node CA certificates.
 
-{{< /table >}}
+## What are the typical cases when a certificate revocation is required? What are the implications for the node?
 
+Certificate revocation is typically required if a certificate was incorrectly issued (for example, if someone managed to impersonate another legal entity), if the key associated with the certificate was compromised, or if the key associated with the certificate was lost. No process is currently available for re-issuing certificates, so certificate revocation is irreversible for the legal identity affected. Therefore certificate revocation must *not* be used for disabling a node temporarily.
 
-## Empty Certificate Revocation List
+## What is the recommended configuration for the CRL?
 
-The TLS-level certificate revocation check validates the entire certificate chain. For each certificate in the
-certificate path, the corresponding CRL will be downloaded and the certificate will be checked against that CRL.
-However, this requires each Certificate Authority, including the Node CA, to provide a CRL for the
-certificates it issues. Since this requirement cannot always be met, especially by the Node CA, the alternative is to use a CRL signed by the trusted CA. As each Corda node trusts the Root CA, an additional empty CRL signed by the Root CA is provided on one of the revocation service endpoints and can be used for any certificate issued by the Node CA.
-{{< note >}} See the table above (best to link to it as its position can change) {{< /note >}}
+You should use a High Availability deployment in order to avoid any impact caused by temporary downtimes.
+See [Identity Manager Service](../../../../cenm/1.3/identity-manager.md) for an example configuration of such a deployment.
 
-
-## Certificate Revocation Request submission
-
-When you submit the certification revocation requests, the following fields should be present in the request payload:
-
-
-* **certificateSerialNumber**:
-Serial number of the certificate that is to be revoked.
-
-
-* **csrRequestId**:
-Certificate signing request identifier associated with the certificate that is to be revoked.
-
-
-* **legalName**:
-Legal name associated with the certificate that is to be revoked.
-
-
-* **reason**:
-Revocation reason (as specified in the java.security.cert.CRLReason). The following values are allowed:
-
-
-  * **KEY_COMPROMISE**:
-Known or suspected that the certificate subject’s private key has been compromised. It applies to end-entity certificates only.
-
-
-  * **CA_COMPROMISE**:
-  Known or suspected that the certificate subject’s private key has been compromised. It applies to certificate authority (CA) certificates only.
-
-
-  * **AFFILIATION_CHANGED**:
-  The subject’s name or other information has changed.
-
-
-  * **SUPERSEDED**:
-  The certificate has been superseded.
-
-
-  * **CESSATION_OF_OPERATION**:
-  The certificate is no longer needed.
-
-
-  * **PRIVILEGE_WITHDRAWN**:
-  The privileges granted to the subject of the certificate have been withdrawn.
-
-
-
-
-* **reporter**:
-Issuer of this certificate revocation request.
-
-Corda AMQP serialization framework is used as the serialization framework.
-
-{{< note >}} It is assumed that those endpoints are used by dedicated tools that support this kind of data encoding, because of the proprietary serialization mechanism. {{< /note >}}
-
-
-## Internal protocol
-
-There is an internal communication protocol between the Signing service and the HSM signing service for producing the signed CRLs.
-This does not use HTTP to avoid exposing any web vulnerabilities to the signing process.
-
-
-
-## Lifecycle
-
-<!-- This sentence below needs more clarity - need to explain the purpose of "next update" so the next bit of the sentence makes sense -->
-CRLs contain a field called "next update”, after which the CRL is no longer valid. This is to ensure that an up-to-date CRL is distributed in the network before the previous one expires. Conventionally, they have a lifecycle of 6 months and are manually signed every 3 months. This kind of scheduling allows plenty of time to resolve any signing issues.
-
-{{< note >}} See [Signing Services](signing-service.md) for details on building and signing CRLs, and especially the “updatePeriod”
-configuration field which is used to determine the next update deadline. See also [CRL Endpoint Check Tool](crl-endpoint-check-tool.md)
-for more information how to check CRLs’ update deadlines. {{< /note >}}
+See [Certificate Revocation List](../../../../cenm/1.3/certificate-revocation.md) for instructions on revoking certificates, and [Signing Services](../../../../cenm/1.3/signing-service.md) for
+configuration of the Signing Service for CRLs (especially the `updatePeriod` option).
