@@ -56,11 +56,14 @@ Operations
 
 * [Enterprise Network Manager Quick-Start Guide](quick-start.md)
 * [Deployment with Kubernetes](deployment-kubernetes.md)
+  * [CENM Auth Service Helm Chart](deployment-kubernetes-auth.md)
+  * [CENM Farm Service Helm Chart](deployment-kubernetes-farm.md)
   * [CENM Identity Manager Helm Chart](deployment-kubernetes-idman.md)
   * [CENM Network Map Helm Chart](deployment-kubernetes-nmap.md)
-  * [CENM Signing Service Helm Chart](deployment-kubernetes-signer.md)
   * [CENM Notary Helm Chart](deployment-kubernetes-notary.md)
+  * [CENM Signing Service Helm Chart](deployment-kubernetes-signer.md)
   * [CENM Zone Service Helm Chart](deployment-kubernetes-zone.md)
+>>>>>>> 102a8110... Add farm helm chart doc
 * [Zone Service](zone-service.md)
 * [Angel Service](angel-service.md)
 * [Identity Manager Service](identity-manager.md)
