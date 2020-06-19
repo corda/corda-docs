@@ -10,7 +10,7 @@ tags:
 - os
 - ent
 title: Upgrading a Corda OS node to Corda Enterprise
-weight: 8
+weight: 9
 ---
 
 
@@ -131,4 +131,3 @@ to a 3rd party commercial databases.
 It can be used via the GUI application or from the command-line, however it only runs on Windows: Vista SP2 and later, as well as Windows Server 2008 and later.
 The tool works by connecting to both databases simultaneously and migrates tables, their data, and other schema objects form one database to the other.
 It can be used to migrate from a H2 database by connecting to its database file.
-

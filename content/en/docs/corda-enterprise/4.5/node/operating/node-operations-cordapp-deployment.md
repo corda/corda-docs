@@ -9,7 +9,7 @@ tags:
 - cordapp
 - deployment
 title: Installing CorDapps on a node
-weight: 9
+weight: 10
 ---
 
 
@@ -256,4 +256,3 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON my_admin_user.<cordapp_table> TO my_user
 
 
 Change *<cordapp_table>*  to a cordap table name.
-

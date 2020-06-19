@@ -9,7 +9,7 @@ tags:
 - cm
 - backup
 title: Backup and restoration of a Corda node
-weight: 7
+weight: 8
 ---
 
 
@@ -54,5 +54,3 @@ If the above holds, Corda components will benefit from the following:
 Private keys used to sign transactions should be preserved with the utmost care. The recommendation is to keep at least two separate copies on a storage not connected to the Internet.
 
 {{< /warning >}}
-
-

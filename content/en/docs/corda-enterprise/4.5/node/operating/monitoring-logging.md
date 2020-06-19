@@ -2,6 +2,7 @@
 date: '2020-04-07T12:00:00Z'
 menu:
   corda-enterprise-4-5:
+    identifier: corda-enterprise-4-5-monitoring-logging
     parent: corda-enterprise-4-5-corda-nodes-operating
 tags:
 - monitoring
@@ -264,5 +265,3 @@ The values for `keyStorePassword` and `trustStorePassword` in the above example 
 This method does not offer full protection. We recommend using further obfuscation methods for sensitive data.
 
 {{< /warning >}}
-
-

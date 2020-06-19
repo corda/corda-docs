@@ -4,15 +4,15 @@ menu:
   corda-enterprise-4-5:
     parent: corda-enterprise-4-5-corda-nodes-operating
 tags:
-- optimizing
-title: Optimizing node performance
-weight: 6
+- optimising
+title: Optimising node performance
+weight: 7
 ---
 
 
-# Optimizing node performance
+# Optimising node performance
 
-Node performance optimization can be achieved by adjusting node configuration, node memory, node thread count.
+Node performance optimisation can be achieved by adjusting node configuration, node memory, node thread count.
 
 
 ## Adjusting the node settings

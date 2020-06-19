@@ -2,20 +2,23 @@
 aliases:
 - /releases/4.5/node-metrics.html
 date: '2020-04-16T19:30:25Z'
-menu: []
+menu:
+  corda-enterprise-4-5:
+    parent: corda-enterprise-4-5-corda-nodes-operating
 tags:
 - node
 - metrics
-title: Metrics
+title: Node metrics
+weight: 6
 ---
 
 
-# Metrics
+# Node metrics
 
 A Corda node exports a number of metrics for the purpose of monitoring the health of the node via JMX. This page documents the metrics
 exported by Corda.
 
-For more information about how to monitor a node, see node-administration.
+For more information on how to monitor a node, see [Node administration](node/operating/node-administration.md).
 
 
 ## Attachments
@@ -32,8 +35,10 @@ For more information about how to monitor a node, see node-administration.
 
 ## Caches
 
-A Corda node maintains a number of caches. For each of the metrics below, the name of the cache must be supplied in the component field to
-show metrics for that cache. There are two sorts of caches: size-based and weight-based. Size-based caches are measured in the number
+A Corda node maintains a number of caches. For each of the metrics below, the name of the cache must be supplied in the `component` field to
+show metrics for that cache.
+
+There are two types of caches: *size-based* and *weight-based*. Size-based caches are measured in the number
 of entries in the cache, while weight-based caches are measured in the bytes of memory occupied by the entries. Note that the set of metrics
 available depends on the cache type. Maximum-size and sizePercent is only available for size-based caches, while maximum-weight, weight, and
 weightPercent are only available for weight-based caches.
@@ -161,6 +166,3 @@ Actions are reified IO actions to execute as part of state machine transitions. 
 |net.corda:type=Transaction,name=SignDuration|Histogram measuring the duration of signing a transaction|
 
 {{< /table >}}
-
-
-
