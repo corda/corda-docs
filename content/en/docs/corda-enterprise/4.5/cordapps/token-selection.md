@@ -68,7 +68,7 @@ To initialise this service, you must select an `indexingStrategy`:
 * **External_ID** strategy can be used to group states from many public keys connected to a given unique user ID. If you use **Accounts**, this strategy is ideal.
 * **Token_Only** selection strategy indexes states only using token type and identifier.
 
-enter the following into your **CorDapp config**, choosing a single indexing strategy:
+Enter the following into your **CorDapp config**, choosing a single indexing strategy:
 
 ```
 stateSelection {
