@@ -16,49 +16,52 @@ weight: 100
 
 # Node monitoring scenarios
 
-## Approaching an OOM error
+Some typical node monitoring scenarios are described below that you may observe when using [node metrics data](../../node-metrics.md).
 
- The `HeapMemoryUsage` attribute of the `java.lang:type=Memory` mbean contains a MemoryUsage (https://docs.oracle.com/javase/8/docs/api/java/lang/management/MemoryUsage.html) object that represents a snapshot of heap memory usage.
- The 'used' variable of this object represents the amount of memory currently used, while the 'max' value represents the maximum amount of memory that can be used for memory management. If the proportion of these two values are repeatedly over 0.85, it could indicate a condition where we are approaching an OOM error.
+## Risk of `OutOfMemoryError`
+
+The `HeapMemoryUsage` attribute of the `java.lang:type=Memory` [MBean](https://docs.oracle.com/javase/tutorial/jmx/mbeans/index.html) contains a [MemoryUsage](https://docs.oracle.com/javase/8/docs/api/java/lang/management/MemoryUsage.html) object that represents a snapshot of heap memory usage. The value of the `used` variable in this object indicates the amount of memory currently used, and the value of the `max` variable indicates the maximum amount of memory that can be used for memory management.
+
+If the proportion of these two values is repeatedly over 0.85, this could indicate a condition where there is a risk of reaching [OutOfMemoryError](https://docs.oracle.com/javase/8/docs/api/java/lang/OutOfMemoryError.html) condition.
 
 ## High CPU usage
 
- The SystemCpuLoad property of the java.lang:type=OperatingSystem is a double type of value that represents Returns the "recent cpu usage" for the whole system.
- The maximum value of this property is 1, which represents a 100% CPU usage.
- Repeated readings of the SystemCpuLoad value being close to 1 (eg. over 0.9) means that consistently high CPU usage.
+The `SystemCpuLoad` property of the `java.lang:type=OperatingSystem` is a `double data type` value that indicates the "recent CPU usage" for the entire system. The maximum value of this property is 1, which corresponds to a 100% CPU usage.
 
-## High flow error rates
+If the `SystemCpuLoad` value is repeatedly close to 1 (for example, over 0.9), this means that the overall system CPU usage is consistently high.
 
-Corda exposes the "net.corda:name=StartedPerMinute,type=Flows" and the"net.corda:name=ErrorPerMinute,type=Flows" meter type of metrics.
-A meter measures the rate of events over time (e.g., “flows per second”). In addition to the mean rate, meters also track 1-, 5-, and 15-minute moving averages.
-The oneMinuteRate property of the above two metrics will represent the rates of started and errored flows in the last minute.
-The last minute's error flow rate reaching a significant percentage of the last minute's started flow rate (eg. over 10%) can indicate high flow error rates.
+## High flow error rate
 
-## Network parameter update proposed
+The `net.corda:name=StartedPerMinute,type=Flows` and `net.corda:name=ErrorPerMinute,type=Flows` metrics data is collected using meters. A meter measures the rate of events over time - for example, “flows per second”. In addition to the average rate, meters also track 1-minute, 5-minute, and 15-minute moving averages. The value of the `oneMinuteRate` property for each of these metrics indicates, respectively, the rates of flows started and flows failed with an error during the past minute.
 
-Corda exposes the "net.corda:name=UpdateProposed,type=NetworkParameter" boolean type of metric.
-The value of this metric can be true or false, true indicating that a network parameter update has been proposed that has not been accepted yet.
+It is an indication of a high flow error rate if the "flows failed with an error" rate for the past minute reaches a significant percentage of the "flows started" - for example, over 10%.
+
+## Network parameter update proposed and not accepted
+
+If the value of the `net.corda:name=UpdateProposed,type=NetworkParameter` boolean type of metric is `true`, this can indicate that a network parameter update was proposed but it has not yet been accepted.
 
 ## Processing messages takes too long
 
-The "net.corda:type=P2P,name=ReceiveDuration" metric is a histogram measuring latency between receiving a P2P message and delivering it to the state machine.
-The properties of this metric can be combined to detect a delay in message processing.
-For instance, - assuming we have received enough messages in the last minute (at least 3 per second) to make a decision,- we can flag up an error if 25% of the messages took significantly (at least 50%) longer than the average message process duration.
-This would look like below using the properties of the metric:
-oneMinuteRate >3.0, 75thPercentile() > mean * 1.5
+The `net.corda:type=P2P,name=ReceiveDuration` metric is a histogram that measures the latency between the node receiving a P2P message and delivering it to the state machine. The properties of this metric can be combined to detect a delay in message processing.
+
+For example, if you assume that a sufficient number of messages have been received during the past minute (at least three per second) in order to make a decision, you can flag up an error if 25% of the messages took significantly longer (at least 50%) than the average message process duration. The example below shows how scenario would look like using the properties of the metric:
+
+`oneMinuteRate >3.0, 75thPercentile() > mean * 1.5`
 
 ## Committing transactions takes too long
 
-The "net.corda:name=Actions.CommitTransaction,type=Flows" metric is a histogram indicating the elapsed time to execute the CommitTransaction action.
-The properties of this metric can be combined to detect if executing this action takes unexpectedly long.
-For instance, - assuming we have executed enough actions in the last minute (at least 3 per second) to make a decision,- we can flag up an error if 25% of the actions took significantly (at least 50%) longer to execute than the average CommitTransaction action duration.
-This would look like below using the properties of the metric:
-oneMinuteRate >3.0, 75thPercentile() > mean * 1.5
+The `net.corda:name=Actions.CommitTransaction,type=Flows` metric is a histogram that indicates the time taken to execute the `CommitTransaction` action. You can combine the properties of this metric to detect if the execution of this action takes an unexpectedly long time.
+
+For example, if you assume that a sufficient number of actions have been executed during the past minute (at least three per second) in order to make a decision, you can flag up an error if 25% of the actions took significantly longer (at least 50%) to execute than the average duration of the `CommitTransaction` action. The example below shows how scenario would look like using the properties of the metric:
+
+`oneMinuteRate >3.0, 75thPercentile() > mean * 1.5`
 
 ## Signing transactions takes too long
 
-The "net.corda:name=SignDuration,type=Transaction" metric is a histogram indicating the duration of signing a transaction.
-The properties of this metric can be combined to detect if signing a transaction unexpectedly long.
-For instance, - assuming we have signed enough transactions in the last minute (at least 3 per second) to make a decision,- we can flag up an error if 25% of the transactions took significantly (at least 50%) longer to sign than the duration of signing a transaction.
-This would look like below using the properties of the metric:
-oneMinuteRate >3.0, 75thPercentile() > mean * 1.5
+The `net.corda:name=SignDuration,type=Transaction` metric is a histogram that indicates the duration of signing a transaction.
+
+You can combine the properties of this metric to detect if signing a transaction takes an unexpectedly long time.
+
+For example, if you assume that a sufficient number of transactions have been signed during the past minute (at least three per second)in order to make a decision, you can flag up an error if 25% of the transactions took significantly longer (at least 50%) to sign than the average time it takes to sign a transaction. The example below shows how scenario would look like using the properties of the metric:
+
+`oneMinuteRate >3.0, 75thPercentile() > mean * 1.5`

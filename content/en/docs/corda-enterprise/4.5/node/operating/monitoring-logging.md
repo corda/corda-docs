@@ -163,6 +163,9 @@ in the graphite metric hierarchy.
 The graphite server must be running with python pickle transport enabled. Please refer to the documentation on
 [https://graphiteapp.org](https://graphiteapp.org) on how to install and run a graphite server.
 
+### Monitoring scenarios
+
+See [Monitoring scenarios](monitoring-scenarios.md) for a description of some typical node monitoring cases you may encounter when using [node metrics](../../node-metrics.md).
 
 ## Memory usage and tuning
 
