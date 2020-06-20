@@ -1,10 +1,6 @@
 ---
 date: '2020-04-07T12:00:00Z'
-menu:
-  corda-enterprise-4-5:
-    identifier: corda-enterprise-4-5-cordapps-quickstart
-    name: "Getting started developing CorDapps"
-    parent: corda-enterprise-4-5-cordapps
+menu: []
 tags:
 - quickstart
 title: Getting started developing CorDapps
@@ -57,4 +53,3 @@ Your CorDapp development environment is now complete.
 ## Next steps
 
 Now that you’ve successfully set up your CorDapp development environment, we’ll cover deploying an example CorDapp locally, before writing a CorDapp from scratch.
-

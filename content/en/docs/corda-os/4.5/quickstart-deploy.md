@@ -4,11 +4,7 @@ aliases:
 - /HEAD/quickstart-deploy.html
 - /quickstart-deploy.html
 date: '2020-04-07T12:00:00Z'
-menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-quickstart-deploy
-    parent: corda-os-4-5-quickstart-index
-    weight: 1010
+menu: []
 tags:
 - quickstart
 - deploy
@@ -69,4 +65,3 @@ This command displays all of the IOU states in the node’s vault. States are im
 ## Next steps
 
 After deploying the example CorDapp, the next step is to start [writing a CorDapp](./quickstart-build.html) containing your own contract, states, and flows.
-
