@@ -2,6 +2,7 @@
 date: '2020-04-07T12:00:00Z'
 menu:
   corda-enterprise-4-5:
+    identifier: corda-enterprise-4-5-monitoring-logging
     parent: corda-enterprise-4-5-corda-nodes-operating
 tags:
 - monitoring
@@ -162,6 +163,9 @@ in the graphite metric hierarchy.
 The graphite server must be running with python pickle transport enabled. Please refer to the documentation on
 [https://graphiteapp.org](https://graphiteapp.org) on how to install and run a graphite server.
 
+### Monitoring scenarios
+
+See [Monitoring scenarios](monitoring-scenarios.md) for a description of some common node monitoring scenarios when using [node metrics](../../node-metrics.md).
 
 ## Memory usage and tuning
 
@@ -180,7 +184,6 @@ The example command above would give a 1 gigabyte Java heap.
 
 {{< note >}}
 Unfortunately the JVM does not let you limit the total memory usage of Java program, just the heap size.
-
 {{< /note >}}
 
 ## Hiding sensitive data
@@ -264,5 +267,3 @@ The values for `keyStorePassword` and `trustStorePassword` in the above example 
 This method does not offer full protection. We recommend using further obfuscation methods for sensitive data.
 
 {{< /warning >}}
-
-

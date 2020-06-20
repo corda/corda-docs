@@ -1,12 +1,15 @@
 ---
 date: '2020-04-07T12:00:00Z'
-menu: []
+menu:
+  corda-enterprise-4-5:
+    parent: corda-enterprise-4-5-corda-nodes-operating
 tags:
 - node
 - database
 - access
 - h2
 title: Database access when running H2
+weight: 12
 ---
 
 
@@ -119,5 +122,3 @@ will return the following error:
 
 
 `jdbc:h2:~/path/to/file/persistence`
-
-

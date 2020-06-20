@@ -9,7 +9,7 @@ tags:
 - upgrade
 - cordapps
 title: Upgrading deployed CorDapps
-weight: 10
+weight: 11
 ---
 
 # Upgrading CorDapps on a node
@@ -85,6 +85,3 @@ The database update for a CorDapp upgrade follows the same steps as database set
 provided by the CorDapp developer to query the vault and run this for all states
     * The contract upgrade initiate flow only needs to be run on one of the participants for each state. The flow will
 automatically upgrade the state on all participants.
-
-
-
