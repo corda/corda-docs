@@ -40,7 +40,7 @@ For a full production environment you would need to modify this deployment to ad
 * An [Auth Service](auth-service.md) deployment to handle user authentication and authorisation.
 * A [FARM Service](gateway-service.md) deployment to act as a gateway from the user interface (CLI) to the back-end services.
 
-### Pre-Requisites
+### Prerequisites
 
 Ensure you have copies of the following files (provided by R3), before creating your network:
 
@@ -68,8 +68,8 @@ with any port defined in the `address` configuration parameter.
 To create your permissioned network takes several steps:
 
 1. Generate the PKI
-2. Start Identity Manager service
-3. Register the Notary with the Identity Manager
+2. Start the Identity Manager Service
+3. Register the Notary with the Identity Manager Service
 4. Sign the notary's identity
 5. Set initial network parameters
 6. Start the Network Map service
@@ -89,7 +89,7 @@ For more information on the certificate hierarchy, see [Certificate Hierarchy Gu
 #### Example Configuration
 
 In the example below, the configuration file (`pki-generation.conf`) uses a placeholder value for
-`<IDENTITY_MANAGER_ADDRESS>` which you should replace with the external IP/hostname of the Identity Manager service.
+`<IDENTITY_MANAGER_ADDRESS>` which you should replace with the external IP/hostname of the Identity Manager Service.
 
 ```guess
 certificates = {
@@ -276,7 +276,7 @@ rpcSettings {
 }
 ```
 
-#### Node Registration
+#### Node registration
 
 On first run you need to run the Corda node with the `--initial-registration`
 parameter, as shown below:
@@ -297,7 +297,7 @@ initialising the network parameters.
     The `--initial-registration` flag was deprecated in the most recent Corda version in favour of `initial-registration` which may result in a warning being printed.
     {{< /note >}}
 
-### Network Map First Run
+### Network Map Service first run
 
 Copy the `corda-network-map-keys.jks` and `network-root-truststore.jks`
 files over to the Network Map host, along with the Network Map zip
@@ -309,7 +309,7 @@ node participating in the zone needs to agree on and use to correctly
 communicate with each other. Setting the parameters is covered below, after
 configuration of the service.
 
-#### Example Service Configuration
+#### Example service configuration
 
 This is a sample configuration (`network-map.conf`) for the Network Map Service, using automatic approval and local signing for updates to the network map and parameters:
 
@@ -348,7 +348,7 @@ This example uses a local H2 database. You can modify this to point to a separat
 
 {{< /note >}}
 
-#### Example Network Parameters Configuration
+#### Example network parameters configuration
 
 This is a sample configuration file (`network-parameters.conf`) that is passed to the service when you set the network parameters. The <NOTARY_NODE_INFO_FILENAME> should correspond to the node info file copied across while [registering the Notary with the Identity Manager](#register-your-notary-with-the-identity-manager).
 The configured path should be relative to the Network Map working directory.
@@ -410,7 +410,7 @@ Binding Shell SSHD server on port <SHELL_PORT>
 Network management web services started on <NETWORK_MAP_ADDRESS> with [NetworkMapWebService, MonitoringWebService]
 ```
 
-### Start your Notary service
+### Start your Notary node
 
 The two main components of your network should now be fully functional and hence the Notary node can be started:
 
@@ -474,7 +474,7 @@ Network management web services started on <NETWORK_MAP_ADDRESS> with [NetworkMa
 
 You could also run this service as a template for one of the services you want to run. The Bundled service deduces which service to run from the configuration file, making this feature backward compatible with CENM 1.1.
 
-For example, you can implicitly run the Identity Manager service:
+For example, you can implicitly run the Identity Manager Service:
 
 ```bash
 java -jar bundled.jar -f identity-manager.conf
