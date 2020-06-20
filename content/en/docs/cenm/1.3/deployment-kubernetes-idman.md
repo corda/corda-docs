@@ -12,20 +12,20 @@ weight: 100
 
 # CENM Identity Manager Helm Chart
 
-This Helm chart is to configure, deploy and run CENM [Identity Manager](identity-manager.md) service.
+This Helm chart is to configure, deploy, and run the CENM [Identity Manager Service](identity-manager.md).
 
 ## Example usage
 
-Using default values:
+The example below shows a command that triggers the Helm chart for the [Zone Service](zone-service.md):
 
 ```bash
-helm install idman idman
+helm install cenm-idman idman --set prefix=cenm --set acceptLicense=Y
 ```
 
-Overwriting default values:
+The example below shows a command that specifies the size of the volume dedicated for logs:
 
 ```bash
-helm install idman idman --set shell.password="superDifficultPassword"
+helm install cenm-idman idman --set idmanPublicIP=X.X.X.X --set prefix=cenm --set acceptLicense=Y --set volumeSizeIdmanLogs=5Gi
 ```
 
 ## Configuration
