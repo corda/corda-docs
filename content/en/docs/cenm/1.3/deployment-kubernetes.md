@@ -421,12 +421,12 @@ However, for additional flexibility you may wish to deploy each Helm chart indiv
 There are several Helm commands which are used to bootstrap a new CENM environment,
 where each command creates a CENM service consisting of the following:
 
-* Signer
-* Identity Manager
-* Network Map
+* Signing Service
+* Identity Manager Service
+* Network Map Service
 * Auth Service
 * FARM Service
-* Notary
+* Corda Notary
 
 They need to be run in the correct order, as shown below:
 
