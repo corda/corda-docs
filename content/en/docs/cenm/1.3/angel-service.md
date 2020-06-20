@@ -40,17 +40,22 @@ java -jar angel-<VERSION>.jar --zone-host zone.example.org --zone-port 5050 --to
 
 The full list of arguments you can use when starting the Angel Service are described below:
 
--   `--jar-name`: The name of the service `.jar` file. Optional.
--   `--webservice-host`: The IP address for the Angel webservice to bind to. Optional.
--   `--webservice-port`: The port for the Angel web service to run. Optional, but must be specified for the web service to be started.
--   `--zone-host`: The host or IP address of the Zone Service.
--   `--zone-port`: The port number of the Zone Service.
--   `--token`: Authentication token to pass to the Zone Service.
--   `--polling-interval`: Time (in seconds) to wait before polling the Zone Service.
--   `--service`: The name of the service being managed. The possible values are `IDENTITY_MANAGER`, `NETWORK_MAP`, or `SIGNER`.
--   `--network-truststore`: The network truststore file path. Optional, but must be specified if the managed service is Network Map, otherwise the Angel Service cannot execute the Flag Day workflow.
--   `--truststore-password`: The password for the network truststore file. Optional, but must be specified if the managed service is Network Map, otherwise the Angel Service cannot execute the Flag Day workflow.
--   `--root-alias`: The root alias. Optional, but must be specified if the managed service is Network Map, otherwise the Angel Service cannot execute the Flag Day workflow.
+- `--jar-name`: The name of the service `.jar` file. Optional.
+- `--webservice-host`: The IP address for the Angel webservice to bind to. Optional.
+- `--webservice-port`: The port for the Angel web service to run. Optional, but must be specified for the web service to be started.
+- `--zone-host`: The host or IP address of the Zone Service.
+- `--zone-port`: The port number of the Zone Service.
+- `--token`: Authentication token to pass to the Zone Service.
+- `--polling-interval`: Time (in seconds) to wait before polling the Zone Service.
+- `--service`: The name of the service being managed. The possible values are `IDENTITY_MANAGER`, `NETWORK_MAP`, or `SIGNER`.
+- `--network-truststore`: The network truststore file path. Optional, but must be specified if the managed service is Network Map, otherwise the Angel Service cannot execute the Flag Day workflow.
+- `--truststore-password`: The password for the network truststore file. Optional, but must be specified if the managed service is Network Map, otherwise the Angel Service cannot execute the Flag Day workflow.
+- `--root-alias`: The root alias. Optional, but must be specified if the managed service is Network Map, otherwise the Angel Service cannot execute the Flag Day workflow.
+- `--tls`: Defines whether TLS is used on listening sockets (ENM and admin). Defaults to `false` if no value is provided.
+- `--tls-keystore`: The path for the TLS keystore. Required if `--tls` is set to `true`.
+- `--tls-keystore-password`: The password for the TLS keystore. Required if `--tls` is set to `true`.
+- `--tls-truststore`: The path for the TLS truststore. Required if `--tls` is set to `true`.
+- `--tls-truststore-password`: The password for the TLS truststore. Required if `--tls` is set to `true`.
 
 ## Configuration
 
