@@ -165,7 +165,7 @@ The graphite server must be running with python pickle transport enabled. Please
 
 ### Monitoring scenarios
 
-See [Monitoring scenarios](monitoring-scenarios.md) for a description of some typical node monitoring cases you may encounter when using [node metrics](../../node-metrics.md).
+See [Monitoring scenarios](monitoring-scenarios.md) for a description of some common node monitoring scenarios when using [node metrics](../../node-metrics.md).
 
 ## Memory usage and tuning
 

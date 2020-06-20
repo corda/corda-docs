@@ -16,7 +16,7 @@ weight: 100
 
 # Node monitoring scenarios
 
-Some typical node monitoring scenarios are described below that you may observe when using [node metrics data](../../node-metrics.md).
+Some common node monitoring scenarios are described below that you may observe when using [node metrics data](../../node-metrics.md).
 
 ## Risk of `OutOfMemoryError`
 
