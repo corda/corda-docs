@@ -18,16 +18,18 @@ title: Release notes
 
 ## CENM 1.3 release overview
 
-CENM 1.3 introduces a new Command-Line Interface (CLI) tool for network operators to manage CENM deployments, along with support for multiple users and the capability to assign permissions per user. This functionality ships with new services that enable you to manage configurations (the new Zone Service), to use gateways for remote management between users and backend systems (the new FARM Service), and to authenticate and authorise users (the new Auth Service). The Auth Service supports full Role-Based Access Control (RBAC) and provides a web-based management interface for system administrators to create and manage user groups and entitlements.
+CENM 1.3 introduces a new Command-Line Interface (CLI) tool for network operators to manage CENM services. the CLI can be used by any user with access to the services, and the required permissions - which are supported with new services and admin applications. This functionality ships with new services that enable you to manage CENM configurations (the new Zone Service), to use gateways for remote management between users and backend systems (the new FARM Service), to create new users and roles (the new User Admin tool) and to authenticate and authorise users (the new Auth Service). The Auth Service supports full Role-Based Access Control (RBAC) and provides a web-based management interface for system administrators to create and manage user groups and entitlements.
 
-While this release is backward-compatible, you should consider upgrading to this release from CENM 1.2 (or earlier) as a major upgrade due to the introduction of several new services.
+While this release is backward-compatible, you should consider upgrading to this release from CENM 1.2 (or earlier) as this is a major upgrade with the introduction of several new services.
 
 Read more about improvements of this release below.
 
 ### New features and enhancements
 
 #### New Command-Line Interface (CLI) tool
-The new CENM Command-Line Interface (CLI) tool supports the new authentication and authorisation (Auth) service and many of the functionalities included in this release, such as central log retrieval, configuration management, and multi-step service orchestration. Users are now able to authenticate through the new CLI tool and to perform actions according to their user permissions (for example, run a Flag Day), thus eliminating the need to access the host of each individual service and its respective shell.
+ The new CENM Command-Line Interface (CLI) tool is supported by the new authentication and authorisation (Auth) service and enables users to access many of the functionalities included in this release, such as central log retrieval, configuration management, and multi-step service orchestration. Users are now able to authenticate through the new CLI tool and to perform actions according to their user-permissions (for example, run a Flag Day), thus eliminating the need to access the host of each individual service and its respective shell.
+#### New User Admin tool
+The User Admin tool that allows CENM administrators to connect securely via a web browser to create and manage new CENM users, groups, and roles for performing tasks on CENM services. The application supports the new authentication and authorisation (Auth) - which is used to check the credentials and permissions of each user.
 
 #### New Auth Service for user authentication and authorisation
 CENM 1.3 introduces a new authentication and authorisation service, allowing Network operators to manage users, groups and roles (along with fine grain permissions associated with roles) through a new management interface provided alongside. This service will first be used by internal services and via a new Command Line Tool and will allow authentication and enforcement of entitlements across all network operations.
@@ -46,7 +48,7 @@ Our documentation now provides some deployment recommendations on how to make th
 
 #### Other changes
 - We have added the new Angel Service to enable the management of the Identity Manager Service, the Network Map Service, and other services. This feature includes a standardised health check API, functionality for fetching configuration from the Zone Service, and capability to enable remote access to service logs to assist with diagnosing issues.
-- We have added the new FARM Service that enables the orchestration of requests from user interfaces (command-line interface or web UI) to back-end services.
+- We have added the new Front-end Application for Remote Management (FARM) Service that acts as a gateway to enable the orchestration of requests from user interfaces (command-line interface or web UI) to back-end services.
 - We have added support for managing the Flag Day process via the command-line interface, replacing the need for the network operator to directly log in to the Network Map and Signing Services. However, note that in the recommended deployment, the signing of parameters is done via systems in a restricted access network, and therefore network operators still need to access the Signing Service from within that restricted network.
 - We have added support for labelling of Sub Zones (Network Map Services) in order to give them a human-readable identifier.
 - We have removed the `NotaryRegistrationTool`, which had been shipped as part of the Notary tools for several versions before.
@@ -124,7 +126,7 @@ with CENM 1.1.
 **Notary Whitelist**
 
 For high availability (HA) notaries only, the network map will now fetch the node info automatically from the
-identity manager, rather than requiring that the files are copied in manually. Support for non-HA notaries
+Identity Manager, rather than requiring that the files are copied in manually. Support for non-HA notaries
 is not anticipated, customers are encouraged to deploy all notaries in a high availability configuration.
 
 
@@ -134,7 +136,7 @@ is not anticipated, customers are encouraged to deploy all notaries in a high av
 * We have expanded our HSM supported list to include AWS Cloud HSM
 * Default log file paths now include the name of the service (i.e. “network-map”) that generates them,
 so if multiple services run from the same folder, their dump log filenames do not collide.
-* Shell interface (Signer and Identity Manager services) no longer provide Java scripting permissions.
+* Shell interface (Signing Service and Identity Manager) no longer provide Java scripting permissions.
 * Remove private network maps - this functionality was never completed, and the changes should not be user visible. This
 does not yet remove them from the database schema, which will be in a future release. Related quarantined and staging
 node info tables are not used as of CENM 1.1.
@@ -164,7 +166,7 @@ use ‘database.runMigration’ instead.
 ### Security Improvements
 
 
-* Shell interface (Signer and Identity Manager services) no longer allow access to commands which allow scripting
+* Shell interface (Signing Service and Identity Manager) no longer allow access to commands which allow scripting
 
 of Java.
 
@@ -174,7 +176,7 @@ of Java.
 
 * Identity Manager’s WorkflowPlugin keeps trying to create new request in an external system,
 until the request is REJECTED or APPROVED. This means the external system needs to internally record which requests
-are currently being processed and reject surplus creation attempts. The Identity Manager service records this in logs
+are currently being processed and reject surplus creation attempts. The Identity Manager records this in logs
 as warning: “There is already a ticket: ‘<TICKET ID>’ corresponding to *Request ID* = <VALUE>, not creating a new one.”
 
 
