@@ -18,7 +18,7 @@ title: Release notes
 
 ## CENM 1.3 release overview
 
-CENM 1.3 introduces a new Command-Line Interface (CLI) tool for network operators to manage CENM services. the CLI can be used by any user with access to the services, and the required permissions - which are supported with new services and admin applications. This functionality ships with new services that enable you to manage CENM configurations (the new Zone Service), to use gateways for remote management between users and backend systems (the new FARM Service), to create new users and roles (the new User Admin tool) and to authenticate and authorise users (the new Auth Service). The Auth Service supports full Role-Based Access Control (RBAC) and provides a web-based management interface for system administrators to create and manage user groups and entitlements.
+CENM 1.3 introduces a new Command-Line Interface (CLI) tool for network operators to manage CENM services. This functionality ships with new services that enable you to manage CENM configurations (the new Zone Service), to create new users and roles (the new User Admin tool), and to authenticate and authorise users (the new Auth Service). The Auth Service supports full Role-Based Access Control (RBAC) and provides a web-based management interface for system administrators to create and manage user groups and entitlements.
 
 While this release is backward-compatible, you should consider upgrading to this release from CENM 1.2 (or earlier) as this is a major upgrade with the introduction of several new services.
 
