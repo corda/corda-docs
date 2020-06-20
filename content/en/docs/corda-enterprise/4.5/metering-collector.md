@@ -109,7 +109,7 @@ It is very important that you create the configuration file correctly. To do so,
 
 * Use the [`RetrieveCordappDataFlow`](#using-RetrieveCordappDataFlow) flow to get detailed information about the CorDapps deployed on your node.
 * Ensure you configure the correct values for the configuration file static keys (`access_configuration`, `network_collectors`, `by_hash`, and so on). Any errors, like a typo, will mean your configuration is ignored and the default applied. As a result, no metering data will be shared.
-* Ensure that every `.jar` hash, `.jar` signature, and CorDapp name in the configuration match at least one of the deployed CorDapps. This means that you must not whitelist a CorDapp that does not exist. This step is essential in order to pass the configuration validation step that runs at node start-up, which checks that the X.500 names used in the configuration file are valid. If the configuration validation step fails for any reason, the node will fail to start.
+* Ensure that every `.jar` hash, `.jar` signature, and CorDapp name in the configuration matches at least one of the deployed CorDapps. This means that you must not whitelist a CorDapp that does not exist. This step is essential in order to pass the configuration validation step that runs at node start-up, which checks that the X.500 names used in the configuration file are valid. If the configuration validation step fails for any reason, the node will fail to start.
 
 ## Use procedures
 
