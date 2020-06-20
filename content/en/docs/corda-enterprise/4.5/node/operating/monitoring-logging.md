@@ -184,7 +184,6 @@ The example command above would give a 1 gigabyte Java heap.
 
 {{< note >}}
 Unfortunately the JVM does not let you limit the total memory usage of Java program, just the heap size.
-
 {{< /note >}}
 
 ## Hiding sensitive data
