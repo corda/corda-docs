@@ -466,7 +466,10 @@ val corDappData =
 
 ### Collecting metering data from multiple nodes
 
-There are two mechanisms you can use to collect metering data from multiple nodes on the network - by connecting to the node via the Corda RPC API, or via the node shell.
+There are two mechanisms you can use to collect metering data from multiple nodes on the network - by connecting to the node via:
+
+* the [Corda RPC API](api-rpc.md)
+* the [node shell](node/operating/shell.md)]
 
 #### Collecting metering data from multiple nodes using the Corda RPC API
 
@@ -781,7 +784,11 @@ flow start com.r3.corda.metering.MultiAggregatedCollectionFlow dateFormat: {valu
 ### Data filtering using the node shell
 <a name="data-filtering-shell"></a>
 
-When you use the node shell to filter metering data, you can only filter by CorDapp, by transaction type, and by timestamp.
+When you use the node shell to filter metering data, you can only filter by:
+
+* CorDapp
+* transaction type
+* timestamp
 
 #### Filtering by CorDapp
 
