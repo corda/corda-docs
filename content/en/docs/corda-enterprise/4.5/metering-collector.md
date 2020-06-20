@@ -28,16 +28,20 @@ The tool uses the following flows:
 
 * Use the `MeteringCollectionFlow` flow to collect metering data from a node by using the node's shell. You must specify, as an argument, the time window over which the flow will be collecting metering data. You can also specify a set of CorDapps to filter the data by. The flow output represents both the total count of metering events that match the filter within the time window, and a breakdown of these events based on the commands involved and the signing entities. You can invoke this flow from the shell, however its usage via RPC has been deprecated - you can use the `NodeMeteringCollectionFlow` flow instead. This flow gathers data from the "current" node - the node where it was initiated.
 * Use the `NodeMeteringCollectionFlow` flow to collect metering data from a node by connecting to it via RPC. You must specify, as an argument, the time window over which the flow will be collecting metering data. You can also specify a set of CorDapps to filter the data by. The flow output represents both the total count of metering events that match the filter within the time window, and a breakdown of these events based on the commands involved and the signing entities. This flow gathers data from the "current" node - the node where it was initiated.
-* The `FilteredMeteringCollectionFlow` flow is similar to the `NodeMeteringCollectionFlow` flow with the only difference being that `FilteredMeteringCollectionFlow` collects data from another node on the network - a node that is different from the one where the flow was initiated. For that reason, it requires an additional argument where you must specify the party running the node where metering data is to be collected from.
+* Use the `FilteredMeteringCollectionFlow` flow to collect metering data from another node on the network by connecting to it via RPC. The `FilteredMeteringCollectionFlow` flow is identical to the `NodeMeteringCollectionFlow` flow except that `FilteredMeteringCollectionFlow` collects data from another node on the network - a node that is different from the one where the flow was initiated. For that reason, it requires an additional argument where you must specify the party running the node where metering data is to be collected from.
 * Use the `AggregatedMeteringCollectionFlow` flow to collect aggregated metering data from other nodes on the network - nodes that are different from the one where it was initiated. You must specify, as arguments, the time window over which the flow will be collecting metering data as well as the party running the node where metering data will be collected from. The flow output represents the total count of signing events that happened on the monitored nodes during the specified time window.
-* The `MultiFilteredCollectionFlow` flow is similar to the `FilteredMeteringCollectionFlow` flow with the only difference being that `MultiFilteredCollectionFlow` collects data from multiple nodes on the network sequentially in a single flow, and returns the result as a `JSON` string. You can use this flow from the node shell only. You can use the dedicated method `FilteredMeteringCollectionFlow#multiCollect` to collect metering data from multiple nodes in parallel by using an RPC client to connect to the nodes.
-* The `MultiAggregatedCollectionFlow` flow is similar to the `AggregatedMeteringCollectionFlow` flow with the only difference being that `MultiAggregatedCollectionFlow` collects data from multiple nodes on the network sequentially in a single flow, and returns the result as a `JSON` string. You can use this flow from the node shell only. You can use the dedicated method `AggregatedMeteringCollectionFlow#multiCollect` to collect metering data from multiple nodes in parallel by using an RPC client to connect to the nodes.
+* Use the `MultiFilteredCollectionFlow` flow to collect metering data from multiple nodes on the network by connecting to them via RPC. The `MultiFilteredCollectionFlow` flow is identical to the `FilteredMeteringCollectionFlow` flow except that `MultiFilteredCollectionFlow` collects data from multiple nodes on the network sequentially in a single flow, and returns the result as a `JSON` string. You can use this flow from the node shell only. You can use the dedicated method `FilteredMeteringCollectionFlow#multiCollect` to collect metering data from multiple nodes in parallel by using an RPC client to connect to the initiating flow - the collection process then uses the flow framework to collect metering data from the other nodes on the network.
+* Use the `MultiAggregatedCollectionFlow` flow to collect aggregated metering data from multiple nodes on the network sequentially in a single flow. The `MultiAggregatedCollectionFlow` flow is identical to the `AggregatedMeteringCollectionFlow` flow except that `MultiAggregatedCollectionFlow` collects data from multiple nodes on the network sequentially in a single flow, and returns the result as a `JSON` string. You can use this flow from the node shell only. If you want to use an RPC client to connect to the nodes, use the dedicated method `AggregatedMeteringCollectionFlow#multiCollect` to collect metering data from multiple nodes in parallel via RPC.
 * Use the `NotaryCollectionFlow` flow to collect metering data from notaries. You must specify, as an argument, the time window over which the flow will be collecting metering data. The flow output represents the total count of notarisation requests during the specified time window, along with a breakdown of these requests filtered by the parties that made them.
-* The `RetrieveCordappDataFlow` flow is a utility flow you can use to extract CorDapp hashes and signing keys for a given CorDapp name, in the correct format, for use in the `NodeMeteringCollectionFlow` flow filter (see above). This flow provides information about the versions and vendors of the returned CorDapps so that the correct CorDapp data can be selected.
+* Use the `RetrieveCordappDataFlow` utility flow to extract CorDapp hashes and signing keys for a given CorDapp name, in the correct format, for use in the `NodeMeteringCollectionFlow` flow filter (see above). This flow provides information about the versions and vendors of the returned CorDapps so that the correct CorDapp data can be selected.
 
 {{< warning >}}
 The `NotaryCollectionFlow` flow does not allow the collection of metering data for notaries configured in high-availability mode.
 {{< /warning >}}
+
+{{< note >}}
+The difference between `AggregatedMeteringCollectionFlow` and `FilteredMeteringCollectionFlow` is that the output of the `FilteredMeteringCollectionFlow` flow provides a detailed breakdown of the events by identity and command, and `AggregatedMeteringCollectionFlow` only reports the total number of signing events in the metering data collection.
+{{< /note >}}
 
 ## Installation
 
@@ -94,7 +98,7 @@ An example configuration file that enables metering data sharing is shown below:
 Based on the example configuration above:
 * Nodes `PartyA` and `PartyB` collect [aggregated metering data](#using-AggregatedMeteringCollectionFlow) from the node. This means that only the total number of signing events, which have happened within the specified time period, are shared.
 * Node `PartyB` node collects detailed metering data related to all installed CorDapps called *Corda Finance Demo* (the name must be an exact match).
-* Node `PartyC` collects detailed metering data related to CorDapps with a `.jar` hash either `FC0150EFAB3BBD715BDAA7F67B4C4DB5E133D919B6860A3D3B4C6C7D3EFE25D5` or `44489E8918D7D8F7A3227FE56EC34BFDDF15BD413FF92F23E72DD5D543BD6194`. a
+* Node `PartyC` collects detailed metering data related to CorDapps with a `.jar` hash either `FC0150EFAB3BBD715BDAA7F67B4C4DB5E133D919B6860A3D3B4C6C7D3EFE25D5` or `44489E8918D7D8F7A3227FE56EC34BFDDF15BD413FF92F23E72DD5D543BD6194`.
 * Node `PartyD` collects detailed metering data related to all CorDapps that have had their `.jar` files signed with the key `AA59D829F2CA8FDDF5ABEA40D815F937E3E54E572B65B93B5C216AE6594E7D6B`.
 
 To create the configuration file correctly, use the [`RetrieveCordappDataFlow`](#using-RetrieveCordappDataFlow) flow to get detailed information about the CorDapps deployed on your node.
@@ -103,7 +107,7 @@ To create the configuration file correctly, use the [`RetrieveCordappDataFlow`](
 It is very important that you create the configuration file correctly. To do so:
 
 * Use the [`RetrieveCordappDataFlow`](#using-RetrieveCordappDataFlow) flow to get detailed information about the CorDapps deployed on your node.
-* Make sure to configure the correct values for the configuration file static keys (`access_configuration`, `network_collectors`, `by_hash`, and so on). If there is a typing error, for example, your configuration will be ignored and the default values will be applied, which will prevent the sharing of the collected metering data.
+* Make sure to configure the correct values for the configuration file static keys (`access_configuration`, `network_collectors`, `by_hash`, and so on). If there is a typing error, for example, your configuration will be ignored and the default values will be applied, which will prevent the sharing of the recorded metering data.
 
 There is a configuration validation step that runs at node start-up, which checks that the X.500 names used in the configuration file are valid. The X.500 standard definition does not require that X.500 names must actually exist on the network. The configuration validation step also checks whether each of the `.jar` hashes, `.jar` signatures, and CorDapp names in the configuration match at least one of the deployed CorDapps (so you must not whitelist a CorDapp that does not exist). If the configuration validation step fails for any reason, the node will fail to start.
 {{< /warning >}}
@@ -311,7 +315,7 @@ You can use this flow to collect metering data from a remote node on the network
 {{< note >}}
 The result of the metering data collection with this flow depends on what the node operator decided to share with you in their [CorDapp configuration](#sharing-of-metering-data).
 
-If nothing was shared, you will receive an object with an empty `entries` list. In order for the Metering Collection Tool to distinguish between the case where there was no metering data on the collected node and the case where the node operator did not whitelist it, the returned object contains the `collectedCorDapps` field, which is populated with the list of CorDapps for which metering data is collected.
+If nothing was shared, you will receive an object with an empty `entries` list. In order for the Metering Collection Tool to distinguish between the case where there was no metering data on the collected node and the case where the node operator did not whitelist it, the returned object contains the `collectedCorDapps` field, which is populated with the list of CorDapps the requester is allowed to collect metering data for.
 
 If `collectedCorDapps` is returned as an empty list, this means that the requester was not authorised to collect metering data from any of the requested CorDapps. However, if `entries` is returned as an empty list but `collectedCorDapps` is not, this means that the CorDapps contained in `collectedCorDapps` have been collected but no metering data was present during the specified time window.
 {{< /note >}}
@@ -483,7 +487,7 @@ so that any flows that do not terminate within the timeout are simply cancelled,
 You can specify a callback as an argument. The callback is invoked once for each destination node as soon as the relative flow returns. The callback takes the following parameters:
 
 * The destination party from which metering data has been collected.
-* The parameters that were used for the collection (an instance of `MeteringCollectionParameters` is used for `FilteredMeteringCollectionFlow`, and a simple `MeteringCollectionTimeWindow` is used for `AggregatedMeteringCollectionFlow`).
+* The `Filter` instance that was used for the metering data collection.
 * A `Future` that is guaranteed to be done at the time of the callback invocation.
 
 If the flow invocation resulted in an exception, the exception is thrown again inside the callback when calling `Future.get` and it is expected that the callback is able to handle it. In case this fails, the execution is interrupted, and all the created sub-flows are cancelled.
@@ -661,7 +665,7 @@ You only need to specify two out of the following three parameters: `start`, `en
 {{< /note >}}
 
 {{< warning >}}
-Due to some node shell limitations, you must wrap the `start`, `end`, `period`, and `dateFormat` parameters within an object when you create them in the shell. For example, use `start : {value: "2020-06-01 05:45"}` instead of simply `start : "2020-06-01 05:45"`. These limitations will be address in a future release.
+Due to some node shell limitations, you must wrap the `start`, `end`, `period`, and `dateFormat` parameters within an object when you create them in the shell. For example, use `start : {value: "2020-06-01 05:45"}` instead of simply `start : "2020-06-01 05:45"`.
 {{< /warning >}}
 
 #### Output format
