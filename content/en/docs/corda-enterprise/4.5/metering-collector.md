@@ -104,13 +104,12 @@ Based on the example configuration above:
 To create the configuration file correctly, use the [`RetrieveCordappDataFlow`](#using-RetrieveCordappDataFlow) flow to get detailed information about the CorDapps deployed on your node.
 
 {{< warning >}}
-It is very important that you create the configuration file correctly. To do so:
+It is very important that you create the configuration file correctly. To do so, you must follow the configuration process described below exactly, otherwise the collection of metering data will fail and the node could even fail to start.
+{{< /warning >}}
 
 * Use the [`RetrieveCordappDataFlow`](#using-RetrieveCordappDataFlow) flow to get detailed information about the CorDapps deployed on your node.
-* Make sure to configure the correct values for the configuration file static keys (`access_configuration`, `network_collectors`, `by_hash`, and so on). If there is a typing error, for example, your configuration will be ignored and the default values will be applied, which will prevent the sharing of the recorded metering data.
-
-There is a configuration validation step that runs at node start-up, which checks that the X.500 names used in the configuration file are valid. The X.500 standard definition does not require that X.500 names must actually exist on the network. The configuration validation step also checks whether each of the `.jar` hashes, `.jar` signatures, and CorDapp names in the configuration match at least one of the deployed CorDapps (so you must not whitelist a CorDapp that does not exist). If the configuration validation step fails for any reason, the node will fail to start.
-{{< /warning >}}
+* Ensure you configure the correct values for the configuration file static keys (`access_configuration`, `network_collectors`, `by_hash`, and so on). Any errors, like a typo, will mean your configuration is ignored and the default applied. As a result, no metering data will be shared.
+* Ensure that every `.jar` hash, `.jar` signature, and CorDapp name in the configuration match at least one of the deployed CorDapps. This means that you must not whitelist a CorDapp that does not exist. This step is essential in order to pass the configuration validation step that runs at node start-up, which checks that the X.500 names used in the configuration file are valid. If the configuration validation step fails for any reason, the node will fail to start.
 
 ## Use procedures
 
