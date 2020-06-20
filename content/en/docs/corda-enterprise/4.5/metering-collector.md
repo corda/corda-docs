@@ -123,37 +123,18 @@ In the list of flows below:
 
 ### Using `MeteringCollectionFlow`
 
-You invoke this flow from the shell. The flow takes the following arguments:
+You invoke this flow from the [shell](node/operating/shell.md). The flow takes the following arguments:
 
 1. A time window over which the flow runs. This is a mandatory argument. The accepted time window formats are either a start date and an end date (both of type `Instant`), or a start date and a duration (see the [Usage](#usage) section below). Note that the minimum time unit you can use is an hour, so the flow is unable to collect metering data over durations shorter than an hour.
 2. A filter to select which CorDapps to collect data for. To specify a filter, provide a `MeteringFilter` object, which consists of `filterBy` criteria and a list of strings that describe
 the CorDapps to filter by. There are four possible options to filter by, which are described in the [data filtering section](#data-filtering).
 3. A paging specification to describe how the flow should access the database. The paging specification is used to control database access by ensuring that only a subset of data is accessed at once. This is important in order to prevent too much data being read into memory at once, which would result in out-of-memory errors. By default, up to 10 000 metering entries are read into memory at a time, although the number of returned entries is likely to be smaller because some aggregation takes place in the background. If more than one page of data is required, the flow may need to be run multiple times to collect the full breakdown of metering events. However, the total count provided is always the full number of signing events that match the supplied criteria.
 
-#### Output format
-
-The output of the `MeteringCollectionFlow` flow is a data class that contains a structured representation of the metering data, as follows:
-
-* The total number of signing events that match the query provided.
-* The current version of the output metering data.
-* An object describing the query that produced this set of data. This includes the time window over which the data was collected, the
-filter applied to the data, and the paging criteria used.
-* A list of entries giving a breakdown of the metering data. Each entry contains a signing entity, a set of commands, a transaction type,
-and a count of events in this page that match this specification.
-
-The output object can also be serialised into `JSON` format by calling `serialize`.
-
-#### Usage
-
 Use the shell interface to invoke the flow by specifying the time window - either provide the `startDate` and `endDate` for the metering data collection in the format `YYYY-MM-DD`, or the `startDate` (in the same format) and the duration as an integer number of `daysToCollect`.
 
 You can also specify a filter according to the rules described in the [data filtering section](#data-filtering). This is not needed if all the metering data is required. As mentioned above, the smallest time window you can specify is one day.
 
 When date strings are required, they are always in the `YYYY-MM-DD` format. If the date does not parse correctly, an exception is thrown.
-
-When the Metering Collection Tool is run from the shell, the collected metering data is shown as output on the shell terminal, in `JSON` format.
-
-#### Examples
 
 The example below shows a collection of all metering data over a particular week:
 
@@ -167,7 +148,20 @@ The example below shows a collection of metering data for a particular CorDapp:
 start MeteringCollectionFlow startDate: 2019-11-07, endDate: 2019-11-14, filterBy: CORDAPP_NAMES, filter: ["Corda Finance Demo"], page: 1
 ```
 
-The example below shows the output `JSON` on the shell terminal:
+#### Output
+
+The output of the `MeteringCollectionFlow` flow is a data class that contains a structured representation of the metering data, as follows:
+
+* The total number of signing events that match the query provided.
+* The current version of the output metering data.
+* An object describing the query that produced this set of data. This includes the time window over which the data was collected, the
+filter applied to the data, and the paging criteria used.
+* A list of entries giving a breakdown of the metering data. Each entry contains a signing entity, a set of commands, a transaction type,
+and a count of events in this page that match this specification.
+
+The output object can also be serialised into `JSON` format by calling `serialize`.
+
+When you run Metering Collection Tool from the shell, the collected metering data is shown as output on the shell terminal, in `JSON` format. The example below shows the output `JSON` on the shell terminal:
 
 ```bash
 {"totalCount":2,"version":1,"query":{"startDate":"2019-11-13T00:00:00Z","endDate":"2019-11-15T00:00:00Z","filter":{"filterBy":"NONE","values":[]},"pageNumber":1,"totalPages":1,"pageSize":10000},"entries":[{"signingId":{"type":"NODE_IDENTITY","accountId":null},"txType":"NORMAL","commands":["net.corda.finance.contracts.asset.Cash.Commands.Issue"],"count":1},{"signingId":{"type":"NODE_IDENTITY","accountId":null},"txType":"NORMAL","commands":["net.corda.finance.contracts.asset.Cash.Commands.Move"],"count":1}]}
