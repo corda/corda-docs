@@ -65,7 +65,7 @@ The time when a transaction is signed is not exposed outside of the node.
 
 Notaries running on Corda Enterprise are also metered. The data recorded for notaries indicates what notarisation requests were made and who made them.
 
-### Sharing of metering data
+### How metering data is shared
 
 The Metering Collection Tool also contains responder flows that can be used by other nodes on the network to collect metering data from the node where
 the respective CorDapp is installed. This feature must be enabled by the node operator deploying a
