@@ -134,14 +134,33 @@ You can find the files required for the following steps in [CENM deployment repo
 Before bootstrapping CENM, you should read the license agreement. You can do so by running `./bootstrap.cenm`.
 The example below includes the `--ACCEPT_LICENSE Y` argument, which you should only specify if you accept the license agreement.
 
-Run the following command to bootstrap a new CENM environment by allocating a new external IP:
+You can use the following bootstrap options when running bootstrap:
+
+* `-h` - displays this help message and exits.
+* `-i|--idman  [name]` - provides Identity Manager kubernetes service name.
+* `-n|--notary [name]` - provides Notary kubernetes service name.
+* `-p|--prefix [prefix]` - specifies the release prefix for all Helm charts.
+* `-m|--mpv [version]` - specifies the minimum platform version for your network.
+* `--ACCEPT_LICENSE [YES]` - confirms agreement to the Licenses for Components deployed by the Bootstrapper.
+* `-a|--auto` - completes the script without further prompts to the user.
+
+Usage:
+
+```bash
+cd network-services/deployment/k8s/helm
+./bootstrap.cenm <option>
+```
+
+For example, run the following command to bootstrap a new CENM environment by allocating a new external IP:
 
 ```bash
 cd network-services/deployment/k8s/helm
 ./bootstrap.cenm --ACCEPT_LICENSE Y
 ```
 
-{{< note >}} The allocation of a loadbalancer to provide a public IP can take a significant amount of time (for example, even 10 minutes). {{< /note >}}
+{{< note >}}
+The allocation of a load balancer to provide a public IP can take a significant amount of time (for example, even 10 minutes). 
+{{< /note >}}
 
 The script exits after all bootstrapping processes on the Kubernetes cluster have been started.
 The process will continue to run on the cluster after the script has exited. You can monitor the completion of the deployment by running the following commands:
@@ -456,25 +475,6 @@ helm install farm farm --set idmanPublicIP=[use IP from step 3]
 # Run these commands to display allocated public IP for Network Map Service:
 kubectl get svc --namespace cenm nmap --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"
 ```
-### Bootstrap options
-
-You can use the following options when running bootstrap:
-
-* `-h` - displays this help message and exits.
-* `-i|--idman  [name]` - provides Identity Manager kubernetes service name.
-* `-n|--notary [name]` - provides Notary kubernetes service name.
-* `-p|--prefix [prefix]` - specifies the release prefix for all Helm charts.
-* `-m|--mpv [version]` - specifies the minimum platform version for your network.
-* `--ACCEPT_LICENSE [YES]` - confirms agreement to the Licenses for Components deployed by the Bootstrapper.
-* `-a|--auto` - completes the script without further prompts to the user.
-
-Usage:
-
-`bootstrap.cenm <option>`
-
-For example:
-
-`bootstrap.cenm -a`
 
 ## Appendix A: Docker Images
 
