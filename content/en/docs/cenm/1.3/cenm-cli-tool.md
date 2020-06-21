@@ -3,7 +3,11 @@ aliases:
 - /cenm-cli-tool.html
 - /releases/release-1.3/cenm-cli-tool.html
 date: '2020-05-28T17:40:25Z'
-menu: []
+menu:
+  cenm-1-3:
+    identifier: cenm-1-3-cli-tool
+    parent: cenm-1-3-tools-index
+    weight: 1013
 tags:
 - CLI
 - CENM command line interface
@@ -73,7 +77,7 @@ You can update the Network Map admin address using a command like this: `./cenm 
 
     `./cenm signer config set-admin-address -a=signer:9087`
 
-7. Set the Signer configuration last, as it depends on the first two service's locations for it to be complete:
+7. Set the Signing Service configuration last, as it depends on the first two service's locations for it to be complete:
 
     `./cenm signer config set -f config/signer.conf --zone-token`
 
