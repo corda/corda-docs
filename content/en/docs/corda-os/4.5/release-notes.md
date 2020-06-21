@@ -15,7 +15,7 @@ title: Release notes
 ---
 
 
-# Release notes
+# Corda release notes
 
 ## Corda 4.5 release overview
 
@@ -61,7 +61,7 @@ the knowledge base will be populated over time, as new error conditions are repo
 
 Corda uses Quasar to instrument flows, which makes it possible to resume a flow from a checkpoint. However, the Quasar instrumentation causes `OutOfMemoryError` exceptions to occur when certain `.jar` files are loaded as dependencies.
 
-To resolve this issue, we have added the new node configuration option `quasarExcludePackages`, which allows you to list packages that are to be excluded from the Quasar instrumentation. See [Node configuration](corda-configuration-file.md#quasarexcludepackages) for more information.
+To resolve this issue, we have added the new node configuration option `quasarExcludePackages`, which allows you to list packages that are to be excluded from the Quasar instrumentation. See [Node configuration](corda-configuration-fields.md#quasarexcludepackages) for more information.
 
 #### `RestrictedEntityManager` and `RestrictedConnection`
 
