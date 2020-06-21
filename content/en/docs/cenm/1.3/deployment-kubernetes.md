@@ -131,17 +131,22 @@ You can find the files required for the following steps in [CENM deployment repo
 #### 5. Bootstrap CENM
 **Option 1.** Bootstrap by allocating new external IP addresses
 
-Before bootstrapping CENM, you should read the license agreement. You can do so by running `./bootstrap.cenm`.
-The example below includes the `--ACCEPT_LICENSE Y` argument, which you should only specify if you accept the license agreement.
+To bootstrap your network, run the `bootstrap.cenm` script from the `/k8s/helm` directory.
+The script includes the `--ACCEPT_LICENSE Y` argument, which is mandatory and confirms that you have read and accepted the license agreement.
+
+```bash
+cd k8s/helm
+./bootstrap.cenm --ACCEPT_LICENSE Y <options>
+```
 
 You can use the following bootstrap options when running bootstrap:
 
+* `--ACCEPT_LICENSE [Y]` - confirms agreement to the Licenses for Components deployed by the Bootstrapper.
 * `-h` - displays this help message and exits.
 * `-i|--idman  [name]` - provides Identity Manager kubernetes service name.
 * `-n|--notary [name]` - provides Notary kubernetes service name.
 * `-p|--prefix [prefix]` - specifies the release prefix for all Helm charts.
 * `-m|--mpv [version]` - specifies the minimum platform version for your network.
-* `--ACCEPT_LICENSE [YES]` - confirms agreement to the Licenses for Components deployed by the Bootstrapper.
 * `-a|--auto` - completes the script without further prompts to the user.
 
 Usage:
@@ -151,15 +156,8 @@ cd network-services/deployment/k8s/helm
 ./bootstrap.cenm <option>
 ```
 
-For example, run the following command to bootstrap a new CENM environment by allocating a new external IP:
-
-```bash
-cd network-services/deployment/k8s/helm
-./bootstrap.cenm --ACCEPT_LICENSE Y
-```
-
 {{< note >}}
-The allocation of a load balancer to provide a public IP can take a significant amount of time (for example, even 10 minutes). 
+The allocation of a load balancer to provide a public IP can take a significant amount of time (for example, even 10 minutes).
 {{< /note >}}
 
 The script exits after all bootstrapping processes on the Kubernetes cluster have been started.
