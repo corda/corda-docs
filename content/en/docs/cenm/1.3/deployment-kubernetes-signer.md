@@ -12,7 +12,7 @@ weight: 400
 
 # CENM Signing Service Helm Chart
 
-This Helm chart is to configure, deploy, and run the [CENM Signing Service](signing-service.md).
+This Helm chart is to configure, deploy, and run the [CENM Signing Service](signing-service.md) on Kubernetes.
 
 As the initial step this chart runs automatically PKI tool which creates and stores certificates necessary for correct Corda Network operation.
 By default, the certificates have sample X.500 subject names (for example, the Identity Manager Service certificate has the subject name “CN=Test Identity Manager Service Certificate, OU=HQ, O=HoldCo LLC, L=New York, C=US”). The subject name can be set by configuration options starting with `pki.certificates.` prefix.

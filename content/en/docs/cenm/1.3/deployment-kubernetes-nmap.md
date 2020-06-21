@@ -12,7 +12,7 @@ weight: 200
 
 # CENM Network Map Service Helm Chart
 
-This Helm chart is to configure, deploy, and run the [CENM Network Map Service](network-map.md).
+This Helm chart is to configure, deploy, and run the [CENM Network Map Service](network-map.md) on Kubernetes.
 
 ## Example usage
 

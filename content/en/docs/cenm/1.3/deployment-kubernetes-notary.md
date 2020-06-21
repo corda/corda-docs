@@ -12,7 +12,7 @@ weight: 300
 
 # CENM Notary Helm Chart
 
-This Helm chart is to configure, deploy and run a Corda Notary.
+This Helm chart is to configure, deploy, and run a Corda Notary on Kubernetes.
 
 ## Example usage
 
