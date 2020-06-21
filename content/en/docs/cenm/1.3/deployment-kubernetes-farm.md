@@ -12,7 +12,7 @@ weight: 60
 
 # CENM FARM Service Helm Chart
 
-This Helm chart is to configure, deploy and run the [CENM FARM Service](gateway-service.md).
+This Helm chart is to configure, deploy, and run the [CENM FARM Service](gateway-service.md) on Kubernetes.
 
 ## Example usage
 

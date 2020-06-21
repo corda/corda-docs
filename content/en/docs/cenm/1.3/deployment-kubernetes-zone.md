@@ -12,7 +12,7 @@ weight: 500
 
 # CENM Zone Service Helm Chart
 
-This Helm chart is to configure, deploy, and run the [CENM Zone Service](zone-service.md).
+This Helm chart is to configure, deploy, and run the [CENM Zone Service](zone-service.md) on Kubernetes.
 
 ## Example usage
 

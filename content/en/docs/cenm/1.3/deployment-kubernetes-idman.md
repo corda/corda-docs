@@ -12,20 +12,20 @@ weight: 100
 
 # CENM Identity Manager Helm Chart
 
-This Helm chart is to configure, deploy and run CENM [Identity Manager](identity-manager.md) service.
+This Helm chart is to configure, deploy, and run the CENM [Identity Manager Service](identity-manager.md) on Kubernetes.
 
 ## Example usage
 
-Using default values:
+The example below shows a command that triggers the Helm chart for the [Zone Service](zone-service.md):
 
 ```bash
-helm install idman idman
+helm install cenm-idman idman --set prefix=cenm --set acceptLicense=Y
 ```
 
-Overwriting default values:
+The example below shows a command that specifies the size of the volume dedicated for logs:
 
 ```bash
-helm install idman idman --set shell.password="superDifficultPassword"
+helm install cenm-idman idman --set idmanPublicIP=X.X.X.X --set prefix=cenm --set acceptLicense=Y --set volumeSizeIdmanLogs=5Gi
 ```
 
 ## Configuration
@@ -33,25 +33,29 @@ helm install idman idman --set shell.password="superDifficultPassword"
 | Parameter                     | Description                                              | Default value         |
 | ----------------------------- | -------------------------------------------------------- | --------------------- |
 | `bashDebug`                   | Display additional information while running bash scripts (useful while investigating issues) | `false` |
-| `dockerImage.name`            | URL to Identity Manager Docker image                     | `acrcenm.azurecr.io/idman/idman` |
-| `dockerImage.tag`             | Docker image Tag | `1.2` |
-| `dockerImage.pullPolicy`      | Image pull policy. Ref.: https://kubernetes.io/docs/concepts/containers/images/#updating-images | `Always` |
-| `service.type`                | Kubernetes service type, https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types | `LoadBalancer` |
-| `service.port`                | Kubernetes service port/targetPort for external communication | `10000` |
-| `serviceInternal.type`        | Kubernetes service type for internal communication between CENM components | `LoadBalancer` |
-| `serviceInternal.port`        | Kubernetes service port/targetPort | `5052` |
-| `serviceRevocation.port`      | Kubernetes service port to access Identity Manager's revocation endpoint (targetPort) | `5053` |
-| `serviceSsh.type`             | Kubernetes service type to access Identity Manager's ssh console | `LoadBalancer` |
-| `shell.sshdPort`              | Identity Manager ssh port | `2222` |
-| `shell.user`                  | Identity Manager ssh user | `idman` |
-| `shell.password`              | Identity Manager ssh password | `idmanP` |
+| `dockerImage.name`            | URL to Identity Manager Docker image used by the Identity Manager Service Helm chart | `acrcenm.azurecr.io/identitymanager/identitymanager` |
+| `dockerImage.tag`             | Docker image Tag for the Docker image used by the Identity Manager Service Helm chart | `1.3` |
+| `dockerImage.pullPolicy`      | Docker image pull policy for the Docker image used by the Identity Manager Service Helm chart. More info: https://kubernetes.io/docs/concepts/containers/images/#updating-images | `Always` |
+| `dockerImageCli.name`            | URL to Identity Manager Docker image used by the CENM Command-Line (CLI) tool Helm chart | `acrcenm.azurecr.io/cli/cli` |
+| `dockerImageCli.tag`             | Docker image Tag for the Docker image used by the CENM Command-Line (CLI) tool Helm chart | `1.3` |
+| `dockerImageCli.pullPolicy`      | Docker image pull policy for the Docker image used by the CENM Command-Line (CLI) tool Helm chart. More info: https://kubernetes.io/docs/concepts/containers/images/#updating-images | `Always` |
+| `volumeSizeIdmanEtc`          | Volume size for the `etc/` directory | `1Gi` |
+| `volumeSizeIdmanLogs`         | Volume size for `logs/` directory | `10Gi` |
+| `volumeSizeIdmanH2`           | Volume size for h2/ directory | `10Gi` |
 | `database.driverClassName`    | Identity Manager database connection details | `org.h2.Driver` |
-| `database.url`                | Identity Manager database connection details | `jdbc:h2:file:./identity-manager-persistence;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=10000;WRITE_DELAY=0; AUTO_SERVER_PORT=0` |
+| `database.jdbcDriver`         | Identity Manager database connection details |  |
+| `database.url`                | Identity Manager database connection details | `jdbc:h2:file:./h2/identity-manager-persistence;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=10000;WRITE_DELAY=0;AUTO_SERVER_PORT=0` |
 | `database.user`               | Identity Manager database connection details | `example-db-user` |
 | `database.password`           | Identity Manager database connection details | `example-db-password` |
 | `database.runMigration`       | Identity Manager database connection details | `true` |
-| `cordaJarMx`                  | Initial value for memory allocation | `1` |
-| `jarPath`                     | Path to a folder which contains Identity Manager `.jar` files | `bin` |
-| `configPath`                  | Path to a folder which contains Identity Manager configuration file | `etc` |
+| `acceptLicense`               | Required parameter |  |
+| `cordaJarMx`                  | Memory size allocated to the main Identity Manager Service container (in GB) | `1` |
+| `idmanJar.xmx`                | Value for java `-Xmx` parameter | `1G` |
+| `idmanJar.path`               | The directory where the Identity Manager Service `.jar` file is stored | `bin` |
+| `idmanJar.configPath`         | The directory where the Identity Manager Service configuration is stored | `etc` |
+| `sleepTimeAfterError`         | Sleep time (in seconds) after an error occurred | `120` |
+| `authPort`                    | Auth Service port | `8081` |
+| `serviceRevocation.port`      | Kubernetes service port to access Identity Manager's revocation endpoint (targetPort) | `5053` |
+| `logsContainersEnabled`       | Defines whether the container displaying live logs is enabled or disabled | `true` |
 
 For additional information on database connection details refer to the official documentation: [database documentation](config-database.md).
