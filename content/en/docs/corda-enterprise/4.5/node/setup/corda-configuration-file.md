@@ -308,7 +308,7 @@ To add additional data source properties (for a specific JDBC driver) use the ``
   * Database user.
 * `dataSource.password`
   * Database password.
-  
+
 *Default:*
 
 ```
@@ -592,7 +592,7 @@ Internal option.
 **Important: Please do not change.**
 
 *Default:* true
- 
+
 ### manAllowed
 
 Enables the usage of the shell 'man' command. Please note it makes use of insecure APIs and should be enabled with caution.
@@ -857,7 +857,7 @@ If the provided host is unreachable, the node will try to auto-discover its publ
 
 *Default:* not defined
 
-### quasarExcludePackages
+### `quasarExcludePackages`
 
 A list of packages to exclude from Quasar instrumentation. Wildcards are allowed, for example `org.xml**`.
 
