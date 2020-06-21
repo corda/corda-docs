@@ -50,16 +50,16 @@ sudo systemctl stop corda
 If this is an HA node, make sure to stop both the hot and cold nodes before proceeding. Any database migration should be performed whilst both nodes are offline.
 {{< /warning >}}
 
-* Download the Resources:Download the finance CorDapp and database manager to your VM instance:
-    * corda-finance-contracts-4.4.jar
-    * corda-finance-workflows-4.4.jar
-    * corda-tools-database-manager-4.4.jar
+* Download the resources - download the finance CorDapp and database manager to your VM instance:
+    * corda-finance-contracts-4.5.jar
+    * corda-finance-workflows-4.5.jar
+    * corda-tools-database-manager-4.5.jar
 
 This is required to run some flows to check your connections, and to issue/transfer cash to counterparties. Copy it to
 the Corda installation location:
 
 ```bash
-sudo cp /home/<USER>/corda-finance-*-4.4.jar /opt/corda/cordapps/
+sudo cp /home/<USER>/corda-finance-*-4.5.jar /opt/corda/cordapps/
 ```
 
 * Create a symbolic link to the shared database driver folder
@@ -73,14 +73,14 @@ sudo ln -s /opt/corda/drivers /opt/corda/plugins
 
 ```bash
 cd /opt/corda
-sudo java -jar /home/<USER>/corda-tools-database-manager-4.4.jar --base-directory /opt/corda --execute-migration
+sudo java -jar /home/<USER>/corda-tools-database-manager-4.5.jar --base-directory /opt/corda --execute-migration
 ```
 
 
 * Run the following to create a config file for the finance CorDapp:
 
 ```bash
-echo "issuableCurrencies = [ USD ]" > /opt/corda/cordapps/config/corda-finance-4.4.conf
+echo "issuableCurrencies = [ USD ]" > /opt/corda/cordapps/config/corda-finance-4.5.conf
 ```
 
 
@@ -100,7 +100,7 @@ file will list installed apps at startup. Search for `Loaded CorDapps` in the lo
 * Now download the Node Explorer to your **LOCAL** machine:
 
 ```bash
-https://software.r3.com/artifactory/corda-releases/net/corda/corda-tools-explorer/4.5/corda-tools-explorer-4.4.jar
+https://software.r3.com/artifactory/corda-releases/net/corda/corda-tools-explorer/4.5/corda-tools-explorer-4.5.jar
 ```
 
 {{< warning >}}
@@ -111,7 +111,7 @@ use different serialisation schemes (Kryo vs AMQP).
 * Run the Node Explorer tool on your **LOCAL** machine.
 
 ```bash
-java -jar corda-tools-explorer-4.4.jar
+java -jar corda-tools-explorer-4.5.jar
 ```
 
 ![explorer login](../resources/explorer-login.png "explorer login")
@@ -157,4 +157,3 @@ or wait for a success message to be displayed:
 
 ![explorer transactions](../resources/explorer-transactions.png "explorer transactions")
 Congratulations! You have now successfully installed a CorDapp and executed a transaction on the Corda Testnet.
-

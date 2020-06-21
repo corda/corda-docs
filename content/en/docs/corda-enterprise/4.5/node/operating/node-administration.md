@@ -30,52 +30,52 @@ be printed out in a separate file (name will be prefixed with *details*) in the 
 structured to allow for log processing by 3rd party tools. MDC is also enabled for it. Currently, the following statement types are supported:
 
 
-* 
+*
     * fields: *action*, *id*, *uploader*
     * actions: *loading*, *loaded*, *store_start*, *store_created*, *store_updated*, *query_start*, *query_end*, *query_version_start*, *query_version_end*
 
 
-* 
+*
     * fields: *action*, *type*, *criteria*, *pagination*, *sorting*
     * actions: *query_start*, *query_end*
 
 
-* 
+*
     * fields: *action*, *alias*, *scheme*, *found*, *algorithm*, *id*, *path*, *authState*
     * actions: *generate_key_pair_start*, *generate_key_pair_end*, *key_lookup_start*, *key_lookup_end*, *key_get_start*, *key_get_end*, *signing_start*, *signing_end*, *get_signer*, *create_client*, *key_import*, *authenticate_start*, *authenticate_end*, *keystore_load_start*, *keystore_load_end*
 
 
-* 
+*
     * fields: *action*, *flowId*, *flow*, *state*, *flowState*, *subFlows*, *subFlowStack*, *exception*, *reason*, *error*, *suspends*, *session*, *errorState*, *numberOfSuspends*
     * actions: *start*, *add_and_start*, *create_from_checkpoint*, *retry_safe_point*, *propagate_error*, *remove*
 
 
-* 
+*
     * fields: *action*, *flowId*, *size*, *platformVersion*, *id*, *to*, *from*
     * actions: *send*, *receive*
 
 
-* 
+*
     * fields: *action*, *party*
     * actions: *save_start*, *save_end*
 
 
-* 
+*
     * fields: *action*, *className*, *status*
     * actions: *save_start*, *save_end*
 
 
-* 
+*
     * fields: *action*, *refs*
     * actions: *loading*, *loaded*
 
 
-* 
+*
     * fields: *action*, *flowId*, *id*, *appName*, *message*, flowVersion`, *recipient*
     * actions: *send_initial_message*, *send_existing_message*
 
 
-* 
+*
     * fields: *action*, *flowId*
     * actions: *rollback*
 
@@ -283,7 +283,7 @@ When `devMode` is explicitly  <sup>[\[1\]](#node/operating/node-administration-i
 
 <a name="node/operating/node-administration-id2"></a>
 
-\[1\] 
+\[1\]
 If `devMode` is not explicitly configured but resolved to `false` based on OS environment, the default heap size remains 512mb.
 
 
@@ -437,13 +437,13 @@ The RPC call is also available as the `run nodeDiagnosticInfo` command executabl
 Here is a sample output displayed by the `run nodeDiagnosticInfo` command executed from the Corda shell:
 
 ```none
-version: "4.4"
+version: "4.5"
 revision: "d7e4a0050049be357999f57f69d8bca41a2b8274"
-platformVersion: 4
+platformVersion: 7
 vendor: "Corda Open Source"
 cordapps:
 - type: "Contract CorDapp"
-  name: "corda-finance-contracts-4.4"
+  name: "corda-finance-contracts-4.5"
   shortName: "Corda Finance Demo"
   minimumPlatformVersion: 1
   targetPlatformVersion: 4
@@ -452,7 +452,7 @@ cordapps:
   licence: "Open Source (Apache 2)"
   jarHash: "570EEB9DF4B43680586F3BE663F9C5844518BC2E410EAF9904E8DEE930B7E45C"
 - type: "Workflow CorDapp"
-  name: "corda-finance-workflows-4.4"
+  name: "corda-finance-workflows-4.5"
   shortName: "Corda Finance Demo"
   minimumPlatformVersion: 1
   targetPlatformVersion: 4
@@ -489,7 +489,7 @@ Outputs to the shell a list of all attachments along with the following informat
 
 
 
-* Whether an attachment is installed locally> 
+* Whether an attachment is installed locally>
 
     * `True` if the attachment is installed in the CorDapps directory or uploaded via RPC
     * `False` in all other scenarios, including attachments received from a peer node or uploaded via any means other than RPC
@@ -519,5 +519,3 @@ hash if there is no name to display.
 The output above shows that two CorDapps have been installed locally and are therefore trusted. The 3rd record is an attachment received
 from another node, hence the `Name` field containing `Received from: O=PartyA, L=London, C=GB`. The CorDapp is also trusted as another
 CorDapp has been signed by a common key, the `Trust Root` field is filled in to highlight this.
-
-

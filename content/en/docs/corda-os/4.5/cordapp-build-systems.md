@@ -77,7 +77,7 @@ Corda you’re developing against:
 The current versions used are as follows:
 
 ```groovy
-ext.corda_release_version = '4.4'
+ext.corda_release_version = '4.5'
 ext.corda_gradle_plugins_version = '5.0.6'
 ext.quasar_version = '0.7.12_r3'
 ext.kotlin_version = '1.2.71'
