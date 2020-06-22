@@ -26,7 +26,7 @@ The Configuraton Obfuscator tool can only be used with configuration files for C
 
 ## How obfuscation works
 
-You obfuscate a configuration file using the Configuration Obfuscation tool. In the example below, the `user` and `password` properties are encrypted by placing them in this format: ``"<encrypt{your-secret-database-password}>"``.
+You obfuscate a configuration file using the Configuration Obfuscation tool. In the example below, the `user` and `password` properties are encrypted by placing them in this format: `"<encrypt{your-secret-database-password}>"`.
 
 
 ```json
@@ -235,7 +235,7 @@ $ export CONFIG_OBFUSCATION_SEED=my-seed; export CONFIG_OBFUSCATION_PASSPHRASE=m
 The configuration directives described below can be placed arbitrarily within 'string' properties in the target configuration file, with a maximum of one per line.
 
 {{< note >}}
-Obfuscated passwords are unique to the field they came from. You cannot use the same obfuscation of a password for multiple, even if they use the same password. In other words, once a password has been obfuscated, you cannot copy and paste the obfuscated version into different fields - the password will not be accepted.
+Obfuscated passwords are unique to the configuration field they came from. You cannot use the same obfuscation of a password for multiple fields, even if they use the same password. In other words, once a password has been obfuscated, you cannot copy and paste the obfuscated version into different fields - the password will not be accepted.
 {{< /note >}}
 
 For example:
@@ -269,7 +269,7 @@ To indicate parts of the configuration that should be obfuscated, you can place 
 ```
 
 {{< note >}}
-If your configuration file uses include directives, as shown below, then the referenced file is automatically imported and obfuscated with the main file. The result will contain both the main file and the include file in the output.
+If your configuration file uses `include` directives, as shown below, then the referenced file is automatically imported and obfuscated with the main file. The result will contain both the main file and the `include` file in the output.
 
 `include required(file("dataSource.conf"))`
 {{< /note >}}
