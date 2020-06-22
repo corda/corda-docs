@@ -20,7 +20,7 @@ Production use of Corda Enterprise 4.5 is only supported on Linux OS, see detail
 
 ## JDK support
 
-Corda Enterprise 4.5 has been tested and verified to work with **Oracle JDK 8 JVM 8u171+** and **Azul Zulu Enterprise 8**, downloadable from
+Corda Enterprise 4.5 has been tested and verified to work with **Oracle JDK 8 JVM 8u251+** and **Azul Zulu Enterprise 8u252**, downloadable from
 [Azul Systems](https://www.azul.com/downloads/azure-only/zulu/).
 
 {{< note >}}
