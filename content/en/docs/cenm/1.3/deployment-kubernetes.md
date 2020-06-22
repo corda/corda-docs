@@ -54,7 +54,14 @@ The deployed network runs on Kubernetes minimum version 1.16.9 and Helm minimum 
 ### Deployment overview
 
 The provided deployment runs all CENM services run inside a single, dedicated Kubernetes namespace (default name:`cenm`).
-Each service runs in its own dedicated Kubernetes pod.
+Each service runs in its own dedicated Kubernetes pod, with the exception of the [Angel Service](angel-service.md), which runs in the same pod as its managed service.
+
+{{< note >}}
+Naturally, the following command will not show a dedicated Angel Service pod:
+kubectl get pods -o wide
+
+The Angel Service and its managed service must both be healthy in order for the pod they are running on to healthy. This means that the pod has a status `RUNNING` if both services are running fine, and a status `DOWN` if **any** of the two services (or both) is down.
+{{< /note >}}
 
 The CENM network is bootstrapped with PKI certificates, and sample X.500 subject names are provided as defaults
 (for example, the Identity Manager Service certificate subject is
