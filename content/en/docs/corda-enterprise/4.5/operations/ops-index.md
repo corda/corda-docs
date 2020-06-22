@@ -14,10 +14,10 @@ weight: 100
 
 # Corda Enterprise Operations Guide
 
-The Corda Operations Guide is intended to assist users of Corda Enterprise in planning, deploying, and operating an
-instance of Corda Enterprise.
+The Corda Operations Guide is intended to assist you and your organisation in planning, deploying, and operating an
+instance of Corda Enterprise. Much of the material you can read here is expanded upon throughout the docs, and can be readily found using a search on this documentation site. Wherever there is more material available on a particular subject, you can follow a link for the complete documentation.
 
-There are three distinct sections:
+There are three sections in this guide:
 
 - Project planner documentation
 
