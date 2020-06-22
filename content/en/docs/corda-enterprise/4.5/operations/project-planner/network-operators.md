@@ -11,12 +11,15 @@ title: Network operator project planning
 weight: 300
 ---
 
-# Network operator project planning
+# Business Network Operator project planning
 
-The Business Network Operator is responsible for the infrastructure of the business network, they maintain the network map
-and identity services that allow parties to communicate, and - in many deployments - also operate the notary service.
+When planning a Corda deployment as a Business Network Operator, there are several considerations:
 
-## Deployment architecture
+- Deployment environments
+- Notary compatibility
+- HSM compatibility
+- Database compatibility
+- Corda Enterprise Network Manager deployment
 
 The Business Network Operator is responsible for all major components of the Corda network. In most enterprise deployments
 of Corda this includes: Nodes, an HA notary cluster, an HA Corda Firewall, an HSM, the certificate hierarchy of the network,
@@ -24,20 +27,46 @@ identity manager, and network map.
 
 This likely includes a Corda Enterprise Network Manager as well as Corda Enterprise.
 
-**Development and testing environments**
+## Deployment environments
 
-A Business Network Operator should have a variety of environments:
+Business Network Operators will need several deployments of Corda Enterprise, at least including:
 
-- A development environment including minimum network infrastructure.
+- A development environment including minimal network infrastructure.
 - A testing environment including a basic network, without HA notary, Corda Firewall, or HSMs.
 - A UAT environment, that includes the full network infrastructure, with a shared HSM, and HA Corda Firewall.
 - The production environment, including an HA notary cluster, HA Corda Firewalls on all nodes, HSMs, and network services.
 
+## Node sizing and databases
 
+When defining the requirements of a node, it is important to define the resources that the node will require. While every
+Corda deployment will have different requirements - depending on the CorDapps and business model of the parties - the
+following table gives approximate sizings for typical node deployments.
 
+{{< table >}}
 
-## JPA notary databases
+|Size|JVM Heap|# Cores|Minimum Host RAM|
+|------------|---------|-------|----------------|
+|Small|1GB|1|2GB to 3GB|
+|Medium|4GB|8|8GB|
+|Large|32GB|32|64GB|
+|X-Large|> 32GB|> 32|> 64GB|
 
+{{< /table >}}
+
+All Corda Nodes have a database. A range of third-party databases are supported by Corda, shown in the following table:
+
+{{< table >}}
+
+|Vendor|CPU Architecture|Versions|JDBC Driver|
+|-------------------------------|------------------|------------------|------------------------|
+|Microsoft|x86-64|Azure SQL,SQL Server 2017|Microsoft JDBC Driver 6.4|
+|Oracle|x86-64|11gR2|Oracle JDBC 6|
+|Oracle|x86-64|12cR2|Oracle JDBC 8|
+|PostgreSQL|x86-64|9.6, 10.10 11.5|PostgreSQL JDBC Driver 42.1.4 / 42.2.8|
+
+{{< /table >}}
+
+## Notary databases
 
 {{< table >}}
 
@@ -48,10 +77,7 @@ A Business Network Operator should have a variety of environments:
 
 {{< /table >}}
 
-
-
 ## Hardware Security Modules (HSM)
-
 
 {{< table >}}
 

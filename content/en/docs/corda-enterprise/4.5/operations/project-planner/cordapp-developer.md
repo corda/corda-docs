@@ -13,36 +13,20 @@ weight: 100
 
 # CorDapp development project planning
 
-When developing a CorDapp for production deployment, there are several important factors to consider:
+When planning to develop a CorDapp, consider the following factors:
 
 - CorDapp development requirements
-- CorDapp testing
-- CorDapp performance at scale
-- Deployment architecture
+- CorDapp development and testing environments
 
-## Developing CorDapps
+## Prerequisites for CorDapp development
 
 There are a number of pre-requisites for CorDapp development.
 
 - You must use the **Java 8 JVM**, version 8u171 and onwards are supported, but version 9 and later is not supported.
-
-## Operating systems supported in production
-
-
-{{< table >}}
-
-|Platform|CPU Architecture|Versions|
-|-------------------------------|------------------|-----------|
-|Red Hat Enterprise Linux|x86-64|7.x,6.x|
-|Suse Linux Enterprise Server|x86-64|12.x,11.x|
-|Ubuntu Linux|x86-64|16.04,18.04|
-|Oracle Linux|x86-64|7.x,6.x|
-
-{{< /table >}}
-
-
-## Operating systems supported in development
-
+- Gradle 5.4.1
+- An IDE of your choice. We use IntelliJ because it has strong Kotlin support.
+- Git, for running example projects.
+- The following operating systems are supported in development:
 
 {{< table >}}
 
@@ -53,3 +37,27 @@ There are a number of pre-requisites for CorDapp development.
 |Apple macOS|x86-64|10.9 andabove|
 
 {{< /table >}}
+
+
+## CorDapp testing and performance
+
+When developing CorDapps, you should have three initial environments:
+
+1. A development environment.
+2. An initial testing environment.
+3. A more fully-featured performance and verification testing environment.
+
+### Development environment
+
+A CorDapp development environment can be hosted on a typical development machine, running Windows, Linux, or macOS.
+
+For more information on developing CorDapps, see [developing CorDapps](../cordapps/cordapp-overview.md/).
+
+### Testing environment
+
+While in development a CorDapp should be regularly tested using a local testing environment to ensure the flows CorDapp
+is delivering the intended function. Nodes can be created locally using the network bootstrapper tool.
+
+A local testing environment should use nodes in **devMode** with no other network components.
+
+For more information on testing CorDapps, see [debugging and testing](../cordapps/debugging-a-cordapp.md/).
