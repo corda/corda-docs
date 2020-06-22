@@ -155,6 +155,7 @@ graphiteOptions = {
   prefix = "<node specific prefix>"
   server = <host name of the graphite server>
   port = <write port on the graphite server>
+  sampleIntervalSeconds = 60
 }
 ```
 
