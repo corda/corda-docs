@@ -86,8 +86,26 @@ For more information about platform versions, see [Versioning](versioning.md).
 
 ### Fixed issues
 
-* 
-
+* We have fixed an issue where the deserialisation of throwables did not support [evolution](serialization-default-evolution.md), which made it difficult to add constructor parameters in new versions or to rename a property [[CORDA-3316](https://r3-cev.atlassian.net/browse/CORDA-3316)].
+* We have fixed an issue where the implementation of `FieldInfo.notEqual` in `QueryCriteriaUtils` was the same as `FieldInfo.Equal` [[CORDA-3394](https://r3-cev.atlassian.net/browse/CORDA-3394)].
+* We have optimised Corda's DJVM deserialiser so that `loadForSandbox()` now returns a `Class` instead of a `LoadedClass` [[CORDA-3590](https://r3-cev.atlassian.net/browse/CORDA-3590)].
+* We have modified `CordaFuture` so that any throwable can complete it, even if exceptions that do not subclass `java.lang.Exception` are re-thrown immediately [[CORDA-3638](https://r3-cev.atlassian.net/browse/CORDA-3638)].
+* We have fixed an issue where CorDapp custom serialisers were not supported in `MockNetwork`, causing unit tests of flows to fail without using `Driver` [[CORDA-3643](https://r3-cev.atlassian.net/browse/CORDA-3643)].
+* We have fixed an issue where serialising a `FlowExternalOperation`, which had maintained a reference to a `FlowLogic`, could throw an `IndexOutOfBoundsException` error when constructing a `FlowAsyncOperation` from a `FlowExternalOperation` [[CORDA-3677](https://r3-cev.atlassian.net/browse/CORDA-3677)].
+* We have fixed an issue where `ServiceHub.signInitialTransaction()` threw undeclared checked exceptions (`TransactionDeserialisationException` and `MissingAttachmentsException` [[CORDA-3685](https://r3-cev.atlassian.net/browse/CORDA-3685)].
+* We have standardised all node database timestamps to use the UTC time zone [[CORDA-3697](https://r3-cev.atlassian.net/browse/CORDA-3697)].
+* We have fixed issues with the existing checkpoint iterator serialisers related to null handling and the use of `equals` when restoring the iterator position [[CORDA-3701](https://r3-cev.atlassian.net/browse/CORDA-3701)].
+* We have fixed an issue where Corda failed to deserialise Enums with custom `toString()` methods into the DJVM sandbox [[CORDA-3716](https://r3-cev.atlassian.net/browse/CORDA-3716)].
+* We have fixed an issue where Corda's internal `providerMap` field in `core`, which is supposed to be private, was both public and mutable [[CORDA-3758](https://r3-cev.atlassian.net/browse/CORDA-3758)].
+* We have fixed an issue with failing session init messages when the state machine replayed them from the Artemis queue in order to retry flows that had not yet persisted their first checkpoint, due to problems with database connectivity [[CORDA-3841](https://r3-cev.atlassian.net/browse/CORDA-3841)].
+* We have fixed an issue where the `com.r3.corda.enterprise.settlementperftestcordapp.flows.SwapStockForCashFlowTest` failed for Oracle 11 due to failed migration.
+* We have fixed an issue where `Level.WARN` and `Level.FATAL` logs did not include the original log message after updating them to extract more information from the stack traces.
+* We have fixed an issue where a race condition would occur when a flow hung while waiting for the ledger to commit a transaction with hash even when that transaction was present in the database.
+* We have fixed an issue where no CRL check was done when using embedded Artemis, which could cause nodes to continue to be involved in transactions after they had been blacklisted.
+* We have fixed an issue with inconsistent error messages on starting components if HSM was not available.
+* We have fixed an issue where a Vault Query using `LinearStateQueryCriteria(linearId = emptyList())` would translate into an illegal SQL statement on PostgreSQL and would throw an exception.
+* We have added a custom serialiser (`IteratorSerializer`) that can fix broken iterators in order to resolve an issue with a `ConcurrentModificationException` in `FetchDataFlow`.
+* We have fixed an issue with failing `VaultObserverExceptionTest` tests on Oracle.
 
 ## Corda 4.4
 
