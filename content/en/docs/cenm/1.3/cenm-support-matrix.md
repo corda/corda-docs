@@ -17,7 +17,9 @@ title: CENM support matrix
 
 The Operating System platforms supported in Corda Enterprise Network Manager 1.3 are a subset of those supported by [Java](http://www.oracle.com/technetwork/java/javase/certconfig-2095354.html).
 
-Production use of Corda Enterprise 4.4+ and Corda Enterprise Network Manager 1.3+ is only supported on Linux OS, see details below.
+Production use of Corda Enterprise Network Manager 1.3+ is only supported on Linux OS, see details below.
+
+For information about supported Operating Systems for Corda Enterprise, see the Corda Enterprise 4.5 [platform support matrix](../../corda-enterprise/4.5/platform-support-matrix.md) section or check the relevant [support documentation](https://docs.corda.net/docs/corda-enterprise/index.html) for previous versions of Corda Enterprise.
 
 ## Hardware Security Modules (HSMs)
 
