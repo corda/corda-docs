@@ -60,9 +60,9 @@ These instructions only apply to CorDapp Contract JARs (unless otherwise stated)
 
 {{< /note >}}
 
-### Corda 4.4
+### Corda 4.5
 
-Corda 4.4 requires some additional steps to consume and evolve pre-existing on-ledger **hash** constrained states:
+Corda 4.5 requires some additional steps to consume and evolve pre-existing on-ledger **hash** constrained states:
 
 
 * All Corda Nodes in the same CZ or business network that may encounter a transaction chain with a hash constrained state must be started using
@@ -117,9 +117,9 @@ These instructions only apply to CorDapp Contract JARs (unless otherwise stated)
 
 {{< /note >}}
 
-### Corda 4.4
+### Corda 4.5
 
-Corda 4.4 requires some additional steps to consume and evolve pre-existing on-ledger **CZ whitelisted** constrained states:
+Corda 4.5 requires some additional steps to consume and evolve pre-existing on-ledger **CZ whitelisted** constrained states:
 
 
 * As the original developer of the CorDapp, the first step is to sign the latest version of the JAR that was released (see [Building and installing a CorDapp](cordapp-build-systems.md)).
@@ -184,4 +184,3 @@ TransactionBuilder txBuilder = new TransactionBuilder(notary)
 * As a node operator you need to add the new signed version of the contracts CorDapp to the `/cordapps` folder together with the latest version of the flows jar.
 Please also ensure that the original unsigned contracts CorDapp is removed from the `/cordapps` folder (this will already be present in the
 nodes attachments store) to ensure the lookup code in step 3 retrieves the correct signed contract CorDapp JAR.
-

@@ -9,7 +9,7 @@ tags:
 title: Legal notice and Javassist license
 weight: 4
 ---
-# CORDA ENTERPRISE 4.4 THIRD-PARTY SOFTWARE NOTICES AND INFORMATION
+# CORDA ENTERPRISE 4.5 THIRD-PARTY SOFTWARE NOTICES AND INFORMATION
 Do Not Translate or Localize
 
 This file is based on or incorporates material from the projects listed below (Third Party IP). R3 LLC licenses these components under the Corda Enterprise software license terms. The original copyright notices and the licenses under which R3 LLC received such components are set forth below for informational purposes.  R3 LLC reserves all rights not expressly granted herein, whether by  implication, estoppel or otherwise.
@@ -4569,7 +4569,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ================================================
 END OF THIRD PARTY NOTICES FOR
-Corda Enterprise V. 4.4
+Corda Enterprise V. 4.5
 ================================================
 
 

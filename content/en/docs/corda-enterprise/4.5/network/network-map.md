@@ -178,7 +178,7 @@ Read more about *Package ownership* here “[Package namespace ownership](../nod
 
 
 {{< note >}}
-To determine which *minimumPlatformVersion* a zone must mandate in order to permit all the features of Corda 4.4 see features-versions
+To determine which *minimumPlatformVersion* a zone must mandate in order to permit all the features of Corda 4.5, see [Corda features and versions](../features-versions.md).
 
 {{< /note >}}
 More parameters will be added in future releases to regulate things like allowed port numbers, whether or not IPv6
