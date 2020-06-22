@@ -310,7 +310,8 @@ environments, which are rebuilt regularly), as follows:
 ### Delete the whole environment including IPs
 
 ```bash
-helm delete cenm-auth cenm-farm cenm-idman cenm-nmap cenm-notary cenm-pki cenm-hsm cenm-signer cenm-zone cenm-idman-ip cenm-notary-ip
+export CENM_PREFIX=cenm
+helm delete ${CENM_PREFIX}-auth ${CENM_PREFIX}-farm ${CENM_PREFIX}-idman ${CENM_PREFIX}-nmap ${CENM_PREFIX}-notary ${CENM_PREFIX}-pki ${CENM_PREFIX}-hsm ${CENM_PREFIX}-signer ${CENM_PREFIX}-zone ${CENM_PREFIX}-idman-ip ${CENM_PREFIX}-notary-ip
 ```
 
 ### Delete the whole environment without deleting IPs
