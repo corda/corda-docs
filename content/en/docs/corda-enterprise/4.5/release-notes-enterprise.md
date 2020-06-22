@@ -102,7 +102,7 @@ The Configuration Obfuscator has been improved to:
 
 
 * Use a more robust key derivation function (PBKDF2 with HMAC-SHA256)
-* 
+*
     * keyboard input (stdin)
     * Command-line
     * Environment variables
@@ -124,4 +124,3 @@ From Corda Enterprise 4.4 onwards, we are moving towards an open core strategy. 
 
 As per previous major releases, we have provided a comprehensive upgrade notes ([Upgrading CorDapps to Corda Enterprise 4.4](app-upgrade-notes-enterprise.md)) to ease the upgrade
 of CorDapps to Corda Enterprise 4.4.
-
