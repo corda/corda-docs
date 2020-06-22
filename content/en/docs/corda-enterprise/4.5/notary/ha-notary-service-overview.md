@@ -4,14 +4,14 @@ menu:
   corda-enterprise-4-5:
     identifier: corda-enterprise-4-5-corda-nodes-notaries
     name: "Notary options in Corda Enterprise"
-    parent: corda-enterprise-4-5-corda-nodes
+    parent: corda-enterprise-4-5-notaries
 tags:
 - ha
 - notary
 - service
 - overview
 title: Corda Enterprise notary service overview
-weight: 90
+weight: 10
 ---
 
 

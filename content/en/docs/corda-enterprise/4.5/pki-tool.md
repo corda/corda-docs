@@ -2,13 +2,12 @@
 date: '2020-04-07T12:00:00Z'
 menu:
   corda-enterprise-4-5:
-    identifier: corda-enterprise-4-5-tool-pki
-    name: "Corda Enterprise PKI Tool"
-    parent: corda-enterprise-4-5-tool-index
+    parent: corda-enterprise-4-5-corda-networks
 tags:
 - pki
 - tool
 title: Public Key Infrastructure (PKI) Tool
+weight: 10
 ---
 
 
@@ -18,7 +17,7 @@ title: Public Key Infrastructure (PKI) Tool
 
 ## Overview
 
-As described in the pki-guide, a certificate hierarchy with certain properties is required to run a Corda
+A certificate hierarchy with certain properties is required to run a Corda
 network. Specifically, the certificate hierarchy should include the two main CENM entities - the Identity Manager and
 the Network Map - and ensure that all entities map back to one common root of trust. The key pairs and certificates for
 these entities are used within the Signing Service to sign related network data such as approved CSRs, CRRs, Network Map

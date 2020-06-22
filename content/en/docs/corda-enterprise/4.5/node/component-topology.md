@@ -2,12 +2,13 @@
 date: '2020-04-07T12:00:00Z'
 menu:
   corda-enterprise-4-5:
-    parent: corda-enterprise-4-5-corda-nodes
+    identifier: corda-enterprise-4-5-corda-nodes
+    name: "Corda Nodes"
 tags:
 - component
 - topology
 title: Understanding the node
-weight: 1
+weight: 30
 ---
 
 

@@ -2,12 +2,14 @@
 date: '2020-04-07T12:00:00Z'
 menu:
   corda-enterprise-4-5:
-    parent: corda-enterprise-4-5-release-notes
+    identifier: "corda-enterprise-4-5-release-notes"
+    name: "Release notes and changelog"
 tags:
 - release
 - notes
 - enterprise
-title: Corda Enterprise Release notes
+title: Corda Enterprise release notes
+weight: 1
 ---
 
 
@@ -102,7 +104,7 @@ The Configuration Obfuscator has been improved to:
 
 
 * Use a more robust key derivation function (PBKDF2 with HMAC-SHA256)
-* 
+*
     * keyboard input (stdin)
     * Command-line
     * Environment variables

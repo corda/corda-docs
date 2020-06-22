@@ -2,7 +2,7 @@
 date: '2020-04-07T12:00:00Z'
 menu:
   corda-enterprise-4-5:
-    parent: corda-enterprise-4-5-miscellaneous
+    parent: corda-enterprise-4-5-release-notes
 tags:
 - legal
 - info

@@ -2,12 +2,13 @@
 date: '2020-04-07T12:00:00Z'
 menu:
   corda-enterprise-4-5:
-    parent: corda-enterprise-4-5-tool-index
+    parent: corda-enterprise-4-5-corda-nodes-configuring
 tags:
 - tools
 - config
 - obfuscator
 title: Configuration Obfuscator
+weight: 70
 ---
 
 # Configuration Obfuscator

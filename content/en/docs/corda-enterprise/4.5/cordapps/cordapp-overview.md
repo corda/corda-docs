@@ -2,12 +2,13 @@
 date: '2020-04-07T12:00:00Z'
 menu:
   corda-enterprise-4-5:
-    parent: corda-enterprise-4-5-cordapps
+    identifier: corda-enterprise-4-5-cordapps
+    name: "Developing CorDapps"
 tags:
 - cordapp
 - overview
 title: What is a CorDapp?
-weight: -1
+weight: 20
 ---
 
 

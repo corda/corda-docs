@@ -2,9 +2,10 @@
 date: '2020-04-07T12:00:00Z'
 menu:
   corda-enterprise-4-5:
-    parent: corda-enterprise-4-5-miscellaneous
+    identifier: corda-enterprise-4-5-corda-network
+    name: "The Corda Network"
 title: Introduction to Corda Network
-weight: 1
+weight: 500
 ---
 
 
