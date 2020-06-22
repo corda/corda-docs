@@ -26,12 +26,28 @@ The Configuraton Obfuscator tool can only be used with configuration files for C
 
 ## How obfuscation works
 
-You obfuscate a configuration file using the Configuration Obfuscation tool.
+You obfuscate a configuration file using the Configuration Obfuscation tool. In the example below, the `user` and `password` properties are encrypted by placing them in this format: `"<encrypt{your-secret-database-password}>"`.
 
-It takes a seed and a passphrase as input to obfuscate a given configuration file.
+
+```json
+{
+  // (...)
+  "dataSourceProperties" : {
+    "dataSource" : {
+      "url" : "jdbc:h2:file:persistence;<encrypt{sensitive-options-go-here}>",
+      "user" : "<encrypt{your-database-username}>",
+      "password" : "<encrypt{your-secret-database-password}>"
+    },
+    "dataSourceClassName" : "org.h2.jdbcx.JdbcDataSource"
+  },
+  // (...)
+}
+```
+
+The tool takes a seed and a passphrase as input to obfuscate a given configuration file.
 
 {{< note >}}
-To deobfuscate that configuration file, you must provide the same seed and passphrase to any process (see below) that accepts obfuscated configurations - for example, when starting a node.
+To deobfuscate that configuration file, you must provide the same seed and passphrase to any process that accepts obfuscated configurations. For example, when starting a node.
 {{< /note >}}
 
 ## How deobfuscation works
@@ -218,6 +234,10 @@ $ export CONFIG_OBFUSCATION_SEED=my-seed; export CONFIG_OBFUSCATION_PASSPHRASE=m
 
 The configuration directives described below can be placed arbitrarily within 'string' properties in the target configuration file, with a maximum of one per line.
 
+{{< note >}}
+Obfuscated passwords are unique to the configuration field they came from. You cannot use the same obfuscation of a password for multiple fields, even if they use the same password. In other words, once a password has been obfuscated, you cannot copy and paste the obfuscated version into different fields - the password will not be accepted.
+{{< /note >}}
+
 For example:
 
 ```json
@@ -247,6 +267,12 @@ To indicate parts of the configuration that should be obfuscated, you can place 
   // (...)
 }
 ```
+
+{{< note >}}
+If your configuration file uses `include` directives, as shown below, then the referenced file is automatically imported and obfuscated with the main file. The result will contain both the main file and the `include` file in the output.
+
+`include required(file("dataSource.conf"))`
+{{< /note >}}
 
 The example below shows how this area of the configuration file will look like after it is run through the obfuscation tool:
 
