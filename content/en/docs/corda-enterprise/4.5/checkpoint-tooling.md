@@ -240,10 +240,9 @@ You should therefore see two different output files upon invoking the checkpoint
 * `<NODE_BASE>\logs\checkpoints_agent-<date>.log` contains output from this agent tool (types and sizes of a checkpoint stack)
 
 {{< note >}}
-You will only see a separate *checkpoints_agent-<date>.log* file if you configure a separate log4j logger as described below.
-Otherwise all diagnostics logging will be routed to the standard Corda node log file: `node-<hostname>.log`.
-
+A checkpoint agent log is created by default even when no specific configuration is provided for checkpoint  agent. Every time a node starts up, an empty  checkpoint agent log is created.
 {{< /note >}}
+
 If you **only** wish to log checkpoint data for failing flows, start the checkpoint agent with the following arguments:
 
 ```shell
@@ -252,11 +251,9 @@ checkpoint-agent.jar=instrumentType=read,instrumentClassname=NONE
 
 and use the `checkpoints dump` shell command to trigger diagnostics collection.
 
-
 {{< warning >}}
 The checkpoint agent JAR file must be called “checkpoint-agent.jar” as the checkpoint dump support code uses Java reflection to
 determine whether the VM has been instrumented or not at runtime.
-
 {{< /warning >}}
 
 
@@ -609,4 +606,3 @@ The checkpoint dump gives good diagnostics on the reason a flow may be suspended
   }
 }
 ```
-
