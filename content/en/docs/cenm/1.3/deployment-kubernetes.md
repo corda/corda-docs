@@ -310,7 +310,7 @@ environments, which are rebuilt regularly), as follows:
 ### Delete the whole environment including IPs
 
 ```bash
-helm delete nmap notary idman signer notary-ip idman-ip
+helm delete cenm-auth cenm-farm cenm-idman cenm-nmap cenm-notary cenm-pki cenm-signer cenm-zone cenm-idman-ip cenm-notary-ip
 ```
 
 ### Delete the whole environment without deleting IPs
@@ -318,7 +318,7 @@ helm delete nmap notary idman signer notary-ip idman-ip
 If you run several ephemeral test networks in your development cycle, you might want to keep your IP addresses to speed up the process:
 
 ```bash
-helm delete nmap notary idman signer
+helm delete cenm-auth cenm-farm cenm-idman cenm-nmap cenm-notary cenm-pki cenm-signer cenm-zone
 ```
 
 ## Deployment Customisation
