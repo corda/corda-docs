@@ -68,8 +68,21 @@ Target versioning is one of the mechanisms we have to keep the platform evolving
 being bug-for-bug compatible with old versions. When no apps are loaded that target old versions, any emulations of older bugs or problems
 can be disabled.
 
+## Platform version matrix
 
-## Publishing versions in your JAR manifests
+{{< table >}}
+| Corda release  | Platform version |
+| :------------- | :------------- |
+| 4.5 | 7 |
+| 4.4 | 6 |
+| 4.3 | 5 |
+| 4.2 | 4 |
+| 4.1 | 4 |
+| 4.0 | 4 |
+| 3.3 | 3 |
+{{< /table >}}
+
+## Publishing versions in your `.jar` manifests
 
 A well structured CorDapp should be split into two separate modules:
 
@@ -125,4 +138,3 @@ The `versionId` specified for the JAR manifest is currently used for informative
 
 
 {{< /important >}}
-

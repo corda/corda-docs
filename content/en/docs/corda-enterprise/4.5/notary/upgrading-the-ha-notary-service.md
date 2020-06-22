@@ -85,26 +85,17 @@ Upgrade steps:
 
 ### JPA Notary
 
-
 #### CockroachDB
-
 
 ```sql
 ALTER TABLE notary_request_log ADD COLUMN worker_node_x500_name VARCHAR(255);
 ```
 
-
-
-
 #### Oracle RAC
-
 
 ```sql
 ALTER TABLE notary_request_log ADD worker_node_x500_name VARCHAR(255);
 ```
-
-
-
 
 ### Percona XtraDB
 
@@ -112,9 +103,6 @@ ALTER TABLE notary_request_log ADD worker_node_x500_name VARCHAR(255);
 ```sql
 ALTER TABLE notary_request_log ADD COLUMN worker_node_x500_name TEXT;
 ```
-
-
-
 
 ## Version 4.2
 
@@ -149,4 +137,3 @@ CREATE TABLE IF NOT EXISTS notary_committed_transactions (
 
 * In the unlikely event that the database gets corrupted, take all the notary worker nodes down and restore the database.
 * Perform a rolling upgrade on the notary worker nodes. Follow the [node upgrade guide](../node-upgrade-notes.md) for each node, and make sure the node is running and is no longer in flow draining mode before moving on to the next one.
-
