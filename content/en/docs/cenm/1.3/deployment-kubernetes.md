@@ -319,7 +319,8 @@ helm delete ${CENM_PREFIX}-auth ${CENM_PREFIX}-farm ${CENM_PREFIX}-idman ${CENM_
 If you run several ephemeral test networks in your development cycle, you might want to keep your IP addresses to speed up the process:
 
 ```bash
-helm delete cenm-auth cenm-farm cenm-idman cenm-nmap cenm-notary cenm-pki cenm-hsm cenm-signer cenm-zone
+export CENM_PREFIX=cenm
+helm delete ${CENM_PREFIX}-auth ${CENM_PREFIX}-farm ${CENM_PREFIX}-idman ${CENM_PREFIX}-nmap ${CENM_PREFIX}-notary ${CENM_PREFIX}-pki ${CENM_PREFIX}-hsm ${CENM_PREFIX}-signer ${CENM_PREFIX}-zone
 ```
 
 ## Deployment Customisation
