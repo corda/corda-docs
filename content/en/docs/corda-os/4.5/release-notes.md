@@ -41,7 +41,9 @@ We have improved the existing [killFlow RPC operation](https://api.corda.net/api
 
 #### New flow APIs
 
-We have introduced new flow framework APIs (`sendAll`/`sendAllMap`), which can be used to send messages to multiple counterparties with improved performance. Previously, a flow was able to send messages to multiple counterparties by using the [send API](api-flows.md#send) once for each counterparty. These new APIs can now be used to achieve the same with better performance, which comes from a smaller number of suspensions and checkpoints.
+We have introduced new flow framework APIs `sendAll` and `sendAllMap`, which can be used to send messages to multiple counterparties with improved performance. Previously, a flow was able to send messages to multiple counterparties by using the [send API](api-flows.md#send) once for each counterparty. These new APIs can now be used to achieve the same with better performance, which comes from a smaller number of suspensions and checkpoints.
+
+For more information about the new APIs, see the [API flows](api-flows.html#communication-between-parties) documentation section.
 
 {{< note >}}
 Existing CorDapps will have to be updated to benefit from the new API.
@@ -76,13 +78,15 @@ The full list of blocked functions can be found below:
 
 We have updated our `Dockerform` [local development task](`generating-a-node.md`) plug-in to use PostgreSQL as the chosen external database.
 
+### Platform version change
+
+The platform version of Corda 4.5 has been bumped up from 6 to 7 due to the addition of the new flow framework APIs `sendAll` and `sendAllMap`, which can be used to send messages to multiple counterparties with improved performance.
+
+For more information about platform versions, see [Versioning](versioning.md).
+
 ### Fixed issues
 
-
-
-### Known issues
-
-
+* 
 
 
 ## Corda 4.4
@@ -171,7 +175,7 @@ For more information on platform version, please see [Versioning](versioning.md)
 Changes introduced in Corda 4.4 to increase ledger integrity have highlighted limitations regarding database transactions. To prevent flows from continuing to process after a database transaction has failed to commit or suffered from a pre-commit persistence exception, extra database flushes have been added. These extra flushes can cause exceptions to be thrown where they were not before (or cause different exception types to be raised compared to Corda 4.3 or previous versions). In general, CorDapp developers should not expect to be able to catch exceptions thrown during a database transaction and then continue with further DB operations as part of the same flow. A safer pattern involves allowing the flow to fail and be retried
 
 
-### Issues Fixed
+### Fixed Issues
 
 
 * A failure response from Doorman during initial registration causes a class cast exception [[CORDA-2744](https://r3-cev.atlassian.net/browse/CORDA-2744)]
