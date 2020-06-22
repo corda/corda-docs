@@ -63,6 +63,8 @@ Operations
 * [Identity Manager Service](identity-manager.md)
 * [Network Map Service](network-map.md)
 * [Signing Service](signing-service.md)
+* [Auth Service](auth-service.md)
+* [FARM service](gateway-service.md)
 * [CENM Command-line Interface (CLI) tool](cenm-cli-tool.md)
 * [Updating the network parameters](updating-network-parameters.md)
 * [Upgrading Corda Enterprise Network Manager](upgrade-notes.md)

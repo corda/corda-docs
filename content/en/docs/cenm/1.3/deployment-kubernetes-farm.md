@@ -29,7 +29,7 @@ helm install cenm-farm farm --set prefix=cenm --set acceptLicense=Y --set volume
 ```
 
 ## Configuration
-
+{{< table >}}
 | Parameter                     | Description                                              | Default value         |
 | ----------------------------- | -------------------------------------------------------- | --------------------- |
 | `bashDebug`                   | Display additional information while running bash scripts (useful while investigating issues) | `false` |
@@ -43,5 +43,5 @@ helm install cenm-farm farm --set prefix=cenm --set acceptLicense=Y --set volume
 | `farmPort`                    | Farm Service port | `8080` |
 | `zonePort`                    | Zone Service port | `12345` |
 | `logsContainersEnabled`       | Enable container displaying live logs | `true`
-
+{{< /table >}}
 For additional information on database connection details refer to the official documentation: [database documentation](config-database.md).
