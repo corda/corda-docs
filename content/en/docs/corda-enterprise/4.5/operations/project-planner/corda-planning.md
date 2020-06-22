@@ -15,16 +15,13 @@ weight: 10
 
 # Corda for Project Planners
 
-An enterprise deployment of Corda will require a variety of machines and resources depending on the role of each member
-of the Corda project, and the architecture of the deployment. It's important to define the role or roles of your organisation
-before beginning a project on Corda.
+A deployment of Corda Enterprise requires a variety of machines and resources depending on the role of each member
+of the Corda project, and the architecture of the deployment. It's important to define the role your organisation
+will play before beginning a project on Corda.
 
 ## Roles in a Corda business network
 
-When planning a to use Corda in an enterprise setting, it's important to understand the role your organisation will play
-in the larger business network. Some organisations may develop CorDapps for deployment to other networks, others may operate
-only their own nodes, and some organisations may take a lead role in their business network infrastructure, taking the
-role of Business Network Operators.
+Whether you are planning to build CorDapps for other organisations to use, or you are planning to take responsibility for a network as a Business Network Operator, you should get a good idea of the work and responsibilities of other enterprise users so you can see where you fit in. Keep in mind that some organisations may perform multiple roles on their network. 
 
 ### CorDapp Developer
 
