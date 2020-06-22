@@ -22,7 +22,7 @@ The RPC data recorded by the node is explained in detail on the [RPC Audit Data 
 
 To enable the collection of recorded RPC Audit Data, we have provided a new RPC action with options for filtering data collection based on `username`, `action`, and a specific time range (by specifying `startTime` and `endTime`). All of these filters are optional and are not applied if not explicitly enabled.
 
-The action is available on the `AuditDataRpcOps` interface.
+The action is available on the `AuditDataRPCOps` interface.
 
 {{< tabs name="signature" >}}
 {{% tab name="kotlin" %}}
@@ -157,19 +157,19 @@ public String collectRpcAuditData(AuditDataRPCOps rpc) {
 
 ## Purging RPC audit data
 
-You can purge older audit logs that you don't need (although the collection of RPC audit data usually results in a fairly small amount of disk space). To remove older audit data, use the following action on the `AuditDataRpcOps` interface:
+You can purge older audit logs that you don't need (although the collection of RPC audit data usually results in a fairly small amount of disk space). To remove older audit data, use the following action on the `AuditDataRPCOps` interface:
 
 ```kotlin
 /**
  * Removes any past audit data
  * NOTE: Exercise caution if you are allowing users access to this function.
  */
-fun clearRpcAuditDataBefore(
+fun clearRPCAuditDataBefore(
     before: Instant
 )
 ```
 
-You can use the `clearRpcAuditDataBefore` action with the following parameter:
+You can use the `clearRPCAuditDataBefore` action with the following parameter:
 
 - `before` - the cut-off time to keep audit data from - all audit data recorded before that time will be cleared (exclusive)
 
