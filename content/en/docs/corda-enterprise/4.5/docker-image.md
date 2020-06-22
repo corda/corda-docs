@@ -147,6 +147,9 @@ docker run -ti --net="host" \
         -e DOORMAN_URL="https://doorman.corda.example.com"      \
         -e NETWORK_TRUST_PASSWORD="trustPass"       \
         -e MY_EMAIL_ADDRESS="cordauser@r3.com"      \
+        -e ACCEPT_LICENSE="YES"      \
+        -e SSHPORT="2222"      \
+        -e RPC_USER="PartyA"      \
         -v /home/user/docker/config:/etc/corda          \
         -v /home/user/docker/certificates:/opt/corda/certificates \
         corda/corda-zulu-java1.8-4.4:latest config-generator --generic --exit-on-generate
@@ -160,6 +163,9 @@ Several environment variables must also be passed to the container to allow it t
 * `DOORMAN_URL` - The address of the Zone’s doorman service (this should be provided to you by the Zone).
 * `NETWORK_TRUST_PASSWORD` - The password to the Zone Trust Root (this should be provided to you by the Zone).
 * `MY_EMAIL_ADDRESS` - The email address to use when generating the config. This must be the same as registered with the Zone.
+* `ACCEPT_LICENSE` - Set to `YES` or `Y` to indicate that you have accepted the license agreement.
+* `SSHPORT` - The port to use for SSH.
+* `RPC_USER` - The RPC username.
 
 There are some optional variables which allow customisation of the generated config:
 

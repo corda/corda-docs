@@ -470,7 +470,7 @@ val corDappData =
 There are two mechanisms you can use to collect metering data from multiple nodes on the network - by connecting to the node via:
 
 * the [Corda RPC API](api-rpc.md)
-* the [node shell](node/operating/shell.md)]
+* the [node shell](node/operating/shell.md)
 
 #### Collecting metering data from multiple nodes using the Corda RPC API
 

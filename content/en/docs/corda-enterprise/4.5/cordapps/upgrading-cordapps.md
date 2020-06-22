@@ -826,4 +826,3 @@ This can be simulated with a scenario like this:
 are being successfully read by nodes with the old CorDapp.
 6. Upgrade all nodes and simulate the deadline expiration.
 7. Make sure old transactions can be consumed, and new features are successfully used in new transactions.
-

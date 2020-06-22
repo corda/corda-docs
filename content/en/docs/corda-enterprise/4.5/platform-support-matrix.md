@@ -16,32 +16,22 @@ weight: 3
 
 Our supported Operating System platforms are a subset of those supported by [Java](http://www.oracle.com/technetwork/java/javase/certconfig-2095354.html).
 
-Production use of Corda Enterprise 4.4 is only supported on Linux OS, see details below.
-
+Production use of Corda Enterprise 4.5 is only supported on Linux OS, see details below.
 
 ## JDK support
 
-Corda Enterprise 4.4 has been tested and verified to work with **Oracle JDK 8 JVM 8u171+** and **Azul Zulu Enterprise 8**, downloadable from
+Corda Enterprise 4.5 has been tested and verified to work with **Oracle JDK 8 JVM 8u251+** and **Azul Zulu Enterprise 8u252**, downloadable from
 [Azul Systems](https://www.azul.com/downloads/azure-only/zulu/).
 
-{{< note >}}
-On previous versions of Corda only the **Oracle JDK 8 JVM 8u171+** is supported.
-
-{{< /note >}}
-Other distributions of the [OpenJDK](https://openjdk.java.net/) are not officially supported but should be compatible with Corda Enterprise 4.4.
-
+Other distributions of the [OpenJDK](https://openjdk.java.net/) are not officially supported but should be compatible with Corda Enterprise 4.5.
 
 {{< warning >}}
-In accordance with the [Oracle Java SE Support Roadmap](https://www.oracle.com/technetwork/java/java-se-support-roadmap.html)
+In accordance with the [Oracle Java SE Support Roadmap](https://www.oracle.com/technetwork/java/java-se-support-roadmap.html),
 which outlines the end of public updates of Java SE 8 for commercial use, please ensure you have the correct Java support contract in place
 for your deployment needs.
-
 {{< /warning >}}
 
-
-
 ## Operating systems supported in production
-
 
 {{< table >}}
 
@@ -54,9 +44,7 @@ for your deployment needs.
 
 {{< /table >}}
 
-
 ## Operating systems supported in development
-
 
 {{< table >}}
 
@@ -68,9 +56,7 @@ for your deployment needs.
 
 {{< /table >}}
 
-
 ## Node databases
-
 
 {{< table >}}
 
@@ -83,9 +69,7 @@ for your deployment needs.
 
 {{< /table >}}
 
-
 ## MySQL notary databases
-
 
 {{< table >}}
 
@@ -95,9 +79,7 @@ for your deployment needs.
 
 {{< /table >}}
 
-
 ## JPA notary databases
-
 
 {{< table >}}
 
@@ -108,10 +90,7 @@ for your deployment needs.
 
 {{< /table >}}
 
-
-
 ## Hardware Security Modules (HSM)
-
 
 {{< table >}}
 
@@ -127,7 +106,7 @@ for your deployment needs.
 | Azure Key Vault               | * Driver version 1.2.1     | * Driver version 1.2.1     | Not supported              | * Driver version 1.2.1   |
 | Securosys PrimusX             | * Firmware version 2.7.4   | * Firmware version 2.7.4   | * Firmware version 2.7.4   | * Firmware version 2.7.4 |
 |                               | * Driver version 1.8.2     | * Driver version 1.8.2     | * Driver version 1.8.2     | * Driver version 1.8.2   |
-| nCipher nShield Connect       | * Firmware version 12.50.11| * Firmware version 12.50.11| Not supported              | Not supported            |
+| nCipher nShield Connect       | * Firmware version 12.50.11| * Firmware version 12.50.11| Not supported              | * Firmware version 12.50.11 |
 |                               | * Driver version 12.60.2   | * Driver version 12.60.2   |                            |                          |
 | AWS CloudHSM                  | * Driver version 3.0.0     | * Driver version 3.0.0     | * Driver version 3.0.0     | Not supported            |
 

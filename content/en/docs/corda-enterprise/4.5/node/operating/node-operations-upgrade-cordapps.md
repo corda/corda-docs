@@ -17,7 +17,7 @@ weight: 11
 In order to upgrade a CorDapp on a node to a new version, it needs to be determined whether any backwards compatible
 changes have been made. These could range from database changes, to changes in the protocol.
 
-For developer information on upgrading CorDapps, see upgrading-cordapps.
+For developer information on upgrading CorDapps, see [](../../cordapps/upgrading-cordapps.md).
 
 To be compatible with Corda Enterprise, CorDapps need to bundle database migaration scripts (see database-management).
 

@@ -339,7 +339,7 @@ There are two types of contract/state upgrade:
 * *Explicit:* By creating a special *contract upgrade transaction* and getting all participants of a state to sign it using the
 contract upgrade flows.
 
-The general recommendation for Corda 4 is to use **implicit** upgrades for the reasons described [here](api-contract-constraints.md#implicit-vs-explicit-upgrades).
+The general recommendation for Corda 4.5 is to use **implicit** upgrades for the reasons described [here](api-contract-constraints.md#implicit-vs-explicit-upgrades).
 
 
 
@@ -351,7 +351,7 @@ constraint of the states it’s allowed to replace.
 
 
 {{< warning >}}
-In Corda 4 we’ve introduced the Signature Constraint (see [API: Contract Constraints](api-contract-constraints.md)). States created or migrated to
+Corda 4 introduced the Signature Constraint (see [API: Contract Constraints](api-contract-constraints.md)). States created or migrated to
 the Signature Constraint can’t be explicitly upgraded using the Contract upgrade transaction. This feature might be added in a future version.
 Given the nature of the Signature constraint there should be little need to create a brand new contract to fix issues in the old contract.
 
@@ -831,4 +831,3 @@ This can be simulated with a scenario like this:
 are being successfully read by nodes with the old CorDapp.
 6. Upgrade all nodes and simulate the deadline expiration.
 7. Make sure old transactions can be consumed, and new features are successfully used in new transactions.
-

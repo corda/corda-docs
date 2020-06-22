@@ -56,13 +56,14 @@ You should run the tool against an empty database, not the database you are reus
 java -jar tools-database-manager-|release|.jar dry-run -b path_to_configuration_directory
 ```
 
-The option `-b` points to the base directory (the directory containing a `node.conf` file, and the *drivers* and *cordapps* subdirectories).The generated script (*migration/*.sql*) will be present in the base directory.
+The option `-b` points to the base directory (the directory containing a `node.conf` file, and the *drivers* and *cordapps* subdirectories). The generated script (*migration/*.sql*) will be present in the base directory.
 This script contains all of the statements to create the data structures (e.g. tables/indexes) for CorDapps,
 and inserts to the Liquibase management table *DATABASECHANGELOG*.
 For a description of the options, refer to the [Corda Database Management Tool](node-database.md#database-management-tool-ref) manual.
+
 * Run selected insert statements to update Liquibase database change logIn the generated script, find all inserts into *DATABASECHANGELOG* table related to your CorDapp,
 you can search for *– Changeset migration/<file-name>* lines, where <file-name> references the Liquibase Script file name from the CorDapp.
-The SQL insert related to a changeset will follow the *– Changeset migration/<file-name>* comment, e.g.:
+The SQL insert related to a changeset will follow the *– Changeset migration/<file-name>* comment, for example:
 
 ```sql
 -- Changeset migration/yo-schema-v1.changelog-master.sql::initial_schema_for_YoSchemaV1::R3.Corda.Generated
@@ -96,12 +97,12 @@ Please contact R3 for further advice.
 
 ## Upgrade from an older Corda (open source) release to Corda Enterpise
 
-CorDapps, contracts and states written for Corda 3.x and Corda 4.x are compatible with Corda Enterprise 4.4, so upgrading
-existing open source Corda nodes should be a simple case of updating the Corda JAR.
+CorDapps, contracts and states written for Corda 3.x and Corda 4.x are compatible with Corda Enterprise 4.5, so upgrading
+existing open source Corda nodes should be a simple case of updating the Corda `.jar` file.
 See node-upgrade-notes for general instructions on upgrading your node.
 For developer information on recompiling CorDapps against Corda Enterprise, see upgrade-notes.
 
-Please ensure you follow the instructions in [Upgrade Notes](https://docs.corda.net/releases/release-V3.3/upgrade-notes.html)
+Please ensure you follow the instructions in the [Corda 3.3 Upgrade Notes](../../../../corda-os/3.3/upgrade-notes.md)
 to upgrade your database to the latest minor release of Corda (3.3 as time of writing),
 and then proceed with the upgrade following the instructions in [above](#node-operations-upgrading-os-to-ent-1).
 
@@ -126,7 +127,7 @@ To migrate from a H2 database to another database, follow the same database inst
 
 ## Using a third-party tool to migrate data from a H2 database
 
-R3 has trialled the third-party commercial tool [Full Convert](https://www.spectralcore.com/fullconvert) for migrating from a H2 database
+R3 have trialled the third-party commercial tool [Full Convert](https://www.spectralcore.com/fullconvert) for migrating from a H2 database
 to a 3rd party commercial databases.
 It can be used via the GUI application or from the command-line, however it only runs on Windows: Vista SP2 and later, as well as Windows Server 2008 and later.
 The tool works by connecting to both databases simultaneously and migrates tables, their data, and other schema objects form one database to the other.

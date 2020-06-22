@@ -14,7 +14,7 @@ tags:
 - info
 title: Legal notice
 ---
-# CORDA OPEN SOURCE 4.4 THIRD-PARTY SOFTWARE NOTICES AND INFORMATION
+# CORDA OPEN SOURCE 4.5 THIRD-PARTY SOFTWARE NOTICES AND INFORMATION
 
 Do Not Translate or Localize
 
@@ -5306,7 +5306,7 @@ the Author.
 
 ================================================
 END OF THIRD PARTY NOTICES FOR
-Corda Open Source V. 4.4
+Corda Open Source V. 4.5
 ================================================
 
 
