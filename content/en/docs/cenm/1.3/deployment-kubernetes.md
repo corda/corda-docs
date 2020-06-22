@@ -309,6 +309,8 @@ environments, which are rebuilt regularly), as follows:
 
 ### Delete the whole environment including IPs
 
+The environment can be deleted via Helm, by deleting each deployed chart individually. Note that the chart names include a prefix, which needs to match the prefix specified when setting up the environment.
+
 ```bash
 export CENM_PREFIX=cenm
 helm delete ${CENM_PREFIX}-auth ${CENM_PREFIX}-farm ${CENM_PREFIX}-idman ${CENM_PREFIX}-nmap ${CENM_PREFIX}-notary ${CENM_PREFIX}-pki ${CENM_PREFIX}-hsm ${CENM_PREFIX}-signer ${CENM_PREFIX}-zone ${CENM_PREFIX}-idman-ip ${CENM_PREFIX}-notary-ip
