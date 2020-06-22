@@ -49,6 +49,7 @@ The name needs to be a valid X500 name and commas need to be escaped by a backsl
 
 ## Configuration variables
 
+{{< table >}}
 | Parameter                                    | Description                                              | Default value         |
 | -------------------------------------------- | -------------------------------------------------------- | --------------------- |
 | `bashDebug`                                  | Display additional information while running bash scripts (useful while investigating issues) | `false` |
@@ -80,3 +81,4 @@ The name needs to be a valid X500 name and commas need to be escaped by a backsl
 | `pki.certificates.networkmap.subject`        | Subject of Corda Network Map certificate (alias: networkmap)  | `CN=Test Network Map Service Certificate, OU=HQ, O=HoldCo LLC, L=New York, C=US` |
 | `sleepTimeAfterError`                        | Sleep time (in seconds) after an error occurred | `120` |
 | `logsContainersEnabled`                      | Enable container displaying live logs | `true`
+{{< /table >}}

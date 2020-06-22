@@ -30,10 +30,11 @@ helm install cenm-auth auth --set prefix=cenm --set acceptLicense=Y --set volume
 
 ## Configuration
 
-| Parameter                     | Description                                              | Default value         |
-| ----------------------------- | -------------------------------------------------------- | --------------------- |
+{{< table >}}
+| Parameter  | Description   | Default value    |
+| ---------- | ------------- | -----------------|
 | `bashDebug`                   | Display additional information while running bash scripts (useful while investigating issues) | `false` |
-| `authImage.repository`        | URL to Network Map Docker image repository               | `acrcenm.azurecr.io/auth/auth` |
+| `authImage.repository`        | URL to Network Map Docker image repository | `acrcenm.azurecr.io/auth/auth` |
 | `authImage.tag`               | Docker image tag | `1.3` |
 | `authImage.pullPolicy`        | Image pull policy. Ref.: https://kubernetes.io/docs/concepts/containers/images/#updating-images | `Always` |
 | `database.driverClassName`    | Auth Service database connection details | `org.h2.Driver` |
@@ -47,5 +48,5 @@ helm install cenm-auth auth --set prefix=cenm --set acceptLicense=Y --set volume
 | `volumeSizeAuthLogs`          | Volume size for the `logs/` directory | `5Gi` |
 | `sleepTimeAfterError`         | Sleep time (in seconds) after an error occurred | `120` |
 | `logsContainersEnabled`       | Enable container displaying live logs | `true`
-
+{{< /table >}}
 For additional information on database connection details refer to the official documentation: [database documentation](config-database.md).
