@@ -111,28 +111,3 @@ for your deployment needs.
 |PostgreSQL|x86-64|9.6, 10.10 11.5|PostgreSQL JDBC Driver 42.1.4 / 42.2.8|
 
 {{< /table >}}
-
-
-## MySQL notary databases
-
-
-{{< table >}}
-
-|Vendor|CPU Architecture|Versions|JDBC Driver|
-|-------------------------------|------------------|------------------|--------------------|
-|Percona Server for MySQL *(deprecated)*|x86-64|5.7|MySQL JDBC Driver 8.0.16|
-
-{{< /table >}}
-
-
-## JPA notary databases
-
-
-{{< table >}}
-
-|Vendor|CPU Architecture|Versions|JDBC Driver|
-|-------------------------------|------------------|------------------|--------------------|
-|CockroachDB|x86-64|19.1.2|PostgreSQL JDBCDriver 42.1.4|
-|Oracle RAC|x86-64|12cR2|Oracle JDBC 8|
-
-{{< /table >}}
