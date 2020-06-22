@@ -130,12 +130,19 @@ kubectl config set-context $(kubectl config current-context) --namespace=${nameS
 
 You can verify this with the command `kubectl get ns`.
 
-
 #### 4. Download CENM deployment scripts
 
 You can find the files required for the following steps in [CENM deployment repo](https://github.com/corda/cenm-deployment).
 
-#### 5. Bootstrap CENM
+#### 5. External database setup
+
+CENM services are pre-configured to use embedded H2 databases by default.
+You can skip this step if an H2 database is sufficient for your needs. Otherwise you need to install database(s), set up users and permissions, 
+and change database configuration options for CENM services before bootstrapping CENM.
+For instructions on how to do that, refer to the "CENM configuration for external databases" section below, which contains a sample PostgreSQL installation guide
+and an explanation of CENM database configuration options.
+
+#### 6. Bootstrap CENM
 **Option 1.** Bootstrap by allocating new external IP addresses
 
 To bootstrap your network, run the `bootstrap.cenm` script from the `/k8s/helm` directory.
@@ -406,13 +413,42 @@ You cannot override the passwords to security certificates keys and keystores.
 ### External database support
 
 You can configure the services to use an external database. We strongly recommend this for production deployments.
+A database can be installed as a pod inside the same Kubernetes cluster or as a separate installation outside the Kubernetes cluster.
+The example below shows a PostgresSQL installation that runs inside the same Kubernetes cluster where CENM runs.
+
+#### Example PostgreSQL database setup inside the Kubernetes cluster
+
+A PostgreSQL database can be installed inside the Kubernetes cluster using a third-party [Bitami Helm chart](https://github.com/bitnami/charts/tree/master/bitnami/postgresql):
+
+```bash
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm install cenm-database bitnami/postgresql
+```
+
+Follow the instructions displayed by the script output to connect to the database server via `psql`.
+You can create a separate database server for each CENM service by running the Helm script multiple times with different names
+and then setting up the database user/schema, following the instructions in the [CENM database setup](database-set-up.md) section.
+Alternatively, you can create several databases inside the single PostgresSQL server you have just deployed, by running
+the following DDL commands:
+
+```bash
+CREATE DATABASE <DATABASE>;
+CREATE USER <USER> WITH PASSWORD '<PASSWORD>';
+GRANT ALL PRIVILEGES ON DATABASE <USER> to <DATABASE>;
+```
+
+For each service (Identity Manager, Network Map, Zone, and Auth), use different `<DATABASE>` name and `<USER>` - 
+for example, `idenamagerdb` / `identitymanageruser` for the Identity Manager Service.
+
+#### CENM configuration for external databases
+
 The database used by each service is configured via JDBC URL and is defined in the `values.yml` file for
 the Helm chart of the respective service - for example, `idman/values.yml` for the Identity Manager Service.
 In the `values.yml` file, edit the database section of the configuration to change the JDBC URL, user, and password.
 
 The deployed service already contains JDBC drivers for PostgreSQL and SQLServer.
 For an Oracle database, you need to extend the Docker images for the service by adding
-the Oracle JDBC driver `.jar` file to the ` /opt/${USER}/drivers/` directory.
+the Oracle JDBC driver `.jar` file to the `/opt/${USER}/drivers/` directory.
 
 {{< note >}}
 The bootstrap script cannot be used with an external database.
@@ -424,6 +460,7 @@ Example settings for connection to a PostgreSQL database follow below:
 ```guess
 database:
   driverClassName: "org.postgresql.Driver"
+  jdbcDriver: "/opt/cenm/drivers/postgresql-42.2.12.jar"
   url: "jdbc:postgresql://<HOST>:<PORT>/<DATABASE>"
   user: "<USER>"
   password: "<PASSWORD>"
