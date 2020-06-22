@@ -32,7 +32,7 @@ If you specify both command line arguments at the same time, the node will fail 
 
 ## Configuration file format
 
-The Corda configuration file uses the HOCON format which is a superset of JSON. Please visit 
+The Corda configuration file uses the HOCON format which is a superset of JSON. Please visit
 [HOCON (Human-Optimized Config Object Notation)](https://github.com/typesafehub/config/blob/master/HOCON.md) on GitHub for further details.
 
 **Do not** use double quotes (`"`) in configuration keys.
@@ -138,13 +138,13 @@ java -Dcorda.jarDirs_0=./newdir1
 
 The resulting value of `jarDirs` will be `["./newdir1"]`.
 
-* You can't override a populated list with an empty list. For example, when ``devMode=false``, ``cordappSignerKeyFingerprintBlacklist`` is pre-populated with Corda development keys. It isn't possible to set this to an empty list via the commandline. You can however override the list with an all zero hash which will remove the keys:
+* You can't override a populated list with an empty list. For example, when `devMode=false`, `cordappSignerKeyFingerprintBlacklist` is pre-populated with Corda development keys. It isn't possible to set this to an empty list via the commandline. You can however override the list with an all zero hash which will remove the keys:
 
 ```shell script
 java -Dcorda.cordappSignerKeyFingerprintBlacklist.0="0000000000000000000000000000000000000000000000000000000000000000"
 ```
 
-* Objects in lists cannot currently be overridden. For example the ``rpcUsers`` configuration key is a list of user objects, overriding these via environment variables or system properties will not work.
+* Objects in lists cannot currently be overridden. For example the `rpcUsers` configuration key is a list of user objects, overriding these via environment variables or system properties will not work.
 
 ## Configuration file fields
 
@@ -152,9 +152,9 @@ See [Configuration file fields](corda-configuration-fields.md).
 
 ## Reference.conf
 
-A set of default configuration options are loaded from the built-in resource file ``/node/src/main/resources/reference.conf``.   This file can be found in the ``:node`` gradle module of the [Corda repository](https://github.com/corda/corda). Any options you do not specify in your own ``node.conf`` file will use these defaults.
+A set of default configuration options are loaded from the built-in resource file `/node/src/main/resources/reference.conf`.   This file can be found in the `:node` gradle module of the [Corda repository](https://github.com/corda/corda). Any options you do not specify in your own `node.conf` file will use these defaults.
 
-Here are the contents of the ``reference.conf`` file:
+Here are the contents of the `reference.conf` file:
 
 ```json
 {
@@ -280,4 +280,4 @@ openssl pkcs7 -in <extract_signed_jar_directory>/META-INF/<signature_to_hash>.RS
 | openssl rsa -pubin -outform der | openssl dgst -sha256
 ```
 
-- Copy the public key hash that is generated and place it into the required location (e.g. in ``node.conf``).
+- Copy the public key hash that is generated and place it into the required location (e.g. in `node.conf`).
