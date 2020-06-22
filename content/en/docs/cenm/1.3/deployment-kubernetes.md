@@ -95,7 +95,7 @@ The deployment steps are given below:
     ```bash
     version.BuildInfo{Version:"v3.1.2", GitCommit:"afe70585407b420d0097d07b21c47dc511525ac8", GitTreeState:"clean", GoVersion:"go1.13.8"}
     ```
-- Download CENM Command-Line Interface (CLI) tool so you can manage CENM services.
+- Download CENM [Command-Line Interface (CLI) tool](cenm-cli-tool.md) so you can manage CENM services.
 
 #### 2. Set up the Kubernetes cluster
 
@@ -131,17 +131,34 @@ You can find the files required for the following steps in [CENM deployment repo
 #### 5. Bootstrap CENM
 **Option 1.** Bootstrap by allocating new external IP addresses
 
-Before bootstrapping CENM, you should read the license agreement. You can do so by running `./bootstrap.cenm`.
-The example below includes the `--ACCEPT_LICENSE Y` argument, which you should only specify if you accept the license agreement.
+To bootstrap your network, run the `bootstrap.cenm` script from the `/k8s/helm` directory.
+The script includes the `--ACCEPT_LICENSE Y` argument, which is mandatory and confirms that you have read and accepted the license agreement.
 
-Run the following command to bootstrap a new CENM environment by allocating a new external IP:
+```bash
+cd k8s/helm
+./bootstrap.cenm --ACCEPT_LICENSE Y <options>
+```
+
+You can use the following bootstrap options when running bootstrap:
+
+* `--ACCEPT_LICENSE [Y]` - confirms agreement to the Licenses for Components deployed by the Bootstrapper.
+* `-h` - displays this help message and exits.
+* `-i|--idman  [name]` - provides Identity Manager kubernetes service name.
+* `-n|--notary [name]` - provides Notary kubernetes service name.
+* `-p|--prefix [prefix]` - specifies the release prefix for all Helm charts.
+* `-m|--mpv [version]` - specifies the minimum platform version for your network.
+* `-a|--auto` - completes the script without further prompts to the user.
+
+Usage:
 
 ```bash
 cd network-services/deployment/k8s/helm
-./bootstrap.cenm --ACCEPT_LICENSE Y
+./bootstrap.cenm <option>
 ```
 
-{{< note >}} The allocation of a loadbalancer to provide a public IP can take a significant amount of time (for example, even 10 minutes). {{< /note >}}
+{{< note >}}
+The allocation of a load balancer to provide a public IP can take a significant amount of time (for example, even 10 minutes).
+{{< /note >}}
 
 The script exits after all bootstrapping processes on the Kubernetes cluster have been started.
 The process will continue to run on the cluster after the script has exited. You can monitor the completion of the deployment by running the following commands:
@@ -161,13 +178,13 @@ cd network-services/deployment/k8s/helm
 
 ## Network operations
 
-Use CENM Command Line Interface (CLI) Tool to access the FARM Service:
+Use the CENM [Command Line Interface (CLI) Tool](cenm-cli-tool.md) to access the [FARM Service](gateway-service.md):
 
 ```bash
 ./cenm context login -s -u <USER> -p <PASSWORD> http://<FARM-SERVICE-IP>:8080
 ```
 
-The FARM Service is a gateway between the Auth Service and front end services in CENM. It allows you to perform all network operations on the Identity Manager Service, the Network Map Service, and the Signing Services.
+The [FARM Service](gateway-service.md) is a gateway between the [Auth Service](auth-service.md) and front end services in CENM. It allows you to perform all network operations on the [Identity Manager Service](identity-manager.md), the [Network Map Service](network-map.md), and the [Signing Service](signing-service.md).
 The IP address is dynamically allocated for each deployment and can be found with `kubectl get svc`.
 Use the following command to ensure that you are pointing at the correct namespace:
 
@@ -204,13 +221,13 @@ kubectl cp <namespace>/<signer-pod>:DATA/trust-stores/network-root-truststore.jk
 
 Namespace is typically `cenm` for this deployment.
 
-Run the following command to obtain public IPs of Identity Manager and Network Map:
+Run the following command to obtain public IPs of the Identity Manager Service and the Network Map Service:
 
 ```bash
 kubectl get svc idman-ip notary-ip
 ```
 
-Run the command below to obtain the pod name for the Signer:
+Run the command below to obtain the pod name for the Signing Service:
 
 ```bash
 kubectl get pods -o wide`
@@ -219,12 +236,12 @@ kubectl get pods -o wide`
 You will find the truststore password in the `signer/files/pki.conf`, where the default value used in this Helm chart is `trust-store-password`.
 
 {{< note >}} For more details about joining a CENM network, see:
-[Joining an existing compatibility zone](https://docs.corda.net/docs/corda-os/joining-a-compatibility-zone.html).
+[Joining an existing compatibility zone](../../corda-os/4.5/joining-a-compatibility-zone.html).
 {{< /note >}}
 
 ### Display logs
 
-Each CENM service has a dedicated sidecar to display live logs from the ```log/``` folder.
+Each CENM service has a dedicated sidecar to display live logs from the `log/` directory.
 
 Use the following command to display logs:
 
@@ -238,10 +255,10 @@ Use the following command to display live logs:
   kubectl logs -c logs -f <pod-name>
   ```
 
-Display configuration files used for each CENM service
+Display configuration files used for each CENM service:
 
-Each service stores configuration files in ```etc/``` folder in a pod.
-Run the following commands to display what is in the Identity Manager Service ```etc/``` folder :
+Each service stores configuration files in `etc/` directory in a pod.
+Run the following commands to display what is in the Identity Manager Service `etc/` directory:
 
 ```bash
 kubectl exec -it <pod name> -- ls -al etc/
@@ -265,12 +282,12 @@ database {
 
 ### Update network parameters
 
-Use CENM CLI tool command to update the network parameters.
+Use the CENM [Command-Line (CLI) tool](cenm-cli-tool.md) to run commands to update the network parameters.
 
 See the official CENM documentation for more information about the list of available [network parameters](./config-network-parameters.html)
 and instructions on [updating network parameters](./updating-network-parameters.html).
 
-### Run flag day
+### Run Flag Day
 
 Use the following CENM Command-Line Interface (CLI) tool command to run a Flag Day:
 
@@ -280,7 +297,7 @@ This operation is scheduled to take place at regular intervals (by default, once
 
 ### Signing Service configuration
 
-The Signing Service is not managed by the Angel Service in this deployment, therefore any CENM Command-Line Interface (CLI) tool commands trying to change the Signing Service configuration will take no effect.
+The Signing Service is not managed by the [Angel Service](angel-service.md) in this deployment, therefore any CENM Command-Line Interface (CLI) tool commands trying to change the Signing Service configuration will take no effect.
 To change the Singing Service configuration, you must log in to a Kubernetes pod, update the configuration file, and restart the service.
 
 ## Delete Network
@@ -356,13 +373,13 @@ You must modify the following values in the `values.yaml` file:
 There are a number of settings provided on each Helm chart, which allow easy customisation of
 common options. Each CENM service has its own dedicated page with more detailed documentation:
 
-* [Identity Manager](deployment-kubernetes-idman.md)
-* [Network Map](deployment-kubernetes-nmap.md)
-* [Signer](deployment-kubernetes-signer.md)
-* FARM Service - documentation not available yet
-* Auth Service - documentation not available yet
-* Zone Service - documentation not available yet
+* [Auth Service](deployment-kubernetes-auth.md)
+* [FARM Service](deployment-kubernetes-farm.md)
+* [Identity Manager Service](deployment-kubernetes-idman.md)
+* [Network Map Service](deployment-kubernetes-nmap.md)
 * [Corda Notary](deployment-kubernetes-notary.md)
+* [Signing Service](deployment-kubernetes-signer.md)
+* [Zone Service](deployment-kubernetes-zone.md)
 
 ### Overriding Service Configuration
 
@@ -421,12 +438,12 @@ However, for additional flexibility you may wish to deploy each Helm chart indiv
 There are several Helm commands which are used to bootstrap a new CENM environment,
 where each command creates a CENM service consisting of the following:
 
-* Signer
-* Identity Manager
-* Network Map
+* Signing Service
+* Identity Manager Service
+* Network Map Service
 * Auth Service
 * FARM Service
-* Notary
+* Corda Notary
 
 They need to be run in the correct order, as shown below:
 
