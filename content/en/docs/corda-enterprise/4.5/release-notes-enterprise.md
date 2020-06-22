@@ -3,7 +3,7 @@ date: '2020-04-07T12:00:00Z'
 menu:
   corda-enterprise-4-5:
     identifier: "corda-enterprise-4-5-release-notes"
-    name: "Release notes and changelog"
+    name: "Release notes"
 tags:
 - release
 - notes
