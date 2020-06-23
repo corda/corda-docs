@@ -2,15 +2,13 @@
 date: '2020-06-18T12:00:00Z'
 menu:
   corda-enterprise-4-5:
-    identifier: corda-enterprise-4-5-ops-monitoring-logging
-    name: "Monitoring and logging"
-    parent: corda-enterprise-4-5-operations-guide
+    parent: corda-enterprise-4-5-ops-monitoring-logging
 tags:
 - operations
 - deployment
 - planning
-title: Corda Enterprise Operations Guide
-weight: 30
+title: Troubleshooting, health-checking, and recovering your node
+weight: 20
 ---
 # Troubleshooting, health-checking, and recovering your node
 

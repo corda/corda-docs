@@ -10,7 +10,7 @@ tags:
 - deployment
 - planning
 title: Corda Enterprise Operations Guide
-weight: 10
+weight: 30
 ---
 # Monitoring and maintaining the health of your node
 
@@ -33,7 +33,7 @@ Monitoring and logging topics:
 * [Node monitoring scenarios](metrics-monitoring-scenarios).
 * [Troubleshooting Corda Enterprise Network Manager (CENM) services on your node](monitoring-trouble-shooting).
 * [The Corda Enterprise Health Survey tool](monitoring-trouble-shooting#corda-health-survey-tool).
-* [Using Ledger Sync to check the status of data on your node and the rest of the ledger](monitoring-trouble-shooting#ledger-sync).  
+* [Using Ledger Sync to check the status of data on your node and the rest of the ledger](monitoring-trouble-shooting#ledger-sync).
 
 ## Logging - the basics
 

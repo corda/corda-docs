@@ -15,7 +15,9 @@ weight: 100
 # Corda Enterprise Operations Guide
 
 The Corda Operations Guide is intended to assist you and your organisation in planning, deploying, and operating an
-instance of Corda Enterprise. Much of the material you can read here is expanded upon throughout the docs, and can be readily found using a search on this documentation site. Wherever there is more material available on a particular subject, you can follow a link for the complete documentation.
+instance of Corda Enterprise. Much of the material you can read here is expanded upon throughout the docs, and can be
+readily found using a search on this documentation site. Wherever there is more material available on a particular
+subject, you can follow a link for the complete documentation.
 
 There are three sections in this guide:
 
@@ -27,6 +29,13 @@ There are three sections in this guide:
 
 ## Project planner documentation
 
-The project planner documentation advises users on the requirements of their deployment.
+The project planner documentation gives advice on the requirements of Corda deployments. It explains the likely environments
+that you will to deploy, and what components should be deployed there.
 
-`other technical writers to add their headings here`
+## Operations and deployment guide
+
+The operations and deployment section contains instructions on configuring and deploying all elements of a Corda solution.
+
+## Monitoring and logging
+
+The monitoring and logging section gives advice on the metrics available in Corda and various monitoring scenarios.
