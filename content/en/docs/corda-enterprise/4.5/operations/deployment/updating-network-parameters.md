@@ -30,7 +30,7 @@ Typical update process is as follows:
 >
 > * Stop the Network Map Service.
 > * Run it with `--set-network-parameters` flag, along with the network truststore related flags. See the ‘Setting
-> the Network Parameters’ section within the [Network Map Service](network-map.md) document for more information. The network parameters
+> the Network Parameters’ section within the [Network Map Service](../../../../cenm/1.3/network-map.md) document for more information. The network parameters
 > file must have `parametersUpdate` configuration block:```guess
 > parametersUpdate {
 >     description = "Important update"

@@ -13,7 +13,7 @@ weight: 200
 
 # CENM Network Map Helm Chart
 
-This Helm chart is to configure, deploy and run CENM [Network Map](network-map.md) service.
+This Helm chart is to configure, deploy and run CENM [Network Map](../../../../cenm/1.3/network-map.md) service.
 
 ## Example usage
 
@@ -55,4 +55,4 @@ helm install nmap nmap --set shell.password="superDifficultPassword"
 | `jarPath`                     | Path to a folder which contains Network Map `.jar` files | `bin` |
 | `configPath`                  | Path to a folder which contains Network Map configuration file | `etc` |
 
-For additional information on database connection details refer to the official documentation: [database documentation](config-database.md).
+For additional information on database connection details refer to the official documentation: [database documentation](../../../../cenm/1.3/config-database.md).

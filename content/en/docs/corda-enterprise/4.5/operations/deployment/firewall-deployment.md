@@ -124,7 +124,7 @@ absolute path to the firewall’s base directory.
 
 
 * **healthCheck**:
-An optional parameter which specifies whether the firewall can process requests sent by the [Health Survey Tool](../health-survey.md#health-survey-ref). If missing the value is defaulted to `true`.
+An optional parameter which specifies whether the firewall can process requests sent by the [Health Survey Tool](../../health-survey.md#health-survey-ref). If missing the value is defaulted to `true`.
 
 
 * **certificatesDirectory**:
@@ -427,7 +427,7 @@ Allows a list of jvm argument overrides to be sent to the Corda firewall process
 For instance ``custom.jvmArgs = ["-Xmx2G"]` in the configuration file will set 2GByte of memory for the firewall.
 This is equivalent to specifying `-Dcapsule.jvm.args="-Xmx2G"` on the command line, but is easier to track with other configuration and does not risk
 accidentally setting the properties onto the capsule parent process (e.g. wasting 2Gbyte of memory).
-See [Setting JVM arguments](deploy/running-a-node.md#setting-jvm-args) for examples and details on the precedence of the different approaches to settings arguments.
+See [Setting JVM arguments](../../node/deploy/running-a-node.md#setting-jvm-args) for examples and details on the precedence of the different approaches to settings arguments.
 
 
 

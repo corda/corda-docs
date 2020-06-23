@@ -33,7 +33,7 @@ If you specify both command line arguments at the same time, the node will fail 
 
 ## Configuration file format
 
-The Corda configuration file uses the HOCON format which is a superset of JSON. Please visit 
+The Corda configuration file uses the HOCON format which is a superset of JSON. Please visit
 [HOCON (Human-Optimized Config Object Notation)](https://github.com/typesafehub/config/blob/master/HOCON.md) on GitHub for further details.
 
 **Do not** use double quotes (`"`) in configuration keys.
@@ -67,7 +67,7 @@ for more information.
 
 It is possible to add placeholders to the `node.conf` file to override particular settings via environment variables. In this case the
 `rpcSettings.address` property will be overridden by the `RPC_ADDRESS` environment variable, and the node will fail to load if this
-environment variable isn’t present (see: [Hiding sensitive data](../operating/node-administration.md#hiding-sensitive-data) for more information).
+environment variable isn’t present (see: [Hiding sensitive data](../../node/operating/node-administration.md#hiding-sensitive-data) for more information).
 
 ```groovy
 rpcSettings {

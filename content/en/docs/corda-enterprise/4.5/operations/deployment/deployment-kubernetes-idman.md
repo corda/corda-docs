@@ -13,7 +13,7 @@ weight: 100
 
 # CENM Identity Manager Helm Chart
 
-This Helm chart is to configure, deploy and run CENM [Identity Manager](identity-manager.md) service.
+This Helm chart is to configure, deploy and run CENM [Identity Manager](../../../../cenm/1.3/identity-manager.md) service.
 
 ## Example usage
 
@@ -55,4 +55,4 @@ helm install idman idman --set shell.password="superDifficultPassword"
 | `jarPath`                     | Path to a folder which contains Identity Manager `.jar` files | `bin` |
 | `configPath`                  | Path to a folder which contains Identity Manager configuration file | `etc` |
 
-For additional information on database connection details refer to the official documentation: [database documentation](config-database.md).
+For additional information on database connection details refer to the official documentation: [database documentation](../../../../cenm/1.3/config-database.md).
