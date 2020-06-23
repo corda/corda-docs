@@ -102,7 +102,13 @@ The deployment steps are given below:
     ```bash
     version.BuildInfo{Version:"v3.1.2", GitCommit:"afe70585407b420d0097d07b21c47dc511525ac8", GitTreeState:"clean", GoVersion:"go1.13.8"}
     ```
-- Download CENM [Command-Line Interface (CLI) tool](cenm-cli-tool.md) so you can manage CENM services.
+- Install [Docker](https://www.docker.com/get-started). Docker is required to run the CENM CLI tool.
+
+- Download the Docker image with CENM [Command-Line Interface (CLI) tool](cenm-cli-tool.md) so you can manage CENM services:
+
+    ```bash
+    docker pull cenm-cli:1.3-zulu-openjdk8u242
+    ```
 
 #### 2. Set up the Kubernetes cluster
 
@@ -137,7 +143,7 @@ You can find the files required for the following steps in [CENM deployment repo
 #### 5. External database setup
 
 CENM services are pre-configured to use embedded H2 databases by default.
-You can skip this step if an H2 database is sufficient for your needs. Otherwise you need to install database(s), set up users and permissions, 
+You can skip this step if an H2 database is sufficient for your needs. Otherwise you need to install database(s), set up users and permissions,
 and change database configuration options for CENM services before bootstrapping CENM.
 For instructions on how to do that, refer to the "CENM configuration for external databases" section below, which contains a sample PostgreSQL installation guide
 and an explanation of CENM database configuration options.
@@ -192,11 +198,28 @@ cd network-services/deployment/k8s/helm
 
 ## Network operations
 
-Use the CENM [Command Line Interface (CLI) Tool](cenm-cli-tool.md) to access the [FARM Service](gateway-service.md):
+Use the CENM [Command Line Interface (CLI) Tool](cenm-cli-tool.md) to access the [FARM Service](gateway-service.md) from your local machine.
+To star CENM CLI Tool run Docker command starting Docker container with the tool:
 
-```bash
-./cenm context login -s -u <USER> -p <PASSWORD> http://<FARM-SERVICE-IP>:8080
-```
+  ```bash
+  docker run  -it --env ACCEPT_LICENSE=Y --name=cenm-cli cenm-cli:1.3-zulu-openjdk8u242
+  ```
+
+The welcome message will appear:
+
+  ```bash
+  CORDA ENTERPRISE NETWORK MANAGER – SOFTWARE EVALUATION LICENSE AGREEMENT has been accepted, CORDA ENTERPRISE NETWORK MANAGER will now continue.   The Software Evaluation License Agreement for this product can be viewed from https://www.r3.com/corda-enterprise-network-manager-evaluation-license.
+  A copy of the Software Evaluation License Agreement also exists within the /license directory in the container.
+
+  Type "./cenm <COMMAND>" to run CENM CLI or "./cenm -h" to display help.
+  cenm@5fdb0372b89b:~$
+  ```
+
+You can now use `cemn` commands from within the running Docker container:
+
+  ```bash
+  ./cenm context login -s -u <USER> -p <PASSWORD> http://<FARM-SERVICE-IP>:8080
+  ```
 
 The [FARM Service](gateway-service.md) is a gateway between the [Auth Service](auth-service.md) and front end services in CENM. It allows you to perform all network operations on the [Identity Manager Service](identity-manager.md), the [Network Map Service](network-map.md), and the [Signing Service](signing-service.md).
 The IP address is dynamically allocated for each deployment and can be found with `kubectl get svc`.
@@ -205,6 +228,18 @@ Use the following command to ensure that you are pointing at the correct namespa
   ```bash
   kubectl config current-context && kubectl config view --minify --output 'jsonpath={..namespace}' && echo`)
   ```
+
+If you have exited the Docker container, you can reconnect again:
+
+  ```bash
+  docker container exec -it cenm-cli bash
+  ```
+
+If the Docker container was not running, you need to restart it by reconnecting:
+
+  ```bash
+  docker container start cenm-cli
+   ```
 
 ## Assigning permissions to users
 
@@ -437,7 +472,7 @@ CREATE USER <USER> WITH PASSWORD '<PASSWORD>';
 GRANT ALL PRIVILEGES ON DATABASE <USER> to <DATABASE>;
 ```
 
-For each service (Identity Manager, Network Map, Zone, and Auth), use different `<DATABASE>` name and `<USER>` - 
+For each service (Identity Manager, Network Map, Zone, and Auth), use different `<DATABASE>` name and `<USER>` -
 for example, `idenamagerdb` / `identitymanageruser` for the Identity Manager Service.
 
 #### CENM configuration for external databases
@@ -509,14 +544,14 @@ kubectl get svc --namespace cenm notary-ip --template "{{ range (index .status.l
 kubectl get svc --namespace cenm farm-ip --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"  # step 3
 
 # These Helm charts bootstrap CENM
-helm install auth auth
-helm install zone zone
-helm install nmap nmap
-helm install signer signer
-helm install idman idman --set idmanPublicIP=[use IP from step 1]
-helm install notary notary --set notaryPublicIP=[use IP from step 2]
-helm install nmap nmap
-helm install farm farm --set idmanPublicIP=[use IP from step 3]
+helm install cenm-auth auth --set prefix=cenm --set acceptLicense=YES
+helm install cenm-zone zone --set prefix=cenm --set acceptLicense=YES
+helm install cenm-nmap nmap --set prefix=cenm --set acceptLicense=YES
+helm install cenm-signer signer --set prefix=cenm --set acceptLicense=YES
+helm install cenm-idman idman --set prefix=cenm --set acceptLicense=Y --set idmanPublicIP=[use IP from step 1]
+helm install notary notary --set prefix=cenm --set acceptLicense=YES --set notaryPublicIP=[use IP from step 2]
+helm install cenm-nmap nmap --set prefix=cenm --set acceptLicense=YES
+helm install cenm-farm farm --set prefix=cenm --set acceptLicense=YES --set idmanPublicIP=[use IP from step 3]
 
 # Run these commands to display allocated public IP for Network Map Service:
 kubectl get svc --namespace cenm nmap --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"
