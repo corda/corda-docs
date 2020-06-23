@@ -7,7 +7,7 @@ date: '2020-04-07T12:00:00Z'
 menu:
   corda-os-4-5:
     identifier: corda-os-4-5-deterministic-modules
-    parent: corda-os-4-5-participate
+    parent: corda-os-4-5-development
     weight: 430
 tags:
 - deterministic

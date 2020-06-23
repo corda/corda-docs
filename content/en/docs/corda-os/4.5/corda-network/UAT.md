@@ -4,12 +4,13 @@ aliases:
 - /HEAD/corda-network/UAT.html
 - /corda-network/UAT.html
 date: '2020-04-07T12:00:00Z'
-menu: 
+menu:
   corda-os-4-5:
-    parent: corda-os-4-5-corda-network
+    parent: corda-os-4-5-corda-network-foundation
     identifier: corda-os-4-5-corda-network-uat
 tags:
 - UAT
+weight: 1
 title: 'Corda Network: Pre-Production Environment'
 ---
 

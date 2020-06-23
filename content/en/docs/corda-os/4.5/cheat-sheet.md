@@ -4,10 +4,7 @@ aliases:
 - /HEAD/cheat-sheet.html
 - /cheat-sheet.html
 date: '2020-04-07T12:00:00Z'
-menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-cheat-sheet
-    weight: 4
+menu: []
 tags:
 - cheat
 - sheet

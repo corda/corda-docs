@@ -7,7 +7,8 @@ date: '2020-04-07T12:00:00Z'
 menu:
   corda-os-4-5:
     identifier: corda-os-4-5-features-versions
-    weight: 2
+    parent: corda-os-4-5-upgrading
+    weight: 10
 tags:
 - features
 - versions
