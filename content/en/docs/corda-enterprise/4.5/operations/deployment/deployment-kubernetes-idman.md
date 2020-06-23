@@ -13,11 +13,7 @@ weight: 30
 
 # CENM Identity Manager Helm Chart
 
-<<<<<<< HEAD
-This Helm chart is to configure, deploy, and run the CENM [Identity Manager Service](identity-manager.md) on Kubernetes.
-=======
-This Helm chart is to configure, deploy and run CENM [Identity Manager](../../../../cenm/1.3/identity-manager.md) service.
->>>>>>> a071f249ddf3f29287a3c70c5342b20fd867702d
+This Helm chart is to configure, deploy, and run the CENM [Identity Manager Service](../../../../cenm/1.3/identity-manager.md) on Kubernetes.
 
 ## Example usage
 

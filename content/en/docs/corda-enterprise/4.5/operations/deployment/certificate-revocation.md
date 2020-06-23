@@ -8,7 +8,7 @@ menu:
 tags:
 - certificate
 - revocation
-title: Certificate Revocation FAQ
+title: Certificate revocation FAQ
 ---
 
 

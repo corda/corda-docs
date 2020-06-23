@@ -60,7 +60,7 @@ To generate the JWT, refer to the [Auth Service](../../../../cenm/1.3/auth-servi
 The generated keys and certificates will then need to be distributed to the service hosts,
 replacing the existing SSL (but not network trust root or other signing key/certificates).
 
-### Deploying Farm, Auth, and Zone Services
+### Deploying FARM, Auth, and Zone Services
 
 To deploy the new services, follow the guides in the service documentation:
 

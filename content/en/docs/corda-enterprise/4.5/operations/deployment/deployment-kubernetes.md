@@ -7,7 +7,7 @@ menu:
 tags:
 - config
 - kubernetes
-title: CENM Deployment with Docker, Kubernetes, and Helm charts
+title: CENM deployment with Docker, Kubernetes, and Helm charts
 weight: 20
 ---
 
@@ -158,13 +158,13 @@ cd network-services/deployment/k8s/helm
 
 ## Network operations
 
-Use CENM CLI Tool to access to Farm Service:
+Use CENM CLI Tool to access to FARM Service:
 
 ```bash
 ./cenm context login -s -u <USER> -p <PASSWORD> http://<FARM-SERVICE-IP>:8080
 ```
 
-The Farm Service allows you to perform all network operations on the Identity Manager Service, the Network Map Service, and the Signing Services.
+The FARM Service allows you to perform all network operations on the Identity Manager Service, the Network Map Service, and the Signing Services.
 The IP address is dynamically allocated for each deployment and can be found with `kubectl get svc`.
 Use the following command to ensure that you are pointing at the correct namespace:
 
@@ -346,7 +346,7 @@ common options. Each CENM service has its own dedicated page with more detailed 
 * [Identity Manager](deployment-kubernetes-idman.md)
 * [Network Map](deployment-kubernetes-nmap.md)
 * [Signer](deployment-kubernetes-signer.md)
-* Farm Service - documentation not available yet
+* FARM Service - documentation not available yet
 * Auth Service - documentation not available yet
 * Zone Service - documentation not available yet
 * [Corda Notary](deployment-kubernetes-notary.md)
@@ -410,7 +410,7 @@ where each command creates a CENM service consisting of the following:
 * Identity Manager
 * Network Map
 * Auth Service
-* Farm Service
+* FARM Service
 * Notary
 
 They need to be run in the correct order, as shown below:
@@ -455,7 +455,7 @@ The Docker images used for the Kubernetes deployment are listed below for refere
 | Signing           | acrcenm.azurecr.io/signer/signer   | 1.3 |
 | Zone              | acrcenm.azurecr.io/zone/zone       | 1.3 |
 | Auth              | acrcenm.azurecr.io/auth/auth       | 1.3 |
-| Farm              | acrcenm.azurecr.io/farm/farm       | 1.3 |
+| FARM              | acrcenm.azurecr.io/farm/farm       | 1.3 |
 | PKI Tool          | acrcenm.azurecr.io/pkitool/pkitool | 1.3 |
 | Notary            | acrcenm.azurecr.io/notary/notary   | 1.3 |
 

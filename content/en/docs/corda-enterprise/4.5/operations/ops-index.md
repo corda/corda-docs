@@ -3,7 +3,7 @@ date: '2020-06-16T12:00:00Z'
 menu:
   corda-enterprise-4-5:
     identifier: corda-enterprise-4-5-operations-guide
-    name: "Corda Operations and Deployment"
+    name: "Corda Operations and deployment"
 tags:
 - operations
 - deployment
@@ -12,7 +12,7 @@ title: Corda Enterprise Operations Guide
 weight: 100
 ---
 
-# Corda Enterprise Operations Guide
+# Corda Enterprise operations guide
 
 The Corda Operations Guide is intended to assist you and your organisation in planning, deploying, and operating an
 instance of Corda Enterprise. Much of the material you can read here is expanded upon throughout the docs, and can be

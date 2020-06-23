@@ -9,7 +9,7 @@ tags:
 - troubleshooting
 - common
 - issues
-title: Troubleshooting Common Issues
+title: Troubleshooting common issues
 ---
 
 
