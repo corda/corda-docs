@@ -27,9 +27,9 @@ Just as prior releases have brought with them commitments to wire and API stabil
 
 States and apps valid in Corda 3.0 and above are usable in Corda 4.5.
 
-### New features and enhancements
+## New features and enhancements
 
-#### Improved `killFlow` operations
+### Improved `killFlow` operations
 
 We have improved the existing [killFlow RPC operation](https://api.corda.net/api/corda-os/4.5/html/api/kotlin/corda/net.corda.core.messaging/-corda-r-p-c-ops/kill-flow.html), which allows node operators to terminate flows manually - in several ways:
 
@@ -39,7 +39,7 @@ We have improved the existing [killFlow RPC operation](https://api.corda.net/api
 
 * A flow can now check programmatically whether its termination has been requested. This allows a looping flow to use this API to ensure it doesn't loop indefinitely when a termination has been requested. Previously, the flow would wait until it reached the next checkpoint to decide whether to terminate, allowing deadlocks to occur (e.g. if the flow was caught in an infinite loop)
 
-#### New flow APIs
+### New flow APIs
 
 We have introduced new flow framework APIs `sendAll` and `sendAllMap`, which can be used to send messages to multiple counterparties with improved performance. Previously, a flow was able to send messages to multiple counterparties by using the [send API](api-flows.md#send) once for each counterparty. These new APIs can now be used to achieve the same with better performance, which comes from a smaller number of suspensions and checkpoints.
 
@@ -49,7 +49,13 @@ For more information about the new APIs, see the [API flows](api-flows.html#comm
 Existing CorDapps will have to be updated to benefit from the new API.
 {{< /note >}}
 
-#### Error code knowledge base
+### Tokens SDK documentation and training
+
+The Tokens SDK documentation has been relocated to the main Corda and Corda Enterprise documentation site, along with a comprehensive training module for developers in the Corda training site.
+[Read the documentation](token-sdk-introduction.md). 
+[Explore the training module](https://training.corda.net/libraries/tokens-sdk/)
+
+### Error code knowledge base
 
 Error reports generated in Corda stack traces will include (starting from Corda 4.5 onwards) a unique code linked to a knowledge base in our documentation.
 
@@ -59,13 +65,13 @@ When a documented error is encountered, users can access the [knowledge base pag
 the knowledge base will be populated over time, as new error conditions are reported and investigated.
 {{< /note >}}
 
-#### Excluding `.jar` files from Quasar instrumentation
+### Excluding `.jar` files from Quasar instrumentation
 
 Corda uses Quasar to instrument flows, which makes it possible to resume a flow from a checkpoint. However, the Quasar instrumentation causes `OutOfMemoryError` exceptions to occur when certain `.jar` files are loaded as dependencies.
 
 To resolve this issue, we have added the new node configuration option `quasarExcludePackages`, which allows you to list packages that are to be excluded from the Quasar instrumentation. See [Node configuration](corda-configuration-fields.md#quasarexcludepackages) for more information.
 
-#### `RestrictedEntityManager` and `RestrictedConnection`
+### `RestrictedEntityManager` and `RestrictedConnection`
 
 To improve reliability and prevent user errors, we have modified the database access provided via JDBC and `EntityManager` to block access to functions that may corrupt flow checkpointing. As a result, it is now impossible to mistakenly call rollback inside the raw vault observer transaction, or to close the database connection prematurely.
 
@@ -74,17 +80,17 @@ The full list of blocked functions can be found below:
 - [Restricted connections](api-persistence.md#restricted-control-of-connections).
 - [Restricted entity managers](api-persistence.md#restricted-control-of-entity-managers).
 
-#### Updated Dockerform task
+### Updated Dockerform task
 
 We have updated our `Dockerform` [local development task](`generating-a-node.md`) plug-in to use PostgreSQL as the chosen external database.
 
-### Platform version change
+## Platform version change
 
 The platform version of Corda 4.5 has been bumped up from 6 to 7 due to the addition of the new flow framework APIs `sendAll` and `sendAllMap`, which can be used to send messages to multiple counterparties with improved performance.
 
 For more information about platform versions, see [Versioning](versioning.md).
 
-### Fixed issues
+## Fixed issues
 
 * We have fixed an issue where the deserialisation of throwables did not support [evolution](serialization-default-evolution.md), which made it difficult to add constructor parameters in new versions or to rename a property [[CORDA-3316](https://r3-cev.atlassian.net/browse/CORDA-3316)].
 * We have fixed an issue where the implementation of `FieldInfo.notEqual` in `QueryCriteriaUtils` was the same as `FieldInfo.Equal` [[CORDA-3394](https://r3-cev.atlassian.net/browse/CORDA-3394)].
