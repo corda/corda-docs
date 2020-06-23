@@ -9,121 +9,195 @@ tags:
 - notes
 - enterprise
 title: Corda Enterprise release notes
-weight: 1
+weight: 100
+
 ---
 
 
-# Corda Enterprise Release notes
+# Corda Enterprise release notes
 
 
-## Corda Enterprise 4.4
+## Corda Enterprise 4.5 release overview
 
-This release extends the [Corda Enterprise 4.3 release](https://docs.corda.r3.com/releases/4.3/release-notes-enterprise.html)
-with further performance, resilience and operational improvements.
+This release extends the [Corda Enterprise 4.4 release](../4.4/release-notes-enterprise.md) with further performance, resilience, and operational improvements.
 
-Corda Enterprise 4.4 supports Linux for production deployments, with Windows and macOS support for development and demonstration purposes only. Please refer to product documentation for details.
+Corda Enterprise 4.5 supports Linux for production deployments, with Windows and macOS support for development and demonstration purposes only. See the Corda Enterprise [platform support matrix](platform-support-matrix.md) for more information.
 
-Corda Enterprise 4.4 is operationally compatible with Corda (open source) 4.x and 3.x, and Corda Enterprise 4.3, 4.2, 4.1, 4.0 and 3.x, while providing enterprise-grade features and performance.
+Corda Enterprise 4.5 is operationally compatible with Corda (open source) 4.x and 3.x, and Corda Enterprise 4.4, 4.3, 4.2, 4.1, 4.0, and 3.x. See the [Corda (open source) release notes](../../corda-os/4.5/release-notes.md) for more information.
 
+## New features and enhancements
 
-### Key new features and components
+### Performance improvements
 
+As part of Corda Enterprise 4.5 we have introduced significant performance enhancements. Our main focus was to improve latency across multiple areas of the platform.
 
-#### Corda Open Core
+We have reduced the latency of `FinalityFlow` and `CollectSignaturesFlow`. This was achieved by parallelising various areas of the platform, such as backchain resolution, collection of signatures, and broadcast of finalised transaction to peers. Note that no CorDapp changes are required to benefit from these changes.
 
+We have introduced [new flow framework APIs](cordapps/api-flows.md#communication-between-parties) (`sendAll`/`sendAllMap`), which can be used to send messages to multiple counterparties with improved performance. Previously, a flow was able to send messages to multiple counterparties by using the [send API](cordapps/api-flows.md#send) once for each counterparty. These new APIs can now be used to achieve the same with better performance, which comes from a smaller number of suspensions and checkpoints.
 
-Starting with Corda Enterprise 4.4, Corda Enterprise and Open Source share the same core and API libraries - the Enterprise version
-now has a binary dependency on the matching Open Source release. This reduces maintenance overhead, and improves API compatibility
-and interoperability between the Open Source and Enterprise versions.
+{{< note >}}
+Existing CorDapps will have to be updated to benefit from the new API.
+{{< /note >}}
 
-This change has some implications on the upgrade process (see “Upgrade Notes” section later on).
-
-
-
-#### Further Hardware Security Module (HSM) support
+We have introduced compression of messages exchanged between nodes during flows which can improve performance in terms of both latency and throughput. The performance improvement gained depends upon environmental factors, such as network configuration or hardware specification. This option is enabled by default but can be disabled if desired via the `enableP2PCompression` [node configuration option](node/setup/corda-configuration-fields.md#enablep2pcompression).
 
 
-This release adds support for storing the node’s CA and legal identity key in a [nCipher nShield Connect](https://www.ncipher.com/products/general-purpose-hsms/nshield-connect) HSM.
-Please refer to the associated section of the cryptoservice-configuration page for more details.
+### Corda Enterprise images on DockerHub
 
-We also have extended the set of HSMs available for the storage of a highly-available notary’s shared service key. The notary’s shared service key can now be stored in the following HSM types:
+Official Corda Enterprise Docker images are now available directly on [DockerHub](https://hub.docker.com/u/corda).
 
+Furthermore, we have updated our `Dockerform` [local development task](node/deploy/generating-a-node.md) to make use of the new Docker images and to default to using PostgreSQL as the chosen node database.
 
-* Utimaco
-* Gemalto Luna
-* nCipher
+{{< note >}}
+To run the Corda Enterprise images, the Corda Enterprise evaluation must be programmatically accepted via a dedicated environment variable. See the [official Corda Docker image](docker-image.md) documentation section for more information.
+{{< /note >}}
 
+### New Azure cloud templates
 
+To facilitate deployment and testing of Corda in a cloud environment, we have created new cloud templates leveraging Microsoft’s Azure Cloud Computing Platform. The templates are available in the Azure marketplace and can be used to:
 
-#### Performance improvements
+* Generate a complete Corda network (including the Corda Enterprise Network Manager and one or more nodes)
+* Add a new Corda Enterprise node to an existing network
 
+These templates are designed to be lightweight and targeted as a development tool to help test CorDapps quickly within an existing network. The templates leverage Docker and Kubernetes under the hood, and allow users to bundle their own CorDapps into node containers to speed the set-up.
 
-This release introduces an optimisation for sharing transaction backchains. Corda Enterprise nodes can request backchain items in bulk instead of one at a time (the configuration property `backchainFetchBatchSize` can be used to define the size of the batch).
+{{< note >}}
+The templates cannot be used to create highly-available nodes or set up nodes protected by the Corda Firewall.
+{{< /note >}}
 
-Responding nodes (Enterprise or Open Source) running at platform version >= 6 will supply backchain items in bulk up to half of the network’s allowed maximum message size (minimum one item; items exceeding the limit are sent in subsequent batches). Nodes running on older platform version will still supply backchain items one at a time.
+See the [one-click developer test environment](node/deploy/oneclick-developer-test-environment.md) documentation section for more information.
 
-The release also includes the ability to configure the timeout and buffer size that ActiveMQ Artemis uses to flush produced messages to disk and send acknowledgements back to the client. This is exposed via a set of additional node configuration properties (`journalBufferTimeout`, `journalBufferSize` and `brokerConnectionTtlCheckIntervalMs`). Optimizing these values for your particular use case may result in improved latency depending on the characteristics of the hardware infrastructure.
+### Further Hardware Security Module (HSM) support
 
+Corda Enterprise 4.5 introduces the ability to use AWS CloudHSM to secure the cryptographic keys used by a node. Legal identity, TLS Firewall and Confidential Identity keys can now all be stored in an AWS HSM.
 
+See the [platform support matrix](platform-support-matrix.md) documentation section for more information.
 
-#### HA Notary registration process improvements
+### Collaborative Recovery CorDapps for disaster recovery
 
+Corda Enterprise 4.5 introduces a new suite of utility CorDapps that can help you safely, and privately reconcile and recover ledger data lost in a disaster scenario. 
 
-We have introduced a set of improvements to make it easier to register a highly-available notary onto a Corda network:
+The 'LedgerSync` CorDapp can be used to routinely check the ledger for data inconsistencies between nodes, without compromising security. In the rare event that an inconsistency is discovered, the CorDapp `LedgerRecover` can be deployed in either Automatic recovery or Manual recovery mode (for more serious data loss) to securely recover the missing data from nodes across the network. 
 
+See the [Collaborative Recovery](node/collaborative-recovery/introduction-cr.md) documentation section for more information.
 
-* The keystore containing the notary identity key that is generated during registration is given a name that clearly disambiguates it from a regular node keystore
-* The notary can now be registered using its X500 name, as an alternative to providing a node info file. This allows the notary to be added to the network parameters before the notary is registered, and avoids the need to copy the node info file around between notary workers
-* HA notary workers can retrieve the notary’s service certificate from the network map service, avoiding the need to manually copy it around between the various workers
-* HA notary workers check they have access to the shared notary service key and certificate before they register with the notary
+#### The `LedgerSync` CorDapp as a stand alone tool
 
+The `LedgerSync` CorDapp is part of the Collaborative Recovery CorDapps, however it can be run as a standalone tool as well.
 
+It safely and privately highlights the differences between the common ledger data held by two nodes in the same Business Network.
+A peer running the CorDapp can be alerted to missing transactions. This procedure is called **Reconciliation**.
 
-#### Corda Health Survey improvements
+The CorDapp is designed to diagnose ledger inconsistencies caused by either of the following two events:
+* A disaster affecting a node’s relational datastore.
+* More rarely, a hardware or connectivity fault.
 
+`LedgerSync` can be run either on demand or on a regular basis. The app contacts all peers of the initiating node that are on the same business network, and produces a report detailing if all transactions relevant to both the node and the target peers, held in the initiating node’s ledger (transactions are considered relevant to a node if it was involved as either state participant or owner). If `LedgerSync` finds that the initiating tool is missing any relevant transaction, it flags the discrepancy to the operator, who can then proceed to recover the missing data.
 
-We have improved the Corda Health Survey tool to support a fuller range of node commissioning tasks, including:
+`LedgerSync` is designed to be compliant with the Corda privacy model. It does not share any transaction information with network peers that shouldn’t already have access to it.
 
-
-* Verifying connectivity with other peers and Notaries
-* Validating more complex deployments of Corda Enterprise (including HA node-Firewall combinations)
-* Further connectivity checks on network infrastructure (check CRL endpoint via the Bridge)
-* Further validation of node functionality (RPC connectivity)
-* Warning operators that the node or Firewall configuration files are not obfuscated
-
-Furthermore, we have improved the overall usability of the tool by adding support for running the tool via RPC.
-
-The new version of the tool can only be used on Corda Enterprise 4.4 (and above) nodes. Peer connectivity checks can target any node or Notary running on the same network.
-
-
-
-#### Configuration Obfuscator improvements
-
-
-The Configuration Obfuscator has been improved to:
-
-
-* Use a more robust key derivation function (PBKDF2 with HMAC-SHA256)
-*
-    * keyboard input (stdin)
-    * Command-line
-    * Environment variables
+See the `LedgerSync` [documentation section](node/collaborative-recovery/ledger-sync.md) for more information.
 
 
 
-The new version of the tool is also able to de-obfuscate files obfuscated with older versions.
 
-The new version of the tool can only be used with Corda Enterprise 4.4 (and above) node and Firewall configuration files.
+### HA Notary readback queue
 
+Each Notary worker now has a readback queue. This queue collects recently-spent states, then double-checks that they have correctly been recorded as spent in the Notary database. If this mechanism detects an inconsistency, an error is recorded in the worker’s log file, and a JMX metric for unpersisted DB records is updated.
 
+See the [database monitoring agent](notary/notary-monitoring.md) documentation section for more information.
 
-### Known issues
+### Notary double-spend tool
 
+A double-spend occurs when a state that the notary has marked as spent is used as input to a new transaction. Notaries will reject transactions that attempt double-spends.
 
-### Upgrade notes
+Corda Enterprise 4.5 introduces the `Spent State Audit Tool` - a new command-line tool that enables notary operators to obtain a list of transactions that attempted to double-spend a state. The information provided by the tool can be used to undertake root cause analysis on a double-spend attempt that has occurred on the network.
 
-From Corda Enterprise 4.4 onwards, we are moving towards an open core strategy. Common APIs shared by Corda Enterprise will only be available in Corda Open Source. Therefore, any CorDapps written against Corda Enterprise 4.4 or later will have to depend on the open source version of `corda-core`.
+Please consult the `Spent State Audit Tool` [documentation](notary/spent-state.md) section for more information.
 
-As per previous major releases, we have provided a comprehensive upgrade notes ([Upgrading CorDapps to Corda Enterprise 4.4](app-upgrade-notes-enterprise.md)) to ease the upgrade
-of CorDapps to Corda Enterprise 4.4.
+{{< note >}}
+A change in the notary database schema is required to run the tool - see the [documentation](notary/spent-state.md) for details.
+{{< /note >}}
 
+#### Metering improvements
+
+The [Metering Collector CorDapps](metering-collector.md) have been extended to request a summary of Corda Enterprise usage from one or more other participants on the network via the flow framework. This feature is designed to support Business Network Operators (BNOs) and comes with strong built-in privacy controls to ensure that each user has to opt in to sharing their information.
+
+### RPC auditing
+
+Corda Enterprise nodes now maintain an audit trail of RPC usage. Whenever a user attempts to perform an RPC call, the information will be recorded by the node in an off-ledger database table. The information can be downloaded locally in CSV or JSON format by an authorised user via a dedicated RPC operation.
+
+See the [RPC Audit Collection Tool](rpc-audit-collector.md) documentation section for more information.
+
+### Monitoring
+
+Our documentation on monitoring has been revamped and now includes [improved guidance](node/operating/node-administration.md#monitoring-your-node) for node operators.
+
+Furthermore, Corda Enterprise nodes expose additional metrics. The list of all metrics exposed by the node is available [here](node-metrics.md).
+
+We have also provided a list of [common node monitoring scenarios](node/operating/monitoring-scenarios.md).
+
+### Corda Enterprise Configuration Obfuscator
+
+We have unified the [configuration obfuscation](tools-config-obfuscator.md) tools for Corda Enterprise and the Corda Enterprise Network Manager under a single `.jar` file. The new tool provides the same level of functionality of its predecessors.
+
+#### Security updates
+
+The following libraries have been updated:
+
+* `netty` updated to [4.1.46.Final](https://github.com/netty/netty/releases/tag/netty-4.1.46.Final)
+* `tcnative` updated to [2.0.29.Final](https://github.com/netty/netty-tcnative/releases/tag/netty-tcnative-parent-2.0.29.Final)
+
+### Tokens SDK documentation and training
+
+The Tokens SDK documentation has been relocated to the main Corda and Corda Enterprise documentation site, along with a comprehensive training module for developers in the Corda training site. 
+
+[Read the documentation](cordapps/token-sdk-introduction.md). 
+[Explore the training module](https://training.corda.net/libraries/tokens-sdk/)
+### Other improvements
+
+* All database columns containing datestamps have been standardised to use UTC (the time zone used was previously inconsistent).
+* The HSM name used in the HA Utilities `--bridge-hsm-name` and `--float-hsm-name` command-line parameters should now exactly match `cryptoServiceName`, as described [here](cryptoservice-configuration.md).
+
+## Platform version change
+
+The platform version of Corda Enterprise 4.5 has been bumped up from 6 to 7 due to the addition of the new flow framework APIs `sendAll` and `sendAllMap`, which can be used to send messages to multiple counterparties with improved performance.
+
+For more information about platform versions, see [Versioning](../../corda-os/4.5/versioning.md).
+
+## Fixed issues
+
+* Fixed an issue where the implementation of `FieldInfo.notEqual` in `QueryCriteriaUtils` was the same as `FieldInfo.Equal`.
+* We have fixed an issue where CorDapp custom serialisers were not supported in `MockNetwork`, causing unit tests of flows to fail without using `Driver`.
+* We have fixed an issue where serialising a `FlowExternalOperation`, which had maintained a reference to a `FlowLogic`, could throw an `IndexOutOfBoundsException` error when constructing a `FlowAsyncOperation` from a `FlowExternalOperation`.
+* We have fixed an issue where `ServiceHub.signInitialTransaction()` threw undeclared checked exceptions (`TransactionDeserialisationException` and `MissingAttachmentsException`.
+* We have standardised all node database timestamps to use the UTC time zone.
+* We have fixed issues with the existing checkpoint iterator serialisers related to null handling and the use of `equals` when restoring the iterator position.
+* We have fixed an issue where Corda failed to deserialise Enums with custom `toString()` methods into the DJVM sandbox.
+* We have fixed an issue where Corda's internal `providerMap` field in `core`, which is supposed to be private, was both public and mutable.
+* We have fixed an issue with failing session init messages when the state machine replayed them from the Artemis queue in order to retry flows that had not yet persisted their first checkpoint, due to problems with database connectivity.
+* We have fixed an issue where the `com.r3.corda.enterprise.settlementperftestcordapp.flows.SwapStockForCashFlowTest` failed for Oracle 11 due to failed migration.
++ * We have fixed an issue where `Level.WARN` and `Level.FATAL` logs did not include the original log message after updating them to extract more information from the stack traces.
+* We have fixed an issue where a race condition would occur when a flow hung while waiting for the ledger to commit a transaction with hash even when that transaction was present in the database.
+* We have fixed an issue where no CRL check was done when using embedded Artemis, which could cause nodes to continue to be involved in transactions after they had been blacklisted.
+* We have fixed an issue with inconsistent error messages on starting components if HSM was not available.
+* We have fixed an issue where a Vault Query using `LinearStateQueryCriteria(linearId = emptyList())` would translate into an illegal SQL statement on PostgreSQL and would throw an exception.
+* We have added a custom serialiser (`IteratorSerializer`) that can fix broken iterators in order to resolve an issue with a `ConcurrentModificationException` in `FetchDataFlow`.
+* We have fixed an issue with failing `VaultObserverExceptionTest` tests on Oracle.
+* We have fixed an issue where the “Registering as a new participant with a Corda network” message during node registration using the node shell was not centred.
+* We have fixed an issue with licensing for the Collaborative Recovery CorDapps.
+* We have removed stack trace for `level.INFO` and `level.WARN` logs while running `LedgerRecover` with `LedgerSync`.
+* We have fixed an issue where an unhandled exception was thrown when a user attempted to start the `InitiateManualRecoveryFlow` flow from the node when the recovery had already been initialised.
+* We have fixed an issue where an unhandled exception was thrown when `isRequester` had a wrong value while running `LedgerRecover`.
+* We have fixed an issue where Corda Enterprise did not provide information about the flow when a non-started manual `LedgerRecover` was requested by the node.
+* We have ensured that the documentation about `LedgerRecover` clearly explains that `TimeStamps` for recovered transactions are changed compared to the original transactions.
+* We have fixed an issue where the `ExportTransactionsFlow` flow could get stuck while `LedgerRecover` was running.
+* We have fixed an issue where manual `LedgerRecover` did not work for PostgreSQL 10.
+* We have added a primary key to the `NODE_PROPERTIES` table in order to prevent duplicate inserts.
+* We have fixed an issue where the Corda Firewall load was stuck when the connection between the Firewall Load Testing tool and Corda Firewall was disrupted.
+* We have fixed a production environment issue occurring where notaries became unresponsive after a Java upgrade to Zulu 8.46.0.19.
+* We have fixed an issue where the Corda Health Survey tool ignored HTTP 301 and 404 response codes when resolving network information.
+* We have fixed an issue where the Corda Health Survey tool did not perform HTTP / HTTPS network map redirections.
+* We have fixed an issue with a flaky test where `net.corda.coretests.transactions.AttachmentsClassLoaderTests.attachment` was still available in verify after forced garbage collection.
+* We have moved the `backchainFetchBatchSize` option, used for bulk backchain resolution, into the correct Corda Enterprise-specific tuning section of the [Node configuration](node/setup/corda-configuration-file.md) (this section contains options that should be changed only in consultation with R3).
+* We have fixed an issue where sensitive information was exposed as plain text in logs and the shell terminal when using the [Database Management Tool](database-management-tool.md).

@@ -4,15 +4,12 @@ menu:
 tags:
 - release
 - notes
-title: Release notes and changelog
+title: Release notes
 weight: 4
 ---
 
 
-# Release notes and changelog
+# Release notes
 
-* [Corda release notes](release-notes.md)
-* [Corda Enterprise Release notes](release-notes-enterprise.md)
-* [Corda Enterprise changelog](changelog-enterprise.md)
-
-
+* [Corda Enterprise 4.5 release notes](release-notes-enterprise.md)
+* [Corda (open source) 4.5 release notes](../../corda-os/4.5/release-notes.md)

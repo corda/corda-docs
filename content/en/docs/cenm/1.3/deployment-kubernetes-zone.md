@@ -30,6 +30,7 @@ helm install cenm-zone auth --set idmanPublicIP=X.X.X.X --set prefix=cenm --set 
 
 ## Configuration
 
+{{< table >}}
 | Parameter                     | Description                                              | Default value         |
 | ----------------------------- | -------------------------------------------------------- | --------------------- |
 | `bashDebug`                   | Display additional information while running bash scripts (useful while investigating issues) | `false` |
@@ -51,5 +52,6 @@ helm install cenm-zone auth --set idmanPublicIP=X.X.X.X --set prefix=cenm --set 
 | `authService.port`            | Definition of the Auth Service | `8081`
 | `sleepTimeAfterError`         | Sleep time (in seconds) after an error occurred | `120` |
 | `logsContainersEnabled`       | Enable container displaying live logs | `true`
+{{< /table >}}
 
 For additional information on database connection details, refer to the official documentation: [database documentation](config-database.md).

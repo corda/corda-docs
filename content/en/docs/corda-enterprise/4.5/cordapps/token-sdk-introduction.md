@@ -3,19 +3,19 @@ date: '2020-05-10T12:00:00Z'
 menu:
   corda-enterprise-4-5:
     identifier: corda-enterprise-4-5-token-sdk
-    name: "Token SDK"
+    name: "Tokens SDK"
     parent: corda-enterprise-4-5-cordapps
 tags:
 - building
 - against
 - release
-title: Token SDK
+title: Tokens SDK
 weight: 15
 ---
 
-# The Token SDK
+# The Tokens SDK
 
-The Token SDK provides you with the fastest and easiest way to create tokens that represent any kind of asset on your network. This asset can be anything you want it to be - conceptual, physical, valuable or not. You can create a token to represent something outside of the network, or something that only exists on the ledger - like a Corda-native digital currency.
+The Tokens SDK provides you with the fastest and easiest way to create tokens that represent any kind of asset on your network. This asset can be anything you want it to be - conceptual, physical, valuable or not. You can create a token to represent something outside of the network, or something that only exists on the ledger - like a Corda-native digital currency.
 
 With the SDK, you can define your token and its attributes, then add functionality to a CorDapp so the token can be **issued**, **moved**, and **redeemed** on a ledger.
 
@@ -29,7 +29,7 @@ Use this guide to:
 
 {{< note >}}
 
-If you are new to Corda, and want a guided tutorial on using the Token SDK for the first time, take a look at the [Corda training section on tokens](https://training.corda.net/libraries/tokens-sdk/).
+If you are new to Corda, and want a guided tutorial on using the Tokens SDK for the first time, take a look at the [Corda training section on tokens](https://training.corda.net/libraries/tokens-sdk/).
 
 {{< /note >}}
 
@@ -46,14 +46,14 @@ If you have developed a CorDapp that uses the Tokens SDK V1.1, you can upgrade t
 4. Communicate the change to parties consuming your CorDapp accordingly, along with your recommended steps for upgrading.
 
 
-## What's inside the Token SDK
+## What's inside the Tokens SDK
 
-The Token SDK is contained in two `.jar`  files which includes all the required dependencies for your CorDapp, including:
+The Tokens SDK is contained in two `.jar`  files which includes all the required dependencies for your CorDapp, including:
 
 * **Contracts**, which contains the base token types, states and contracts needed to create a token, including token type definitions for fiat and digital currencies.
 * **Workflows**, which contains the flows for issuing, moving, redeeming tokens, and selection workflows, which allow a party to select which source of fungible tokens they will use to pay with in a transaction.
 
-As the **Contracts** `.jar` file contains the ability to define and create tokens, and the **Workflows** `.jar` file contains the flows required to use them, you must add both `.jar` files to your CorDapp's folder in order to use the Token SDK.
+As the **Contracts** `.jar` file contains the ability to define and create tokens, and the **Workflows** `.jar` file contains the flows required to use them, you must add both `.jar` files to your CorDapp's folder in order to use the Tokens SDK.
 
 ## Choose the anatomy of your token
 
@@ -77,15 +77,15 @@ Before using the SDK to create a token, you need to have a clear understanding o
 | Diamonds | Non-Fungible | Evolvable | Off-ledger asset |
 {{< /table >}}
 
-## Create tokens using the Token SDK
+## Create tokens using the Tokens SDK
 
 When you know what kind of token you want to introduce into the network, you can start defining it. The requirements for each token depend on whether it is fungible, and whether it can evolve over time.  
 
 Use the list below to understand what needs to be included in the token you want to create.
 
-## The process of using the Token SDK  
+## The process of using the Tokens SDK  
 
-Once you have established what type of token you want to create, you can use the Token SDK to perform the following key tasks:
+Once you have established what type of token you want to create, you can use the Tokens SDK to perform the following key tasks:
 
 * **Define** your token. Using the readymade utilities contained in the contract `.jar` file, you can define all the required attributes and custom attributes of your tokens.
 
@@ -234,7 +234,7 @@ To create and issue a fungible token, you must ensure it has:
 
 Fungible tokens can be split using a flow initiated by the **Move** command. This allows a party to send some of the value of a single token to more than one recipient. Just like you can split a 10 USD bill between two people (as long as someone has change).
 
-In the below example, Alice instantiates a token representing a BitCoin. This token is generated using the Token SDK's built-in `money` library.
+In the below example, Alice instantiates a token representing a BitCoin. This token is generated using the Tokens SDK's built-in `money` library.
 
 {{< tabs name="tabs-1234" >}}
 {{% tab name="kotlin" %}}
@@ -278,14 +278,14 @@ val myBaseBallCardToken: NonFungibleToken = NonFungibleToken(
 
 ## Write the flows for your token
 
-You can use the Token SDK to create flows for your tokens in the following ways:
+You can use the Tokens SDK to create flows for your tokens in the following ways:
 
 * **Utility methods** - methods by which you can compose your own flows.
 * **Subflows** - ready made processes that need to be initiated by another flow.
 * **RPC Enabled flows** - out-of-the-box flows that have been produced for testing purposes. These may not be suitable for commercial use.
 
 {{< attention >}}
-All of the utility methods, subflows and RPC enabled flows for Token SDK have been annotated with @JVMOverloads to ensure the appropriate Java constructors are generated where the source Kotlin constructor contains nullable arguments. This ensures a seamless experience when using the Tokens SDK from a Java code base.
+All of the utility methods, subflows and RPC enabled flows for Tokens SDK have been annotated with @JVMOverloads to ensure the appropriate Java constructors are generated where the source Kotlin constructor contains nullable arguments. This ensures a seamless experience when using the Tokens SDK from a Java code base.
 {{< /attention >}}
 
 ### Utility method - Issue
@@ -714,7 +714,7 @@ Tokens are usually constructed before calling this flow. This flow is to be used
 
 This flow:
 
-1. Creates a `TransactionBuilder` with the preferred notary, which is set in the token SDK config file.
+1. Creates a `TransactionBuilder` with the preferred notary, which is set in the Tokens SDK config file.
 
 2. Adds the requested set of `tokensToIssue` as outputs to the transaction builder and adds `IssueTokenCommand`s for each group of states, grouped by `IssuedTokenType`.
 
@@ -1235,19 +1235,19 @@ constructor(
 }
 ```
 
-## Install the Token SDK
+## Install the Tokens SDK
 
 Depending on your plan for issuing tokens onto your network - whether you are ready to deploy tokens in an enterprise scenario or experimenting - there are two different ways to install the Tokens SDK:
 
-* [Use the kotlin token SDK template](###get-started-using-the-kotlin-token-sdk-template) template to get started and issue tokens locally. This is a great way to learn about the Token SDK through practical application, but may not be suitable for your enterprise deployment.
+* [Use the kotlin Tokens SDK template](###get-started-using-the-kotlin-token-sdk-template) template to get started and issue tokens locally. This is a great way to learn about the Tokens SDK through practical application, but may not be suitable for your enterprise deployment.
 * [Clone the latest repo](###build-token-sdk-against-corda-release-branch).
 
 
 For each of the these steps, follow the instructions below.
 
-### Create a local testing environment using the Kotlin Token SDK template
+### Create a local testing environment using the Kotlin Tokens SDK template
 
-To get started quickly with the Token SDK, use the **Tokens template** which is a branch on the kotlin version of the **CorDapp template**.
+To get started quickly with the Tokens SDK, use the **Tokens template** which is a branch on the kotlin version of the **CorDapp template**.
 
 To use the tokens template:
 
@@ -1261,10 +1261,10 @@ To use the tokens template:
 
 2. Open the token-template branch of the repo with your preferred coding tool. The recommended tool is IntelliJ because it works well with Gradle.
 
-You now have a template repo with the token SDK dependencies
-included and some example code to illustrate how to use the token SDK.
+You now have a template repo with the Tokens SDK dependencies
+included and some example code to illustrate how to use the Tokens SDK.
 
-**To test your token SDK set up locally:**
+**To test your Tokens SDK set up locally:**
 
 1. Use command line to create three nodes:
 
@@ -1282,9 +1282,9 @@ included and some example code to illustrate how to use the token SDK.
 See the token template code [here](https://github.com/corda/cordapp-template-kotlin/tree/token-template)
 for more information.
 
-### Build Token SDK against Corda release branch
+### Build Tokens SDK against Corda release branch
 
-You can build the Token SDK against the master branch with the following commands:
+You can build the Tokens SDK against the master branch with the following commands:
 
 ```
 git clone https://github.com/corda/token-sdk.git
@@ -1298,7 +1298,7 @@ Checkout the version of Corda you wish to install. In the example above master i
 
 Then run `./gradlew clean install` from the root directory.
 
-### Add Token SDK dependencies to an existing CorDapp
+### Add Tokens SDK dependencies to an existing CorDapp
 
 1. Add a variable for the tokens release group and the version you
 wish to use. Set the Corda version to the one you have installed locally:
@@ -1347,4 +1347,4 @@ in each module of your CorDapp. For contract modules add:
         cordapp("$tokens_release_group:tokens-workflows:$tokens_release_version")
     }
 ```
-You have installed the Token SDK.
+You have installed the Tokens SDK.

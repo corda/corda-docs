@@ -18,6 +18,8 @@ weight: 100
 
 Some common node monitoring scenarios are described below that you may observe when using [node metrics data](../../node-metrics.md).
 
+One important reason to monitor a node is to decide when to failover.
+
 ## Risk of `OutOfMemoryError`
 
 The `HeapMemoryUsage` attribute of the `java.lang:type=Memory` [MBean](https://docs.oracle.com/javase/tutorial/jmx/mbeans/index.html) contains a [MemoryUsage](https://docs.oracle.com/javase/8/docs/api/java/lang/management/MemoryUsage.html) object that represents a snapshot of heap memory usage. The value of the `used` variable in this object indicates the amount of memory currently used, and the value of the `max` variable indicates the maximum amount of memory that can be used for memory management.
@@ -65,3 +67,7 @@ You can combine the properties of this metric to detect if signing a transaction
 For example, if you assume that a sufficient number of transactions have been signed during the past minute (at least three per second)in order to make a decision, you can flag up an error if 25% of the transactions took significantly longer (at least 50%) to sign than the average time it takes to sign a transaction. The example below shows how scenario would look like using the properties of the metric:
 
 `oneMinuteRate >3.0, 75thPercentile() > mean * 1.5`
+
+## Signing events
+
+The total number of signing events on the node can be found by looking at the `totalCounts` metric.

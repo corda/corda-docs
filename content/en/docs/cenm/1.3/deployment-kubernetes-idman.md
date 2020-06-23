@@ -30,6 +30,7 @@ helm install cenm-idman idman --set idmanPublicIP=X.X.X.X --set prefix=cenm --se
 
 ## Configuration
 
+{{< table >}}
 | Parameter                     | Description                                              | Default value         |
 | ----------------------------- | -------------------------------------------------------- | --------------------- |
 | `bashDebug`                   | Display additional information while running bash scripts (useful while investigating issues) | `false` |
@@ -57,5 +58,6 @@ helm install cenm-idman idman --set idmanPublicIP=X.X.X.X --set prefix=cenm --se
 | `authPort`                    | Auth Service port | `8081` |
 | `serviceRevocation.port`      | Kubernetes service port to access Identity Manager's revocation endpoint (targetPort) | `5053` |
 | `logsContainersEnabled`       | Defines whether the container displaying live logs is enabled or disabled | `true` |
+{{< /table >}}
 
 For additional information on database connection details refer to the official documentation: [database documentation](config-database.md).

@@ -5,11 +5,11 @@ menu:
     parent: corda-enterprise-4-5-token-sdk
 weight: 200
 tags:
-title: Token SDK evolvable token example
+title: Tokens SDK evolvable token example
 ---
-# Diamonds as tokens - non-fungible, evolvable tokens using the Token SDK
+# Diamonds as tokens - non-fungible, evolvable tokens using the Tokens SDK
 
-In this example workflow, the Token SDK is used to create a non-fungible, evolvable token for diamonds. A diamond cannot be split and merged, but its value and other attributes can evolve over time.
+In this example workflow, the Tokens SDK is used to create a non-fungible, evolvable token for diamonds. A diamond cannot be split and merged, but its value and other attributes can evolve over time.
 
 ## The story so far...
 
@@ -17,7 +17,7 @@ Denise is a diamond dealer. Her client, Alice wants to buy a diamond and then se
 
 Before the diamond can change hands, it must be subject to an official grading report. The grading report is maintained by GIC, and contains grading information about the diamond - it does not contain information about the holder of the diamond.
 
-The token SDK is used to create a token for the non-fungible asset, along with the required commands to ensure that the token can be bought and sold with an up-to-date record in the grading report.
+The Tokens SDK is used to create a token for the non-fungible asset, along with the required commands to ensure that the token can be bought and sold with an up-to-date record in the grading report.
 
 ## Access the example
 

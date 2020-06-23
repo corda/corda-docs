@@ -30,6 +30,7 @@ helm install nmap nmap --set shell.password="superDifficultPassword"
 
 ## Configuration
 
+{{< table >}}
 | Parameter                     | Description                                              | Default value         |
 | ----------------------------- | -------------------------------------------------------- | --------------------- |
 | `bashDebug`                   | Display additional information while running bash scripts (useful while investigating issues) | `false` |
@@ -58,5 +59,6 @@ helm install nmap nmap --set shell.password="superDifficultPassword"
 | `networkRootTruststore.password` | Password of the network trust store file | `trust-store-password` |
 | `rootAlias`                   | The alias for the root certificate within the trust store | `cordarootca` |
 | `logsContainersEnabled`       | Enable container displaying live logs | `true`
+{{< /table >}}
 
 For additional information on database connection details refer to the official documentation: [database documentation](config-database.md).

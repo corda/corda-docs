@@ -12,13 +12,13 @@ menu:
 tags:
 - legal
 - info
-title: Legal notice
+title: Third-Party Software Licence Information
 ---
-# CORDA OPEN SOURCE 4.5 THIRD-PARTY SOFTWARE NOTICES AND INFORMATION
+# Corda Open Source 4.5 third-party software notices and licence information
 
-Do Not Translate or Localize
+**Do not translate or localise.**
 
-This file is based on or incorporates material from the projects listed below (Third Party IP). R3 LLC licenses these components under the Corda Open Source software license terms. The original copyright notices and the licenses under which R3 LLC received such components are set forth below for informational purposes.  R3 LLC reserves all rights not expressly granted herein, whether by implication, estoppel or otherwise.
+This file is based on or incorporates material from the projects listed below (Third Party IP). R3 LLC licenses these components under the Corda Open Source software licence terms. The original copyright notices and the licences under which R3 LLC received such components are set forth below for informational purposes.  R3 LLC reserves all rights not expressly granted herein, whether by implication, estoppel or otherwise.
 
 1.	animal-snifferannotations
 2.	annotations
@@ -2185,7 +2185,7 @@ The precise terms and conditions for copying, distribution and modification foll
 
 TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 
-0. This License applies to any program or other work which contains a notice placed by the copyright holder saying it may be distributed under the terms of this General Public License. The "Program", below, refers to any such program or work, and a "work based on the Program" means either the Program or any derivative work under copyright law: that is to say, a work containing the Program or a portion of it, either verbatim or with modifications and/or translated into another language. (Hereinafter, translation is included without limitation in the term "modification".) Each licensee is addressed as "you".
+This License applies to any program or other work which contains a notice placed by the copyright holder saying it may be distributed under the terms of this General Public License. The "Program", below, refers to any such program or work, and a "work based on the Program" means either the Program or any derivative work under copyright law: that is to say, a work containing the Program or a portion of it, either verbatim or with modifications and/or translated into another language. (Hereinafter, translation is included without limitation in the term "modification".) Each licensee is addressed as "you".
 
 Activities other than copying, distribution and modification are not covered by this License; they are outside its scope. The act of running the Program is not restricted, and the output from the Program is covered only if its contents constitute a work based on the Program (independent of having been made by running the Program). Whether that is true depends on what the Program does.
 

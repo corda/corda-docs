@@ -15,29 +15,112 @@ title: Release notes
 ---
 
 
-# Release notes
+# Corda release notes
 
+## Corda 4.5 release overview
 
-Welcome to the Corda 4.5 release notes. Please read these carefully to understand what’s new in this release and how the features can help you. Just as prior releases have brought with them commitments to wire and API stability, Corda 4.5 comes with those same guarantees. States and apps valid in Corda 3.0 are usable in Corda 4.5.
+Welcome to the Corda 4.5 release notes.
 
-## Corda 4.5
+Please read these carefully to understand what’s new in this release and how the new features and enhancements can help you.
 
-### Changes for developers in Corda 4.5
+Just as prior releases have brought with them commitments to wire and API stability, Corda 4.5 comes with those same guarantees.
 
-#### RestrictedEntityManager and RestrictedConnection
+States and apps valid in Corda 3.0 and above are usable in Corda 4.5.
 
-To improve reliability and prevent user errors, we have modified the database access provided via JDBC and `EntityManager`s to block access to functions that may corrupt flow checkpointing. As a result, it is now impossible to mistakenly call rollback inside the raw vault observer transaction, or to close the database connection prematurely. 
+## New features and enhancements
+
+### Improved `killFlow` operations
+
+We have improved the existing [killFlow RPC operation](https://api.corda.net/api/corda-os/4.5/html/api/kotlin/corda/net.corda.core.messaging/-corda-r-p-c-ops/kill-flow.html), which allows node operators to terminate flows manually - in several ways:
+
+* When a flow is terminated, any counterparty that has an open flow session with the flow in question is notified that the flow has ended unexpectedly
+
+* Any vault soft-locks held by a flow are released when the flow is terminated
+
+* A flow can now check programmatically whether its termination has been requested. This allows a looping flow to use this API to ensure it doesn't loop indefinitely when a termination has been requested. Previously, the flow would wait until it reached the next checkpoint to decide whether to terminate, allowing deadlocks to occur (e.g. if the flow was caught in an infinite loop)
+
+### New flow APIs
+
+We have introduced new flow framework APIs `sendAll` and `sendAllMap`, which can be used to send messages to multiple counterparties with improved performance. Previously, a flow was able to send messages to multiple counterparties by using the [send API](api-flows.md#send) once for each counterparty. These new APIs can now be used to achieve the same with better performance, which comes from a smaller number of suspensions and checkpoints.
+
+For more information about the new APIs, see the [API flows](api-flows.html#communication-between-parties) documentation section.
+
+{{< note >}}
+Existing CorDapps will have to be updated to benefit from the new API.
+{{< /note >}}
+
+### Tokens SDK documentation and training
+
+The Tokens SDK documentation has been relocated to the main Corda and Corda Enterprise documentation site, along with a comprehensive training module for developers in the Corda training site.
+[Read the documentation](token-sdk-introduction.md). 
+[Explore the training module](https://training.corda.net/libraries/tokens-sdk/)
+
+### Error code knowledge base
+
+Error reports generated in Corda stack traces will include (starting from Corda 4.5 onwards) a unique code linked to a knowledge base in our documentation.
+
+When a documented error is encountered, users can access the [knowledge base page](error-codes.md) to get more information about the error. This replaces the error codes based on stack trace hashes that had been introduced in earlier versions of Corda.
+
+{{< note >}}
+the knowledge base will be populated over time, as new error conditions are reported and investigated.
+{{< /note >}}
+
+### Excluding `.jar` files from Quasar instrumentation
+
+Corda uses Quasar to instrument flows, which makes it possible to resume a flow from a checkpoint. However, the Quasar instrumentation causes `OutOfMemoryError` exceptions to occur when certain `.jar` files are loaded as dependencies.
+
+To resolve this issue, we have added the new node configuration option `quasarExcludePackages`, which allows you to list packages that are to be excluded from the Quasar instrumentation. See [Node configuration](corda-configuration-fields.md#quasarexcludepackages) for more information.
+
+### `RestrictedEntityManager` and `RestrictedConnection`
+
+To improve reliability and prevent user errors, we have modified the database access provided via JDBC and `EntityManager` to block access to functions that may corrupt flow checkpointing. As a result, it is now impossible to mistakenly call rollback inside the raw vault observer transaction, or to close the database connection prematurely.
 
 The full list of blocked functions can be found below:
 
 - [Restricted connections](api-persistence.md#restricted-control-of-connections).
 - [Restricted entity managers](api-persistence.md#restricted-control-of-entity-managers).
 
+### Updated Dockerform task
+
+We have updated our `Dockerform` [local development task](`generating-a-node.md`) plug-in to use PostgreSQL as the chosen external database.
+
+## Platform version change
+
+The platform version of Corda 4.5 has been bumped up from 6 to 7 due to the addition of the new flow framework APIs `sendAll` and `sendAllMap`, which can be used to send messages to multiple counterparties with improved performance.
+
+For more information about platform versions, see [Versioning](versioning.md).
+
+## Fixed issues
+
+* We have fixed an issue where the deserialisation of throwables did not support [evolution](serialization-default-evolution.md), which made it difficult to add constructor parameters in new versions or to rename a property [[CORDA-3316](https://r3-cev.atlassian.net/browse/CORDA-3316)].
+* We have fixed an issue where the implementation of `FieldInfo.notEqual` in `QueryCriteriaUtils` was the same as `FieldInfo.Equal` [[CORDA-3394](https://r3-cev.atlassian.net/browse/CORDA-3394)].
+* We have optimised Corda's DJVM deserialiser so that `loadForSandbox()` now returns a `Class` instead of a `LoadedClass` [[CORDA-3590](https://r3-cev.atlassian.net/browse/CORDA-3590)].
+* We have modified `CordaFuture` so that any throwable can complete it, even if exceptions that do not subclass `java.lang.Exception` are re-thrown immediately [[CORDA-3638](https://r3-cev.atlassian.net/browse/CORDA-3638)].
+* We have fixed an issue where CorDapp custom serialisers were not supported in `MockNetwork`, causing unit tests of flows to fail without using `Driver` [[CORDA-3643](https://r3-cev.atlassian.net/browse/CORDA-3643)].
+* We have fixed an issue where serialising a `FlowExternalOperation`, which had maintained a reference to a `FlowLogic`, could throw an `IndexOutOfBoundsException` error when constructing a `FlowAsyncOperation` from a `FlowExternalOperation` [[CORDA-3677](https://r3-cev.atlassian.net/browse/CORDA-3677)].
+* We have fixed an issue where `ServiceHub.signInitialTransaction()` threw undeclared checked exceptions (`TransactionDeserialisationException` and `MissingAttachmentsException` [[CORDA-3685](https://r3-cev.atlassian.net/browse/CORDA-3685)].
+* We have standardised all node database timestamps to use the UTC time zone [[CORDA-3697](https://r3-cev.atlassian.net/browse/CORDA-3697)].
+* We have fixed issues with the existing checkpoint iterator serialisers related to null handling and the use of `equals` when restoring the iterator position [[CORDA-3701](https://r3-cev.atlassian.net/browse/CORDA-3701)].
+* We have fixed an issue where Corda failed to deserialise Enums with custom `toString()` methods into the DJVM sandbox [[CORDA-3716](https://r3-cev.atlassian.net/browse/CORDA-3716)].
+* We have fixed an issue where Corda's internal `providerMap` field in `core`, which is supposed to be private, was both public and mutable [[CORDA-3758](https://r3-cev.atlassian.net/browse/CORDA-3758)].
+* We have fixed an issue with failing session init messages when the state machine replayed them from the Artemis queue in order to retry flows that had not yet persisted their first checkpoint, due to problems with database connectivity [[CORDA-3841](https://r3-cev.atlassian.net/browse/CORDA-3841)].
+* We have fixed an issue where the `com.r3.corda.enterprise.settlementperftestcordapp.flows.SwapStockForCashFlowTest` failed for Oracle 11 due to failed migration.
+* We have fixed an issue where `Level.WARN` and `Level.FATAL` logs did not include the original log message after updating them to extract more information from the stack traces.
+* We have fixed an issue where a race condition would occur when a flow hung while waiting for the ledger to commit a transaction with hash even when that transaction was present in the database.
+* We have fixed an issue where no CRL check was done when using embedded Artemis, which could cause nodes to continue to be involved in transactions after they had been blacklisted.
+* We have fixed an issue with inconsistent error messages on starting components if HSM was not available.
+* We have fixed an issue where a Vault Query using `LinearStateQueryCriteria(linearId = emptyList())` would translate into an illegal SQL statement on PostgreSQL and would throw an exception.
+* We have added a custom serialiser (`IteratorSerializer`) that can fix broken iterators in order to resolve an issue with a `ConcurrentModificationException` in `FetchDataFlow`.
+* We have fixed an issue with failing `VaultObserverExceptionTest` tests on Oracle.
+
 ## Corda 4.4
 
-Corda 4.4 lays the foundation of a new open-core approach for the Corda codebase. This involved a refactoring of the main functional components of Corda. Please consult [the CorDapp overview](cordapps/cordapp-overview.md) to get an overview of the practical impact on CorDapp development.
+Corda 4.4 lays the foundation of a new open core approach for the Corda codebase. This involved a refactoring of the
+main functional components of Corda. Please consult [the CorDapp overview](cordapp-overview.md/) to get an overview of
+the practical impact on CorDapp development.
 
-Furthermore, Corda 4.4 introduces improvements to the flow framework API, a new diagnostic `ServiceHub` call and includes a number of security enhancements.
+Furthermore, Corda 4.4 introduces improvements to the flow framework API and a new diagnostic `ServiceHub` call, and includes
+a number of security enhancements.
 
 
 ### Changes for developers in Corda 4.4
@@ -45,15 +128,21 @@ Furthermore, Corda 4.4 introduces improvements to the flow framework API, a new 
 
 #### Flows API improvements
 
-Corda 4.4 introduces a new `FlowLogic.await` API that allows a CorDapp developer to suspend their flow when executing user-defined long-running operations (e.g. call-outs to external services). This prevents these long-running operations from blocking the flow thread, allowing other flows to progress in the interim. Previously, these operations had to be executed synchronously, blocking the flow thread.
+Corda 4.4 introduces a `FlowLogic.await` API, allowing a CorDapp developer to suspend a flow when executing
+user-defined long-running operations, such as call-outs to external services. The `FlowLogic.await` API prevents these
+long-running operations from blocking the flow thread, allowing other flows to progress. Previously, these operations
+had to be executed synchronously, blocking the flow thread.
 
-The CorDapp developer can decide whether to run these asynchronous flow operations in a dedicated thread pool, or to handle the threading themselves directly.
+The CorDapp developer can decide whether to run these asynchronous flow operations in a dedicated thread pool, or to
+handle the threading themselves directly.
 
-Note that as before, the flow framework suspends automatically for certain operations (e.g. when waiting to receive a message from a counterparty). These suspensions do not have to be triggered explicitly.
+Note that as before, the flow framework suspends automatically for certain operations (for example, when waiting to receive a
+message from a counterparty). These suspensions do not have to be triggered explicitly.
 
 The node operator can configure the number of threads in the threadpool to dedicate to external operations.
 
-Corda 4.4 also introduces a new `HospitalizeFlowException` exception type that, when thrown, causes a flow to halt execution and send itself to the flow hospital for observation. The flow will automatically be retried on the next node start.
+Corda 4.4 also introduces a new `HospitalizeFlowException` exception type that, when thrown, causes a flow to halt
+execution and send itself to the flow hospital for observation. The flow will automatically be retried on the next node start.
 
 This exception gives user code a way to retry a flow from its last checkpoint if a known intermittent failure occurred.
 
@@ -79,25 +168,23 @@ Corda 4.4 also provides a callback (`AppServiceHub.register`) to allow Corda ser
 
 #### Changes to integration testing
 
-The “out-of-process” nodes spawned through Driver DSL (see [Integration testing](tutorial-integration-testing.md)) will no longer accidentally contain your CorDapps on their application classpath. The list of items that will be automatically filtered out include:
+The "out-of-process" nodes spawned through Driver DSL (see [Integration testing](tutorial-integration-testing.md)) will
+no longer accidentally contain your CorDapps on their application classpath. The following items will be filtered out:
 
-
-* Directories (only regular files are allowed)
-* Jars with Maven classifiers `tests` or `test`
-* Jars with any Cordapp attributes in their manifests (any of those listed in [Building and installing a CorDapp](cordapp-build-systems.md) or `Target-Platform-Version` and `Min-Platform-Version` if both are present)
-* Jars with the `Corda-Testing` attribute in their manifests. The manifest of the following artifacts has been updated to include the `Corda-Testing` attribute:
-
+* Directories (only files are allowed)
+* .jar files with Maven classifiers `tests` or `test`
+* .jar files with any CorDapp attributes in their manifests (any of those listed in [Building and installing a CorDapp](cordapp-build-systems.md) or `Target-Platform-Version` and `Min-Platform-Version` if both are present)
+* .jar files with the `Corda-Testing` attribute in their manifests. The manifest of the following artifacts has been
+updated to include the `Corda-Testing` attribute:
     * `corda-node-driver`
     * `corda-test-utils`
     * `corda-test-common`
     * `corda-test-db`
     * `corda-mock`
+* Any files with names beginning with `corda-mock`, `junit`, `testng` or `mockito`
 
-
-
-* Files whose names start with `corda-mock`, `junit`, `testng` or `mockito`
-
-Some of your existing integration tests might implicitly be relying on the presence of the above files, so please keep this in mind when upgrading your version of Corda.
+Some of your existing integration tests might implicitly be relying on the presence of the above files, so please keep
+this in mind when upgrading your version of Corda.
 
 
 ### Platform version change
@@ -112,7 +199,7 @@ For more information on platform version, please see [Versioning](versioning.md)
 Changes introduced in Corda 4.4 to increase ledger integrity have highlighted limitations regarding database transactions. To prevent flows from continuing to process after a database transaction has failed to commit or suffered from a pre-commit persistence exception, extra database flushes have been added. These extra flushes can cause exceptions to be thrown where they were not before (or cause different exception types to be raised compared to Corda 4.3 or previous versions). In general, CorDapp developers should not expect to be able to catch exceptions thrown during a database transaction and then continue with further DB operations as part of the same flow. A safer pattern involves allowing the flow to fail and be retried
 
 
-### Issues Fixed
+### Fixed Issues
 
 
 * A failure response from Doorman during initial registration causes a class cast exception [[CORDA-2744](https://r3-cev.atlassian.net/browse/CORDA-2744)]
@@ -147,7 +234,7 @@ Changes introduced in Corda 4.4 to increase ledger integrity have highlighted li
 * Deserialization using the DJVM creates too many SerializerFactory objects [[CORDA-3552](https://r3-cev.atlassian.net/browse/CORDA-3552)]
 * Allow initial registration errors to propagate up so the node exits with a failure code [[CORDA-3558](https://r3-cev.atlassian.net/browse/CORDA-3558)]
 * Remove reference to man run [[CORDA-3559](https://r3-cev.atlassian.net/browse/CORDA-3559)]
-* Always add TestCordapps to the classpath when building _driverSerializationEnv [[CORDA-3566](https://r3-cev.atlassian.net/browse/CORDA-3566)]
+* Always add TestCorDapps to the classpath when building _driverSerializationEnv [[CORDA-3566](https://r3-cev.atlassian.net/browse/CORDA-3566)]
 * Use the connectionMaxRetryInterval configuration when reconnection the RPC client [[CORDA-3576](https://r3-cev.atlassian.net/browse/CORDA-3576)]
 * Update docs for X500 name and SSH hostkey [[CORDA-3585](https://r3-cev.atlassian.net/browse/CORDA-3585)]
 * hashLookup command help misspelling [[CORDA-3587](https://r3-cev.atlassian.net/browse/CORDA-3587)]
@@ -340,7 +427,7 @@ Any confidential identities registered using the old API will not be reflected i
 * Add failover listeners to terminate node process [[CORDA-2617](https://r3-cev.atlassian.net/browse/CORDA-2617)]
 * Parallel node info download [[CORDA-3055](https://r3-cev.atlassian.net/browse/CORDA-3055)]
 * Checkpoint agent tool [[CORDA-3071](https://r3-cev.atlassian.net/browse/CORDA-3071)]
-* More information in log warning for Cordapps missing advised JAR manifest file entries [[CORDA-3012](https://r3-cev.atlassian.net/browse/CORDA-3012)]
+* More information in log warning for CorDapps missing advised JAR manifest file entries [[CORDA-3012](https://r3-cev.atlassian.net/browse/CORDA-3012)]
 * Restore CompositeKey support to core-deterministic [[CORDA-2871](https://r3-cev.atlassian.net/browse/CORDA-2871)]
 * Restrict extended key usage of certificate types [[CORDA-2216](https://r3-cev.atlassian.net/browse/CORDA-2216)]
 * Hash to Signature Constraint automatic propagation [[CORDA-2920](https://r3-cev.atlassian.net/browse/CORDA-2920)]
@@ -419,7 +506,7 @@ Any confidential identities registered using the old API will not be reflected i
 * relax fingerprinter strictness [[CORDA-2848](https://r3-cev.atlassian.net/browse/CORDA-2848)]
 * Check if resources are in classpath [[CORDA-2651](https://r3-cev.atlassian.net/browse/CORDA-2651)]
 * Improve error reporting around failed flows [[CORDA-2522](https://r3-cev.atlassian.net/browse/CORDA-2522)]
-* Fix the way serialization whitelist is calculated for CordappImpl [[CORDA-2851](https://r3-cev.atlassian.net/browse/CORDA-2851)]
+* Fix the way serialization whitelist is calculated for CorDappImpl [[CORDA-2851](https://r3-cev.atlassian.net/browse/CORDA-2851)]
 * Changed crash version to our latest [[CORDA-2519](https://r3-cev.atlassian.net/browse/CORDA-2519)]
 * Clarify error message when base directory doesn’t exist [[CORDA-2834](https://r3-cev.atlassian.net/browse/CORDA-2834)]
 * change message when rpc/p2p login fails [[CORDA-2621](https://r3-cev.atlassian.net/browse/CORDA-2621)]
@@ -439,7 +526,7 @@ of tools Corda offers. Now, following the release of Corda Enterprise 4.0, we ar
 and documentation updates to bring additional stability and quality of life improvements to those developing on the Corda platform.
 
 Information on Corda Enterprise 4.0 can be found [here](https://www.r3.com/wp-content/uploads/2019/05/CordaEnterprise4_Enhancements_FS.pdf) and
-[here](https://docs.corda.r3.com/releases/4.0/release-notes.html). (It’s worth noting that normally this document would have started with a comment
+[here](https://docs.corda.net/docs/corda-enterprise/4.0/release-notes-enterprise.html). (It’s worth noting that normally this document would have started with a comment
 about whether or not you’d been recently domiciled under some solidified mineral material regarding the release of Corda Enterprise 4.0. Alas, we made
 that joke when we shipped the first release of Corda after Enterprise 3.0 shipped, so the thunder has been stolen and repeating ourselves would be terribly gauche.)
 
@@ -531,7 +618,7 @@ As such, we recommend you upgrade from Corda 4.0 to Corda 4.1 as soon possible.
 * Useless migration error when finance workflow jar is not installed [[CORDA-2651](https://r3-cev.atlassian.net/browse/CORDA-2651)]
 * Database connection pools leaking memory on every checkpoint [[CORDA-2646](https://r3-cev.atlassian.net/browse/CORDA-2646)]
 * Exception swallowed when querying vault via RPC with bad page spec [[CORDA-2645](https://r3-cev.atlassian.net/browse/CORDA-2645)]
-* Applying CordFormation and Cordapp Gradle plugins together includes Jolokia into the Cordapp. [[CORDA-2642](https://r3-cev.atlassian.net/browse/CORDA-2642)]
+* Applying CordFormation and CorDapp Gradle plugins together includes Jolokia into the CorDapp. [[CORDA-2642](https://r3-cev.atlassian.net/browse/CORDA-2642)]
 * Wrong folder ownership while trying to connect to Testnet using  RC* docker image [[CORDA-2641](https://r3-cev.atlassian.net/browse/CORDA-2641)]
 * Provide a better error message on an incompatible implicit contract upgrade [[CORDA-2633](https://r3-cev.atlassian.net/browse/CORDA-2633)]
 * `uploadAttachment` via shell can fail with unhelpful message if the result of the command is unsuccessful [[CORDA-2632](https://r3-cev.atlassian.net/browse/CORDA-2632)]
@@ -546,12 +633,12 @@ As such, we recommend you upgrade from Corda 4.0 to Corda 4.1 as soon possible.
 * Add *flow kill* command, deprecate *run killFlow* [[CORDA-2569](https://r3-cev.atlassian.net/browse/CORDA-2569)]
 * Hash to signature constraints migration: add a config option that makes hash constraints breakable. [[CORDA-2568](https://r3-cev.atlassian.net/browse/CORDA-2568)]
 * Deadlock between database and AppendOnlyPersistentMap [[CORDA-2566](https://r3-cev.atlassian.net/browse/CORDA-2566)]
-* Docfix: Document custom cordapp configuration [[CORDA-2560](https://r3-cev.atlassian.net/browse/CORDA-2560)]
+* Docfix: Document custom CorDapp configuration [[CORDA-2560](https://r3-cev.atlassian.net/browse/CORDA-2560)]
 * Bootstrapper - option to include contracts to whitelist from signed jars [[CORDA-2554](https://r3-cev.atlassian.net/browse/CORDA-2554)]
 * Explicit contract upgrade sample fails upon initiation (ClassNotFoundException) [[CORDA-2550](https://r3-cev.atlassian.net/browse/CORDA-2550)]
 * IRS demo app missing demodate endpoint [[CORDA-2535](https://r3-cev.atlassian.net/browse/CORDA-2535)]
 * Doc fix: Contract testing tutorial errors [[CORDA-2528](https://r3-cev.atlassian.net/browse/CORDA-2528)]
-* Unclear error message when receiving state from node on higher version of signed cordapp [[CORDA-2522](https://r3-cev.atlassian.net/browse/CORDA-2522)]
+* Unclear error message when receiving state from node on higher version of signed CorDapp [[CORDA-2522](https://r3-cev.atlassian.net/browse/CORDA-2522)]
 * Terminating ssh connection to node results in stack trace being thrown to the console [[CORDA-2519](https://r3-cev.atlassian.net/browse/CORDA-2519)]
 * Error propagating hash to signature constraints [[CORDA-2515](https://r3-cev.atlassian.net/browse/CORDA-2515)]
 * Unable to import trusted attachment  [[CORDA-2512](https://r3-cev.atlassian.net/browse/CORDA-2512)]
@@ -905,7 +992,6 @@ will have no impact on any deployed configurations.
 
 ### Miscellaneous changes
 
-To learn more about smaller changes, please read the [Changelog](changelog.md).
+To learn more about smaller changes, please read the [Changelog](../4.0/changelog.md).
 
 Finally, we have added some new jokes. Thank you and good night!
-
