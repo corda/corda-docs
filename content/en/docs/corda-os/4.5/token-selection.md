@@ -5,7 +5,7 @@ menu:
     parent: corda-os-4-5-token-sdk
 weight: 100
 tags:
-- Token SDK
+- Tokens SDK
 - Selection
 - Database selection
 - In Memory
@@ -13,12 +13,12 @@ tags:
 - inMemory
 - selectionType
 - selection type
-title: Selection in the Token SDK
+title: Selection in the Tokens SDK
 ---
 
-# Token selection using the Token SDK
+# Token selection using the Tokens SDK
 
-When you move or redeem tokens using the Token SDK, you can choose which balance of tokens you want to use, and how much from each reserve, in any given transaction.
+When you move or redeem tokens using the Tokens SDK, you can choose which balance of tokens you want to use, and how much from each reserve, in any given transaction.
 
 This process is called **Selection**.
 
@@ -39,7 +39,7 @@ In DB selection, token states must be queried from the vault and “selected” 
 
 ## Move tokens using Database Selection
 
-In the Token SDK, database (DB) selection is the default method of selection for each transaction.
+In the Tokens SDK, database (DB) selection is the default method of selection for each transaction.
 
 In move flows of multiple tokens using database selection, you specify the method of selection to modify the `TransactionBuilder`, along with the preferred selection source of payment.
 
@@ -101,7 +101,7 @@ You can use generic versions of `MoveTokensFlow` or `addMoveTokens` (not `addMov
 
 ### Initialise `VaultWatcherService`
 
-To use in-memory selection, you must ensure the CorDapp `VaultWatcherService` is installed and the service is running. This comes as part of the Token SDK.
+To use in-memory selection, you must ensure the CorDapp `VaultWatcherService` is installed and the service is running. This comes as part of the Tokens SDK.
 
 To initialise this service, you must select an `indexingStrategy`. An indexing strategy is used to apply an index to recorded records of Token States in in the `VaultWatcherService`. This improves querying time (and ultimately the performance of your application). As always - you can tune different use cases for better performance by selecting the appropriate indexing strategy.
 
