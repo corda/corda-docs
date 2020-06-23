@@ -362,6 +362,11 @@ identifier = "corda-enterprise-4-5-corda-networks"
 name = "Corda Networks"
 weight = 40
 
+[[corda-enterprise-4-5]]
+identifier = "corda-enterprise-4-5-corda-nodes-operating"
+name = "Operating a Corda Node"
+parent = "corda-enterprise-4-5-corda-nodes"
+weight = 60
 
 [[corda-os-4-0]]
 identifier = "corda-os-4-0-development"

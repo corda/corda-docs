@@ -6,12 +6,12 @@ menu:
 tags:
 - notary
 - healthcheck
-title: Notary Health Check
+title: Notary health check
 weight: 100
 ---
 
 
-# Notary Health Check
+# Notary health check
 
 This is a simple CorDapp to check if notaries on a Corda network are up and responsive.
 
