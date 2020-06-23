@@ -7,14 +7,14 @@ tags:
 - operations
 - deployment
 - planning
-title: Troubleshooting, health-checking, and recovering your node
+title: Troubleshooting and recovering your node
 weight: 20
 ---
 # Troubleshooting, health-checking, and recovering your node
 
 If you are a Corda Enterprise Network Manager (CENM) services user in your Corda Enterprise environment, you can make use of the CENM node troubleshooting guide.
 
-Here you can find [troubleshooting solutions](../../cenm/trouble-shooting-common-issues) to issues such as:
+Here you can find [troubleshooting solutions](../../../../cenm/1.3/troubleshooting-common-issues) to issues such as:
 
 * **Verifying a service is running and responsive** - As well as the service logs, the CENM services provideendpoints which can be used to determine the current status of the service, whether it is executing and if it is reachable.
 * **Nodes are not appearing in the Network Map** - The Network Map Service and node is up and running, but the node cannot be seen from any other nodes on the network. There are a few different reasons why this could be:
@@ -30,7 +30,7 @@ Here you can find [troubleshooting solutions](../../cenm/trouble-shooting-common
 
 ## Ledger sync
 
-Part of [Collaborative Recovery](introduction-cr.md), LedgerSync is a CorDapp used to discover any differences between the common ledger data held by two nodes that exist on the same Business Network. This is called the **Reconciliation** stage of collaborative recovery. It uses an efficient set reconciliation algorithm to minimise the amount of network communication required. Reconciliations can be configured to run both on-demand, and at a given time (through the use of scheduled states).
+Part of [Collaborative Recovery](../../node/collaborative-recovery/introduction-cr), LedgerSync is a CorDapp used to discover any differences between the common ledger data held by two nodes that exist on the same Business Network. This is called the **Reconciliation** stage of collaborative recovery. It uses an efficient set reconciliation algorithm to minimise the amount of network communication required. Reconciliations can be configured to run both on-demand, and at a given time (through the use of scheduled states).
 
 All reconciliations are added to a bounded execution pool, which is configurable, for eventual execution by the internal job scheduler. Results of reconciliations are stored in the database of the node that requested the reconciliation, and work only in one direction.
 
