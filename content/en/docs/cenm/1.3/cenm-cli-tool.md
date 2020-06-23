@@ -27,7 +27,23 @@ Once you have the required permissions to access the CENM service you require, y
 * Network Map
 * Signing Service
 
-## Setting up the CENM CLI
+## Install the CENM CLI Tool
+
+The CLI Tool comes as a part of your CENM upgrade to 1.3 as a .jar file. If you cannot access the .jar file, you can install via Docker image.
+
+To install using Docker:
+
+1. Install Docker from the [Docker website](https://www.docker.com/get-started).
+
+2. Use the command line to download the Docker image with CENM CLI:
+
+     ```bash
+     docker pull cenm-cli:1.3-zulu-openjdk8u242
+     ```
+
+You have installed the CENM CLI tool.
+
+## Setting up the CENM CLI Tool
 
 In order to use the CLI, you must have permission to access the CENM services you plan to use.
 
