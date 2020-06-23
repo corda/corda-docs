@@ -43,7 +43,8 @@ To install using Docker:
 
 You have installed the CENM CLI tool.
 
-## Setting up the CENM CLI Tool
+
+## Set up the CENM CLI Tool
 
 In order to use the CLI, you must have permission to access the CENM services you plan to use.
 
