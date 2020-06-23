@@ -17,7 +17,7 @@ This Helm chart is to configure, deploy, and run the CENM [Identity Manager Serv
 
 ## Example usage
 
-The example below shows a command that triggers the Helm chart for the [Zone Service](zone-service.md):
+The example below shows a command that triggers the Helm chart for the [Zone Service](../../../../cenm/1.3/zone-service.md):
 
 ```bash
 helm install cenm-idman idman --set prefix=cenm --set acceptLicense=Y

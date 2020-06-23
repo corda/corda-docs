@@ -45,14 +45,21 @@ In addition, the CENM Command-Line Interface (CLI) tool is required so you can c
 ### Compatibility
 
 The deployment scripts are compatible with Corda Enterprise Network Manager version 1.3 only.
-The deployed network runs on Kubernetes minimum version 1.8 and Helm minimum version 3.1.1.
+The deployed network runs on Kubernetes minimum version 1.16.9 and Helm minimum version 3.1.1.
 
 ## Deployment
 
 ### Deployment overview
 
 The provided deployment runs all CENM services run inside a single, dedicated Kubernetes namespace (default name:`cenm`).
-Each service runs in its own dedicated Kubernetes pod.
+Each service runs in its own dedicated Kubernetes pod, with the exception of the [Angel Service](../../../../cenm/1.3/angel-service.md), which runs in the same pod as its managed service.
+
+{{< note >}}
+Naturally, the following command will not show a dedicated Angel Service pod:
+kubectl get pods -o wide
+
+The Angel Service and its managed service must both be healthy in order for the pod they are running on to healthy. This means that the pod has a status `RUNNING` if both services are running fine, and a status `DOWN` if **any** of the two services (or both) is down.
+{{< /note >}}
 
 The CENM network is bootstrapped with PKI certificates, and sample X.500 subject names are provided as defaults
 (for example, the Identity Manager Service certificate subject is
@@ -93,7 +100,13 @@ The deployment steps are given below:
     ```bash
     version.BuildInfo{Version:"v3.1.2", GitCommit:"afe70585407b420d0097d07b21c47dc511525ac8", GitTreeState:"clean", GoVersion:"go1.13.8"}
     ```
-- Download CENM Command-Line Interface (CLI) tool so you can manage CENM services.
+- Install [Docker](https://www.docker.com/get-started). Docker is required to run the CENM CLI tool.
+
+- Download the Docker image with CENM [Command-Line Interface (CLI) tool](../../../../cenm/1.3/cenm-cli-tool.md) so you can manage CENM services:
+
+    ```bash
+    docker pull cenm-cli:1.3-zulu-openjdk8u242
+    ```
 
 #### 2. Set up the Kubernetes cluster
 
@@ -125,20 +138,45 @@ You can verify this with the command `kubectl get ns`.
 
 You can find the files required for the following steps in [CENM deployment repo](https://github.com/corda/cenm-deployment).
 
-#### 5. Bootstrap CENM
+#### 5. External database setup
+
+CENM services are pre-configured to use embedded H2 databases by default.
+You can skip this step if an H2 database is sufficient for your needs. Otherwise you need to install database(s), set up users and permissions,
+and change database configuration options for CENM services before bootstrapping CENM.
+For instructions on how to do that, refer to the "CENM configuration for external databases" section below, which contains a sample PostgreSQL installation guide
+and an explanation of CENM database configuration options.
+
+#### 6. Bootstrap CENM
 **Option 1.** Bootstrap by allocating new external IP addresses
 
-Before bootstrapping CENM, you should read the license agreement. You can do so by running `./bootstrap.cenm`.
-The example below includes the `--ACCEPT_LICENSE Y` argument, which you should only specify if you accept the license agreement.
+To bootstrap your network, run the `bootstrap.cenm` script from the `/k8s/helm` directory.
+The script includes the `--ACCEPT_LICENSE Y` argument, which is mandatory and confirms that you have read and accepted the license agreement.
 
-Run the following command to bootstrap a new CENM environment by allocating a new external IP:
+```bash
+cd k8s/helm
+./bootstrap.cenm --ACCEPT_LICENSE Y <options>
+```
+
+You can use the following bootstrap options when running bootstrap:
+
+* `--ACCEPT_LICENSE [Y]` - confirms agreement to the Licenses for Components deployed by the Bootstrapper.
+* `-h` - displays this help message and exits.
+* `-i|--idman  [name]` - provides Identity Manager kubernetes service name.
+* `-n|--notary [name]` - provides Notary kubernetes service name.
+* `-p|--prefix [prefix]` - specifies the release prefix for all Helm charts.
+* `-m|--mpv [version]` - specifies the minimum platform version for your network.
+* `-a|--auto` - completes the script without further prompts to the user.
+
+Usage:
 
 ```bash
 cd network-services/deployment/k8s/helm
-./bootstrap.cenm `--ACCEPT_LICENSE Y`
+./bootstrap.cenm <option>
 ```
 
-{{< note >}} The allocation of a loadbalancer to provide a public IP can take a significant amount of time (for example, even 10 minutes). {{< /note >}}
+{{< note >}}
+The allocation of a load balancer to provide a public IP can take a significant amount of time (for example, even 10 minutes).
+{{< /note >}}
 
 The script exits after all bootstrapping processes on the Kubernetes cluster have been started.
 The process will continue to run on the cluster after the script has exited. You can monitor the completion of the deployment by running the following commands:
@@ -158,19 +196,53 @@ cd network-services/deployment/k8s/helm
 
 ## Network operations
 
-Use CENM CLI Tool to access to FARM Service:
+Use the CENM [Command Line Interface (CLI) Tool](../../../../cenm/1.3/cenm-cli-tool.md) to access the [FARM Service](../../../../cenm/1.3/gateway-service.md) from your local machine.
+To star CENM CLI Tool run Docker command starting Docker container with the tool:
 
-```bash
-./cenm context login -s -u <USER> -p <PASSWORD> http://<FARM-SERVICE-IP>:8080
-```
+  ```bash
+  docker run  -it --env ACCEPT_LICENSE=Y --name=cenm-cli cenm-cli:1.3-zulu-openjdk8u242
+  ```
 
-The FARM Service allows you to perform all network operations on the Identity Manager Service, the Network Map Service, and the Signing Services.
+The welcome message will appear:
+
+  ```bash
+  CORDA ENTERPRISE NETWORK MANAGER – SOFTWARE EVALUATION LICENSE AGREEMENT has been accepted, CORDA ENTERPRISE NETWORK MANAGER will now continue.   The Software Evaluation License Agreement for this product can be viewed from https://www.r3.com/corda-enterprise-network-manager-evaluation-license.
+  A copy of the Software Evaluation License Agreement also exists within the /license directory in the container.
+
+  Type "./cenm <COMMAND>" to run CENM CLI or "./cenm -h" to display help.
+  cenm@5fdb0372b89b:~$
+  ```
+
+You can now use `cemn` commands from within the running Docker container:
+
+  ```bash
+  ./cenm context login -s -u <USER> -p <PASSWORD> http://<FARM-SERVICE-IP>:8080
+  ```
+
+The [FARM Service](../../../../cenm/1.3/gateway-service.md) is a gateway between the [Auth Service](../../../../cenm/1.3/auth-service.md) and front end services in CENM. It allows you to perform all network operations on the [Identity Manager Service](../../../../cenm/1.3/identity-manager.md), the [Network Map Service](../../../../cenm/1.3/network-map.md), and the [Signing Service](../../../../cenm/1.3/signing-service.md).
 The IP address is dynamically allocated for each deployment and can be found with `kubectl get svc`.
 Use the following command to ensure that you are pointing at the correct namespace:
 
   ```bash
   kubectl config current-context && kubectl config view --minify --output 'jsonpath={..namespace}' && echo`)
   ```
+
+If you have exited the Docker container, you can reconnect again:
+
+  ```bash
+  docker container exec -it cenm-cli bash
+  ```
+
+If the Docker container was not running, you need to restart it by reconnecting:
+
+  ```bash
+  docker container start cenm-cli
+   ```
+
+## Assigning permissions to users
+
+Login to web application ``http://<FARM-SERVICE-IP>:8080/admin`` using admin user and credentials.
+The CENM network has no permissions assigned to Main Zone by default, you need to assign them manually.
 
 ### Join your network
 
@@ -196,13 +268,13 @@ kubectl cp <namespace>/<signer-pod>:DATA/trust-stores/network-root-truststore.jk
 
 Namespace is typically `cenm` for this deployment.
 
-Run the following command to obtain public IPs of Identity Manager and Network Map:
+Run the following command to obtain public IPs of the Identity Manager Service and the Network Map Service:
 
 ```bash
 kubectl get svc idman-ip notary-ip
 ```
 
-Run the command below to obtain the pod name for the Signer:
+Run the command below to obtain the pod name for the Signing Service:
 
 ```bash
 kubectl get pods -o wide`
@@ -211,12 +283,12 @@ kubectl get pods -o wide`
 You will find the truststore password in the `signer/files/pki.conf`, where the default value used in this Helm chart is `trust-store-password`.
 
 {{< note >}} For more details about joining a CENM network, see:
-[Joining an existing compatibility zone](https://docs.corda.net/docs/corda-os/joining-a-compatibility-zone.html).
+[Joining an existing compatibility zone](../../corda-os/4.5/joining-a-compatibility-zone.html).
 {{< /note >}}
 
 ### Display logs
 
-Each CENM service has a dedicated sidecar to display live logs from the ```log/``` folder.
+Each CENM service has a dedicated sidecar to display live logs from the `log/` directory.
 
 Use the following command to display logs:
 
@@ -230,10 +302,10 @@ Use the following command to display live logs:
   kubectl logs -c logs -f <pod-name>
   ```
 
-Display configuration files used for each CENM service
+Display configuration files used for each CENM service:
 
-Each service stores configuration files in ```etc/``` folder in a pod.
-Run the following commands to display what is in the Identity Manager Service ```etc/``` folder :
+Each service stores configuration files in `etc/` directory in a pod.
+Run the following commands to display what is in the Identity Manager Service `etc/` directory:
 
 ```bash
 kubectl exec -it <pod name> -- ls -al etc/
@@ -257,18 +329,23 @@ database {
 
 ### Update network parameters
 
-Use CENM CLI tool command to update the network parameters.
+Use the CENM [Command-Line (CLI) tool](../../../../cenm/1.3/cenm-cli-tool.md) to run commands to update the network parameters.
 
 See the official CENM documentation for more information about the list of available [network parameters](./config-network-parameters.html)
 and instructions on [updating network parameters](./updating-network-parameters.html).
 
-### Run flag day
+### Run Flag Day
 
 Use the following CENM Command-Line Interface (CLI) tool command to run a Flag Day:
 
 {{< note >}} For the changes to be advertised to the nodes, the new network map must be signed by the Signing Service.
 This operation is scheduled to take place at regular intervals (by default, once every 10 seconds), as defined in the network map configuration.
 {{< /note >}}
+
+### Signing Service configuration
+
+The Signing Service is not managed by the [Angel Service](../../../../cenm/1.3/angel-service.md) in this deployment, therefore any CENM Command-Line Interface (CLI) tool commands trying to change the Signing Service configuration will take no effect.
+To change the Singing Service configuration, you must log in to a Kubernetes pod, update the configuration file, and restart the service.
 
 ## Delete Network
 There are two ways to delete your permissioned network (intended for development
@@ -279,8 +356,11 @@ environments, which are rebuilt regularly), as follows:
 
 ### Delete the whole environment including IPs
 
+The environment can be deleted via Helm, by deleting each deployed chart individually. Note that the chart names include a prefix, which needs to match the prefix specified when setting up the environment.
+
 ```bash
-helm delete nmap notary idman signer notary-ip idman-ip
+export CENM_PREFIX=cenm
+helm delete ${CENM_PREFIX}-auth ${CENM_PREFIX}-farm ${CENM_PREFIX}-idman ${CENM_PREFIX}-nmap ${CENM_PREFIX}-notary ${CENM_PREFIX}-pki ${CENM_PREFIX}-hsm ${CENM_PREFIX}-signer ${CENM_PREFIX}-zone ${CENM_PREFIX}-idman-ip ${CENM_PREFIX}-notary-ip
 ```
 
 ### Delete the whole environment without deleting IPs
@@ -288,7 +368,8 @@ helm delete nmap notary idman signer notary-ip idman-ip
 If you run several ephemeral test networks in your development cycle, you might want to keep your IP addresses to speed up the process:
 
 ```bash
-helm delete nmap notary idman signer
+export CENM_PREFIX=cenm
+helm delete ${CENM_PREFIX}-auth ${CENM_PREFIX}-farm ${CENM_PREFIX}-idman ${CENM_PREFIX}-nmap ${CENM_PREFIX}-notary ${CENM_PREFIX}-pki ${CENM_PREFIX}-hsm ${CENM_PREFIX}-signer ${CENM_PREFIX}-zone
 ```
 
 ## Deployment Customisation
@@ -343,13 +424,13 @@ You must modify the following values in the `values.yaml` file:
 There are a number of settings provided on each Helm chart, which allow easy customisation of
 common options. Each CENM service has its own dedicated page with more detailed documentation:
 
-* [Identity Manager](deployment-kubernetes-idman.md)
-* [Network Map](deployment-kubernetes-nmap.md)
-* [Signer](deployment-kubernetes-signer.md)
-* FARM Service - documentation not available yet
-* Auth Service - documentation not available yet
-* Zone Service - documentation not available yet
+* [Auth Service](deployment-kubernetes-auth.md)
+* [FARM Service](deployment-kubernetes-farm.md)
+* [Identity Manager Service](deployment-kubernetes-idman.md)
+* [Network Map Service](deployment-kubernetes-nmap.md)
 * [Corda Notary](deployment-kubernetes-notary.md)
+* [Signing Service](deployment-kubernetes-signer.md)
+* [Zone Service](deployment-kubernetes-zone.md)
 
 ### Overriding Service Configuration
 
@@ -360,16 +441,47 @@ In brief this can be achieved by:
 * Override individual parameters using `--set`, such as `helm install --set foo=bar idman`, or;
 * Any combination of the above, for example ```helm install -f myvalues.yaml --set foo=bar idman```
 
+You cannot override the passwords to security certificates keys and keystores.
+
 ### External database support
 
 You can configure the services to use an external database. We strongly recommend this for production deployments.
+A database can be installed as a pod inside the same Kubernetes cluster or as a separate installation outside the Kubernetes cluster.
+The example below shows a PostgresSQL installation that runs inside the same Kubernetes cluster where CENM runs.
+
+#### Example PostgreSQL database setup inside the Kubernetes cluster
+
+A PostgreSQL database can be installed inside the Kubernetes cluster using a third-party [Bitami Helm chart](https://github.com/bitnami/charts/tree/master/bitnami/postgresql):
+
+```bash
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm install cenm-database bitnami/postgresql
+```
+
+Follow the instructions displayed by the script output to connect to the database server via `psql`.
+You can create a separate database server for each CENM service by running the Helm script multiple times with different names
+and then setting up the database user/schema, following the instructions in the [CENM database setup](../../../../cenm/1.3/database-set-up.md) section.
+Alternatively, you can create several databases inside the single PostgresSQL server you have just deployed, by running
+the following DDL commands:
+
+```bash
+CREATE DATABASE <DATABASE>;
+CREATE USER <USER> WITH PASSWORD '<PASSWORD>';
+GRANT ALL PRIVILEGES ON DATABASE <USER> to <DATABASE>;
+```
+
+For each service (Identity Manager, Network Map, Zone, and Auth), use different `<DATABASE>` name and `<USER>` -
+for example, `idenamagerdb` / `identitymanageruser` for the Identity Manager Service.
+
+#### CENM configuration for external databases
+
 The database used by each service is configured via JDBC URL and is defined in the `values.yml` file for
 the Helm chart of the respective service - for example, `idman/values.yml` for the Identity Manager Service.
 In the `values.yml` file, edit the database section of the configuration to change the JDBC URL, user, and password.
 
 The deployed service already contains JDBC drivers for PostgreSQL and SQLServer.
 For an Oracle database, you need to extend the Docker images for the service by adding
-the Oracle JDBC driver `.jar` file to the ` /opt/${USER}/drivers/` directory.
+the Oracle JDBC driver `.jar` file to the `/opt/${USER}/drivers/` directory.
 
 {{< note >}}
 The bootstrap script cannot be used with an external database.
@@ -381,6 +493,7 @@ Example settings for connection to a PostgreSQL database follow below:
 ```guess
 database:
   driverClassName: "org.postgresql.Driver"
+  jdbcDriver: "/opt/cenm/drivers/postgresql-42.2.12.jar"
   url: "jdbc:postgresql://<HOST>:<PORT>/<DATABASE>"
   user: "<USER>"
   password: "<PASSWORD>"
@@ -406,12 +519,12 @@ However, for additional flexibility you may wish to deploy each Helm chart indiv
 There are several Helm commands which are used to bootstrap a new CENM environment,
 where each command creates a CENM service consisting of the following:
 
-* Signer
-* Identity Manager
-* Network Map
+* Signing Service
+* Identity Manager Service
+* Network Map Service
 * Auth Service
 * FARM Service
-* Notary
+* Corda Notary
 
 They need to be run in the correct order, as shown below:
 
@@ -429,14 +542,14 @@ kubectl get svc --namespace cenm notary-ip --template "{{ range (index .status.l
 kubectl get svc --namespace cenm farm-ip --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"  # step 3
 
 # These Helm charts bootstrap CENM
-helm install auth auth
-helm install zone zone
-helm install nmap nmap
-helm install signer signer
-helm install idman idman --set idmanPublicIP=[use IP from step 1]
-helm install notary notary --set notaryPublicIP=[use IP from step 2]
-helm install nmap nmap
-helm install farm farm --set idmanPublicIP=[use IP from step 3]
+helm install cenm-auth auth --set prefix=cenm --set acceptLicense=YES
+helm install cenm-zone zone --set prefix=cenm --set acceptLicense=YES
+helm install cenm-nmap nmap --set prefix=cenm --set acceptLicense=YES
+helm install cenm-signer signer --set prefix=cenm --set acceptLicense=YES
+helm install cenm-idman idman --set prefix=cenm --set acceptLicense=Y --set idmanPublicIP=[use IP from step 1]
+helm install notary notary --set prefix=cenm --set acceptLicense=YES --set notaryPublicIP=[use IP from step 2]
+helm install cenm-nmap nmap --set prefix=cenm --set acceptLicense=YES
+helm install cenm-farm farm --set prefix=cenm --set acceptLicense=YES --set idmanPublicIP=[use IP from step 3]
 
 # Run these commands to display allocated public IP for Network Map Service:
 kubectl get svc --namespace cenm nmap --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"
@@ -455,7 +568,7 @@ The Docker images used for the Kubernetes deployment are listed below for refere
 | Signing           | acrcenm.azurecr.io/signer/signer   | 1.3 |
 | Zone              | acrcenm.azurecr.io/zone/zone       | 1.3 |
 | Auth              | acrcenm.azurecr.io/auth/auth       | 1.3 |
-| FARM              | acrcenm.azurecr.io/farm/farm       | 1.3 |
+| Farm              | acrcenm.azurecr.io/farm/farm       | 1.3 |
 | PKI Tool          | acrcenm.azurecr.io/pkitool/pkitool | 1.3 |
 | Notary            | acrcenm.azurecr.io/notary/notary   | 1.3 |
 
