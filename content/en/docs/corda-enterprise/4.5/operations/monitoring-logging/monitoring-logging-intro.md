@@ -9,7 +9,7 @@ tags:
 - operations
 - deployment
 - planning
-title: Monitoring and logging
+title: Monitoring and maintaining a node
 weight: 30
 ---
 # Monitoring and maintaining the health of your node
