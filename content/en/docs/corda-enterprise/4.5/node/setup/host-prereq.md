@@ -35,7 +35,7 @@ weight: 2
 {{< table >}}
 
 |Platform|CPU Architecture|Versions|
-|---------------------------------------|-----------------------|--------------|
+|:------------------|:--------------------|:-----------|
 |Microsoft Windows|x86-64|10, 8.x|
 |Microsoft Windows Server|x86-64|2016, 2012
 R2, 2012|
@@ -50,16 +50,12 @@ above|
 
 {{< table >}}
 
-|Vendor|CPU
-Architecture|Versions|JDBC Driver|
-|---------------------------|-----------------|-----------------|------------------|
-|Microsoft|x86-64|Azure SQL, SQL
-Server 2017|Microsoft JDBC
-Driver 6.2|
-|Oracle|x86-64|11gR2|Oracle JDBC 6|
-|Oracle|x86-64|12cR2|Oracle JDBC 8|
-|PostgreSQL|x86-64|9.6|PostgreSQL JDBC
-Driver 42.1.4|
+| Vendor| CPU | Architecture | Versions | JDBC Driver |
+|:--------|:-----------------|:---------------|:----------------|:-----|
+|Microsoft| x86-64 | Azure SQL, SQL Server 2017 |Microsoft | JDBC Driver 6.2|
+| Oracle | x86-64 | 11gR2 | Oracle | JDBC 6 |
+| Oracle | x86-64 | 12cR2 | Oracle | JDBC 8 |
+| PostgreSQL | x86-64 | 9.6 |PostgreSQL | JDBC Driver 42.1.4 |
 
 {{< /table >}}
 
@@ -143,4 +139,3 @@ During deployment the following system (not user) tables will be created in the 
 Detailed information on the Corda Vault can be found [here](../operating/node-database.html).
 
 JDBC Connectivity to the Corda Vault is handled in the Corda Enterprise `node.conf` file in `/opt/corda`. Here are examples for each supported RDBMS.
-
