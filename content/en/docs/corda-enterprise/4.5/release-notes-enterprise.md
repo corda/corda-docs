@@ -9,7 +9,7 @@ tags:
 - notes
 - enterprise
 title: Corda Enterprise release notes
-weight: 100
+weight: 1
 
 ---
 
@@ -75,9 +75,9 @@ See the [platform support matrix](platform-support-matrix.md) documentation sect
 
 ### Collaborative Recovery CorDapps for disaster recovery
 
-Corda Enterprise 4.5 introduces a new suite of utility CorDapps that can help you safely, and privately reconcile and recover ledger data lost in a disaster scenario. 
+Corda Enterprise 4.5 introduces a new suite of utility CorDapps that can help you safely, and privately reconcile and recover ledger data lost in a disaster scenario.
 
-The 'LedgerSync` CorDapp can be used to routinely check the ledger for data inconsistencies between nodes, without compromising security. In the rare event that an inconsistency is discovered, the CorDapp `LedgerRecover` can be deployed in either Automatic recovery or Manual recovery mode (for more serious data loss) to securely recover the missing data from nodes across the network. 
+The 'LedgerSync` CorDapp can be used to routinely check the ledger for data inconsistencies between nodes, without compromising security. In the rare event that an inconsistency is discovered, the CorDapp `LedgerRecover` can be deployed in either Automatic recovery or Manual recovery mode (for more serious data loss) to securely recover the missing data from nodes across the network.
 
 See the [Collaborative Recovery](node/collaborative-recovery/introduction-cr.md) documentation section for more information.
 
@@ -150,9 +150,9 @@ The following libraries have been updated:
 
 ### Tokens SDK documentation and training
 
-The Tokens SDK documentation has been relocated to the main Corda and Corda Enterprise documentation site, along with a comprehensive training module for developers in the Corda training site. 
+The Tokens SDK documentation has been relocated to the main Corda and Corda Enterprise documentation site, along with a comprehensive training module for developers in the Corda training site.
 
-[Read the documentation](cordapps/token-sdk-introduction.md). 
+[Read the documentation](cordapps/token-sdk-introduction.md).
 [Explore the training module](https://training.corda.net/libraries/tokens-sdk/)
 ### Other improvements
 
