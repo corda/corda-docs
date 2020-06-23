@@ -41,8 +41,9 @@ To install using Docker:
      docker pull cenm-cli:1.3-zulu-openjdk8u242
      ```
 
-You have installed the CENM CLI tool.
+You have installed the Docker image with CENM CLI tool.
 
+To get the tool ready to use from within the Docker container, check the [Kubernetes deployment guide](deployment-kubernetes.md#network-operations).  
 
 ## Set up the CENM CLI Tool
 
