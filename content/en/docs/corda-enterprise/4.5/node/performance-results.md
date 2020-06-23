@@ -7,7 +7,7 @@ tags:
 - benchmark
 - performance
 title: Performance benchmarking results
-weight: 7
+weight: 71
 ---
 
 
@@ -219,7 +219,7 @@ performance and privacy requirements.
 
 ### Scaling with CPU core count
 
-Corda Enterprise provides the capability to make use of multiple cores by running flows simultaneously. When a flow is running (and not waiting for peer-to-peer messages), 
+Corda Enterprise provides the capability to make use of multiple cores by running flows simultaneously. When a flow is running (and not waiting for peer-to-peer messages),
 it splits its time between computation (running contract verification, signing transactions, and so on) and database write and read operations. When giving a node more and more
 CPU cores in order to scale up, at some point the balance of processing will shift to the database and the node will no longer be able to take advantage of
 additional CPU cores, reflected in an inability to drive CPU utilisation towards 100%.
@@ -306,7 +306,7 @@ The first test performed was focused on the latency aspect. Load was generated f
 ![CE 4.3/4.5 latency comparison chart](../resources/performance-testing/4-3_4-5_latency_comparison.png "CE 4.3/4.5 latency comparison chart")
 
 The main observations from the tests follow below:
-* Corda Enterprise 4.3 shows an exponential increase in the latency of the flow as the number of nodes that participate in the transaction is increased. This can be attributed to the following two reasons. Firstly, during the tests the exchange node was performing the `CollectSignaturesFlow` and `FinalityFlow` flows sequentially across the involved nodes, so the more nodes these flows had to iterate over, the more time it took. Secondly, these flows have the capability to trigger the execution of transaction resolution if they identify states for which the node is missing the provenance chain. In Corda Enterprise 4.3, transaction resolution is not performed in bulk - it is performed one state at a time. As a result, every additional node causes a significant amount of extra work to be done. 
+* Corda Enterprise 4.3 shows an exponential increase in the latency of the flow as the number of nodes that participate in the transaction is increased. This can be attributed to the following two reasons. Firstly, during the tests the exchange node was performing the `CollectSignaturesFlow` and `FinalityFlow` flows sequentially across the involved nodes, so the more nodes these flows had to iterate over, the more time it took. Secondly, these flows have the capability to trigger the execution of transaction resolution if they identify states for which the node is missing the provenance chain. In Corda Enterprise 4.3, transaction resolution is not performed in bulk - it is performed one state at a time. As a result, every additional node causes a significant amount of extra work to be done.
 * Corda Enterprise 4.4 demonstrates a large reduction in flow latency, which is mostly thanks to the introduction of bulk transaction resolution. The execution of the flows is still sequential across the nodes, but the cost per node is significantly smaller. As a result, in this version the flow latency scales quasi-linearly with the number of participating nodes.
 * Corda Enterprise 4.5 also demonstrates a considerable reduction in flow latency, which is mostly thanks to the parallelised flows. It is also clear that it scales almost optimally as the increase in latency from additional participants is minimal.
 
@@ -318,7 +318,7 @@ The second test was focused on the throughput aspect. Load was generated from mu
 
 The main observations from the tests follow below:
 * Corda Enterprise 4.5 can achieve a significantly higher throughput when compared to Corda Enterprise 4.3. This can be attributed to the following factors:
-	* In Corda Enterprise 4.5, flows that execute in parallel have a significantly lower latency, as shown above. Such reduced latency means that nodes are able to complete more flows in the same amount of time, thus achieving a higher throughput. 
+	* In Corda Enterprise 4.5, flows that execute in parallel have a significantly lower latency, as shown above. Such reduced latency means that nodes are able to complete more flows in the same amount of time, thus achieving a higher throughput.
 	* In Corda Enterprise 4.5, P2P messages between nodes can be compressed, which can lead to a more efficient use of network bandwidth.
 	* In Corda Enterprise 4.5, parallelised flows take advantage of the new `sendAll` API in order to send messages in parallel to multiple parties. This means that a smaller number of checkpoints are created overall, thus leading to a more efficient use of the database.
 * It has become clear from the tests that the throughput decreases as more nodes are added. The difference in throughput between Corda Enterprise 4.3 and Corda Enterprise 4.5 gets smaller as more nodes participate in the transaction. This is most likely due to environmental issues: as mentioned above, the tests described here involved the deployment of multiple Corda nodes per physical machine, leading to the nodes sharing physical resources and thus interfering with one another. If the same test is repeated using a dedicated machine per Corda node, it is very likely that a much higher throughput would be observed for both Corda Enterprise versions, with a larger difference between the two versions when more nodes are involved.
@@ -341,7 +341,7 @@ The purpose of this last test was to investigate the effects of these options in
 ![CE 4.5 variants throughput comparison chart](../resources/performance-testing/4-5_variants_throughput.png "Corda Enterprise 4.5 variants throughput comparison chart")
 
 The main observations from the test are as follows:
-* Disabling compression leads to lower throughput and higher latency. This is expected because compression introduces a trade-off between CPU and network bandwidth utilisation and in most cases the network would prove to be a bigger bottleneck. 
+* Disabling compression leads to lower throughput and higher latency. This is expected because compression introduces a trade-off between CPU and network bandwidth utilisation and in most cases the network would prove to be a bigger bottleneck.
 * The "artemis-frequent-flush" variation leads to lower latency but also lower throughput. The reduction in latency is thanks to the fact that buffered messages are sent to counterparties more frequently, thus allowing flows to make progress faster. The decrease in throughput is due to the fact that flushing messages more frequently can lead to a more inefficient use of the disk overall.
 * The "artemis-medium-flush" variation achieves higher throughput, but at the cost of higher latency. This is in line with the reasoning described above.
 * The "artemis-infrequent-flush" demonstrates both lower throughput and higher latency. This indicates that the node enters a somewhat degraded phase, where messages are flushed so infrequently that flows experience long stalls, while the node is not taking full advantage of the disk's bandwidth.

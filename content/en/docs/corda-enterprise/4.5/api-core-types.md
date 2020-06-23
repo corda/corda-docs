@@ -2,13 +2,13 @@
 date: '2020-04-07T12:00:00Z'
 menu:
   corda-enterprise-4-5:
-    parent: corda-enterprise-4-5-corda-nodes
+    parent: corda-enterprise-4-5-cordapps
 tags:
 - api
 - core
 - types
 title: 'Core types in the Corda API'
-weight: 130
+weight: 300
 ---
 
 # API: Core types

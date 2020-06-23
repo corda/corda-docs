@@ -4,7 +4,7 @@ menu:
   corda-enterprise-4-5:
     identifier: corda-enterprise-4-5-node-serialization
     name: "Serialization in Corda"
-    parent: corda-enterprise-4-5-corda-nodes
+    parent: corda-enterprise-4-5-corda-nodes-operating
 tags:
 - serialization
 title: Serialization

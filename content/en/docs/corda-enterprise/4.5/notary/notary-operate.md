@@ -4,12 +4,12 @@ menu:
   corda-enterprise-4-5:
     identifier: corda-enterprise-4-5-corda-nodes-notary-operate
     name: "Operating a notary"
-    parent: corda-enterprise-4-5-corda-nodes
+    parent: corda-enterprise-4-5-notaries
 tags:
 - notary
 - operate
 title: Operating a notary
-weight: 120
+weight: 30
 ---
 
 

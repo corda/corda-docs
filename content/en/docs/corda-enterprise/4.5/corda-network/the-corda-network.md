@@ -2,16 +2,17 @@
 date: '2020-04-07T12:00:00Z'
 menu:
   corda-enterprise-4-5:
-    parent: corda-enterprise-4-5-miscellaneous
+    identifier: corda-enterprise-4-5-corda-network
+    name: "Corda Network Foundation"
 title: Introduction to Corda Network
-weight: 1
+weight: 500
 ---
 
 
-# Corda Network
+# Corda Network Foundation
 
 
-## Introduction to Corda Network
+## Introduction to Corda Network Foundation
 
 [Corda Network](https://corda.network/) is a publicly-available internet of Corda nodes operated by network participants. Each
 node is identified by a certificate issued by the network’s identity service, and will also be discoverable on a network map.

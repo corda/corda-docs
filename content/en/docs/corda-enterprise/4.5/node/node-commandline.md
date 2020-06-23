@@ -2,12 +2,12 @@
 date: '2020-04-07T12:00:00Z'
 menu:
   corda-enterprise-4-5:
-    parent: corda-enterprise-4-5-corda-nodes
+    parent: corda-enterprise-4-5-corda-nodes-operating
 tags:
 - node
 - commandline
 title: Node command-line options
-weight: 70
+weight: 140
 ---
 
 

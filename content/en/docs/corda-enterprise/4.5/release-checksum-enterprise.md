@@ -3,7 +3,6 @@ title: Release files and checksums
 date: '2020-06-22T12:19:11Z'
 menu:
   corda-enterprise-4-5:
-    identifier: corda-enterprise-4-5-release-checksum-enterprise
     parent: corda-enterprise-4-5-release-notes
     weight: 200
 tags:

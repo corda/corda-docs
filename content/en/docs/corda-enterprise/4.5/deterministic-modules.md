@@ -2,12 +2,12 @@
 date: '2020-04-07T12:00:00Z'
 menu:
   corda-enterprise-4-5:
-    parent: corda-enterprise-4-5-miscellaneous
+    parent: corda-enterprise-4-5-cordapps-contracts
 tags:
 - deterministic
 - modules
 title: Deterministic Corda Modules
-weight: 3
+weight: 30
 ---
 
 # Deterministic Corda Modules
@@ -104,7 +104,7 @@ full JDK then you will need to configure the new SDK by hand:
 
 * Create a JDK Home directory with the following contents:
 
- 
+
 `jre/lib/rt.jar`
 where `rt.jar` here is this renamed artifact:
 ```xml
@@ -219,13 +219,13 @@ infix fun Temporal.until(endExclusive: Temporal): Duration = Duration.between(th
 
 Elements that *must* be deleted from classes in the deterministic JAR should be annotated as `@DeleteForDJVM`.
 You must also ensure that a deterministic class’s primary constructor does not reference any classes that are
-not available in the deterministic `rt.jar`. 
+not available in the deterministic `rt.jar`.
 
 The biggest risk here would be that `JarFilter` would delete the
 primary constructor and that the class could no longer be instantiated, although `JarFilter` will print a warning
 in this case. However, it is also likely that the “determinised” class would have a different serialisation
 signature than its non-deterministic version and so become unserialisable on the deterministic JVM.Primary constructors that have non-deterministic default parameter values must still be annotated as
-`@DeleteForDJVM` because they cannot be refactored without breaking Corda’s binary interface. 
+`@DeleteForDJVM` because they cannot be refactored without breaking Corda’s binary interface.
 
 The Kotlin compiler
 will automatically apply this `@DeleteForDJVM` annotation - along with any others - to all of the class’s

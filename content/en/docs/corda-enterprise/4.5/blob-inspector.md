@@ -2,11 +2,12 @@
 date: '2020-04-07T12:00:00Z'
 menu:
   corda-enterprise-4-5:
-    parent: corda-enterprise-4-5-tool-index
+    parent: corda-enterprise-4-5-corda-nodes-operating
 tags:
 - blob
 - inspector
 title: Blob Inspector
+weight: 100
 ---
 
 

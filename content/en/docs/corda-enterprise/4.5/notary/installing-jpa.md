@@ -4,12 +4,12 @@ menu:
   corda-enterprise-4-5:
     identifier: corda-enterprise-4-5-corda-nodes-notary-config
     name: "Configuring a notary"
-    parent: corda-enterprise-4-5-corda-nodes
+    parent: corda-enterprise-4-5-notaries
 tags:
 - installing
 - jpa
 title: Configuring a JPA notary backend
-weight: 100
+weight: 20
 ---
 
 # Configuring a JPA notary backend
