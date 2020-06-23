@@ -9,7 +9,7 @@ tags:
 - operations
 - deployment
 - planning
-title: Corda Enterprise Operations Guide
+title: Monitoring and maintaining a node
 weight: 30
 ---
 # Monitoring and maintaining the health of your node
