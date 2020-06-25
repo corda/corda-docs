@@ -1,13 +1,20 @@
 ---
 aliases:
 - /releases/4.4/cordapp-advanced-concepts.html
+- /docs/corda-enterprise/head/cordapp-advanced-concepts.html
+- /docs/corda-enterprise/cordapp-advanced-concepts.html
 date: '2020-01-08T09:59:25Z'
-menu: []
+menu:
+  corda-enterprise-4-4:
+    identifier: corda-enterprise-4-4-cordapp-advanced-concepts
+    name: "Advanced CorDapp concepts"
+    parent: corda-enterprise-4-4-cordapps
 tags:
 - cordapp
 - advanced
 - concepts
 title: Advanced CorDapp Concepts
+weight: 13
 ---
 
 
@@ -428,5 +435,3 @@ The *finance* CorDapp is a sample and should not normally be used in production 
 the app developer requires some code, they can just copy it under their own namespace.
 
 {{< /warning >}}
-
-

@@ -1,6 +1,8 @@
 ---
 aliases:
 - /releases/4.4/notary/ha-notary-service-setup.html
+- /docs/corda-enterprise/head/notary/ha-notary-service-setup.html
+- /docs/corda-enterprise/notary/ha-notary-service-setup.html
 date: '2020-01-08T09:59:25Z'
 menu:
   corda-enterprise-4-4:
@@ -11,7 +13,7 @@ tags:
 - service
 - setup
 title: Corda Enterprise HA notary service set-up
-weight: 10
+weight: 105
 ---
 
 

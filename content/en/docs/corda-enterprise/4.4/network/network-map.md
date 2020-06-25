@@ -1,6 +1,8 @@
 ---
 aliases:
 - /releases/4.4/network/network-map.html
+- /docs/corda-enterprise/head/network/network-map.html
+- /docs/corda-enterprise/network/network-map.html
 date: '2020-01-08T09:59:25Z'
 menu:
   corda-enterprise-4-4:
@@ -8,12 +10,12 @@ menu:
 tags:
 - network
 - map
-title: The network map
+title: Network map
 weight: 3
 ---
 
 
-# The network map
+# Network map
 
 
 The network map is a collection of signed `NodeInfo` objects. Each NodeInfo is signed by the node it represents and

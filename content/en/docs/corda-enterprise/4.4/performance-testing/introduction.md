@@ -1,8 +1,13 @@
 ---
 aliases:
 - /releases/4.4/performance-testing/introduction.html
+- /docs/corda-enterprise/head/performance-testing/introduction.html
+- /docs/corda-enterprise/performance-testing/introduction.html
 date: '2020-01-08T09:59:25Z'
-menu: []
+menu:
+  corda-enterprise-4-4:
+    parent: corda-enterprise-4-4-perf-index
+    weight: 2001
 tags:
 - introduction
 title: Introduction
@@ -178,4 +183,3 @@ then start to break it up in smaller payments, allowing the following settings t
 * Number of input states to a new transaction (i.e. pay a larger sums from change shards of the previous transaction).
 
 Advanced tests also include testing e.g. connecting to the target node via float/firewall.
-

@@ -1,6 +1,8 @@
 ---
 aliases:
 - /releases/4.4/notary/notary-operate.html
+- /docs/corda-enterprise/head/notary/notary-operate.html
+- /docs/corda-enterprise/notary/notary-operate.html
 date: '2020-01-08T09:59:25Z'
 menu:
   corda-enterprise-4-4:
@@ -11,7 +13,7 @@ tags:
 - notary
 - operate
 title: Operating a notary
-weight: 11
+weight: 120
 ---
 
 
@@ -28,6 +30,3 @@ weight: 11
 * [Handling flag days](handling-flag-days.md)
 * [Scaling A Notary Cluster](scaling-a-notary-cluster.md)
 * [Upgrading the notary to a new version of Corda Enterprise](upgrading-the-ha-notary-service.md)
-
-
-

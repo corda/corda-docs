@@ -1,13 +1,18 @@
 ---
 aliases:
 - /releases/4.4/performance-testing/toc-tree.html
+- /docs/corda-enterprise/head/performance-testing/toc-tree.html
+- /docs/corda-enterprise/performance-testing/toc-tree.html
 date: '2020-01-08T09:59:25Z'
-menu: []
-title: Corda Enterprise Performance Testing
+menu:  
+  corda-enterprise-4-4:
+    identifier: corda-enterprise-4-4-perf-index
+    weight: 2000    
+title: Performance Testing
 ---
 
 
-# Corda Enterprise Performance Testing
+# Performance Testing
 
 This section contains the documentation on running performance test of Corda Enterprise
 
@@ -21,6 +26,3 @@ This section contains the documentation on running performance test of Corda Ent
 * [Reproducing the R3 performance test numbers](r3-performance-runs.md)
 * [Practical Considerations](practical-considerations.md)
 * [Performance Tuning a Node](performance-tuning.md)
-
-
-

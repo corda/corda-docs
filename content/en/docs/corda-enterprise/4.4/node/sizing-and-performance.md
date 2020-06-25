@@ -1,8 +1,15 @@
 ---
 aliases:
 - /releases/4.4/node/sizing-and-performance.html
+- /docs/corda-enterprise/head/node/sizing-and-performance.html
+- /docs/corda-enterprise/node/sizing-and-performance.html
 date: '2020-01-08T09:59:25Z'
-menu: []
+menu:
+    corda-enterprise-4-4:
+      identifier: corda-enterprise-4-4-sizing-and-performance
+      name: "Sizing and performance"
+      parent: corda-enterprise-4-4-corda-nodes  
+      weight: 30
 tags:
 - sizing
 - performance
@@ -117,7 +124,7 @@ shared infrastructure.
 
 {{< /note >}}
 
-## The flows used in the measurements
+## Flows used in the measurements
 
 The results currently cover two main types of flow:
 
@@ -152,7 +159,7 @@ from `startFlow` RPC call complete on the client.  At this point the transaction
 complete.
 
 
-## The node configurations used in the measurements
+## Node configurations used in the measurements
 
 We have established results for a number of different software configurations:
 
@@ -276,4 +283,3 @@ In the highest throughput scenarios in Figure 1, node A experiences between 500 
 since under normal circumstances flow checkpoint traffic is write-only.  In order to maximise the bandwidth available between two nodes it
 is necessary to use the `useOpenSsl` option described in corda-configuration-file.  The JVM implementation of SSL is restricted in the
 bandwidth it can sustain over a single connection.
-

@@ -1,6 +1,8 @@
 ---
 aliases:
 - /releases/4.4/messaging.html
+- /docs/corda-enterprise/head/messaging.html
+- /docs/corda-enterprise/messaging.html
 date: '2020-01-08T09:59:25Z'
 menu:
   corda-enterprise-4-4:
@@ -8,7 +10,7 @@ menu:
 tags:
 - messaging
 title: Networking and messaging
-weight: 15
+weight: 140
 ---
 
 
@@ -140,6 +142,3 @@ with the advertised X.500 legal name from the network map service.
 
 *
     * Connect to the P2P broker using the `SystemUsers/Peer` user and a doorman signed certificate. The authentication is performed based on the root CA.
-
-
-

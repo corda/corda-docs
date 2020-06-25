@@ -1,6 +1,8 @@
 ---
 aliases:
 - /releases/4.4/node/operating/operating-node.html
+- /docs/corda-enterprise/head/node/operating/operating-node.html
+- /docs/corda-enterprise/node/operating/operating-node.html
 date: '2020-01-08T09:59:25Z'
 menu:
   corda-enterprise-4-4:
@@ -9,8 +11,8 @@ menu:
     parent: corda-enterprise-4-4-corda-nodes
 tags:
 - node
-title: Operating a Corda Node
-weight: 5
+title: Operating a Corda node
+weight: 60
 ---
 
-# Operating a Corda Node
+# Operating a Corda node

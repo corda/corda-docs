@@ -1,12 +1,10 @@
 ---
 aliases:
 - /releases/4.4/cordapps/quickstart-build.html
+- /docs/corda-enterprise/head/cordapps/quickstart-build.html
+- /docs/corda-enterprise/cordapps/quickstart-build.html
 date: '2020-01-08T09:59:25Z'
-menu:
-    corda-enterprise-4-4:
-        identifier: "corda-enterprise-4-4-cordapps-quickstart-building"
-        name: "Building your own CorDapp"
-        parent: corda-enterprise-4-4-cordapps-quickstart
+menu: []
 tags:
 - quickstart
 - build
@@ -199,7 +197,7 @@ class CarContract : Contract {
         when(command) {
           is Commands.Issue -> requireThat {
             "There should be no input state" using (tx.inputs.isEmpty())
-            "There should be one input state" using (tx.outputs.size == 1)
+            "There should be one output state" using (tx.outputs.size == 1)
             "The output state must be of type CarState" using (tx.outputs.get(0).data is CarState)
             val outputState = tx.outputs.get(0).data as CarState
             "The licensePlateNumber must be seven characters long" using (outputState.licensePlateNumber.length == 7)

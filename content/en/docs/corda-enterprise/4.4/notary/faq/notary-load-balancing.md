@@ -1,13 +1,19 @@
 ---
 aliases:
 - /releases/4.4/notary/faq/notary-load-balancing.html
+- /docs/corda-enterprise/head/notary/faq/notary-load-balancing.html
+- /docs/corda-enterprise/notary/faq/notary-load-balancing.html
 date: '2020-01-08T09:59:25Z'
-menu: []
+menu:
+  corda-enterprise-4-4:
+    identifier: corda-enterprise-4-4-corda-nodes-notary-faq-notary-load-balancing
+    name: "Notary Load Balancing"
+    parent: corda-enterprise-4-4-running-a-notary-cluster-faq-toctree
 tags:
 - notary
-- load
-- balancing
+- load balancing
 title: Notary Load Balancing
+weight: 2
 ---
 
 
@@ -50,4 +56,3 @@ If one Corda node sends multiple notarisation requests which try to spend the sa
 While technically it should be first in first out, in reality it’s quite possible in the case of a HA notary that the first request gets sent
 to notary 1 and the second request gets sent to notary 2. If notary 2 processes the request faster the FIFO is not met and the request on notary
 1 will error out. Such a race on a state shouldn’t normally be possible unless it’s done intentionally.
-

@@ -1,6 +1,8 @@
 ---
 aliases:
 - /releases/4.4/node/setup/corda-configuration-file.html
+- /docs/corda-enterprise/head/node/setup/corda-configuration-file.html
+- /docs/corda-enterprise/node/setup/corda-configuration-file.html
 date: '2020-01-08T09:59:25Z'
 menu:
   corda-enterprise-4-4:
@@ -451,6 +453,12 @@ dataSource.password = ""
 
 `tuning`
     Performance tuning parameters for Corda Enterprise
+
+`backchainFetchBatchSize`
+
+This is an optimisation for sharing transaction backchains. Corda Enterprise nodes can request backchain items in bulk instead of one at a time. This field specifies the size of the batch. The value is just an integer indicating the maximum number of states that can be requested at a time during backchain resolution.
+
+*Default:* 50
 
 `flowThreadPoolSize`
   The number of threads available to handle flows in parallel. This is the number of flows

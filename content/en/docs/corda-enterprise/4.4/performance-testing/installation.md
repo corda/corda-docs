@@ -1,8 +1,13 @@
 ---
 aliases:
 - /releases/4.4/performance-testing/installation.html
+- /docs/corda-enterprise/head/performance-testing/installation.html
+- /docs/corda-enterprise/performance-testing/installation.html
 date: '2020-01-08T09:59:25Z'
-menu: []
+menu:
+  corda-enterprise-4-4:
+    parent: corda-enterprise-4-4-perf-index
+    weight: 2002
 tags:
 - installation
 title: Obtaining and Installing the Performance Test Suite
@@ -72,4 +77,3 @@ Restart=on-failure
 [Install]
 WantedBy=multi-user.target
 ```
-

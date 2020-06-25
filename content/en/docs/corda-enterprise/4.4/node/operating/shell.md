@@ -1,6 +1,8 @@
 ---
 aliases:
 - /releases/4.4/node/operating/shell.html
+- /docs/corda-enterprise/head/node/operating/shell.html
+- /docs/corda-enterprise/node/operating/shell.html
 date: '2020-01-08T09:59:25Z'
 menu:
   corda-enterprise-4-4:
@@ -60,13 +62,16 @@ There are also operations that allow starting/killing the flows or even stopping
 
 
 * Watching flows (`flow watch`) requires `InvokeRpc.stateMachinesFeed`.
-* Starting flows requires `InvokeRpc.startTrackedFlowDynamic`, `InvokeRpc.registeredFlows` and `InvokeRpc.wellKnownPartyFromX500Name`, as well as a
+* Starting flows requires `InvokeRpc.registeredFlows` and `InvokeRpc.wellKnownPartyFromX500Name`, as well as a
 permission for the flow being started.
 * Killing flows (`flow kill`) requires `InvokeRpc.killFlow`. This currently
 allows the user to kill *any* flow, so please be careful when granting it!
 
 Description of RPC operations can be found in api-rpc.
 
+{{< note >}}
+`InvokeRpc.startTrackedFlowDynamic` permission gives permission to run all existing flows.
+{{< /note >}}
 
 ## The shell via the local terminal
 
@@ -485,7 +490,3 @@ The shell will be enhanced over time. The currently known limitations include:
 * The `jdbc` command requires you to explicitly log into the database first
 * Commands placed in the `shell-commands` directory are only noticed after the node is restarted
 * The `jul` command advertises access to logs, but it doesn’t work with the logging framework we’re using
-
-
-
-

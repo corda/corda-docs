@@ -4,11 +4,15 @@ aliases:
 - /HEAD/corda-network/index.html
 - /corda-network/index.html
 - /releases/release-V4.4/corda-network/index.html
+- /docs/corda-os/head/corda-network/index.html
+- /docs/corda-os/corda-network/index.html
+- /docs/corda-os/head/corda-network.html
+- /docs/corda-os/corda-network.html
 date: '2020-01-08T09:59:25Z'
 menu:
   corda-os-4-4:
     identifier: corda-os-4-4-corda-network
-    weight: 5
+    weight: 6
 title: Corda Network
 ---
 
@@ -73,4 +77,3 @@ otherwise rely, is to be treated as ‘confirmed’ in accordance with the terms
 
 The Support Service is provided to participants and business network operators to manage and resolve inquiries and incidents
 relating to the Identity Service, Network Map Service and Notary Services.
-

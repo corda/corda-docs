@@ -1,8 +1,13 @@
 ---
 aliases:
 - /releases/4.4/performance-testing/r3-performance-runs.html
+- /docs/corda-enterprise/head/performance-testing/r3-performance-runs.html
+- /docs/corda-enterprise/performance-testing/r3-performance-runs.html
 date: '2020-01-08T09:59:25Z'
-menu: []
+menu:
+  corda-enterprise-4-4:
+    parent: corda-enterprise-4-4-perf-index
+    weight: 2006
 tags:
 - r3
 - performance
@@ -155,4 +160,3 @@ It is recommended to manage the database server manually and optimise for write 
 
 For the test, JMeter server instances on 4 node machines and the simple notary machine all connect to one node via RPC
 to drive the tests. A external JMeter client uses the `NightlyBenchmark.jmx` test plan to run the tests.
-

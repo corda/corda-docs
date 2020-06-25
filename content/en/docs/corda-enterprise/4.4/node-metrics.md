@@ -1,16 +1,21 @@
 ---
 aliases:
 - /releases/4.4/node-metrics.html
+- /docs/corda-enterprise/head/node-metrics.html
+- /docs/corda-enterprise/node-metrics.html
 date: '2020-01-08T09:59:25Z'
-menu: []
+menu:
+  corda-enterprise-4-4:
+    parent: corda-enterprise-4-4-corda-nodes
 tags:
 - node
 - metrics
-title: Metrics
+title: Node metrics
+weight: 200
 ---
 
 
-# Metrics
+# Node metrics
 
 A Corda node exports a number of metrics for the purpose of monitoring the health of the node via JMX. This page documents the metrics
 exported by Corda.
@@ -114,4 +119,3 @@ weightPercent are only available for weight-based caches.
 |net.corda:type=P2P,name=SendQueueSizeOnInsert|Histogram measuring the size of the in-memory send queue in the state machine when new messages are added|
 
 {{< /table >}}
-

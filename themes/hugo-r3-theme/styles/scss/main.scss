@@ -1,5 +1,3 @@
-@import "../../node_modules/docsearch.js/dist/npm/styles/main";
-
 @import "1_settings/variables";
 @import "1_settings/colours";
 @import "1_settings/bootstrap";
@@ -11,6 +9,7 @@
 @import "4_base/typography";
 @import "4_base/links";
 
+@import "5_objects/table";
 @import "5_objects/wrappers";
 
 @import "6_components/alerts";
@@ -35,4 +34,5 @@
 @import "6_components/warning";
 
 @import "7_utilities/anchor";
+@import "7_utilities/cookies-consent";
 @import "7_utilities/tableofcontents";

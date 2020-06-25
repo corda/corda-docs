@@ -4,6 +4,8 @@ aliases:
 - /HEAD/network-builder.html
 - /network-builder.html
 - /releases/release-V4.4/network-builder.html
+- /docs/corda-os/head/network-builder.html
+- /docs/corda-os/network-builder.html
 date: '2020-01-08T09:59:25Z'
 menu:
   corda-os-4-4:
@@ -56,12 +58,11 @@ the following layout:
  -- cordapps/
 ```
 
-An easy way to build a valid set of nodes is by running `deployNodes`. In this document, we will be using
-the output of running `deployNodes` for the [Example CorDapp](https://github.com/corda/cordapp-example):
+An easy way to build a valid set of nodes is by running `deployNodes`. In this document, we will be using the output of running `deployNodes` for the [Java samples repository](https://github.com/corda/samples-java):
 
 
-* `git clone https://github.com/corda/samples`
-* `cd samples/cordapp-example`
+* `git clone https://github.com/corda/samples-java`
+* `cd samples-java/Basic/cordapp-example`
 * `./gradlew clean workflows-java:deployNodes`
 
 
@@ -218,4 +219,3 @@ Tue Jul 17 15:47:14 GMT 2018>>> run networkMapSnapshot
 ## Shutting down the nodes
 
 Run `docker kill $(docker ps -q)` to kill all running Docker processes.
-

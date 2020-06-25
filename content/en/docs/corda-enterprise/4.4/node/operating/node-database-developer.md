@@ -1,6 +1,8 @@
 ---
 aliases:
 - /releases/4.4/node/operating/node-database-developer.html
+- /docs/corda-enterprise/head/node/operating/node-database-developer.html
+- /docs/corda-enterprise/node/operating/node-database-developer.html
 date: '2020-01-08T09:59:25Z'
 menu:
   corda-enterprise-4-4:
@@ -10,7 +12,7 @@ tags:
 - database
 - developer
 title: Simplified database schema setup for development
-weight: 1
+weight: 20
 ---
 
 
@@ -616,6 +618,3 @@ To remove node and CorDapp specific tables run the following SQL script:
 DROP SCHEMA IF EXISTS "my_schema" CASCADE;
 DROP OWNED BY "my_user";
 ```
-
-
-

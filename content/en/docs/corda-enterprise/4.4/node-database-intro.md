@@ -1,13 +1,18 @@
 ---
 aliases:
 - /releases/4.4/node-database-intro.html
+- /docs/corda-enterprise/head/node-database-intro.html
+- /docs/corda-enterprise/node-database-intro.html
 date: '2020-01-08T09:59:25Z'
-menu: []
+menu:
+  corda-enterprise-4-4:
+    parent: corda-enterprise-4-4-corda-nodes-operating-db
 tags:
 - node
 - database
 - intro
 title: Database management
+weight: 10
 ---
 
 
@@ -33,4 +38,3 @@ It is intended to be used by Corda Enterprise node administrators during databas
 It can be also used by CorDapp developers as a helper to create Liquibase database migration scripts.
 Any CorDapp deployed onto a Corda Enteprise node, which stores data in a custom tables,
 requires embedded DDL scripts written in a cross database manner database-management.
-

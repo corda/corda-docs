@@ -1,12 +1,17 @@
 ---
 aliases:
 - /releases/4.4/node-cloud.html
+- /docs/corda-enterprise/head/node-cloud.html
+- /docs/corda-enterprise/node-cloud.html
 date: '2020-01-08T09:59:25Z'
-menu: []
+menu:
+  corda-enterprise-4-4:
+    parent: corda-enterprise-4-4-corda-networks
 tags:
 - node
 - cloud
 title: Corda Enterprise cloud images
+weight: 8
 ---
 
 
@@ -148,4 +153,3 @@ You can check the status of the `corda` service by running:
 ```shell
 sudo systemctl status corda
 ```
-

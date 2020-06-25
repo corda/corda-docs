@@ -1,12 +1,17 @@
 ---
 aliases:
 - /releases/4.4/event-scheduling.html
+- /docs/corda-enterprise/head/event-scheduling.html
+- /docs/corda-enterprise/event-scheduling.html
 date: '2020-01-08T09:59:25Z'
-menu: []
+menu:
+  corda-enterprise-4-4:
+    parent: corda-enterprise-4-4-cordapps
 tags:
 - event
 - scheduling
 title: Event scheduling
+weight: 30
 ---
 
 
@@ -97,4 +102,3 @@ should become available and schedules an activity at that time to work out what 
 business process and to take on those roles.  That `FlowLogic` will be handed the `StateRef` for the interest
 rate swap `State` in question, as well as a tolerance `Duration` of how long to wait after the activity is triggered
 for the interest rate before indicating an error.
-

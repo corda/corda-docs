@@ -1,8 +1,12 @@
 ---
 aliases:
 - /releases/4.4/node-database-access-h2.html
+- /docs/corda-enterprise/head/node-database-access-h2.html
+- /docs/corda-enterprise/node-database-access-h2.html
 date: '2020-01-08T09:59:25Z'
-menu: []
+menu:
+  corda-enterprise-4-4:
+    parent: corda-enterprise-4-4-corda-nodes-operating
 tags:
 - node
 - database
@@ -121,5 +125,3 @@ will return the following error:
 
 
 `jdbc:h2:~/path/to/file/persistence`
-
-

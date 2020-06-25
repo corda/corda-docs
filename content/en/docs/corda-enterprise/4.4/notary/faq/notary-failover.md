@@ -1,12 +1,19 @@
 ---
 aliases:
 - /releases/4.4/notary/faq/notary-failover.html
+- /docs/corda-enterprise/head/notary/faq/notary-failover.html
+- /docs/corda-enterprise/notary/faq/notary-failover.html
 date: '2020-01-08T09:59:25Z'
-menu: []
+menu:
+  corda-enterprise-4-4:
+    identifier: corda-enterprise-4-4-corda-nodes-notary-faq-notary-failover
+    name: "Notary Failover"
+    parent: corda-enterprise-4-4-running-a-notary-cluster-faq-toctree
 tags:
 - notary
 - failover
 title: Notary Failover
+weight: 3
 ---
 
 
@@ -47,4 +54,3 @@ Previously notarised transactions are saved so that future repeated requests can
 ## If there is a network outage/partition, how does this affect the notary?
 
 We are prioritizing consistency over availability. Therefore the service will halt on the minority side of a network partition.
-

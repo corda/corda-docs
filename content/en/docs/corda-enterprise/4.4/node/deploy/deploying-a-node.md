@@ -1,6 +1,8 @@
 ---
 aliases:
 - /releases/4.4/node/deploy/deploying-a-node.html
+- /docs/corda-enterprise/head/node/deploy/deploying-a-node.html
+- /docs/corda-enterprise/node/deploy/deploying-a-node.html
 date: '2020-01-08T09:59:25Z'
 menu:
   corda-enterprise-4-4:
@@ -45,7 +47,7 @@ handling, and ensures the Corda service is run at boot.
 
 
 
-* A supported Java distribution. The supported versions are listed in getting-set-up
+* A supported Java distribution (see [Getting set up for CorDapp development](getting-set-up.md))
 
 
 
@@ -249,7 +251,7 @@ at boot, and means the Corda service stays running with no users connected to th
 
 
 
-* A supported Java distribution. The supported versions are listed in getting-set-up
+* A supported Java distribution (see [Getting set up for CorDapp development](getting-set-up.md))
 
 
 
@@ -347,4 +349,3 @@ You can verify Corda is running by connecting to your RPC port from another host
 
 If you receive the message “Escape character is ^]”, Corda is running and accessible. Press Ctrl-] and Ctrl-D to exit
 telnet.
-

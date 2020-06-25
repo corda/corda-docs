@@ -1,8 +1,13 @@
 ---
 aliases:
 - /releases/4.4/performance-testing/running-jmeter-corda.html
+- /docs/corda-enterprise/head/performance-testing/running-jmeter-corda.html
+- /docs/corda-enterprise/performance-testing/running-jmeter-corda.html
 date: '2020-01-08T09:59:25Z'
-menu: []
+menu:
+  corda-enterprise-4-4:
+    parent: corda-enterprise-4-4-perf-index
+    weight: 2003
 tags:
 - running
 - jmeter
@@ -192,4 +197,3 @@ java -jar jmeter-corda.jar -XjmeterProperties <property file including hostnames
 
 It is recommended to consult the JMeter manual on [Remote Testing](https://jmeter.apache.org/usermanual/remote-test.html)
 when setting up remote testing without SSH tunneling.
-

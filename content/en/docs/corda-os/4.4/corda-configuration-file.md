@@ -4,6 +4,8 @@ aliases:
 - /HEAD/corda-configuration-file.html
 - /corda-configuration-file.html
 - /releases/release-V4.4/corda-configuration-file.html
+- /docs/corda-os/head/corda-configuration-file.html
+- /docs/corda-os/corda-configuration-file.html
 date: '2020-01-08T09:59:25Z'
 menu:
   corda-os-4-4:
@@ -389,6 +391,10 @@ dataSource.password = ""
   Only the JARs in the directories are added, not the directories themselves.
   This is useful for including JDBC drivers and the like. e.g. ``jarDirs = [ ${baseDirectory}"/libs" ]``.
   (Note that you have to use the ``baseDirectory`` substitution value when pointing to a relative path).
+
+{{< note >}}
+If an item in a list is overridden via an environment variable/system property, the whole list will be overridden. This mechanism should not be used for CorDapps directory.
+{{< /note >}}
 
   *Default:* not defined
 
