@@ -16,15 +16,17 @@ weight: 65
 
 # One-click Corda deployment
 
-This document describes how Corda nodes and networks can be deployed in one click in an Azure environment. It uses three Azure deployment templates:
+This document describes how Corda nodes and networks can be deployed in one click in an Azure environment. There are three offerings that can be found on the Azure Marketplace:
 
-* **CENM Deployment**: CENM is deployed onto a newly-created Azure Kubernetes Service cluster.
-* **Nodes Onto An Existing Network**: Deploy Nodes onto an newly-created Azure Kubernetes Service cluster that connects to an externally running network.
-* **Corda One Click**: CEMN is deployed onto a newly-created Azure Kubernetes Service cluster and then nodes running a custom CorDapp are deployed.
+* **CENM Deployment**: A CENM instance is deployed onto a newly-created Azure Kubernetes Service cluster.
+* **Nodes Onto An Existing Network**: Corda Enterprise Nodes are deployed onto an newly-created Azure Kubernetes Service cluster that connects to an externally running network.
+* **Corda One Click**: A CEMN instance is deployed onto a newly-created Azure Kubernetes Service cluster and then nodes running a custom CorDapp are deployed.
 
-The templates can be found on the Azure Marketplace or downloaded from the [`azure-resource-management-templates` repo](https://github.com/corda/azure-resource-management-templates/) on GitHub.
+{{< note >}}The nodes deployed using these templates are not production-ready. In particular, they use H2 as their database, which is not a supported configuration, as per the [Platform Support Matrix](../../platform-support-matrix.md#node-databases). In addition, they are not configured to use hardware security modules or Corda Enterprise Firewall instances, and are not deployed in high-availability mode.{{< /note >}}
 
-The deployed nodes will use H2 databases, will not be configured to use hardware security modules or Corda Enterprise Firewall instances, and will not be deployed in high-availability mode.
+{{< note >}}CORDA ENTERPRISE may be used for evaluation purposes for 90 days pursuant to the Software Evaluation License Agreement. Any use beyond this (e.g. in production deployments) requires a commercial license. Please contact sales@r3.com for more information.
+
+The Software Evaluation License Agreement for this product can be viewed from https://www.r3.com/corda-enterprise-evaluation-license.{{< /note >}}
 
 ## Prerequisites
 
