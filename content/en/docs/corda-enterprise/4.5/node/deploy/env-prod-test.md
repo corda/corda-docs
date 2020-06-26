@@ -93,7 +93,7 @@ This configuration file contains specifies the location of:
 
 
 
-You can find examples of configuration files [available here](https://docs.corda.r3.com/corda-firewall-configuration-file.html)
+You can find examples of configuration files [available here](../corda-firewall-configuration-file.html).
 
 
 ### Installing the Corda Node
