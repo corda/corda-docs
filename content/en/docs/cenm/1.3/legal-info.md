@@ -21,182 +21,212 @@ title: Third-party software licence information
 
 This file is based on or incorporates material from the projects listed below (Third Party IP). R3 LLC licenses these components under the Corda Enterprise Network Manager software license terms. The original copyright notices and the licenses under which R3 LLC received such components are set forth below for informational purposes.  R3 LLC reserves all rights not expressly granted herein, whether by implication, estoppel or otherwise.
 
-1.	animal-sniffer-annotations
-2.	annotations
-3.	antlr
-4.	artemis-amqp-protocol
-5.	artemis-commons
-6.	artemis-core-client
-7.	artemis-jdbc-store
-8.	artemis-jms-client
-9.	artemis-journal
-10.	artemis-native
-11.	artemis-selector
-12.	artemis-server
-13.	asm
-14.	asm-analysis
-15.	asm-commons
-16.	asm-tree
-17.	asm-util
-18.	bcpkix-jdk15on
-19.	bcprov-jdk15on
-20.	byte-buddy
-21.	caffeine
-22.	catalyst-buffer
-23.	catalyst-common
-24.	catalyst-concurrent
-25.	catalyst-netty
-26.	catalyst-serializer
-27.	catalyst-transport
-28.	checker-qual
-29.	classgraph
-30.	classmate
-31.	commons-beanutils
-32.	commons-codec
-33.	commons-collections
-34.	commons-configuration
-35.	commons-io
-36.	commons-lang3
-37.	commons-logging
-38.	commons-collections4
-39.	config
-40.	console-tree-builder
-41.	copycat-client
-42.	copycat-protocol
-43.	copycat-server
-44.	corda
-45.	corda-common-configuration-parsing
-46.	corda-common-validation
-47.	corda-confidential-identities
-48.	corda-core
-49.	corda-jackson
-50.	corda-node
-51.	corda-node-api
-52.	corda-rpc
-53.	corda-serialization
-54.	corda-shell
-55.	corda-tools-cliutils
-56.	crash.cli
-57.	crash.connectors.ssh
-58.	disruptor
-59.	docker-client
-60.	doclet-cs
+1.	amqp-client
+2.	animal-sniffer-annotations
+3.	annotations
+4.	antlr
+5.	aopalliance-repackaged
+6.	artemis-amqp-protocol
+7.	artemis-commons
+8.	artemis-core-client
+9.	artemis-jdbc-store
+10.	artemis-jms-client
+11.	artemis-journal
+12.	artemis-native
+13.	artemis-selector
+14.	artemis-server
+15.	asm
+16.	asm-analysis
+17.	asm-commons
+18.	asm-tree
+19.	asm-util
+20.	atlassian-event
+21.	atlassian-httpclient-api
+22.	atlassian-httpclient-library
+23.	atlassian-util-concurrent
+24.	bcprov-jdk15on
+25.	byte-buddy
+26.	caffeine
+27.	catalyst-buffer
+28.	catalyst-common
+29.	catalyst-concurrent
+30.	catalyst-netty
+31.	catalyst-serializer
+32.	catalyst-transport
+33.	checker-qual
+34.	classgraph
+35.	classmate
+36.	commons-beanutils
+37.	commons-codec
+38.	commons-collections
+39.	commons-collections4
+40.	commons-io
+41.	commons-lang3
+42.	config
+43.	copycat-client
+44.	copycat-protocol
+45.	copycat-server
+46.	corda-common-configuration-parsing
+47.	corda-common-logging
+48.	corda-common-validation
+49.	corda-confidential-identities
+50.	corda-core
+51.	corda-extensions-api
+52.	corda-jackson
+53.	corda-node
+54.	corda-node-api
+55.	corda-rpc
+56.	corda-serialization
+57.	corda-shell
+58.	corda-tools-cliutils
+59.	crash.cli
+60.	disruptor
 61.	dom4j
 62.	eddsa
 63.	error_prone_annotations
 64.	failureaccess
 65.	FastInfoset
-66.	fugue
-67.	gant_groovy1.8
-68.	geronimo-jms_ 2.0_spec
-69.	geronimo-json_ 1.0_spec
-70.	groovy-all
-71.	guava
-72.	gwtbootstrap3
-73.	h2
-74.	HdrHistogram
-75.	hibernate-commons-annotations
-76.	hibernate-core
-77.	hibernate-java8
-78.	HikariCP
-79.	istack-commons-runtime
-80.	j2objc-annotations
-81.	jackson-annotations
-82.	jackson-core
-83.	jackson-databind
-84.	jackson-dataformat-yaml
-85.	jackson-datatype- jsr310
-86.	jacksonm-odule-kotlin
-87.	jandex
-88.	jansi
-89.	javassist
-90.	javax.activation-api
-91.	javax.persistence-api
-92.	javax.servlet-api
-93.	jaxb-api
-94.	jaxb-runtime
-95.	jaxws-api
-96.	jboss-logging
-97.	jbosstransaction- api_1.2_spec
-98.	jcabi-log
-99.	jcabi-manifests
-100.	jcl-over-slf4j
-101.	jersey-container-jetty-http
-102.	jersey-container-servlet-core
-103.	jersey-server
-104.	jetty-servlet
-105.	jetty-webapp
-106.	jgroups
-107.	jira-rest-java-client-core
-108.	jjwt
-109.	johnzon-core
-110.	jolokia-core
-111.	jolokia-jvm
-112.	jpam
-113.	jquery
-114.	jsch
-115.	json-simple
-116.	jsr305
-117.	jul-to-slf4j
-118.	kotlin-reflect
-119.	kotlin-stdlib
-120.	kotlin-stdlib-common
-121.	kotlin-stdlib-jdk7
-122.	kotlin-stdlib-jdk8
-123.	kotlin-stdlib-jre7
-124.	kotlin-stdlib-jre8
-125.	kryo
-126.	kryo-serializers
-127.	LatencyUtils
-128.	liquibase-core
-129.	liquibase-slf4j
-130.	listenablefuture
-131.	log4j-api
-132.	log4j-core
-133.	log4j-slf4j-impl
-134.	log4j-web
-135.	metrics-core
-136.	metrics-jmx
-137.	mina-core
-138.	minlog
-139.	netty-buffer
-140.	netty-codec
-141.	netty-codec-http
-142.	netty-common
-143.	netty-handler
-144.	netty-resolver
-145.	netty-tcnative-boringssl-static
-146.	netty-transport
-147.	netty-transport-native-epoll
-148.	netty-transport-native-kqueue
-149.	netty-transport-native-unix-common
-150.	newrelic-api
-151.	objenesis
-152.	okhttp
-153.	okio
-154.	picocli
-155.	proton-j
-156.	quasar-core
-157.	reflectasm
-158.	rxjava
-159.	shiro-cache
-160.	shiro-config-core
-161.	shiro-config-ogdl
-162.	shiro-core
-163.	shiro-crypto-cipher
-164.	shiro-crypto-core
-165.	shiro-crypto-hash
-166.	shiro-event
-167.	shiro-lang
-168.	slf4j-api
-169.	slf4j-nop
-170.	snakeyaml
-171.	snappy
-172.	sshd-common
-173.	sshd-core
-174.	sshd-pam
-175.	stax-ex
-176.	txw2
+66.	forms
+67.	forms_rt
+68.	fugue
+69.	geronimo-jms_ 2.0_spec
+70.	geronimo-json_ 1.0_spec
+71.	groovy-all
+72.	h2
+73.	HdrHistogram
+74.	hibernate-commons-annotations
+75.	hibernate-core
+76.	hibernate-java8
+77.	HikariCP
+78.	hk2-api
+79.	hk2-locator
+80.	hk2-utils
+81.	httpasyncclient
+82.	httpasyncclient-cache
+83.	httpclient
+84.	httpclient-cache
+85.	httpcore
+86.	httpcore-nio
+87.	httpmime
+88.	istack-commons-runtime
+89.	j2objc-annotations
+90.	jackson-annotations
+91.	jackson-core
+92.	jackson-core-asl
+93.	jackson-databind
+94.	jackson-dataformat-yaml
+95.	jackson-datatype- jsr310
+96.	jackson-jaxrs
+97.	jackson-mapper-asl
+98.	jackson-module-kotlin
+99.	jackson-xc
+100.	jandex
+101.	jansi
+102.	java-jwt
+103.	java-semver
+104.	javassist
+105.	javax.activation-api
+106.	javax.annotation-api
+107.	javax.inject
+108.	javax.persistence-api
+109.	javax.servlet-api
+110.	javax.ws.rs-api
+111.	jaxb-api
+112.	jaxb-impl
+113.	jaxb-runtime
+114.	jboss-logging
+115.	jboss-transaction-api_1.2_spec
+116.	jcabi-log
+117.	jcabi-manifests
+118.	jdom
+119.	jersey-client
+120.	jersey-common
+121.	jersey-container-jetty-http
+122.	jersey-container-servlet-core
+123.	jersey-guava
+124.	jersey-json
+125.	jersey-media-jaxb
+126.	jersey-server
+127.	jettison
+128.	jetty-continuation
+129.	jetty-http
+130.	jetty-io
+131.	jetty-security
+132.	jetty-server
+133.	jetty-servlet
+134.	jetty-util
+135.	jetty-webapp
+136.	jetty-xml
+137.	jgroups
+138.	jimfs
+139.	jira-rest-java-client-api
+140.	jira-rest-java-client-core
+141.	jjwt
+142.	joda-time
+143.	johnzon-core
+144.	jolokia-core
+145.	jolokia-jvm
+146.	jpam
+147.	jsch
+148.	json-simple
+149.	jsr305
+150.	jul-to-slf4j
+151.	kotlin-stdlib
+152.	kotlin-stdlib-common
+153.	kotlin-stdlib-jdk7
+154.	kotlin-stdlib-jre7
+155.	kotlin-stdlib-jre8
+156.	LatencyUtils
+157.	library
+158.	liquibase-core
+159.	liquibase-slf4j
+160.	listenablefuture
+161.	log4j-slf4j-impl
+162.	log4j-web
+163.	metrics-graphite
+164.	metrics-jmx
+165.	metrics-new-relic
+166.	mina-core
+167.	minlog
+168.	netty-buffer
+169.	netty-codec
+170.	netty-codec-socks
+171.	netty-common
+172.	netty-resolver
+173.	netty-tcnative-boringssl-static
+174.	netty-transport-native-unix-common
+175.	newrelic-api
+176.	objenesis
+177.	okio
+178.	osgi-resource-locator
+179.	pf4j
+180.	picocli
+181.	proton-j
+182.	quasar-core
+183.	r3-libs-obfuscator
+184.	reflectasm
+185.	rxjava
+186.	sal-api
+187.	shiro-cache
+188.	shiro-config-core
+189.	shiro-config-ogdl
+190.	shiro-core
+191.	shiro-crypto-cipher
+192.	shiro-crypto-core
+193.	shiro-crypto-hash
+194.	shiro-event
+195.	shiro-lang
+196.	slf4j-api
+197.	snakeyaml
+198.	snappy
+199.	spring-beans
+200.	spring-core
+201.	sshd-common
+202.	sshd-core
+203.	sshd-pam
+204.	stax-ex
+205.	txw2
+206.	validation-api
 
 
 ## Start of Notices
@@ -204,510 +234,561 @@ This file is based on or incorporates material from the projects listed below (T
 
 =========== START OF NOTICES AND INFORMATION for the following components=========
 
-classmate 1.3.4
-http://github.com/FasterXML/java-classmate
-http://www.apache.org/licenses/LICENSE-2.0.txt
-
-jackson-dataformat-yaml 2.9.7
-https://github.com/FasterXML/jackson-dataformat-yaml
-http://www.apache.org/licenses/LICENSE-2.0.txt
-
-jackson-datatype- jsr310 2.9.7
-https://github.com/FasterXML/jackson-datatype-jsr310
-http://www.apache.org/licenses/LICENSE-2.0.txt
-
-jackson-module-kotlin 2.9.7
-https://github.com/FasterXML/jackson-module-kotlin
-http://www.apache.org/licenses/LICENSE-2.0.txt
-
-caffeine 2.7.0
-https://github.com/ben-manes/caffeine
-https://github.com/ben-manes/caffeine/blob/master/LICENSE
-
-guava 28.0-jre
-https://github.com/google/guava
-https://github.com/google/guava/blob/master/COPYING
-
-j2objc-annotations 1.3
-https://github.com/google/j2objc/
-https://github.com/google/j2objc/blob/master/LICENSE
-
-json-simple 1.1.1
-http://code.google.com/p/json-simple/
-http://www.apache.org/licenses/LICENSE-2.0
-
-disruptor 3.4.2
-Copyright © 2011 - 2018 LMAX Ltd.
-http://lmax-exchange.github.com/disruptor
-http://www.apache.org/licenses/LICENSE-2.0.txt
-
-okhttp	3.14.2
-https://github.com/square/okhttp
-https://github.com/square/okhttp/blob/master/LICENSE.txt
-
-okio 1.17.2
-https://github.com/square/okio
-https://github.com/square/okio/blob/master/LICENSE.txt
-
-config 1.3.4
-https://github.com/lightbend/config
-https://github.com/lightbend/config/blob/master/LICENSE-2.0.txt
-
-HikariCP 3.3.1
-https://github.com/brettwooldridge/HikariCP
-https://github.com/brettwooldridge/HikariCP/blob/dev/LICENSE
-
-commons-beanutils 1.9.3
-https://commons.apache.org/proper/commons-beanutils/
-http://www.apache.org/licenses/LICENSE-2.0.txt
-
-commons-codec 1.13
-http://commons.apache.org/proper/commons-codec/
-http://www.apache.org/licenses/LICENSE-2.0.txt
-
-commons-collections 3.2.2
-http://commons.apache.org/collections/
-http://www.apache.org/licenses/LICENSE-2.0.txt
-
-commons-configuration 1.6
-http://commons.apache.org/proper/commons-configuration/
-http://www.apache.org/licenses/LICENSE-2.0.txt
-
-commons-io 2.6
-http://commons.apache.org/proper/commons-io/
-http://www.apache.org/licenses/LICENSE-2.0.txt
-
-commons-logging 1.2
-https://commons.apache.org/proper/commons-logging/
-http://www.apache.org/licenses/LICENSE-2.0.txt
-
-console-tree-builder 2.0
-Copyright 2016 SUN XIMENG (Nathaniel Sun)
-https://github.com/nathanielove/Java-Console-Tree-Builder
-https://github.com/nathanielove/Java-Console-Tree-Builder/blob/master/license.txt
-
-docker-client 8.9.1
-https://github.com/spotify/docker-client
-https://github.com/spotify/docker-client/blob/master/LICENSE
-
-fugue 2.6.1
-https://github.com/andyglick/atlassian-fugue/tree/master/fugue
-https://github.com/andyglick/atlassian-fugue/blob/master/LICENSE.txt
-
-kryo-serializers 0.43
-https://github.com/magro/kryo-serializers
-https://github.com/magro/kryo-serializers/blob/master/LICENCE.txt
-
-picocli	3.9.6
-http://picocli.info/
-https://github.com/remkop/picocli/blob/master/LICENSE
-
-catalyst-buffer	1.1.2
-https://github.com/atomix/catalyst
-https://github.com/atomix/catalyst/blob/master/LICENSE
-
-catalyst-common	1.1.2
-https://github.com/atomix/catalyst
-https://github.com/atomix/catalyst/blob/master/LICENSE
-
-catalyst-concurrent 1.1.2
-https://github.com/atomix/catalyst
-https://github.com/atomix/catalyst/blob/master/LICENSE
-
-catalyst-netty	1.1.2
-https://github.com/atomix/catalyst
-https://github.com/atomix/catalyst/blob/master/LICENSE
-
-catalyst-serializer 1.1.2
-https://github.com/atomix/catalyst
-https://github.com/atomix/catalyst/blob/master/LICENSE
-
-catalyst-transport 1.1.2
-https://github.com/atomix/catalyst
-https://github.com/atomix/catalyst/blob/master/LICENSE
-
-copycat-client 1.2.3
-https://github.com/atomix/copycat
-https://github.com/atomix/copycat/blob/master/LICENSE
-
-copycat-protocol 1.2.3
-https://github.com/atomix/copycat
-https://github.com/atomix/copycat/blob/master/LICENSE
-
-copycat-server	1.2.3
-https://github.com/atomix/copycat
-https://github.com/atomix/copycat/blob/master/LICENSE
-
-metrics-core 4.1.0
-https://metrics.dropwizard.io/4.0.0/
-https://github.com/dropwizard/metrics/blob/4.1-development/LICENSE
-
-metrics-jmx 4.1.0
-
-https://metrics.dropwizard.io/4.0.0/
-https://github.com/dropwizard/metrics/blob/4.1-development/LICENSE
-
-netty-buffer 4.1.29.Final
-https://netty.io/
-https://github.com/netty/netty/blob/4.1/LICENSE.txt
-
-netty-codec 4.1.29.Final
-https://netty.io/
-https://github.com/netty/netty/blob/4.1/LICENSE.txt
-
-netty-codec-http 4.1.29.Final
-https://netty.io/
-https://github.com/netty/netty/blob/4.1/LICENSE.txt
-
-netty-common 4.1.29.Final
-https://netty.io/
-https://github.com/netty/netty/blob/4.1/LICENSE.txt
-
-netty-handler 4.1.29.Final
-https://netty.io/
-https://github.com/netty/netty/blob/4.1/LICENSE.txt
-
-netty-resolver	4.1.29.Final
-https://netty.io/
-https://github.com/netty/netty/blob/4.1/LICENSE.txt
-
-netty-tcnative-boringssl-static	2.0.14.Final
-https://netty.io/
-https://github.com/netty/netty/blob/4.1/LICENSE.txt
-
-netty-transport	4.1.29.Final
-https://netty.io/
-https://github.com/netty/netty/blob/4.1/LICENSE.txt
-
-netty-transport-native-epoll 4.1.29.Final
-https://netty.io/
-https://github.com/netty/netty/blob/4.1/LICENSE.txt
-
-netty-transport-native-kqueue 4.1.29.Final
-https://netty.io/
-https://github.com/netty/netty/blob/4.1/LICENSE.txt
-
-netty-transport-native-unix-common 4.1.29.Final
-https://netty.io/
-https://github.com/netty/netty/blob/4.1/LICENSE.txt
-
-rxjava 1.3.8
-https://github.com/ReactiveX/RxJava
-https://github.com/ReactiveX/RxJava/blob/3.x/LICENSE
-
-byte-buddy 1.9.10
-https://bytebuddy.net/#/
-https://github.com/raphw/byte-buddy/blob/master/LICENSE
-
-corda 4.3
-Copyright 2016 - 2020, R3 Limited.
-https://github.com/corda/corda
-https://github.com/corda/corda/blob/release/os/4.5/LICENSE
-
-corda-common-configuration-parsing 4.0
-Copyright 2016 - 2020, R3 Limited.
-https://github.com/corda/corda
-https://github.com/corda/corda/blob/release/os/4.5/LICENSE
-
-corda-common-validation	4.3
-Copyright 2016 - 2020, R3 Limited.
-https://github.com/corda/corda
-https://github.com/corda/corda/blob/release/os/4.5/LICENSE
-
-corda-confidential-identities 4.3
-Copyright 2016 - 2020, R3 Limited.
-https://github.com/corda/corda
-https://github.com/corda/corda/blob/release/os/4.5/LICENSE
-
-corda-core 4.3
-Copyright 2016 - 2020, R3 Limited.
-https://github.com/corda/corda
-https://github.com/corda/corda/blob/release/os/4.5/LICENSE
-
-corda-jackson 4.3
-Copyright 2016 - 2020, R3 Limited.
-https://github.com/corda/corda
-https://github.com/corda/corda/blob/release/os/4.5/LICENSE
-
-corda-node 4.3
-Copyright 2016 - 2020, R3 Limited.
-https://github.com/corda/corda
-https://github.com/corda/corda/blob/release/os/4.5/LICENSE
-
-corda-node-api 4.3
-Copyright 2016 - 2020, R3 Limited.
-https://github.com/corda/corda
-https://github.com/corda/corda/blob/release/os/4.5/LICENSE
-
-corda-rpc 4.3
-Copyright 2016 - 2020, R3 Limited.
-https://github.com/corda/corda
-https://github.com/corda/corda/blob/release/os/4.5/LICENSE
-
-corda-serialization 4.3
-Copyright 2016 - 2020, R3 Limited.
-https://github.com/corda/corda
-https://github.com/corda/corda/blob/release/os/4.5/LICENSE
-
-corda-shell 4.3
-Copyright 2016 - 2020, R3 Limited.
-https://github.com/corda/corda
-https://github.com/corda/corda/blob/release/os/4.5/LICENSE
-
-corda-tools-cliutils 4.3
-Copyright 2016 - 2020, R3 Limited.
-https://github.com/corda/corda
-https://github.com/corda/corda/blob/release/os/4.5/LICENSE
-
-jpam 1.1
-http://jpam.sourceforge.net/
-http://jpam.sourceforge.net/JPamUserGuide.html#id.s6.2.1
-
-artemis-amqp-protocol 2.6.2
-https://github.com/apache/activemq
-https://github.com/apache/activemq/blob/master/LICENSE
-
-artemis-commons	2.6.2
-https://github.com/apache/activemq
-https://github.com/apache/activemq/blob/master/LICENSE
-
-artemis-core-client 2.6.2
-https://github.com/apache/activemq
-https://github.com/apache/activemq/blob/master/LICENSE
-
-artemis-jdbc-store 2.6.2
-https://github.com/apache/activemq
-https://github.com/apache/activemq/blob/master/LICENSE
-
-artemis-jms-client 2.6.2
-https://github.com/apache/activemq
-https://github.com/apache/activemq/blob/master/LICENSE
-
-artemis-journal	2.6.2
-https://github.com/apache/activemq
-https://github.com/apache/activemq/blob/master/LICENSE
-
-artemis-native	2.6.2
-https://github.com/apache/activemq
-https://github.com/apache/activemq/blob/master/LICENSE
-
-artemis-selector 2.6.2
-https://github.com/apache/activemq
-https://github.com/apache/activemq/blob/master/LICENSE
-
-artemis-server	2.6.2
-https://github.com/apache/activemq
-https://github.com/apache/activemq/blob/master/LICENSE
-
-commons-lang3 3.9
-http://commons.apache.org/jexl/
-http://www.apache.org/licenses/LICENSE-2.0.txt
-
-commons-collections4 4.3
-http://commons.apache.org/jexl/
-http://www.apache.org/licenses/LICENSE-2.0.txt
-
-error_prone_annotations 2.3.3
-https://github.com/google/error-prone
-https://github.com/google/error-prone/blob/master/COPYING
-
-failureaccess 1.0.1
-Copyright (C) 2018 The Guava Authors
-https://github.com/google/guava/blob/master/futures/failureaccess/src/com/google/common/util/concurrent/internal/InternalFutureFailureAccess.java
-https://github.com/google/guava/blob/master/futures/failureaccess/src/com/google/common/util/concurrent/internal/InternalFutureFailureAccess.java
-
-FastInfoset 1.9.9
-https://github.com/javaee/metro-fi/blob/master/code/fastinfoset/src/main/java/com/sun/xml/fastinfoset/algorithm/BASE64EncodingAlgorithm.java
-https://opensource.org/licenses/apache2.0.php
-
-gant_groovy1.8 1.9.9
-http://gant.codehaus.org.uk
-http://www.apache.org/licenses/LICENSE-2.0.txt
-
-geronimo-json_ 1.0_spec	1.0-alpha-1
-https://github.com/apache/geronimo-specs
-https://github.com/apache/geronimo-specs/blob/trunk/LICENSE
-
-geronimo-jms_ 2.0_spec 1.0-alpha-2
-https://github.com/apache/geronimo-specs
-https://github.com/apache/geronimo-specs/blob/trunk/LICENSE
-
-gwtbootstrap3 0.6
-https://github.com/gwtbootstrap3/gwtbootstrap3
-https://github.com/gwtbootstrap3/gwtbootstrap3/blob/master/LICENSE
-
-johnzon-core 0.9.5
-https://github.com/apache/johnzon
-https://github.com/apache/johnzon/blob/master/LICENSE
-
-listenablefuture 9999.0-empty-to-avoid-conflict-with-guava
-Copyright (C) 2007 The Guava Authors
-https://github.com/google/guava/blob/master/guava/src/com/google/common/util/concurrent/ListenableFuture.java
-https://github.com/google/guava/blob/master/guava/src/com/google/common/util/concurrent/ListenableFuture.java
-
-log4j-api 2.11.2
-https://github.com/apache/logging-log4j2
-https://github.com/apache/logging-log4j2/blob/master/LICENSE.txt
-
-log4j-core 2.11.2
-https://github.com/apache/logging-log4j2
-https://github.com/apache/logging-log4j2/blob/master/LICENSE.txt
-
-log4j-slf4j-impl 2.11.2
-https://github.com/apache/logging-log4j2
-https://github.com/apache/logging-log4j2/blob/master/LICENSE.txt
-
-log4j-web 2.11.2
-https://github.com/apache/logging-log4j2
-https://github.com/apache/logging-log4j2/blob/master/LICENSE.txt
-
-mina-core 2.0.16
-https://github.com/apache/mina
-https://github.com/apache/mina/blob/trunk/LICENSE
-
-proton-j 0.33.0
-https://qpid.apache.org/releases/qpid-proton-j-0.33.0/index.html
-https://github.com/apache/qpid-proton-j/blob/master/LICENSE
-
-shiro-cache 1.4.1
-https://github.com/apache/shiro
-https://github.com/apache/shiro/blob/master/LICENSE
-
-shiro-config-core 1.4.1
-https://github.com/apache/shiro
-https://github.com/apache/shiro/blob/master/LICENSE
-
-shiro-config-ogdl 1.4.1
-https://github.com/apache/shiro
-https://github.com/apache/shiro/blob/master/LICENSE
-
-shiro-core 1.4.1
-https://github.com/apache/shiro
-https://github.com/apache/shiro/blob/master/LICENSE
-
-shiro-crypto-cipher 1.4.1
-https://github.com/apache/shiro
-https://github.com/apache/shiro/blob/master/LICENSE
-
-shiro-crypto-core 1.4.1
-https://github.com/apache/shiro
-https://github.com/apache/shiro/blob/master/LICENSE
-
-shiro-crypto-hash 1.4.1
-https://github.com/apache/shiro
-https://github.com/apache/shiro/blob/master/LICENSE
-
-shiro-event 1.4.1
-https://github.com/apache/shiro
-https://github.com/apache/shiro/blob/master/LICENSE
-
-shiro-lang 1.4.1
-https://github.com/apache/shiro
-https://github.com/apache/shiro/blob/master/LICENSE
-
-sshd-common 2.3.0
-https://github.com/apache/mina-sshd
-https://github.com/apache/mina-sshd/blob/master/LICENSE.txt
-
-sshd-core 2.3.0
-https://github.com/apache/mina-sshd
-https://github.com/apache/mina-sshd/blob/master/LICENSE.txt
-
-sshd-pam 0.11.0
-https://github.com/apache/mina-sshd
-https://github.com/apache/mina-sshd/blob/master/LICENSE.txt
-
-groovy-all 1.8.9
-https://github.com/apache/groovy
-https://github.com/apache/groovy/blob/master/LICENSE
-
-jansi 1.18
-https://github.com/fusesource/jansi
-https://github.com/fusesource/jansi/blob/master/license.txt
-
-snappy 0.4
-Copyright (C) 2011 the original author or authors
-https://github.com/dain/snappy
-https://github.com/dain/snappy/blob/master/license-header.txt
-
-jandex 2.0.5.Final
-https://github.com/wildfly/jandex
-https://github.com/wildfly/jandex/blob/master/LICENSE.txt
-
-jboss-logging 3.3.2.Final
-https://github.com/jboss-logging/jboss-logging
-https://github.com/jboss-logging/jboss-logging/blob/master/src/main/resources/META-INF/LICENSE.txt
-
-annotations 13.0
-http://www.jetbrains.org/display/IJOS/Home;jsessionid=D8BEE7ABBE9465C870555B5B84556904
+amqp-client 5.5.3      
+https://www.rabbitmq.com/java-client.html      
+https://github.com/rabbitmq/rabbitmq-java-client/blob/master/LICENSE
+
+annotations 13.0      
+http://www.jetbrains.org/display/IJOS/Home;jsessionid=D8BEE7ABBE9465C870555B5B84556904      
 http://www.jetbrains.org/display/IJOS/License+Information
 
-kotlin-reflect	1.2.71
-Copyright 2010-2018 JetBrains s.r.o.
-https://github.com/JetBrains/kotlin
-https://github.com/JetBrains/kotlin/tree/master/license
+artemis-amqp-protocol 2.6.2      
+https://github.com/apache/activemq      
+https://github.com/apache/activemq/blob/master/LICENSE
 
-kotlin-stdlib 1.2.71
-Copyright 2010-2018 JetBrains s.r.o.
-https://github.com/JetBrains/kotlin
-https://github.com/JetBrains/kotlin/tree/master/license
+artemis-commons 2.6.2      
+https://github.com/apache/activemq      
+https://github.com/apache/activemq/blob/master/LICENSE
 
-kotlin-stdlib-common 1.2.71
-Copyright 2010-2018 JetBrains s.r.o.
-https://github.com/JetBrains/kotlin
-https://github.com/JetBrains/kotlin/tree/master/license
+artemis-core-client 2.6.2      
+https://github.com/apache/activemq      
+https://github.com/apache/activemq/blob/master/LICENSE
 
-kotlin-stdlib-jdk7 1.2.71
-Copyright 2010-2018 JetBrains s.r.o.
-https://github.com/JetBrains/kotlin
-https://github.com/JetBrains/kotlin/tree/master/license
+artemis-jdbc-store 2.6.2      
+https://github.com/apache/activemq      
+https://github.com/apache/activemq/blob/master/LICENSE
 
-kotlin-stdlib-jdk8 1.2.71
-Copyright 2010-2018 JetBrains s.r.o.
-https://github.com/JetBrains/kotlin
-https://github.com/JetBrains/kotlin/tree/master/license
+artemis-jms-client 2.6.2      
+https://github.com/apache/activemq      
+https://github.com/apache/activemq/blob/master/LICENSE
 
-kotlin-stdlib-jre7 1.2.71
-Copyright 2010-2018 JetBrains s.r.o.
-https://github.com/JetBrains/kotlin
-https://github.com/JetBrains/kotlin/tree/master/license
+artemis-journal 2.6.2      
+https://github.com/apache/activemq      
+https://github.com/apache/activemq/blob/master/LICENSE
 
-kotlin-stdlib-jre8 1.2.71
-Copyright 2010-2018 JetBrains s.r.o.
-https://github.com/JetBrains/kotlin
-https://github.com/JetBrains/kotlin/tree/master/license
+artemis-native	2.6.2                  
+https://github.com/apache/activemq      
+https://github.com/apache/activemq/blob/master/LICENSE
 
-jgroups	3.6.13.Final
-http://www.jgroups.org/
-http://www.jgroups.org/license.html
+artemis-selector 2.6.2                  
+https://github.com/apache/activemq            
+https://github.com/apache/activemq/blob/master/LICENSE
 
-jira-rest-java-client-core 5.0.4
-https://ecosystem.atlassian.net/wiki/spaces/JRJC/overview
+artemis-server	2.6.2          
+https://github.com/apache/activemq            
+https://github.com/apache/activemq/blob/master/LICENSE
+
+atlassian-httpclient-api 2.0.0            
+https://github.com/atlassian/httpclient                  
 http://www.apache.org/licenses/LICENSE-2.0
 
-jjwt 0.9.1
-https://github.com/jwtk/jjwt
+atlassian-httpclient-library 2.0.0           
+https://github.com/atlassian/httpclient                  
+http://www.apache.org/licenses/LICENSE-2.0
+
+atlassian-util-concurrent 4.0.1           
+https://github.com/andyglick/atlassian-util-concurrent            
+https://github.com/andyglick/atlassian-util-concurrent/blob/master/LICENSE.txt
+
+byte-buddy 1.9.10                 
+https://bytebuddy.net/#/           
+https://github.com/raphw/byte-buddy/blob/master/LICENSE
+
+caffeine 2.7.0-r3-fifty                      
+https://github.com/ben-manes/caffeine            
+https://github.com/ben-manes/caffeine/blob/master/LICENSE
+
+catalyst-buffer 1.1.2		            
+https://github.com/atomix/catalyst      
+https://github.com/atomix/catalyst/blob/master/LICENSE
+
+catalyst-common 1.1.2		      
+https://github.com/atomix/catalyst      
+https://github.com/atomix/catalyst/blob/master/LICENSE
+
+catalyst-concurrent 1.1.2		      
+https://github.com/atomix/catalyst      
+https://github.com/atomix/catalyst/blob/master/LICENSE
+
+catalyst-netty	1.1.2		      
+https://github.com/atomix/catalyst      
+https://github.com/atomix/catalyst/blob/master/LICENSE
+
+catalyst-serializer	1.1.2	      	      
+https://github.com/atomix/catalyst      
+https://github.com/atomix/catalyst/blob/master/LICENSE
+
+catalyst-transport	1.1.2	          
+https://github.com/atomix/catalyst      
+https://github.com/atomix/catalyst/blob/master/LICENSE
+
+classmate	1.3.4		      
+http://github.com/FasterXML/java-classmate      
+http://www.apache.org/licenses/LICENSE-2.0.txt
+
+commons-beanutils	1.9.3		      
+https://commons.apache.org/proper/commons-beanutils/      
+http://www.apache.org/licenses/LICENSE-2.0.txt
+
+commons-codec	1.13		      
+http://commons.apache.org/proper/commons-codec/      
+http://www.apache.org/licenses/LICENSE-2.0.txt
+
+commons-collections	3.2.2		      
+http://commons.apache.org/collections/      
+http://www.apache.org/licenses/LICENSE-2.0.txt
+
+commons-collections4 4.3		      
+http://commons.apache.org/proper/commons-collections/      
+http://www.apache.org/licenses/LICENSE-2.0.txt
+
+commons-io 2.6		      
+http://commons.apache.org/proper/commons-io/      
+http://www.apache.org/licenses/LICENSE-2.0.txt
+
+commons-lang3 3.9		      
+http://commons.apache.org/proper/commons-lang/      
+http://www.apache.org/licenses/LICENSE-2.0.txt
+
+config 1.3.4		      
+https://github.com/lightbend/config      
+https://github.com/lightbend/config/blob/master/LICENSE-2.0.txt
+
+copycat-client 1.2.3		      
+https://github.com/atomix/copycat      
+https://github.com/atomix/copycat/blob/master/LICENSE
+
+copycat-protocol 1.2.3		      
+https://github.com/atomix/copycat      
+https://github.com/atomix/copycat/blob/master/LICENSE
+
+copycat-server 1.2.3		      
+https://github.com/atomix/copycat      
+https://github.com/atomix/copycat/blob/master/LICENSE
+
+corda-common-configuration-parsing 4.3      
+Copyright © 2016 - 2020, R3 Limited.      
+https://github.com/corda/corda            
+https://github.com/corda/corda/blob/release/os/4.5/LICENSE
+
+corda-common-logging 4.3      
+Copyright © 2016 - 2020, R3 Limited.      
+https://github.com/corda/corda      
+https://github.com/corda/corda/blob/release/os/4.5/LICENSE
+
+corda-common-validation 4.3      
+Copyright © 2016 - 2020, R3 Limited.      
+https://github.com/corda/corda      
+https://github.com/corda/corda/blob/release/os/4.5/LICENSE
+
+corda-confidential-identities 4.3      
+Copyright © 2016 - 2020, R3 Limited.      
+https://github.com/corda/corda            
+https://github.com/corda/corda/blob/release/os/4.5/LICENSE
+
+corda-core 4.3      
+Copyright © 2016 - 2020, R3 Limited.      
+https://github.com/corda/corda      
+https://github.com/corda/corda/blob/release/os/4.5/LICENSE
+
+corda-extensions-api 4.3      
+Copyright © 2016 - 2020, R3 Limited.      
+https://github.com/corda/corda      
+https://github.com/corda/corda/blob/release/os/4.5/LICENSE
+
+corda-jackson 4.3      
+Copyright © 2016 - 2020, R3 Limited.      
+https://github.com/corda/corda      
+https://github.com/corda/corda/blob/release/os/4.5/LICENSE
+
+corda-node 4.3      
+Copyright © 2016 - 2020, R3 Limited.      
+https://github.com/corda/corda      
+https://github.com/corda/corda/blob/release/os/4.5/LICENSE
+
+corda-node-api 4.3      
+Copyright © 2016 - 2020, R3 Limited.      
+https://github.com/corda/corda      
+https://github.com/corda/corda/blob/release/os/4.5/LICENSE
+
+corda-rpc 4.3      
+Copyright © 2016 - 2020, R3 Limited.      
+https://github.com/corda/corda      
+https://github.com/corda/corda/blob/release/os/4.5/LICENSE
+
+corda-serialization 4.3      
+Copyright © 2016 - 2020, R3 Limited.      
+https://github.com/corda/corda      
+https://github.com/corda/corda/blob/release/os/4.5/LICENSE
+
+corda-shell 4.3      
+Copyright © 2016 - 2020, R3 Limited.      
+https://github.com/corda/corda      
+https://github.com/corda/corda/blob/release/os/4.5/LICENSE
+
+corda-tools-cliutils 4.3      
+Copyright © 2016 - 2020, R3 Limited.      
+https://github.com/corda/corda      
+https://github.com/corda/corda/blob/release/os/4.5/LICENSE
+
+disruptor 3.4.2      
+Copyright © 2011 - 2018 LMAX Ltd.      
+http://lmax-exchange.github.com/disruptor      
+http://www.apache.org/licenses/LICENSE-2.0.txt
+
+error_prone_annotations 2.3.3		      
+https://github.com/google/error-prone      
+https://github.com/google/error-prone/blob/master/COPYING
+
+failureaccess 1.0.1      
+Copyright © 2018 The Guava Authors      
+https://github.com/google/guava/blob/master/futures/failureaccess/src/com/google/common/util/concurrent/internal/InternalFutureFailureAccess.java
+
+FastInfoset 1.2.15		      
+https://github.com/javaee/metro-fi/blob/master/code/fastinfoset/src/main/java/com/sun/xml/fastinfoset/algorithm/BASE64EncodingAlgorithm.java      
+https://opensource.org/licenses/apache2.0.php
+
+forms_rt 7.0.3		      
+https://www.jetbrains.com/         
+http://www.apache.org/licenses/LICENSE-2.0.txt
+
+fugue 4.7.2		      
+https://github.com/andyglick/atlassian-fugue/tree/master/fugue      
+https://github.com/andyglick/atlassian-fugue/blob/master/LICENSE.txt
+
+geronimo-jms_2.0_spec 1.0-alpha-2				      
+https://github.com/apache/geronimo-specs            
+https://github.com/apache/geronimo-specs/blob/trunk/LICENSE
+
+geronimo-json_1.0_spec 1.0-alpha-1		            
+https://github.com/apache/geronimo-specs            
+https://github.com/apache/geronimo-specs/blob/trunk/LICENSE
+
+groovy-all 1.8.9		            
+https://github.com/apache/groovy           
+https://github.com/apache/groovy/blob/master/LICENSE
+
+HikariCP 3.3.1		      
+https://github.com/brettwooldridge/HikariCP      
+https://github.com/brettwooldridge/HikariCP/blob/dev/LICENSE
+
+httpasyncclient 4.1.4      
+Copyright © 2005-2020 The Apache Software Foundation. All Rights Reserved.      
+https://hc.apache.org/httpcomponents-asyncclient-4.1.x/index.html      
+http://www.apache.org/licenses/LICENSE-2.0.txt
+
+httpasyncclient-cache 4.1.4      
+Copyright © 2005-2020 The Apache Software Foundation. All Rights Reserved.      
+https://hc.apache.org/httpcomponents-asyncclient-4.1.x/index.html      
+http://www.apache.org/licenses/LICENSE-2.0.txt
+
+httpclient 4.5.6      
+Copyright © 2005-2020 The Apache Software Foundation. All Rights Reserved.      
+https://hc.apache.org/httpcomponents-client-ga/index.html           
+http://www.apache.org/licenses/LICENSE-2.0.txt
+
+httpclient-cache 4.5.6      
+Copyright © 2005-2020 The Apache Software Foundation. All Rights Reserved.      
+https://hc.apache.org/httpcomponents-client-ga/index.html              
+http://www.apache.org/licenses/LICENSE-2.0.txt
+
+httpcore 4.4.10      
+Copyright © 2005-2020 The Apache Software Foundation. All Rights Reserved.      
+https://hc.apache.org/httpcomponents-core-4.4.x/index.html      
+http://www.apache.org/licenses/LICENSE-2.0.txt
+
+httpcore-nio 4.4.10      
+Copyright © 2005-2020 The Apache Software Foundation. All Rights Reserved.      
+https://hc.apache.org/httpcomponents-core-4.4.x/index.html      
+http://www.apache.org/licenses/LICENSE-2.0.txt
+
+httpmime 4.5.5      
+Copyright © 2005-2020 The Apache Software Foundation. All Rights Reserved.      
+https://hc.apache.org/httpcomponents-client-ga/httpmime/summary.html      
+http://www.apache.org/licenses/LICENSE-2.0.txt
+
+j2objc-annotations 1.3      
+https://github.com/google/j2objc/      
+https://github.com/google/j2objc/blob/master/LICENSE
+
+jackson-core-asl 1.9.2      
+https://github.com/codehaus/jackson            
+http://www.apache.org/licenses/LICENSE-2.0.txt
+
+jackson-databind 2.9.7      
+https://github.com/FasterXML/jackson-databind      
+https://github.com/FasterXML/jackson-databind/blob/master/LICENSE
+
+jackson-dataformat-yaml 2.9.7		      
+https://github.com/FasterXML/jackson-dataformat-yaml      
+http://www.apache.org/licenses/LICENSE-2.0.txt
+
+jackson-datatype-jsr310 2.9.7		      
+https://github.com/FasterXML/jackson-datatype-jsr310      
+http://www.apache.org/licenses/LICENSE-2.0.txt
+
+jackson-jaxrs 1.9.2		      
+https://github.com/codehaus/jackson            
+http://www.apache.org/licenses/LICENSE-2.0.txt
+
+jackson-mapper-asl 1.9.2	       
+https://github.com/codehaus/jackson             
+http://www.apache.org/licenses/LICENSE-2.0.txt
+
+jackson-module-kotlin 2.9.7		      
+https://github.com/FasterXML/jackson-module-kotlin      
+http://www.apache.org/licenses/LICENSE-2.0.txt
+
+jackson-xc 1.9.2		      
+https://github.com/codehaus/jackson            
+http://www.apache.org/licenses/LICENSE-2.0.txt
+
+jandex	2.0.5.Final		      
+https://github.com/wildfly/jandex      
+https://github.com/wildfly/jandex/blob/master/LICENSE.txt
+
+jansi 1.18			      
+https://github.com/fusesource/jansi			      
+https://github.com/fusesource/jansi/blob/master/license.txt
+
+javax.inject 1.0					      
+https://github.com/javax-inject/javax-inject   			         
+http://www.apache.org/licenses/LICENSE-2.0
+
+jboss-logging 3.3.2.Final					      
+https://github.com/jboss-logging/jboss-logging     			       
+https://github.com/jboss-logging/jboss-logging/blob/master/src/main/resources/META-INF/LICENSE.txt
+
+jdom 1.0			      
+http://www.jdom.org/index.html      			      
+http://www.apache.org/licenses/LICENSE-2.0.txt
+
+jettison 1.1					      
+https://github.com/codehaus/jettison			      
+https://github.com/codehaus/jettison/blob/master/src/main/resources/META-INF/LICENSE
+
+jgroups 3.6.13.Final			      			      
+http://www.jgroups.org/			      
+http://www.jgroups.org/license.html
+
+jimfs 1.1			      
+https://github.com/google/jimfs      			      
+https://github.com/google/jimfs/blob/master/LICENSE
+
+jira-rest-java-client-api 5.1.6			      
+https://ecosystem.atlassian.net/wiki/spaces/JRJC/overview			      
+http://www.apache.org/licenses/LICENSE-2.0
+
+jira-rest-java-client-core 5.1.6					      
+https://ecosystem.atlassian.net/wiki/spaces/JRJC/overview			      
+http://www.apache.org/licenses/LICENSE-2.0
+
+jjwt 0.9.1					      
+https://github.com/jwtk/jjwt      			      
 https://github.com/jwtk/jjwt/blob/master/LICENSE
 
-jolokia-core 1.6.1
-https://jolokia.org/
+joda-time 2.9.9					      
+https://www.joda.org/joda-time/ 	   			      
+https://www.joda.org/joda-time/licenses.html
+
+johnzon-core 0.9.5					      
+https://github.com/apache/johnzon			      
+https://github.com/apache/johnzon/blob/master/LICENSE
+
+jolokia-core 1.6.1					      
+https://jolokia.org/			      
 https://jolokia.org/license.html
 
-jolokia-jvm 1.6.1
-https://jolokia.org/
+jolokia-jvm 1.6.1			      
+https://jolokia.org/			      
 https://jolokia.org/license.html
 
-liquibase-core 3.6.3
-https://github.com/liquibase/liquibase
+jpam 1.1					      
+http://jpam.sourceforge.net/    			        
+http://jpam.sourceforge.net/JPamUserGuide.html#id.s6.2.1
+
+json-simple 1.1.1					      
+http://code.google.com/p/json-simple/  			         
+http://www.apache.org/licenses/LICENSE-2.0
+
+kotlin-stdlib 1.2.71			      
+Copyright © 2010-2018 JetBrains s.r.o.			      
+https://github.com/JetBrains/kotlin    			        
+https://github.com/JetBrains/kotlin/tree/master/license
+
+kotlin-stdlib-common 1.2.71			      
+Copyright © 2010-2018 JetBrains s.r.o.			      
+https://github.com/JetBrains/kotlin      			      
+https://github.com/JetBrains/kotlin/tree/master/license
+
+kotlin-stdlib-jdk7 1.2.71			      
+Copyright © 2010-2018 JetBrains s.r.o.			      
+https://github.com/JetBrains/kotlin			      
+https://github.com/JetBrains/kotlin/tree/master/license
+
+kotlin-stdlib-jre7 1.2.71			      
+Copyright © 2010-2018 JetBrains s.r.o.			      
+https://github.com/JetBrains/kotlin			      
+https://github.com/JetBrains/kotlin/tree/master/license
+
+kotlin-stdlib-jre8 1.2.71			      
+Copyright © 2010-2018 JetBrains s.r.o.			      
+https://github.com/JetBrains/kotlin			      
+https://github.com/JetBrains/kotlin/tree/master/license
+
+library master-v1.1-beta-g6215ec8-87			      			      
+http://bft-smart.github.io/library/  			          
+https://github.com/bft-smart/library/blob/master/LICENSE
+
+liquibase-core	3.6.3					      
+https://github.com/liquibase/liquibase			      
 https://github.com/liquibase/liquibase/blob/master/LICENSE.txt
 
-objenesis 2.5.1
+listenablefuture 9999.0-empty-to-avoid-conflict-with-guava			      
+Copyright © 2007 The Guava Authors			      
+https://github.com/google/guava/blob/master/guava/src/com/google/common/util/concurrent/ListenableFuture.java
+
+log4j-slf4j-impl 2.11.2					      
+https://github.com/apache/logging-log4j2  			          
+https://github.com/apache/logging-log4j2/blob/master/LICENSE.txt
+
+log4j-web 2.11.2			      
+https://github.com/apache/logging-log4j2  			          
+https://github.com/apache/logging-log4j2/blob/master/LICENSE.txt
+
+metrics-graphite 4.1.0					      
+https://metrics.dropwizard.io/4.0.0/			      
+https://github.com/dropwizard/metrics/blob/4.1-development/LICENSE
+
+metrics-jmx 4.1.0					      
+https://metrics.dropwizard.io/4.0.0/			      
+https://github.com/dropwizard/metrics/blob/4.1-development/LICENSE
+
+mina-core 2.0.16					      
+https://mina.apache.org/mina-project/			      
+https://github.com/apache/mina/blob/trunk/LICENSE
+
+netty-buffer 4.1.22.Final			      
+https://netty.io/			      
+https://github.com/netty/netty/blob/4.1/LICENSE.txt
+
+netty-codec 4.1.22.Final			      
+https://netty.io/			      
+https://github.com/netty/netty/blob/4.1/LICENSE.txt
+
+netty-codec-socks 4.1.22.Final			      
+https://netty.io/			      
+https://github.com/netty/netty/blob/4.1/LICENSE.txt
+
+netty-common 4.1.22.Final			      
+https://netty.io/			      
+https://github.com/netty/netty/blob/4.1/LICENSE.txt
+
+netty-resolver 4.1.22.Final			      
+https://netty.io/			      
+https://github.com/netty/netty/blob/4.1/LICENSE.txt
+
+netty-tcnative-boringssl-static 2.0.14.Final					      
+https://netty.io/			      
+https://github.com/netty/netty/blob/4.1/LICENSE.txt
+
+netty-transport-native-unix-common 4.1.22.Final				      
+https://netty.io/			      
+https://github.com/netty/netty/blob/4.1/LICENSE.txt
+
+objenesis 2.5.1			      
+Copyright © 2003-2013, Objenesis Team and all contributors			      
 http://objenesis.org/
 http://objenesis.org/license.html
 
-snakeyaml 1.23
-http://www.snakeyaml.org/
+okio 1.14.0					      
+https://github.com/square/okio 			           
+https://github.com/square/okio/blob/master/LICENSE.txt
+
+pf4j 3.3.1					      
+https://github.com/pf4j/pf4j/tree/release-3.3.1      			      
+https://pf4j.org/dev/license.html
+
+picocli 3.9.6					      
+http://picocli.info/      			      
+https://github.com/remkop/picocli/blob/master/LICENSE
+
+proton-j 0.33.0					      
+https://qpid.apache.org/releases/qpid-proton-j-0.33.0/index.html			      
+https://github.com/apache/qpid-proton-j/blob/master/LICENSE
+
+rxjava 1.3.8					      
+https://github.com/ReactiveX/RxJava			      
+https://github.com/ReactiveX/RxJava/blob/3.x/LICENSE
+
+shiro-cache 1.4.1					      
+https://github.com/apache/shiro			      
+https://github.com/apache/shiro/blob/master/LICENSE
+
+shiro-config-core 1.4.1					      
+https://github.com/apache/shiro			      
+https://github.com/apache/shiro/blob/master/LICENSE
+
+shiro-config-ogdl 1.4.1					      
+https://github.com/apache/shiro			      
+https://github.com/apache/shiro/blob/master/LICENSE
+
+shiro-core 1.4.1					      
+https://github.com/apache/shiro			      
+https://github.com/apache/shiro/blob/master/LICENSE
+
+shiro-crypto-cipher 1.4.1					      
+https://github.com/apache/shiro			      
+https://github.com/apache/shiro/blob/master/LICENSE
+
+shiro-crypto-core 1.4.1					      
+https://github.com/apache/shiro			      
+https://github.com/apache/shiro/blob/master/LICENSE
+
+shiro-crypto-hash 1.4.1					      
+https://github.com/apache/shiro			      
+https://github.com/apache/shiro/blob/master/LICENSE
+
+shiro-event 1.4.1					      
+https://github.com/apache/shiro			      
+https://github.com/apache/shiro/blob/master/LICENSE
+
+shiro-lang 1.4.1					      
+https://github.com/apache/shiro			      
+https://github.com/apache/shiro/blob/master/LICENSE
+
+snakeyaml 1.23			      
+http://www.snakeyaml.org/			      
 https://bitbucket.org/asomov/snakeyaml/src/default/LICENSE.txt
+
+snappy 0.4			      
+Copyright © 2011 the original author or authors			      
+https://github.com/dain/snappy			      
+https://github.com/dain/snappy/blob/master/license-header.txt
+
+spring-beans 4.1.7.RELEASE					      
+https://github.com/spring-projects/spring-framework			      
+https://github.com/spring-projects/spring-framework/blob/master/LICENSE.txt
+
+spring-core 4.1.7.RELEASE					      
+https://github.com/spring-projects/spring-framework			      
+https://github.com/spring-projects/spring-framework/blob/master/LICENSE.txt
+
+sshd-common 2.3.0					      
+https://github.com/apache/mina-sshd   			         
+https://github.com/apache/mina-sshd/blob/master/LICENSE.txt
+
+sshd-core 2.3.0	 			      
+https://github.com/apache/mina-sshd   			         
+https://github.com/apache/mina-sshd/blob/master/LICENSE.txt
+
+sshd-pam 0.11.0					      
+https://github.com/apache/mina-sshd     			       
+https://github.com/apache/mina-sshd/blob/master/LICENSE.txt
+
+validation-api 1.1.0.Final				      			      
+https://beanvalidation.org/      			      
+http://www.apache.org/licenses/LICENSE-2.0.txt
 
 -----------------------START OF LICENSE TEXT-----------------------------------
 
@@ -922,19 +1003,14 @@ https://bitbucket.org/asomov/snakeyaml/src/default/LICENSE.txt
 
 =========== START OF NOTICES AND INFORMATION for the following components=========
 
-jackson-annotations	2.9.0
-https://github.com/FasterXML/jackson-annotations
-http://www.apache.org/licenses/LICENSE-2.0.txt
+jackson-annotations	2.9.0			      
+https://github.com/FasterXML/jackson-annotations			      
+http://www.apache.org/licenses/LICENSE-2.0.txt			      
 https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
 
-jackson-core 2.9.7
-https://github.com/FasterXML/jackson
-http://www.apache.org/licenses/LICENSE-2.0.txt
-https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-
-jackson-databind 2.9.7
-https://github.com/FasterXML/jackson-databind
-http://www.apache.org/licenses/LICENSE-2.0.txt
+jackson-core 2.9.7			      
+https://github.com/FasterXML/jackson			      
+http://www.apache.org/licenses/LICENSE-2.0.txt			      
 https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
 
 -----------------------START OF LICENSE TEXT-----------------------------------
@@ -1615,20 +1691,34 @@ Alternatively, the contents of this software may be used under the terms of the 
 
 =========== START OF NOTICES AND INFORMATION for the following components=========
 
-antlr 2.7.7
-Copyright © 2012 Terence Parr & Sam Harwell
-https://www.antlr.org/
+Antlr 2.7.7 			      
+Copyright © 2012 Terence Parr & Sam Harwell			      
+https://www.antlr.org/			      
 https://www.antlr.org/license.html
 
-jcabi-log 0.14
-Copyright (c) 2012-2017, jcabi.com
-https://www.jcabi.com/
+dom4j 2.1.1			      
+Copyright 2001-2016 © MetaStuff, Ltd. and DOM4J contributors			      
+http://www.dom4j.org/			      
+https://github.com/dom4j/dom4j/blob/master/LICENSE
+
+forms 1.1-preview					      
+http://www.jgoodies.com/			      
+http://www.jgoodies.com/freeware/libraries/
+
+jcabi-log 0.14			      
+Copyright (c) 2012-2017, jcabi.com			      
+https://www.jcabi.com/			      
 https://www.jcabi.com/LICENSE.txt
 
-dom4j 1.6.1
-Copyright 2001-2016 (C) MetaStuff, Ltd. and DOM4J contributors
-http://www.dom4j.org/
-https://github.com/dom4j/dom4j/blob/master/LICENSE
+jcabi-manifests 1.1			      
+Copyright © 2012-2017, jcabi.com			      
+https://www.jcabi.com/			      
+https://www.jcabi.com/LICENSE.txt
+
+sal-api	3.0.7			      
+Copyright © 2016 Atlassian. All rights reserved			      
+https://docs.atlassian.com/sal-api/3.0.7/sal-api/			      
+https://docs.atlassian.com/sal-api/3.0.7/sal-api/license.html
 
 -----------------------START OF LICENSE TEXT-----------------------------------
 
@@ -1644,6 +1734,15 @@ Neither the name of the author nor the names of its contributors may be used to 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ================================================
+
+Copyright © 2016, Atlassian.
+All rights reserved
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+===============================================
 
 Copyright (c) 2012-2017, jcabi.com
 All rights reserved.
@@ -1759,9 +1858,9 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 
 =========== START OF NOTICES AND INFORMATION for the following components=========
 
-LatencyUtils 2.0.3
-Copyright (c) 2012, 2013, 2014 Gil Tene
-https://github.com/LatencyUtils/LatencyUtils
+LatencyUtils 2.0.3			      
+Copyright (c) 2012, 2013, 2014 Gil Tene			      
+https://github.com/LatencyUtils/LatencyUtils			      
 https://github.com/LatencyUtils/LatencyUtils/blob/master/LICENSE
 
 -----------------------START OF LICENSE TEXT-----------------------------------
@@ -1816,87 +1915,55 @@ https://github.com/LatencyUtils/LatencyUtils/blob/master/LICENSE
 
 =========== START OF NOTICES AND INFORMATION for the following components=========
 
-Docket-cs 1.1.0
-Copyright (c) 2015, Arno Unkrig All rights reserved.
-http://unkrig.de/w/Cs-doclet
-http://unkrig.de/w/MAIN_doclet#License
+asm 7.1			      
+Copyright (c) 2000-2011 INRIA, France Telecom			      
+https://asm.ow2.io/index.html			      
+https://asm.ow2.io/license.html
 
------------------------START OF LICENSE TEXT-----------------------------------
+asm-analysis 5.2			      
+Copyright (c) 2000-2011 INRIA, France Telecom			      
+https://asm.ow2.io/index.html			      
+https://asm.ow2.io/license.html
 
-The MAIN doclet is available under the terms of the "new BSD license":
+asm-commons 5.2			      
+Copyright (c) 2000-2011 INRIA, France Telecom			      
+https://asm.ow2.io/index.html			      
+https://asm.ow2.io/license.html
 
-Copyright (c) 2015, Arno Unkrig All rights reserved.
+asm-tree 5.2			      
+Copyright (c) 2000-2011 INRIA, France Telecom			      
+https://asm.ow2.io/index.html			      
+https://asm.ow2.io/license.html
 
-Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+asm-util 5.2			      
+Copyright (c) 2000-2011 INRIA, France Telecom			      
+https://asm.ow2.io/index.html			      
+https://asm.ow2.io/license.html
 
-1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
-3. Neither the name of no-template nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+atlassian-event 3.0.0			      
+Copyright © 2006–2015 Atlassian. All rights reserved.			      
+https://docs.atlassian.com/atlassian-event/3.0.0-m001/			      
+https://docs.atlassian.com/atlassian-event/3.0.0-m002/license.html
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+javax.activation-api	1.2.0			      
+Copyright (c) 2018 Oracle and/or its affiliates. All rights reserved.			      
+https://github.com/eclipse-ee4j/jaf			      
+https://github.com/eclipse-ee4j/jaf/blob/master/LICENSE.md
 
----------------------END OF LICENSE TEXT-----------------------------------------
-
-=============END OF NOTICES AND INFORMATION for above components=================
-
-
-================================================
-
-================================================
-
-
-
-=========== START OF NOTICES AND INFORMATION for the following components=========
-
-jsch 0.1.54
-Copyright (c) 2002-2015 Atsuhiko Yamanaka, JCraft,Inc.
-http://www.jcraft.com/jsch/
+jsch 0.1.54			      
+Copyright (c) 2002-2015 Atsuhiko Yamanaka, JCraft,Inc.			      
+http://www.jcraft.com/jsch/			      
 http://www.jcraft.com/jsch/LICENSE.txt
 
-kryo 4.0.2
-Copyright (c) 2008-2018, Nathan Sweet
-https://github.com/EsotericSoftware/kryo/releases/tag/kryo-parent-4.0.0
-https://github.com/EsotericSoftware/kryo/blob/master/LICENSE.md
-
-minlog 1.3.0
-Copyright (c) 2008, Nathan Sweet
-https://github.com/EsotericSoftware/minlog
+minlog 1.3.0			      
+Copyright (c) 2008, Nathan Sweet			      
+https://github.com/EsotericSoftware/minlog			      
 https://github.com/EsotericSoftware/minlog/blob/master/license.txt
 
-reflectasm 1.11.3
-Copyright (c) 2008, Nathan Sweet
-https://github.com/EsotericSoftware/reflectasm
+reflectasm 1.11.3			      
+Copyright (c) 2008, Nathan Sweet			      
+https://github.com/EsotericSoftware/reflectasm			      
 https://github.com/EsotericSoftware/reflectasm/blob/master/license.txt
-
-asm 7.1
-Copyright (c) 2000-2011 INRIA, France Telecom
-https://asm.ow2.io/index.html
-https://asm.ow2.io/license.html
-
-asm-analysis 5.2
-Copyright (c) 2000-2011 INRIA, France Telecom
-https://asm.ow2.io/index.html
-https://asm.ow2.io/license.html
-
-asm-commons 5.2
-Copyright (c) 2000-2011 INRIA, France Telecom
-https://asm.ow2.io/index.html
-https://asm.ow2.io/license.html
-
-asm-tree 5.2
-Copyright (c) 2000-2011 INRIA, France Telecom
-https://asm.ow2.io/index.html
-https://asm.ow2.io/license.html
-
-asm-util 5.2
-Copyright (c) 2000-2011 INRIA, France Telecom
-https://asm.ow2.io/index.html
-https://asm.ow2.io/license.html
-
-javax.activation-api	1.2.0
-Copyright (c) 2018 Oracle and/or its affiliates. All rights reserved.
-https://github.com/eclipse-ee4j/jaf
-https://github.com/eclipse-ee4j/jaf/blob/master/LICENSE.md
 
 -----------------------START OF LICENSE TEXT-----------------------------------
 
@@ -1936,8 +2003,8 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 =========== START OF NOTICES AND INFORMATION for the following components=========
 
-eddsa 0.3.0
-https://github.com/str4d/ed25519-java
+eddsa 0.3.0			      
+https://github.com/str4d/ed25519-java			      
 https://github.com/str4d/ed25519-java/blob/master/LICENSE.txt
 
 -----------------------START OF LICENSE TEXT-----------------------------------
@@ -2078,17 +2145,69 @@ For more information, please see https://creativecommons.org/publicdomain/zero/1
 
 =========== START OF NOTICES AND INFORMATION for the following components=========
 
-jersey-container-jetty-http 2.25
-https://jar-download.com/artifacts/org.glassfish.jersey.containers/jersey-container-jetty-servlet
+aopalliance-repackaged 2.5.0-b30					      
+https://github.com/javaee/hk2			      
+https://github.com/javaee/hk2/blob/master/LICENSE.md
+
+hk2-api 2.5.0-b30			      
+https://github.com/javaee/hk2			      
+https://github.com/javaee/hk2/blob/master/LICENSE.md
+
+hk2-locator 2.5.0-b30					      
+https://github.com/javaee/hk2			      
+https://github.com/javaee/hk2/blob/master/LICENSE.md
+
+hk2-utils 2.5.0-b30					      
+https://github.com/javaee/hk2			      
+https://github.com/javaee/hk2/blob/master/LICENSE.md
+
+javax.annotation-api	1.2					      
+https://github.com/javaee/javax.annotation			      
+https://github.com/javaee/javax.annotation/blob/master/LICENSE
+
+javax.inject 2.5.0-b30					      
+https://github.com/javaee/hk2			      
+https://github.com/javaee/hk2/blob/master/LICENSE.md
+
+javax.ws.rs-api	2.0.1	 			      
+https://github.com/jax-rs			      
+https://javaee.github.io/glassfish/LICENSE
+
+jersey-client 1.19					      
+https://github.com/jersey/jersey-1.x			      
+https://github.com/jersey/jersey-1.x/blob/master/license.html
+
+jersey-client 2.25					      
+https://eclipse-ee4j.github.io/jersey.github.io/project-info/2.25/jersey/project/project/jersey-gf-ejb/dependencies.html			      
+https://javaee.github.io/glassfish/LICENSE
+
+jersey-common 2.25					      
+https://eclipse-ee4j.github.io/jersey.github.io/project-info/2.25/jersey/project/project/jersey-gf-ejb/dependencies.html			      
+https://javaee.github.io/glassfish/LICENSE
+
+jersey-container-jetty-http 2.25			      
+https://jar-download.com/artifacts/org.glassfish.jersey.containers/jersey-container-jetty-servlet			      
 http://glassfish.java.net/public/CDDL+GPL_1_1.html
 
-jersey-container-servlet-core 2.25
-Copyright (c) 2012-2017 Oracle and/or its affiliates. All rights reserved.
-https://github.com/jersey/jersey/tree/2.25.x/containers/jersey-servlet-core
+jersey-container-servlet-core 2.25			      
+Copyright (c) 2012-2017 Oracle and/or its affiliates. All rights reserved.			      
+https://github.com/jersey/jersey/tree/2.25.x/containers/jersey-servlet-core			      
 https://github.com/jersey/jersey/blob/2.25.x/containers/jersey-servlet-core/pom.xml
 
-jersey-server 2.25
-https://jar-download.com/artifacts/org.glassfish.jersey.core/jersey-server/2.25.1/source-code
+jersey-guava	2.25					      
+https://eclipse-ee4j.github.io/jersey.github.io/project-info/2.25/jersey/project/project/jersey-gf-ejb/dependencies.html			      
+https://javaee.github.io/glassfish/LICENSE
+
+jersey-json 1.19					      
+https://github.com/jersey/jersey-1.x			      
+https://github.com/jersey/jersey-1.x/blob/master/license.html
+
+jersey-media-jaxb 2.25					      
+https://eclipse-ee4j.github.io/jersey.github.io/project-info/2.25/jersey/project/project/jersey-gf-ejb/dependencies.html			      
+https://javaee.github.io/glassfish/LICENSE
+
+jersey-server 2.25			      
+https://jar-download.com/artifacts/org.glassfish.jersey.core/jersey-server/2.25.1/source-code			      
 https://javaee.github.io/glassfish/
 
 -----------------------START OF LICENSE TEXT-----------------------------------
@@ -2866,12 +2985,49 @@ from your version.
 
 =========== START OF NOTICES AND INFORMATION for the following components=========
 
-jetty-servlet 9.4.7.v20170914
-https://www.eclipse.org/jetty/
+jetty-continuation 9.2.14.v20151106			      
+Copyright © 2016 The Eclipse Foundation. All Rights Reserved.			      
+https://www.eclipse.org/jetty/			      
 https://www.eclipse.org/jetty/licenses.html
 
-jetty-webapp 9.4.7.v20170914
-https://www.eclipse.org/jetty/
+jetty-http 9.2.14.v20151106			      
+Copyright © 2016 The Eclipse Foundation. All Rights Reserved.			      
+https://www.eclipse.org/jetty/			      
+https://www.eclipse.org/jetty/licenses.html
+
+jetty-io 9.2.14.v20151106			      
+Copyright © 2016 The Eclipse Foundation. All Rights Reserved.			      
+https://www.eclipse.org/jetty/			      
+https://www.eclipse.org/jetty/licenses.html
+
+jetty-security 9.2.14.v20151106			      
+Copyright © 2016 The Eclipse Foundation. All Rights Reserved.			      
+https://www.eclipse.org/jetty/			      
+https://www.eclipse.org/jetty/licenses.html
+
+jetty-server 9.2.14.v20151106			      
+Copyright © 2016 The Eclipse Foundation. All Rights Reserved.			      
+https://www.eclipse.org/jetty/			      
+https://www.eclipse.org/jetty/licenses.html
+
+jetty-servlet 9.2.14.v20151106			      
+Copyright © 2016 The Eclipse Foundation. All Rights Reserved.			      
+https://www.eclipse.org/jetty/			      
+https://www.eclipse.org/jetty/licenses.html
+
+jetty-util 9.2.14.v20151106			      
+Copyright © 2016 The Eclipse Foundation. All Rights Reserved.			      
+https://www.eclipse.org/jetty/			      
+https://www.eclipse.org/jetty/licenses.html
+
+jetty-webapp 9.2.14.v20151106			      
+Copyright © 2016 The Eclipse Foundation. All Rights Reserved.			      
+https://www.eclipse.org/jetty/			      
+https://www.eclipse.org/jetty/licenses.html
+
+jetty-xml 9.2.14.v20151106			      
+Copyright © 2016 The Eclipse Foundation. All Rights Reserved.			      
+https://www.eclipse.org/jetty/			      
 https://www.eclipse.org/jetty/licenses.html
 
 -----------------------START OF LICENSE TEXT-----------------------------------
@@ -3305,14 +3461,14 @@ any resulting litigation.
 
 =========== START OF NOTICES AND INFORMATION for the following components=========
 
-javax.servlet-api 3.1.0
-Copyright (c) 1997-2017 Oracle and/or its affiliates.
-https://javaee.github.io/servlet-spec/
+javax.servlet-api 3.1.0			      
+Copyright (c) 1997-2017 Oracle and/or its affiliates.			      
+https://javaee.github.io/servlet-spec/			      
 https://search.maven.org/artifact/javax.servlet/javax.servlet-api/4.0.0/jar
 
-jbosstransaction- api_1.2_spec 1.1.1.Final
-Copyright (c) 2011 Oracle and/or its affiliates. All rights reserved.
-https://github.com/jboss/jboss-transaction-api_spec
+jbosstransaction-api_1.2_spec 1.1.1.Final			      
+Copyright (c) 2011 Oracle and/or its affiliates. All rights reserved.			      
+https://github.com/jboss/jboss-transaction-api_spec			      
 https://github.com/jboss/jboss-transaction-api_spec/blob/master/LICENSE.txt
 
 -----------------------START OF LICENSE TEXT-----------------------------------
@@ -3593,21 +3749,21 @@ As a special exception, the copyright holders of this library give you permissio
 
 =========== START OF NOTICES AND INFORMATION for the following components=========
 
-istack-commons-runtime 3.0.7
-https://github.com/jboss/jboss-transaction-api_spec
+istack-commons-runtime 3.0.7			      
+https://github.com/jboss/jboss-transaction-api_spec			      
 https://javaee.github.io/jaxb-istack-commons/LICENSE
 
-jaxb-api 2.3.1
-https://github.com/javaee/jaxb-v2
+jaxb-api 2.3.1			      
+https://github.com/javaee/jaxb-v2			      
 https://oss.oracle.com/licenses/CDDL+GPL-1.1
 
-jaxb-runtime 2.3.1
-https://javaee.github.io/glassfish/
-https://javaee.github.io/glassfish/LICENSE
+jaxb-impl 2.2.3-1					      
+https://github.com/javaee/jaxb-v2			      
+https://github.com/javaee/jaxb-v2/blob/master/LICENSE
 
-jaxws-api 2.3.1
-https://github.com/javaee/jax-ws-spec
-https://github.com/javaee/jax-ws-spec/blob/master/LICENSE.md
+jaxb-runtime 2.3.1			      
+https://javaee.github.io/glassfish/			      
+https://javaee.github.io/glassfish/LICENSE
 
 -----------------------START OF LICENSE TEXT-----------------------------------
 
@@ -4370,12 +4526,16 @@ from your version.
 
 =========== START OF NOTICES AND INFORMATION for the following components=========
 
-stax-ex 1.8
-https://javaee.github.io/metro-stax-ex/
+osgi-resource-locator	1.0.1					      
+https://eclipse-ee4j.github.io/jersey.github.io/project-info/2.5/jersey/project/project/jersey-gf-ejb/dependencies.html			      
+https://github.com/javaee/hk2/blob/master/LICENSE.md
+
+stax-ex 1.8			      
+https://javaee.github.io/metro-stax-ex/			      
 https://javaee.github.io/metro-stax-ex/LICENSE
 
-txw2 2.3.1
-https://javaee.github.io/glassfish/
+txw2 2.3.1			      
+https://javaee.github.io/glassfish/			      
 https://javaee.github.io/glassfish/LICENSE
 
 -----------------------START OF LICENSE TEXT-----------------------------------
@@ -5140,9 +5300,9 @@ from your version.
 
 =========== START OF NOTICES AND INFORMATION for the following components=========
 
-quasar-core 0.7.10
-Copyright (c) 2013-2018, Parallel Universe Software Co.
-http://docs.paralleluniverse.co/quasar/
+quasar-core 0.7.11_r3			      
+Copyright (c) 2013-2018, Parallel Universe Software Co.			      
+http://docs.paralleluniverse.co/quasar/			      
 https://github.com/puniverse/quasar/blob/master/LICENSE
 
 -----------------------START OF LICENSE TEXT-----------------------------------
@@ -5169,12 +5329,51 @@ as published by the Free Software Foundation.
 
 ================================================
 
+=========== START OF NOTICES AND INFORMATION for the following components=========
+
+metrics-new-relic 1.1.1					      
+https://github.com/palominolabs/metrics-new-relic/tree/v1.1.1			      
+https://github.com/palominolabs/metrics-new-relic/blob/master/LICENSE
+
+-----------------------START OF LICENSE TEXT-----------------------------------
+
+# Copyfree Open Innovation License
+This is version 0.4 of the Copyfree Open Innovation License.
+## Terms and Conditions
+
+Redistributions, modified or unmodified, in whole or in part, must retain
+applicable copyright or other legal privilege notices, these conditions, and
+the following license terms and disclaimer.  Subject to these conditions, the
+holder(s) of copyright or other legal privileges, author(s) or assembler(s),
+and contributors of this work hereby grant to any person who obtains a copy of
+this work in any form:
+1. Permission to reproduce, modify, distribute, publish, sell, sublicense, use,
+and/or otherwise deal in the licensed material without restriction.
+2. A perpetual, worldwide, non-exclusive, royalty-free, irrevocable patent
+license to reproduce, modify, distribute, publish, sell, use, and/or otherwise
+deal in the licensed material without restriction, for any and all patents:
+    a. Held presently or in the future by each such holder of copyright or
+    other legal privilege, author or assembler, or contributor, necessarily
+    infringed by the contributions alone or by combination with the work, of
+    that privilege holder, author or assembler, or contributor.
+    b. Necessarily infringed by the work at the time that holder of copyright
+    or other privilege, author or assembler, or contributor made any
+    contribution to the work.
+NO WARRANTY OF ANY KIND IS IMPLIED BY, OR SHOULD BE INFERRED FROM, THIS LICENSE OR THE ACT OF DISTRIBUTION UNDER THE TERMS OF THIS LICENSE, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT.  IN NO EVENT SHALL THE AUTHORS, ASSEMBLERS, OR HOLDERS OF COPYRIGHT OR OTHER LEGAL PRIVILEGE BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN ACTION OF CONTRACT, TORT, OR OTHERWISE ARISING FROM, OUT OF, OR IN CONNECTION WITH THE WORK OR THE USE OF OR OTHER DEALINGS IN THE WORK.
+
+---------------------END OF LICENSE TEXT-----------------------------------------
+
+=============END OF NOTICES AND INFORMATION for above components=================
+================================================
+
+================================================
+
 
 =========== START OF NOTICES AND INFORMATION for the following components=========
 
-javax.persistence-api 2.2
-Copyright (c) 2008, 2019 Oracle and/or its affiliates. All rights reserved.
-https://github.com/eclipse-ee4j/jpa-api
+javax.persistence-api 2.2			      
+Copyright (c) 2008, 2019 Oracle and/or its affiliates. All rights reserved.			      
+https://github.com/eclipse-ee4j/jpa-api			      
 https://github.com/eclipse-ee4j/jpa-api/blob/master/LICENSE.md
 
 -----------------------START OF LICENSE TEXT-----------------------------------
@@ -5469,8 +5668,8 @@ version(s), and exceptions or additional permissions here}."
 
 =========== START OF NOTICES AND INFORMATION for the following components=========
 
-h2 1.4.199
-http://www.h2database.com/
+h2 1.4.199			      
+http://www.h2database.com/			      
 http://h2database.com/html/license.html
 
 -----------------------START OF LICENSE TEXT-----------------------------------
@@ -5725,9 +5924,9 @@ This Agreement is governed by the laws of the State of New York and the intellec
 
 =========== START OF NOTICES AND INFORMATION for the following components=========
 
-checker-qual 2.8.1
-Copyright 2004-present by the Checker Framework developers
-https://github.com/typetools/checker-framework
+checker-qual 2.8.1			      
+Copyright 2004-present by the Checker Framework developers			      
+https://github.com/typetools/checker-framework			      
 https://github.com/typetools/checker-framework/blob/master/LICENSE.txt
 
 -----------------------START OF LICENSE TEXT-----------------------------------
@@ -6156,25 +6355,21 @@ THE SOFTWARE.
 
 =========== START OF NOTICES AND INFORMATION for the following components=========
 
-crash.cli 1.3.0-cr8
-Copyright (C) 2003-2009 eXo Platform SAS.
-https://github.com/crashub/crash
+crash.cli 1.7.4			      
+Copyright (c) 2003-2009 eXo Platform SAS.			      
+https://github.com/crashub/crash			      
 https://opensource.org/licenses/LGPL-2.1
 
-crash.connectors.ssh 1.7.4
-http://www.crashub.org/
-https://opensource.org/licenses/lgpl-license.php
-
-hibernate-core 5.4.3.Final
-http://hibernate.org/
+hibernate-core 5.4.3.Final			      
+http://hibernate.org/			      
 https://github.com/hibernate/hibernate-orm/blob/master/lgpl.txt
 
-hibernate-java8	5.4.3.Final
-http://hibernate.org/
+hibernate-java8	5.4.3.Final			      
+http://hibernate.org/			      
 https://github.com/hibernate/hibernate-orm/blob/master/lgpl.txt
 
-hibernate-commons-annotations 5.1.0.Final
-https://github.com/hibernate/hibernate-commons-annotations
+hibernate-commons-annotations 5.1.0.Final			      
+https://github.com/hibernate/hibernate-commons-annotations			      
 https://github.com/hibernate/hibernate-commons-annotations/blob/master/lgpl.txt
 
 -----------------------START OF LICENSE TEXT-----------------------------------
@@ -6336,8 +6531,8 @@ END OF TERMS AND CONDITIONS
 
 =========== START OF NOTICES AND INFORMATION for the following components=========
 
-jsr305	3.0.2
-http://findbugs.sourceforge.net/
+jsr305	3.0.2			      
+http://findbugs.sourceforge.net/			      
 https://www.gnu.org/licenses/lgpl-3.0.html
 
 -----------------------START OF LICENSE TEXT-----------------------------------
@@ -6411,55 +6606,41 @@ If the Library as you received it specifies that a proxy can decide whether futu
 
 =========== START OF NOTICES AND INFORMATION for the following components=========
 
-liquibase-slf4j	2.0.0
-Copyright (c) 2012-2015 Matt Bertolini
-https://github.com/mattbertolini/liquibase-slf4j
+animal-sniffer-annotations 1.17					      
+https://www.mojohaus.org/animal-sniffer/animal-sniffer-annotations/index.htmlhttps://www.mojohaus.org/animal-sniffer/license.html
+
+bcprov-jdk15on 1.64			      
+Copyright © 2000-2019 The Legion of the Bouncy Castle Inc. 				      
+http://www.bouncycastle.org/java.html			      
+http://www.bouncycastle.org/licence.html
+
+classgraph 4.8.41 Copyright (c) 2019 Luke Hutchison			      
+https://github.com/classgraph/classgraph			      
+https://github.com/classgraph/classgraph/blob/master/LICENSE-ClassGraph.txt
+
+java-jwt 3.8.2			      
+Copyright © 2015 Auth0, Inc.			      
+https://github.com/auth0/java-jwt			      
+https://github.com/auth0/java-jwt/blob/master/LICENSE
+
+java-semver 0.9.0					      
+https://github.com/zafarkhaja/jsemver			      
+https://github.com/zafarkhaja/jsemver/blob/master/LICENSE
+
+jul-to-slf4j 1.7.26			      
+Copyright © 2004-2017 QOS.ch			      
+https://github.com/qos-ch/slf4j			      
+https://github.com/qos-ch/slf4j/blob/master/LICENSE.txt
+
+liquibase-slf4j	2.0.0			      
+Copyright © 2012-2015 Matt Bertolini			      
+https://github.com/mattbertolini/liquibase-slf4j			      
 https://opensource.org/licenses/mit-license.html
 
-classgraph 4.8.58
-Copyright (c) 2019 Luke Hutchison
-https://github.com/classgraph/classgraph
-https://github.com/classgraph/classgraph/blob/master/LICENSE
-
-jquery 1.11.1
-Copyright 2005, 2014 jQuery Foundation, Inc. and other contributors
-https://blog.jquery.com/2014/05/01/jquery-1-11-1-and-2-1-1-released/
-http://jquery.org/license
-
-bcpkix-jdk15on 1.60
-Copyright (c) 2000-2019 The Legion of the Bouncy Castle Inc.
-http://www.bouncycastle.org/java.html
-http://www.bouncycastle.org/licence.html
-
-bcprov-jdk15on	1.60
-Copyright (c) 2000-2019 The Legion of the Bouncy Castle Inc.
-http://www.bouncycastle.org/java.html
-http://www.bouncycastle.org/licence.html
-
-animal-sniffer-annotations 1.17
-https://www.mojohaus.org/animal-sniffer/index.html
-https://www.mojohaus.org/animal-sniffer/license.html
-
-jcl-over-slf4j 1.7.26
-Copyright (c) 2004-2017 QOS.ch
-https://github.com/qos-ch/slf4j
+slf4j-api 1.7.26			      
+Copyright © 2004-2017 QOS.ch			      
+https://github.com/qos-ch/slf4j			      
 https://github.com/qos-ch/slf4j/blob/master/LICENSE.txt
-
-jul-to-slf4j 1.7.26
-Copyright (c) 2004-2017 QOS.ch
-https://github.com/qos-ch/slf4j
-https://github.com/qos-ch/slf4j/blob/master/LICENSE.txt
-
-slf4j-api 1.7.26
-Copyright (c) 2004-2017 QOS.ch
-https://github.com/qos-ch/slf4j
-https://github.com/qos-ch/slf4j/blob/master/LICENSE.txt
-
-Slf4j-nop 1.7.26
-Copyright (c) 2004-2017 QOS.ch
-https://github.com/qos-ch/slf4j
-https://github.com/qos-ch/slf4j/blob/master/LICENSE.txt
-
 
 -----------------------START OF LICENSE TEXT-----------------------------------
 
@@ -6485,9 +6666,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 =========== START OF NOTICES AND INFORMATION for the following components=========
 
-newrelic-api	3.10.0
-Copyright (c) 2008-2019 New Relic, Inc.
-https://newrelic.com/
+newrelic-api	3.10.0			      
+Copyright (c) 2008-2019 New Relic, Inc.			      
+https://newrelic.com/			      
 https://docs.newrelic.com/docs/licenses/license-information/other-licenses/new-relic-agent-license
 
 -----------------------START OF LICENSE TEXT-----------------------------------
@@ -6542,8 +6723,8 @@ for lost profits or data.
 
 =========== START OF NOTICES AND INFORMATION for the following components=========
 
-HdrHistogram 2.1.9
-https://github.com/HdrHistogram/HdrHistogram
+HdrHistogram 2.1.9			      
+https://github.com/HdrHistogram/HdrHistogram			      
 https://github.com/HdrHistogram/HdrHistogram/blob/master/LICENSE.txt
 
 -----------------------START OF LICENSE TEXT-----------------------------------
@@ -6597,7 +6778,7 @@ the Author.
 
 ================================================
 END OF THIRD PARTY NOTICES FOR
-Corda Enterprise Network Manager  V. 1.2
+Corda Enterprise Network Manager  V. 1.3
 ================================================
 
 
