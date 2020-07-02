@@ -115,7 +115,7 @@ In order to ensure that a Jolokia agent is instrumented with the JVM run-time, y
 The following JMX statistics are exported:
 
 
-* Corda specific metrics: flow information (total started, finished, in-flight; flow duration by flow type), attachments (count)
+* Corda specific metrics: see node-metrics for a list
 * Apache Artemis metrics: queue information for P2P and RPC services
 * JVM statistics: classloading, garbage collection, memory, runtime, threading, operating system
 
