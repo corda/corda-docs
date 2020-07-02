@@ -1,10 +1,14 @@
 ---
 date: '2020-04-07T12:00:00Z'
-menu: []
+menu:
+  corda-enterprise-4-5:
+    identifier: corda-enterprise-4-5-corda-nodes-operating-administration
+    parent: corda-enterprise-4-5-corda-nodes-operating
 tags:
 - node
 - administration
 title: Node administration
+weight: 145
 ---
 
 
