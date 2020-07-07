@@ -1,20 +1,20 @@
 ---
-date: '2020-04-07T12:00:00Z'
+date: '2020-01-08T09:59:25Z'
 menu:
   corda-enterprise-4-5:
     parent: corda-enterprise-4-5-corda-nodes-operating
 tags:
 - node
 - explorer
-weight: 15
 title: Node Explorer
+weight: 160
 ---
 
 # Node Explorer
 
 {{< note >}}
 
-This version of Node Explorer replaces and improves upon the [deprecated Corda Finance Node Explorer](node-explorer-corda-finance.md).
+This version of Node Explorer replaces and improves upon the retired **Corda Finance Node Explorer**.
 
 {{< /note >}}
 

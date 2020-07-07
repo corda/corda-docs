@@ -7,8 +7,8 @@ date: '2020-04-07T12:00:00Z'
 menu:
   corda-os-4-5:
     identifier: corda-os-4-5-node-explorer
-    parent: corda-os-4-5-tools-index
-    weight: 1040
+    parent: corda-os-4-5-corda-nodes-index
+    weight: 1200
 tags:
 - node
 - explorer
@@ -19,7 +19,7 @@ title: Node Explorer
 
 {{< note >}}
 
-This version of Node Explorer replaces and improves upon the [deprecated Corda Finance Node Explorer](node-explorer-corda-finance.md).
+This version of Node Explorer replaces and improves upon the retired **Corda Finance Node Explorer**.
 
 {{< /note >}}
 
