@@ -88,7 +88,7 @@ fun <T : ContractState> _trackBy(criteria: QueryCriteria,
 
 ```
 
-[VaultService.kt](https://github.com/corda/corda/blob/release/os/4.5/core/src/main/kotlin/net/corda/core/node/services/VaultService.kt)
+[VaultService.kt](https://github.com/corda/corda/blob/release/os/4.4/core/src/main/kotlin/net/corda/core/node/services/VaultService.kt)
 
 And via `CordaRPCOps` for use by RPC client applications:
 
@@ -101,7 +101,7 @@ fun <T : ContractState> vaultQueryBy(criteria: QueryCriteria,
 
 ```
 
-[CordaRPCOps.kt](https://github.com/corda/corda/blob/release/os/4.5/core/src/main/kotlin/net/corda/core/messaging/CordaRPCOps.kt)
+[CordaRPCOps.kt](https://github.com/corda/corda/blob/release/os/4.4/core/src/main/kotlin/net/corda/core/messaging/CordaRPCOps.kt)
 
 ```kotlin
 @RPCReturnsObservables
@@ -112,7 +112,7 @@ fun <T : ContractState> vaultTrackBy(criteria: QueryCriteria,
 
 ```
 
-[CordaRPCOps.kt](https://github.com/corda/corda/blob/release/os/4.5/core/src/main/kotlin/net/corda/core/messaging/CordaRPCOps.kt)
+[CordaRPCOps.kt](https://github.com/corda/corda/blob/release/os/4.4/core/src/main/kotlin/net/corda/core/messaging/CordaRPCOps.kt)
 
 Helper methods are also provided with default values for arguments:
 
@@ -127,7 +127,7 @@ fun <T : ContractState> vaultQueryByWithSorting(contractStateType: Class<out T>,
 
 ```
 
-[CordaRPCOps.kt](https://github.com/corda/corda/blob/release/os/4.5/core/src/main/kotlin/net/corda/core/messaging/CordaRPCOps.kt)
+[CordaRPCOps.kt](https://github.com/corda/corda/blob/release/os/4.4/core/src/main/kotlin/net/corda/core/messaging/CordaRPCOps.kt)
 
 ```kotlin
 fun <T : ContractState> vaultTrack(contractStateType: Class<out T>): DataFeed<Vault.Page<T>, Vault.Update<T>>
@@ -140,7 +140,7 @@ fun <T : ContractState> vaultTrackByWithSorting(contractStateType: Class<out T>,
 
 ```
 
-[CordaRPCOps.kt](https://github.com/corda/corda/blob/release/os/4.5/core/src/main/kotlin/net/corda/core/messaging/CordaRPCOps.kt)
+[CordaRPCOps.kt](https://github.com/corda/corda/blob/release/os/4.4/core/src/main/kotlin/net/corda/core/messaging/CordaRPCOps.kt)
 
 The API provides both static (snapshot) and dynamic (snapshot with streaming updates) methods for a defined set of
 filter criteria:
@@ -150,65 +150,60 @@ filter criteria:
 * Use `trackBy` to obtain both a current snapshot and a future stream of updates (for a given `QueryCriteria`)
 
 {{< note >}}
-Streaming updates are only filtered based on contract type and state status (UNCONSUMED, CONSUMED, ALL).
+Streaming updates are only filtered based on contract type and state status (`UNCONSUMED`, `CONSUMED`, `ALL`).
 They will not respect any other criteria that the initial query has been filtered by.
 
 {{< /note >}}
 Simple pagination (page number and size) and sorting (directional ordering using standard or custom property
-attributes) is also specifiable. Defaults are defined for paging (pageNumber = 1, pageSize = 200) and sorting
-(direction = ASC).
+attributes) is also specifiable. Defaults are defined for paging (`pageNumber` = 1, `pageSize` = 200) and sorting (`direction` = ASC).
 
 The `QueryCriteria` interface provides a flexible mechanism for specifying different filtering criteria, including
 and/or composition and a rich set of operators to include:
 
 
-* Binary logical (AND, OR)
-* Comparison (LESS_THAN, LESS_THAN_OR_EQUAL, GREATER_THAN, GREATER_THAN_OR_EQUAL)
-* Equality (EQUAL, NOT_EQUAL)
-* Likeness (LIKE, NOT_LIKE)
-* Nullability (IS_NULL, NOT_NULL)
-* Collection based (IN, NOT_IN)
-* Standard SQL-92 aggregate functions (SUM, AVG, MIN, MAX, COUNT)
+* Binary logical (`AND`, `OR`)
+* Comparison (`LESS_THAN`, `LESS_THAN_OR_EQUAL`, `GREATER_THAN`, `GREATER_THAN_OR_EQUAL`)
+* Equality (`EQUAL`, `NOT_EQUAL`)
+* Likeness (`LIKE`, `NOT_LIKE`)
+* Nullability (`IS_NULL`, `NOT_NULL`)
+* Collection based (`IN`, `NOT_IN`)
+* Standard SQL-92 aggregate functions (`SUM`, `AVG`, `MIN`, `MAX`, `COUNT`)
 
-There are four implementations of this interface which can be chained together to define advanced filters.
+There are four implementations of this interface which can be chained together to define advanced filters:
 
 
-* `VaultQueryCriteria` provides filterable criteria on attributes within the Vault states table: status (UNCONSUMED,
-CONSUMED), state reference(s), contract state type(s), notaries, soft locked states, timestamps (RECORDED, CONSUMED),
-state constraints (see [Constraint Types](api-contract-constraints.md#implicit-constraint-types)), relevancy (ALL, RELEVANT, NON_RELEVANT),
-participants (exact or any match).> 
+* `VaultQueryCriteria` provides filterable criteria on attributes within the **VAULT_STATES** table. Filterable attributes include one or more of the following: status (`UNCONSUMED`,
+`CONSUMED`), state reference, contract state type, notary name, soft locked states, timestamps (`RECORDED`, `CONSUMED`), state constraints (see [Constraint Types](api-contract-constraints.md#implicit-constraint-types)), relevancy (`ALL`, `RELEVANT`, `NON_RELEVANT`), and participants (exact or any match).
 {{< note >}}
-Sensible defaults are defined for frequently used attributes (status = UNCONSUMED, always include soft
+Sensible defaults are defined for frequently used attributes (`status` = `UNCONSUMED`, always include soft
 locked states).{{< /note >}}
 
 
 * `FungibleAssetQueryCriteria` provides filterable criteria on attributes defined in the Corda Core
 `FungibleAsset` contract state interface, used to represent assets that are fungible, countable and issued by a
-specific party (eg. `Cash.State` and `CommodityContract.State` in the Corda finance module). Filterable
-attributes include: participants (exact or any match), owner(s), quantity, issuer party(s) and issuer reference(s).> 
+specific party (for example, `Cash.State` and `CommodityContract.State` in the Corda finance module). Filterable attributes include one or more of the following: participants (exact or any match), owner, quantity, issuer name, and issuer reference.
 {{< note >}}
-All contract states that extend the `FungibleAsset` now automatically persist that interfaces common
-state attributes to the **vault_fungible_states** table.{{< /note >}}
+All contract states that extend the `FungibleAsset` now automatically persist that interface's common
+state attributes to the **VAULT_FUNGIBLE_STATES** table.{{< /note >}}
 
 
 * `LinearStateQueryCriteria` provides filterable criteria on attributes defined in the Corda Core `LinearState`
 and `DealState` contract state interfaces, used to represent entities that continuously supersede themselves, all
-of which share the same `linearId` (e.g. trade entity states such as the `IRSState` defined in the SIMM
-valuation demo). Filterable attributes include: participants (exact or any match), linearId(s), uuid(s), and externalId(s).> 
+of which share the same `linearId` (for example, trade entity states such as the `IRSState` defined in the SIMM
+valuation demo). Filterable attributes include one or more of the following: participants, linear ID, UUID, and external ID.
 {{< note >}}
 All contract states that extend `LinearState` or `DealState` now automatically persist those
-interfaces common state attributes to the **vault_linear_states** table.{{< /note >}}
+interfaces' common state attributes to the **VAULT_LINEAR_STATES** table.{{< /note >}}
 
 
 * `VaultCustomQueryCriteria` provides the means to specify one or many arbitrary expressions on attributes defined
 by a custom contract state that implements its own schema as described in the [Persistence](api-persistence.md)
-documentation and associated examples. Custom criteria expressions are expressed using one of several type-safe
-`CriteriaExpression`: BinaryLogical, Not, ColumnPredicateExpression, AggregateFunctionExpression. The
-`ColumnPredicateExpression` allows for specification arbitrary criteria using the previously enumerated operator
-types. The `AggregateFunctionExpression` allows for the specification of an aggregate function type (sum, avg,
-max, min, count) with optional grouping and sorting. Furthermore, a rich DSL is provided to enable simple
+documentation and associated examples. Custom criteria expressions are expressed using one of the following type-safe forms of
+`CriteriaExpression`: `BinaryLogical`, `Not`, `ColumnPredicateExpression`, and `AggregateFunctionExpression`. The
+`ColumnPredicateExpression` allows for the specification of arbitrary criteria using the previously enumerated operator
+types. The `AggregateFunctionExpression` allows for the specification of an aggregate function type (`SUM`, `AVG`, `MAX`, `MIN`, `COUNT`) with optional grouping and sorting. Furthermore, a rich DSL is provided to enable simple
 construction of custom criteria using any combination of `ColumnPredicate`. See the `Builder` object in
-`QueryCriteriaUtils` for a complete specification of the DSL.> 
+`QueryCriteriaUtils` for a complete specification of the DSL.
 {{< note >}}
 Custom contract schemas are automatically registered upon node startup for CorDapps. Please refer to
 [Persistence](api-persistence.md) for mechanisms of registering custom schemas for different testing
@@ -216,16 +211,15 @@ purposes.{{< /note >}}
 
 
 
-All `QueryCriteria` implementations are composable using `and` and `or` operators.
+All `QueryCriteria` implementations are composable using `AND` and `OR` operators.
 
 All `QueryCriteria` implementations provide an explicitly specifiable set of common attributes:
 
 
-* State status attribute (`Vault.StateStatus`), which defaults to filtering on UNCONSUMED states.
-When chaining several criteria using AND / OR, the last value of this attribute will override any previous
+* A state status attribute (`Vault.StateStatus`), which defaults to filtering on `UNCONSUMED` states.
+When chaining several criteria using AND / OR, the last value of this attribute will override any previous value.
 * Contract state types (`<Set<Class<out ContractState>>`), which will contain at minimum one type (by default this
-will be `ContractState` which resolves to all state types). When chaining several criteria using `and` and
-`or` operators, all specified contract state types are combined into a single set
+will be `ContractState` which resolves to all state types). When chaining several criteria using `AND` and `OR` operators, all specified contract state types are combined into a single set.
 
 An example of a custom query is illustrated here:
 
@@ -245,10 +239,10 @@ val results = builder {
 
 ```
 
-[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
+[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
 
 {{< note >}}
-Custom contract states that implement the `Queryable` interface may now extend common schemas types
+Custom contract states that implement the `Queryable` interface may now extend the common schema types
 `FungiblePersistentState` or, `LinearPersistentState`.  Previously, all custom contracts extended the root
 `PersistentState` class and defined repeated mappings of `FungibleAsset` and `LinearState` attributes. See
 `SampleCashSchemaV2` and `DummyLinearStateSchemaV2` as examples.
@@ -297,11 +291,10 @@ Vault.Page<ContractState> results = vaultService.queryBy(Cash.State.class, crite
 
 ```
 
-[VaultQueryJavaTests.java](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/java/net/corda/node/services/vault/VaultQueryJavaTests.java)
+[VaultQueryJavaTests.java](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/java/net/corda/node/services/vault/VaultQueryJavaTests.java)
 
 {{< note >}}
-Queries by `Party` specify the `AbstractParty` which may be concrete or anonymous. In the later case,
-where an anonymous party does not resolve to an X500 name via the `IdentityService`, no query results will ever be
+Queries by `Party` specify the `AbstractParty` which may be concrete or anonymous. Note, however, that if an anonymous party does not resolve to an X500 name via the `IdentityService`, no query results will ever be
 produced. For performance reasons, queries do not use `PublicKey` as search criteria.
 
 {{< /note >}}
@@ -320,8 +313,8 @@ val currencyIndex = PersistentCashState::currency.equal(USD.currencyCode, true)
 
 {{< note >}}
 The `Boolean` input of `true` in this example could be removed since the function will default to `true` when not provided.
-
 {{< /note >}}
+
 An example of a case insensitive custom query operator is illustrated here:
 
 {{< tabs name="tabs-2" >}}
@@ -383,7 +376,7 @@ val vaultSnapshot = proxy.vaultQueryBy<ContractState>(
 {{< /tabs >}}
 
 {{< note >}}
-A pages maximum size `MAX_PAGE_SIZE` is defined as `Int.MAX_VALUE` and should be used with extreme
+A page's maximum size `MAX_PAGE_SIZE` is defined as `Int.MAX_VALUE` and should be used with extreme
 caution as results returned may exceed your JVM’s memory footprint.
 
 {{< /note >}}
@@ -413,7 +406,7 @@ val metadata = result.statesMetadata
 
 ```
 
-[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
+[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
 
 Query for unconsumed states for some state references:
 
@@ -424,7 +417,7 @@ val results = vaultService.queryBy<DummyLinearContract.State>(criteria, Sort(set
 
 ```
 
-[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
+[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
 
 Query for unconsumed states for several contract state types:
 
@@ -434,7 +427,7 @@ val results = vaultService.queryBy<ContractState>(criteria)
 
 ```
 
-[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
+[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
 
 Query for unconsumed states for specified contract state constraint types and sorted in ascending alphabetical order:
 
@@ -446,7 +439,7 @@ val constraintResults = vaultService.queryBy<LinearState>(constraintTypeCriteria
 
 ```
 
-[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
+[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
 
 Query for unconsumed states for specified contract state constraints (type and data):
 
@@ -457,7 +450,7 @@ val constraintResults = vaultService.queryBy<LinearState>(constraintCriteria)
 
 ```
 
-[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
+[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
 
 Query for unconsumed states for a given notary:
 
@@ -467,7 +460,7 @@ val results = vaultService.queryBy<ContractState>(criteria)
 
 ```
 
-[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
+[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
 
 Query for unconsumed states for a given set of participants (matches any state that contains at least one of the specified participants):
 
@@ -477,7 +470,7 @@ val results = vaultService.queryBy<ContractState>(criteria)
 
 ```
 
-[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
+[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
 
 Query for unconsumed states for a given set of participants (exactly matches only states that contain all specified participants):
 
@@ -487,7 +480,7 @@ val strictResults = vaultService.queryBy<ContractState>(strictCriteria)
 
 ```
 
-[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
+[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
 
 Query for unconsumed states recorded between two time intervals:
 
@@ -502,12 +495,12 @@ val results = vaultService.queryBy<ContractState>(criteria)
 
 ```
 
-[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
+[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
 
 {{< note >}}
 This example illustrates usage of a `Between` `ColumnPredicate`.
-
 {{< /note >}}
+
 Query for all states with pagination specification (10 results per page):
 
 ```kotlin
@@ -517,13 +510,13 @@ val results = vaultService.queryBy<ContractState>(criteria, paging = pagingSpec)
 
 ```
 
-[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
+[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
 
 {{< note >}}
 The result set metadata field *totalStatesAvailable* allows you to further paginate accordingly as
 demonstrated in the following example.
-
 {{< /note >}}
+
 Query for all states using a pagination specification and iterate using the *totalStatesAvailable* field until no further
 pages available:
 
@@ -539,7 +532,7 @@ do {
 
 ```
 
-[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
+[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
 
 Query for only relevant states in the vault:
 
@@ -549,11 +542,11 @@ Query for only relevant states in the vault:
 
 ```
 
-[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
+[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
 
 **LinearState and DealState queries using** `LinearStateQueryCriteria`:
 
-Query for unconsumed linear states for given linear ids:
+Query for unconsumed linear states for given linear IDs:
 
 ```kotlin
 val linearIds = issuedStates.states.map { it.state.data.linearId }.toList()
@@ -562,9 +555,9 @@ val results = vaultService.queryBy<LinearState>(criteria)
 
 ```
 
-[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
+[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
 
-Query for all linear states associated with a linear id:
+Query for all linear states associated with a linear ID:
 
 ```kotlin
 val linearStateCriteria = LinearStateQueryCriteria(linearId = listOf(linearId), status = Vault.StateStatus.ALL)
@@ -573,9 +566,9 @@ val results = vaultService.queryBy<LinearState>(linearStateCriteria and vaultCri
 
 ```
 
-[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
+[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
 
-Query for unconsumed deal states with deals references:
+Query for unconsumed deal states with deal references:
 
 ```kotlin
 val criteria = LinearStateQueryCriteria(externalId = listOf("456", "789"))
@@ -583,9 +576,9 @@ val results = vaultService.queryBy<DealState>(criteria)
 
 ```
 
-[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
+[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
 
-Query for unconsumed deal states with deals parties (any match):
+Query for unconsumed deal states with deal parties (any match):
 
 ```kotlin
 val criteria = LinearStateQueryCriteria(participants = parties)
@@ -593,9 +586,9 @@ val results = vaultService.queryBy<DealState>(criteria)
 
 ```
 
-[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
+[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
 
-Query for unconsumed deal states with deals parties (exact match):
+Query for unconsumed deal states with deal parties (exact match):
 
 ```kotlin
 val strictCriteria = LinearStateQueryCriteria().withExactParticipants(parties)
@@ -603,7 +596,7 @@ val strictResults = vaultService.queryBy<ContractState>(strictCriteria)
 
 ```
 
-[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
+[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
 
 Query for only relevant linear states in the vault:
 
@@ -613,7 +606,7 @@ Query for only relevant linear states in the vault:
 
 ```
 
-[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
+[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
 
 **FungibleAsset and DealState queries using** `FungibleAssetQueryCriteria`:
 
@@ -626,7 +619,7 @@ val results = vaultService.queryBy<FungibleAsset<*>>(criteria)
 
 ```
 
-[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
+[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
 
 Query for fungible assets for a minimum quantity:
 
@@ -636,12 +629,12 @@ val results = vaultService.queryBy<Cash.State>(fungibleAssetCriteria)
 
 ```
 
-[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
+[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
 
 {{< note >}}
 This example uses the builder DSL.
-
 {{< /note >}}
+
 Query for fungible assets for a specific issuer party:
 
 ```kotlin
@@ -650,7 +643,7 @@ val results = vaultService.queryBy<FungibleAsset<*>>(criteria)
 
 ```
 
-[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
+[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
 
 Query for only relevant fungible states in the vault:
 
@@ -660,12 +653,12 @@ val allCashStates = vaultService.queryBy<Cash.State>(allCashCriteria).states
 
 ```
 
-[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
+[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
 
 **Aggregate Function queries using** `VaultCustomQueryCriteria`:
 
 {{< note >}}
-Query results for aggregate functions are contained in the `otherResults` attribute of a results Page.
+Query results for aggregate functions are contained in the `otherResults` attribute of a results page.
 
 {{< /note >}}
 Aggregations on cash using various functions:
@@ -694,12 +687,12 @@ val results = vaultService.queryBy<FungibleAsset<*>>(sumCriteria
 
 ```
 
-[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
+[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
 
 {{< note >}}
 `otherResults` will contain 5 items, one per calculated aggregate function.
-
 {{< /note >}}
+
 Aggregations on cash grouped by currency for various functions:
 
 ```kotlin
@@ -722,13 +715,13 @@ val results = vaultService.queryBy<FungibleAsset<*>>(sumCriteria
 
 ```
 
-[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
+[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
 
 {{< note >}}
 `otherResults` will contain 24 items, one result per calculated aggregate function per currency (the
 grouping attribute - currency in this case - is returned per aggregate result).
-
 {{< /note >}}
+
 Sum aggregation on cash grouped by issuer party and currency and sorted by sum:
 
 ```kotlin
@@ -742,7 +735,7 @@ val results = vaultService.queryBy<FungibleAsset<*>>(VaultCustomQueryCriteria(su
 
 ```
 
-[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
+[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
 
 {{< note >}}
 `otherResults` will contain 12 items sorted from largest summed cash amount to smallest, one result per
@@ -761,7 +754,7 @@ Track unconsumed cash states:
 
 ```
 
-[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
+[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
 
 Track unconsumed linear states:
 
@@ -770,12 +763,12 @@ val (snapshot, updates) = vaultService.trackBy<LinearState>()
 
 ```
 
-[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
+[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
 
 {{< note >}}
 This will return both `DealState` and `LinearState` states.
-
 {{< /note >}}
+
 Track unconsumed deal states:
 
 ```kotlin
@@ -783,7 +776,7 @@ val (snapshot, updates) = vaultService.trackBy<DealState>()
 
 ```
 
-[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
+[VaultQueryTests.kt](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/kotlin/net/corda/node/services/vault/VaultQueryTests.kt)
 
 {{< note >}}
 This will return only `DealState` states.
@@ -799,7 +792,7 @@ Vault.Page<LinearState> results = vaultService.queryBy(LinearState.class);
 
 ```
 
-[VaultQueryJavaTests.java](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/java/net/corda/node/services/vault/VaultQueryJavaTests.java)
+[VaultQueryJavaTests.java](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/java/net/corda/node/services/vault/VaultQueryJavaTests.java)
 
 Query for all consumed cash states:
 
@@ -809,9 +802,9 @@ Vault.Page<Cash.State> results = vaultService.queryBy(Cash.State.class, criteria
 
 ```
 
-[VaultQueryJavaTests.java](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/java/net/corda/node/services/vault/VaultQueryJavaTests.java)
+[VaultQueryJavaTests.java](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/java/net/corda/node/services/vault/VaultQueryJavaTests.java)
 
-Query for consumed deal states or linear ids, specify a paging specification and sort by unique identifier:
+Query for consumed deal states or linear IDs, specify a paging specification and sort by unique identifier:
 
 ```java
 Vault.StateStatus status = Vault.StateStatus.CONSUMED;
@@ -834,7 +827,7 @@ Vault.Page<LinearState> results = vaultService.queryBy(LinearState.class, compos
 
 ```
 
-[VaultQueryJavaTests.java](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/java/net/corda/node/services/vault/VaultQueryJavaTests.java)
+[VaultQueryJavaTests.java](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/java/net/corda/node/services/vault/VaultQueryJavaTests.java)
 
 Query for all states using a pagination specification and iterate using the *totalStatesAvailable* field until no further pages available:
 
@@ -854,7 +847,7 @@ do {
 
 ```
 
-[VaultQueryJavaTests.java](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/java/net/corda/node/services/vault/VaultQueryJavaTests.java)
+[VaultQueryJavaTests.java](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/java/net/corda/node/services/vault/VaultQueryJavaTests.java)
 
 **Aggregate Function queries using** `VaultCustomQueryCriteria`:
 
@@ -874,7 +867,7 @@ Vault.Page<Cash.State> results = vaultService.queryBy(Cash.State.class, criteria
 
 ```
 
-[VaultQueryJavaTests.java](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/java/net/corda/node/services/vault/VaultQueryJavaTests.java)
+[VaultQueryJavaTests.java](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/java/net/corda/node/services/vault/VaultQueryJavaTests.java)
 
 Aggregations on cash grouped by currency for various functions:
 
@@ -893,7 +886,7 @@ Vault.Page<Cash.State> results = vaultService.queryBy(Cash.State.class, criteria
 
 ```
 
-[VaultQueryJavaTests.java](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/java/net/corda/node/services/vault/VaultQueryJavaTests.java)
+[VaultQueryJavaTests.java](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/java/net/corda/node/services/vault/VaultQueryJavaTests.java)
 
 Sum aggregation on cash grouped by issuer party and currency and sorted by sum:
 
@@ -906,7 +899,7 @@ Vault.Page<Cash.State> results = vaultService.queryBy(Cash.State.class, sumCrite
 
 ```
 
-[VaultQueryJavaTests.java](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/java/net/corda/node/services/vault/VaultQueryJavaTests.java)
+[VaultQueryJavaTests.java](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/java/net/corda/node/services/vault/VaultQueryJavaTests.java)
 
 Track unconsumed cash states:
 
@@ -922,10 +915,9 @@ Vault.Page<ContractState> snapshot = results.getSnapshot();
 
 ```
 
-[VaultQueryJavaTests.java](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/java/net/corda/node/services/vault/VaultQueryJavaTests.java)
+[VaultQueryJavaTests.java](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/java/net/corda/node/services/vault/VaultQueryJavaTests.java)
 
-Track unconsumed deal states or linear states (with snapshot including specification of paging and sorting by unique
-identifier):
+Track unconsumed deal states or linear states (with snapshot including specification of paging and sorting by unique identifier):
 
 ```java
 @SuppressWarnings("unchecked")
@@ -948,12 +940,12 @@ Vault.Page<ContractState> snapshot = results.getSnapshot();
 
 ```
 
-[VaultQueryJavaTests.java](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/java/net/corda/node/services/vault/VaultQueryJavaTests.java)
+[VaultQueryJavaTests.java](https://github.com/corda/corda/blob/release/os/4.4/node/src/test/java/net/corda/node/services/vault/VaultQueryJavaTests.java)
 
 
 ## Troubleshooting
 
-If the results your were expecting do not match actual returned query results we recommend you add an entry to your
+If the results you were expecting do not match actual returned query results we recommend you add an entry to your
 `log4j2.xml` configuration file to enable display of executed SQL statements:
 
 ```kotlin
@@ -971,7 +963,7 @@ If the results your were expecting do not match actual returned query results we
 * `TrackBy` updates do not take into account the full criteria specification due to different and more restrictive
 syntax in [observables](https://github.com/ReactiveX/RxJava/wiki) filtering (vs full SQL-92 JDBC filtering as used
 in snapshot views). Specifically, dynamic updates are filtered by `contractStateType` and `stateType`
-(UNCONSUMED, CONSUMED, ALL) only
+(`UNCONSUMED`, `CONSUMED`, `ALL`) only
 * `QueryBy` and `TrackBy` snapshot views using pagination may return different result sets as each paging request
 is a separate SQL query on the underlying database, and it is entirely conceivable that state modifications are
 taking place in between and/or in parallel to paging requests. When using pagination, always check the value of the
@@ -982,7 +974,7 @@ taking place in between and/or in parallel to paging requests. When using pagina
 
 For advanced use cases that require sophisticated pagination, sorting, grouping, and aggregation functions, it is
 recommended that the CorDapp developer utilise one of the many proven frameworks that ship with this capability out of
-the box. Namely, implementations of JPQL (JPA Query Language) such as Hibernate for advanced SQL access, and
+the box, namely, implementations of JPQL (JPA Query Language) such as Hibernate for advanced SQL access, and
 Spring Data for advanced pagination and ordering constructs.
 
 The Corda Tutorials provide examples satisfying these additional Use Cases:
@@ -1062,4 +1054,3 @@ a view which maps each state to one or more external IDs. The entity relationshi
 ![state to external id](/en/images/state-to-external-id.png "state to external id")
 When performing a vault query, it is now possible to query for states by external ID using the `externalIds` parameter in
 `VaultQueryCriteria`.
-

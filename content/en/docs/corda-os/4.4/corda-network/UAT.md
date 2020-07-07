@@ -15,11 +15,11 @@ menu:
     weight: 10
 tags:
 - UAT
-title: 'Corda Network: Pre-Production Environment'
+title: 'Corda Network: Pre-Production environment'
 ---
 
 
-# Corda Network: Pre-Production Environment
+# Corda Network: Pre-Production environment
 
 Corda Network Pre-Production (or UAT) seeks to provide a test environment which is as close as possible to Corda Network in its make-up and operation.
 
