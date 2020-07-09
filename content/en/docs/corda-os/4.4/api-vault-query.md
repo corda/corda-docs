@@ -222,9 +222,8 @@ All `QueryCriteria` implementations provide an explicitly specifiable set of com
 
 
 * A state status attribute (`Vault.StateStatus`), which defaults to filtering on `UNCONSUMED` states.
-When chaining several criteria using AND / OR, the last value of this attribute will override any previous value.
-* Contract state types (`<Set<Class<out ContractState>>`), which will contain at minimum one type (by default, this
-will be `ContractState` which resolves to all state types). When chaining several criteria using `AND` and `OR` operators, all specified contract state types are combined into a single set.
+When chaining several criteria using `AND` or `OR`, the last value of this attribute will override any previous value.
+* Contract state types (`<Set<Class<out ContractState>>`), which will contain at minimum one type (by default, this will be `ContractState` which resolves to all state types). When chaining several criteria using `AND` and `OR` operators, all specified contract state types are combined into a single set.
 
 ### Custom queries in Kotlin
 
@@ -296,13 +295,13 @@ Vault.Page<ContractState> results = vaultService.queryBy(Cash.State.class, crite
 Queries by `Party` specify the `AbstractParty` which may be concrete or anonymous. Note, however, that if an anonymous party does not resolve to an X500 name via the `IdentityService`, no query results will ever be produced. For performance reasons, queries do not use `PublicKey` as search criteria.
 {{< /note >}}
 
-### Custom queries and case sensitivity 
+### Custom queries and case sensitivity
 
 Custom queries can be either case sensitive or case insensitive. They are defined via a `Boolean` as one of the function parameters of each operator function. By default, each operator is case sensitive.
 
-#### Case sensitive custom query operators in Kotlin
+#### Case-sensitive custom query operators in Kotlin
 
-An example of a case sensitive custom query operator in Kotlin is illustrated here:
+An example of a case-sensitive custom query operator in Kotlin is illustrated here:
 
 {{< tabs name="tabs-1" >}}
 {{% tab name="kotlin" %}}
@@ -317,9 +316,9 @@ val currencyIndex = PersistentCashState::currency.equal(USD.currencyCode, true)
 The `Boolean` input of `true` in this example could be removed since the function will default to `true` when not provided.
 {{< /note >}}
 
-#### Case insensitive custom query operators in Kotlin
+#### Case-insensitive custom query operators in Kotlin
 
-An example of a case insensitive custom query operator in Kotlin is illustrated here:
+An example of a case-insensitive custom query operator in Kotlin is illustrated here:
 
 {{< tabs name="tabs-2" >}}
 {{% tab name="kotlin" %}}
@@ -330,9 +329,9 @@ val currencyIndex = PersistentCashState::currency.equal(USD.currencyCode, false)
 
 {{< /tabs >}}
 
-#### Case sensitive custom query operators in Java
+#### Case-sensitive custom query operators in Java
 
-An example of a case sensitive custom query operator in Java is illustrated here:
+An example of a case-sensitive custom query operator in Java is illustrated here:
 
 {{< tabs name="tabs-3" >}}
 {{% tab name="java" %}}
@@ -344,9 +343,9 @@ CriteriaExpression currencyIndex = Builder.equal(attributeCurrency, "USD", true)
 
 {{< /tabs >}}
 
-#### Case insensitive custom query operators in Java
+#### Case-insensitive custom query operators in Java
 
-An example of a case insensitive custom query operator in Java is illustrated here:
+An example of a case-insensitive custom query operator in Java is illustrated here:
 
 {{< tabs name="tabs-4" >}}
 {{% tab name="java" %}}
@@ -392,7 +391,7 @@ caution as results returned may exceed your JVM’s memory footprint.
 ## Example usage
 
 
-### Kotlin
+### Kotlin examples
 
 #### General snapshot queries using `VaultQueryCriteria`:
 
@@ -747,10 +746,8 @@ val results = vaultService.queryBy<FungibleAsset<*>>(VaultCustomQueryCriteria(su
 `otherResults` will contain 12 items sorted from largest summed cash amount to smallest, one result per calculated aggregate function per issuer party and currency (grouping attributes are returned per aggregate result).
 {{< /note >}}
 
-Dynamic queries (also using `VaultQueryCriteria`) are an extension to the snapshot queries by returning an
-additional `QueryResults` return type in the form of an `Observable<Vault.Update>`. Refer to
-[ReactiveX Observable](http://reactivex.io/documentation/observable.html) for a detailed understanding and usage of
-this type.
+Dynamic queries (also using `VaultQueryCriteria`) are an extension to the snapshot queries by returning an additional `QueryResults` return type in the form of an `Observable<Vault.Update>`. Refer to
+[ReactiveX Observable](http://reactivex.io/documentation/observable.html) for a detailed understanding and usage of this type.
 
 ##### Track unconsumed cash states:
 
@@ -950,8 +947,7 @@ Vault.Page<ContractState> snapshot = results.getSnapshot();
 
 ## Troubleshooting
 
-If the results you were expecting do not match actual returned query results we recommend you add an entry to your
-`log4j2.xml` configuration file to enable display of executed SQL statements:
+If the results you were expecting do not match actual returned query results, we recommend that you add an entry to your `log4j2.xml` configuration file to enable display of executed SQL statements:
 
 ```kotlin
 <Logger name="org.hibernate.SQL" level="debug" additivity="false">
@@ -965,24 +961,15 @@ If the results you were expecting do not match actual returned query results we 
 ## Behavioural notes
 
 
-* `TrackBy` updates do not take into account the full criteria specification due to different and more restrictive
-syntax in [observables](https://github.com/ReactiveX/RxJava/wiki) filtering (vs full SQL-92 JDBC filtering as used
-in snapshot views). Specifically, dynamic updates are filtered by `contractStateType` and `stateType`
-(`UNCONSUMED`, `CONSUMED`, `ALL`) only
-* `QueryBy` and `TrackBy` snapshot views using pagination may return different result sets as each paging request
-is a separate SQL query on the underlying database, and it is entirely conceivable that state modifications are
-taking place in between and/or in parallel to paging requests. When using pagination, always check the value of the
-`totalStatesAvailable` (from the `Vault.Page` result) and adjust further paging requests appropriately.
+* `TrackBy` updates do not take into account the full criteria specification due to different and more restrictive syntax in [observables](https://github.com/ReactiveX/RxJava/wiki) filtering (vs full SQL-92 JDBC filtering as used in snapshot views). Specifically, dynamic updates are filtered by `contractStateType` and `stateType` (`UNCONSUMED`, `CONSUMED`, `ALL`) only.
+* `QueryBy` and `TrackBy` snapshot views using pagination may return different result sets, as each paging request is a separate SQL query on the underlying database, and it is entirely conceivable that state modifications are taking place in between and/or in parallel to paging requests. When using pagination, always check the value of the `totalStatesAvailable` (from the `Vault.Page` result) and adjust further paging requests appropriately.
 
 
-## Other use case scenarios
+## Other use-case scenarios
 
-For advanced use cases that require sophisticated pagination, sorting, grouping, and aggregation functions, it is
-recommended that the CorDapp developer utilise one of the many proven frameworks that ship with this capability out of
-the box, namely, implementations of JPQL (JPA Query Language) such as Hibernate for advanced SQL access, and
-Spring Data for advanced pagination and ordering constructs.
+For advanced use cases that require sophisticated pagination, sorting, grouping, and aggregation functions, it is recommended that the CorDapp developer utilise one of the many proven frameworks that ship with this capability out of the box, namely, implementations of JPQL (JPA Query Language) such as Hibernate for advanced SQL access, and Spring Data for advanced pagination and ordering constructs.
 
-The Corda Tutorials provide examples satisfying these additional Use Cases:
+The Corda tutorials provide examples satisfying these additional use cases:
 
 
 
@@ -998,15 +985,13 @@ The Corda Tutorials provide examples satisfying these additional Use Cases:
 
 ## Mapping owning keys to external IDs
 
-When creating new public keys via the `KeyManagementService`, it is possible to create an association between the newly created public
-key and an external ID. This, in effect, allows CorDapp developers to group state ownership/participation keys by an account ID.
+When creating new public keys via the `KeyManagementService`, it is possible to create an association between the newly created public key and an external ID. This, in effect, allows CorDapp developers to group state ownership/participation keys by an account ID.
 
 {{< note >}}
-This only works with freshly generated public keys and *not* the node’s legal identity key. If you require that the freshly
-generated keys be for the node’s identity then use `PersistentKeyManagementService.freshKeyAndCert` instead of `freshKey`.
+This only works with freshly generated public keys and *not* the node’s legal identity key. If you require that the freshly generated keys be for the node’s identity, then use `PersistentKeyManagementService.freshKeyAndCert` instead of `freshKey`.
 Currently, the generation of keys for other identities is not supported.
-
 {{< /note >}}
+
 The code snippet below show how keys can be associated with an external ID by using the exposed JPA functionality:
 
 {{< tabs name="tabs-6" >}}
@@ -1043,19 +1028,13 @@ fun freshKeyForExternalId(externalId: UUID, services: ServiceHub): AnonymousPart
 
 {{< /tabs >}}
 
-As can be seen in the code snippet above, the `PublicKeyHashToExternalId` entity has been added to `PersistentKeyManagementService`,
-which allows you to associate your public keys with external IDs. So far, so good.
+As can be seen in the code snippet above, the `PublicKeyHashToExternalId` entity has been added to `PersistentKeyManagementService`, which allows you to associate your public keys with external IDs.
 
 {{< note >}}
-Here, it is worth noting that we must map **owning keys** to external IDs, as opposed to **state objects**. This is because it
-might be the case that a `LinearState` is owned by two public keys generated by the same node.
-
+Here, it is worth noting that we must map **owning keys** to external IDs, as opposed to **state objects**. This is because it might be the case that a `LinearState` is owned by two public keys generated by the same node.
 {{< /note >}}
-The intuition here is that when these public keys are used to own or participate in a state object, it is trivial to then associate those
-states with a particular external ID. Behind the scenes, when states are persisted to the vault, the owning keys for each state are
-persisted to a `PersistentParty` table. The `PersistentParty` table can be joined with the `PublicKeyHashToExternalId` table to create
-a view which maps each state to one or more external IDs. The entity relationship diagram below helps to explain how this works.
+
+The logic here is that when these public keys are used to own or participate in a state object, it is trivial to then associate those states with a particular external ID. Behind the scenes, when states are persisted to the vault, the owning keys for each state are persisted to a `PersistentParty` table. The `PersistentParty` table can be joined with the `PublicKeyHashToExternalId` table to create a view which maps each state to one or more external IDs. The entity relationship diagram below helps to explain how this works.
 
 ![state to external id](/en/images/state-to-external-id.png "state to external id")
-When performing a vault query, it is now possible to query for states by external ID using the `externalIds` parameter in
-`VaultQueryCriteria`.
+When performing a vault query, it is now possible to query for states by external ID using the `externalIds` parameter in `VaultQueryCriteria`.
