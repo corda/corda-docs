@@ -1,9 +1,9 @@
 ---
 date: '2020-01-08T09:59:25Z'
 menu:
-  corda-enterprise-4-5:
-    parent: corda-enterprise-4-5-operations-guide-deployment-cenm-kubernetes
-    identifier: corda-enterprise-4-5-operations-guide-deployment-cenm-kubernetes-farm
+  corda-enterprise-4-6:
+    parent: corda-enterprise-4-6-operations-guide-deployment-cenm-kubernetes
+    identifier: corda-enterprise-4-6-operations-guide-deployment-cenm-kubernetes-farm
 tags:
 - config
 - kubernetes

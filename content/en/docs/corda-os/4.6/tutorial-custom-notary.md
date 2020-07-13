@@ -5,9 +5,9 @@ aliases:
 - /tutorial-custom-notary.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-tutorial-custom-notary
-    parent: corda-os-4-5-tutorials-index
+  corda-os-4-6:
+    identifier: corda-os-4-6-tutorial-custom-notary
+    parent: corda-os-4-6-tutorials-index
     weight: 1130
 tags:
 - tutorial
@@ -51,7 +51,7 @@ class MyCustomValidatingNotaryService(
 
 ```
 
-[MyCustomNotaryService.kt](https://github.com/corda/corda/blob/release/os/4.5/samples/notary-demo/workflows/src/main/kotlin/net/corda/notarydemo/MyCustomNotaryService.kt)
+[MyCustomNotaryService.kt](https://github.com/corda/corda/blob/release/os/4.6/samples/notary-demo/workflows/src/main/kotlin/net/corda/notarydemo/MyCustomNotaryService.kt)
 
 The next step is to write a notary service flow. You are free to copy and modify the existing built-in flows such
 as `ValidatingNotaryFlow`, `NonValidatingNotaryFlow`, or implement your own from scratch (following the
@@ -92,7 +92,7 @@ class MyValidatingNotaryFlow(otherSide: FlowSession, service: MyCustomValidating
 
 ```
 
-[MyCustomNotaryService.kt](https://github.com/corda/corda/blob/release/os/4.5/samples/notary-demo/workflows/src/main/kotlin/net/corda/notarydemo/MyCustomNotaryService.kt)
+[MyCustomNotaryService.kt](https://github.com/corda/corda/blob/release/os/4.6/samples/notary-demo/workflows/src/main/kotlin/net/corda/notarydemo/MyCustomNotaryService.kt)
 
 To enable the service, add the following to the node configuration:
 
@@ -120,7 +120,7 @@ To create a flow test that uses your custom notary service, you can set the clas
 
 ```
 
-[CustomNotaryTest.kt](https://github.com/corda/corda/blob/release/os/4.5/testing/node-driver/src/test/kotlin/net/corda/testing/node/CustomNotaryTest.kt)
+[CustomNotaryTest.kt](https://github.com/corda/corda/blob/release/os/4.6/testing/node-driver/src/test/kotlin/net/corda/testing/node/CustomNotaryTest.kt)
 
 After this, your custom notary will be the default notary on the mock network, and can be used in the same way as described in [Writing flow tests](flow-testing.md).
 

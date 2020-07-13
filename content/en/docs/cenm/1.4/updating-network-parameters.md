@@ -3,9 +3,9 @@ aliases:
 - /updating-network-parameters.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-3:
-    identifier: cenm-1-3-updating-network-parameters
-    parent: cenm-1-3-operations
+  cenm-1-4:
+    identifier: cenm-1-4-updating-network-parameters
+    parent: cenm-1-4-operations
     weight: 160
 tags:
 - updating
@@ -58,7 +58,7 @@ the time (in ISO-8601 format) by which all nodes in the network must decide that
 A Flag Day cannot be issued *before* the `updateDeadline` has passed, so make sure to set the right `updateDeadline` time.
 
 {{< note >}}
-Currently you can only make backward-compatible changes to the network parameters. For example, you cannot remove notaries 
+Currently you can only make backward-compatible changes to the network parameters. For example, you cannot remove notaries
 (they will be always added to the existing list), you can only increase the max transaction size, and so on.
 {{< /note >}}
 
@@ -112,7 +112,7 @@ cenm signer netmap netparams update status --network-params-hash <parameters upd
 ## Execute network parameters update
 
 Once the `updateDeadline` has passed, you can issue a Flag Day. This is the act of changing the active network
-parameters to be the parameters advertised in step 2. To do so, use the following 
+parameters to be the parameters advertised in step 2. To do so, use the following
 command:
 
 ```bash
@@ -129,7 +129,7 @@ Corda 4.6 does not support hotswapping of Network Parameters within a node. As a
 
 ## Sign the network map
 
-As with signing the network parameters, you should run the high security commands listed below 
+As with signing the network parameters, you should run the high security commands listed below
 from within the same network as the Signing Service:
 
 * Fetch the unsigned Network Map - command: `cenm signer netmap unsigned`.

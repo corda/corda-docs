@@ -1,9 +1,9 @@
 ---
 date: '2020-06-17T12:00:00Z'
 menu:
-  corda-enterprise-4-5:
-    identifier: corda-enterprise-4-5-operations-guide-deployment-notary
-    parent: corda-enterprise-4-5-operations-guide-deployment
+  corda-enterprise-4-6:
+    identifier: corda-enterprise-4-6-operations-guide-deployment-notary
+    parent: corda-enterprise-4-6-operations-guide-deployment
     name: "Notary deployment"
 tags:
 - operations
@@ -97,7 +97,7 @@ notary {
 
 
 
-[dbm.conf](https://github.com/corda/enterprise/blob/release/ent/4.5/docs/source/notary/resources/dbm.conf) | ![github](/images/svg/github.svg "github")
+[dbm.conf](https://github.com/corda/enterprise/blob/release/ent/4.6/docs/source/notary/resources/dbm.conf) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 

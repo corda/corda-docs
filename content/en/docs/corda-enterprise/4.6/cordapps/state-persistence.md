@@ -1,10 +1,10 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-5:
-    identifier: corda-enterprise-4-5-cordapps-states-persistence
+  corda-enterprise-4-6:
+    identifier: corda-enterprise-4-6-cordapps-states-persistence
     name: "State persistence"
-    parent: corda-enterprise-4-5-cordapps-states
+    parent: corda-enterprise-4-6-cordapps-states
 tags:
 - state
 - persistence
@@ -549,7 +549,7 @@ object CustomVaultQuery {
 
 ```
 
-[CustomVaultQuery.kt](https://github.com/corda/enterprise/blob/release/ent/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/vault/CustomVaultQuery.kt)
+[CustomVaultQuery.kt](https://github.com/corda/enterprise/blob/release/ent/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/vault/CustomVaultQuery.kt)
 
 which is then referenced within a custom flow:
 
@@ -578,7 +578,7 @@ override fun call(): List<SignedTransaction> {
 }
 ```
 
-[CustomVaultQuery.kt](https://github.com/corda/enterprise/blob/release/ent/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/vault/CustomVaultQuery.kt)
+[CustomVaultQuery.kt](https://github.com/corda/enterprise/blob/release/ent/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/vault/CustomVaultQuery.kt)
 
 For examples on testing `@CordaService` implementations, see the oracle example here.
 

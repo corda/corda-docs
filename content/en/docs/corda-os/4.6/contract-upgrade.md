@@ -5,9 +5,9 @@ aliases:
 - /contract-upgrade.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-contract-upgrade
-    parent: corda-os-4-5-tutorials-index
+  corda-os-4-6:
+    identifier: corda-os-4-6-contract-upgrade
+    parent: corda-os-4-6-tutorials-index
     weight: 1060
 tags:
 - contract
@@ -72,7 +72,7 @@ class Authorise(
 
 ```
 
-[ContractUpgradeFlow.kt](https://github.com/corda/corda/blob/release/os/4.5/core/src/main/kotlin/net/corda/core/flows/ContractUpgradeFlow.kt)
+[ContractUpgradeFlow.kt](https://github.com/corda/corda/blob/release/os/4.6/core/src/main/kotlin/net/corda/core/flows/ContractUpgradeFlow.kt)
 
 ```kotlin
 @StartableByRPC
@@ -82,7 +82,7 @@ class Deauthorise(val stateRef: StateRef) : FlowLogic<Void?>() {
 
 ```
 
-[ContractUpgradeFlow.kt](https://github.com/corda/corda/blob/release/os/4.5/core/src/main/kotlin/net/corda/core/flows/ContractUpgradeFlow.kt)
+[ContractUpgradeFlow.kt](https://github.com/corda/corda/blob/release/os/4.6/core/src/main/kotlin/net/corda/core/flows/ContractUpgradeFlow.kt)
 
 
 ## Proposing an upgrade
@@ -161,7 +161,7 @@ class DummyContractV2 : UpgradedContractWithLegacyConstraint<DummyContract.State
 
 ```
 
-[DummyContractV2.kt](https://github.com/corda/corda/blob/release/os/4.5/testing/test-utils/src/main/kotlin/net/corda/testing/contracts/DummyContractV2.kt)
+[DummyContractV2.kt](https://github.com/corda/corda/blob/release/os/4.6/testing/test-utils/src/main/kotlin/net/corda/testing/contracts/DummyContractV2.kt)
 
 
 * Bank A instructs its node to accept the contract upgrade to `DummyContractV2` for the contract state.

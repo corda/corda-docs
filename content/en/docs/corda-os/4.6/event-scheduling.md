@@ -5,9 +5,9 @@ aliases:
 - /event-scheduling.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-event-scheduling
-    parent: corda-os-4-5-tutorials-index
+  corda-os-4-6:
+    identifier: corda-os-4-6-event-scheduling
+    parent: corda-os-4-6-tutorials-index
     weight: 1160
 tags:
 - event
@@ -99,7 +99,7 @@ override fun nextScheduledActivity(thisStateRef: StateRef, flowLogicRefFactory: 
 
 
 
-[IRS.kt](https://github.com/corda/corda/blob/release/os/4.5/samples/irs-demo/cordapp/contracts-irs/src/main/kotlin/net/corda/irs/contract/IRS.kt) | ![github](/images/svg/github.svg "github")
+[IRS.kt](https://github.com/corda/corda/blob/release/os/4.6/samples/irs-demo/cordapp/contracts-irs/src/main/kotlin/net/corda/irs/contract/IRS.kt) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 

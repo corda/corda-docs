@@ -3,9 +3,9 @@ aliases:
 - /enm-with-ssl.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-3:
-    identifier: cenm-1-3-enm-with-ssl
-    parent: cenm-1-3-configuration
+  cenm-1-4:
+    identifier: cenm-1-4-enm-with-ssl
+    parent: cenm-1-4-configuration
     weight: 250
 tags:
 - enm

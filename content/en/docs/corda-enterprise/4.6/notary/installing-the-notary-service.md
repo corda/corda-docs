@@ -1,8 +1,8 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-5:
-    parent: corda-enterprise-4-5-corda-nodes-notary-config
+  corda-enterprise-4-6:
+    parent: corda-enterprise-4-6-corda-nodes-notary-config
 tags:
 - installing
 - notary
@@ -92,7 +92,7 @@ jarDirs = [PATH_TO_JDBC_DRIVER_DIR]
 
 
 
-[node.conf](https://github.com/corda/enterprise/blob/release/ent/4.5/docs/source/notary/resources/node.conf) | ![github](/images/svg/github.svg "github")
+[node.conf](https://github.com/corda/enterprise/blob/release/ent/4.6/docs/source/notary/resources/node.conf) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -130,7 +130,7 @@ notary {
 
 
 
-[percona.conf](https://github.com/corda/enterprise/blob/release/ent/4.5/docs/source/notary/resources/percona.conf) | ![github](/images/svg/github.svg "github")
+[percona.conf](https://github.com/corda/enterprise/blob/release/ent/4.6/docs/source/notary/resources/percona.conf) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -175,7 +175,7 @@ dataSourceProperties = {
 }
 ```
 
-[config_obfuscator](https://github.com/corda/enterprise/blob/release/ent/4.5/docs/source/notary/resources/config_obfuscator)
+[config_obfuscator](https://github.com/corda/enterprise/blob/release/ent/4.6/docs/source/notary/resources/config_obfuscator)
 
 
 

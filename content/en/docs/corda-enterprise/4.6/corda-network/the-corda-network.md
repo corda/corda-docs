@@ -1,8 +1,8 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-5:
-    identifier: corda-enterprise-4-5-corda-network
+  corda-enterprise-4-6:
+    identifier: corda-enterprise-4-6-corda-network
     name: "Corda Network Foundation"
 title: Introduction to Corda Network
 weight: 500

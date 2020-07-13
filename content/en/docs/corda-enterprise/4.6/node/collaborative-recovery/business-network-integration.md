@@ -1,8 +1,8 @@
 ---
 date: '2020-04-24T12:00:00Z'
 menu:
-  corda-enterprise-4-5:
-    parent: corda-enterprise-4-5-corda-nodes-collaborative-recovery
+  corda-enterprise-4-6:
+    parent: corda-enterprise-4-6-corda-nodes-collaborative-recovery
 tags:
 - disaster recovery
 - collaborative recovery
@@ -86,7 +86,7 @@ After reconciling with all necessary parties, the node operator should then proc
 
             // Check that all parties you wish to reconcile with are part of the Business Network
             if (businessNetworkMembers.containsAll(reconciliationParties)) {
-                throw LedgerSyncException("Only parties in this Business Network are eligible for reconciliation.")    
+                throw LedgerSyncException("Only parties in this Business Network are eligible for reconciliation.")
             }
 
             // Initiate a subFlow to kick off reconciliation with all parties retrieved
@@ -110,7 +110,7 @@ After reconciling with all necessary parties, the node operator should then proc
 
             // Check that the counterparty is part of the Business Network
             if (!businessNetworkMembers.contains(session.counterparty)) {
-                throw LedgerSyncException("Only parties in this Business Network are eligible for reconciliation.")    
+                throw LedgerSyncException("Only parties in this Business Network are eligible for reconciliation.")
             }
 
             // Kick off the responding flow to continue to reconcile with the initiating part
@@ -210,7 +210,7 @@ For more information on this process and how it may be further configured, see t
 
             // Check that all parties you wish to reconcile with are part of the Business Network
             if (businessNetworkMembers.contains(recoveryParty)) {
-                throw AutomaticRecoveryException("Only parties in this Business Network are eligible for recovery.")    
+                throw AutomaticRecoveryException("Only parties in this Business Network are eligible for recovery.")
             }
 
             // Initiate a subFlow to kick off recovery with all Business Network members
@@ -234,7 +234,7 @@ For more information on this process and how it may be further configured, see t
 
             // Check that the counterparty is part of the Business Network
             if (!businessNetworkMembers.contains(session.counterparty)) {
-                throw AutomaticRecoveryException("Only parties in this Business Network are eligible for recovery.")    
+                throw AutomaticRecoveryException("Only parties in this Business Network are eligible for recovery.")
             }
 
             // Kick off the responding flow to continue to reconcile with the initiating part
@@ -295,7 +295,7 @@ For more information on this process and how it may be further configured, see t
 
             // Check that the party who wishes to engage in automatic recovery is part of the Business Network
             if (!businessNetworkMembers.contains(session.counterparty)) {
-                throw AutomaticRecoveryException("Only parties in this Business Network are eligible for recovery.");   
+                throw AutomaticRecoveryException("Only parties in this Business Network are eligible for recovery.");
             }
 
             // Initiate a subFlow to kick off reconciliation with all parties retrieved
@@ -332,7 +332,7 @@ to export, transfer and eventually import the missing transaction data.
 
             // Check that all parties you wish to reconcile with are part of the Business Network
             if (!businessNetworkMembers.contains(recoveryParty)) {
-                throw ManualRecoveryException("Only parties in this Business Network are eligible for recovery.")    
+                throw ManualRecoveryException("Only parties in this Business Network are eligible for recovery.")
             }
 
             // Initiate a subFlow to kick off recovery with all Business Network members
@@ -356,7 +356,7 @@ to export, transfer and eventually import the missing transaction data.
 
             // Check that the counterparty is part of the Business Network
             if (!businessNetworkMembers.contains(session.counterparty)) {
-                throw ManualRecoveryException("Only parties in this Business Network are eligible for recovery.")    
+                throw ManualRecoveryException("Only parties in this Business Network are eligible for recovery.")
             }
 
             // Kick off the responding flow to continue to reconcile with the initiating part
@@ -417,7 +417,7 @@ to export, transfer and eventually import the missing transaction data.
 
             // Check that the party who wishes to engage in automatic recovery is part of the Business Network
             if (!businessNetworkMembers.contains(session.counterparty)) {
-                throw AutomaticRecoveryException("Only parties in this Business Network are eligible for recovery.");   
+                throw AutomaticRecoveryException("Only parties in this Business Network are eligible for recovery.");
             }
 
             // Initiate a subFlow to kick off reconciliation with all parties retrieved

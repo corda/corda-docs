@@ -1,8 +1,8 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-5:
-    parent: corda-enterprise-4-5-node-serialization
+  corda-enterprise-4-6:
+    parent: corda-enterprise-4-6-node-serialization
 tags:
 - serialization
 title: Object serialization
@@ -83,7 +83,7 @@ class ExampleRPCSerializationWhitelist : SerializationWhitelist {
 
 ```
 
-[ClientRpcTutorial.kt](https://github.com/corda/enterprise/blob/release/ent/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/ClientRpcTutorial.kt)
+[ClientRpcTutorial.kt](https://github.com/corda/enterprise/blob/release/ent/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/ClientRpcTutorial.kt)
 
 {{< note >}}
 Several of the core interfaces at the heart of Corda are already annotated and so any classes that implement

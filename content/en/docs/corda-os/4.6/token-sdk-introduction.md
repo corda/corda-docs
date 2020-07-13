@@ -1,10 +1,10 @@
 ---
 date: '2020-05-10T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-token-sdk
+  corda-os-4-6:
+    identifier: corda-os-4-6-token-sdk
     name: "Tokens SDK"
-    parent: corda-os-4-5-development
+    parent: corda-os-4-6-development
 tags:
 - building
 - against

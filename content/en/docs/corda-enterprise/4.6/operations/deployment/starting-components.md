@@ -1,9 +1,9 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-5:
-    identifier: corda-enterprise-4-5-operations-guide-deployment-node-starting
-    parent: corda-enterprise-4-5-operations-guide-deployment-node
+  corda-enterprise-4-6:
+    identifier: corda-enterprise-4-6-operations-guide-deployment-node-starting
+    parent: corda-enterprise-4-6-operations-guide-deployment-node
 tags:
 - starting
 - components
@@ -30,7 +30,7 @@ The `corda-firewall.jar` is used by both Bridge and Float. The JAR file  assumes
 
 To start the Float run the following command from the Float VM:
 
-`/usr/bin/java -Xmx1024m -jar /opt/corda/corda-firewall-4.5.jar --config-file float.conf`
+`/usr/bin/java -Xmx1024m -jar /opt/corda/corda-firewall-4.6.jar --config-file float.conf`
 
 You should see the following output:
 
@@ -70,7 +70,7 @@ $ export CONFIG_OBFUSCATION_SEED=my-seed; export CONFIG_OBFUSCATION_PASSPHRASE=m
 
 To start the Bridge run the following command from the Bridge VM:
 
-`/usr/bin/java -Xmx1024m -jar /opt/corda/corda-firewall-4.5.jar`
+`/usr/bin/java -Xmx1024m -jar /opt/corda/corda-firewall-4.6.jar`
 
 You should see the following output in the Bridge:
 

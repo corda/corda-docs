@@ -5,9 +5,9 @@ aliases:
 - /writing-a-cordapp.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-writing-a-cordapp
-    parent: corda-os-4-5-building-a-cordapp-index
+  corda-os-4-6:
+    identifier: corda-os-4-6-writing-a-cordapp
+    parent: corda-os-4-6-building-a-cordapp-index
     weight: 1050
 tags:
 - cordapp
@@ -151,7 +151,7 @@ The `src` directory is structured as follows:
 Within `main`, we have the following directories:
 
 
-* `java`, which contains the source-code for our CorDapp:> 
+* `java`, which contains the source-code for our CorDapp:>
 
     * `TemplateFlow.java`, which contains a template `FlowLogic` subclass
     * `TemplateState.java`, which contains a template `ContractState` implementation
@@ -163,7 +163,7 @@ Within `main`, we have the following directories:
 
 
 
-* `resources/META-INF/services`, which contains various registries:> 
+* `resources/META-INF/services`, which contains various registries:>
 
     * `net.corda.core.serialization.SerializationWhitelist`, which registers the CorDapp’s serialisation whitelists
     * `net.corda.webserver.services.WebServerPluginRegistry`, which registers the CorDapp’s web plugins

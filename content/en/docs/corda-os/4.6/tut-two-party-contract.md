@@ -5,9 +5,9 @@ aliases:
 - /tut-two-party-contract.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-tut-two-party-contract
-    parent: corda-os-4-5-tut-two-party-introduction
+  corda-os-4-6:
+    identifier: corda-os-4-6-tut-two-party-contract
+    parent: corda-os-4-6-tut-two-party-introduction
     weight: 1010
 tags:
 - tut
@@ -203,7 +203,7 @@ public class IOUContract implements Contract {
 
 
 
-[IOUContract.kt](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/twoparty/IOUContract.kt) | [IOUContract.java](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/twoparty/IOUContract.java) | ![github](/images/svg/github.svg "github")
+[IOUContract.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/twoparty/IOUContract.kt) | [IOUContract.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/twoparty/IOUContract.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 

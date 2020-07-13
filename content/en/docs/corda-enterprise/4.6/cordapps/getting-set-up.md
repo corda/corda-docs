@@ -4,8 +4,8 @@ aliases:
 - /docs/corda-enterprise/cordapps/getting-set-up.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  corda-enterprise-4-5:
-    parent: corda-enterprise-4-5-cordapps
+  corda-enterprise-4-6:
+    parent: corda-enterprise-4-6-cordapps
 tags:
 - getting
 - set

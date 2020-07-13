@@ -5,9 +5,9 @@ aliases:
 - /serialization.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-serialization
-    parent: corda-os-4-5-serialization-index
+  corda-os-4-6:
+    identifier: corda-os-4-6-serialization
+    parent: corda-os-4-6-serialization-index
     weight: 1010
 tags:
 - serialization
@@ -88,7 +88,7 @@ class ExampleRPCSerializationWhitelist : SerializationWhitelist {
 
 ```
 
-[ClientRpcTutorial.kt](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/ClientRpcTutorial.kt)
+[ClientRpcTutorial.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/ClientRpcTutorial.kt)
 
 {{< note >}}
 Several of the core interfaces at the heart of Corda are already annotated and so any classes that implement

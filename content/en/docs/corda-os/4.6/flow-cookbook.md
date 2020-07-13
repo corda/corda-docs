@@ -5,9 +5,9 @@ aliases:
 - /flow-cookbook.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-flow-cookbook
-    parent: corda-os-4-5-building-a-cordapp-index
+  corda-os-4-6:
+    identifier: corda-os-4-6-flow-cookbook
+    parent: corda-os-4-6-building-a-cordapp-index
     weight: 1100
 tags:
 - flow
@@ -1403,7 +1403,7 @@ public class FlowCookbook {
 
 
 
-[FlowCookbook.kt](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/FlowCookbook.kt) | [FlowCookbook.java](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/java/net/corda/docs/java/FlowCookbook.java) | ![github](/images/svg/github.svg "github")
+[FlowCookbook.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/FlowCookbook.kt) | [FlowCookbook.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/java/net/corda/docs/java/FlowCookbook.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 

@@ -5,9 +5,9 @@ aliases:
 - /wire-format.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-wire-format
-    parent: corda-os-4-5-serialization-index
+  corda-os-4-6:
+    identifier: corda-os-4-6-wire-format
+    parent: corda-os-4-6-serialization-index
     weight: 1070
 tags:
 - wire
@@ -237,7 +237,7 @@ The list type will be defined as a restricted type, like so:
 * Label: NULL
 * Provides: []
 * Source: “list”
-* 
+*
 * Symbol: net.corda:2A8U5kaXW/lD5ns+l0xPFg==
 * Numeric: NULL
 

@@ -26,7 +26,7 @@ The first thing you need to do is clone a CorDapp template to modify.
 
 ## Step Two: Creating states
 
-Since the CorDapp models a car dealership network, a state must be created to represent cars. States are immutable objects representing on-ledger facts. A state might represent a physical asset like a car, or an intangible asset or agreement like an IOU. For more information on states, see the [state documentation](/docs/corda-os/4.5/key-concepts-states.md).
+Since the CorDapp models a car dealership network, a state must be created to represent cars. States are immutable objects representing on-ledger facts. A state might represent a physical asset like a car, or an intangible asset or agreement like an IOU. For more information on states, see the [state documentation](/docs/corda-os/4.6/key-concepts-states.md).
 
 * From IntelliJ expand the source files and navigate to the following state template file: `contracts > src > main > kotlin > com.template > states > TemplateState.kt`.
 * Right-click on **TemplateState.kt** in the project navigation on the left. Select **Refactor** > **Copy**.
@@ -115,7 +115,7 @@ The `CarState` definition has now been created. It lists the properties and asso
 
 ## Step Three: Creating contracts
 
-After creating a state, you must create a contract. Contracts define the rules that govern how states can be created and evolved. For example, a contract for a Cash state should check that any transaction that changes the ownership of the cash is signed by the current owner and does not create cash from thin air. To learn more about contracts, see the [contracts documentation](/docs/corda-os/4.5/key-concepts-contracts.md).
+After creating a state, you must create a contract. Contracts define the rules that govern how states can be created and evolved. For example, a contract for a Cash state should check that any transaction that changes the ownership of the cash is signed by the current owner and does not create cash from thin air. To learn more about contracts, see the [contracts documentation](/docs/corda-os/4.6/key-concepts-contracts.md).
 
 * From IntelliJ, expand the project source and navigate to: `contracts > src > main > kotlin > com > template > contracts > TemplateContract.kt`
 * Right-click on **TemplateContract.kt** in the project navigation on the left. Select **Refactor > Copy**.

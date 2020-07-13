@@ -1,8 +1,8 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-5:
-    parent: corda-enterprise-4-5-corda-nodes
+  corda-enterprise-4-6:
+    parent: corda-enterprise-4-6-corda-nodes
 tags:
 - benchmark
 - performance
@@ -278,9 +278,9 @@ because the flow checkpoint traffic is write-only under normal circumstances. In
 you must use the `useOpenSsl` option, as described in [Configuring a node](setup/corda-configuration-file.md). The JVM implementation of SSL is restricted in the
 bandwidth it can sustain over a single connection.
 
-## Comparing Corda Enterprise 4.3 vs Corda Enterprise 4.5
+## Comparing Corda Enterprise 4.3 vs Corda Enterprise 4.6
 
-This section contains a comparative analysis between Corda Enterprise 4.3 and Corda Enterprise 4.5, with a main focus on the parallelisation improvements introduced in version 4.5. The analysis also covers some of the improvements introduced in version 4.4. The features discussed are listed below:
+This section contains a comparative analysis between Corda Enterprise 4.3 and Corda Enterprise 4.6, with a main focus on the parallelisation improvements introduced in version 4.5. The analysis also covers some of the improvements introduced in version 4.4. The features discussed are listed below:
 * the batched transaction resolution, introduced in version 4.4.
 * the new Artemis tuning options (`brokerConnectionTtlCheckIntervalMs` and `journalBufferTimeout`), introduced in version 4.4.
 * the new `sendAll` API for sending messages to multiple parties in a more efficient way.

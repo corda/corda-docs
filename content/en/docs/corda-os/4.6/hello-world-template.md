@@ -5,9 +5,9 @@ aliases:
 - /hello-world-template.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-hello-world-template
-    parent: corda-os-4-5-hello-world-introduction
+  corda-os-4-6:
+    identifier: corda-os-4-6-hello-world-template
+    parent: corda-os-4-6-hello-world-introduction
     weight: 1010
 tags:
 - template

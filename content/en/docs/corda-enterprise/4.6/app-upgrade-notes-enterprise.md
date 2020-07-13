@@ -1,29 +1,29 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-5:
-    identifier: "corda-enterprise-4-5-enterprise-cordapp-upgrade"
-    name: "Upgrading a CorDapp to Corda Enterprise 4.5"
-    parent: corda-enterprise-4-5-upgrading-menu
+  corda-enterprise-4-6:
+    identifier: "corda-enterprise-4-6-enterprise-cordapp-upgrade"
+    name: "Upgrading a CorDapp to Corda Enterprise 4.6"
+    parent: corda-enterprise-4-6-upgrading-menu
 tags:
 - app
 - upgrade
 - notes
 - enterprise
-title: Upgrading CorDapps to Corda Enterprise 4.5
+title: Upgrading CorDapps to Corda Enterprise 4.6
 ---
 
 
 
 
-# Upgrading CorDapps to Corda Enterprise 4.5
+# Upgrading CorDapps to Corda Enterprise 4.6
 
 ## Upgrading from Open Source
 
 
-### Running on Corda Enterprise 4.5
+### Running on Corda Enterprise 4.6
 
-A prerequisite to upgrade to Corda Enterprise 4.5 is to ensure your CorDapp is upgraded to Open Source Corda 4.x.
+A prerequisite to upgrade to Corda Enterprise 4.6 is to ensure your CorDapp is upgraded to Open Source Corda 4.x.
 Please follow the instructions in [Upgrading CorDapps to newer Platform Versions](app-upgrade-notes.md) section to complete this initial step.
 
 There is no requirement to re-compile your CorDapp to Corda Enterprise in order to run it on Corda Enterprise. If you wish your CorDapp to
@@ -38,7 +38,7 @@ Please read [Corda and Corda Enterprise compatibility](version-compatibility.md)
 {{< /note >}}
 
 
-### Re-compiling for Corda Enterprise 4.5
+### Re-compiling for Corda Enterprise 4.6
 
 Re-compiling your CorDapp requires updating its associated Gradle build file as follows:
 

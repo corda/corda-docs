@@ -1,8 +1,8 @@
 ---
 date: '2020-06-01T12:00:00Z'
 menu:
-  corda-enterprise-4-5:
-    parent: corda-enterprise-4-5-corda-nodes-notary-operate
+  corda-enterprise-4-6:
+    parent: corda-enterprise-4-6-corda-nodes-notary-operate
 tags:
 - scaling
 - notary
@@ -28,7 +28,7 @@ The spend state audit tool is only compatible with a [high-availability implemen
 The Spent State Audit Tool is distributed with Corda Enterprise as a `.jar` file that must be run from the command line using the following command:
 
 ```
-java -jar corda-tools-notary-utilities-4.5.jar spent-state-audit <options> <state_reference>
+java -jar corda-tools-notary-utilities-4.6.jar spent-state-audit <options> <state_reference>
 ```
 
 The tool connects to the notary via RPC, and so must specify a valid RPC username and password, using the `-u` and `-p` options, unless an RPC username and password are specified in the notary worker's `node.conf` configuration file.

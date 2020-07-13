@@ -5,9 +5,9 @@ aliases:
 - /tutorial-attachments.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-tutorial-attachments
-    parent: corda-os-4-5-tutorials-index
+  corda-os-4-6:
+    identifier: corda-os-4-6-tutorial-attachments
+    parent: corda-os-4-6-tutorials-index
     weight: 1150
 tags:
 - tutorial
@@ -106,7 +106,7 @@ val complexCondition =
 
 
 
-[NodeAttachmentServiceTest.kt](https://github.com/corda/corda/blob/release/os/4.5/node/src/test/kotlin/net/corda/node/services/persistence/NodeAttachmentServiceTest.kt) | ![github](/images/svg/github.svg "github")
+[NodeAttachmentServiceTest.kt](https://github.com/corda/corda/blob/release/os/4.6/node/src/test/kotlin/net/corda/node/services/persistence/NodeAttachmentServiceTest.kt) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -192,7 +192,7 @@ fun recipient(rpc: CordaRPCOps, webPort: Int) {
 
 
 
-[AttachmentDemo.kt](https://github.com/corda/corda/blob/release/os/4.5/samples/attachment-demo/src/main/kotlin/net/corda/attachmentdemo/AttachmentDemo.kt) | ![github](/images/svg/github.svg "github")
+[AttachmentDemo.kt](https://github.com/corda/corda/blob/release/os/4.6/samples/attachment-demo/src/main/kotlin/net/corda/attachmentdemo/AttachmentDemo.kt) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -232,7 +232,7 @@ private fun sender(rpc: CordaRPCOps, inputStream: InputStream, hash: SecureHash.
 
 
 
-[AttachmentDemo.kt](https://github.com/corda/corda/blob/release/os/4.5/samples/attachment-demo/src/main/kotlin/net/corda/attachmentdemo/AttachmentDemo.kt) | ![github](/images/svg/github.svg "github")
+[AttachmentDemo.kt](https://github.com/corda/corda/blob/release/os/4.6/samples/attachment-demo/src/main/kotlin/net/corda/attachmentdemo/AttachmentDemo.kt) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 

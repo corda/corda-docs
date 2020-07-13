@@ -5,9 +5,9 @@ aliases:
 - /corda-networks-index.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-corda-networks-index
-    parent: corda-os-4-5-operations
+  corda-os-4-6:
+    identifier: corda-os-4-6-corda-networks-index
+    parent: corda-os-4-6-operations
     weight: 340
 tags:
 - corda

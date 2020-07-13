@@ -1,9 +1,9 @@
 ---
 date: '2020-01-08T09:59:25Z'
 menu:
-  corda-enterprise-4-5:
-    identifier: corda-enterprise-4-5-operations-guide-deployment-cenm-kubernetes
-    parent: corda-enterprise-4-5-operations-guide-deployment-cenm
+  corda-enterprise-4-6:
+    identifier: corda-enterprise-4-6-operations-guide-deployment-cenm-kubernetes
+    parent: corda-enterprise-4-6-operations-guide-deployment-cenm
 tags:
 - config
 - kubernetes
@@ -283,7 +283,7 @@ kubectl get pods -o wide
 You will find the truststore password in the `signer/files/pki.conf`, where the default value used in this Helm chart is `trust-store-password`.
 
 {{< note >}} For more details about joining a CENM network, see:
-[Joining an existing compatibility zone](../../../../corda-os/4.5/joining-a-compatibility-zone.md).
+[Joining an existing compatibility zone](../../../../corda-os/4.6/joining-a-compatibility-zone.md).
 {{< /note >}}
 
 ### Display logs

@@ -5,9 +5,9 @@ aliases:
 - /api-contracts.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-api-contracts
-    parent: corda-os-4-5-corda-api
+  corda-os-4-6:
+    identifier: corda-os-4-6-api-contracts
+    parent: corda-os-4-6-corda-api
     weight: 190
 tags:
 - api
@@ -60,7 +60,7 @@ interface Contract {
 
 
 
-[Structures.kt](https://github.com/corda/corda/blob/release/os/4.5/core/src/main/kotlin/net/corda/core/contracts/Structures.kt) | ![github](/images/svg/github.svg "github")
+[Structures.kt](https://github.com/corda/corda/blob/release/os/4.6/core/src/main/kotlin/net/corda/core/contracts/Structures.kt) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -170,7 +170,7 @@ The `LedgerTransaction` object passed into `verify` has the following properties
 
 
 
-[LedgerTransaction.kt](https://github.com/corda/corda/blob/release/os/4.5/core/src/main/kotlin/net/corda/core/transactions/LedgerTransaction.kt) | ![github](/images/svg/github.svg "github")
+[LedgerTransaction.kt](https://github.com/corda/corda/blob/release/os/4.6/core/src/main/kotlin/net/corda/core/transactions/LedgerTransaction.kt) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -291,7 +291,7 @@ data class CommandWithParties<out T : CommandData>(
 
 
 
-[Structures.kt](https://github.com/corda/corda/blob/release/os/4.5/core/src/main/kotlin/net/corda/core/contracts/Structures.kt) | ![github](/images/svg/github.svg "github")
+[Structures.kt](https://github.com/corda/corda/blob/release/os/4.6/core/src/main/kotlin/net/corda/core/contracts/Structures.kt) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 

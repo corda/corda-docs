@@ -1,10 +1,10 @@
 ---
 date: '2020-05-10T12:00:00Z'
 menu:
-  corda-enterprise-4-5:
-    identifier: corda-enterprise-4-5-token-sdk
+  corda-enterprise-4-6:
+    identifier: corda-enterprise-4-6-token-sdk
     name: "Tokens SDK"
-    parent: corda-enterprise-4-5-cordapps
+    parent: corda-enterprise-4-6-cordapps
 tags:
 - building
 - against
@@ -94,11 +94,11 @@ Before using the SDK to create a token, you need to have a clear understanding o
 
 ## Create tokens using the Tokens SDK
 
-When you know what kind of token you want to introduce into the network, you can start defining it. The requirements for each token depend on whether it is fungible, and whether it can evolve over time.  
+When you know what kind of token you want to introduce into the network, you can start defining it. The requirements for each token depend on whether it is fungible, and whether it can evolve over time.
 
 Use the list below to understand what needs to be included in the token you want to create.
 
-## The process of using the Tokens SDK  
+## The process of using the Tokens SDK
 
 Once you have established what type of token you want to create, you can use the Tokens SDK to perform the following key tasks:
 
@@ -148,7 +148,7 @@ data class DiamondGradingReport(
         override val linearId: UniqueIdentifier = UniqueIdentifier()
 ) : EvolvableTokenType() {
         override val maintainers: List<Party>
-            get() = listOf()             
+            get() = listOf()
         override val fractionDigits: Int
             get() = 2
 }

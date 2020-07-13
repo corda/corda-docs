@@ -5,9 +5,9 @@ aliases:
 - /tutorials-index.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-tutorials-index
-    parent: corda-os-4-5-development
+  corda-os-4-6:
+    identifier: corda-os-4-6-tutorials-index
+    parent: corda-os-4-6-development
     weight: 100
 tags:
 - tutorials

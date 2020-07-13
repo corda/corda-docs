@@ -5,9 +5,9 @@ aliases:
 - /corda-configuration-file.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-corda-configuration-file
-    parent: corda-os-4-5-corda-nodes-index
+  corda-os-4-6:
+    identifier: corda-os-4-6-corda-configuration-file
+    parent: corda-os-4-6-corda-nodes-index
     weight: 1030
 tags:
 - corda
@@ -201,7 +201,7 @@ verifierType = InMemory
 
 ```
 
-[reference.conf](https://github.com/corda/corda/blob/release/os/4.5/node/src/main/resources/reference.conf)
+[reference.conf](https://github.com/corda/corda/blob/release/os/4.6/node/src/main/resources/reference.conf)
 
 ## Configuration examples
 
@@ -232,7 +232,7 @@ devMode = true
 
 ```
 
-[example-node.conf](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/resources/example-node.conf)
+[example-node.conf](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/resources/example-node.conf)
 
 ```none
 myLegalName = "O=Notary Service,OU=corda,L=London,C=GB"
@@ -286,7 +286,7 @@ networkServices {
 
 ```
 
-[example-node-with-networkservices.conf](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/resources/example-node-with-networkservices.conf)
+[example-node-with-networkservices.conf](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/resources/example-node-with-networkservices.conf)
 
 ## Generating a public key hash
 

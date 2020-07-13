@@ -1,8 +1,8 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-5:
-    parent: corda-enterprise-4-5-corda-networks
+  corda-enterprise-4-6:
+    parent: corda-enterprise-4-6-corda-networks
 tags:
 - network
 - map
@@ -178,7 +178,7 @@ Read more about *Package ownership* here “[Package namespace ownership](../nod
 
 
 {{< note >}}
-To determine which *minimumPlatformVersion* a zone must mandate in order to permit all the features of Corda 4.5, see [Corda features and versions](../features-versions.md).
+To determine which *minimumPlatformVersion* a zone must mandate in order to permit all the features of Corda 4.6, see [Corda features and versions](../features-versions.md).
 
 {{< /note >}}
 More parameters will be added in future releases to regulate things like allowed port numbers, whether or not IPv6

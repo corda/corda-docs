@@ -5,9 +5,9 @@ aliases:
 - /contributing-flow-internals.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-contributing-flow-internals
-    parent: corda-os-4-5-contributing-index
+  corda-os-4-6:
+    identifier: corda-os-4-6-contributing-flow-internals
+    parent: corda-os-4-6-contributing-index
     weight: 1100
 tags:
 - contributing
@@ -409,7 +409,7 @@ The processing of an event consists of two steps:
 
 
 * Calculating a transition. This is the pure `StateMachineState` + `Event` -> `TransitionResult` function.
-* Executing the transition. This is done by a `TransitionExecutor`, which in turn uses an `ActionExecutor` for individual 
+* Executing the transition. This is done by a `TransitionExecutor`, which in turn uses an `ActionExecutor` for individual
 {{< warning >}}``{{< /warning >}}
 
 Action``s.
@@ -460,7 +460,7 @@ actions.add(Action.ScheduleEvent(Event.DoRemainingWork))
 
 It marks the error state as `propagating = true` and schedules a `DoRemainingWork`. The processing of that event in turn will detect
 that we are errored and propagating, and there are some errors that haven’t been propagated yet. It then propagates those errors and updates
-the “propagated index” to indicate all errors have been dealt with. Subsequent 
+the “propagated index” to indicate all errors have been dealt with. Subsequent
 {{< warning >}}``{{< /warning >}}
 
 DoRemainingWork``s will thus do nothing. However, in case

@@ -1,10 +1,10 @@
 ---
 date: '2020-06-18T12:00:00Z'
 menu:
-  corda-enterprise-4-5:
-    identifier: corda-enterprise-4-5-ops-project-planning
+  corda-enterprise-4-6:
+    identifier: corda-enterprise-4-6-ops-project-planning
     name: "Corda for project planners"
-    parent: corda-enterprise-4-5-operations-guide
+    parent: corda-enterprise-4-6-operations-guide
 tags:
 - operations
 - deployment
@@ -21,7 +21,7 @@ will play before beginning a project on Corda.
 
 ## Roles in a Corda business network
 
-Whether you are planning to build CorDapps for other organisations to use, or you are planning to take responsibility for a network as a Business Network Operator, you should get a good idea of the work and responsibilities of other enterprise users so you can see where you fit in. Keep in mind that some organisations may perform multiple roles on their network. 
+Whether you are planning to build CorDapps for other organisations to use, or you are planning to take responsibility for a network as a Business Network Operator, you should get a good idea of the work and responsibilities of other enterprise users so you can see where you fit in. Keep in mind that some organisations may perform multiple roles on their network.
 
 ### CorDapp Developer
 

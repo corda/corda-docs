@@ -1,8 +1,8 @@
 ---
 date: '2020-05-10T12:00:00Z'
 menu:
-  corda-os-4-5:
-    parent: corda-os-4-5-token-sdk
+  corda-os-4-6:
+    parent: corda-os-4-6-token-sdk
 weight: 100
 tags:
 - Tokens SDK
@@ -145,7 +145,7 @@ You can create a flow for redeeming tokens using `LocalTokenSelection` in a simi
 
 1. Choose states that cover the required amount.
 
-2. Create exit states and get possible change outputs.  
+2. Create exit states and get possible change outputs.
 
 3. Call the subflow to redeem states with the issuer.
 

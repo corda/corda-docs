@@ -5,9 +5,9 @@ aliases:
 - /node-upgrade-notes.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-node-upgrade-notes
-    parent: corda-os-4-5-upgrading
+  corda-os-4-6:
+    identifier: corda-os-4-6-node-upgrade-notes
+    parent: corda-os-4-6-upgrading
     weight: 30
 tags:
 - node

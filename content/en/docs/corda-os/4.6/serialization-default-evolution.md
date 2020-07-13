@@ -5,9 +5,9 @@ aliases:
 - /serialization-default-evolution.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-serialization-default-evolution
-    parent: corda-os-4-5-serialization-index
+  corda-os-4-6:
+    identifier: corda-os-4-6-serialization-default-evolution
+    parent: corda-os-4-6-serialization-index
     weight: 1030
 tags:
 - serialization

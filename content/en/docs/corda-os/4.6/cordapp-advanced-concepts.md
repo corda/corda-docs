@@ -5,9 +5,9 @@ aliases:
 - /cordapp-advanced-concepts.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-cordapp-advanced-concepts
-    parent: corda-os-4-5-development
+  corda-os-4-6:
+    identifier: corda-os-4-6-cordapp-advanced-concepts
+    parent: corda-os-4-6-development
     weight: 160
 tags:
 - cordapp
@@ -100,7 +100,7 @@ verify the transaction as two attachment IDs - which are SHA-256 hashes of the a
 {{< note >}}
 The attachment ID is a cryptographic hash of a file. Any node calculates this hash when it downloads the file from a peer (during transaction resolution) or from
 another source, and thus knows that it is the exact file that any other party verifying this transaction will use. In the current version of
-Corda - 4.5 , nodes won’t load JARs downloaded from a peer into a classloader. This is a temporary security measure until we integrate the
+Corda, nodes won’t load JARs downloaded from a peer into a classloader. This is a temporary security measure until we integrate the
 Deterministic JVM Sandbox, which will be able to isolate network loaded code from sensitive data.
 
 {{< /note >}}

@@ -5,9 +5,9 @@ aliases:
 - /api-core-types.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-api-core-types
-    parent: corda-os-4-5-corda-api
+  corda-os-4-6:
+    identifier: corda-os-4-6-api-core-types
+    parent: corda-os-4-6-corda-api
     weight: 210
 tags:
 - api
@@ -44,7 +44,7 @@ interface NamedByHash {
 
 
 
-[Structures.kt](https://github.com/corda/corda/blob/release/os/4.5/core/src/main/kotlin/net/corda/core/contracts/Structures.kt) | ![github](/images/svg/github.svg "github")
+[Structures.kt](https://github.com/corda/corda/blob/release/os/4.6/core/src/main/kotlin/net/corda/core/contracts/Structures.kt) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 

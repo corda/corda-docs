@@ -5,9 +5,9 @@ aliases:
 - /docker-image.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-docker-image
-    parent: corda-os-4-5-operations
+  corda-os-4-6:
+    identifier: corda-os-4-6-docker-image
+    parent: corda-os-4-6-operations
     weight: 350
 tags:
 - docker

@@ -5,9 +5,9 @@ aliases:
 - /upgrading-cordapps.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-upgrading-cordapps
-    parent: corda-os-4-5-versioning-and-upgrades
+  corda-os-4-6:
+    identifier: corda-os-4-6-upgrading-cordapps
+    parent: corda-os-4-6-versioning-and-upgrades
     weight: 1030
 tags:
 - upgrading
@@ -339,7 +339,7 @@ There are two types of contract/state upgrade:
 * *Explicit:* By creating a special *contract upgrade transaction* and getting all participants of a state to sign it using the
 contract upgrade flows.
 
-The general recommendation for Corda 4.5 is to use **implicit** upgrades for the reasons described [here](api-contract-constraints.md#implicit-vs-explicit-upgrades).
+The general recommendation for Corda 4.6 is to use **implicit** upgrades for the reasons described [here](api-contract-constraints.md#implicit-vs-explicit-upgrades).
 
 
 

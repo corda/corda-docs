@@ -5,9 +5,9 @@ aliases:
 - /key-concepts.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-key-concepts
-    parent: corda-os-4-5-development
+  corda-os-4-6:
+    identifier: corda-os-4-6-key-concepts
+    parent: corda-os-4-6-development
     weight: 80
 tags:
 - concepts

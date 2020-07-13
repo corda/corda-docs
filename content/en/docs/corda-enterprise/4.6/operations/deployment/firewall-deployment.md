@@ -1,9 +1,9 @@
 ---
 date: '2020-06-16T12:00:00Z'
 menu:
-  corda-enterprise-4-5:
-    identifier: corda-enterprise-4-5-operations-guide-deployment-firewall
-    parent: corda-enterprise-4-5-operations-guide-deployment
+  corda-enterprise-4-6:
+    identifier: corda-enterprise-4-6-operations-guide-deployment-firewall
+    parent: corda-enterprise-4-6-operations-guide-deployment
     name: "Firewall deployment"
 tags:
 - operations
@@ -80,7 +80,7 @@ silencedIPs = []
 useProxyForCrls = true
 ```
 
-[firewalldefault_latest.conf](https://github.com/corda/enterprise/blob/release/ent/4.5/bridge/src/main/resources/firewalldefault_latest.conf)
+[firewalldefault_latest.conf](https://github.com/corda/enterprise/blob/release/ent/4.6/bridge/src/main/resources/firewalldefault_latest.conf)
 
 
 ## Firewall operating modes

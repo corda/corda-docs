@@ -5,9 +5,9 @@ aliases:
 - /contributing.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-contributing
-    parent: corda-os-4-5-contributing-index
+  corda-os-4-6:
+    identifier: corda-os-4-6-contributing
+    parent: corda-os-4-6-contributing-index
     weight: 1020
 tags:
 - contributing

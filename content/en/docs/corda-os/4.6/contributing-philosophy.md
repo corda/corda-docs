@@ -5,9 +5,9 @@ aliases:
 - /contributing-philosophy.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-contributing-philosophy
-    parent: corda-os-4-5-contributing-index
+  corda-os-4-6:
+    identifier: corda-os-4-6-contributing-philosophy
+    parent: corda-os-4-6-contributing-index
     weight: 1010
 tags:
 - contributing
@@ -36,7 +36,7 @@ The project is supported and maintained by [R3](https://www.r3.com).
 The Corda maintainers, developers and extended community make active use of the following channels:
 
 
-* The [Corda Slack team](http://slack.corda.net/) for general community discussion, and in particular:> 
+* The [Corda Slack team](http://slack.corda.net/) for general community discussion, and in particular:>
 
     * The `#contributing` channel for discussions around contributing
     * The `#design` channel for discussions around the platform’s design
@@ -66,7 +66,7 @@ merged; they are held to the same standard as all other contributions. The commu
 Current community maintainers:
 
 
-* [Rick Parker](https://github.com/rick-r3) - Contact me:> 
+* [Rick Parker](https://github.com/rick-r3) - Contact me:>
 
     * On the [Corda Slack team](http://slack.corda.net/), either in the `#community` channel or by direct message using the handle
 `@parkri`

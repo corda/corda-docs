@@ -5,9 +5,9 @@ aliases:
 - /cordapp-build-systems.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-cordapp-build-systems
-    parent: corda-os-4-5-building-a-cordapp-index
+  corda-os-4-6:
+    identifier: corda-os-4-6-cordapp-build-systems
+    parent: corda-os-4-6-building-a-cordapp-index
     weight: 1060
 tags:
 - cordapp
@@ -79,7 +79,7 @@ Corda you’re developing against:
 The current versions used are as follows:
 
 ```groovy
-ext.corda_release_version = '4.5'
+ext.corda_release_version = '4.6'
 ext.corda_gradle_plugins_version = '5.0.6'
 ext.quasar_version = '0.7.12_r3'
 ext.kotlin_version = '1.2.71'
@@ -425,7 +425,7 @@ class GetStringConfigFlow(private val configKey: String) : FlowLogic<String>() {
 
 ```
 
-[GetStringConfigFlow.kt](https://github.com/corda/corda/blob/release/os/4.5/samples/cordapp-configuration/workflows/src/main/kotlin/net/corda/configsample/GetStringConfigFlow.kt)
+[GetStringConfigFlow.kt](https://github.com/corda/corda/blob/release/os/4.6/samples/cordapp-configuration/workflows/src/main/kotlin/net/corda/configsample/GetStringConfigFlow.kt)
 
 
 ### Using CorDapp configuration with the deployNodes task
@@ -470,7 +470,7 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['jar']) {
 ```
 
 There is an example project that demonstrates this in the `samples` folder of the Corda Git repository, called `cordapp-configuration` .
-API documentation can be found at [api/kotlin/corda/net.corda.core.cordapp/index.html](https://api.corda.net/api/corda-os/4.5/html/api/kotlin/corda/net.corda.core.cordapp/index.html).
+API documentation can be found at [api/kotlin/corda/net.corda.core.cordapp/index.html](https://api.corda.net/api/corda-os/4.6/html/api/kotlin/corda/net.corda.core.cordapp/index.html).
 
 
 ## Minimum and target platform version

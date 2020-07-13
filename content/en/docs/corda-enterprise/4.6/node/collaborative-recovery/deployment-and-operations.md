@@ -1,8 +1,8 @@
 ---
 date: '2020-04-24T12:00:00Z'
 menu:
-  corda-enterprise-4-5:
-    parent: corda-enterprise-4-5-corda-nodes-collaborative-recovery
+  corda-enterprise-4-6:
+    parent: corda-enterprise-4-6-corda-nodes-collaborative-recovery
 tags:
 - disaster recovery
 - collaborative recovery
@@ -110,7 +110,7 @@ If you have not been able to use synchronous replication:
 
 * After recovering from a backup/asynchronous replica, some of the flow checkpoints may be stale, and resuming them might cause disruption.
 * In an ideal scenario, all flow checkpoints should be cleaned out manually before starting the node. You can do this using [Corda checkpoint tooling](../../checkpoint-tooling.html).
-* Message queue files should also be cleaned manually, as they are unlikely to match the contents of the database anymore, especially when restoring from a backup.  
+* Message queue files should also be cleaned manually, as they are unlikely to match the contents of the database anymore, especially when restoring from a backup.
 * After the node has been started, you should run [LedgerSync](ledger-sync) to check whether the ledger is missing any transactions.
 
 ### What to do if ledger inconsistencies are detected

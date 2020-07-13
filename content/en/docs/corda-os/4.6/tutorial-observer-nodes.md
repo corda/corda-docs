@@ -5,9 +5,9 @@ aliases:
 - /tutorial-observer-nodes.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-tutorial-observer-nodes
-    parent: corda-os-4-5-tutorials-index
+  corda-os-4-6:
+    identifier: corda-os-4-6-tutorial-observer-nodes
+    parent: corda-os-4-6-tutorials-index
     weight: 1170
 tags:
 - tutorial
@@ -73,7 +73,7 @@ Just define a new flow that wraps the SendTransactionFlow/ReceiveTransactionFlow
 
 
 
-[AutoOfferFlow.kt](https://github.com/corda/corda/blob/release/os/4.5/samples/irs-demo/cordapp/workflows-irs/src/main/kotlin/net.corda.irs/flows/AutoOfferFlow.kt) | ![github](/images/svg/github.svg "github")
+[AutoOfferFlow.kt](https://github.com/corda/corda/blob/release/os/4.6/samples/irs-demo/cordapp/workflows-irs/src/main/kotlin/net.corda.irs/flows/AutoOfferFlow.kt) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 

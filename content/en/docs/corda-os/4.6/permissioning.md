@@ -5,9 +5,9 @@ aliases:
 - /permissioning.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-permissioning
-    parent: corda-os-4-5-corda-networks-index
+  corda-os-4-6:
+    identifier: corda-os-4-6-permissioning
+    parent: corda-os-4-6-corda-networks-index
     weight: 1020
 tags:
 - permissioning
@@ -70,7 +70,7 @@ The key pairs and certificates must obey the following restrictions:
 
 * The certificates must follow the [X.509v3 standard](https://tools.ietf.org/html/rfc5280)
 * The TLS certificates must follow the [TLS v1.2 standard](https://tools.ietf.org/html/rfc5246)
-* The root network CA, doorman CA, and node CA keys, as well as the node TLS keys, must follow one of the following schemes:> 
+* The root network CA, doorman CA, and node CA keys, as well as the node TLS keys, must follow one of the following schemes:>
 
 * ECDSA using the NIST P-256 curve (secp256r1)
 * ECDSA using the Koblitz k1 curve (secp256k1)

@@ -5,9 +5,9 @@ aliases:
 - /hello-world-state.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-hello-world-state
-    parent: corda-os-4-5-hello-world-introduction
+  corda-os-4-6:
+    identifier: corda-os-4-6-hello-world-state
+    parent: corda-os-4-6-hello-world-introduction
     weight: 1020
 tags:
 - state
@@ -139,7 +139,7 @@ public class IOUState implements ContractState {
 
 
 
-[IOUState.kt](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/helloworld/IOUState.kt) | [IOUState.java](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/helloworld/IOUState.java) | ![github](/images/svg/github.svg "github")
+[IOUState.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/helloworld/IOUState.kt) | [IOUState.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/helloworld/IOUState.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 

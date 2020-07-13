@@ -1,8 +1,8 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-5:
-    parent: corda-enterprise-4-5-cordapps-flows
+  corda-enterprise-4-6:
+    parent: corda-enterprise-4-6-cordapps-flows
 tags:
 - flow
 - state
@@ -175,7 +175,7 @@ object TwoPartyTradeFlow {
 
 
 
-[TutorialFlowStateMachines.kt](https://github.com/corda/enterprise/blob/release/ent/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/flowstatemachines/TutorialFlowStateMachines.kt) | ![github](/images/svg/github.svg "github")
+[TutorialFlowStateMachines.kt](https://github.com/corda/enterprise/blob/release/ent/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/flowstatemachines/TutorialFlowStateMachines.kt) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 

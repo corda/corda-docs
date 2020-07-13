@@ -5,9 +5,9 @@ aliases:
 - /blob-inspector.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-blob-inspector
-    parent: corda-os-4-5-serialization-index
+  corda-os-4-6:
+    identifier: corda-os-4-6-blob-inspector
+    parent: corda-os-4-6-serialization-index
     weight: 1060
 tags:
 - blob
@@ -23,7 +23,7 @@ disadvantage is the inability to view the contents in a human-friendly manner. T
 this issue by allowing the contents of a binary blob file (or URL end-point) to be output in either YAML or JSON. It
 uses `JacksonSupport` to do this (see [JSON](json.md)).
 
-The tool is distributed as part of Corda OS 4.5 in the form of runnable `.jar.` file - `corda-tools-blob-inspector-4.5.jar`.
+The tool is distributed as part of Corda OS 4.6 in the form of runnable `.jar.` file - `corda-tools-blob-inspector-4.6.jar`.
 
 To run simply pass in the file or URL as the first parameter:
 

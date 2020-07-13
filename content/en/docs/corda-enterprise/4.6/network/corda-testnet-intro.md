@@ -1,10 +1,10 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-5:
-    identifier: corda-enterprise-4-5-corda-networks-testnet
+  corda-enterprise-4-6:
+    identifier: corda-enterprise-4-6-corda-networks-testnet
     name: "Corda Testnet"
-    parent: corda-enterprise-4-5-corda-networks
+    parent: corda-enterprise-4-6-corda-networks
 tags:
 - corda
 - testnet

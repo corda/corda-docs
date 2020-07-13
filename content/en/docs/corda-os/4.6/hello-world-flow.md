@@ -5,9 +5,9 @@ aliases:
 - /hello-world-flow.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-hello-world-flow
-    parent: corda-os-4-5-hello-world-introduction
+  corda-os-4-6:
+    identifier: corda-os-4-6-hello-world-flow
+    parent: corda-os-4-6-hello-world-introduction
     weight: 1030
 tags:
 - flow
@@ -188,7 +188,7 @@ public class IOUFlow extends FlowLogic<Void> {
 
 
 
-[IOUFlow.kt](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/helloworld/IOUFlow.kt) | [IOUFlow.java](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/helloworld/IOUFlow.java) | ![github](/images/svg/github.svg "github")
+[IOUFlow.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/helloworld/IOUFlow.kt) | [IOUFlow.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/helloworld/IOUFlow.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -351,7 +351,7 @@ public class IOUFlowResponder extends FlowLogic<Void> {
 
 
 
-[IOUFlowResponder.kt](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/helloworld/IOUFlowResponder.kt) | [IOUFlowResponder.java](https://github.com/corda/corda/blob/release/os/4.5/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/helloworld/IOUFlowResponder.java) | ![github](/images/svg/github.svg "github")
+[IOUFlowResponder.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/helloworld/IOUFlowResponder.kt) | [IOUFlowResponder.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/helloworld/IOUFlowResponder.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 

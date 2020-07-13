@@ -1,10 +1,10 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-5:
-    identifier: corda-enterprise-4-5-cordapps-debugging
+  corda-enterprise-4-6:
+    identifier: corda-enterprise-4-6-cordapps-debugging
     name: "Debugging and testing CorDapps"
-    parent: corda-enterprise-4-5-cordapps
+    parent: corda-enterprise-4-6-cordapps
 tags:
 - debugging
 - cordapp

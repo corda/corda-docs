@@ -1,9 +1,9 @@
 ---
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-3:
-    identifier: cenm-1-3-identity-manager
-    parent: cenm-1-3-operations
+  cenm-1-4:
+    identifier: cenm-1-4-identity-manager
+    parent: cenm-1-4-operations
     weight: 130
 tags:
 - identity

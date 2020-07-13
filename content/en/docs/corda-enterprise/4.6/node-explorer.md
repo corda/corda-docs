@@ -1,8 +1,8 @@
 ---
 date: '2020-01-08T09:59:25Z'
 menu:
-  corda-enterprise-4-5:
-    parent: corda-enterprise-4-5-corda-nodes-operating
+  corda-enterprise-4-6:
+    parent: corda-enterprise-4-6-corda-nodes-operating
 tags:
 - node
 - explorer

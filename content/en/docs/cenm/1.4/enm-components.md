@@ -3,9 +3,9 @@ aliases:
 - /enm-components.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-3:
-    identifier: cenm-1-3-enm-components
-    parent: cenm-1-3-concepts-and-overview
+  cenm-1-4:
+    identifier: cenm-1-4-enm-components
+    parent: cenm-1-4-concepts-and-overview
     weight: 30
 tags:
 - enm

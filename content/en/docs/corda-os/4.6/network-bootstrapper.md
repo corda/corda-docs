@@ -5,9 +5,9 @@ aliases:
 - /network-bootstrapper.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-network-bootstrapper
-    parent: corda-os-4-5-tools-index
+  corda-os-4-6:
+    identifier: corda-os-4-6-network-bootstrapper
+    parent: corda-os-4-6-tools-index
     weight: 1020
 tags:
 - network
@@ -46,7 +46,7 @@ The Corda Network Bootstrapper can be downloaded from [here](https://software.r3
 Create a directory containing a node config file, ending in “_node.conf”, for each node you want to create. “devMode” must be set to true. Then run the
 following command:
 
-`java -jar network-bootstrapper-4.5.jar --dir <nodes-root-dir>`
+`java -jar network-bootstrapper-4.6.jar --dir <nodes-root-dir>`
 
 For example running the command on a directory containing these files:
 
@@ -172,7 +172,7 @@ can use the Network Bootstrapper on the following network structure:
 
 Then run the Network Bootstrapper again from the root dir:
 
-`java -jar network-bootstrapper-4.5.jar --dir <nodes-root-dir>`
+`java -jar network-bootstrapper-4.6.jar --dir <nodes-root-dir>`
 
 Which will give the following:
 
@@ -244,7 +244,7 @@ For example, with the following pre-generated network:
 
 Then run the Network Bootstrapper again from the root dir:
 
-`java -jar network-bootstrapper-4.5.jar --dir <nodes-root-dir>`
+`java -jar network-bootstrapper-4.6.jar --dir <nodes-root-dir>`
 
 To give the following:
 
@@ -293,11 +293,11 @@ be used to override the default network parameters. See [Command line options](#
 
 You can provide a network parameters overrides file using the following syntax:
 
-`java -jar network-bootstrapper-4.5.jar --network-parameter-overrides=<path_to_file>`
+`java -jar network-bootstrapper-4.6.jar --network-parameter-overrides=<path_to_file>`
 
 Or alternatively, by using the short form version:
 
-`java -jar network-bootstrapper-4.5.jar -n=<path_to_file>`
+`java -jar network-bootstrapper-4.6.jar -n=<path_to_file>`
 
 The network parameter overrides file is a HOCON file with the following fields, all of which are optional. Any field that is not provided will be
 ignored. If a field is not provided and you are bootstrapping a new network, a sensible default value will be used. If a field is not provided and you
@@ -311,42 +311,42 @@ variable `KEY_STORE_PASSWORD`. See: corda-configuration-hiding-sensitive-data .
 The available configuration fields are listed below:
 
 
-* **minimumPlatformVersion**: 
+* **minimumPlatformVersion**:
 The minimum supported version of the Corda platform that is required for nodes in the network.
 
 
-* **maxMessageSize**: 
+* **maxMessageSize**:
 The maximum permitted message size, in bytes. This is currently ignored but will be used in a future release.
 
 
-* **maxTransactionSize**: 
+* **maxTransactionSize**:
 The maximum permitted transaction size, in bytes.
 
 
-* **eventHorizon**: 
+* **eventHorizon**:
 The time after which nodes will be removed from the network map if they have not been seen during this period. This parameter uses
 the `parse` function on the `java.time.Duration` class to interpret the data. See [here](https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html#parse-java.lang.CharSequence-)
 for information on valid inputs.
 
 
-* **packageOwnership**: 
+* **packageOwnership**:
 A list of package owners. See [Package namespace ownership](#id1) for more information. For each package owner, the following fields
 are required:
 
 
-* **packageName**: 
+* **packageName**:
 Java package name (e.g *com.my_company* ).
 
 
-* **keystore**: 
+* **keystore**:
 The path of the keystore file containing the signed certificate.
 
 
-* **keystorePassword**: 
+* **keystorePassword**:
 The password for the given keystore (not to be confused with the key password).
 
 
-* **keystoreAlias**: 
+* **keystoreAlias**:
 The alias for the name associated with the certificate to be associated with the package namespace.
 
 
@@ -389,20 +389,20 @@ The packages can be registered by supplying a network parameters override config
 For each package to be registered, the following are required:
 
 
-* **packageName**: 
+* **packageName**:
 Java package name (e.g *com.my_company* ).
 
 
-* **keystore**: 
+* **keystore**:
 The path of the keystore file containing the signed certificate. If a relative path is provided, it is assumed to be relative to the
 location of the configuration file.
 
 
-* **keystorePassword**: 
+* **keystorePassword**:
 The password for the given keystore (not to be confused with the key password).
 
 
-* **keystoreAlias**: 
+* **keystoreAlias**:
 The alias for the name associated with the certificate to be associated with the package namespace.
 
 
@@ -415,7 +415,7 @@ You can point to any existing bootstrapped corda network (this will have the eff
 
 {{< /note >}}
 
-* Create a new public key to use for signing the Java package namespace we wish to register:> 
+* Create a new public key to use for signing the Java package namespace we wish to register:>
 ```shell
 $JAVA_HOME/bin/keytool -genkeypair -keystore _teststore -storepass MyStorePassword -keyalg RSA -alias MyKeyAlias -keypass MyKeyPassword -dname "O=Alice Corp, L=Madrid, C=ES"
 ```
@@ -423,7 +423,7 @@ $JAVA_HOME/bin/keytool -genkeypair -keystore _teststore -storepass MyStorePasswo
 
 This will generate a key store file called `_teststore` in the current directory.
 
-* Create a `network-parameters.conf` file in the same directory, with the following information:> 
+* Create a `network-parameters.conf` file in the same directory, with the following information:>
 ```kotlin
 packageOwnership=[
     {
@@ -438,7 +438,7 @@ packageOwnership=[
 
 
 
-* Register the package namespace to be claimed by the public key generated above:> 
+* Register the package namespace to be claimed by the public key generated above:>
 ```shell
 # Register the Java package namespace using the Network Bootstrapper
 java -jar network-bootstrapper.jar --dir build/nodes --network-parameter-overrides=network-parameters.conf
@@ -447,7 +447,7 @@ java -jar network-bootstrapper.jar --dir build/nodes --network-parameter-overrid
 
 
 
-* To unregister the package namespace, edit the `network-parameters.conf` file to remove the package:> 
+* To unregister the package namespace, edit the `network-parameters.conf` file to remove the package:>
 ```kotlin
 packageOwnership=[]
 ```
@@ -455,7 +455,7 @@ packageOwnership=[]
 
 
 
-* Unregister the package namespace:> 
+* Unregister the package namespace:>
 ```shell
 # Unregister the Java package namespace using the Network Bootstrapper
 java -jar network-bootstrapper.jar --dir build/nodes --network-parameter-overrides=network-parameters.conf

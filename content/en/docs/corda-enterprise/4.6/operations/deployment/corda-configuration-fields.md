@@ -1,9 +1,9 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-5:
-    identifier: corda-enterprise-4-5-operations-guide-deployment-configuration-fields
-    parent: corda-enterprise-4-5-operations-guide-deployment-configuration
+  corda-enterprise-4-6:
+    identifier: corda-enterprise-4-6-operations-guide-deployment-configuration-fields
+    parent: corda-enterprise-4-6-operations-guide-deployment-configuration
 tags:
 - corda
 - configuration
@@ -22,7 +22,7 @@ The available configuration fields are listed below in alphabetic order.
 
 An array of additional host:port values, which will be included in the advertised NodeInfo in the network map in addition to the `p2pAddress`.
 Nodes can use this configuration option to advertise HA endpoints and aliases to external parties.
-0.0.0.0 is not a valid host setting since each additionalP2PAddress must be an external client address.  
+0.0.0.0 is not a valid host setting since each additionalP2PAddress must be an external client address.
 
 *Default:* empty list
 
@@ -176,7 +176,7 @@ To add additional data source properties (for a specific JDBC driver) use the ``
   * Database user.
 * `dataSource.password`
   * Database password.
-  
+
 *Default:*
 
 ```
@@ -414,7 +414,7 @@ This is useful for including JDBC drivers and the like. e.g. ``jarDirs = [ ${bas
 {{< warning >}}
  If an item in a list is overridden via an environment variable/system property, the whole list will be overridden. This mechanism should not be used for CorDapps directory.
  {{< /warning >}}
- 
+
 *Default:* not defined
 
 This property is only available for Corda distributed with Capsule. For the Corda tarball distribution this option is unavailable.
@@ -453,7 +453,7 @@ Internal option.
 **Important: Please do not change.**
 
 *Default:* true
- 
+
 ## `manAllowed`
 
 Enables the usage of the shell 'man' command. Please note it makes use of insecure APIs and should be enabled with caution.
@@ -475,7 +475,7 @@ If ``messagingServerAddress`` is specified the default assumption is that the ar
 Setting this to ``false`` overrides this behaviour and runs the artemis internally to the node, but bound to the address specified in ``messagingServerAddress``.
 This allows the address and port advertised in ``p2pAddress`` to differ from the local binding, especially if there is external remapping by firewalls, load balancers , or routing rules. Note that ``detectPublicIp`` should be set to ``false`` to ensure that no translation of the ``p2pAddress`` occurs before it is sent to the network map.
 
-0.0.0.0 is not a valid host setting since p2pAddress must be an external client address.  
+0.0.0.0 is not a valid host setting since p2pAddress must be an external client address.
 
 *Default:* not defined
 

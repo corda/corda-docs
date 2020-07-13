@@ -5,9 +5,9 @@ aliases:
 - /tut-two-party-introduction.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-tut-two-party-introduction
-    parent: corda-os-4-5-tutorials-index
+  corda-os-4-6:
+    identifier: corda-os-4-6-tut-two-party-introduction
+    parent: corda-os-4-6-tutorials-index
     weight: 1020
 tags:
 - tut

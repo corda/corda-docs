@@ -1,9 +1,9 @@
 ---
 date: '2020-06-16T12:00:00Z'
 menu:
-  corda-enterprise-4-5:
-    identifier: corda-enterprise-4-5-operations-guide-deployment-hsm
-    parent: corda-enterprise-4-5-operations-guide-deployment
+  corda-enterprise-4-6:
+    identifier: corda-enterprise-4-6-operations-guide-deployment-hsm
+    parent: corda-enterprise-4-6-operations-guide-deployment
     name: "HSM deployment"
 tags:
 - operations

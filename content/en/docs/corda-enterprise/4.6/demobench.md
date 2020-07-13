@@ -1,8 +1,8 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-5:
-    parent: corda-enterprise-4-5-cordapps-debugging
+  corda-enterprise-4-6:
+    parent: corda-enterprise-4-6-cordapps-debugging
 tags:
 - demobench
 title: DemoBench
@@ -17,7 +17,7 @@ DemoBench is a standalone desktop application that makes it easy to configure an
 
 ## Downloading
 
-Operating System specific installers are provided as part of Corda Enterprise 4.5 distribution, e.g. for Windows this will be “Corda DemoBench-4.5.exe”.
+Operating System specific installers are provided as part of Corda Enterprise distribution, e.g. for Windows this will be “Corda DemoBench-4.6.exe”.
 
 
 ## Running DemoBench

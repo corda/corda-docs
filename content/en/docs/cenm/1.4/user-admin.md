@@ -4,9 +4,9 @@ aliases:
 - /releases/release-1.2/pki-tool.html
 date: '2020-05-22T05:59:25Z'
 menu:
-  cenm-1-3:
-    identifier: cenm-1-3-user-admin-tool
-    parent: cenm-1-3-tools-index
+  cenm-1-4:
+    identifier: cenm-1-4-user-admin-tool
+    parent: cenm-1-4-tools-index
     weight: 1015
 tags:
 - users
@@ -185,7 +185,7 @@ You have made changes to your group. If you have removed a user from the group, 
 
 3. In the confirmation dialogue box, click **Yes** to confirm you want to delete the group.
 
-You have deleted a group. The users in the group are still active. Any roles you assigned at group level are no longer applied to the users who were in the group.  
+You have deleted a group. The users in the group are still active. Any roles you assigned at group level are no longer applied to the users who were in the group.
 
 ## Create a new Role
 

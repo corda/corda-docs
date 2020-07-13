@@ -1,9 +1,9 @@
 ---
 date: '2020-06-06T18:19:00Z'
 menu:
-  cenm-1-3:
-    identifier: cenm-1-3-auth
-    parent: cenm-1-3-operations
+  cenm-1-4:
+    identifier: cenm-1-4-auth
+    parent: cenm-1-4-operations
     weight: 26
 tags:
 - authentication
@@ -62,7 +62,7 @@ Environment variables:
 ### Install using the .jar file
 
 1. Add the file `accounts-application.jar` to your CENM working directory.
-2. Configure the Auth service using the command line.  
+2. Configure the Auth service using the command line.
 
 ### Prepare for configuration
 

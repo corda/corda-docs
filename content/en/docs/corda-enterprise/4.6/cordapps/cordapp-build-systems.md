@@ -1,8 +1,8 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-5:
-    parent: corda-enterprise-4-5-cordapps
+  corda-enterprise-4-6:
+    parent: corda-enterprise-4-6-cordapps
 tags:
 - cordapp
 - build
@@ -74,8 +74,8 @@ The current versions used are as follows:
 ```groovy
 ext.corda_release_distribution = 'com.r3.corda'
 ext.corda_core_release_distribution = 'net.corda'
-ext.corda_release_version = '4.5'
-ext.corda_core_release_version = '4.5'
+ext.corda_release_version = '4.6'
+ext.corda_core_release_version = '4.6'
 ext.corda_gradle_plugins_version = '5.0.6'
 ext.quasar_version = '0.7.12_r3'
 ext.kotlin_version = '1.2.71'
@@ -463,7 +463,7 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['jar']) {
 ```
 
 There is an example project that demonstrates this in the `samples` folder of the Corda Git repository, called `cordapp-configuration` .
-API documentation can be found at [api/kotlin/corda/net.corda.core.cordapp/index.html](https://api.corda.net/api/corda-enterprise/4.5/html/api/kotlin/corda/net.corda.core.cordapp/index.html).
+API documentation can be found at [api/kotlin/corda/net.corda.core.cordapp/index.html](https://api.corda.net/api/corda-enterprise/4.6/html/api/kotlin/corda/net.corda.core.cordapp/index.html).
 
 
 ## Minimum and target platform version

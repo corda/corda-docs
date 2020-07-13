@@ -1,10 +1,10 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-5:
-    identifier: corda-enterprise-4-5-contract-catalogue
+  corda-enterprise-4-6:
+    identifier: corda-enterprise-4-6-contract-catalogue
     name: "Contract catalogue"
-    parent: corda-enterprise-4-5-component-library-index
+    parent: corda-enterprise-4-6-component-library-index
 tags:
 - contract
 - catalogue

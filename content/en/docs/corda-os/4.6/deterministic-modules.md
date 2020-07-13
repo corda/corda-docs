@@ -5,9 +5,9 @@ aliases:
 - /deterministic-modules.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-deterministic-modules
-    parent: corda-os-4-5-development
+  corda-os-4-6:
+    identifier: corda-os-4-6-deterministic-modules
+    parent: corda-os-4-6-development
     weight: 430
 tags:
 - deterministic
@@ -105,7 +105,7 @@ deleted functions and properties are still present.
 
 ```
 
-[build.gradle](https://github.com/corda/corda/blob/release/os/4.5/core-deterministic/build.gradle)
+[build.gradle](https://github.com/corda/corda/blob/release/os/4.6/core-deterministic/build.gradle)
 
 This step will fail if ProGuard spots any Java API references that still cannot be satisfied by the deterministic
 `rt.jar`, and hence it will break the build.
@@ -233,7 +233,7 @@ Classes that *must* be included in the deterministic JAR should be annotated as 
 annotation class KeepForDJVM
 ```
 
-[KeepForDJVM.kt](https://github.com/corda/corda/blob/release/os/4.5/core/src/main/kotlin/net/corda/core/KeepForDJVM.kt)
+[KeepForDJVM.kt](https://github.com/corda/corda/blob/release/os/4.6/core/src/main/kotlin/net/corda/core/KeepForDJVM.kt)
 
 
 To preserve any Kotlin functions, properties or type aliases that have been declared outside of a `class`,
@@ -267,7 +267,7 @@ Elements that *must* be deleted from classes in the deterministic JAR should be 
 annotation class DeleteForDJVM
 ```
 
-[DeleteForDJVM.kt](https://github.com/corda/corda/blob/release/os/4.5/core/src/main/kotlin/net/corda/core/DeleteForDJVM.kt)
+[DeleteForDJVM.kt](https://github.com/corda/corda/blob/release/os/4.6/core/src/main/kotlin/net/corda/core/DeleteForDJVM.kt)
 
 
 You must also ensure that a deterministic class’s primary constructor does not reference any classes that are
@@ -331,7 +331,7 @@ annotation class StubOutForDJVM
 
 ```
 
-[StubOutForDJVM.kt](https://github.com/corda/corda/blob/release/os/4.5/core/src/main/kotlin/net/corda/core/StubOutForDJVM.kt)
+[StubOutForDJVM.kt](https://github.com/corda/corda/blob/release/os/4.6/core/src/main/kotlin/net/corda/core/StubOutForDJVM.kt)
 
 
 This annotation instructs `JarFilter` to replace the function’s body with either an empty body (for functions

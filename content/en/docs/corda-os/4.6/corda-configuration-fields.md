@@ -1,9 +1,9 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-corda-configuration-fields
-    parent: corda-os-4-5-corda-nodes-index
+  corda-os-4-6:
+    identifier: corda-os-4-6-corda-configuration-fields
+    parent: corda-os-4-6-corda-nodes-index
     weight: 1031
 tags:
 - corda

@@ -1,12 +1,12 @@
 ---
 aliases:
 - /cenm-cli-tool.html
-- /releases/release-1.3/cenm-cli-tool.html
+- /releases/release-1.4/cenm-cli-tool.html
 date: '2020-05-28T17:40:25Z'
 menu:
-  cenm-1-3:
-    identifier: cenm-1-3-cli-tool
-    parent: cenm-1-3-tools-index
+  cenm-1-4:
+    identifier: cenm-1-4-cli-tool
+    parent: cenm-1-4-tools-index
     weight: 1013
 tags:
 - CLI
@@ -43,7 +43,7 @@ To install using Docker:
 
 You have installed the Docker image with CENM CLI tool.
 
-To get the tool ready to use from within the Docker container, check the [Kubernetes deployment guide](deployment-kubernetes.md#network-operations).  
+To get the tool ready to use from within the Docker container, check the [Kubernetes deployment guide](deployment-kubernetes.md#network-operations).
 
 ## Set up the CENM CLI Tool
 
@@ -145,7 +145,7 @@ You can use the CLI to:
 * Update the password you use to access CENM services.
 * Set up and switch between contexts - allowing you to perform tasks across multiple servers with minimum effort to switch between them.
 * Perform tasks in Identity Manager.
-* Access the Network Map.  
+* Access the Network Map.
 * Manage zones.
 * Perform tasks in Signing Services.
 
@@ -1053,7 +1053,7 @@ Sets which subzone to operate on. If you are operating on just one subzone you d
 
 ### Advertise pending network parameter changes
 
-You can use the CLI to advertise upcoming changes to network parameters across the network.  
+You can use the CLI to advertise upcoming changes to network parameters across the network.
 
 **Sample command structure**
 
@@ -1117,7 +1117,7 @@ Sets which subzone to operate on. If you are operating on just one subzone you d
 **Options**
 
 `--accepted`
-Add this option to see a list of nodes that accepted the change. To see a list of nodes that have not yet accepted, do not include this option.  
+Add this option to see a list of nodes that accepted the change. To see a list of nodes that have not yet accepted, do not include this option.
 
 `-c, --use-context=<useContext>`
 Sets the context of the command - overrides the current context set.

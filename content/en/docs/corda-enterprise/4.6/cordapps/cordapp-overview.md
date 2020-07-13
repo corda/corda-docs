@@ -1,8 +1,8 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-5:
-    identifier: corda-enterprise-4-5-cordapps
+  corda-enterprise-4-6:
+    identifier: corda-enterprise-4-6-cordapps
     name: "Developing CorDapps"
 tags:
 - cordapp

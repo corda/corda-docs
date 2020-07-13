@@ -5,9 +5,9 @@ aliases:
 - /network-map.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-network-map
-    parent: corda-os-4-5-corda-networks-index
+  corda-os-4-6:
+    identifier: corda-os-4-6-network-map
+    parent: corda-os-4-6-corda-networks-index
     weight: 1030
 tags:
 - network
@@ -173,7 +173,7 @@ The transaction verification logic will throw an exception when this happens.
 
 
 {{< note >}}
-To determine which *minimumPlatformVersion* a zone must mandate in order to permit all the features of Corda 4.5, see [Corda Features and Versions](features-versions.md).
+To determine which *minimumPlatformVersion* a zone must mandate in order to permit all the features of Corda, see [Corda Features and Versions](features-versions.md).
 
 {{< /note >}}
 More parameters will be added in future releases to regulate things like allowed port numbers, whether or not IPv6
@@ -220,7 +220,7 @@ data class ParametersUpdateInfo(
 
 ```
 
-[CordaRPCOps.kt](https://github.com/corda/corda/blob/release/os/4.5/core/src/main/kotlin/net/corda/core/messaging/CordaRPCOps.kt)
+[CordaRPCOps.kt](https://github.com/corda/corda/blob/release/os/4.6/core/src/main/kotlin/net/corda/core/messaging/CordaRPCOps.kt)
 
 
 ### Automatic Acceptance
@@ -264,7 +264,7 @@ data class NetworkParameters(
 
 ```
 
-[NetworkParameters.kt](https://github.com/corda/corda/blob/release/os/4.5/core/src/main/kotlin/net/corda/core/node/NetworkParameters.kt)
+[NetworkParameters.kt](https://github.com/corda/corda/blob/release/os/4.6/core/src/main/kotlin/net/corda/core/node/NetworkParameters.kt)
 
 This behaviour can be turned off by setting the optional node configuration property `networkParameterAcceptanceSettings.autoAcceptEnabled`
 to `false`. For example:

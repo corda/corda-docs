@@ -1,10 +1,10 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-5:
-    identifier: "corda-enterprise-4-5-node-upgrade"
-    name: "Upgrading Nodes to Corda Enterprise 4.5"
-    parent: corda-enterprise-4-5-upgrading-menu
+  corda-enterprise-4-6:
+    identifier: "corda-enterprise-4-6-node-upgrade"
+    name: "Upgrading Nodes to Corda Enterprise 4.6"
+    parent: corda-enterprise-4-6-upgrading-menu
 tags:
 - node
 - upgrade
@@ -305,7 +305,7 @@ The option `-b` points to the base directory (with a `node.conf` file, and *driv
 Replace the `corda.jar` with the latest version of Corda.
 
 Download the latest version of Corda from [our Artifactory site](https://software.r3.com/artifactory/webapp/#/artifacts/browse/simple/General/corda/net/corda/corda-node).
-Make sure it’s available on your path, and that you’ve read the [Corda release notes](../../corda-os/4.5/release-notes.md). Pay particular attention to which version of Java this
+Make sure it’s available on your path, and that you’ve read the [Corda release notes](../../corda-os/4.6/release-notes.md). Pay particular attention to which version of Java this
 node requires.
 
 

@@ -3,9 +3,9 @@ aliases:
 - /network-map.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-3:
-    identifier: cenm-1-3-network-map
-    parent: cenm-1-3-operations
+  cenm-1-4:
+    identifier: cenm-1-4-network-map
+    parent: cenm-1-4-operations
     weight: 140
 tags:
 - network
@@ -76,7 +76,7 @@ Saved initial network parameters to be signed:
 
 ### Starting The Network Map Service
 
-Once you have set the network parameters, you can start the Network Map Service 
+Once you have set the network parameters, you can start the Network Map Service
 manually by running the following command:
 
 ```bash

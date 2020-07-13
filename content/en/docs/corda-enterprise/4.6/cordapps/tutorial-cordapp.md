@@ -8,8 +8,8 @@ aliases:
 - /docs/corda-os/tutorial-cordapp.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  corda-enterprise-4-5:
-    parent: corda-enterprise-4-5-cordapps
+  corda-enterprise-4-6:
+    parent: corda-enterprise-4-6-cordapps
 tags:
 - tutorial
 - cordapp
@@ -74,7 +74,7 @@ To open the example CorDapp in the IntelliJ IDEA:
   * In the **Project SDK** section, click **New…** > **JDK**, then select the home directory of your JDK and click **OK**.
 * Specify the following additional settings:
   * Select **Modules**, then click the **+** button located just above the `cordapp-example` folder and select **Import Module**.
-  * On the **Select File or Directory to Import** window, navigate to `samples-java\Basic\cordapp-example` and click **OK**.  
+  * On the **Select File or Directory to Import** window, navigate to `samples-java\Basic\cordapp-example` and click **OK**.
   * On the **Import Module** window, select the **Import module from external model** option, then select **Gradle** from the list of options and click **Next**.
   * Select the **Use auto-import** checkbox and click **Finish**, then click **OK**.
 
@@ -101,7 +101,7 @@ The `cordapp-example` folder is structured as follows:
 │           │               ├── MainController.java
 │           │               ├── NodeRPCConnection.java
 │           │               └── Server.java
-│           │               
+│           │  
 │           └── resources
 │               ├── application.properties
 │               └── public
@@ -112,7 +112,7 @@ The `cordapp-example` folder is structured as follows:
 │   ├── dev
 │      └── log4j2.xml
 │  
-│       
+│  
 ├── contracts-java
 │   ├── build.gradle
 │   └── src

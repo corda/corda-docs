@@ -1,8 +1,8 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-5:
-    parent: corda-enterprise-4-5-corda-nodes-operating
+  corda-enterprise-4-6:
+    parent: corda-enterprise-4-6-corda-nodes-operating
 tags:
 - node
 - flow
@@ -36,7 +36,7 @@ This concept is analogous to *exception management handling* associated with ent
 
 ## Functionality
 
-Flow hospital functionality is enabled by default in Corda Enterprise 4.5. No explicit configuration settings are required.
+Flow hospital functionality is enabled by default in Corda Enterprise 4.6. No explicit configuration settings are required.
 
 There are two aspects to the flow hospital:
 
