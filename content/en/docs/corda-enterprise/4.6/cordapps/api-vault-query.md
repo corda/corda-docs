@@ -19,7 +19,7 @@ weight: 3
 
 ## Overview
 
-Corda has been designed from the ground up to encourage usage of industry standard, proven query frameworks and libraries for accessing RDBMS backed transactional stores (including the Vault).
+Corda has been designed from the ground up to encourage the use of industry standard, proven query frameworks and libraries for accessing RDBMS backed transactional stores (including the Vault).
 
 Corda provides a number of flexible query mechanisms for accessing the Vault:
 
