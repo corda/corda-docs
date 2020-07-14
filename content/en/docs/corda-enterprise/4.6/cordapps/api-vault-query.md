@@ -253,7 +253,7 @@ Permissioning at the database level will be enforced at a later date to ensure a
 {{< /note >}}
 
 {{< note >}}
-API’s now provide ease of use calling semantics from both Java and Kotlin. However, it should be noted that Java custom queries are significantly more verbose due to the use of reflection fields to reference schema attribute types.
+APIs now provide ease of use calling semantics from both Java and Kotlin. However, it should be noted that Java custom queries are significantly more verbose due to the use of reflection fields to reference schema attribute types.
 {{< /note >}}
 
 ### Custom queries in Java
