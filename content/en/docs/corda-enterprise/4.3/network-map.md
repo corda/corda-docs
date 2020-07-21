@@ -90,7 +90,7 @@ messages separated into parallel and nested flows, which isn’t necessary for n
 
 {{< note >}}
 
-Note that only HTTP OK (response code 200) is supported - any other kind of response codes including HTTP redirects (response code 301) are not supported.
+Note that only HTTP OK (response code 200) is supported - any other kind of response codes, including HTTP redirects (for example, response code 301), are not supported.
 
 {{< /note >}}
 
