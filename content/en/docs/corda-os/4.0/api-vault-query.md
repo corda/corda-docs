@@ -955,19 +955,6 @@ recommended that the CorDapp developer utilise one of the many proven frameworks
 the box, namely, implementations of JPQL (JPA Query Language) such as Hibernate for advanced SQL access, and
 Spring Data for advanced pagination and ordering constructs.
 
-The Corda Tutorials provide examples satisfying these additional Use Cases:
-
-
-
-
-* Example CorDapp service using Vault API Custom Query to access attributes of IOU State
-* Example CorDapp service query extension executing Named Queries via [JPQL](http://docs.jboss.org/hibernate/orm/current/userguide/html_single/Hibernate_User_Guide.html#hql)
-* [Advanced pagination](https://docs.spring.io/spring-data/commons/docs/current/api/org/springframework/data/repository/PagingAndSortingRepository.html) queries using Spring Data [JPA](https://docs.spring.io/spring-data/jpa/docs/current/reference/html)
-
-
-
-
-
 
 ## Mapping owning keys to external IDs
 
