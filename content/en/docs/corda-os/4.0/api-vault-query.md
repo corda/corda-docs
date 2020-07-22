@@ -948,7 +948,7 @@ taking place in between and/or in parallel to paging requests. When using pagina
 `totalStatesAvailable` (from the `Vault.Page` result) and adjust further paging requests appropriately.
 
 
-## Other use case scenarios
+## Other use-case scenarios
 
 For advanced use cases that require sophisticated pagination, sorting, grouping, and aggregation functions, it is
 recommended that the CorDapp developer utilise one of the many proven frameworks that ship with this capability out of
