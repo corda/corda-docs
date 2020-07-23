@@ -1,8 +1,10 @@
 ---
 aliases:
-- /releases/4.1/corda-network/UAT.html
+- /releases/4.1/corda-network/uat.html
 date: '2020-01-08T09:59:25Z'
-menu: []
+menu:
+  corda-enterprise-4-1:
+    parent: corda-enterprise-4-1-the-corda-network
 tags:
 - UAT
 title: 'Corda Network: UAT environment'
@@ -174,4 +176,3 @@ Installation and configuration of your Corda applications must be undertaken by 
 Business Network Operators should co-ordinate any post-install tests that may involve a small number of low value transactions on the business network to assure themselves of the correct setup of their node. Node operators should co-ordinate with their Business Network Operator in this regard. All node-initiated activity on the network from the point of connection is the responsibility of the node operator.
 
 For further questions on this process, please contact us - preferably on the mailing list: [https://groups.io/g/corda-network](https://groups.io/g/corda-network)
-

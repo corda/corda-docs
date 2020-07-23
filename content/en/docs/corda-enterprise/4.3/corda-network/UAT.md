@@ -1,15 +1,18 @@
 ---
 aliases:
-- /releases/4.3/corda-network/UAT.html
+- /releases/4.3/corda-network/uat.html
 date: '2020-01-08T09:59:25Z'
-menu: []
+menu:
+  corda-enterprise-4-3:
+    parent: corda-enterprise-4-3-the-corda-network
 tags:
 - UAT
-title: 'Corda Network: Pre-Production environment'
+title: Corda Network Pre-Production environment
+weight: 2
 ---
 
 
-# Corda Network: Pre-Production environment
+# Corda Network Pre-Production environment
 
 Corda Network Pre-Production (or UAT) seeks to provide a test environment which is as close as possible to Corda Network in its make-up and operation.
 

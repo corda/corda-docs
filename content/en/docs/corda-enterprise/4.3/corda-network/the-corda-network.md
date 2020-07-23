@@ -1,39 +1,42 @@
 ---
 aliases:
 - /releases/4.3/corda-network/index.html
+- /docs/corda-enterprise/head/corda-network/index.html
+- /docs/corda-enterprise/corda-network/index.html
+- /docs/corda-enterprise/head/corda-network.html
+- /docs/corda-enterprise/corda-network.html
 date: '2020-01-08T09:59:25Z'
 menu:
   corda-enterprise-4-3:
-    identifier: corda-enterprise-4-3-corda-network
-    parent: corda-enterprise-4-3-miscellaneous
-    weight: 430
-title: Corda Network
+    identifier: corda-enterprise-4-3-the-corda-network      
+title: Corda Network Foundation
+weight: 430
 ---
 
 
-# Corda Network
+# Corda Network Foundation and Corda Network
 
-
-## Introduction to Corda Network
 
 [Corda Network](https://corda.network/) is a publicly-available internet of Corda nodes operated by network participants. Each
-node is identified by a certificate issued by the network’s identity service, and will also be discoverable on a network map.
+node is identified by a certificate issued by the network’s identity service, and is also discoverable on a network map.
+
+Corda Network went live in December 2018, and is currently governed by the independent, not-for-profit Corda Network Foundation. The Foundation's Board of Directors is made up of the network's initial participants in Spring 2019 and will oversee the Foundation until democratic elections are held. See the [governance model](https://corda.network/governance/governance-guidelines.html) for more detail.
+
+## Benefits of Corda Network
 
 Corda Network enables interoperability – the exchange of data or assets via a secure, efficient internet layer – in a way
 that isn’t possible with separate, isolated Corda networks. A common trust root surrounds all transactions, and a consistent set of network parameters ensures all participants may transact with each other.
-
-The network went live in December 2018, and is currently governed by an independent, not-for-profit foundation with a Board of Directors from initial participants in Spring 2019, which will oversee the foundation until democratic elections are held a year later. See the [governance model](https://corda.network/governance/governance-guidelines.html)
-for more detail.
 
 The network will support many sub-groups of participants running particular CorDapps (sometimes referred to as ‘business networks’), and these groups will often have a co-ordinating party (the ‘business network operator’) who manages the distribution of the app and rules, including membership, for its use. There is a clear separation between areas of control for the network as a whole and for individual business networks. Like the internet, Corda Network intends to exist as a background utility.
 
 The main benefit of Corda Network for participants is being able to move cash, digital assets, and identity data from one application or line of business to another. Business network operators also benefit by being able to access network-wide services, and reuse the [trust root](https://corda.network/trust-root/index.html) and network services, instead of building and managing their own.
 
-The Corda Network website has a [high level overview](https://corda.network/participation/index.html) of the joining process.
+The [Corda Network](https://corda.network/) website provides a [high-level overview](https://corda.network/participation/index.html) of the joining process.
 
 
 # Key services
 
+The roles of the individual services on Corda Network are described below.
 
 ## Identity Service
 

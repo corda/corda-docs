@@ -140,7 +140,7 @@ to all nodes in that CZ). The CZ network operator should check that the JAR is s
 From now on the development organisation that signed the JAR is responsible for signing new versions.The process of CZ network CorDapp whitelisting depends on how the Corda network is configured:>
 
 * if using a hosted CZ network (such as [The Corda Network](https://docs.corda.net/head/corda-network/index.html) or
-[UAT Environment](https://docs.corda.net/head/corda-network/UAT.html) ) running an Identity Operator (formerly known as Doorman) and
+[UAT Environment](https://docs.corda.net/head/corda-network/uat.html) ) running an Identity Operator (formerly known as Doorman) and
 Network Map Service, you should manually send the hashes of the two JARs to the CZ network operator and request these be added using
 their network parameter update process.
 * if using a local network created using the Network Bootstrapper tool, please follow the instructions in

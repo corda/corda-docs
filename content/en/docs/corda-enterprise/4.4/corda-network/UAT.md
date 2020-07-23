@@ -1,21 +1,21 @@
 ---
 aliases:
-- /releases/4.4/corda-network/UAT.html
-- /docs/corda-enterprise/head/UAT.html
-- /docs/corda-enterprise/UAT.html
+- /releases/4.4/corda-network/uat.html
+- /docs/corda-enterprise/head/uat.html
+- /docs/corda-enterprise/uat.html
 date: '2020-01-08T09:59:25Z'
 menu:
   corda-enterprise-4-4:
-    parent: corda-enterprise-4-4-miscellaneous
+    parent: corda-enterprise-4-4-the-corda-network
 tags:
 - UAT
-title: "Corda Network Pre-Production environment"
-weight: 2
+title: Corda Network Pre-Production environment
+weight: 1000
 ---
 
 # Corda Network Pre-Production environment
 
-Corda Network Pre-Production (or UAT) seeks to provide a test environment which is as close as possible to Corda Network in its make-up and operation.
+The Corda Network Pre-Production (or UAT) environment seeks to provide a test environment which is as close as possible to Corda Network in its make-up and operation.
 
 For owners of tested CorDapps with a firm plan to take them into production, a bespoke Pre-Production environment is provided. Here, such CorDapps can be further tested in the network configuration they will experience in production, utilising relevant Corda Network Services (including the Identity Operator, Network Map and notaries).
 

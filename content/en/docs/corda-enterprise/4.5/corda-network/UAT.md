@@ -11,7 +11,7 @@ weight: 2
 
 # Corda Network Pre-Production environment
 
-Corda Network Pre-Production (or UAT) seeks to provide a test environment which is as close as possible to Corda Network in its make-up and operation.
+The Corda Network Pre-Production (or UAT) environment seeks to provide a test environment which is as close as possible to Corda Network in its make-up and operation.
 
 For owners of tested CorDapps with a firm plan to take them into production, a bespoke Pre-Production environment is provided. Here, such CorDapps can be further tested in the network configuration they will experience in production, utilising relevant Corda Network Services (including the Identity Operator, Network Map and notaries).
 

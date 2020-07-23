@@ -1,6 +1,6 @@
 ---
 aliases:
-- /releases/release-V4.1/corda-network/UAT.html
+- /releases/release-V4.1/corda-network/uat.html
 date: '2020-01-08T09:59:25Z'
 menu: []
 tags:
@@ -48,4 +48,3 @@ More information about UAT will continue to be uploaded on this site or related 
 Steps to join are outlined on the [Corda Network UAT microsite](http://uat.network.r3.com/pages/joining/joining.html)
 
 For further questions on this process, please contact us - preferably on the mailing list: [https://groups.io/g/corda-network](https://groups.io/g/corda-network)
-

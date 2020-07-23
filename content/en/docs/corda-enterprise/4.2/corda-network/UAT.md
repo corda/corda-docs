@@ -1,8 +1,10 @@
 ---
 aliases:
-- /releases/4.2/corda-network/UAT.html
+- /releases/4.2/corda-network/uat.html
 date: '2020-01-08T09:59:25Z'
-menu: []
+menu:
+  corda-enterprise-4-2:
+    parent: corda-enterprise-4-2-the-corda-network
 tags:
 - UAT
 title: 'Corda Network: UAT environment'
@@ -48,4 +50,3 @@ Corda Network UAT is an R3 owned and operated environment and service designed t
 Steps to join are outlined on the [Corda Network UAT microsite](http://uat.network.r3.com/pages/joining/joining.html).
 
 For further questions on this process, please contact us - preferably on the mailing list: [https://groups.io/g/corda-network](https://groups.io/g/corda-network)
-
