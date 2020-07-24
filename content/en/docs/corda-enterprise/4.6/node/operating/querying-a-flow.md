@@ -19,62 +19,137 @@ A checkpoint is a record of flow data taken at key points during a flow's operat
 
 To query the node for flow data, you must use the [Node Shell](shell.md).
 
-## Query formatting
+You can then use the `flowStatus` query command, in combination with one or more fields, to retrieve various types of flow data from the node's checkpoints.
 
-A query contains the following elements:
-
-- A query command: `flowStatus queryFlows`.
-- One or more fields that define what data is returned from each returned checkpoint.
-
-A complete query might look like this:
-
-`checkpoint reportBy compatibleWithCurrentCordaRuntime,cordapp`
-
-In this example, only the `compatibleWithCurrentCordaRuntime` and `cordapp` data from each checkpoint will be returned.
 
 ## List all flows that have not completed
 
-You can query a node to retrieve flow data from each checkpoint about any flows that have not completed.
-
-To view a list of all flows on a node that have not completed, enter the following command:
+You can use the `flowStatus` command to return a list of all flows on a node that have not completed. To do this, run the following query:
 
 `flowStatus queryFlows`
 
-A list of all flows on the node that have not completed is returned. The list takes the following format, with the flow ID of each flow listed on a separate line:
+A list consisting of the flow IDs of all flows on the node that have not completed is returned.
+
+The flow ID belonging to each flow is listed on a separate line, as shown in the example below:
 
 ```
 5da55b82-332f-4ecd-a20c-3b02be040bb7
 4dc21e46-142g-7rbt-b56i-2k41mr701lb2
 ```
 
-You can also to return more specific information from each checkpoint.
+## List specific information about the flow
 
-**How do I write this query? What information is returned? Code samples?**
+You can define the type of data to be returned from each checkpoint by combining the `flowStatus queryFlows` query command with one of more of the fields shown in the table below.
+
+Including one or more of these fields enables you to run queries that identify flows that did not complete and where:
+
+* The flow is or is not compatible with the current Corda runtime environment.
+* The flow relates to a particular CorDapp.
+* The flow is in a particular state.
+* The flow includes a particular flow class.
+* The flow was executed within a specific time window.
+* The flow did not proceed beyond a specific progress step.
+* The flow remained stuck at a checkpoint for a particular length of time.
 
 {{< table >}}
 
 | Field name | Description | Format |
 |---------|----------|---------|---------|
-| compatibleWithCurrentCordaRuntime  |  Specifies whether the flow has been marked as being incompatible with the current Corda runtime environment. |  Boolean String  |
-| cordapp  |  The name of the CorDapp to which the flow belongs.  |  String  |  
-| flowClass  |  The name of the class that implements the flow.  |  String  |  
-| flowStartFrom  |  The start time of the time-window in which the flow was started - if not present taken to be 0 unix timestamp.  |  String [ISO8601 DateTime]  |  
-| flowStartUntil  |  The end time of the time-window in which the flow was started.  |  String [ISO8601 DateTime]  |  
-| flowState  |  The state of the flow at its latest checkpoint. The state is one of the following values: `RUNNABLE`, `FAILED`, `COMPLETED`, `HOSPITALIZED`, `KILLED`, `PAUSED`.   |  String  |  
-| progressStep  |  If the flow implements progress tracking, specifies the latest step that was encountered before checkpointing  |  String  |  
-| flowStartContext  |  Specifies the creator of the flow: RPC user, parent, or in the case of initiated flows, initiating flow ID   |  String  |  
-| suspensionDuration | Specifies the minimum duration for which a flow must have been checkpointed. This is entered in the format `\"<size>, unit\"` where unit is one of `SECONDS`, `MINUTES`, `HOURS` or `DAYS`) |  String  |  
-
+| compatibleWithCurrentCordaRuntime | Indicates whether the flow has been marked as being incompatible with the current Corda runtime environment. | Boolean String |
+| cordapp | The name of the CorDapp in which the flow is present. You do not need to enter the full name - providing a fragment of the name is sufficient. | String |  
+| flowClass | The name of the class that implements the flow. You do not need to enter the full name - providing a fragment of the name is sufficient. | String |  
+| flowStartFrom | The start time of the time-window in which the flow was started - if not present taken to be 0 UNIX timestamp. If you specify a value for `flowStartFrom` but do not specify a value for `flowStartUntil`, the query will return a list of all flows that did not complete up until the time that the query was run. | String in ISO8601 DateTime format*. |  
+| flowStartUntil | The end time of the time-window in which the flow was started. If you specify a value for `flowStartUntil` but do not specify a value for `flowStartFrom`, the query will return a list of all flows that did not complete since the node started up. | String in ISO8601 DateTime format*. |  
+| flowState | The state of the flow at its latest checkpoint. The state is one of the following values: `RUNNABLE`, `FAILED`, `COMPLETED`, `HOSPITALIZED`, `KILLED`, `PAUSED`. | String |  
+| progressStep | If the flow implements progress tracking, specifies the latest step that was encountered before checkpointing. A progressStep is a user-defined value which is defined by the CorDapp developer - you can specify the name of any progressStep defined in your CorDapp. | String |  
+| suspensionDuration | The minimum duration for which a flow must have remained suspended (that is, "stuck") at a checkpoint. This is entered in the format `"<value>, <unit>"` where <value> is a numerical value and <unit> is the unit of time, specified as `SECONDS`, `MINUTES`, `HOURS` or `DAYS`). | String |  
 {{< /table >}}
+
+/*  See example under [Sample query specifying a time-window for a flow](#sample-query-specifying-a-time-window-for-a-flow).
+
+### Constructing your query
+
+To return specific information about a flow, a query must contain the following elements:
+
+* The query command: `flowStatus queryFlows`.
+* One or more fields from the above table. These fields define the data that is returned from each checkpoint.
+
+If you run the query without including any additional fields, a list consisting only of the flow IDs of all flows on the node that have not completed is returned, as outlined under [List all flows that have not completed](#list-all-flows-that-have-not-completed).
+
+### Sample query to identify a flow in a particular state
+
+To return a list of all flows that have not completed and are in a particular state (in this example, the `HOSPITALIZED` state), run the following query:
+
+`flowStatus queryFlows flowState: HOSPITALIZED`
+
+### Sample query to identify a flow in a particular class
+
+To return a list of all flows that have not completed for the flowClass `HospitalizerFlow`, run the following query:
+
+`flowStatus queryFlows flowClass: HospitalizerFlow`
+
+### Sample query specifying a time-window for a flow
+
+When specifying time-windows, all dates and times must be specified as per the [ISO 8601 standard](https://www.iso.org/iso-8601-date-and-time-format.html/) using the following format:
+
+`yyyy-MM-ddTHH:mm:ss`
+
+For example, to specify a `flowStartFrom` time of 08:45:56 on July 21, 2020, you must enter the time in the following format:
+
+`2020-07-21T08:45:56`
+
+You can create a query for an open or closed time-window.
+
+To return a list of all flows that did not complete within a closed time-window, specify both a start and end time for the time-window as follows:
+
+ `flowStatus queryFlows flowStartFrom: 2020-05-16T09:30:00 flowStartUntil: 2020-05-17T09:30:00`
+
+The following query is an example of an open time-window, where only the start-time of the time-window is specified:
+
+ `flowStatus queryFlows flowStartFrom: 2020-05-16T09:30:00`
+
+If running a query for an open-ended time-window, note the following:
+
+* If you specify a value for `flowStartFrom` but do not specify a value for `flowStartUntil`, the query will return a list of all flows that did not complete up until the time that the query was run.
+
+* If you specify a value for `flowStartUntil` but do not specify a value for `flowStartFrom`, the query will return a list of all flows that did not complete since the node started up.
+
+### Sample query to filter suspended flows
+
+To filter flows that have been suspended (that is, "stuck") for a certain minimum period of time, you can filter by the `suspensionDuration` field. by will filter out flows that have not been suspended for _at least_ this duration
+
+This option is particularly useful if, for example, you want to identify all flows that have been stuck for a certain period of time or if you want to exclude flows that have been executed recently from the results returned. For example, if you know that a flow takes a certain amount of time to execute, you may wish to check for flows that have not completed that have been stuck for a period of time that is longer than the normal execution period.
+
+To return a list of all flows that did not complete and which have been stuck a certain minimum period of time (in this example, at least 2 hours), run the following query:
+
+ `flowStatus queryFlows suspensionDuration: "2, HOURS"`
+
+### Sample compound queries
+
+You can combine multiple fields in a single query. For example, you could combine the fields in the examples above and construct a single query as follows:
+
+`flowStatus queryFlows flowState: HOSPITALIZED flowClass: HospitalizerFlow`
+
+You can also construct more complex queries, such as the following:
+
+`flowStatus queryFlows compatibleWithCurrentCordaRuntime: true cordapp: custom-cordapp flowClass: Hospitalizer suspensionDuration: "5, MINUTES"`
+
+In this example, flow data will be returned for flows that did not complete and which also meet all of the following conditions:
+* The flow is compatible with the current Corda runtime environment.
+* The flow exists in the CorDapp called `custom-cordapp`
+* The flow belongs to the Hospitalizer class.
+* The flow has been suspended for five minutes or more.
 
 
 ## List flow information for a checkpointed flow
 
-Using a flow's ID, you can query a node to retrieve flow checkpoint data relating to one or more flows. For example, to return information about three flows where the flow IDs are `id1`, `id2`, and `id3`, you would structure your query as follows:
+If you want to obtain a summary of checkpoint data relating to one or more flows, you can use the `flowStatus` query command, in combination with the `queryById` field.
 
- `queryById <id1> <id2> <id3>`
+For example, to return summary data for the flow which has the flow ID `5da55b82-332f-4ecd-a20c-3b02be040bb7`, you would structure your query as follows:
 
- Running this query returns checkpoint data on flows with the IDs `id1`, `id2`, and `id3`.
+ `flowStatus queryById 5da55b82-332f-4ecd-a20c-3b02be040bb7`
+
+ Running this query returns the following checkpoint data for the flow:
 
 ```
 flowStatus queryById 5da55b82-332f-4ecd-a20c-3b02be040bb7
@@ -97,10 +172,16 @@ flowStatus queryById 5da55b82-332f-4ecd-a20c-3b02be040bb7
   lastCheckpoint: 1595323327.481000000
 ```
 
- ## Formatting dates and times
+You can return summary data for one or more flows in a single query.
 
- All dates and times must be formatted as per the [ISO 8601 standard](https://www.iso.org/iso-8601-date-and-time-format.html/) using the following pattern `yyyy-MM-dd'T'HH:mm:ss.SSSZ`.
- For example, 2001-07-04 12:08:56 local time in the U.S. Pacific Time time zone is represented as `2001-07-04T12:08:56.235-07:00`.
+To return data for more than one flow, specify the flow IDs for the required flows in the following format:
+
+ `flowStatus queryById flowId1 flowId2`
+
+ For example, to return summary data for two flows where the flow ID of the first flow is `5da55b82-332f-4ecd-a20c-3b02be040bb7` and the flow ID of the second flow is `4dc21e46-142g-7rbt-b56i-2k41mr701lb2`, you would structure your query as follows:
+
+`flowStatus queryById 5da55b82-332f-4ecd-a20c-3b02be040bb7 4dc21e46-142g-7rbt-b56i-2k41mr701lb2`
+
 
 ## Get help with the `flowStatus` command
 
@@ -109,9 +190,3 @@ You can view a list of all arguments relating to the `flowStatus` command by ent
 `flowStatus --help`
 
 A list of all possible options is returned.
-
-For an example of how to implement the FlowStatusQuery command, see (https://github.com/corda/enterprise/blob/release/ent/4.6/tools/shell/src/main/java/net/corda/tools/shell/FlowStatusQueryCommand.java).
-
-**Release notes text:**
-
-**Code samples?**
