@@ -52,7 +52,7 @@ Contract CorDapp please read [Contract and state versioning](../node/operating/c
 
 
 Please also remember that *states are always consumable if the version of the CorDapp that issued (created) them is installed*.
-In the simplest of scenarios it may be easier to re-issue existing hash or CZ whitelist constrained states (efor example, exit them from the ledger using
+In the simplest of scenarios, it may be easier to re-issue existing hash or CZ whitelist constrained states (for example, exit them from the ledger using
 the original unsigned CorDapp and re-issuing them using the new signed CorDapp).
 
 
@@ -109,7 +109,7 @@ TransactionBuilder txBuilder = new TransactionBuilder(notary)
 
 * As a node operator you need to add the new signed version of the contracts CorDapp to the `/cordapps` folder together with the latest version of the flows jar.
 Please also ensure that the original unsigned contracts CorDapp is removed from the `/cordapps` folder (this will already be present in the
-nodes attachments store) to ensure the lookup code in step 2 retrieves the correct signed contract CorDapp JAR.
+node's attachments store) to ensure the lookup code in step 2 retrieves the correct signed contract CorDapp JAR.
 
 
 
@@ -127,24 +127,22 @@ Corda 4.5 requires some additional steps to consume and evolve pre-existing on-l
 
 * As the original developer of the CorDapp, the first step is to sign the latest version of the JAR that was released (see [Building and installing a CorDapp](../cordapps/cordapp-build-systems.md)).
 The key used for signing will be used to sign all subsequent releases, so it should be stored appropriately. The JAR can be signed by multiple keys owned
-by different parties and it will be expressed as a `CompositeKey` in the `SignatureAttachmentConstraint` (See [API: Core types](../api-core-types)).
+by different parties and it will be expressed as a `CompositeKey` in the `SignatureAttachmentConstraint` (see [API: Core types](../api-core-types)).
 * The new Corda 4 signed CorDapp JAR must be registered with the CZ network operator (as whitelisted in the network parameters which are distributed
 to all nodes in that CZ). The CZ network operator should check that the JAR is signed and not allow any more versions of it to be whitelisted in the future.
-From now on the development organisation that signed the JAR is responsible for signing new versions.The process of CZ network CorDapp whitelisting depends on how the Corda network is configured:
+From now on the development organisation that signed the JAR is responsible for signing new versions. The process of CZ network CorDapp whitelisting depends on how the Corda network is configured:
 
-* if using a hosted CZ network (such as [Corda Network Foundation](../corda-network/the-corda-network.html) or
+* If using a hosted CZ network (such as [Corda Network Foundation](../corda-network/the-corda-network.html) or
 [Corda Network Pre-Production/UAT environment](../corda-network/uat.html)) running an Identity Operator (formerly known as Doorman) and
 Network Map Service, you should manually send the hashes of the two JARs to the CZ network operator and request these be added using
 their network parameter update process.
-* if using a local network created using the Network Bootstrapper tool, please follow the instructions in
+* If using a local network created using the Network Bootstrapper tool, please follow the instructions in
 [Updating the contract whitelist for bootstrapped networks](../network-bootstrapper.md#bootstrapper-updating-whitelisted-contracts) to can add both CorDapp Contract JAR hashes.
-
-
 
 * Any flow that builds transactions using this CorDapp will automatically transition states to use the `SignatureAttachmentConstraint` if
 no other constraint is specified and the CorDapp continues to be whitelisted. Therefore, there are two ways to alter the existing code.
-* Do not specify a constraint
-* Explicitly add a Signature Constraint
+  * Do not specify a constraint
+  * Explicitly add a Signature Constraint
 
 
 
@@ -184,6 +182,6 @@ TransactionBuilder txBuilder = new TransactionBuilder(notary)
 {{< /tabs >}}
 
 
-* As a node operator you need to add the new signed version of the contracts CorDapp to the `/cordapps` folder together with the latest version of the flows jar.
+* As a node operator, you need to add the new signed version of the contracts CorDapp to the `/cordapps` folder together with the latest version of the flows jar.
 Please also ensure that the original unsigned contracts CorDapp is removed from the `/cordapps` folder (this will already be present in the
 nodes attachments store) to ensure the lookup code in step 3 retrieves the correct signed contract CorDapp JAR.

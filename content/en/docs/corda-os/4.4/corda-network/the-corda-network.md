@@ -49,7 +49,7 @@ information submitted. A digitally signed participation certificate is returned 
 
 
 * The participant meets the requirements specified in the [bylaws and policies](https://corda.network/policy/admission-criteria.html)
-of the foundation (broadly speaking, limited to sanction screening only);
+of the foundation (broadly speaking, limited to sanctions screening only);
 * The participant agrees to Corda Network participant [terms of use](https://corda.network/participation/terms-of-use.html).
 
 The Corda Network node can then use the participation certificate to register itself with the Network Map Service.
@@ -76,4 +76,4 @@ otherwise rely, is to be treated as ‘confirmed’ in accordance with the terms
 ## Support Service
 
 The Support Service is provided to participants and business network operators to manage and resolve inquiries and incidents
-relating to the Identity Service, Network Map Service and Notary Services.
+relating to the Identity Service, Network Map Service and Notary Service.
