@@ -57,8 +57,8 @@ if(params.PREVIEW != null) {
         case 'rooney':
             config = new Configuration('docsite-dev', 'docsite-preview-rooney', 'docs-preview.dev.r3.corda.internal', false, "rooney")
             break
-        case 'bank':
-            config = new Configuration('docsite-dev', 'docsite-preview-bank', 'docs-preview.dev.r3.corda.internal', false, "bank")
+        case 'banks':
+            config = new Configuration('docsite-dev', 'docsite-preview-banks', 'docs-preview.dev.r3.corda.internal', false, "banks")
             break
     }
 }
@@ -79,7 +79,7 @@ pipeline {
 
     parameters {
         booleanParam defaultValue: config.defaultPublish, description: 'Publishing Docsite Docker image?', name: 'DO_PUBLISH'
-        choice(name: 'PREVIEW', choices: 'default\ntolkien\nborges\nseel\nbaldwin\nrooney\nbank', description: 'Preview site')
+        choice(name: 'PREVIEW', choices: 'default\ntolkien\nborges\nseel\nbaldwin\nrooney\nbanks', description: 'Preview site')
     }
 
     environment {
