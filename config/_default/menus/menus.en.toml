@@ -243,11 +243,6 @@ name = "Release Process"
 weight = 1010
 
 [[corda-enterprise-4-0]]
-identifier = "corda-enterprise-4-0-corda-api"
-name = "Corda API"
-weight = 75
-
-[[corda-enterprise-4-0]]
 identifier = "corda-enterprise-4-0-development"
 name = "Development"
 weight = 170
@@ -273,15 +268,9 @@ name = "Participate"
 weight = 270
 
 [[corda-enterprise-4-2]]
-identifier = "corda-enterprise-4-2-corda-api"
-name = "Corda API"
-weight = 75
-
-[[corda-enterprise-4-2]]
 identifier = "corda-enterprise-4-2-corda-enterprise"
 name = "Corda Enterprise"
 weight = 90
-
 
 [[corda-enterprise-4-2]]
 identifier = "corda-enterprise-4-2-development"
