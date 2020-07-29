@@ -26,7 +26,9 @@ You can then use the `flowStatus` query command, in combination with one or more
 
 You can use the `flowStatus` command to return a list of all flows on a node that have not completed. To do this, run the following query:
 
-`flowStatus queryFlows`
+```
+flowStatus queryFlows
+```
 
 A list consisting of the flow IDs of all flows on the node that have not completed is returned.
 
@@ -36,10 +38,9 @@ The flow ID belonging to each flow is listed on a separate line, as shown in the
 5da55b82-332f-4ecd-a20c-3b02be040bb7
 4dc21e46-142g-7rbt-b56i-2k41mr701lb2
 ```
+## Filter the list of flows by specific criteria
 
-## List specific information about the flow
-
-You can define the type of data to be returned from each checkpoint by combining the `flowStatus queryFlows` query command with one of more of the fields shown in the table below.
+You can filter the list of flows that did not complete by specifying additional search criteria. You do this by combining the `flowStatus queryFlows` query command with one of more of the fields shown in the table below.
 
 Including one or more of these fields enables you to run queries that identify flows that did not complete and where:
 
@@ -50,6 +51,8 @@ Including one or more of these fields enables you to run queries that identify f
 * The flow is in a particular state.
 * The flow did not proceed beyond a specific progress step.
 * The flow remained stuck at a checkpoint for a particular length of time.
+
+
 
 {{< table >}}
 
@@ -76,37 +79,49 @@ To return specific information about a flow, a query must contain the following 
 
 If you run the query without including any additional fields, a list consisting only of the flow IDs of all flows on the node that have not completed is returned, as outlined under [List all flows that have not completed](#list-all-flows-that-have-not-completed).
 
-### Sample query to identify a flow in a particular state
+### Sample query to list all flows in a particular state
 
 To return a list of all flows that have not completed and are in a particular state (in this example, the `HOSPITALIZED` state), run the following query:
 
-`flowStatus queryFlows flowState: HOSPITALIZED`
+```
+flowStatus queryFlows flowState: HOSPITALIZED
+```
 
-### Sample query to identify a flow in a particular class
+### Sample query to list all flows in a particular class
 
 To return a list of all flows that have not completed and which relate to a particular flow class (in this example, the `HospitalizerFlow` class), run the following query:
 
-`flowStatus queryFlows flowClass: HospitalizerFlow`
+```
+flowStatus queryFlows flowClass: HospitalizerFlow
+```
 
 ### Sample query specifying a time-window for a flow
 
 When specifying time-windows, all dates and times must be specified in accordance with the [ISO 8601 standard](https://www.iso.org/iso-8601-date-and-time-format.html/) as follows:
 
-`yyyy-MM-ddTHH:mm:ss`
+```
+yyyy-MM-ddTHH:mm:ss
+```
 
 For example, to specify a `flowStartFrom` time of 08:45:56 on July 21, 2020, you must enter the time in the following format:
 
-`2020-07-21T08:45:56`
+```
+2020-07-21T08:45:56
+```
 
 You can create a query for an open or closed time-window.
 
 To return a list of all flows that did not complete within a closed time-window, specify both a start time and end time for the time-window as follows:
 
- `flowStatus queryFlows flowStartFrom: 2020-05-16T09:30:00 flowStartUntil: 2020-05-17T09:30:00`
+ ```
+ flowStatus queryFlows flowStartFrom: 2020-05-16T09:30:00 flowStartUntil: 2020-05-17T09:30:00
+ ```
 
 The following query is an example of an open time-window, where only the start-time of the time-window is specified:
 
- `flowStatus queryFlows flowStartFrom: 2020-05-16T09:30:00`
+```
+flowStatus queryFlows flowStartFrom: 2020-05-16T09:30:00
+```
 
 If running a query for an open-ended time-window, note the following:
 
@@ -122,9 +137,11 @@ This option is particularly useful if, for example, you want to identify all flo
 
 To specify the `suspensionDuration`, enter the value in the format `"<value>, <unit>"` where `<value>` is a numerical value and `<unit>` is the unit of time, specified as `SECONDS`, `MINUTES`, `HOURS` or `DAYS`.
 
-To return a list of all flows that did not complete and which have been stuck a certain minimum period of time (in this example, at least 2 hours), run the following query:
+To return a list of all flows that have not completed and which have been stuck a certain minimum period of time (in this example, at least 2 hours), run the following query:
 
- `flowStatus queryFlows suspensionDuration: "2, HOURS"`
+```
+flowStatus queryFlows suspensionDuration: "2, HOURS"
+```
 
 ### Sample compound queries
 
@@ -136,20 +153,22 @@ You can also construct more complex queries, such as the following:
 
 `flowStatus queryFlows compatibleWithCurrentCordaRuntime: true cordapp: custom-cordapp flowClass: Hospitalizer suspensionDuration: "5, MINUTES"`
 
-In this example, flow data will be returned for flows that did not complete and which also meet all of the following conditions:
+In this example, flow data will be returned for flows that have not completed and which also meet all of the following conditions:
 * The flow is compatible with the current Corda runtime environment.
 * The flow exists in the CorDapp called `custom-cordapp`.
 * The flow belongs to the `Hospitalizer` class.
 * The flow has been suspended for five minutes or more.
 
 
-## List summary information for a checkpointed flow
+## List summary information for a flow
 
 If you want to obtain a summary of checkpoint data relating to one or more flows, you can use the `flowStatus` query command, in combination with the `queryById` field.
 
 For example, to return summary data for the flow which has the flow ID `5da55b82-332f-4ecd-a20c-3b02be040bb7`, you would structure your query as follows:
 
- `flowStatus queryById 5da55b82-332f-4ecd-a20c-3b02be040bb7`
+ ```
+ flowStatus queryById 5da55b82-332f-4ecd-a20c-3b02be040bb7
+ ```
 
  Running this query returns the following checkpoint data for the flow:
 
@@ -176,9 +195,11 @@ flowStatus queryById 5da55b82-332f-4ecd-a20c-3b02be040bb7
 
 You can return summary data for one or more flows in a single query.
 
-To return data for more than one flow, specify the flow IDs for the required flows in the following format:
+To return data for more than one flow, specify the flow IDs of the relevant flows in the following format:
 
- `flowStatus queryById flowId1 flowId2`
+```
+flowStatus queryById flowId1 flowId2
+```
 
  For example, let's say you want to return summary data for following two flows:
 
@@ -187,13 +208,16 @@ To return data for more than one flow, specify the flow IDs for the required flo
 
  To do this, you would structure your query as follows, listing each flow ID, separated by a space:
 
-`flowStatus queryById 5da55b82-332f-4ecd-a20c-3b02be040bb7 4dc21e46-142g-7rbt-b56i-2k41mr701lb2`
-
+```
+flowStatus queryById 5da55b82-332f-4ecd-a20c-3b02be040bb7 4dc21e46-142g-7rbt-b56i-2k41mr701lb2
+```
 
 ## Get help with the `flowStatus` command
 
 You can view a list of all arguments relating to the `flowStatus` command by entering the following command:
 
-`flowStatus --help`
+```
+flowStatus --help
+```
 
 A list of all possible options is returned.
