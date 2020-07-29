@@ -44,6 +44,9 @@ repositories {
 [CordaRPCConnection](https://api.corda.net/api/corda-enterprise/4.6/html/api/javadoc/net/corda/client/rpc/CordaRPCConnection.html) has a `proxy` method that takes an RPC username and password and returns a [CordaRPCOps](https://api.corda.net/api/corda-enterprise/4.6/html/api/javadoc/net/corda/core/messaging/CordaRPCOps.html)
 object that you can use to interact with the node.
 
+Since `CordaRPCClient` is limited to `CordaRPCOps` remote interface only, if there is an intention to use the other remote
+interfaces Corda Node provides - [Multi RPC CLient](#multi-rpc-client) should be used.
+
 Here is an example of using [CordaRPCClient](https://api.corda.net/api/corda-enterprise/4.6/html/api/javadoc/net/corda/client/rpc/CordaRPCClient.html) to connect to a node and log the current time on its internal clock:
 
 {{< tabs name="tabs-1" >}}
@@ -545,3 +548,51 @@ Note that RPC TLS does not use mutual authentication, and delegates fine grained
 CorDapps must whitelist any classes used over RPC with Corda’s serialization framework, unless they are whitelisted by
 default in `DefaultWhitelist`. The whitelisting is done either via the plugin architecture or by using the
 `@CordaSerializable` annotation.  See serialization. An example is shown in tutorial-clientrpc-api.
+
+## Multi RPC Client
+
+[MultiRPCClient](https://api.corda.net/api/corda-enterprise/4.6/html/api/javadoc/net/corda/client/rpc/ext/MultiRPCClient.html)
+supplements `CordaRPCClient` when it comes to invoking methods of the remote interfaces other than `CordaRPCOps`.
+
+Corda Enterprise has a pluggable mechanism to expose custom RPC interfaces for clients to call.
+For example an interface [NodeHealthCheckRpcOps](https://api.corda.net/api/corda-enterprise/4.6/html/api/javadoc/net/corda/client/rpc/proxy/NodeHealthCheckRpcOps.html)
+been introduced which allows to get a report about health state of the Corda Enterprise Node.
+There are many more additional remote RPC interfaces will be supplied as part of Corda Enterprise release, and they are
+all included into `:client:extensions-rpc` module.
+
+### Pre-requisites
+
+In order to use `MultiRPCClient` functionality from a custom application, it is necessary to include the following
+dependencies:
+
+```groovy
+dependencies {
+    compile "net.corda:corda-rpc:$corda_release_version"
+    compile "net.corda:corda-rpc-ext:$corda_release_version"
+    ...
+}
+```
+
+On the Corda Enterprise Node side it is necessary to grant permissions for a particular user to make such calls.
+This requires adding the following to the `node.conf` file:
+
+```groovy
+rpcUsers=[
+    {
+        username=exampleUser
+        password=examplePass
+        permissions=[
+            "InvokeRpc:net.corda.client.rpc.proxy.NodeHealthCheckRpcOps#ALL"
+        ]
+    },
+    ...
+]
+```
+
+For more details on RPC permissions in case of multiple RPC interfaces, please see [here](#granting-permissions-for-rpc-operations).
+
+### `MultiRPCClient` API usage
+
+```kotlin
+
+```
