@@ -55,17 +55,17 @@ Including one or more of these fields enables you to run queries that identify f
 
 | Field name | Description | Format |
 |---------|----------|---------|---------|
-| compatibleWithCurrentCordaRuntime | Indicates whether the flow has been marked as being incompatible with the current Corda runtime environment. | Boolean String |
-| cordapp | The name of the CorDapp that contains the flow. You do not need to enter the full name - providing a fragment of the name is enough to identify the CorDapp. | String |  
-| flowClass | The name of the class that implements the flow. You do not need to enter the full name - providing a fragment of the class name is enough to identify the class. | String |  
-| flowStartFrom | The start time of the time-window in which the flow was started. If you do not specify a start time value, the start time is taken to be a UNIX 0 timestamp (that is, the time 00:00 on January 1, 1970). If you specify a value for `flowStartFrom` but do not specify a value for `flowStartUntil`, the query will return a list of all flows that did not complete up until the time that the query was run. | String in ISO8601 DateTime format*. |  
-| flowStartUntil | The end time of the time-window in which the flow was started. If you specify a value for `flowStartUntil` but do not specify a value for `flowStartFrom`, the query will return a list of all flows that did not complete since the node started up. | String in ISO8601 DateTime format*. |  
-| flowState | The state of the flow at its latest checkpoint. The state is one of the following values: `RUNNABLE`, `FAILED`, `COMPLETED`, `HOSPITALIZED`, `KILLED`, `PAUSED`. | String |  
-| progressStep | If the flow implements progress tracking, specifies the latest step that was encountered before checkpointing. A progressStep is a user-defined value which is defined by the CorDapp developer - you can specify the name of any progressStep defined in your CorDapp. | String |  
-| suspensionDuration | The minimum duration for which a flow must have remained suspended (that is, "stuck") at a checkpoint. This is entered in the format `"<value>, <unit>"` where `<value>` is a numerical value and `<unit>` is the unit of time, specified as `SECONDS`, `MINUTES`, `HOURS` or `DAYS`). | String |  
+| `compatibleWithCurrentCordaRuntime` | Indicates whether the flow has been marked as being incompatible with the current Corda runtime environment. | Boolean String |
+| `cordapp` | The name of the CorDapp that contains the flow. You do not need to enter the full name - providing a fragment of the name is enough to identify the CorDapp. | String |  
+| `flowClass` | The name of the class that implements the flow. You do not need to enter the full name - providing a fragment of the class name is enough to identify the class. | String |  
+| `flowStartFrom` | The start time of the time-window in which the flow was started. If you do not specify a start time value, the start time is taken to be a UNIX 0 timestamp (that is, the time 00:00 on January 1, 1970). If you specify a value for `flowStartFrom` but do not specify a value for `flowStartUntil`, the query will return a list of all flows that did not complete up until the time that the query was run. | String in ISO8601 DateTime format*. |  
+| `flowStartUntil` | The end time of the time-window in which the flow was started. If you specify a value for `flowStartUntil` but do not specify a value for `flowStartFrom`, the query will return a list of all flows that did not complete since the node started up. | String in ISO8601 DateTime format*. |  
+| `flowState` | The state of the flow at its latest checkpoint. The state is one of the following values: `RUNNABLE`, `FAILED`, `COMPLETED`, `HOSPITALIZED`, `KILLED`, `PAUSED`. | String |  
+| `progressStep` | If the flow implements progress tracking, specifies the latest step that was encountered before checkpointing. A progressStep is a user-defined value which is defined by the CorDapp developer - you can specify the name of any progressStep defined in your CorDapp. | String |  
+| `suspensionDuration` | The minimum duration for which a flow must have remained suspended (that is, "stuck") at a checkpoint. This is entered in the format `"<value>, <unit>"` where `<value>` is a numerical value and `<unit>` is the unit of time, specified as `SECONDS`, `MINUTES`, `HOURS` or `DAYS`). | String |  
 {{< /table >}}
 
-\*  See example under [Sample query specifying a time-window for a flow](#sample-query-specifying-a-time-window-for-a-flow).
+\*  See [Sample query specifying a time-window for a flow](#sample-query-specifying-a-time-window-for-a-flow).
 
 ### Constructing your query
 
