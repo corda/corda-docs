@@ -593,6 +593,59 @@ For more details on RPC permissions in case of multiple RPC interfaces, please s
 
 ### `MultiRPCClient` API usage
 
-```kotlin
+The following code snippet demonstrates use of `MultiRPCClient` API:
 
+```kotlin
+val client = MultiRPCClient(rpcAddress, NodeHealthCheckRpcOps::class.java, "exampleUser", "examplePass")
+
+client.use {
+    val connFuture: CompletableFuture<RPCConnection<NodeHealthCheckRpcOps>> = client.start()
+    val conn: RPCConnection<NodeHealthCheckRpcOps> = connFuture.get()
+    conn.use {
+        assertThat(it.proxy.runtimeInfo(), containsString("usedMemory"))
+    }
+}
 ```
+
+It is possible to see that `MultiRPCClient` is created with:
+- Endpoint address;
+- Interface class to be used for communication;
+- User name;
+- Password.
+
+`MultiRPCClient` is not started after creation, which permits performing additional configuration steps and attaching
+`RPCConnectionListener`s if necessary.
+
+`MultiRPCClient` has some internal resources allocated, and it is always a good idea to call `close()` method for it when
+it is no longer needed. In Kotlin it is usual to utilize `use` construct for that purpose. In Java, try-with-resource can
+be used.
+
+When method `start` is called on `MultiRPCClient` it performs a remote call to establish an RPC connection with specified endpoint.
+Connection creation is not instant, hence `start()` method returns `Future` over `RPCConnection` for specified remote
+interface type.
+
+Once connection is retrieved, it is possible to obtain a `proxy` and perform a remote call. In the example above, this
+will be a call to `runtimeInfo()` method of `NodeHealthCheckRpcOps` interface.
+
+`RPCConnection` is also a `Closeable` construct, so it is a good idea to call `close()` on it after use.
+
+### More sophisticated uses of `MultiRPCClient`
+
+Please have a look at API documentation for [MultiRPCClient](https://api.corda.net/api/corda-enterprise/4.6/html/api/javadoc/net/corda/client/rpc/ext/MultiRPCClient.html).
+
+It is possible to pass multiple endpoint addresses upon `MultiRPCClient` construction.
+In this case `MultiRPCClient` will operate in fail-over mode and if one of the endpoints become unreachable it will
+re-try connection using round-robin policy.
+
+If reconnection cycle has started then previously supplied `RPCConnection` might become disconnected and `proxy` will throw
+`RPCException` every time remote method is called.
+
+In order to get notified when connection re-established or, indeed, be informed about every connection (including
+the very first one) lifecycle it is possible to add one or many [RPCConnectionListener](https://api.corda.net/api/corda-enterprise/4.6/html/api/javadoc/net/corda/client/rpc/ext/RPCConnectionListener.html)
+to `MultiRPCClient`.
+Please refer to API documentation of [RPCConnectionListener](https://api.corda.net/api/corda-enterprise/4.6/html/api/javadoc/net/corda/client/rpc/ext/RPCConnectionListener.html)
+for specific details.
+
+Other constructors of `MultiRPCClient` allows to specify a variety of other configuration parameters of RPC connection, please
+see API documentation of [MultiRPCClient](https://api.corda.net/api/corda-enterprise/4.6/html/api/javadoc/net/corda/client/rpc/ext/MultiRPCClient.html)
+for specific details.
