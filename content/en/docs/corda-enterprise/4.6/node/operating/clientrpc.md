@@ -562,7 +562,7 @@ all included into `:client:extensions-rpc` module.
 
 ### Pre-requisites
 
-In order to use `MultiRPCClient` functionality from a custom application, it is necessary to include the following
+In order to use `MultiRPCClient` functionality from a custom JVM application, it is necessary to include the following
 dependencies:
 
 ```groovy
@@ -573,8 +573,8 @@ dependencies {
 }
 ```
 
-On the Corda Enterprise Node side it is necessary to grant permissions for a particular user to make such calls.
-This requires adding the following to the `node.conf` file:
+On the Corda Enterprise Node side it is necessary to grant permissions for a particular user to invoke remote methods.
+Example below shows what might be added to the `node.conf` file:
 
 ```groovy
 rpcUsers=[
@@ -613,7 +613,7 @@ It is possible to see that `MultiRPCClient` is created with:
 - User name;
 - Password.
 
-`MultiRPCClient` is not started after creation, which permits performing additional configuration steps and attaching
+`MultiRPCClient` is not started after creation, which allows performing additional configuration steps and attaching
 `RPCConnectionListener`s if necessary.
 
 `MultiRPCClient` has some internal resources allocated, and it is always a good idea to call `close()` method for it when
@@ -624,7 +624,7 @@ When method `start` is called on `MultiRPCClient` it performs a remote call to e
 Connection creation is not instant, hence `start()` method returns `Future` over `RPCConnection` for specified remote
 interface type.
 
-Once connection is retrieved, it is possible to obtain a `proxy` and perform a remote call. In the example above, this
+Once connection is created, it is possible to obtain a `proxy` and perform a remote call. In the example above, this
 will be a call to `runtimeInfo()` method of `NodeHealthCheckRpcOps` interface.
 
 `RPCConnection` is also a `Closeable` construct, so it is a good idea to call `close()` on it after use.
@@ -634,18 +634,18 @@ will be a call to `runtimeInfo()` method of `NodeHealthCheckRpcOps` interface.
 Please have a look at API documentation for [MultiRPCClient](https://api.corda.net/api/corda-enterprise/4.6/html/api/javadoc/net/corda/client/rpc/ext/MultiRPCClient.html).
 
 It is possible to pass multiple endpoint addresses upon `MultiRPCClient` construction.
-In this case `MultiRPCClient` will operate in fail-over mode and if one of the endpoints become unreachable it will
+In this case `MultiRPCClient` will operate in fail-over mode and if one of the endpoints become unreachable, it will automatically
 re-try connection using round-robin policy.
 
-If reconnection cycle has started then previously supplied `RPCConnection` might become disconnected and `proxy` will throw
+If reconnection cycle has started then previously supplied `RPCConnection` might become interrupted and `proxy` will throw
 `RPCException` every time remote method is called.
 
-In order to get notified when connection re-established or, indeed, be informed about every connection (including
-the very first one) lifecycle it is possible to add one or many [RPCConnectionListener](https://api.corda.net/api/corda-enterprise/4.6/html/api/javadoc/net/corda/client/rpc/ext/RPCConnectionListener.html)
+In order to get notified when connection re-established or, indeed, be informed about every connection's (including
+the very first one) lifecycle it is possible to add one or many [RPCConnectionListeners](https://api.corda.net/api/corda-enterprise/4.6/html/api/javadoc/net/corda/client/rpc/ext/RPCConnectionListener.html)
 to `MultiRPCClient`.
 Please refer to API documentation of [RPCConnectionListener](https://api.corda.net/api/corda-enterprise/4.6/html/api/javadoc/net/corda/client/rpc/ext/RPCConnectionListener.html)
 for specific details.
 
-Other constructors of `MultiRPCClient` allows to specify a variety of other configuration parameters of RPC connection, please
-see API documentation of [MultiRPCClient](https://api.corda.net/api/corda-enterprise/4.6/html/api/javadoc/net/corda/client/rpc/ext/MultiRPCClient.html)
-for specific details.
+There are many constructors of `MultiRPCClient` which allows specifying a variety of other configuration parameters of RPC connection, please
+see API documentation on [MultiRPCClient](https://api.corda.net/api/corda-enterprise/4.6/html/api/javadoc/net/corda/client/rpc/ext/MultiRPCClient.html)
+for specific details. These parameters are largely similar to [CordaRPCClient](https://api.corda.net/api/corda-enterprise/4.6/html/api/javadoc/net/corda/client/rpc/CordaRPCClient.html).
