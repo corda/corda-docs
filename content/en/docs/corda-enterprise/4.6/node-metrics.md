@@ -130,7 +130,8 @@ Actions are reified IO actions to execute as part of state machine transitions. 
 |-----------------------------------------------|---------------------------------------------------------------------------------------|
 |net.corda:type=Metering,name=commandsPersisted|The number of unique sets of commands persisted.|
 |net.corda:type=Metering,name=droppedCounts|The number of signing events not persisted.|
-|net.corda:type=Metering,name=queueLength|A histogram indicating the length of the queue of events waiting to be persisted.|
+|net.corda:type=Metering,name=eventsProcessed|A histogram indicating the number of events processed on every aggregation interval.|
+|net.corda:type=Metering,name=dataQueueSize|An instant value of the size of the queue of aggregation events.|
 |net.corda:type=Metering,name=stacksPersisted|The number of unique CorDapp stacks persisted.|
 |net.corda:type=Metering,name=totalCounts|The total number of signing events persisted.|
 
