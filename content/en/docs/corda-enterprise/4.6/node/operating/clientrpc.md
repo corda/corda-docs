@@ -28,7 +28,7 @@ your node via HTTP, you will need to stand up your own webserver that connects t
 
 ## Building the Corda RPC Client
 
-To interact with your node via the `CordaRPCOps` remote interface, you need to build a client that uses the [CordaRPCClient](https://api.corda.net/api/corda-enterprise/4.6/html/api/javadoc/net/corda/client/rpc/CordaRPCClient.html) class. The `CordaRPCClient` class allows you to connect to your node via a message queue protocol and provides a simple RPC interface (the `CordaRPCOps` remote interface) for interacting with the node. You make calls on a JVM object as normal, and the marshalling back-and-forth is handled for you.
+To interact with your node via the `CordaRPCOps` remote interface, you need to build a client that uses the [CordaRPCClient](https://api.corda.net/api/corda-enterprise/4.6/html/api/javadoc/net/corda/client/rpc/CordaRPCClient.html) class. The `CordaRPCClient` class enables you to connect to your node via a message queue protocol and provides a simple RPC interface (the `CordaRPCOps` remote interface) for interacting with the node. You make calls on a JVM object as normal, and the marshalling back-and-forth is handled for you.
 
 ### Pre-requisites
 
