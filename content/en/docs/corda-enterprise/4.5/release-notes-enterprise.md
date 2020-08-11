@@ -25,7 +25,7 @@ Corda Enterprise 4.5.1 is a patch release of Corda Enterprise that introduces fi
 * Classloader fails to find class when Optional generic used on Type definition.
 * Config Obfuscator doesn't work anymore for HSM configuration files.
 * Retrying session inits can fail due to database connectivity.
-* Revert H2 version to 197 to avoid bug introduced in the dependency after
+* Revert H2 version to 197 to avoid bug introduced in the dependency after previous upgrade.
 * NodeMeteringBackground processes high CPU while a node is idle.
 * Prevent AMQP header spoofing.
 * Passing two sessions with the same counterparty to the CollectSignaturesFlow leads both counterparty's flows to infinitely await messages from other party.
