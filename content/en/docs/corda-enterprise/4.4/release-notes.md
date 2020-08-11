@@ -19,6 +19,26 @@ title: Corda release notes
 
 Welcome to the Corda 4.4 release notes. Please read these carefully to understand what’s new in this release and how the features can help you. Just as prior releases have brought with them commitments to wire and API stability, Corda 4.4 comes with those same guarantees. States and apps valid in Corda 3.0 are usable in Corda 4.4.
 
+## Corda 4.4.3
+
+Corda Enterprise 4.4.3 is a patch release of Corda Enterprise that introduces fixes to known issues in Corda Enterprise 4.4.2.
+
+### Issues fixed
+
+* Allow session rollbacks inside an entity manager
+* Database Management Tool - Sensitive information being exposed as clear text on logs and terminal 
+* Classloader fails to find class when Optional generic used on Type definition
+* Config Obfuscator doesn't work anymore for HSM configuration files
+* Revert H2 version to 197 to avoid bug introduced in the dependency after
+* Prevent AMQP header spoofing 
+* Uncaught exception in FlowStateMachineImpl.run().initialiseFlow()
+* NodeMeteringBackground processes high CPU while a node is idle
+* Move backchainFetchBatchSize option into the tuning section
+* Error in DNS name resolution when using Corda Health Survey tool 
+* [ConfigObfuscator] Firewall doesn't start if its main config and HSM config was obfuscated with specified SEED and PASSPHRASE
+* [ConfigObfuscator] Deobfuscation options are missing from HA-Utilities in "generate-internal-tunnel-ssl-keystores" mode
+* AKS deployment uses Corda ENT 4.4 but requires feature from Corda ENT 4.5.
+* vaultService.updates.subscribe errors when running inside STATE_MACHINE_STARTED event handler
 
 
 ## Corda 4.4
