@@ -448,9 +448,12 @@ Permission strings are case-insensitive.
 The code snippet below demonstrates how to use the [MultiRPCClient](https://api.corda.net/api/corda-enterprise/4.6/html/api/javadoc/net/corda/client/rpc/ext/MultiRPCClient.html) class  to build a Multi RPC Client and define the following:
 
 * Endpoint address
-* Interface class to be used for communication (in this example, `NodeHealthCheckRpcOps::class.java`, which is used to communicate with the `net.corda.client.rpc.proxy.NodeFlowStatusRpcOps` interface)  
+* Interface class to be used for communication (in this example, `NodeHealthCheckRpcOps::class.java`, which is used to communicate with the `net.corda.client.rpc.proxy.NodeHealthCheckRpcOps` interface)
 * User name
 * Password
+
+{{< tabs name="tabs-4" >}}
+{{% tab name="kotlin" %}}
 
 ```kotlin
 val client = MultiRPCClient(rpcAddress, NodeHealthCheckRpcOps::class.java, "exampleUser", "examplePass")
@@ -463,6 +466,23 @@ client.use {
     }
 }
 ```
+
+{{% /tab %}}
+
+{{% tab name="java" %}}
+
+```java
+try(MultiRPCClient client = new MultiRPCClient(rpcAddress, NodeHealthCheckRpcOps.class, "exampleUser", "examplePass")) {
+    CompletableFuture<RPCConnection<NodeHealthCheckRpcOps>> connFuture = client.start();
+    try(RPCConnection<NodeHealthCheckRpcOps> conn = connFuture.get()) {
+        assertThat(conn.getProxy().runtimeInfo(), containsString("usedMemory"));
+    }
+}
+```
+
+{{% /tab %}}
+
+{{< /tabs >}}
 
 `MultiRPCClient` is not started upon its creation, thus enabling you to perform any additional configuration steps that may be required and attach
 `RPCConnectionListener`s if necessary before starting.
