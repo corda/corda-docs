@@ -21,4 +21,5 @@ weight: 5
 
 * [Corda release notes](release-notes.md)
 * [Corda Enterprise Release notes](release-notes-enterprise.md)
+* [Corda Enterprise release files and checksums](release-checksum-enterprise.md)
 * [Corda Enterprise changelog](changelog-enterprise.md)
