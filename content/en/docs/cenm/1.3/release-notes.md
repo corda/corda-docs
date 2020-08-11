@@ -16,6 +16,18 @@ title: Release notes
 
 # Release notes
 
+## Release 1.3.1
+
+CENM 1.3.1 introduces fixes to known issues in CENM 1.3.
+
+### Fixed issues
+
+* Pki pod fails to generate due to file `out.pkcs12`  not found in `/opt/cenm/HSM` in pki pod.
+* HSM passwords are not hidden in services logs.
+* Zone service accidentally removes "mode" field from the Signer's config with Utimaco and fails to return it to the Angel service.
+* `keyPassword` is not hidden in log files for each service with configuration file.
+* Not clear error message with not handled exception.
+
 ## CENM 1.3 release overview
 
 CENM 1.3 introduces a new Command-Line Interface (CLI) tool for network operators to manage CENM services. This functionality ships with new services that enable you to manage CENM configurations (the new Zone Service), to create new users and roles (the new User Admin tool), and to authenticate and authorise users (the new Auth Service). The Auth Service supports full Role-Based Access Control (RBAC) and provides a web-based management interface for system administrators to create and manage user groups and entitlements.
