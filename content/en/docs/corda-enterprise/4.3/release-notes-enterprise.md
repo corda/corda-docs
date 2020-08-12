@@ -32,7 +32,7 @@ As a node operator, you should upgrade to the [latest released version of Corda]
 
 ### Fixed issues
 
-* Handling of default cases in Vault Query have been checked for consistency.
+* The handling of default cases in Vault Query has been checked for consistency.
 * `NodeMeteringBackground` process CPU use has been decreased.
 * Memory management for `AttachmentClassLoader` and `AttachmentURLStreamHandlerFactory` has been improved.
 * `hashLookup` command help has been corrected.
