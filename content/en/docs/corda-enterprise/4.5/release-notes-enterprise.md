@@ -37,7 +37,7 @@ As a node operator, you should upgrade to the [latest released version of Corda]
 * Fixed an issue where passing two sessions with the same counterparty to the `CollectSignaturesFlow` led to both counterparties' flows having to wait infinitely for messages from the other party.
 * A previously unhandled exception in `FlowStateMachineImpl.run().initialiseFlow()` is now handled correctly.
 * Fixed an issue where Corda Firewall did not start if its main configuration and its HSM configuration were obfuscated.
-* Fixed an issue where a TLS handshake timeout lead to blacklisting endpoint.
+* Fixed an issue where a TLS handshake timeout led to blacklisting endpoint.
 * Added support to the spent state audit command for specifying state references in the form `txId(outputIdx)` in addition to the existing `txId:outputIdx`.
 
 ## Corda Enterprise 4.5 release overview
