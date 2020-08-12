@@ -30,7 +30,7 @@ As a node operator, you should upgrade to the [latest released version of Corda]
 
 ### Fixed issues
 
-* Session rollbacks are now allwed inside an entity manager.
+* Session rollbacks are now allowed inside an entity manager.
 * Sensitive information is no longer exposed as clear text on logs and terminal when using the [Database Management Tool](database-management-tool.md). 
 * Fixed an issue where the Classloader failed to find a Command class when Optional generic was used on Type definition.
 * The [Configuraton Obfuscator tool](tools-config-obfuscator.md) has been fixed to work for HSM configuration files.
