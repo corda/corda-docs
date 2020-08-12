@@ -37,7 +37,7 @@ As a node operator, you should upgrade to the [latest released version of Corda]
 * Security update to prevent AMQP header spoofing.
 * Uncaught exception in `FlowStateMachineImpl.run().initialiseFlow()` now correctly handled.
 * `NodeMeteringBackground` process CPU use has been decreased.
-* Moved `backchainFetchBatchSize` option into the tuning section of the node configuration file.
+* The `backchainFetchBatchSize` option has been moved to the tuning section of the node configuration file.
 * Fixed an error in DNS name resolution when using Corda Health Survey tool.
 * Firewall did not start if its main configuration and HSM configuation was obfuscated.
 * Deobfuscation options were missing from HA-Utilities in `generate-internal-tunnel-ssl-keystores` mode.
