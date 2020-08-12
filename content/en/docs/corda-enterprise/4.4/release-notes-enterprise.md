@@ -33,7 +33,7 @@ As a node operator, you should upgrade to the [latest released version of Corda]
 * Sensitive information is no longer exposed as clear text on logs and terminal when using the [Database Management Tool](database-management-tool.mc). 
 * Classloader failed to find class when Optional generic used on Type definition.
 * The [Configuraton Obfuscator tool](tools-config-obfuscator.md) has been fixed to work for HSM configuration files.
-* Reverted H2 version to 1.4.197 to avoid a dependency bug introduced after the previous upgrade.
+* The H2 version has been reverted to 1.4.197 to avoid a dependency issue introduced after the previous upgrade.
 * Security update to prevent AMQP header spoofing.
 * Uncaught exception in `FlowStateMachineImpl.run().initialiseFlow()` now correctly handled.
 * `NodeMeteringBackground` process CPU use has been decreased.
