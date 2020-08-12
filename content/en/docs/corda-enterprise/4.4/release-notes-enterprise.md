@@ -34,7 +34,7 @@ As a node operator, you should upgrade to the [latest released version of Corda]
 * Fixed an issue where the Classloader failed to find a class when Optional generic was used on Type definition.
 * The [Configuraton Obfuscator tool](tools-config-obfuscator.md) has been fixed to work for HSM configuration files.
 * The H2 version has been reverted to 1.4.197 to avoid a dependency issue introduced after the previous upgrade.
-* Security update to prevent AMQP header spoofing.
+* A security update to prevent AMQP header spoofing has been applied.
 * Uncaught exception in `FlowStateMachineImpl.run().initialiseFlow()` now correctly handled.
 * `NodeMeteringBackground` process CPU use has been decreased.
 * The `backchainFetchBatchSize` option has been moved to the tuning section of the node configuration file.
