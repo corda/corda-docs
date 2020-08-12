@@ -28,16 +28,16 @@ As a node operator, you should upgrade to the [latest released version of Corda]
 
 ### Fixed issues
 
-* Classloader fails to find class when Optional generic used on Type definition.
-* Config Obfuscator doesn't work anymore for HSM configuration files.
+* Fixed an issue where the Classloader failed to find a Command class when Optional generic was used on Type definition.
+* The [Configuraton Obfuscator tool](tools-config-obfuscator.md) has been fixed to work for HSM configuration files.
 * Retrying session inits can fail due to database connectivity.
-* Revert H2 version to 1.4.197 to avoid bug introduced in the dependency after previous upgrade.
-* NodeMeteringBackground processes high CPU while a node is idle.
-* Prevent AMQP header spoofing.
-* Passing two sessions with the same counterparty to the CollectSignaturesFlow leads both counterparty's flows to infinitely await messages from other party.
-* Uncaught exception in FlowStateMachineImpl.run().initialiseFlow().
-* [ConfigObfuscator] Firewall doesn't start if its main config and HSM config was obfuscated with specified SEED and PASSPHRASE.
-* TLS handshake timeout leads to blacklisting endpoint.
+* The H2 version has been reverted to 1.4.197 to avoid a dependency issue introduced after the previous upgrade.
+* The CPU usage of the `NodeMeteringBackground` process has been decreased.
+* A security update to prevent AMQP header spoofing has been applied.
+* Fixed an issue where passing two sessions with the same counterparty to the `CollectSignaturesFlow` lead to both counterparties' flows to wait infinitely for messages from the other party.
+* A previously unhandled exception in `FlowStateMachineImpl.run().initialiseFlow()` is now handled correctly.
+* Fixed an issue where Corda Firewall did not start if its main configuration and its HSM configuration were obfuscated.
+* Fixed an issue where a TLS handshake timeout lead to blacklisting endpoint.
 * Added support to the spent state audit command for specifying state references in the form `txId(outputIdx)` in addition to the existing `txId:outputIdx`.
 
 ## Corda Enterprise 4.5 release overview
