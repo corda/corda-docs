@@ -34,7 +34,7 @@ As a node operator, you should upgrade to the [latest released version of Corda]
 * The H2 version has been reverted to 1.4.197 to avoid a dependency issue introduced after the previous upgrade.
 * The CPU usage of the `NodeMeteringBackground` process has been decreased.
 * A security update to prevent AMQP header spoofing has been applied.
-* Fixed an issue where passing two sessions with the same counterparty to the `CollectSignaturesFlow` lead to both counterparties' flows having to wait infinitely for messages from the other party.
+* Fixed an issue where passing two sessions with the same counterparty to the `CollectSignaturesFlow` led to both counterparties' flows having to wait infinitely for messages from the other party.
 * A previously unhandled exception in `FlowStateMachineImpl.run().initialiseFlow()` is now handled correctly.
 * Fixed an issue where Corda Firewall did not start if its main configuration and its HSM configuration were obfuscated.
 * Fixed an issue where a TLS handshake timeout lead to blacklisting endpoint.
