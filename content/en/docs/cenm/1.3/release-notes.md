@@ -23,7 +23,7 @@ CENM 1.3.1 introduces fixes to known issues in CENM 1.3.
 ### Fixed issues
 
 * Fixed an issue where an error occurred when generating the PKI data for Kubernetes as the `out.pkcs12` file could not be found in the `/opt/cenm/HSM` directory of the Kubernetes pod for PKI.
-* HSM passwords are not hidden in services logs.
+* Fixed an issue where HSM passwords were not hidden in CENM Services' logs.
 * Zone service accidentally removes "mode" field from the Signer's config with Utimaco and fails to return it to the Angel service.
 * `keyPassword` is not hidden in log files for each service with configuration file.
 * Not clear error message with not handled exception.
