@@ -30,7 +30,7 @@ As a node operator, you should upgrade to the [latest released version of Corda]
 
 * Fixed an issue where the Classloader failed to find a Command class when Optional generic was used on Type definition.
 * The [Configuraton Obfuscator tool](tools-config-obfuscator.md) has been fixed to work for HSM configuration files.
-* Retrying session inits can fail due to database connectivity.
+* Fixed an issue where retrying session inits could fail due to database connectivity.
 * The H2 version has been reverted to 1.4.197 to avoid a dependency issue introduced after the previous upgrade.
 * The CPU usage of the `NodeMeteringBackground` process has been decreased.
 * A security update to prevent AMQP header spoofing has been applied.
