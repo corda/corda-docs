@@ -36,7 +36,7 @@ As a node operator, you should upgrade to the [latest released version of Corda]
 * The H2 version has been reverted to 1.4.197 to avoid a dependency issue introduced after the previous upgrade.
 * A security update to prevent AMQP header spoofing has been applied.
 * A previously unhandled exception in `FlowStateMachineImpl.run().initialiseFlow()` is now handled correctly.
-* `NodeMeteringBackground` process CPU use has been decreased.
+* The CPU usage of the `NodeMeteringBackground` process has been decreased.
 * The `backchainFetchBatchSize` option has been moved to the tuning section of the node configuration file.
 * Fixed an error in DNS name resolution when using the [Corda Health Survey tool](health-survey.md).
 * Fixed an issue where Corda Firewall did not start if its main configuration and its HSM configuration were obfuscated.
