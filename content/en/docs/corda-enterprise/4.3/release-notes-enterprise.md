@@ -33,8 +33,8 @@ As a node operator, you should upgrade to the [latest released version of Corda]
 ### Fixed issues
 
 * The handling of default cases in Vault Query has been checked for consistency.
-* `NodeMeteringBackground` process CPU use has been decreased.
-* Memory management for `AttachmentClassLoader` and `AttachmentURLStreamHandlerFactory` has been improved.
+* The CPU usage of the `NodeMeteringBackground` process has been decreased.
+* The memory management for `AttachmentClassLoader` and `AttachmentURLStreamHandlerFactory` has been improved.
 * `hashLookup` command help has been corrected.
 * A security update to prevent AMQP header spoofing has been applied.
 
