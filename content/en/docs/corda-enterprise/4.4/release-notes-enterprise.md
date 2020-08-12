@@ -35,7 +35,7 @@ As a node operator, you should upgrade to the [latest released version of Corda]
 * The [Configuraton Obfuscator tool](tools-config-obfuscator.md) has been fixed to work for HSM configuration files.
 * The H2 version has been reverted to 1.4.197 to avoid a dependency issue introduced after the previous upgrade.
 * A security update to prevent AMQP header spoofing has been applied.
-* Uncaught exception in `FlowStateMachineImpl.run().initialiseFlow()` now correctly handled.
+* A previously unhandled exception in `FlowStateMachineImpl.run().initialiseFlow()` is now handled correctly.
 * `NodeMeteringBackground` process CPU use has been decreased.
 * The `backchainFetchBatchSize` option has been moved to the tuning section of the node configuration file.
 * Fixed an error in DNS name resolution when using the [Corda Health Survey tool](health-survey.md).
