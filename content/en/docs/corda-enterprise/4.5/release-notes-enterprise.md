@@ -20,7 +20,7 @@ weight: 1
 
 Corda Enterprise 4.5.1 is a patch release of Corda Enterprise that introduces fixes to known issues in Corda Enterprise 4.5.
 
-### Issues Fixed
+### Fixed issues
 
 * Classloader fails to find class when Optional generic used on Type definition.
 * Config Obfuscator doesn't work anymore for HSM configuration files.
