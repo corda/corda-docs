@@ -26,7 +26,7 @@ CENM 1.3.1 introduces fixes to known issues in CENM 1.3.
 * Fixed an issue where HSM passwords were not hidden in CENM Services' logs.
 * Fixed an issue where the Zone Service accidentally removed the `mode` field from the Signing Service's configuration with Utimaco, and failed to return it to the Angel Service.
 * Fixed an issue where `keyPassword` was not hidden in log files for each CENNM Service with a configuration file.
-* Not clear error message with not handled exception.
+* Fixed an issue with an unclear error message for unhandled exceptions.
 
 ## CENM 1.3 release overview
 
