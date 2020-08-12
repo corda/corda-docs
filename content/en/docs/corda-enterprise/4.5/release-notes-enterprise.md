@@ -25,14 +25,14 @@ Corda Enterprise 4.5.1 is a patch release of Corda Enterprise that introduces fi
 * Classloader fails to find class when Optional generic used on Type definition.
 * Config Obfuscator doesn't work anymore for HSM configuration files.
 * Retrying session inits can fail due to database connectivity.
-* Revert H2 version to 197 to avoid bug introduced in the dependency after previous upgrade.
+* Revert H2 version to 1.4.197 to avoid bug introduced in the dependency after previous upgrade.
 * NodeMeteringBackground processes high CPU while a node is idle.
 * Prevent AMQP header spoofing.
 * Passing two sessions with the same counterparty to the CollectSignaturesFlow leads both counterparty's flows to infinitely await messages from other party.
 * Uncaught exception in FlowStateMachineImpl.run().initialiseFlow().
 * [ConfigObfuscator] Firewall doesn't start if its main config and HSM config was obfuscated with specified SEED and PASSPHRASE.
 * TLS handshake timeout leads to blacklisting endpoint.
-* Command line state ref usability improvement (CE 4.5.1).
+* Added support to the spent state audit command for specifying state references in the form `txId(outputIdx)` in addition to the existing `txId:outputIdx`.
 
 ## Corda Enterprise 4.5 release overview
 
