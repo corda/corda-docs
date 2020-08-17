@@ -170,7 +170,7 @@ rpcUsers = [[ user: "user1", "password": "test", "permissions": ["StartFlow.net.
 configFile = "samples/trader-demo/src/main/resources/node-b.conf"
 ```
 
-* `sshdPort` &lt;integer&gt; - use this configuration option to specify the port for sshd communication. For more information, ee [sshd](../setup/corda-configuration-fields.md#sshd). For example:
+* `sshdPort` &lt;integer&gt; - use this configuration option to specify the SSH port for the Docker container. This will be mapped to the same port on the host.  If `sshdPort` is specified, then that port must be available on the host and not in use by some other service. If `sshdPort` is not specified, then a default value will be used for the SSH port on the container. Use the `docker port <container_name>` command to check which port has been allocated on the host for your container. For more information, see [sshd](../setup/corda-configuration-fields.md#sshd). For example:
 
 ```kotlin
 sshd {
@@ -329,7 +329,7 @@ You do not need to specify the node ports because every node has a separate cont
 
 You should interact with each node via its shell over SSH - see the [node configuration options](../setup/corda-configuration-file.md) for more information.
 
-To enable the shell, yon need to set the `sshdPort` number for each node in the gradle task - this is explained in the section [run the Dockerform task](#run-the-dockerform-task) further below. For example:
+To enable the shell, you need to set the `sshdPort` number for each node in the gradle task - this is explained in the section [run the Dockerform task](#run-the-dockerform-task) further below. For example:
 
 ```groovy
 node {
