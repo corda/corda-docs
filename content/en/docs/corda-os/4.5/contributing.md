@@ -192,11 +192,11 @@ the [Community Maintainers](contributing-philosophy.md#community-maintainers) di
 
 A “large” contribution is one that meets one or more of the following criteria:
 
-* It would require users to modify or recompile their CorDapps
-* It would introduce a new user-facing feature or configuration option
-* It would negatively impact performance or security (e.g. by introducing a new dependency)
-* It would take a long time to implement - two weeks or more
-* It significantly increases the project’s QA or support costs
+* It would require users to modify or recompile their CorDapps.
+* It would introduce a new user-facing feature or configuration option.
+* It would negatively impact performance or security (e.g. by introducing a new dependency).
+* It would take a long time to implement - two weeks or more.
+* It would significantly increase the project’s QA or support costs.
 
 Large contributions can be disruptive - both for users of the Corda platform, and for platform developers who are modifying the same parts of the software as part of the established product roadmap. In addition, the work of reviewing and maintaining these contributions diverts the team’s resources from other efforts. Generally, it is more effective to put in a feature request via the [corda-dev mailing list](https://groups.io/g/corda-dev) instead.
 
@@ -210,17 +210,17 @@ The process for contributing a large change to Corda is as follows:
 
 2. The project maintainers will feed back on your proposal. Some of the criteria they will be evaluating the proposal against are:
 
-    * Whether the contribution is aligned with Corda’s mission statement (as outlined in the [Corda Introductory Whitepaper](https://docs.corda.net/en/pdf/corda-introductory-whitepaper.pdf))
+    * The contribution is/is not aligned with Corda’s mission statement (as outlined in the [Corda Introductory Whitepaper](https://docs.corda.net/en/pdf/corda-introductory-whitepaper.pdf)).
 
-    * Whether the contribution will negatively impact the ability of R3 and other project contributors to deliver improvements to the platform
+    * The contribution will/will not negatively impact the ability of R3 and other project contributors to deliver improvements to the platform.
 
-    * Whether the contribution will require the project maintainers to have access to proprietary hardware or software resources
+    * The contribution will/will not require the project maintainers to have access to proprietary hardware or software resources.
 
-    * The contribution’s impact on the project’s QA or support costs
+    * The contribution will/will not impact the project’s QA or support costs.
 
-3. If the proposal is accepted, please raise a design PR on the [Corda GitHub project](https://github.com/corda/corda). The design should give the rationale for the change, how the change will be implemented, and what alternative designs were rejected. The engineering team will review your design and indicate any required changes
+3. If the proposal is accepted, please raise a design PR on the [Corda GitHub project](https://github.com/corda/corda). The design should give the rationale for the change, how the change will be implemented, and what alternative designs were rejected. The engineering team will review your design and indicate any required changes.
 
-4. Once the design is approved, please go ahead with the change according to the [guidelines for small and medium contributions](contributing.md#making-the-required-changes). In addition to those guidelines, we require that large contributions be fully exercised by tests, including any exception paths and error handling
+4. Once the design is approved, please go ahead with the change according to the [guidelines for small and medium contributions](contributing.md#making-the-required-changes). In addition to those guidelines, we require that large contributions be fully exercised by tests, including any exception paths and error handling.
 
 
 ## Developer Certificate of Origin
