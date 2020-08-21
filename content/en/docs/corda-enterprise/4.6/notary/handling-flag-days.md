@@ -18,22 +18,22 @@ weight: 7
 ## Consequences of Flag Days for the notary
 
 A Flag Day signifies the point in time where the network stops using one set of Network Parameters and begins using the new, previously
-proposed set of Network Parameters. This is discussed in the “Network parameters update process” within the network-map
-documentation.
+proposed set of Network Parameters. This is discussed in [Network parameters update process](../network/network-map.md#network-parameters-update-process).
 
-Once a Flag Day is issued, the next time a node polls the Network Map service it will receive the updated Network Parameters, in turn
-causing the node to shutdown due to a parameter mismatch. As a Notary node (whether a basic Notary or a worker within a HA cluster) is built
-upon the same foundation as a standard node, it will behave in the same way and also shutdown when it next polls.
+Once a Flag Day is issued, the next time a node polls the Network Map service, it will receive the updated Network Parameters, in turn
+causing the node to shut down due to a parameter mismatch. As a Notary node (whether a basic Notary or a worker within a HA cluster) is built
+upon the same foundation as a standard node, it will behave in the same way and also shut down when it next polls.
 
 {{< note >}}
-This shutdown occurs because, as there is currently no way to hot swap the old set of Network Parameters with the new set, the only
+This shutdown occurs because, with one exception, it is not possible to hot swap the old set of Network Parameters with the new set, and the only
 option to refresh the parameters is a node restart. A consequence of this is that there is no way to restart the Notary in a preemptive
 manner prior to the Flag Day.
 
+The exception is if the parameter changes _only_ update the list of notaries. In those circumstances, the node does not need to restart. See [Hotloading](../network/network-map.md#hotloading) for more information.
+
 {{< /note >}}
-Outlined below is some basic suggestions to best deal with Flag Days. Note that to avoid any issues restarting the Notary nodes, a Notary
-operator should ensure that all nodes have accepted the parameter update. See the “Network parameters update process” section within the
-network-map for more information.
+Outlined below are some basic suggestions to best deal with Flag Days. Note that to avoid any issues restarting the Notary nodes, a Notary
+operator should ensure that all nodes have accepted the parameter update. See [Network parameters update process](../network/network-map.md#network-parameters-update-process) for more information.
 
 
 ## Single notary

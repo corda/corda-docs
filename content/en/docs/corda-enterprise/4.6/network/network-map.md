@@ -265,8 +265,11 @@ shell (see shell):
 
 If the administrator does not accept the update then next time the node polls network map after the deadline, the
 advertised network parameters will be the updated ones. The previous set of parameters will no longer be valid.
-At this point the node will automatically shutdown and will require the node operator to bring it back again.
+At this point the node will automatically shut down and will require the node operator to restart the node.
 
+### Hotloading
+
+Most network parameter changes require that a node is stopped and restarted before the changes are accepted. The exception to this is when the network parameter changes only update notaries. Updates that have only changes to notaries can be accepted without a restart. In other words, they can be hotloaded.
 
 ## Private networks
 
