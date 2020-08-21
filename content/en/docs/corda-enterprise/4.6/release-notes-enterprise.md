@@ -29,6 +29,22 @@ Corda Enterprise 4.6 is operationally compatible with Corda (open source) 4.x an
 
 ## New features and enhancements
 
+### Ability to access new, remote RPC interfaces via Multi RPC Client
+
+A new RPC Client, called the Multi RPC Client, has been added in Corda Enterprise 4.6.
+
+Node operators can now use the Multi RPC client to interact with a Corda Enterprise node via any of the following custom, remote RPC interfaces:
+
+* `net.corda.client.rpc.proxy.AuditDataRPCOps`: enables you to audit the log of RPC activity.
+* `net.corda.client.rpc.proxy.FlowRPCOps`: enables you to retry a previously hospitalised flow.
+* `net.corda.client.rpc.proxy.NodeFlowStatusRpcOps`: enables external applications to query and view the status of the flows which are currently under monitoring by the Flow Hospital.
+* `net.corda.client.rpc.proxy.NodeHealthCheckRpcOps`: enables you to get a report about the health of the Corda Enterprise node.
+* `net.corda.client.rpc.proxy.notary.NotaryQueryRpcOps`: enables you to perform a spend audit for a particular state reference.
+
+All of these interfaces are located in the `:client:extensions-rpc` module. Corda Enterprise customers can extend these interfaces to add custom, user-defined functionality to help manage their Corda Enterprise nodes.
+
+For more information, see the [Interacting with a node](../4.6/node/operating/clientrpc.md) documentation section or see [MultiRPCClient](https://api.corda.net/api/corda-enterprise/4.6/html/api/javadoc/net/corda/client/rpc/ext/MultiRPCClient.html) in the API documentation.
+
 ### New `flowStatus` command available from the Node shell
 
 Corda Enterprise 4.6 introduces a new query command to help node operators manage the set of flows currently in execution on their node.
@@ -48,7 +64,8 @@ Using the functionality provided by the `flowStatus` command, node operators can
 	* The flow remained stuck at a checkpoint for a particular length of time.
 * List summary information for a checkpointed flow
 
-See the [Querying flow data](../node/operating/querying-flow-data.md) documentation section for more information.
+See the [Querying flow data](../4.6/node/operating/querying-flow-data.md) documentation section for more information.
+
 
 
 ## Fixed issues
@@ -57,7 +74,7 @@ See the [Querying flow data](../node/operating/querying-flow-data.md) documentat
 
 ### Minor fixed issues
 
-* We have fixed an issue where 
+* We have fixed an issue where
 * We have fixed an issue where
 * We have fixed an issue where
 * We have fixed an issue where
