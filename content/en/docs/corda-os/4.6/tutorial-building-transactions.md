@@ -8,7 +8,7 @@ menu:
   corda-os-4-6:
     identifier: corda-os-4-6-tutorial-building-transactions
     parent: corda-os-4-6-tutorials-index
-    weight: 1090
+    weight: 1080
 tags:
 - tutorial
 - building
@@ -428,5 +428,4 @@ overall transaction id is still provable from the
 not expose that data to the other node directly. A full example of this
 can be found in the `NodeInterestRates` Oracle code from the
 `irs-demo` project which interacts with the `RatesFixFlow` flow.
-Also, refer to the [Transaction tear-offs](tutorial-tear-offs.md).
-
+Also, refer to the [Defining transaction tear-offs](tutorial-tear-offs.md).

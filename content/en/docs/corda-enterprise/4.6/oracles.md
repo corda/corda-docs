@@ -42,7 +42,7 @@ could do an HTTP request: it’s possible that an answer would change after bein
 consensus.
 
 
-### The two basic approaches
+### Approaches to implementing oracles
 
 The architecture provides two ways of implementing oracles with different tradeoffs:
 
@@ -442,4 +442,3 @@ You can then write tests on your mock network to verify the nodes interact with 
 [OracleNodeTearOffTests.kt](https://github.com/corda/enterprise/blob/release/ent/4.6/samples/irs-demo/cordapp/workflows-irs/src/test/kotlin/net/corda/irs/api/OracleNodeTearOffTests.kt)
 
 See [here](https://github.com/corda/corda/samples/irs-demo/cordapp/workflows-irs/src/test/kotlin/net/corda/irs/api/OracleNodeTearOffTests.kt) for more examples.
-

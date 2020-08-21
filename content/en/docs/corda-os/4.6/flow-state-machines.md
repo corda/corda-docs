@@ -8,7 +8,7 @@ menu:
   corda-os-4-6:
     identifier: corda-os-4-6-flow-state-machines
     parent: corda-os-4-6-tutorials-index
-    weight: 1100
+    weight: 1130
 tags:
 - flow
 - state
@@ -21,7 +21,7 @@ title: Writing flows
 
 # Writing flows
 
-This article explains our approach to modelling business processes and the lower level network protocols that implement
+This tutorial explains our approach to modelling business processes and the lower level network protocols that implement
 them. It explains how the platform’s flow framework is used, and takes you through the code for a simple
 2-party asset trading flow which is included in the source.
 
@@ -247,7 +247,7 @@ when messages arrive. It provides the send/receive/sendAndReceive calls that let
 interaction and it will save/restore serialised versions of the fiber at the right times.
 
 Flows can be invoked in several ways. For instance, they can be triggered by scheduled events (in which case they need to
-be annotated with `@SchedulableFlow`), see “[Event scheduling](event-scheduling.md)” to learn more about this. They can also be triggered
+be annotated with `@SchedulableFlow`), see “[Scheduling events](event-scheduling.md)” to learn more about this. They can also be triggered
 directly via the node’s RPC API from your app code (in which case they need to be annotated with *StartableByRPC*). It’s
 possible for a flow to be of both types.
 
@@ -862,4 +862,3 @@ problems (e.g. the other side doesn’t know the trade)
 For example to implement human transaction authorisations
 * A standard library of flows that can be easily sub-classed by local developers in order to integrate internal
 reporting logic, or anything else that might be required as part of a communications lifecycle
-

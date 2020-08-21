@@ -8,7 +8,7 @@ menu:
   corda-os-4-6:
     identifier: corda-os-4-6-flow-testing
     parent: corda-os-4-6-tutorials-index
-    weight: 1110
+    weight: 1140
 tags:
 - flow
 - testing
@@ -149,4 +149,3 @@ directly to the `megaCorpNode.services.recordTransaction` method (note that this
 transactions are valid) inside a `database.transaction`.  All node flows run within a database transaction in the
 nodes themselves, but any time we need to use the database directly from a unit test, you need to provide a database
 transaction as shown here.
-

@@ -8,7 +8,7 @@ menu:
   corda-os-4-6:
     identifier: corda-os-4-6-contract-upgrade
     parent: corda-os-4-6-tutorials-index
-    weight: 1060
+    weight: 1070
 tags:
 - contract
 - upgrade

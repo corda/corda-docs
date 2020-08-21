@@ -12,13 +12,13 @@ menu:
 tags:
 - tutorial
 - contract
-title: Writing a contract
+title: Writing contracts
 ---
 
 
 
 
-# Writing a contract
+# Writing contracts
 
 This tutorial will take you through writing a contract, using a simple commercial paper contract as an example.
 Smart contracts in Corda have three key elements:
@@ -659,7 +659,7 @@ To make contract testing more convenient Corda provides a language-like API for 
 you easily construct chains of transactions and verify that they either pass validation, or fail with a particular
 error message.
 
-Testing contracts with this domain specific language is covered in the separate tutorial, [Writing a contract test](tutorial-test-dsl.md).
+Testing contracts with this domain specific language is covered in the separate tutorial, [Writing contract tests](tutorial-test-dsl.md).
 
 
 ## Adding a generation API to your contract
@@ -902,7 +902,7 @@ Corda provides a way for states to advertise scheduled events that should occur 
 is by default ignored, if the corresponding *Cordapp* is installed and active in your node, and if the state is
 considered relevant by your vault (e.g. because you own it), then the node can automatically begin the process
 of creating a transaction and taking it through the life cycle. You can learn more about this in the article
-“[Event scheduling](event-scheduling.md)”.
+[Scheduling events](event-scheduling.md).
 
 
 ## Encumbrances

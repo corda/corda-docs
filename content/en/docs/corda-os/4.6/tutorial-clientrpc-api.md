@@ -8,7 +8,7 @@ menu:
   corda-os-4-6:
     identifier: corda-os-4-6-tutorial-clientrpc-api
     parent: corda-os-4-6-tutorials-index
-    weight: 1080
+    weight: 1180
 tags:
 - tutorial
 - clientrpc
@@ -22,7 +22,7 @@ title: Using the client RPC API
 
 # Using the client RPC API
 
-In this tutorial we will build a simple command line utility that connects to a node, creates some cash transactions
+In this tutorial, we will build a simple command line utility that connects to a node, creates some cash transactions
 and dumps the transaction graph to the standard output. We will then put some simple visualisation on top. For an
 explanation on how RPC works in Corda see [Interacting with a node](clientrpc.md).
 
@@ -613,4 +613,3 @@ annotated with `@StartableByRPC`. Flows without this annotation cannot execute u
 
 See more on security in [Secure coding guidelines](secure-coding-guidelines.md), node configuration in [Node configuration](corda-configuration-file.md) and
 Cordformation in [Running nodes locally](running-a-node.md).
-

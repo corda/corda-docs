@@ -444,7 +444,7 @@ This breaks down as follows:
 ### Attachments
 
 The shell can be used to upload and download attachments from the node. To learn more, see the tutorial
-“[Using attachments](tutorial-attachments.md)”.
+“[Working with attachments](tutorial-attachments.md)”.
 
 
 ### Getting help
@@ -495,7 +495,3 @@ The shell will be enhanced over time. The currently known limitations include:
 * The `jdbc` command requires you to explicitly log into the database first
 * Commands placed in the `shell-commands` directory are only noticed after the node is restarted
 * The `jul` command advertises access to logs, but it doesn’t work with the logging framework we’re using
-
-
-
-

@@ -8,7 +8,7 @@ menu:
   corda-os-4-6:
     identifier: corda-os-4-6-tutorial-integration-testing
     parent: corda-os-4-6-tutorials-index
-    weight: 1070
+    weight: 1150
 tags:
 - tutorial
 - integration
@@ -19,7 +19,7 @@ title: Integration testing
 
 
 
-# Integration testing
+# Conducting integration testing
 
 Integration testing involves bringing up nodes locally and testing invariants about them by starting flows and inspecting
 their state.

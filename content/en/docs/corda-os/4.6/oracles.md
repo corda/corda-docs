@@ -8,7 +8,7 @@ menu:
   corda-os-4-6:
     identifier: corda-os-4-6-oracles
     parent: corda-os-4-6-tutorials-index
-    weight: 1120
+    weight: 1160
 tags:
 - oracles
 title: Writing oracle services
@@ -19,14 +19,14 @@ title: Writing oracle services
 
 # Writing oracle services
 
-This article covers *oracles*: network services that link the ledger to the outside world by providing facts that
+This tutorial covers *oracles*: network services that link the ledger to the outside world by providing facts that
 affect the validity of transactions.
 
 The current prototype includes an example oracle that provides an interest rate fixing service. It is used by the
 IRS trading demo app.
 
 
-## Introduction to oracles
+## Introduction
 
 Oracles are a key concept in the block chain/decentralised ledger space. They can be essential for many kinds of
 application, because we often wish to condition the validity of a transaction on some fact being true or false, but the ledger itself
@@ -50,7 +50,7 @@ could do an HTTP request: it’s possible that an answer would change after bein
 consensus.
 
 
-### The two basic approaches
+### Approaches to implementing oracles
 
 The architecture provides two ways of implementing oracles with different tradeoffs:
 
@@ -467,4 +467,3 @@ You can then write tests on your mock network to verify the nodes interact with 
 [OracleNodeTearOffTests.kt](https://github.com/corda/corda/blob/release/os/4.6/samples/irs-demo/cordapp/workflows-irs/src/test/kotlin/net/corda/irs/api/OracleNodeTearOffTests.kt)
 
 See [here](https://github.com/corda/corda/samples/irs-demo/cordapp/workflows-irs/src/test/kotlin/net/corda/irs/api/OracleNodeTearOffTests.kt) for more examples.
-

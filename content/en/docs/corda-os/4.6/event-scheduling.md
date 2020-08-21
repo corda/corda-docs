@@ -8,19 +8,19 @@ menu:
   corda-os-4-6:
     identifier: corda-os-4-6-event-scheduling
     parent: corda-os-4-6-tutorials-index
-    weight: 1160
+    weight: 1060
 tags:
 - event
 - scheduling
-title: Event scheduling
+title: Scheduling time-based events
 ---
 
 
 
 
-# Event scheduling
+# Scheduling time-based events
 
-This article explains our approach to modelling time based events in code. It explains how a contract
+This tutorial explains our approach to modelling time based events in code. It explains how a contract
 state can expose an upcoming event and what action to take if the scheduled time for that event is reached.
 
 
@@ -109,4 +109,3 @@ should become available and schedules an activity at that time to work out what 
 business process and to take on those roles.  That `FlowLogic` will be handed the `StateRef` for the interest
 rate swap `State` in question, as well as a tolerance `Duration` of how long to wait after the activity is triggered
 for the interest rate before indicating an error.
-

@@ -306,7 +306,7 @@ In Corda 4.3, nodes can choose to record a transaction with three different leve
 Previously, there was a limitation in that if a node initially records a transaction with a specific level of visibility, they cannot later record it with a different level of visibility.
 
 In Corda 4.3, an enhancement has been made to observer node functionality to allow observers to re-record transactions that have already been recorded at a lower visibility.
-See [Observer nodes](tutorial-observer-nodes.md) for details of how to work with observer nodes
+See [Posting transactions to observer nodes](tutorial-observer-nodes.md) for details of how to work with observer nodes.
 
 
 ### Changes for operators in Corda 4.3

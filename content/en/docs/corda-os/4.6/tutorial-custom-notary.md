@@ -8,7 +8,7 @@ menu:
   corda-os-4-6:
     identifier: corda-os-4-6-tutorial-custom-notary
     parent: corda-os-4-6-tutorials-index
-    weight: 1130
+    weight: 1170
 tags:
 - tutorial
 - custom
@@ -123,4 +123,3 @@ To create a flow test that uses your custom notary service, you can set the clas
 [CustomNotaryTest.kt](https://github.com/corda/corda/blob/release/os/4.6/testing/node-driver/src/test/kotlin/net/corda/testing/node/CustomNotaryTest.kt)
 
 After this, your custom notary will be the default notary on the mock network, and can be used in the same way as described in [Writing flow tests](flow-testing.md).
-

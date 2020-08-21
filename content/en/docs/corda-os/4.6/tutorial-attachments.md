@@ -8,17 +8,17 @@ menu:
   corda-os-4-6:
     identifier: corda-os-4-6-tutorial-attachments
     parent: corda-os-4-6-tutorials-index
-    weight: 1150
+    weight: 1090
 tags:
 - tutorial
 - attachments
-title: Using attachments
+title: Working with attachments
 ---
 
 
 
 
-# Using attachments
+# Working with attachments
 
 Attachments are ZIP/JAR files referenced from transaction by hash, but not included in the transaction
 itself. These files are automatically requested from the node sending the transaction when needed and cached
@@ -36,7 +36,7 @@ using `TransactionBuilder.addAttachment()`. Attachments can be uploaded and down
 It is encouraged that where possible attachments are reusable data, so that nodes can meaningfully cache them.
 
 
-## Uploading and downloading
+## Uploading and downloading attachments
 
 To upload an attachment to the node, or download an attachment named by its hash, you use [Interacting with a node](clientrpc.md). This
 is also available for interactive use via the shell. To **upload** run:
@@ -53,11 +53,11 @@ and filename are just plain strings (there is no connection between uploader and
 The file is uploaded, checked and if successful the hash of the file is returned. This is how the attachment is
 identified inside the node.
 
-To download an attachment, you can do:
+To download an attachment, you can run the following command:
 
 `>>> run openAttachment id: AB7FED7663A3F195A59A0F01091932B15C22405CB727A1518418BF53C6E6663A`
 
-which will then ask you to provide a path to save the file to. To do the same thing programmatically, you
+You will be prompted to provide a path to save the file to. To do the same thing programmatically, you
 can pass a simple `InputStream` or `SecureHash` to the `uploadAttachment`/`openAttachment` RPCs from
 a JVM client.
 
@@ -69,12 +69,12 @@ Attachment metadata can be queried in a similar way to the vault (see [API: Vaul
 `AttachmentQueryCriteria` can be used to build a query using the following set of column operations:
 
 
-* Binary logical (AND, OR)
-* Comparison (LESS_THAN, LESS_THAN_OR_EQUAL, GREATER_THAN, GREATER_THAN_OR_EQUAL)
-* Equality (EQUAL, NOT_EQUAL)
-* Likeness (LIKE, NOT_LIKE)
-* Nullability (IS_NULL, NOT_NULL)
-* Collection based (IN, NOT_IN)
+* Binary logical (`AND`, `OR`)
+* Comparison (`LESS_THAN`, `LESS_THAN_OR_EQUAL`, `GREATER_THAN`, `GREATER_THAN_OR_EQUAL`)
+* Equality (`EQUAL`, `NOT_EQUAL`)
+* Likeness (`LIKE`, `NOT_LIKE`)
+* Nullability (`IS_NULL`, `NOT_NULL`)
+* Collection based (`IN`, `NOT_IN`)
 
 The `and` and `or` operators can be used to build complex queries. For example:
 
@@ -236,9 +236,8 @@ private fun sender(rpc: CordaRPCOps, inputStream: InputStream, hash: SecureHash.
 
 {{< /tabs >}}
 
-This side is a bit more complex. Firstly it looks up its counterparty by name in the network map. Then, if the node
+This side is a bit more complex. Firstly, it looks up its counterparty by name in the network map. Then, if the node
 doesn’t already have the attachment in its storage, we upload it from a JAR resource and check the hash was what
 we expected. Then a trivial transaction is built that has the attachment and a single signature and it’s sent to
 the other side using the FinalityFlow. The result of starting the flow is a stream of progress messages and a
 `returnValue` observable that can be used to watch out for the flow completing successfully.
-

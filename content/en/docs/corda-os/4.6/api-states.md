@@ -255,7 +255,7 @@ You can also customize your state by implementing the following interfaces:
 * `QueryableState`, which allows the state to be queried in the node’s database using custom attributes (see
 [API: Persistence](api-persistence.md))
 * `SchedulableState`, which allows us to schedule future actions for the state (e.g. a coupon payment on a bond) (see
-[Event scheduling](event-scheduling.md))
+[Scheduling events](event-scheduling.md))
 
 
 ## User-defined fields
@@ -524,4 +524,3 @@ When building transactions, any `StatePointer` s contained within inputs or outp
 be optionally resolved to reference states using the `resolveStatePointers` method. The effect is that the pointed to
 data is carried along with the transaction. This may or may not be appropriate in all circumstances, which is why
 calling the method is optional.
-

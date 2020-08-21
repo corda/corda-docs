@@ -1202,7 +1202,7 @@ Parameters in this flow:
 
  * `amount` - amount of token to redeem.
  * `issuerSession` - session with the issuer tokens should be redeemed with.
- * `observerSessions` - optional sessions with the observer nodes, to witch the transaction will be broadcasted.
+ * `observerSessions` - optional sessions with the observer nodes, to which the transaction will be broadcasted.
  * `additionalQueryCriteri` - a additional criteria for token selection.
  * `changeHolder` - optional change key, if using accounts you should generate the change key prior to calling this flow then pass it in to the flow via this parameter.
 

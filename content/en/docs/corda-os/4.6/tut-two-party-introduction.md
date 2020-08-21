@@ -7,41 +7,31 @@ date: '2020-04-07T12:00:00Z'
 menu:
   corda-os-4-6:
     identifier: corda-os-4-6-tut-two-party-introduction
-    parent: corda-os-4-6-tutorials-index
-    weight: 1020
+    parent: corda-os-4-6-hello-world-introduction
+    weight: 1050
 tags:
 - tut
 - party
 - introduction
-title: Hello, World! Pt.2 - Contract constraints
+title: Applying contract constraints
 ---
 
 
-# Hello, World! Pt.2 - Contract constraints
+# Applying contract constraints
 
-{{< note >}}
-This tutorial extends the CorDapp built during the [Hello, World tutorial](hello-world-introduction.md).
+In the previous steps of the Hello, World tutorial, you built a CorDapp which enabled you to model IOUs on ledger.
 
-{{< /note >}}
-In the Hello, World tutorial, we built a CorDapp allowing us to model IOUs on ledger. Our CorDapp was made up of two
-elements:
-
+Your CorDapp was made up of two elements:
 
 * An `IOUState`, representing IOUs on the blockchain
 * An `IOUFlow` and `IOUFlowResponder` flow pair, orchestrating the process of agreeing the creation of an IOU on-ledger
 
-However, our CorDapp did not impose any constraints on the evolution of IOUs on the blockchain over time. Anyone was free
+However, the CorDapp as it stands so far does not impose any constraints on the evolution of IOUs on the blockchain over time. Anyone would be free
 to create IOUs of any value, between any party.
 
-In this tutorial, we’ll write a contract to imposes rules on how an `IOUState` can change over time. In turn, this
-will require some small changes to the flow we defined in the previous tutorial.
+To rectify this, you must next write a contract to imposes rules on how an `IOUState` can change over time. In turn, this
+will require some small changes to the flow you defined earlier in [Writing the flow](hello-world-flow.md) .
 
-We’ll start by writing the contract.
+Start by writing the contract - see [Writing the contract](tut-two-party-contract.md).
 
-
-
-* [Writing the contract](tut-two-party-contract.md)
-* [Updating the flow](tut-two-party-flow.md)
-
-
-
+Once that's done, you'll need to make the necessary updates to the flow - see [Updating the flow](tut-two-party-flow.md).

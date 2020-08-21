@@ -8,18 +8,18 @@ menu:
   corda-os-4-6:
     identifier: corda-os-4-6-tutorial-observer-nodes
     parent: corda-os-4-6-tutorials-index
-    weight: 1170
+    weight: 1120
 tags:
 - tutorial
 - observer
 - nodes
-title: Observer nodes
+title: Posting transactions to observer nodes
 ---
 
 
 
 
-# Observer nodes
+# Posting transactions to observer nodes
 
 Posting transactions to an observer node is a common requirement in finance, where regulators often want
 to receive comprehensive reporting on all actions taken. By running their own node, regulators can receive a stream
@@ -107,4 +107,3 @@ expected if just those transactions sent with the ALL_VISIBLE recording flag wer
 * Nodes may re-record transaction if they have previously recorded them as a participant and wish to record them as an observer. However,
 the node cannot resolve a forward chain of transactions if this is done. This means that if you wish to re-record a chain of transactions
 and get the new output states to be correctly marked as consumed, the full chain must be sent to the node *in order*.
-

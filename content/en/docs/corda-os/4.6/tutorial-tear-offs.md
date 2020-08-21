@@ -8,18 +8,18 @@ menu:
   corda-os-4-6:
     identifier: corda-os-4-6-tutorial-tear-offs
     parent: corda-os-4-6-tutorials-index
-    weight: 1140
+    weight: 1110
 tags:
 - tutorial
 - tear
 - offs
-title: Transaction tear-offs
+title: Defining transaction tear-offs
 ---
 
 
 
 
-# Transaction tear-offs
+# Defining transaction tear-offs
 
 Suppose we want to construct a transaction that includes commands containing interest rate fix data as in
 [Writing oracle services](oracles.md). Before sending the transaction to the oracle to obtain its signature, we need to filter out every part

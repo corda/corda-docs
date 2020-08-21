@@ -6,14 +6,14 @@ menu:
 tags:
 - event
 - scheduling
-title: Event scheduling
+title: Scheduling time-based events
 weight: 30
 ---
 
 
 
 
-# Event scheduling
+# Scheduling time-based events
 
 This article explains our approach to modelling time based events in code. It explains how a contract
 state can expose an upcoming event and what action to take if the scheduled time for that event is reached.

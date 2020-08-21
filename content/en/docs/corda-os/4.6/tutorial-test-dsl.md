@@ -13,13 +13,13 @@ tags:
 - tutorial
 - test
 - dsl
-title: Writing a contract test
+title: Writing contract tests
 ---
 
 
 
 
-# Writing a contract test
+# Writing contract tests
 
 This tutorial will take you through the steps required to write a contract test using Kotlin and Java.
 
@@ -850,4 +850,3 @@ public void chainCommercialPaperTweak() {
 [TutorialTestDSL.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/kotlin/net/corda/docs/kotlin/tutorial/testdsl/TutorialTestDSL.kt) | [TutorialTestDSL.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/java/net/corda/docs/java/tutorial/testdsl/TutorialTestDSL.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
-
