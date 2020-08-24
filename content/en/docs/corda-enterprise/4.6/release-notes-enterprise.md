@@ -45,16 +45,19 @@ All of these interfaces are located in the `:client:extensions-rpc` module. Cord
 
 For more information, see the [Interacting with a node](../4.6/node/operating/clientrpc.md) documentation section or see [MultiRPCClient](https://api.corda.net/api/corda-enterprise/4.6/html/api/javadoc/net/corda/client/rpc/ext/MultiRPCClient.html) in the API documentation.
 
-### New `flowStatus` command available from the Node shell
+### Ability to query flow data via RPC and via the node shell
 
-Corda Enterprise 4.6 introduces a new query command to help node operators manage the set of flows currently in execution on their node.
+Corda Enterprise 4.6 introduces the ability to query flow checkpoint data. This helps node operators manage the set of flows currently in execution on their node, by giving operators the ability to a) identify one or more flows that did not complete as expected and b) retrieve status information relating to one or more flows.
 
-The `flowStatus` command, which has been added to the Node shell, enables node operators to identify one or more flows that did not complete and retrieve rich information on a specific flow or on all flows matching specified query criteria.
+Node operators can use one of the following methods to query flow status:
 
-Using the functionality provided by the `flowStatus` command, node operators can:
+* They can use the new `net.corda.client.rpc.proxy.NodeFlowStatusRpcOps` interface to interact with their node and query flow status via RPC.
+* They can query the node manually via the node shell, using the new `flowstatus` command.
 
-* List all flows that have not completed
-* Filter the list of flows that did not complete by specifying additional search criteria such as the following:
+Querying the node using either method enables node operators to:
+
+* Return a list of all flows that have not completed as expected (suspended flows)
+* Return all suspended flows that meet particular search criteria such as the following:
 	* The flow is or is not compatible with the current Corda runtime environment.
 	* The flow relates to a particular CorDapp.
 	* The flow includes a particular flow class.
@@ -62,9 +65,9 @@ Using the functionality provided by the `flowStatus` command, node operators can
 	* The flow is in a particular state.
 	* The flow did not proceed beyond a specific progress step.
 	* The flow remained stuck at a checkpoint for a particular length of time.
-* List summary information for a checkpointed flow
+* Retrieve status information for one or more suspended flows
 
-See the [Querying flow data](../4.6/node/operating/querying-flow-data.md) documentation section for more information.
+See the [Querying flow data](../node/operating/querying-flow-data.md) documentation section for more information.
 
 
 
