@@ -66,7 +66,7 @@ The current update process is a 3 step operation.
 * Day 1-N Collect node acceptances
 * Day N* Update the central file and distribute
 
-On distribution of the updated parameters, Corda 3.X design forces all nodes to stop and restart to accommodate them. Restarting the node is conditional upon acceptance.
+Most network parameter changes require that a node is stopped and restarted before the changes are accepted. The exception to this is when the network parameter changes _only_ update **notaries**. Updates that have only changes to **notaries** can be accepted without a restart.
 
 
 ### Flag day communications

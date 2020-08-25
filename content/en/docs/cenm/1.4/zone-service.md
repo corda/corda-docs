@@ -61,6 +61,7 @@ The full list of configuration options follows below:
 - `--url`: The URL for the Zone Service's database.
 - `--user`: The user for the Zone Service's database.
 - `--password`: The password for the Zone Service's database.
+- `--current-schema`: Allows you to alter the session's current schema for the database. Use this configuration option when the schema name differs from the user name. Only valid for Oracle databases.
 - `--admin-listener-port`: The port where Angel Services connect to the Zone Service.
 - `--disable-authentication`: Allows you to disable authentication and authorisation via the [Auth Service](auth-service.md). Only use this option in development environments. Defaults to `false` if no value is provided.
 - `--auth-host`: The hostname of the Auth Service. Required unless authentication and authorisation are disabled.
