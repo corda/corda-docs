@@ -24,7 +24,7 @@ With Corda Enterprise, you can query flow data in the following ways:
 
 ## Querying flow data via RPC
 
-Corda Enterprise exposes a number of custom, remote RPC interfaces, which enable you to interact with your node. For a list of all the remote interfaces that are available in Corda Enterprise, see [Building a Multi RPC Client](https://docs.corda.net/docs/corda-enterprise/4.6/node/operating/clientrpc.html).
+Corda Enterprise exposes a number of custom, remote RPC interfaces, which enable you to interact with your node. For a list of all the remote interfaces that are available in Corda Enterprise, see [Building a Multi RPC Client](clientrpc.md).
 
 The `net.corda.client.rpc.proxy.NodeFlowStatusRpcOps` interface is an RPC extension which enables external applications to query and view the status of the flows which are currently being monitored by the Flow Hospital.
 
@@ -44,9 +44,9 @@ val connFuture = client.start()
 val conn = connFuture.get()
 val flowStatusRPCOPs = conn.proxy
 ```
-To view the full code sample, see [NodeFlowStatusRpcOps.kt](https://github.com/enterprise/client/extensions-rpc/src/main/kotlin/net/corda/client/rpc/proxy/NodeFlowStatusRpcOps.kt).
+To view the full code sample, see [NodeFlowStatusRpcOps.kt](https://github.com/corda/enterprise/blob/release/ent/4.6/client/extensions-rpc/src/main/kotlin/net/corda/client/rpc/proxy/NodeFlowStatusRpcOps.kt).
 
-For details of how to build a Multi RPC Client, see [Building a Multi RPC Client](https://docs.corda.net/docs/corda-enterprise/4.6/node/operating/clientrpc.html). See also [MultiRPCClient](https://api.corda.net/api/corda-enterprise/4.6/html/api/javadoc/net/corda/client/rpc/ext/MultiRPCClient.html) in the API documentation.
+For details of how to build a Multi RPC Client, see [Building a Multi RPC Client](clientrpc.md). See also [MultiRPCClient](https://api.corda.net/api/corda-enterprise/4.6/html/api/javadoc/net/corda/client/rpc/ext/MultiRPCClient.html) in the API documentation.
 
 ### Specifying the query criteria
 
@@ -110,7 +110,7 @@ matchingFlows.forEach { flowId ->
 }
 
 ```
-[NodeFlowStatusRpcOps.kt](https://github.com/enterprise/client/extensions-rpc/src/main/kotlin/net/corda/client/rpc/proxy/NodeFlowStatusRpcOps.kt)
+[NodeFlowStatusRpcOps.kt](https://github.com/corda/enterprise/blob/release/ent/4.6/client/extensions-rpc/src/main/kotlin/net/corda/client/rpc/proxy/NodeFlowStatusRpcOps.kt)
 
 When this query is executed, a list of the flow IDs for all flows that did not complete and which meet the search criteria is returned. For each flow ID, the status of the specified flow is also returned.
 
@@ -169,7 +169,7 @@ The available search parameters and their required formats are outlined in the t
 | `suspensionDuration` | The minimum duration for which a flow must have remained suspended (that is, "stuck") at a checkpoint. This is entered in the format `"<value>, <unit>"` where `<value>` is a numerical value and `<unit>` is the unit of time, specified as `SECONDS`, `MINUTES`, `HOURS` or `DAYS`). | String |  
 {{< /table >}}
 
-\*  See [Sample query specifying a time-window for a flow](#sample-query-specifying-a-time-window-for-a-flow).
+\*  See [Sample query to view all suspended flows within a particular time-window](#sample-query-to-view-all-suspended-flows-within-a-particular-time-window).
 
 #### Constructing your query
 
@@ -178,7 +178,7 @@ To return specific information about a flow, a query must contain the following 
 * The query command: `flowStatus queryFlows`.
 * One or more parameters from the above table. These parameters define the data that is returned from each checkpoint.
 
-If you run the query without including any specific search criteria, a list consisting only of the flow IDs of all flows on the node that have not completed is returned, as outlined under [List all flows that have not completed](#list-all-flows-that-have-not-completed).
+If you run the query without including any specific search criteria, a list consisting only of the flow IDs of all flows on the node that have not completed is returned, as outlined under [View all flows that have not completed](#view-all-flows-that-have-not-completed).
 
 #### Sample query to view all suspended flows in a particular state
 
@@ -246,7 +246,7 @@ flowStatus queryFlows suspensionDuration: "2, HOURS"
 
 #### Sample compound queries
 
-You can combine multiple search criteria in a single query. For example, you could combine the two sample queries described in [Sample query to identify a flow in a particular state](#sample-query-to-identify-a-flow-in-a-particular-state) and [Sample query to identify a flow in a particular class](#sample-query-to-identify-a-flow-in-a-particular-class) into a single query as follows:
+You can combine multiple search criteria in a single query. For example, you could combine the two sample queries described in [Sample query to view all suspended flows in a particular state](#sample-query-to-view-all-suspended-flows-in-a-particular-state) and [Sample query to view all suspended flows in a particular class](#sample-query-to-view-all-suspended-flows-in-a-particular-class) into a single query as follows:
 
 `flowStatus queryFlows flowState: HOSPITALIZED flowClass: HospitalizerFlow`
 
