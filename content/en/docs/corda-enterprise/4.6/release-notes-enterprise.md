@@ -67,7 +67,7 @@ Querying the node using either method enables node operators to:
 	* The flow remained stuck at a checkpoint for a particular length of time.
 * Retrieve status information for one or more suspended flows
 
-See the [Querying flow data](../node/operating/querying-flow-data.md) documentation section for more information.
+See the [Querying flow data](../4.6/node/operating/querying-flow-data.md) documentation section for more information.
 
 
 
