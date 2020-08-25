@@ -23,7 +23,7 @@ In Corda, shared facts on the blockchain are represented as states. Our first ta
 represent an IOU.
 
 
-## The ContractState interface
+## Implementing the ContractState interface
 
 A Corda state is any instance of a class that implements the `ContractState` interface. The `ContractState`
 interface is defined as follows:
@@ -182,4 +182,3 @@ If you’ve read the white paper or Key Concepts section, you’ll know that eac
 imposes invariants on how the state evolves over time. Including a contract isn’t crucial for our first CorDapp, so
 we’ll just use the empty `TemplateContract` and `TemplateContract.Commands.Action` command defined by the template
 for now. In the next tutorial, we’ll implement our own contract and command.
-

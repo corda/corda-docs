@@ -7,7 +7,7 @@ date: '2020-04-07T12:00:00Z'
 menu:
   corda-os-4-6:
     identifier: corda-os-4-6-flow-state-machines
-    parent: corda-os-4-6-tutorials-index
+    parent: corda-os-4-6-core-tutorials-index
     weight: 1130
 tags:
 - flow
@@ -23,7 +23,7 @@ title: Writing flows
 
 This tutorial explains our approach to modelling business processes and the lower level network protocols that implement
 them. It explains how the platform’s flow framework is used, and takes you through the code for a simple
-2-party asset trading flow which is included in the source.
+two-party asset trading flow which is included in the source.
 
 
 ## Introduction

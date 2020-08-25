@@ -17,22 +17,24 @@ title: Hello, World!
 
 # Hello, World!
 
-
-
-* [The CorDapp Template](hello-world-template.md)
-* [Writing the state](hello-world-state.md)
-* [Writing the flow](hello-world-flow.md)
-* [Running our CorDapp](hello-world-running.md)
-
-
+Ready to write your first CorDapp? You've come to the right place!
 
 By this point, [your dev environment should be set up](getting-set-up.md), you’ve run
 [your first CorDapp](tutorial-cordapp.md), and you’re familiar with Corda’s [key concepts](key-concepts.md). What
 comes next?
 
-If you’re a developer, the next step is to write your own CorDapp. CorDapps are applications that are installed on one or
+If you’re a developer, the next step is to write your own CorDapp.
+
+CorDapps are applications that are installed on one or
 more Corda nodes, and that allow the node’s operator to instruct their node to perform some new process - anything from
 issuing a debt instrument to making a restaurant booking.
+
+Writing your first CorDapp involves the following steps:
+
+1. [Obtaining the CorDapp Template](hello-world-template.md)
+2. [Writing the state](hello-world-state.md)
+3. [Writing the flow](hello-world-flow.md)
+4. [Running our CorDapp](hello-world-running.md)
 
 
 ## Our use-case
@@ -53,9 +55,9 @@ a standard SQL database
 CorDapps usually define at least three things:
 
 
-* **States** - the (possibly shared) facts that are written to the ledger
-* **Flows** - the procedures for carrying out specific ledger updates
-* **Contracts** - the constraints governing how states of a given type can evolve over time
+* **States** - the (possibly shared) facts that are written to the ledger.
+* **Flows** - the procedures for carrying out specific ledger updates.
+* **Contracts** - the constraints governing how states of a given type can evolve over time.
 
 Our IOU CorDapp is no exception. It will define the following components:
 
@@ -89,4 +91,3 @@ tutorial.
 We’ve designed a simple CorDapp that will allow nodes to agree new IOUs on the blockchain.
 
 Next, we’ll take a look at the template project we’ll be using as the basis for our CorDapp.
-

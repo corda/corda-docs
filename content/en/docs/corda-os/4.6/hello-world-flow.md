@@ -87,7 +87,8 @@ import net.corda.core.transactions.TransactionBuilder
 class IOUFlow(val iouValue: Int,
               val otherParty: Party) : FlowLogic<Unit>() {
 
-    /** The progress tracker provides checkpoints indicating the progress of the flow to observers. */
+    /** The progress tracker provides checkpoints indicating the progress of
+    the flow to observers. */
     override val progressTracker = ProgressTracker()
 
     /** The flow logic is encapsulated within the call() method. */
@@ -137,7 +138,8 @@ public class IOUFlow extends FlowLogic<Void> {
     private final Party otherParty;
 
     /**
-     * The progress tracker provides checkpoints indicating the progress of the flow to observers.
+     * The progress tracker provides checkpoints indicating the progress of
+     the flow to observers.
      */
     private final ProgressTracker progressTracker = new ProgressTracker();
 
@@ -366,4 +368,3 @@ will be the finalised transaction which will be recorded in the borrower’s vau
 
 Our flow, and our CorDapp, are now ready! We have now defined a flow that we can start on our node to completely
 automate the process of issuing an IOU onto the ledger. All that’s left is to spin up some nodes and test our CorDapp.
-

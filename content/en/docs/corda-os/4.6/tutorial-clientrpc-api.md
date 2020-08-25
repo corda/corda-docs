@@ -7,7 +7,7 @@ date: '2020-04-07T12:00:00Z'
 menu:
   corda-os-4-6:
     identifier: corda-os-4-6-tutorial-clientrpc-api
-    parent: corda-os-4-6-tutorials-index
+    parent: corda-os-4-6-supplementary-tutorials-index
     weight: 1180
 tags:
 - tutorial

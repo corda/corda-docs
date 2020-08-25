@@ -7,7 +7,7 @@ date: '2020-04-07T12:00:00Z'
 menu:
   corda-os-4-6:
     identifier: corda-os-4-6-tutorial-integration-testing
-    parent: corda-os-4-6-tutorials-index
+    parent: corda-os-4-6-core-tutorials-index
     weight: 1150
 tags:
 - tutorial

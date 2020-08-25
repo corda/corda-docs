@@ -30,7 +30,7 @@ However, the CorDapp as it stands so far does not impose any constraints on the 
 to create IOUs of any value, between any party.
 
 To rectify this, you must next write a contract to imposes rules on how an `IOUState` can change over time. In turn, this
-will require some small changes to the flow you defined earlier in [Writing the flow](hello-world-flow.md) .
+will require some small changes to the flow you defined earlier in [Writing the flow](hello-world-flow.md).
 
 Start by writing the contract - see [Writing the contract](tut-two-party-contract.md).
 

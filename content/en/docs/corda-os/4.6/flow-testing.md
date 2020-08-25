@@ -7,7 +7,7 @@ date: '2020-04-07T12:00:00Z'
 menu:
   corda-os-4-6:
     identifier: corda-os-4-6-flow-testing
-    parent: corda-os-4-6-tutorials-index
+    parent: corda-os-4-6-core-tutorials-index
     weight: 1140
 tags:
 - flow
@@ -20,9 +20,9 @@ title: Writing flow tests
 
 # Writing flow tests
 
-A flow can be a fairly complex thing that interacts with many services and other parties over the network. That
-means unit testing one requires some infrastructure to provide lightweight mock implementations. The MockNetwork
-provides this testing infrastructure layer; you can find this class in the test-utils module.
+A flow can be a fairly complex thing that interacts with many services and other parties over the network. This
+means that unit testing a flow requires some infrastructure to provide lightweight mock implementations. The `MockNetwork` class
+provides this testing infrastructure layer; you can find this class in the `test-utils` module.
 
 A good example to examine for learning how to unit test flows is the `ResolveTransactionsFlow` tests. This
 flow takes care of downloading and verifying transaction graphs, with all the needed dependencies. We start
@@ -140,12 +140,12 @@ private fun makeTransactions(signFirstTX: Boolean = true, withAttachment: Secure
 [ResolveTransactionsFlowTest.kt](https://github.com/corda/corda/blob/release/os/4.6/core-tests/src/test/kotlin/net/corda/coretests/internal/ResolveTransactionsFlowTest.kt)
 
 We’re using the `DummyContract`, a simple test smart contract which stores a single number in its states, along
-with ownership and issuer information. You can issue such states, exit them and re-assign ownership (move them).
+with ownership and issuer information. You can issue such states, exit them, and re-assign ownership (move them).
 It doesn’t do anything else. This code simply creates a transaction that issues a dummy state (the issuer is
-`MEGA_CORP`, a pre-defined unit test identity), signs it with the test notary and MegaCorp keys and then
+`MEGA_CORP`, a pre-defined unit test identity), signs it with the test notary and MegaCorp keys, and then
 converts the builder to the final `SignedTransaction`. It then does so again, but this time instead of issuing
 it re-assigns ownership instead. The chain of two transactions is finally committed to MegaCorpNode by sending them
-directly to the `megaCorpNode.services.recordTransaction` method (note that this method doesn’t check the
+directly to the `megaCorpNode.services.recordTransaction` method (note that this method doesn’t check that the
 transactions are valid) inside a `database.transaction`.  All node flows run within a database transaction in the
 nodes themselves, but any time we need to use the database directly from a unit test, you need to provide a database
 transaction as shown here.

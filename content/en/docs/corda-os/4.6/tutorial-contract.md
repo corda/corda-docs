@@ -7,7 +7,7 @@ date: '2020-04-07T12:00:00Z'
 menu:
   corda-os-4-6:
     identifier: corda-os-4-6-tutorial-contract
-    parent: corda-os-4-6-tutorials-index
+    parent: corda-os-4-6-core-tutorials-index
     weight: 1040
 tags:
 - tutorial
@@ -15,14 +15,13 @@ tags:
 title: Writing contracts
 ---
 
-
-
-
 # Writing contracts
 
 This tutorial will take you through writing a contract, using a simple commercial paper contract as an example.
-Smart contracts in Corda have three key elements:
 
+## Introduction
+
+Smart contracts in Corda have three key elements:
 
 * Executable code (validation logic)
 * State objects
@@ -46,7 +45,7 @@ This lifecycle for commercial paper is illustrated in the diagram below:
 
 ![contract cp](/en/images/contract-cp.png "contract cp")
 
-## Starting the commercial paper class
+## Defining the commercial paper class
 
 A smart contract is a class that implements the `Contract` interface. This can be either implemented directly, as done
 here, or by subclassing an abstract contract such as `OnLedgerAsset`. The heart of any contract in Corda is the
