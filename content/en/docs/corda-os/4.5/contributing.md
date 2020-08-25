@@ -202,13 +202,13 @@ Large contributions can be disruptive - both for users of the Corda platform, an
 
 The process for contributing a large change to Corda is as follows:
 
-1. Raise a discussion of your proposed contribution on the [corda-dev mailing list](https://groups.io/g/corda-dev)
+1. Raise a discussion of your proposed contribution on the [corda-dev mailing list](https://groups.io/g/corda-dev).
 
-    * Please search the [mailing list archives](https://groups.io/g/corda-dev/topics) first for similar proposals that may have been discussed and declined in the past
+    * Please search the [mailing list archives](https://groups.io/g/corda-dev/topics) first for similar proposals that may have been discussed and declined in the past.
 
-    * You will need to provide evidence that you are capable of delivering a large change to the platform. This can be done by contributing smaller changes to Corda first, or by otherwise showing your ability and commitment to delivering large changes to complex, established projects
+    * You will need to provide evidence that you are capable of delivering a large change to the platform. This can be done by contributing smaller changes to Corda first, or by otherwise showing your ability and commitment to delivering large changes to complex, established projects.
 
-2. The project maintainers will feed back on your proposal. Some of the criteria they will be evaluating the proposal against are:
+2. The project maintainers will feed back on your proposal. Some of the criteria they will be evaluating the proposal against include:
 
     * The contribution is/is not aligned with Corda’s mission statement (as outlined in the [Corda Introductory Whitepaper](https://docs.corda.net/en/pdf/corda-introductory-whitepaper.pdf)).
 
