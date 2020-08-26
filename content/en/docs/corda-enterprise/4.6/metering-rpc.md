@@ -344,6 +344,10 @@ An example output file is shown below.
 A signing event can be assigned to multiple CorDapps. The total count for each CorDapp will include every event assigned to it, even if that event is also assigned to another CorDapp.
 {{% /note %}}
 
+{{% note %}}
+If a CorDapp has no metering events associated with it, the metering report will not include any results associated with that particular CorDapp. 
+{{% /note %}}
+
 ## Fault tolerance
 
 As mentioned in [Output format](#output-format), collection from some nodes may fail, meaning that not all of the required data is returned. You can manually re-run the collection to collect the remaining data, and you can re-run it multiple times until all the nodes have responded (meaning the `unresponsive` list will be empty).
