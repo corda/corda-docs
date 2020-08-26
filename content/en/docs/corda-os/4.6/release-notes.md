@@ -846,7 +846,7 @@ you can work with objects from apps you aren’t aware of.
 
 **SSL**. The Corda RPC infrastructure can now be configured to utilise SSL for additional security. The
 operator of a node wishing to enable this must of course generate and distribute a certificate in
-order for client applications to successfully connect. This is documented here [Using the client RPC API](tutorial-clientrpc-api.md)
+order for client applications to successfully connect. This is documented here [Working with the CordaRPCClient API](tutorial-clientrpc-api.md)
 
 
 #### Preview of the deterministic DJVM

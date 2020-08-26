@@ -197,7 +197,7 @@ For further information about managing dependencies, see
 The `cordapp` plugin can sign the generated CorDapp JAR file using [JAR signing and verification tool](https://docs.oracle.com/javase/tutorial/deployment/jar/signing.html).
 Signing the CorDapp enables its contract classes to use signature constraints instead of other types of the constraints,
 for constraints explanation refer to [Contract Constraints](api-contract-constraints.md).
-By default the JAR file is signed by Corda development certificate.
+By default, the JAR file is signed by Corda development certificate.
 The signing process can be disabled or configured to use an external keystore.
 The `signing` entry may contain the following parameters:
 
@@ -217,13 +217,13 @@ the minimal list of required options is shown below, for other options referer t
 
 
 The parameters can be also set by system properties passed to Gradle build process.
-The system properties should be named as the relevant option name prefixed with ‘*signing.*’, e.g.
+The system properties should be named as the relevant option name prefixed with ‘*signing.*’, for example,
 a value for `alias` can be taken from the `signing.alias` system property. The following system properties can be used:
 `signing.enabled`, `signing.keystore`, `signing.alias`, `signing.storepass`, `signing.keypass`, `signing.storetype`.
 The resolution order of a configuration value is as follows: the signing process takes a value specified in the `signing` entry first,
 the empty string *“”* is also considered as the correct value.
 If the option is not set, the relevant system property named *signing.option* is tried.
-If the system property is not set then the value defaults to the configuration of the Corda development certificate.
+If the system property is not set, the value defaults to the configuration of the Corda development certificate.
 
 The example `cordapp` plugin with plugin `signing` configuration:
 
@@ -242,18 +242,18 @@ cordapp {
     //...
 ```
 
-CorDapp auto-signing allows to use signature constraints for contracts from the CorDapp without need to create a
-keystore and configure the `cordapp` plugin. For production deployment ensure to sign the CorDapp using your own
-certificate e.g. by setting system properties to point to an external keystore or by disabling signing in `cordapp`
-plugin and signing the CordDapp JAR downstream in your build pipeline. CorDapp signed by Corda development certificate
-is accepted by Corda node only when running in the development mode. In case CordDapp signed by the (default)
-development key is run on node in the production mode (e.g. for testing), the node may be set to accept the development
-key by adding the `cordappSignerKeyFingerprintBlacklist = []` property set to empty list (see
+CorDapp auto-signing allows you to use signature constraints for contracts from the CorDapp without needing to create a
+keystore and configure the `cordapp` plugin. For a production deployment, ensure that you sign the CorDapp using your own
+certificate, for example, by setting system properties to point to an external keystore or by disabling signing in `cordapp`
+plugin and signing the CorDapp JAR downstream in your build pipeline. A CorDapp signed by a Corda development certificate
+is accepted by a Corda node only when running in development mode. In case that the CorDapp signed by the (default)
+development key is run on node in the production mode (for example, for testing), the node may be set to accept the development
+key by adding the `cordappSignerKeyFingerprintBlacklist = []` property set to an empty list (see
 [Configuring a node](../node/setup/corda-configuration-file.md#corda-configuration-file-signer-blacklist)).
 
 Signing options can be contextually overwritten by the relevant system properties as described above. This allows the
 single `build.gradle` file to be used for a development build (defaulting to the Corda development keystore) and for
-a production build (using an external keystore). The example system properties setup for the build process which
+a production build (using an external keystore). Below is an example of the system properties setup for the build process which
 overrides signing options:
 
 ```shell
@@ -273,8 +273,8 @@ CorDapp signing can be disabled for a build:
 ```
 
 Other system properties can be explicitly assigned to options by calling `System.getProperty` in `cordapp` plugin
-configuration. For example the below configuration sets the specific signing algorithm when a system property is
-available otherwise defaults to an empty string:
+configuration. For example, the below configuration sets the specific signing algorithm when a system property is
+available; otherwise, it defaults to an empty string:
 
 ```groovy
 cordapp {

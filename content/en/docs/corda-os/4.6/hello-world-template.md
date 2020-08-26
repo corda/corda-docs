@@ -19,7 +19,7 @@ title: Obtaining the CorDapp Template
 
 # Obtaining the CorDapp Template
 
-When writing a new CorDapp, you’ll generally want to start from one of the standard templates:
+When writing a new CorDapp, you’ll generally want to start from one of the following standard templates:
 
 
 * [Java Cordapp Template](https://github.com/corda/cordapp-template-java)
@@ -54,7 +54,7 @@ git clone https://github.com/corda/cordapp-template-kotlin.git ; cd cordapp-temp
 ## Opening the template in IntelliJ
 
 Once the template is download, open it in IntelliJ by following the instructions here:
-[Running an example CorDapp](https://docs.corda.net/tutorial-cordapp.html#opening-the-example-cordapp-in-intellij).
+[Running a sample CorDapp](https://docs.corda.net/tutorial-cordapp.html#opening-the-example-cordapp-in-intellij).
 
 
 ## Template structure
@@ -87,4 +87,4 @@ workflows/src/main/kotlin/com/template/flows/Flows.kt
 
 ## Progress so far
 
-You now have a template that we can build upon to define our IOU CorDapp. Let’s start by defining the `IOUState`.
+You now have a template that you can build upon to define your IOU CorDapp. Let’s start by defining the `IOUState`.

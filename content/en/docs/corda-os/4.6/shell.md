@@ -235,7 +235,7 @@ When a shell is running in unsafe mode, the shell behaviour will be the same as 
 the internal shell will run in safe mode but will still be have the ability to execute RPC client calls as before based on
 existing RPC permissions. No Corda functionality is affected by this change; only the ability to access to the Crash shell embedded commands.
 When running an SSH shell, it will run in safe mode for any user that does not explicitly have permission ‘ALL’ as one the items
-in their RPC permission list, see [Using the client RPC API](tutorial-clientrpc-api.md) for more information about the RPC Client API. These shell changes are
+in their RPC permission list, see [Working with the CordaRPCClient API](tutorial-clientrpc-api.md) for more information about the RPC Client API. These shell changes are
 also applied to the Stand Alone shell which will now run in safe mode (Enterprise 4.3 onwards). It may be possible that, in the future,
 the Crash shell embedded commands may become deprecated. Where possible, please do not write any new code that depends on them as they
 are technically not part of Corda functionality.

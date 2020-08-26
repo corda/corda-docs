@@ -20,8 +20,9 @@ title: Scheduling time-based events
 
 # Scheduling time-based events
 
-This tutorial explains our approach to modelling time based events in code. It explains how a contract
-state can expose an upcoming event and what action to take if the scheduled time for that event is reached.
+This tutorial explains our approach to modelling time based events in code.
+
+It explains how a contract state can expose an upcoming event and what action to take if the scheduled time for that event is reached.
 
 
 ## Introduction
@@ -96,7 +97,7 @@ override fun nextScheduledActivity(thisStateRef: StateRef, flowLogicRefFactory: 
 {{% /tab %}}
 {{< /tabs >}}
 
-[IRS.kt](https://github.com/corda/corda/blob/release/os/4.6/samples/irs-demo/cordapp/contracts-irs/src/main/kotlin/net/corda/irs/contract/IRS.kt) 
+[IRS.kt](https://github.com/corda/corda/blob/release/os/4.6/samples/irs-demo/cordapp/contracts-irs/src/main/kotlin/net/corda/irs/contract/IRS.kt)
 
 The first thing this does is establish if there are any remaining fixings.  If there are none, then it returns `null`
 to indicate that there is no activity to schedule. Otherwise, it calculates the `Instant` at which the interest rate

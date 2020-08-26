@@ -95,11 +95,12 @@ the three node folders. Each node folder has the following structure:
 |____node.conf                     // The node's configuration file
 |____cordapps
 |____java/kotlin-source-0.1.jar  // Our IOU CorDapp
+
 ```
 
 
 
-Let’s start the nodes by running the following commands from the root of the project:
+Start the nodes by running the following commands from the root of the project:
 
 ```bash
 // On Windows
@@ -129,8 +130,8 @@ commands.
 {{< note >}}
 Local terminal shell is available only in a development mode. In production environment SSH server can be enabled.
 More about SSH and how to connect can be found on the [Node shell](shell.md) page.
-
 {{< /note >}}
+
 You want to create an IOU of 99 with PartyB. To start the `IOUFlow`, type the following syntax:
 
 ```bash
@@ -221,7 +222,6 @@ After completing this tutorial, your CorDapp should look like this:
 ## Next steps
 
 There are a number of improvements you could make to this CorDapp:
-
 
 * You could add unit tests, using the contract-test and flow-test frameworks.
 * You could change `IOUState.value` from an integer to a proper amount of a given currency.

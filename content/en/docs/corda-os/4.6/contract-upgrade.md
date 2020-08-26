@@ -20,6 +20,10 @@ title: Upgrading contracts
 
 # Upgrading contracts
 
+This tutorial will take you through the steps involved in upgrading a contract.
+
+## Introduction
+
 While every care is taken in development of contract code, inevitably upgrades will be required to fix bugs (in either
 design or implementation). Upgrades can involve a substitution of one version of the contract code for another or
 changing to a different contract that understands how to migrate the existing state objects. When state objects are

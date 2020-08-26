@@ -18,15 +18,16 @@ title: Writing contract tests
 
 # Writing contract tests
 
-This tutorial will take you through the steps required to write a contract test using Kotlin and Java.
+This tutorial will take you through the steps required to write a contract test.
 
-The testing DSL allows one to define a piece of the ledger with transactions referring to each other, and ways of
-verifying their correctness.
+## Introduction
 
+The testing DSL allows you to define a piece of the ledger with transactions referring to each other, and ways of
+verifying their correctness. Before writing the individual tests, the general test setup must be configured. Once that has been done, you can proceed to test individual transactions.
 
 ## Setting up the test
 
-Before writing the individual tests, the general test setup must be configured:
+Configure your test setup, as shown in the following examples:
 
 {{< tabs name="tabs-1" >}}
 {{% tab name="kotlin" %}}

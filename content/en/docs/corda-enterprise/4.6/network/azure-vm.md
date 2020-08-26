@@ -95,7 +95,7 @@ The Network Map Service node is suffixed nm0. The Notary node is suffixed not0. 
 
 ## Using the Yo! CorDapp
 
-Loading the Yo! CordDapp on your Corda nodes lets you send simple Yo! messages to other Corda nodes on the network. A Yo! message is a very simple transaction. The Yo! CorDapp demonstrates:
+Loading the Yo! CorDapp on your Corda nodes lets you send simple Yo! messages to other Corda nodes on the network. A Yo! message is a very simple transaction. The Yo! CorDapp demonstrates:
 
 
 * how transactions are only sent between Corda nodes which they are intended for and are not shared across the entire network by using the network map
@@ -131,7 +131,7 @@ http://(public IP address):(port)/web/yo
 
 where (public IP address) is the public IP address of one of your Corda nodes on the Azure Corda network and (port) is the web server port number for your Corda node, 10004 by default
 
-You will now see the Yo! CordDapp web interface:
+You will now see the Yo! CorDapp web interface:
 
 ![Yo web ui](../resources/Yo_web_ui.png "Yo web ui")
 
@@ -194,4 +194,3 @@ You can open log files with any text editor.
 Now you have built a Corda network and used a basic Corda CorDapp do go and visit the [dedicated Corda website](https://www.corda.net)
 
 Or to join the growing Corda community and get straight into the Corda open source codebase, head over to the [Github Corda repo](https://www.github.com/corda)
-

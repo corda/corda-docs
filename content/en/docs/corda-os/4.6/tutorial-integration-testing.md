@@ -21,19 +21,25 @@ title: Integration testing
 
 # Conducting integration testing
 
+This tutorial will take you through the steps involved in conducting integration testing on your CorDapp.
+
+## Introduction
+
 Integration testing involves bringing up nodes locally and testing invariants about them by starting flows and inspecting
 their state.
 
-In this tutorial we will bring up three nodes - Alice, Bob and a notary. Alice will issue cash to Bob, then Bob will send
-this cash back to Alice. We will see how to test some simple deterministic and nondeterministic invariants in the meantime.
+In this tutorial, you will bring up three nodes - Alice, Bob, and a notary. Alice will issue cash to Bob, then Bob will send
+this cash back to Alice. You will see how to test some simple deterministic and nondeterministic invariants in the meantime.
 
 {{< note >}}
-This example where Alice is self-issuing cash is purely for demonstration purposes, in reality, cash would be
+This example where Alice is self-issuing cash is purely for demonstration purposes; in reality, cash would be
 issued by a bank and subsequently passed around.
-
 {{< /note >}}
-In order to spawn nodes we will use the Driver DSL. This DSL allows one to start up node processes from code. It creates
-a local network where all the nodes see each other and provides safe shutting down of nodes in the background.
+
+##  Starting the nodes
+
+In order to spawn nodes, you will use the Driver DSL. This DSL allows you to start up node processes from code. It creates
+a local network where all the nodes see each other and enables the safe shutting down of nodes in the background.
 
 {{< tabs name="tabs-1" >}}
 {{% tab name="kotlin" %}}
@@ -86,30 +92,25 @@ driver(new DriverParameters()
 
 ```
 {{% /tab %}}
-
-
-
-
-[KotlinIntegrationTestingTutorial.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/integration-test/kotlin/net/corda/docs/kotlin/tutorial/test/KotlinIntegrationTestingTutorial.kt) | [JavaIntegrationTestingTutorial.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/integration-test/java/net/corda/docs/java/tutorial/test/JavaIntegrationTestingTutorial.java) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
+
+
+[KotlinIntegrationTestingTutorial.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/integration-test/kotlin/net/corda/docs/kotlin/tutorial/test/KotlinIntegrationTestingTutorial.kt) | [JavaIntegrationTestingTutorial.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/integration-test/java/net/corda/docs/java/tutorial/test/JavaIntegrationTestingTutorial.java)
 
 The above code starts two nodes:
 
-
-* Alice, configured with an RPC user who has permissions to start the `CashIssueAndPaymentFlow` flow on it and query
+* A node for Alice, configured with an RPC user who has permissions to start the `CashIssueAndPaymentFlow` flow on it and query
 Alice’s vault.
-* Bob, configured with an RPC user who only has permissions to start the `CashPaymentFlow` and query Bob’s vault.
+* A node for Bob, configured with an RPC user who only has permissions to start the `CashPaymentFlow` and query Bob’s vault.
 
 {{< note >}}
-You will notice that we did not start a notary. This is done automatically for us by the driver - it creates
+You will notice that the code samples provided did not include how to start a notary. This is done automatically for you by the driver - it creates
 a notary node with the name `DUMMY_NOTARY_NAME` which is visible to both nodes. If you wish to customise this, for
-example create more notaries, then specify the `DriverParameters.notarySpecs` parameter.
-
+example, to create more notaries, then specify the `DriverParameters.notarySpecs` parameter.
 {{< /note >}}
+
 The `startNode` function returns a `CordaFuture` object that completes once the node is fully started and visible on
-the local network. Returning a future allows starting of the nodes to be parallel. We wait on these futures as we need
-the information returned; their respective `NodeHandles` s.
+the local network. Returning a future allows starting of the nodes to be parallel. You must wait for the `CordaFuture` objects to complete, as to proceed, you will need the  `NodeHandles` for each object.
 
 {{< tabs name="tabs-2" >}}
 {{% tab name="kotlin" %}}
@@ -135,16 +136,14 @@ CordaRPCOps bobProxy = bobClient.start("bobUser", "testPassword2").getProxy();
 
 ```
 {{% /tab %}}
-
-
-
-
-[KotlinIntegrationTestingTutorial.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/integration-test/kotlin/net/corda/docs/kotlin/tutorial/test/KotlinIntegrationTestingTutorial.kt) | [JavaIntegrationTestingTutorial.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/integration-test/java/net/corda/docs/java/tutorial/test/JavaIntegrationTestingTutorial.java) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
 
-Next we connect to Alice and Bob from the test process using the test users we created. We establish RPC links that allow
-us to start flows and query state.
+
+[KotlinIntegrationTestingTutorial.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/integration-test/kotlin/net/corda/docs/kotlin/tutorial/test/KotlinIntegrationTestingTutorial.kt) | [JavaIntegrationTestingTutorial.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/integration-test/java/net/corda/docs/java/tutorial/test/JavaIntegrationTestingTutorial.java)
+
+## Connecting to each node via RPC
+
+Next, you must connect to Alice and Bob from the test process using the test users created earlier. To be able to start flows and query states, you must establish an RPC connection to each node.
 
 {{< tabs name="tabs-3" >}}
 {{% tab name="kotlin" %}}
@@ -165,16 +164,14 @@ Observable<Vault.Update<Cash.State>> aliceVaultUpdates = aliceProxy.vaultTrack(C
 ```
 {{% /tab %}}
 
-
-
-
-[KotlinIntegrationTestingTutorial.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/integration-test/kotlin/net/corda/docs/kotlin/tutorial/test/KotlinIntegrationTestingTutorial.kt) | [JavaIntegrationTestingTutorial.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/integration-test/java/net/corda/docs/java/tutorial/test/JavaIntegrationTestingTutorial.java) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
 
-We will be interested in changes to Alice’s and Bob’s vault, so we query a stream of vault updates from each.
 
-Now that we’re all set up we can finally get some cash action going!
+[KotlinIntegrationTestingTutorial.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/integration-test/kotlin/net/corda/docs/kotlin/tutorial/test/KotlinIntegrationTestingTutorial.kt) | [JavaIntegrationTestingTutorial.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/integration-test/java/net/corda/docs/java/tutorial/test/JavaIntegrationTestingTutorial.java)
+
+## Monitoring changes to the vaults
+
+You will be interested in changes to Alice’s and Bob’s vault, so you need to set up queries to return a stream of vault updates from each.
 
 {{< tabs name="tabs-4" >}}
 {{% tab name="kotlin" %}}
@@ -228,16 +225,18 @@ expectEvents(bobVaultUpdates, true, () ->
 ```
 {{% /tab %}}
 
-
-
-
-[KotlinIntegrationTestingTutorial.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/integration-test/kotlin/net/corda/docs/kotlin/tutorial/test/KotlinIntegrationTestingTutorial.kt) | [JavaIntegrationTestingTutorial.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/integration-test/java/net/corda/docs/java/tutorial/test/JavaIntegrationTestingTutorial.java) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
 
-We start a `CashIssueAndPaymentFlow` flow on the Alice node. We specify that we want Alice to self-issue $1000 which is
-to be payed to Bob. We specify the default notary identity created by the driver as the notary responsible for notarising
-the created states. Note that no notarisation will occur yet as we’re not spending any states, only creating new ones on
+
+[KotlinIntegrationTestingTutorial.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/integration-test/kotlin/net/corda/docs/kotlin/tutorial/test/KotlinIntegrationTestingTutorial.kt) | [JavaIntegrationTestingTutorial.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/integration-test/java/net/corda/docs/java/tutorial/test/JavaIntegrationTestingTutorial.java)
+
+## Starting a flow
+
+Now that you’re all set up, you can finally get some cash action going!
+
+The code in the example below will start a `CashIssueAndPaymentFlow` flow on the Alice node. It specifies that you want Alice to self-issue $1000 which is
+to be paid to Bob. It also specifies that the default notary identity created by the driver is the notary responsible for notarising
+the created states. Note that no notarisation will occur yet, as you're not spending any states - you're only creating new ones on
 the ledger.
 
 We expect a single update to Bob’s vault when it receives the $1000 from Alice. This is what the `expectEvents` call
@@ -280,17 +279,17 @@ expectEvents(aliceVaultUpdates, true, () ->
 
 ```
 {{% /tab %}}
-
-
-
-
-[KotlinIntegrationTestingTutorial.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/integration-test/kotlin/net/corda/docs/kotlin/tutorial/test/KotlinIntegrationTestingTutorial.kt) | [JavaIntegrationTestingTutorial.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/integration-test/java/net/corda/docs/java/tutorial/test/JavaIntegrationTestingTutorial.java) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
 
-Next we want Bob to send this cash back to Alice.
 
-That’s it! We saw how to start up several corda nodes locally, how to connect to them, and how to test some simple invariants
+[KotlinIntegrationTestingTutorial.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/integration-test/kotlin/net/corda/docs/kotlin/tutorial/test/KotlinIntegrationTestingTutorial.kt) | [JavaIntegrationTestingTutorial.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/integration-test/java/net/corda/docs/java/tutorial/test/JavaIntegrationTestingTutorial.java)
+
+
+As a next step, you might like to try setting up a test where Bob sends this cash back to Alice.
+
+## Summary
+
+That’s it! You saw how to start up several corda nodes locally, how to connect to them, and how to test some simple invariants
 about `CashIssueAndPaymentFlow` and `CashPaymentFlow`.
 
 You can find the complete test at `example-code/src/integration-test/java/net/corda/docs/java/tutorial/test/JavaIntegrationTestingTutorial.java`
@@ -298,11 +297,10 @@ You can find the complete test at `example-code/src/integration-test/java/net/co
 [Corda repo](https://github.com/corda/corda).
 
 {{< note >}}
-To make sure the driver classes are included in your project you will need the following in your `build.gradle` file in the module in
+To make sure the driver classes are included in your project, you will need to include the following in the `build.gradle` file in the module in
 which you want to test:
 
 ```groovy
 testCompile "$corda_release_group:corda-node-driver:$corda_release_version"
 ```
-
 {{< /note >}}

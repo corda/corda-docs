@@ -19,6 +19,7 @@ title: Building transactions
 
 # Building transactions
 
+This tutorial will take you through the steps required to implement transactions in Corda.
 
 ## Introduction
 
@@ -413,7 +414,7 @@ subFlow(FinalityFlow(allPartySignedTx, sourceSession))
 [WorkflowTransactionBuildTutorial.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/txbuild/WorkflowTransactionBuildTutorial.kt)
 
 
-## Partially visible transactions
+## Handling partially visible transactions
 
 The discussion so far has assumed that the parties need full visibility
 of the transaction to sign. However, there may be situations where each

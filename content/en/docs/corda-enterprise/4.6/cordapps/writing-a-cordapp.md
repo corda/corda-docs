@@ -15,7 +15,7 @@ weight: 5
 
 The source code for a CorDapp is divided into one or more modules, each of which will be compiled into a separate JAR.
 Together, these JARs represent a single CorDapp. Typically, a single CorDapp is an independent structure, containing all
-the classes required for it to run. However, some CorDapps are designed as libraries for other Cordapps and cannot be
+the classes required for it to run. However, some CorDapps are designed as libraries for other CorDapps and cannot be
 run independently.
 
 Whenever a contract is used in a transaction, the JAR containing the contract’s definition is attached to the transaction
@@ -29,13 +29,13 @@ remaining classes that depend on the contracts and/or states.
 It should be noted, however, that there are scenarios where this two module structure is not required:
 
 
-* A library CorDapp containing only contracts and states would only need a single module
+* A library CorDapp containing only contracts and states would only need a single module.
 * In a CorDapp with multiple sets of contracts and states that **do not** depend on each other, each independent set of
-contracts and states would go in a separate module to reduce transaction size
+contracts and states would go in a separate module to reduce transaction size.
 * In a CorDapp with multiple sets of contracts and states that **do** depend on each other, either keep them in the
-same module or create separate modules that depend on each other
+same module or create separate modules that depend on each other.
 * The module containing the flows and other classes can be structured in any way because it is not attached to
-transactions
+transactions.
 
 
 ## Template CorDapps
@@ -46,7 +46,8 @@ There are two template CorDapps that projects can be based upon:
 * [Java Template CorDapp](https://github.com/corda/cordapp-template-java) (for CorDapps written in Java)
 * [Kotlin Template CorDapp](https://github.com/corda/cordapp-template-kotlin) (for CorDapps written in Kotlin)
 
-Please use the branch of the template that corresponds to the major version of Corda that you are using.
+Please use the branch of the template that corresponds to the major version of Corda that you are using. For example,
+someone building a CorDapp on Corda 4.6 should use the `release-V4` branch of the template.
 
 
 ### Build system
@@ -62,14 +63,14 @@ No templates are currently provided for Maven or other build systems.
 The templates are split into two modules:
 
 
-* A `cordapp-contracts-states` module containing the contracts and states
-* A `cordapp` module containing the remaining classes that depends on the `cordapp-contracts-states` module
+* A `cordapp-contracts-states` module containing the contracts and states.
+* A `cordapp` module containing the remaining classes that depends on the `cordapp-contracts-states` module.
 
 These modules will be compiled into two JARs - a `cordapp-contracts-states` JAR and a `cordapp` JAR - which
 together represent the Template CorDapp.
 
 
-#### Module one - cordapp-contracts-states
+#### Module one: `cordapp-contracts-states`
 
 Here is the structure of the `src` directory for the `cordapp-contracts-states` module of the Java template:
 
@@ -93,7 +94,7 @@ These are definitions for classes that we expect to have to send over the wire. 
 CorDapp.
 
 
-#### Module two - cordapp
+#### Module two: `cordapp`
 
 Here is the structure of the `src` directory for the `cordapp` module of the Java template:
 
@@ -165,6 +166,5 @@ In a production CorDapp:
 
 * We would remove the files related to the deprecated Corda webserver (`TemplateApi.java`,
 `TemplateWebPlugin.java`, `resources/templateWeb`, and `net.corda.webserver.services.WebServerPluginRegistry`)
-and replace them with a production-ready webserver
-* We would also move `TemplateClient.java` into a separate module so that it is not included in the CorDapp
-
+and replace them with a production-ready webserver.
+* We would also move `TemplateClient.java` into a separate module so that it is not included in the CorDapp.

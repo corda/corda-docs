@@ -19,26 +19,23 @@ title: Writing the flow
 
 # Writing the flow
 
-A flow encodes a sequence of steps that a node can perform to achieve a specific ledger update. By installing new flows
-on a node, we allow the node to handle new business processes. The flow we define will allow a node to issue an
+A flow encodes a sequence of steps that a node can perform to achieve a specific ledger update. Installing new flows
+on a node allows the node to handle new business processes. The flow that you define will allow a node to issue an
 `IOUState` onto the ledger.
 
 
 ## Flow outline
 
-The goal of our flow will be to orchestrate an IOU issuance transaction. Transactions in Corda are the atomic units of
+The goal of your flow will be to orchestrate an IOU issuance transaction. Transactions in Corda are the atomic units of
 change that update the ledger. Each transaction is a proposal to mark zero or more existing states as historic (the
 inputs), while creating zero or more new states (the outputs).
 
 The process of creating and applying this transaction to a ledger will be conducted by the IOU’s lender, and will
 require the following steps:
 
-
-
 * Building the transaction proposal for the issuance of a new IOU onto a ledger
 * Signing the transaction proposal
 * Recording the transaction and sending it to the IOU’s borrower so that they can record it too
-
 
 We also need the borrower to receive the transaction and record it for itself. At this stage, we do not require the borrower
 to approve and sign IOU issuance transactions. We will be able to impose this requirement when we look at contracts in the
@@ -54,10 +51,7 @@ before a node can be upgraded to a newer version of Corda, or of your Cordapp, a
 completed, as there is no mechanism to upgrade a persisted flow checkpoint. It is therefore undesirable
 to model a long-running business process as a single flow: it should rather be broken up into a series
 of transactions, with flows used only to orchestrate the completion of each transaction.
-
 {{< /warning >}}
-
-
 
 ### Subflows
 
@@ -71,7 +65,7 @@ to handle these tasks. We call these flows that are invoked in the context of a 
 
 All flows must subclass `FlowLogic`. You then define the steps taken by the flow by overriding `FlowLogic.call`.
 
-Let’s define our `IOUFlow`. Replace the definition of `Initiator` with the following:
+Let’s define your `IOUFlow`. Replace the definition of `Initiator` with the following:
 
 {{< tabs name="tabs-1" >}}
 {{% tab name="kotlin" %}}
@@ -188,11 +182,9 @@ public class IOUFlow extends FlowLogic<Void> {
 {{% /tab %}}
 
 
-
-
-[IOUFlow.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/helloworld/IOUFlow.kt) | [IOUFlow.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/helloworld/IOUFlow.java) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
+
+[IOUFlow.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/helloworld/IOUFlow.kt) | [IOUFlow.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/helloworld/IOUFlow.java)
 
 If you’re following along in Java, you’ll also need to rename `Initiator.java` to `IOUFlow.java`.
 
@@ -214,11 +206,9 @@ annotation out will lead to some very weird error messages!
 
 There are also a few more annotations, on the `FlowLogic` subclass itself:
 
-
-
 * `@InitiatingFlow` means that this flow is part of a flow pair and that it triggers the other side to run the
 the counterpart flow (which in our case is the `IOUFlowResponder` defined below).
-* `@StartableByRPC` allows the node owner to start this flow via an RPC call
+* `@StartableByRPC` allows the node owner to start this flow via an RPC call.
 
 
 Let’s walk through the steps of `FlowLogic.call` itself. This is where we actually describe the procedure for
@@ -234,7 +224,6 @@ information about the other nodes on the network and the services that they offe
 {{< note >}}
 Whenever we need information within a flow - whether it’s about our own node’s identity, the node’s local storage,
 or the rest of the network - we generally obtain it via the node’s `ServiceHub`.
-
 {{< /note >}}
 
 ### Building the transaction
@@ -262,9 +251,9 @@ We’ve already talked about the `IOUState`, but we haven’t looked at commands
 
 
 * They indicate the intent of a transaction - issuance, transfer, redemption, revocation. This will be crucial when we
-discuss contracts in the next tutorial
+discuss contracts in the next tutorial.
 * They allow us to define the required signers for the transaction. For example, IOU creation might require signatures
-from the lender only, whereas the transfer of an IOU might require signatures from both the IOU’s borrower and lender
+from the lender only, whereas the transfer of an IOU might require signatures from both the IOU’s borrower and lender.
 
 Each `Command` contains a command type plus a list of public keys. For now, we use the pre-defined
 `TemplateContract.Action` as our command type, and we list the lender as the only public key. This means that for
@@ -284,7 +273,7 @@ Once we have the `TransactionBuilder`, we add our components:
 * The output `IOUState` is added using `TransactionBuilder.addOutputState`. As well as the output state itself,
 this method takes a reference to the contract that will govern the evolution of the state over time. Here, we are
 passing in a reference to the `TemplateContract`, which imposes no constraints. We will define a contract imposing
-real constraints in the next tutorial
+real constraints in the next tutorial.
 
 
 ### Signing the transaction
@@ -349,13 +338,12 @@ public class IOUFlowResponder extends FlowLogic<Void> {
 
 ```
 {{% /tab %}}
-
-
-
-
-[IOUFlowResponder.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/helloworld/IOUFlowResponder.kt) | [IOUFlowResponder.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/helloworld/IOUFlowResponder.java) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
+
+
+
+[IOUFlowResponder.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/helloworld/IOUFlowResponder.kt) | [IOUFlowResponder.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/helloworld/IOUFlowResponder.java)
+
 
 As with the `IOUFlow`, our `IOUFlowResponder` flow is a `FlowLogic` subclass where we’ve overridden `FlowLogic.call`.
 
@@ -366,5 +354,5 @@ will be the finalised transaction which will be recorded in the borrower’s vau
 
 ## Progress so far
 
-Our flow, and our CorDapp, are now ready! We have now defined a flow that we can start on our node to completely
+Your flow, and your CorDapp, are now ready! We have now defined a flow that we can start on our node to completely
 automate the process of issuing an IOU onto the ledger. All that’s left is to spin up some nodes and test our CorDapp.

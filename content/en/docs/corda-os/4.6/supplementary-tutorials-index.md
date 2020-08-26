@@ -28,5 +28,5 @@ As these tutorials don’t depend on the code from any of the other tutorials, y
 | **Transactions** | [Working with attachments](tutorial-attachments.md) <br/><br/> [Defining transaction tear-offs](tutorial-tear-offs.md) <br/><br/> [Posting transactions to observer nodes](tutorial-observer-nodes.md) |
 | **Oracles** | [Writing oracle services](oracles.md) |
 | **Notaries** | [Writing custom notary services (experimental)](tutorial-custom-notary.md) |
-| **Nodes** | [Using the client RPC API](tutorial-clientrpc-api.md) |
+| **Nodes** | [Working with the CordaRPCClient API](tutorial-clientrpc-api.md) |
 {{< /table >}}
