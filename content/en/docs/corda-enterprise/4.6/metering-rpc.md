@@ -345,7 +345,7 @@ A signing event can be assigned to multiple CorDapps. The total count for each C
 {{% /note %}}
 
 {{% note %}}
-If a CorDapp has no metering events associated with it, the metering report will not include any results associated with that particular CorDapp. 
+If a CorDapp has no metering events associated with it, the metering report will report 0 counts associated with that particular CorDapp. 
 {{% /note %}}
 
 ## Fault tolerance
