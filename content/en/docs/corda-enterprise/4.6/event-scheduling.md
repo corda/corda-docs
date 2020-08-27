@@ -21,7 +21,7 @@ state can expose an upcoming event and what action to take if the scheduled time
 
 ## Introduction
 
-Many financial instruments have time sensitive components to them.  For example, an Interest Rate Swap has a schedule
+Many financial instruments have time sensitive components to them. For example, an Interest Rate Swap has a schedule
 for when:
 
 
@@ -30,16 +30,16 @@ can be agreed.
 * Any payments between the parties are expected to take place.
 * Any payments between the parties become overdue.
 
-Each of these is dependent on the current state of the financial instrument.  What payments and interest rate fixings
-have already happened should already be recorded in the state, for example.  This means that the *next* time sensitive
-event is thus a property of the current contract state.  By next, we mean earliest in chronological terms, that is still
+Each of these is dependent on the current state of the financial instrument. What payments and interest rate fixings
+have already happened should already be recorded in the state, for example. This means that the *next* time sensitive
+event is thus a property of the current contract state. By next, we mean earliest in chronological terms, that is still
 due.  If a contract state is consumed in the UTXO model, then what *was* the next event becomes irrelevant and obsolete
 and the next time sensitive event is determined by any successor contract state.
 
 Knowing when the next time sensitive event is due to occur is useful, but typically some *activity* is expected to take
-place when this event occurs.  We already have a model for business processes in the form of [flows](flow-state-machines.md),
+place when this event occurs. We already have a model for business processes in the form of [flows](flow-state-machines.md),
 so in the platform we have introduced the concept of *scheduled activities* that can invoke flow state machines
-at a scheduled time.  A contract state can optionally described the next scheduled activity for itself.  If it omits
+at a scheduled time. A contract state can optionally described the next scheduled activity for itself. If it omits
 to do so, then nothing will be scheduled.
 
 
@@ -48,10 +48,10 @@ to do so, then nothing will be scheduled.
 There are two main steps to implementing scheduled events:
 
 
-* Have your `ContractState` implementation also implement `SchedulableState`.  This requires a method named
+* Have your `ContractState` implementation also implement `SchedulableState`. This requires a method named
 `nextScheduledActivity` to be implemented which returns an optional `ScheduledActivity` instance.
 `ScheduledActivity` captures what `FlowLogic` instance each node will run, to perform the activity, and when it
-will run is described by a `java.time.Instant`.  Once your state implements this interface and is tracked by the
+will run is described by a `java.time.Instant`. Once your state implements this interface and is tracked by the
 vault, it can expect to be queried for the next activity when committed to the vault. The `FlowLogic` must be
 annotated with `@SchedulableFlow`.
 * If nothing suitable exists, implement a `FlowLogic` to be executed by each node as the activity itself.

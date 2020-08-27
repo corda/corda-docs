@@ -451,7 +451,7 @@ thread {
 
 ## Creating the transaction graph
 
-The RPC operation we need in order to create the transaction graph is `internalVerifiedTransactionsFeed`. The type of
+The RPC operation you need in order to create the transaction graph is `internalVerifiedTransactionsFeed`. The type of
 signature tells us that the RPC operation will return a list of transactions and an `Observable` stream. This is a
 general pattern: we query some data and the node will return the current snapshot and future updates done to it.
 Observables are described in more detail in [Interacting with a node](clientrpc.md).
@@ -527,12 +527,12 @@ or mark it as not used. Failing to do so will leak resources in the node).
 
 Then, in a loop we generate randomly an Issue, a Pay, or an Exit transaction.
 
-The RPC we need to initiate a cash transaction is `startFlow`. This starts an arbitrary flow given sufficient
+The RPC function you need to initiate a cash transaction is `startFlow`. This starts an arbitrary flow given sufficient
 permissions to do so.
 
 ## Generating the transaction graph
 
-At last, we have everything in place: we start a couple of nodes, connect to them, and start creating transactions while
+At last, you have everything in place: we start a couple of nodes, connect to them, and start creating transactions while
 listening on successfully created ones, which are dumped to the console. We just need to run it!
 
 ```text
@@ -542,7 +542,7 @@ listening on successfully created ones, which are dumped to the console. We just
 ./docs/source/example-code/build/install/docs/source/example-code/bin/client-rpc-tutorial Print
 ```
 
-Now let’s try to generate the transaction graph. We will use a graph drawing library called [graphstream](http://graphstream-project.org/).
+Now, let’s try to generate the transaction graph. You will use a graph drawing library called [graphstream](http://graphstream-project.org/).
 
 ```kotlin
     PrintOrVisualise.Visualise -> {

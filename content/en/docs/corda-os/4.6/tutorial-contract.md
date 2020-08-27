@@ -334,7 +334,7 @@ public void verify(LedgerTransaction tx) {
 
 
 
-We start by using the `groupStates` method, which takes a type and a function. State grouping is a way of ensuring
+You start by using the `groupStates` method, which takes a type and a function. State grouping is a way of ensuring
 your contract can handle multiple unrelated states of the same type in the same transaction, which is needed for
 splitting/merging of assets, atomic swaps and so on. More on this next.
 
@@ -573,46 +573,46 @@ may be missing here. We check for it being null later.
 
 
 {{< warning >}}
-In the Kotlin version, as long as we write a comparison with the transaction time first, the compiler will
-verify we didn’t forget to check if it’s missing. Unfortunately, due to the need for smooth interoperability with Java, this
-check won’t happen if we write, for example, `someDate > time`, it has to be `time < someDate`. So it’s good practice to
+In the Kotlin version, as long as you write a comparison with the transaction time first, the compiler will
+verify you didn’t forget to check if it’s missing. Unfortunately, due to the need for smooth interoperability with Java, this
+check won’t happen if you write, for example, `someDate > time`, it has to be `time < someDate`. So it’s good practice to
 always write the transaction time-window first.
 {{< /warning >}}
 
 
-Next, we take one of three paths, depending on what the type of the command object is.
+Next, you take one of three paths, depending on what the type of the command object is.
 
 **If the command is a ``Move`` command:**
 
 The first line (first three lines in Java) impose a requirement that there be a single piece of commercial paper in
 this group. We do not allow multiple units of commercial paper to be split or merged even if they are owned by the same owner. The
 `single()` method is a static *extension method* defined by the Kotlin standard library: given a list, it throws an
-exception if the list size is not 1, otherwise it returns the single item in that list. In Java, this appears as a
+exception if the list size is not 1; otherwise, it returns the single item in that list. In Java, this appears as a
 regular static method of the type familiar from many FooUtils type singleton classes and we have statically imported it
 here. In Kotlin, it appears as a method that can be called on any JDK list. The syntax is slightly different but
 behind the scenes, the code compiles to the same bytecode.
 
-Next, we check that the transaction was signed by the public key that’s marked as the current owner of the commercial
+Next, you need to check that the transaction was signed by the public key that’s marked as the current owner of the commercial
 paper. Because the platform has already verified all the digital signatures before the contract begins execution,
-all we have to do is verify that the owner’s public key was one of the keys that signed the transaction. The Java code
+all you have to do is verify that the owner’s public key was one of the keys that signed the transaction. The Java code
 is straightforward: we are simply using the `Preconditions.checkState` method from Guava. The Kotlin version looks a
-little odd: we have a *requireThat* construct that looks like it’s built into the language. In fact *requireThat* is an
-ordinary function provided by the platform’s contract API. Kotlin supports the creation of *domain specific languages*
+little odd: we have a *requireThat* construct that looks like it’s built into the language. In fact, *requireThat* is an
+ordinary function provided by the platform’s contract API. Kotlin supports the creation of *domain-specific languages*
 through the intersection of several features of the language, and we use it here to support the natural listing of
 requirements. To see what it compiles down to, look at the Java version. Each `"string" using (expression)` statement
 inside a `requireThat` turns into an assertion that the given expression is true, with an `IllegalArgumentException`
 being thrown that contains the string if not. It’s just another way to write out a regular assertion, but with the
-English-language requirement being put front and center.
+English-language requirement being put front and centre.
 
-Next, we simply verify that the output state is actually present: a move is not allowed to delete the commercial paper from the ledger.
+Next, you simply verify that the output state is actually present: a move is not allowed to delete the commercial paper from the ledger.
 The grouping logic already ensured that the details are identical and haven’t been changed, save for the public key of
 the owner.
 
 **If the command is a ``Redeem`` command, then the requirements are more complex:**
 
 
-* We still check there is a commercial paper input state.
-* We want to see that the face value of the commercial paper is being moved as a cash claim against some party, that is, the
+* You still check that there is a commercial paper input state.
+* You want to see that the face value of the commercial paper is being moved as a cash claim against some party, that is, the
 issuer of the commercial paper is really paying back the face value.
 * The transaction must be happening after the maturity date.
 * The commercial paper must *not* be propagated by this transaction: it must be deleted, by the group having no
@@ -620,7 +620,7 @@ output state. This prevents the same commercial paper being considered redeemabl
 
 To calculate how much cash is moving, we use the `sumCashBy` utility function. Again, this is an extension function,
 so in Kotlin code it appears as if it was a method on the `List<Cash.State>` type even though JDK provides no such
-method. In Java we see its true nature: it is actually a static method named `StateSumming.sumCashBy`. This method simply
+method. In Java, we see its true nature: it is actually a static method named `StateSumming.sumCashBy`. This method simply
 returns an `Amount` object containing the sum of all the cash states in the transaction outputs that are owned by
 that given public key, or throws an exception if there were no such states *or* if there were different currencies
 represented in the outputs! So we can see that this contract imposes a limitation on the structure of a redemption
@@ -692,7 +692,7 @@ fun generateIssue(issuance: PartyAndReference, faceValue: Amount<Issued<Currency
 
 [TutorialContract.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/contract/TutorialContract.kt)
 
-We take a reference that points to the issuing party (that is, the caller) and which can contain any internal
+You take a reference that points to the issuing party (that is, the caller) and which can contain any internal
 bookkeeping/reference numbers that we may require. The reference field is an ideal place to put (for example) a
 join key. Then the face value of the paper, and the maturity date. It returns a `TransactionBuilder`.
 A `TransactionBuilder` is one of the few mutable classes the platform provides. It allows you to add inputs,
@@ -820,7 +820,7 @@ fun generateRedeem(tx: TransactionBuilder, paper: StateAndRef<State>, services: 
 [TutorialContract.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/contract/TutorialContract.kt)
 
 
-Here, we can see an example of composing contracts together. When an owner wishes to redeem the commercial paper, the
+Here, you can see an example of composing contracts together. When an owner wishes to redeem the commercial paper, the
 issuer (that is, the caller) must gather cash from its vault and send the face value to the owner of the paper.
 
 {{< note >}}
