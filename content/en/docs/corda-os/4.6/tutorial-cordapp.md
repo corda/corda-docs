@@ -51,7 +51,7 @@ Because data is only propagated on a need-to-know basis, any IOUs agreed between
 CorDapps can be written in any language targeting the JVM. However, source files for the sample CorDapps are provided in both Kotlin and Java. Since both sets of source files are functionally identical, the instructions in this topic will refer to the Java version.
 {{< /note >}}
 
-To download the sample CorDapp, open a command prompt or terminal, open a terminal window in the directory where you want to download the sample CorDapp, and run the following command to clone the  samples repository:
+To download the sample CorDapp, open a command prompt or terminal in the directory where you want to download the sample CorDapp, and run the following command to clone the  samples repository:
 
 {{< tabs name="tabs-1" >}}
 {{% tab name="java" %}}
