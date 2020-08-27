@@ -51,12 +51,26 @@ Because data is only propagated on a need-to-know basis, any IOUs agreed between
 CorDapps can be written in any language targeting the JVM. However, source files for the sample CorDapps are provided in both Kotlin and Java. Since both sets of source files are functionally identical, the instructions in this topic will refer to the Java version.
 {{< /note >}}
 
-To download the sample CorDapp, open a command prompt or terminal and use the following command to clone the Java samples repository:
-`git clone https://github.com/corda/samples-java`
+To download the sample CorDapp, open a command prompt or terminal, open a terminal window in the directory where you want to download the sample CorDapp, and run the following command to clone the  samples repository:
 
-The `samples-java` repository contains a number of sample CorDapps. For details of all the sample CorDapps and their features and usage, see the Readme at the top level of the `samples-java` folder.
+{{< tabs name="tabs-1" >}}
+{{% tab name="java" %}}
+```java
+git clone https://github.com/corda/samples-java
+```
+{{% /tab %}}
 
-The sample CorDapp that we are going to run and deploy is the **Basic** CorDapp &mdash; the source files for this CorDapp are located in the `samples-java\Basic\cordapp-example` folder.
+{{% tab name="kotlin" %}}
+```kotlin
+git clone https://github.com/corda/samples-kotlin
+```
+{{% /tab %}}
+
+{{< /tabs >}}
+
+The `samples-java` and `samples-kotlin` repositories each contain a number of sample CorDapps. For details of all the sample CorDapps and their features and usage, see the Readme file located within the `samples-java` or `samples-kotlin` folder.
+
+The sample CorDapp that we are going to run and deploy is the **Basic** CorDapp &mdash; the source files for this CorDapp are located in the `Basic\cordapp-example` sub-folder.
 
 
 ## Opening the sample CorDapp in IntelliJ IDEA
@@ -64,7 +78,7 @@ The sample CorDapp that we are going to run and deploy is the **Basic** CorDapp 
 To open the sample CorDapp in the IntelliJ IDEA:
 
 1. Open IntelliJ.
-2. From the splash screen, click **Open**, navigate to the `samples-java\Basic\cordapp-example` folder, and click **OK**. The project containing the sample CorDapp should open.
+2. From the splash screen, click **Open**, navigate to the `Basic\cordapp-example` sub-folder, and click **OK**. The project containing the sample CorDapp should open.
 3. Specify which JDK you are using. To do this:
     * Click **File** >  **Project Structure**.
     * Under **Project Settings**, click the **Project** option (if not displayed by default).
@@ -208,7 +222,7 @@ The key files and directories are as follows:
 
 * The **root directory** contains some gradle files, a README, a LICENSE and a TRADEMARK statement
 * **clients** contains the source code for Spring Boot integration
-* **config** contains log4j2 configs
+* **config** contains the log4j2 configuration
 * **contracts-java** and **workflows-java** contain the source code for the sample CorDapp written in Java
 * **contracts-kotlin** and **workflows-kotlin** contain the same source code, but written in Kotlin. CorDapps can be developed in either Java and Kotlin
 * **gradle** contains the gradle wrapper, which allows the use of Gradle without installing it yourself and worrying about which version is required
@@ -229,7 +243,7 @@ The first step is to deploy the CorDapp to nodes running locally. To do this:
 2. Run the `deployNodes` Gradle task to build four nodes with the CorDapp installed on them:
       * Unix/Mac OSX: `./gradlew deployNodes`
       * Windows: `gradlew.bat deployNodes`
-3. After the build finishes, you will see the following output in the `workflows-java/build/nodes` folder:
+3. After the build finishes, navigate to the `workflows-java/build/nodes` or `workflows-kotlin/build/nodes` folder - you should see the following output:
       * A folder for each generated node
       * A `runnodes` shell script for running all the nodes simultaneously on osX
       * A `runnodes.bat` batch file for running all the nodes simultaneously on Windows
@@ -264,11 +278,17 @@ in [Building and installing a CorDapp](cordapp-build-systems.md).
 
 ### Launching the sample CorDapp
 
-Start the nodes by running the following command from the root of the `cordapp-example` folder:
+Start the nodes by running the relevant command below from the root of the `cordapp-example` folder:
 
+To run the Java sample CorDapp, run the command that corresponds to your operating system:
 
 * Unix/Mac OSX: `workflows-java/build/nodes/runnodes`
 * Windows: `call workflows-java\build\nodes\runnodes.bat`
+
+To run the Kotlin sample CorDapp, run the command that corresponds to your operating system:
+
+* Unix/Mac OSX: `workflows-kotlin/build/nodes/runnodes`
+* Windows: `call workflows-kotlin\build\nodes\runnodes.bat`
 
 Start a Spring Boot server for each node by opening a terminal/command prompt for each node and entering the following command, replacing X with A, B and C:
 
