@@ -278,7 +278,7 @@ in [Building and installing a CorDapp](cordapp-build-systems.md).
 
 ### Launching the sample CorDapp
 
-Start the nodes by from the root of the `cordapp-example` folder as follows:
+Start the nodes by running the relevant command below from the root of the `cordapp-example` folder:
 
 To run the Java sample CorDapp, run the command that corresponds to your operating system:
 
