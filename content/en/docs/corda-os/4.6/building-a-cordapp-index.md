@@ -22,7 +22,7 @@ title: CorDapps
 
 * [What is a CorDapp?](cordapp-overview.md)
 * [Getting set up for CorDapp development](getting-set-up.md)
-* [Running the example CorDapp](tutorial-cordapp.md)
+* [Running a sample CorDapp](tutorial-cordapp.md)
 * [Structuring a CorDapp](writing-a-cordapp.md)
 * [Building and installing a CorDapp](cordapp-build-systems.md)
 * [Building Building CorDapps against a non-release branch](building-against-non-release.md)

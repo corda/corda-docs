@@ -7,22 +7,21 @@ date: '2020-04-07T12:00:00Z'
 menu:
   corda-os-4-6:
     identifier: corda-os-4-6-tutorial-contract
-    parent: corda-os-4-6-tutorials-index
+    parent: corda-os-4-6-core-tutorials-index
     weight: 1040
 tags:
 - tutorial
 - contract
-title: Writing a contract
+title: Writing contracts
 ---
 
-
-
-
-# Writing a contract
+# Writing contracts
 
 This tutorial will take you through writing a contract, using a simple commercial paper contract as an example.
-Smart contracts in Corda have three key elements:
 
+## Introduction
+
+Smart contracts in Corda have three key elements:
 
 * Executable code (validation logic)
 * State objects
@@ -46,7 +45,7 @@ This lifecycle for commercial paper is illustrated in the diagram below:
 
 ![contract cp](/en/images/contract-cp.png "contract cp")
 
-## Starting the commercial paper class
+## Defining the class
 
 A smart contract is a class that implements the `Contract` interface. This can be either implemented directly, as done
 here, or by subclassing an abstract contract such as `OnLedgerAsset`. The heart of any contract in Corda is the
@@ -87,7 +86,7 @@ So far, so simple. Now we need to define the commercial paper *state*, which rep
 piece of issued paper.
 
 
-## States
+## Defining the states
 
 A state is a class that stores data that is checked by the contract. A commercial paper state is structured as below:
 
@@ -192,29 +191,26 @@ public class State implements OwnableState {
 
 ```
 {{% /tab %}}
-
-
-
-
-[TutorialContract.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/contract/TutorialContract.kt) | [State.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/contract/State.java) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
+
+[TutorialContract.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/contract/TutorialContract.kt) | [State.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/contract/State.java)
+
+
 
 We define a class that indirectly implements the `ContractState` via `OwnableState`.
 
 We have four fields in our state:
 
-
-* `issuance`, a reference to a specific piece of commercial paper issued by some party.
-* `owner`, the public key of the current owner. This is the same concept as seen in Bitcoin: the public key has no
+* `issuance`: a reference to a specific piece of commercial paper issued by some party.
+* `owner`: the public key of the current owner. This is the same concept as seen in Bitcoin: the public key has no
 attached identity and is expected to be one-time-use for privacy reasons. However, unlike in Bitcoin, we model
-ownership at the level of individual states rather than as a platform-level concept as we envisage many
+ownership at the level of individual states rather than as a platform-level concept, as we envisage many
 (possibly most) contracts on the platform will not represent “owner/issuer” relationships, but “party/party”
-relationships such as a derivative contract.
-* `faceValue`, an `Amount<Issued<Currency>>`, which wraps an integer number of pennies and a currency that is
-specific to some issuer (e.g. a regular bank, a central bank, etc). You can read more about this very common
+relationships, such as a derivative contract.
+* `faceValue`: an `Amount<Issued<Currency>>`, which wraps an integer number of pennies and a currency that is
+specific to some issuer (for example, a regular bank or a central bank). You can read more about this very common
 type in [API: Core types](api-core-types.md).
-* `maturityDate`, an [Instant](https://docs.oracle.com/javase/8/docs/api/java/time/Instant.html), which is a type
+* `maturityDate`: an [Instant](https://docs.oracle.com/javase/8/docs/api/java/time/Instant.html), which is a type
 from the Java 8 standard time library. It defines a point on the timeline.
 
 States are immutable, and thus the class is defined as immutable as well. The `data` modifier in the Kotlin version
@@ -226,17 +222,17 @@ the state with the owner public key blanked out: this will prove useful later.
 The Java code compiles to almost identical bytecode as the Kotlin version, but as you can see, is much more verbose.
 
 
-## Commands
+## Defining the commands
 
 The validation logic for a contract may vary depending on what stage of a state’s lifecycle it is automating. So it can
 be useful to pass additional data into the contract code that isn’t represented by the states which exist permanently
 in the ledger, in order to clarify intent of a transaction.
 
-For this purpose we have commands. Often they don’t need to contain any data at all, they just need to exist. A command
-is a piece of data associated with some *signatures*. By the time the contract runs the signatures have already been
+For this purpose, we have commands. Often, commands don’t need to contain any data at all, they just need to exist. A command
+is a piece of data associated with some *signatures*. By the time the contract runs, the signatures have already been
 checked, so from the contract code’s perspective, a command is simply a data structure with a list of attached
-public keys. Each key had a signature proving that the corresponding private key was used to sign. Because of this
-approach contracts never actually interact or work with digital signatures directly.
+public keys. Each key has a signature, proving that the corresponding private key was used to sign. Because of this
+approach, contracts never actually interact or work with digital signatures directly.
 
 Let’s define a few commands now:
 
@@ -282,12 +278,10 @@ public static class Commands implements CommandData {
 ```
 {{% /tab %}}
 
-
-
-
-[TutorialContract.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/contract/TutorialContract.kt) | [CommercialPaper.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/contract/CommercialPaper.java) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
+
+[TutorialContract.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/contract/TutorialContract.kt) | [CommercialPaper.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/contract/CommercialPaper.java)
+
 
 We define a simple grouping interface or static class, this gives us a type that all our commands have in common,
 then we go ahead and create three commands: `Move`, `Redeem`, `Issue`. `TypeOnlyCommandData` is a helpful utility
@@ -295,25 +289,26 @@ for the case when there’s no data inside the command; only the existence matte
 such that any instances always compare equal and hash to the same value.
 
 
-## The verify function
+## Verifying transactions
 
 The heart of a smart contract is the code that verifies a set of state transitions (a *transaction*). The function is
 simple: it’s given a class representing the transaction, and if the function returns then the transaction is considered
 acceptable. If it throws an exception, the transaction is rejected.
 
 Each transaction can have multiple input and output states of different types. The set of contracts to run is decided
-by taking the code references inside each state. Each contract is run only once. As an example, a transaction that includes
-2 cash states and 1 commercial paper state as input, and has as output 1 cash state and 1 commercial paper state, will
+by taking the code references inside each state.
+
+Each contract is run only once. As an example, a transaction that includes two cash states and one commercial paper state as input, and has one cash state and one commercial paper state as output will
 run two contracts one time each: Cash and CommercialPaper.
 
 {{< tabs name="tabs-4" >}}
 {{% tab name="kotlin" %}}
 ```kotlin
 override fun verify(tx: LedgerTransaction) {
-    // Group by everything except owner: any modification to the CP at all is considered changing it fundamentally.
+    // Group by everything except owner: any modification to the commercial paper at all is considered changing it fundamentally.
     val groups = tx.groupStates(State::withoutOwner)
 
-    // There are two possible things that can be done with this CP. The first is trading it. The second is redeeming
+    // There are two possible things that can be done with this commercial paper. The first is trading it. The second is redeeming
     // it for cash on or after the maturity date.
     val command = tx.commands.requireSingleCommand<CommercialPaper.Commands>()
 
@@ -332,14 +327,14 @@ public void verify(LedgerTransaction tx) {
 ```
 {{% /tab %}}
 
-
-
-
-[TutorialContract.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/contract/TutorialContract.kt) | [CommercialPaper.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/contract/CommercialPaper.java) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
 
-We start by using the `groupStates` method, which takes a type and a function. State grouping is a way of ensuring
+
+[TutorialContract.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/contract/TutorialContract.kt) | [CommercialPaper.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/contract/CommercialPaper.java)
+
+
+
+You start by using the `groupStates` method, which takes a type and a function. State grouping is a way of ensuring
 your contract can handle multiple unrelated states of the same type in the same transaction, which is needed for
 splitting/merging of assets, atomic swaps and so on. More on this next.
 
@@ -352,17 +347,17 @@ such command.
 
 The simplest way to write a smart contract would be to say that each transaction can have a single input state and a
 single output state of the kind covered by that contract. This would be easy for the developer, but would prevent many
-important use cases.
+important use-cases.
 
 The next easiest way to write a contract would be to iterate over each input state and expect it to have an output
-state. Now you can build a single transaction that, for instance, moves two different cash states in different currencies
+state. By doing this, you can build a single transaction that, for instance, moves two different cash states in different currencies
 simultaneously. But it gets complicated when you want to issue or exit one state at the same time as moving another.
 
 Things get harder still once you want to split and merge states. We say states are *fungible* if they are
 treated identically to each other by the recipient, despite the fact that they aren’t quite identical. Dollar bills are
 fungible because even though one may be worn/a bit dirty and another may be crisp and new, they are still both worth
 exactly $1. Likewise, ten $1 bills are almost exactly equivalent to one $10 bill. On the other hand, $10 and £10 are not
-fungible: if you tried to pay for something that cost £20 with $10+£10 notes your trade would not be accepted.
+fungible: if you tried to pay for something that cost £20 with $10+£10 notes, your trade would not be accepted.
 
 To make all this easier the contract API provides a notion of groups. A group is a set of input states and output states
 that should be checked for validity together.
@@ -376,17 +371,17 @@ Consider the following simplified currency trade transaction:
 * **Output**: £10,000 owned by Alice   (B)
 * **Output**: $15,000 owned by Bob     (A)
 
-In this transaction Alice and Bob are trading $15,000 for £10,000. Alice has her money in the form of two different
-inputs e.g. because she received the dollars in two payments. The input and output amounts do balance correctly, but
+In this transaction, Alice and Bob are trading $15,000 for £10,000. Alice has her money in the form of two different
+inputs, for example, because she received the dollars in two payments. The input and output amounts do balance correctly, but
 the cash smart contract must consider the pounds and the dollars separately because they are not fungible: they cannot
-be merged together. So we have two groups: A and B.
+be merged together. So, we have two groups: A and B.
 
 The `LedgerTransaction.groupStates` method handles this logic for us: firstly, it selects only states of the
 given type (as the transaction may include other types of state, such as states representing bond ownership, or a
 multi-sig state) and then it takes a function that maps a state to a grouping key. All states that share the same key are
 grouped together. In the case of the cash example above, the grouping key would be the currency.
 
-In this kind of contract we don’t want CP to be fungible: merging and splitting is (in our example) not allowed.
+In this type of contract, we don’t want commercial paper to be fungible: merging and splitting is (in our example) not allowed.
 So we just use a copy of the state minus the owner field as the grouping key.
 
 Here are some code examples:
@@ -451,7 +446,7 @@ List<InOutGroup<State, State>> groups = tx.groupStates(State.class, State::witho
 
 For large states with many fields that must remain constant and only one or two that are really mutable, it’s often
 easier to do things this way than to specifically name each field that must stay the same. The `withoutOwner` function
-here simply returns a copy of the object but with the `owner` field set to `NullPublicKey`, which is just a public key
+here simply returns a copy of the object, but with the `owner` field set to `NullPublicKey`, which is just a public key
 of all zeros. It’s invalid and useless, but that’s OK, because all we’re doing is preventing the field from mattering
 in equals and hashCode.
 
@@ -471,7 +466,7 @@ for ((inputs, outputs, _) in groups) {
         is Commands.Move -> {
             val input = inputs.single()
             requireThat {
-                "the transaction is signed by the owner of the CP" using (input.owner.owningKey in command.signers)
+                "the transaction is signed by the owner of the commercial paper" using (input.owner.owningKey in command.signers)
                 "the state is propagated" using (outputs.size == 1)
                 // Don't need to check anything else, as if outputs.size == 1 then the output is equal to
                 // the input ignoring the owner field due to the grouping.
@@ -487,7 +482,7 @@ for ((inputs, outputs, _) in groups) {
                 "the paper must have matured" using (time >= input.maturityDate)
                 "the received amount equals the face value" using (received == input.faceValue)
                 "the paper must be destroyed" using outputs.isEmpty()
-                "the transaction is signed by the owner of the CP" using (input.owner.owningKey in command.signers)
+                "the transaction is signed by the owner of the commercial paper" using (input.owner.owningKey in command.signers)
             }
         }
 
@@ -499,7 +494,7 @@ for ((inputs, outputs, _) in groups) {
                 "output states are issued by a command signer" using (output.issuance.party.owningKey in command.signers)
                 "output values sum to more than the inputs" using (output.faceValue.quantity > 0)
                 "the maturity date is not in the past" using (time < output.maturityDate)
-                // Don't allow an existing CP state to be replaced by this issuance.
+                // Don't allow an existing commercial paper state to be replaced by this issuance.
                 "can't reissue an existing state" using inputs.isEmpty()
             }
         }
@@ -524,7 +519,7 @@ for (InOutGroup group : groups) {
     if (cmd.getValue() instanceof Commands.Move) {
         State input = inputs.get(0);
         requireThat(require -> {
-            require.using("the transaction is signed by the owner of the CP", cmd.getSigners().contains(input.getOwner().getOwningKey()));
+            require.using("the transaction is signed by the owner of the commercial paper", cmd.getSigners().contains(input.getOwner().getOwningKey()));
             require.using("the state is propagated", outputs.size() == 1);
             // Don't need to check anything else, as if outputs.size == 1 then the output is equal to
             // the input ignoring the owner field due to the grouping.
@@ -541,7 +536,7 @@ for (InOutGroup group : groups) {
             require.using("the paper must have matured", time.isAfter(input.getMaturityDate()));
             require.using("the received amount equals the face value", received == input.getFaceValue());
             require.using("the paper must be destroyed", outputs.isEmpty());
-            require.using("the transaction is signed by the owner of the CP", cmd.getSigners().contains(input.getOwner().getOwningKey()));
+            require.using("the transaction is signed by the owner of the commercial paper", cmd.getSigners().contains(input.getOwner().getOwningKey()));
             return null;
         });
     } else if (cmd.getValue() instanceof Commands.Issue) {
@@ -553,7 +548,7 @@ for (InOutGroup group : groups) {
             require.using("output states are issued by a command signer", cmd.getSigners().contains(output.getIssuance().getParty().getOwningKey()));
             require.using("output values sum to more than the inputs", output.getFaceValue().getQuantity() > 0);
             require.using("the maturity date is not in the past", time.isBefore(output.getMaturityDate()));
-            // Don't allow an existing CP state to be replaced by this issuance.
+            // Don't allow an existing commercial paper state to be replaced by this issuance.
             require.using("can't reissue an existing state", inputs.isEmpty());
             return null;
         });
@@ -565,12 +560,11 @@ for (InOutGroup group : groups) {
 ```
 {{% /tab %}}
 
-
-
-
-[TutorialContract.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/contract/TutorialContract.kt) | [CommercialPaper.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/contract/CommercialPaper.java) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
+
+
+[TutorialContract.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/contract/TutorialContract.kt) | [CommercialPaper.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/contract/CommercialPaper.java)
+
 
 This loop is the core logic of the contract.
 
@@ -579,64 +573,63 @@ may be missing here. We check for it being null later.
 
 
 {{< warning >}}
-In the Kotlin version as long as we write a comparison with the transaction time first the compiler will
-verify we didn’t forget to check if it’s missing. Unfortunately due to the need for smooth interoperability with Java, this
-check won’t happen if we write e.g. `someDate > time`, it has to be `time < someDate`. So it’s good practice to
+In the Kotlin version, as long as you write a comparison with the transaction time first, the compiler will
+verify you didn’t forget to check if it’s missing. Unfortunately, due to the need for smooth interoperability with Java, this
+check won’t happen if you write, for example, `someDate > time`, it has to be `time < someDate`. So it’s good practice to
 always write the transaction time-window first.
-
 {{< /warning >}}
 
 
-Next, we take one of three paths, depending on what the type of the command object is.
+Next, you take one of three paths, depending on what the type of the command object is.
 
 **If the command is a ``Move`` command:**
 
 The first line (first three lines in Java) impose a requirement that there be a single piece of commercial paper in
-this group. We do not allow multiple units of CP to be split or merged even if they are owned by the same owner. The
+this group. We do not allow multiple units of commercial paper to be split or merged even if they are owned by the same owner. The
 `single()` method is a static *extension method* defined by the Kotlin standard library: given a list, it throws an
-exception if the list size is not 1, otherwise it returns the single item in that list. In Java, this appears as a
+exception if the list size is not 1; otherwise, it returns the single item in that list. In Java, this appears as a
 regular static method of the type familiar from many FooUtils type singleton classes and we have statically imported it
 here. In Kotlin, it appears as a method that can be called on any JDK list. The syntax is slightly different but
 behind the scenes, the code compiles to the same bytecode.
 
-Next, we check that the transaction was signed by the public key that’s marked as the current owner of the commercial
+Next, you need to check that the transaction was signed by the public key that’s marked as the current owner of the commercial
 paper. Because the platform has already verified all the digital signatures before the contract begins execution,
-all we have to do is verify that the owner’s public key was one of the keys that signed the transaction. The Java code
+all you have to do is verify that the owner’s public key was one of the keys that signed the transaction. The Java code
 is straightforward: we are simply using the `Preconditions.checkState` method from Guava. The Kotlin version looks a
-little odd: we have a *requireThat* construct that looks like it’s built into the language. In fact *requireThat* is an
-ordinary function provided by the platform’s contract API. Kotlin supports the creation of *domain specific languages*
+little odd: we have a *requireThat* construct that looks like it’s built into the language. In fact, *requireThat* is an
+ordinary function provided by the platform’s contract API. Kotlin supports the creation of *domain-specific languages*
 through the intersection of several features of the language, and we use it here to support the natural listing of
 requirements. To see what it compiles down to, look at the Java version. Each `"string" using (expression)` statement
 inside a `requireThat` turns into an assertion that the given expression is true, with an `IllegalArgumentException`
 being thrown that contains the string if not. It’s just another way to write out a regular assertion, but with the
-English-language requirement being put front and center.
+English-language requirement being put front and centre.
 
-Next, we simply verify that the output state is actually present: a move is not allowed to delete the CP from the ledger.
+Next, you simply verify that the output state is actually present: a move is not allowed to delete the commercial paper from the ledger.
 The grouping logic already ensured that the details are identical and haven’t been changed, save for the public key of
 the owner.
 
 **If the command is a ``Redeem`` command, then the requirements are more complex:**
 
 
-* We still check there is a CP input state.
-* We want to see that the face value of the CP is being moved as a cash claim against some party, that is, the
-issuer of the CP is really paying back the face value.
+* You still check that there is a commercial paper input state.
+* You want to see that the face value of the commercial paper is being moved as a cash claim against some party, that is, the
+issuer of the commercial paper is really paying back the face value.
 * The transaction must be happening after the maturity date.
 * The commercial paper must *not* be propagated by this transaction: it must be deleted, by the group having no
-output state. This prevents the same CP being considered redeemable multiple times.
+output state. This prevents the same commercial paper being considered redeemable multiple times.
 
 To calculate how much cash is moving, we use the `sumCashBy` utility function. Again, this is an extension function,
 so in Kotlin code it appears as if it was a method on the `List<Cash.State>` type even though JDK provides no such
-method. In Java we see its true nature: it is actually a static method named `StateSumming.sumCashBy`. This method simply
+method. In Java, we see its true nature: it is actually a static method named `StateSumming.sumCashBy`. This method simply
 returns an `Amount` object containing the sum of all the cash states in the transaction outputs that are owned by
 that given public key, or throws an exception if there were no such states *or* if there were different currencies
 represented in the outputs! So we can see that this contract imposes a limitation on the structure of a redemption
-transaction: you are not allowed to move currencies in the same transaction that the CP does not involve. This
+transaction: you are not allowed to move currencies in the same transaction that the commercial paper does not involve. This
 limitation could be addressed with better APIs, if it were to be a real limitation.
 
 **Finally, we support an ``Issue`` command, to create new instances of commercial paper on the ledger.**
 
-It likewise enforces various invariants upon the issuance, such as, there must be one output CP state, for instance.
+It likewise enforces various invariants upon the issuance, such as there must be one output commercial paper state, for instance.
 
 This contract is simple and does not implement all the business logic a real commercial paper lifecycle
 management program would. For instance, there is no logic requiring a signature from the issuer for redemption:
@@ -648,18 +641,18 @@ As the prototype evolves, these requirements will be explored and this tutorial 
 contracts API.
 
 
-## How to test your contract
+## Testing your contract
 
 Of course, it is essential to unit test your new nugget of business logic to ensure that it behaves as you expect.
-As contract code is just a regular Java function you could write out the logic entirely by hand in the usual
+As contract code is just a regular Java function, you could write out the logic entirely by hand in the usual
 manner. But this would be inconvenient, and then you’d get bored of writing tests and that would be bad: you
 might be tempted to skip a few.
 
-To make contract testing more convenient Corda provides a language-like API for both Kotlin and Java that lets
+To make contract testing more convenient, Corda provides a language-like API for both Kotlin and Java that lets
 you easily construct chains of transactions and verify that they either pass validation, or fail with a particular
 error message.
 
-Testing contracts with this domain specific language is covered in the separate tutorial, [Writing a contract test](tutorial-test-dsl.md).
+Testing contracts with this domain specific language is covered in the separate tutorial, [Writing contract tests](tutorial-test-dsl.md).
 
 
 ## Adding a generation API to your contract
@@ -672,7 +665,7 @@ be so).
 Generation may involve complex logic. For example, the cash contract has a `generateSpend` method that is given a set of
 cash states and chooses a way to combine them together to satisfy the amount of money that is being sent. In the
 immutable-state model that we are using ledger entries (states) can only be created and deleted, but never modified.
-Therefore to send $1200 when we have only $900 and $500 requires combining both states together, and then creating
+Therefore, to send $1200 when we have only $900 and $500 requires combining both states together, and then creating
 two new output states of $1200 and $200 back to ourselves. This latter state is called the *change* and is a concept
 that should be familiar to anyone who has worked with Bitcoin.
 
@@ -695,15 +688,11 @@ fun generateIssue(issuance: PartyAndReference, faceValue: Amount<Issued<Currency
 
 ```
 {{% /tab %}}
-
-
-
-
-[TutorialContract.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/contract/TutorialContract.kt) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
 
-We take a reference that points to the issuing party (i.e. the caller) and which can contain any internal
+[TutorialContract.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/contract/TutorialContract.kt)
+
+You take a reference that points to the issuing party (that is, the caller) and which can contain any internal
 bookkeeping/reference numbers that we may require. The reference field is an ideal place to put (for example) a
 join key. Then the face value of the paper, and the maturity date. It returns a `TransactionBuilder`.
 A `TransactionBuilder` is one of the few mutable classes the platform provides. It allows you to add inputs,
@@ -712,11 +701,11 @@ outputs and commands to it and is designed to be passed around, potentially betw
 {{< note >}}
 Generation methods should ideally be written to compose with each other, that is, they should take a
 `TransactionBuilder` as an argument instead of returning one, unless you are sure it doesn’t make sense to
-combine this type of transaction with others. In this case, issuing CP at the same time as doing other things
+combine this type of transaction with others. In this case, issuing commercial paper at the same time as doing other things
 would just introduce complexity that isn’t likely to be worth it, so we return a fresh object each time: instead,
-an issuer should issue the CP (starting out owned by themselves), and then sell it in a separate transaction.
-
+an issuer should issue the commercial paper (starting out owned by themselves), and then sell it in a separate transaction.
 {{< /note >}}
+
 The function we define creates a `CommercialPaper.State` object that mostly just uses the arguments we were given,
 but it fills out the owner field of the state to be the same public key as the issuing party.
 
@@ -745,7 +734,7 @@ public static final String IOU_CONTRACT_ID = "com.example.contract.IOUContract";
 
 
 
-[TutorialContract.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/contract/TutorialContract.kt) | [CommercialPaper.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/contract/CommercialPaper.java) | ![github](/images/svg/github.svg "github")
+[TutorialContract.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/contract/TutorialContract.kt) | [CommercialPaper.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/contract/CommercialPaper.java)
 
 {{< /tabs >}}
 
@@ -767,9 +756,9 @@ prevents it from being double spent. You can learn more about this topic in the 
 {{< note >}}
 For now, don’t worry about how to pick a notary. More infrastructure will come later to automate this
 decision for you.
-
 {{< /note >}}
-What about moving the paper, i.e. reassigning ownership to someone else?
+
+What about moving the paper, that is, reassigning ownership to someone else?
 
 {{< tabs name="tabs-10" >}}
 {{% tab name="kotlin" %}}
@@ -784,15 +773,14 @@ fun generateMove(tx: TransactionBuilder, paper: StateAndRef<State>, newOwner: Ab
 ```
 {{% /tab %}}
 
-
-
-
-[TutorialContract.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/contract/TutorialContract.kt) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
 
+
+[TutorialContract.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/contract/TutorialContract.kt)
+
+
 Here, the method takes a pre-existing `TransactionBuilder` and adds to it. This is correct because typically
-you will want to combine a sale of CP atomically with the movement of some other asset, such as cash. So both
+you will want to combine a sale of commercial paper atomically with the movement of some other asset, such as cash. So both
 generate methods should operate on the same transaction. You can see an example of this being done in the unit tests
 for the commercial paper contract.
 
@@ -827,19 +815,18 @@ fun generateRedeem(tx: TransactionBuilder, paper: StateAndRef<State>, services: 
 {{% /tab %}}
 
 
-
-
-[TutorialContract.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/contract/TutorialContract.kt) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
 
-Here we can see an example of composing contracts together. When an owner wishes to redeem the commercial paper, the
-issuer (i.e. the caller) must gather cash from its vault and send the face value to the owner of the paper.
+[TutorialContract.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/contract/TutorialContract.kt)
+
+
+Here, you can see an example of composing contracts together. When an owner wishes to redeem the commercial paper, the
+issuer (that is, the caller) must gather cash from its vault and send the face value to the owner of the paper.
 
 {{< note >}}
 This contract has no explicit concept of rollover.
-
 {{< /note >}}
+
 The *vault* is a concept that may be familiar from Bitcoin and Ethereum. It is simply a set of states (such as cash) that are
 owned by the caller. Here, we use the vault to update the partial transaction we are handed with a movement of cash
 from the issuer of the commercial paper to the current owner. If we don’t have enough quantity of cash in our vault,
@@ -850,11 +837,10 @@ from the ledger). Finally, we add a Redeem command that should be signed by the 
 {{< warning >}}
 The amount we pass to the `Cash.generateSpend` function has to be treated first with `withoutIssuer`.
 This reflects the fact that the way we handle issuer constraints is still evolving; the commercial paper
-contract requires payment in the form of a currency issued by a specific party (e.g. the central bank,
+contract requires payment in the form of a currency issued by a specific party (for example, the central bank,
 or the issuers own bank perhaps). But the vault wants to assemble spend transactions using cash states from
 any issuer, thus we must strip it here. This represents a design mismatch that we will resolve in future
 versions with a more complete way to express issuer constraints.
-
 {{< /warning >}}
 
 
@@ -868,25 +854,25 @@ You can see how transactions flow through the different stages of construction b
 unit tests.
 
 
-## How multi-party transactions are constructed and transmitted
+## Constructing and transmitting multi-party transactions
 
 OK, so now we know how to define the rules of the ledger, and we know how to construct transactions that satisfy
-those rules … and if all we were doing was maintaining our own data that might be enough. But we aren’t: Corda
+those rules … and if all we were doing was maintaining our own data, that might be enough. But we aren’t: Corda
 is about keeping many different parties all in sync with each other.
 
-In a classical blockchain system all data is transmitted to everyone and if you want to do something fancy, like
-a multi-party transaction, you’re on your own. In Corda data is transmitted only to parties that need it and
+In a classic blockchain system, all data is transmitted to everyone and if you want to do something fancy, like
+a multi-party transaction, you’re on your own. In Corda, data is transmitted only to parties that need it and
 multi-party transactions are a way of life, so we provide lots of support for managing them.
 
 You can learn how transactions are moved between peers and taken through the build-sign-notarise-broadcast
 process in a separate tutorial, [Writing flows](flow-state-machines.md).
 
 
-## Non-asset-oriented smart contracts
+## Working with non-asset-oriented smart contracts
 
 Although this tutorial covers how to implement an owned asset, there is no requirement that states and code contracts
-*must* be concerned with ownership of an asset. It is better to think of states as representing useful facts about the
-world, and (code) contracts as imposing logical relations on how facts combine to produce new facts. Alternatively
+_must_ be concerned with ownership of an asset. It is better to think of states as representing useful facts about the
+world, and (code) contracts as imposing logical relations on how facts combine to produce new facts. Alternatively,
 you can imagine that states are like rows in a relational database and contracts are like stored procedures and
 relational constraints.
 
@@ -895,17 +881,17 @@ to “[Interest rate swaps](contract-irs.md)” and the accompanying source code
 typically not splittable or mergeable and thus you don’t have to worry much about grouping of states.
 
 
-## Making things happen at a particular time
+## Scheduling events
 
 It would be nice if you could program your node to automatically redeem your commercial paper as soon as it matures.
 Corda provides a way for states to advertise scheduled events that should occur in future. Whilst this information
-is by default ignored, if the corresponding *Cordapp* is installed and active in your node, and if the state is
-considered relevant by your vault (e.g. because you own it), then the node can automatically begin the process
-of creating a transaction and taking it through the life cycle. You can learn more about this in the article
-“[Event scheduling](event-scheduling.md)”.
+is by default ignored, if the corresponding *CorDapp* is installed and active in your node, and if the state is
+considered relevant by your vault (for example, because you own it), then the node can automatically begin the process
+of creating a transaction and taking it through the life cycle. You can learn more about this in the tutorial
+[Scheduling events](event-scheduling.md).
 
 
-## Encumbrances
+## Defining encumbrances
 
 All contract states may be *encumbered* by up to one other state, which we call an **encumbrance**.
 
@@ -980,7 +966,7 @@ available somewhere within the input set of states.
 In future, we will consider the concept of a *covenant*. This is where the encumbrance travels alongside each iteration of
 the encumbered state. For example, a cash state may be encumbered with a *domicile* encumbrance, which checks the domicile of
 the identity of the owner that the cash state is being moved to, in order to uphold sanction screening regulations, and prevent
-cash being paid to parties domiciled in e.g. North Korea. In this case, the encumbrance should be permanently attached to
+cash being paid to parties domiciled in for example, North Korea. In this case, the encumbrance should be permanently attached to
 the all future cash states stemming from this one.
 
 We will also consider marking states that are capable of being encumbrances as such. This will prevent states being used

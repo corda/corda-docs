@@ -176,7 +176,7 @@ Read more in [The ledger](key-concepts-ledger.md)
 
 ### Attachments
 
-Read more in [Using attachments](tutorial-attachments.md) and [Node services](node-services.md)
+Read more in [Working with attachments](tutorial-attachments.md) and [Node services](node-services.md)
 
 ![attachments tables](/en/images/attachments_tables.png "attachments tables")
 
@@ -258,7 +258,7 @@ This table should be empty when no states are authorised for upgrade or after au
 
 ### Scheduling
 
-Read more in [Event scheduling](event-scheduling.md)
+Read more in [Scheduling events](event-scheduling.md)
 
 
 {{< table >}}
@@ -507,4 +507,3 @@ These are [Liquibase](https://www.liquibase.org) proprietary tables used by Cord
 |LOCKEDBY||
 
 {{< /table >}}
-

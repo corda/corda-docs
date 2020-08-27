@@ -15,39 +15,29 @@ title: Tutorials
 ---
 
 
-# Tutorials
+#  Tutorials
 
-This section is split into two parts.
+Welcome to the Corda tutorials!
 
-The Hello, World tutorials should be followed in sequence and show how to extend the Java or Kotlin CorDapp Template
-into a full CorDapp.
-
+This suite of tutorials is intended for anyone interested in CorDapp development and will help you get up and running with CorDapp development as quickly as possible.
 
 
-* [Hello, World!](hello-world-introduction.md)
-* [Hello, World! Pt.2 - Contract constraints](tut-two-party-introduction.md)
+## Hello world! tutorial
 
+New to Corda? Start with the [Hello, World! Tutorial](hello-world-introduction.md).
 
+Complete each of the tutorial topics in sequence to learn how to extend the [Java Cordapp Template](https://github.com/corda/cordapp-template-java) or [Kotlin Cordapp Template](https://github.com/corda/cordapp-template-kotlin) into a full CorDapp.
 
-The remaining tutorials cover individual platform features in isolation. They don’t depend on the code from the Hello,
-World tutorials, and can be read in any order.
+## Core tutorials
 
+Once you've worked through the Hello World! tutorials and are ready to dig a bit deeper, the [Core tutorials](core-tutorials-index.md) cover all of the key skills you will need to be able to develop CorDapps.
 
+While the core tutorials don’t depend on the code from any of the other tutorials, for optimum learning, it's recommended that you complete the tutorials in the order shown.
 
-* [Writing a contract](tutorial-contract.md)
-* [Writing a contract test](tutorial-test-dsl.md)
-* [Upgrading contracts](contract-upgrade.md)
-* [Integration testing](tutorial-integration-testing.md)
-* [Using the client RPC API](tutorial-clientrpc-api.md)
-* [Building transactions](tutorial-building-transactions.md)
-* [Writing flows](flow-state-machines.md)
-* [Writing flow tests](flow-testing.md)
-* [Writing oracle services](oracles.md)
-* [Writing a custom notary service (experimental)](tutorial-custom-notary.md)
-* [Transaction tear-offs](tutorial-tear-offs.md)
-* [Using attachments](tutorial-attachments.md)
-* [Event scheduling](event-scheduling.md)
-* [Observer nodes](tutorial-observer-nodes.md)
+## Supplementary tutorials
 
+The supplementary tutorials are standalone tutorials which cover additional platform features in isolation.
 
+As these tutorials don’t depend on the code from any of the other tutorials, you can complete these in any order you wish, to extend your knowledge of Corda and its operation.
 
+For more information, see [Supplementary tutorials](supplementary-tutorials-index.md).

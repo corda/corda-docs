@@ -7,8 +7,8 @@ date: '2020-04-07T12:00:00Z'
 menu:
   corda-os-4-6:
     identifier: corda-os-4-6-oracles
-    parent: corda-os-4-6-tutorials-index
-    weight: 1120
+    parent: corda-os-4-6-supplementary-tutorials-index
+    weight: 1160
 tags:
 - oracles
 title: Writing oracle services
@@ -19,14 +19,12 @@ title: Writing oracle services
 
 # Writing oracle services
 
-This article covers *oracles*: network services that link the ledger to the outside world by providing facts that
+This tutorial covers *oracles*: network services that link the ledger to the outside world by providing facts that
 affect the validity of transactions.
 
-The current prototype includes an example oracle that provides an interest rate fixing service. It is used by the
-IRS trading demo app.
+The [IRS trading demo app](https://github.com/corda/corda/tree/release/os/4.6/samples/irs-demo/cordapp) includes an example oracle that provides an interest rate fixing service.
 
-
-## Introduction to oracles
+## Introduction
 
 Oracles are a key concept in the block chain/decentralised ledger space. They can be essential for many kinds of
 application, because we often wish to condition the validity of a transaction on some fact being true or false, but the ledger itself
@@ -40,7 +38,7 @@ different computer, the entire shared ledger concept wouldn’t work.
 But transaction validity does often depend on data from the outside world - verifying that an
 interest rate swap is paying out correctly may require data on interest rates, verifying that a loan has reached
 maturity requires knowledge about the current time, knowing which side of a bet receives the payment may require
-arbitrary facts about the real world (e.g. the bankruptcy or solvency of a company or country), and so on.
+arbitrary facts about the real world (for example, the bankruptcy or solvency of a company or country), and so on.
 
 We can solve this problem by introducing services that create digitally signed data structures which assert facts.
 These structures can then be used as an input to a transaction and distributed with the transaction data itself. Because
@@ -50,10 +48,9 @@ could do an HTTP request: it’s possible that an answer would change after bein
 consensus.
 
 
-### The two basic approaches
+### Approaches to implementing oracles
 
-The architecture provides two ways of implementing oracles with different tradeoffs:
-
+The Corda architecture provides two ways of implementing oracles with different tradeoffs:
 
 * Using commands
 * Using attachments
@@ -69,14 +66,13 @@ attachments when they run.
 
 {{< note >}}
 Currently attachments do not support digital signing, but this is a planned feature.
-
 {{< /note >}}
+
 As you can see, both approaches share a few things: they both allow arbitrary binary data to be provided to transactions
 (and thus contracts). The primary difference is whether the data is a freely reusable, standalone object or whether it’s
 integrated with a transaction.
 
 Here’s a quick way to decide which approach makes more sense for your data source:
-
 
 * Is your data *continuously changing*, like a stock price, the current time, etc? If yes, use a command.
 * Is your data *commercially valuable*, like a feed which you are not allowed to resell unless it’s incorporated into
@@ -95,7 +91,6 @@ Let’s look at the interest rates oracle that can be found in the `NodeInterest
 an oracle that uses a command because the current interest rate fix is a constantly changing fact.
 
 The obvious way to implement such a service is this:
-
 
 * The creator of the transaction that depends on the interest rate sends it to the oracle.
 * The oracle inserts a command with the rate and signs the transaction.
@@ -146,7 +141,7 @@ class Oracle {
 
 The fix contains a timestamp (the `forDay` field) that identifies the version of the data being requested. Since
 there can be an arbitrary delay between a fix being requested via `query` and the signature being requested via
-`sign`, this timestamp allows the Oracle to know which, potentially historical, value it is being asked to sign for.  This is an
+`sign`, this timestamp allows the Oracle to know which, potentially historical, value it is being asked to sign for. This is an
 important technique for continuously varying data.
 
 
@@ -154,17 +149,17 @@ important technique for continuously varying data.
 
 Because the transaction is sent to the oracle for signing, ordinarily the oracle would be able to see the entire contents
 of that transaction including the inputs, output contract states and all the commands, not just the one (in this case)
-relevant command.  This is an obvious privacy leak for the other participants.  We currently solve this using a
+relevant command. This is an obvious privacy leak for the other participants. We currently solve this using a
 `FilteredTransaction`, which implements a Merkle Tree.  These reveal only the necessary parts of the transaction to the
-oracle but still allow it to sign it by providing the Merkle hashes for the remaining parts.  See [Oracles](key-concepts-oracles.md)
+oracle, but still allow the oracle to sign the transaction by providing the Merkle hashes for the remaining parts. See [Oracles](key-concepts-oracles.md)
 for more details.
 
 
-### Pay-per-play oracles
+### Implementing pay-per-play oracles
 
 Because the signature covers the transaction, and transactions may end up being forwarded anywhere, the fact itself
 is independently checkable. However, this approach can still be useful when the data itself costs money, because the act
-of issuing the signature in the first place can be charged for (e.g. by requiring the submission of a fresh
+of issuing the signature in the first place can be charged for (for example, by requiring the submission of a fresh
 `Cash.State` that has been re-assigned to a key owned by the oracle service). Because the signature covers the
 *transaction* and not only the *fact*, this allows for a kind of weak pseudo-DRM over data feeds. Whilst a
 contract could in theory include a transaction parsing and signature checking library, writing a contract in this way
@@ -175,15 +170,20 @@ punishment.
 
 ## Implementing an oracle with continuously varying data
 
+Implementing an oracle with continuously varying data requires the following steps:
 
-### Implement the core classes
+1. [Implementing the core classes](#implementing-the-core-classes).
+2. [Binding to the network](#binding-to-the-network).
+3. [Providing sub-flows for querying and signing](#providing-sub-flows-for-querying-and-signing).
+
+### Implementing the core classes
 
 The key is to implement your oracle in a similar way to the `NodeInterestRates.Oracle` outline we gave above with
-both a `query` and a `sign` method.  Typically you would want one class that encapsulates the parameters to the `query`
+both a `query` and a `sign` method.  Typically, you would want one class that encapsulates the parameters to the `query`
 method (`FixOf`, above), and a `CommandData` implementation (`Fix`, above) that encapsulates both an instance of
 that parameter class and an instance of whatever the result of the `query` is (`BigDecimal` above).
 
-The `NodeInterestRates.Oracle` allows querying for multiple `Fix` objects but that is not necessary and is
+The `NodeInterestRates.Oracle` allows querying for multiple `Fix` objects, but that is not necessary and is
 provided for the convenience of callers who need multiple fixes and want to be able to do it all in one query request.
 
 Assuming you have a data source and can query it, it should be very easy to implement your `query` method and the
@@ -227,23 +227,22 @@ fun sign(ftx: FilteredTransaction): TransactionSignature {
 
 [NodeInterestRates.kt](https://github.com/corda/corda/blob/release/os/4.6/samples/irs-demo/cordapp/workflows-irs/src/main/kotlin/net.corda.irs/api/NodeInterestRates.kt)
 
-Here we can see that there are several steps:
-
+Here you can see that there are several steps:
 
 * Ensure that the transaction we have been sent is indeed valid and passes verification, even though we cannot see all
-of it
+of it.
 * Check that we only received commands as expected, and each of those commands expects us to sign for them and is of
-the expected type (`Fix` here)
+the expected type (`Fix` here).
 * Iterate over each of the commands we identified in the last step and check that the data they represent matches
-exactly our data source.  The final step, assuming we have got this far, is to generate a signature for the
-transaction and return it
+exactly our data source. The final step, assuming we have got this far, is to generate a signature for the
+transaction and return it.
 
 
 ### Binding to the network
 
 {{< note >}}
 Before reading any further, we advise that you understand the concept of flows and how to write them and use
-them. See [Writing flows](flow-state-machines.md).  Likewise some understanding of Cordapps, plugins and services will be helpful.
+them. See [Writing flows](flow-state-machines.md). Likewise, some understanding of CorDapps, plugins, and services will be helpful.
 See [Running nodes locally](running-a-node.md).
 
 {{< /note >}}
@@ -310,8 +309,8 @@ be executed with.
 
 ### Providing sub-flows for querying and signing
 
-We mentioned the client sub-flow briefly above.  They are the mechanism that clients, in the form of other flows, will
-use to interact with your oracle.  Typically there will be one for querying and one for signing.  Let’s take a look at
+We mentioned the client sub-flow briefly above. This is the mechanism that clients, in the form of other flows, will
+use to interact with your oracle. Typically, there will be one for querying and one for signing. Let’s take a look at
 those for `NodeInterestRates.Oracle`.
 
 ```kotlin
@@ -354,7 +353,6 @@ class FixSignFlow(val tx: TransactionBuilder, val oracle: Party,
 You’ll note that the `FixSignFlow` requires a `FilterTransaction` instance which includes only `Fix` commands.
 You can find a further explanation of this in [Oracles](key-concepts-oracles.md). Below you will see how to build such a
 transaction with hidden fields.
-
 
 
 ## Using an oracle
@@ -427,14 +425,14 @@ checkpointed.
 
 {{< /note >}}
 
-## Testing
+## Testing your oracle service
 
 The `MockNetwork` allows the creation of `MockNode` instances, which are simplified nodes which can be used for testing (see [API: Testing](api-testing.md)).
-When creating the `MockNetwork` you supply a list of `TestCordapp` objects which point to CorDapps on
+When creating the `MockNetwork`, you supply a list of `TestCordapp` objects which point to CorDapps on
 the classpath. These CorDapps will be installed on each node on the network. Make sure the packages you provide reference to the CorDapp
 containing your oracle service.
 
-You can then write tests on your mock network to verify the nodes interact with your Oracle correctly.
+You can then write tests on your mock network to verify the nodes interact with your oracle correctly.
 
 ```kotlin
 @Test(timeout=300_000)
@@ -466,5 +464,4 @@ You can then write tests on your mock network to verify the nodes interact with 
 
 [OracleNodeTearOffTests.kt](https://github.com/corda/corda/blob/release/os/4.6/samples/irs-demo/cordapp/workflows-irs/src/test/kotlin/net/corda/irs/api/OracleNodeTearOffTests.kt)
 
-See [here](https://github.com/corda/corda/samples/irs-demo/cordapp/workflows-irs/src/test/kotlin/net/corda/irs/api/OracleNodeTearOffTests.kt) for more examples.
-
+For more examples, see [OracleNodeTearOffTests.kt](https://github.com/corda/corda/tree/release/os/4.6/samples/irs-demo/cordapp/workflows-irs/src/test/kotlin/net/corda/irs/api/OracleNodeTearOffTests.kt).

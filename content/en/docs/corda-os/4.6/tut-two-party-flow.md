@@ -21,14 +21,13 @@ title: Updating the flow
 
 # Updating the flow
 
-We now need to update our flow to achieve three things:
+After you have written the contract and defined any necessary constraints, as described in [Writing the contract](tut-two-party-contract.md), you now need to update your flow to achieve three things:
 
-
-* Verifying that the transaction proposal we build fulfills the `IOUContract` constraints
+* Verifying that the transaction proposal you build fulfills the `IOUContract` constraints
 * Updating the lender’s side of the flow to request the borrower’s signature
 * Creating a response flow for the borrower that responds to the signature request from the lender
 
-We’ll do this by modifying the flow we wrote in the previous tutorial.
+To do this, modifying the flow that you created earlier as part of [Writing the flow](hello-world-flow.md).
 
 
 ## Verifying the transaction
@@ -78,19 +77,19 @@ import java.util.List;
 
 {{< /tabs >}}
 
-And update `IOUFlow.call` to the following:
+Next, update `IOUFlow.call` to the following:
 
 {{< tabs name="tabs-2" >}}
 {{% tab name="kotlin" %}}
 ```kotlin
-// We retrieve the notary identity from the network map.
+// You retrieve the notary identity from the network map.
 val notary = serviceHub.networkMapCache.notaryIdentities[0]
 
-// We create the transaction components.
+// You create the transaction components.
 val outputState = IOUState(iouValue, ourIdentity, otherParty)
 val command = Command(IOUContract.Create(), listOf(ourIdentity.owningKey, otherParty.owningKey))
 
-// We create a transaction builder and add the components.
+// You create a transaction builder and add the components.
 val txBuilder = TransactionBuilder(notary = notary)
         .addOutputState(outputState, IOUContract.ID)
         .addCommand(command)
@@ -117,15 +116,15 @@ subFlow(FinalityFlow(fullySignedTx, otherPartySession))
 
 {{% tab name="java" %}}
 ```java
-// We retrieve the notary identity from the network map.
+// You retrieve the notary identity from the network map.
 Party notary = getServiceHub().getNetworkMapCache().getNotaryIdentities().get(0);
 
-// We create the transaction components.
+// You create the transaction components.
 IOUState outputState = new IOUState(iouValue, getOurIdentity(), otherParty);
 List<PublicKey> requiredSigners = Arrays.asList(getOurIdentity().getOwningKey(), otherParty.getOwningKey());
 Command command = new Command<>(new IOUContract.Create(), requiredSigners);
 
-// We create a transaction builder and add the components.
+// You create a transaction builder and add the components.
 TransactionBuilder txBuilder = new TransactionBuilder(notary)
         .addOutputState(outputState, IOUContract.ID)
         .addCommand(command);
@@ -158,42 +157,41 @@ return null;
 
 {{< /tabs >}}
 
-In the original CorDapp, we automated the process of notarising a transaction and recording it in every party’s vault
-by invoking a built-in flow called `FinalityFlow` as a subflow. We’re going to use another pre-defined flow,
+In the original CorDapp, you automated the process of notarising a transaction and recording it in every party’s vault
+by invoking a built-in flow called `FinalityFlow` as a subflow. Now, you're going to use another pre-defined flow,
 `CollectSignaturesFlow`, to gather the borrower’s signature.
 
-First, we need to update the command. We are now using `IOUContract.Create`, rather than
-`TemplateContract.Commands.Action`. We also want to make the borrower a required signer, as per the contract
-constraints. This is as simple as adding the borrower’s public key to the transaction’s command.
+First, you need to update the command to use `IOUContract.Create`, rather than
+`TemplateContract.Commands.Action`. You'll also want to make the borrower a required signer, as per the contract
+constraints. To do this, simply add the borrower’s public key to the transaction’s command.
 
-We also need to add the output state to the transaction using a reference to the `IOUContract`, instead of to the old
+You'll also need to add the output state to the transaction using a reference to the `IOUContract`, instead of to the old
 `TemplateContract`.
 
-Now that our state is governed by a real contract, we’ll want to check that our transaction proposal satisfies these
-requirements before kicking off the signing process. We do this by calling `TransactionBuilder.verify` on our
-transaction proposal before finalising it by adding our signature.
+Now that the output state is governed by a real contract, you'll want to check that your transaction proposal satisfies these
+requirements before kicking off the signing process. To do this, you'll call `TransactionBuilder.verify` on your
+transaction proposal before finalising it by adding the signature.
 
 
 ## Requesting the borrower’s signature
 
-Previously we wrote a responder flow for the borrower in order to receive the finalised transaction from the lender.
-We use this same flow to first request their signature over the transaction.
+In the flow that you created earlier, you wrote a responder flow for the borrower in order to receive the finalised transaction from the lender.
+You'll now use this same flow to first request their signature over the transaction.
 
-We gather the borrower’s signature using `CollectSignaturesFlow`, which takes:
-
+To gather the borrower’s signature, you'll use `CollectSignaturesFlow`, which takes:
 
 * A transaction signed by the flow initiator
 * A list of flow-sessions between the flow initiator and the required signers
 
-And returns a transaction signed by all the required signers.
+It then returns a transaction signed by all the required signers.
 
-We can then pass this fully-signed transaction into `FinalityFlow`.
+You can pass this fully-signed transaction into `FinalityFlow`.
 
 
 ## Updating the borrower’s flow
 
-On the lender’s side, we used `CollectSignaturesFlow` to automate the collection of signatures. To allow the borrower
-to respond, we need to update its responder flow to first receive the partially signed transaction for signing. Update
+On the lender’s side, you used `CollectSignaturesFlow` to automate the collection of signatures. To allow the borrower
+to respond, you need to update its responder flow to first receive the partially signed transaction for signing. Update
 `IOUFlowResponder.call` to be the following:
 
 {{< tabs name="tabs-3" >}}
@@ -257,39 +255,39 @@ public Void call() throws FlowException {
 
 {{< /tabs >}}
 
-We could write our own flow to handle this process. However, there is also a pre-defined flow called
+You could write your own flow to handle this process. However, there is also a pre-defined flow called
 `SignTransactionFlow` that can handle the process automatically. The only catch is that `SignTransactionFlow` is an
-abstract class - we must subclass it and override `SignTransactionFlow.checkTransaction`.
+abstract class - you must subclass it and override `SignTransactionFlow.checkTransaction`.
 
 
 ### CheckTransactions
 
 `SignTransactionFlow` will automatically verify the transaction and its signatures before signing it. However, just
-because a transaction is contractually valid doesn’t mean we necessarily want to sign. What if we don’t want to deal
-with the counterparty in question, or the value is too high, or we’re not happy with the transaction’s structure?
+because a transaction is contractually valid doesn’t mean the parties to the contract will necessarily want to sign. What if one party doesn’t want to deal
+with the counterparty in question, or the value is too high, or a party is not happy with the transaction’s structure?
 
-Overriding `SignTransactionFlow.checkTransaction` allows us to define these additional checks. In our case, we are
-checking that:
+Overriding `SignTransactionFlow.checkTransaction` allows you to define any additional checks that you may wish to add. For the purposes of this tutorial, you will want to
+check the following:
 
 
-* The transaction involves an `IOUState` - this ensures that `IOUContract` will be run to verify the transaction
-* The IOU’s value is less than some amount (100 in this case)
+* The transaction involves an `IOUState` - this ensures that `IOUContract` will be run to verify the transaction.
+* The IOU’s value is less than some amount (100 in this case).
 
-If either of these conditions are not met, we will not sign the transaction - even if the transaction and its
+If either of these conditions are not met, the transaction will not be signed - even if the transaction and its
 signatures are contractually valid.
 
-Once we’ve defined the `SignTransactionFlow` subclass, we invoke it using `FlowLogic.subFlow`, and the
+Once you've defined the `SignTransactionFlow` subclass, you invoke it using `FlowLogic.subFlow`, and the
 communication with the borrower’s and the lender’s flow is conducted automatically.
 
-`SignedTransactionFlow` returns the newly signed transaction. We pass in the transaction’s ID to `ReceiveFinalityFlow`
-to ensure we are recording the correct notarised transaction from the lender.
+`SignedTransactionFlow` returns the newly signed transaction. You pass in the transaction’s ID to `ReceiveFinalityFlow`
+to ensure you are recording the correct notarised transaction from the lender.
 
 
 ## Conclusion
 
-We have now updated our flow to verify the transaction and gather the lender’s signature, in line with the constraints
-defined in `IOUContract`. We can now re-run our updated CorDapp, using the
-[same instructions as before](hello-world-running.md).
+You have now updated your flow to verify the transaction and gather the lender’s signature, in line with the constraints
+defined in `IOUContract`. You can now re-run your updated CorDapp, as described in
+[Running your CorDapp](hello-world-running.md).
 
 Our CorDapp now imposes restrictions on the issuance of IOUs. Most importantly, IOU issuance now requires agreement
 from both the lender and the borrower before an IOU can be created on the blockchain. This prevents either the lender or
@@ -306,4 +304,3 @@ You should now be ready to develop your own CorDapps. You can also find a list o
 
 If you get stuck at any point, please reach out on [Slack](https://slack.corda.net/) or
 [Stack Overflow](https://stackoverflow.com/questions/tagged/corda).
-

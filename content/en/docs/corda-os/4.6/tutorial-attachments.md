@@ -7,57 +7,70 @@ date: '2020-04-07T12:00:00Z'
 menu:
   corda-os-4-6:
     identifier: corda-os-4-6-tutorial-attachments
-    parent: corda-os-4-6-tutorials-index
-    weight: 1150
+    parent: corda-os-4-6-supplementary-tutorials-index
+    weight: 1080
 tags:
 - tutorial
 - attachments
-title: Using attachments
+title: Working with attachments
 ---
 
 
 
 
-# Using attachments
+# Working with attachments
+
+This tutorial outlines how to work with attachments, also known as contract attachments.
+
+## Introduction
 
 Attachments are ZIP/JAR files referenced from transaction by hash, but not included in the transaction
 itself. These files are automatically requested from the node sending the transaction when needed and cached
 locally so they are not re-requested if encountered again. Attachments typically contain:
 
-
 * Contract code
 * Metadata about a transaction, such as PDF version of an invoice being settled
 * Shared information to be permanently recorded on the ledger
 
-To add attachments the file must first be uploaded to the node, which returns a unique ID that can be added
-using `TransactionBuilder.addAttachment()`. Attachments can be uploaded and downloaded via RPC and the Corda
-[Node shell](shell.md).
+## Uploading and downloading attachments
 
-It is encouraged that where possible attachments are reusable data, so that nodes can meaningfully cache them.
+To add attachments, the file must first be uploaded to the node, which returns a unique ID that can be added
+using `TransactionBuilder.addAttachment()`.
 
+It is encouraged that, where possible, attachments are reusable data, so that nodes can meaningfully cache them.
 
-## Uploading and downloading
+### Uploading an attachment
 
-To upload an attachment to the node, or download an attachment named by its hash, you use [Interacting with a node](clientrpc.md). This
-is also available for interactive use via the shell. To **upload** run:
+To upload an attachment to the node, you need to first connect to the relevant node. You can do this via the Corda RPC Client, as described in [Interacting with a node](clientrpc.md) or you can upload your attachment via the [Node shell](shell.md).
 
-`>>> run uploadAttachment jar: path/to/the/file.jar`
+To upload an attachment, run the following command:
 
-or
+```
+run uploadAttachment jar: <insert path-to-the-file>.jar
+```
 
-`>>> run uploadAttachmentWithMetadata jar: path/to/the/file.jar, uploader: myself, filename: original_name.jar`
+Alternatively, if you want to include the metadata with the attachment which can be used to find it later on, run the following command:
 
-to include the metadata with the attachment which can be used to find it later on. Note, that currently both uploader
-and filename are just plain strings (there is no connection between uploader and the RPC users for example).
+```
+run uploadAttachmentWithMetadata jar: path/to/the/file.jar, uploader: myself, filename: original_name.jar
+```
+
+Note that currently both uploader and filename are just plain strings - there is no connection between uploader and the RPC users, for example).
 
 The file is uploaded, checked and if successful the hash of the file is returned. This is how the attachment is
 identified inside the node.
 
-To download an attachment, you can do:
+### Downloading an attachment
 
-`>>> run openAttachment id: AB7FED7663A3F195A59A0F01091932B15C22405CB727A1518418BF53C6E6663A`
+To download an attachment named by its hash, you need to first connect to the relevant node. You can do this via the Corda RPC Client, as described in [Interacting with a node](clientrpc.md) or you can upload your attachment via the [Node shell](shell.md).
 
-which will then ask you to provide a path to save the file to. To do the same thing programmatically, you
+To download an attachment, run the following command, replacing the ID with the hash of the attachment that you want to download:
+
+```
+run openAttachment id: AB7FED7663A3F195A59A0F01091932B15C22405CB727A1518418BF53C6E6663A
+```
+
+You will be prompted to provide a path to save the file to. To do the same thing programmatically, you
 can pass a simple `InputStream` or `SecureHash` to the `uploadAttachment`/`openAttachment` RPCs from
 a JVM client.
 
@@ -68,13 +81,12 @@ Attachment metadata can be queried in a similar way to the vault (see [API: Vaul
 
 `AttachmentQueryCriteria` can be used to build a query using the following set of column operations:
 
-
-* Binary logical (AND, OR)
-* Comparison (LESS_THAN, LESS_THAN_OR_EQUAL, GREATER_THAN, GREATER_THAN_OR_EQUAL)
-* Equality (EQUAL, NOT_EQUAL)
-* Likeness (LIKE, NOT_LIKE)
-* Nullability (IS_NULL, NOT_NULL)
-* Collection based (IN, NOT_IN)
+* Binary logical (`AND`, `OR`)
+* Comparison (`LESS_THAN`, `LESS_THAN_OR_EQUAL`, `GREATER_THAN`, `GREATER_THAN_OR_EQUAL`)
+* Equality (`EQUAL`, `NOT_EQUAL`)
+* Likeness (`LIKE`, `NOT_LIKE`)
+* Nullability (`IS_NULL`, `NOT_NULL`)
+* Collection based (`IN`, `NOT_IN`)
 
 The `and` and `or` operators can be used to build complex queries. For example:
 
@@ -104,16 +116,14 @@ val complexCondition =
 {{% /tab %}}
 
 
-
-
-[NodeAttachmentServiceTest.kt](https://github.com/corda/corda/blob/release/os/4.6/node/src/test/kotlin/net/corda/node/services/persistence/NodeAttachmentServiceTest.kt) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
 
+[NodeAttachmentServiceTest.kt](https://github.com/corda/corda/blob/release/os/4.6/node/src/test/kotlin/net/corda/node/services/persistence/NodeAttachmentServiceTest.kt)
 
-## Protocol
 
-Normally attachments on transactions are fetched automatically via the `ReceiveTransactionFlow`. Attachments
+## Fetching attachments
+
+Normally, attachments on transactions are fetched automatically via the `ReceiveTransactionFlow`. Attachments
 are needed in order to validate a transaction (they include, for example, the contract code), so must be fetched
 before the validation process can run.
 
@@ -121,13 +131,12 @@ before the validation process can run.
 Future versions of Corda may support non-critical attachments that are not used for transaction verification
 and which are shared explicitly. These are useful for attaching and signing auditing data with a transaction
 that isn’t used as part of the contract logic.
-
 {{< /note >}}
 
-## Attachments demo
+## Example
 
 There is a worked example of attachments, which relays a simple document from one node to another. The “two party
-trade flow” also includes an attachment, however it is a significantly more complex demo, and less well suited
+trade flow” also includes an attachment; however, it is a significantly more complex demo, and less well suited
 for a tutorial.
 
 The demo code is in the file `samples/attachment-demo/src/main/kotlin/net/corda/attachmentdemo/AttachmentDemo.kt`,
@@ -189,12 +198,12 @@ fun recipient(rpc: CordaRPCOps, webPort: Int) {
 ```
 {{% /tab %}}
 
-
-
-
-[AttachmentDemo.kt](https://github.com/corda/corda/blob/release/os/4.6/samples/attachment-demo/src/main/kotlin/net/corda/attachmentdemo/AttachmentDemo.kt) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
+
+
+[AttachmentDemo.kt](https://github.com/corda/corda/blob/release/os/4.6/samples/attachment-demo/src/main/kotlin/net/corda/attachmentdemo/AttachmentDemo.kt)
+
+
 
 The sender correspondingly builds a transaction with the attachment, then calls `FinalityFlow` to complete the
 transaction and send it to the recipient node:
@@ -229,16 +238,14 @@ private fun sender(rpc: CordaRPCOps, inputStream: InputStream, hash: SecureHash.
 ```
 {{% /tab %}}
 
-
-
-
-[AttachmentDemo.kt](https://github.com/corda/corda/blob/release/os/4.6/samples/attachment-demo/src/main/kotlin/net/corda/attachmentdemo/AttachmentDemo.kt) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
 
-This side is a bit more complex. Firstly it looks up its counterparty by name in the network map. Then, if the node
+
+[AttachmentDemo.kt](https://github.com/corda/corda/blob/release/os/4.6/samples/attachment-demo/src/main/kotlin/net/corda/attachmentdemo/AttachmentDemo.kt)
+
+
+This side is a bit more complex. Firstly, it looks up its counterparty by name in the network map. Then, if the node
 doesn’t already have the attachment in its storage, we upload it from a JAR resource and check the hash was what
 we expected. Then a trivial transaction is built that has the attachment and a single signature and it’s sent to
 the other side using the FinalityFlow. The result of starting the flow is a stream of progress messages and a
 `returnValue` observable that can be used to watch out for the flow completing successfully.
-

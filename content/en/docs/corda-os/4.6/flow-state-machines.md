@@ -7,8 +7,8 @@ date: '2020-04-07T12:00:00Z'
 menu:
   corda-os-4-6:
     identifier: corda-os-4-6-flow-state-machines
-    parent: corda-os-4-6-tutorials-index
-    weight: 1100
+    parent: corda-os-4-6-core-tutorials-index
+    weight: 1130
 tags:
 - flow
 - state
@@ -21,9 +21,9 @@ title: Writing flows
 
 # Writing flows
 
-This article explains our approach to modelling business processes and the lower level network protocols that implement
-them. It explains how the platform’s flow framework is used, and takes you through the code for a simple
-2-party asset trading flow which is included in the source.
+This tutorial explains how  business processes and the lower-level network protocols that implement
+them are modelled in Corda. It explains how the platform’s flow framework is used, and takes you through the code for a simple,
+two-party asset trading flow.
 
 
 ## Introduction
@@ -58,15 +58,15 @@ writing sequential code much easier.
 
 To put these problems in perspective, the *payment channel protocol* in the bitcoinj library, which allows bitcoins to
 be temporarily moved off-chain and traded at high speed between two parties in private, consists of about 7000 lines of
-Java and took over a month of full time work to develop. Most of that code is concerned with the details of persistence,
+Java and took over a month of full-time work to develop. Most of that code is concerned with the details of persistence,
 message passing, lifecycle management, error handling and callback management. Because the business logic is quite
 spread out the code can be difficult to read and debug.
 
-As small contract-specific trading flows are a common occurrence in finance, we provide a framework for the
+As small, contract-specific trading flows are a common occurrence in finance, Corda provides a framework for the
 construction of them that automatically handles many of the concerns outlined above.
 
 
-## Theory
+## Continuations and state machines
 
 A *continuation* is a suspended stack frame stored in a regular object that can be passed around, serialised,
 unserialised and resumed from where it was suspended. This concept is sometimes referred to as “fibers”. This may
@@ -88,13 +88,15 @@ of a multi-stage flow. Typically writing a state machine would require the use o
 explicit variables to keep track of where you’re up to. The use of continuations avoids this hassle.
 
 
-## A two party trading flow
+## Use-case: a two-party trading flow
 
-We would like to implement the “hello world” of shared transaction building flows: a seller wishes to sell some
-*asset* (e.g. some commercial paper) in return for *cash*. The buyer wishes to purchase the asset using his cash. They
-want the trade to be atomic so neither side is exposed to the risk of settlement failure. We assume that the buyer
-and seller have found each other and arranged the details on some exchange, or over the counter. The details of how
-the trade is arranged isn’t covered in this article.
+For the purposes of this tutorial, we will focus on the use-case of a basic, shared transaction: a seller wishes to sell some
+*asset* (for example, some commercial paper) in return for *cash*. The buyer wishes to purchase the asset, also using cash. Both parties
+want the trade to be atomic so that neither side is exposed to the risk of settlement failure. We assume that the buyer
+and seller have found each other and agreed on the details of an exchange.
+
+The focus of this tutorial is on how to implement the flows needed for this transaction. The details of how
+the trade is arranged are not covered in this tutorial.
 
 Our flow has two parties (B and S for buyer and seller) and will proceed as follows:
 
@@ -213,7 +215,7 @@ calling the `call` function ourselves won’t work: instead we need to ask the f
 us. More on that in a moment.
 
 
-## Suspendable functions
+## Marking functions as suspendable
 
 The `call` function of the buyer/seller classes is marked with the `@Suspendable` annotation. What does this mean?
 
@@ -221,16 +223,15 @@ As mentioned above, our flow framework will at points suspend the code and seria
 any methods on the call stack must have been pre-marked as `@Suspendable` so the bytecode rewriter knows to modify
 the underlying code to support this new feature. A flow is suspended when calling either `receive`, `send` or
 `sendAndReceive` which we will learn more about below. For now, just be aware that when one of these methods is
-invoked, all methods on the stack must have been marked. If you forget, then in the unit test environment you will
+invoked, all methods on the stack must have been marked. If you forget, then in the unit test environment, you will
 get a useful error message telling you which methods you didn’t mark. The fix is simple enough: just add the annotation
 and try again.
 
 {{< note >}}
 Java 9 is likely to remove this pre-marking requirement completely.
-
 {{< /note >}}
 
-## Whitelisted classes with the Corda node
+## Whitelisting classes with the Corda node
 
 For security reasons, we do not want Corda nodes to be able to just receive instances of any class on the classpath
 via messaging, since this has been exploited in other Java application containers in the past.  Instead, we require
@@ -239,23 +240,23 @@ but others outside of that set need to be whitelisted either by using the annota
 plugin framework.  See [Object serialization](serialization.md).  You can see above that the `SellerTradeInfo` has been annotated.
 
 
-## Starting your flow
+## Starting a flow
 
 The `StateMachineManager` is the class responsible for taking care of all running flows in a node. It knows
-how to register handlers with the messaging system (see “[Networking and messaging](messaging.md)”) and iterate the right state machine
+how to register handlers with the messaging system (see [Networking and messaging](messaging.md)) and iterate the right state machine
 when messages arrive. It provides the send/receive/sendAndReceive calls that let the code request network
 interaction and it will save/restore serialised versions of the fiber at the right times.
 
 Flows can be invoked in several ways. For instance, they can be triggered by scheduled events (in which case they need to
-be annotated with `@SchedulableFlow`), see “[Event scheduling](event-scheduling.md)” to learn more about this. They can also be triggered
+be annotated with `@SchedulableFlow`), see [Scheduling events](event-scheduling.md) to learn more about this. They can also be triggered
 directly via the node’s RPC API from your app code (in which case they need to be annotated with *StartableByRPC*). It’s
 possible for a flow to be of both types.
 
 You request a flow to be invoked by using the `CordaRPCOps.startFlowDynamic` method. This takes a
 Java reflection `Class` object that describes the flow class to use (in this case, either `Buyer` or `Seller`).
 It also takes a set of arguments to pass to the constructor. Because it’s possible for flow invocations to
-be requested by untrusted code (e.g. a state that you have been sent), the types that can be passed into the
-flow are checked against a whitelist, which can be extended by apps themselves at load time.  There are also a series
+be requested by untrusted code (for example, a state that you have been sent), the types that can be passed into the
+flow are checked against a whitelist, which can be extended by apps themselves at load time. There are also a series
 of inlined Kotlin extension functions of the form `CordaRPCOps.startFlow` which help with invoking flows in a type
 safe manner.
 
@@ -342,7 +343,7 @@ the trade info, and then call `otherSideSession.send`. which takes two arguments
 
 `otherSideSession.send` will serialise the payload and send it to the other party automatically.
 
-Next, we call a *subflow* called `IdentitySyncFlow.Receive` (see [Sub-flows](#subflows)). `IdentitySyncFlow.Receive`
+Next, we call a *subflow* called `IdentitySyncFlow.Receive` (see [Implementing sub-flows](#subflows)). `IdentitySyncFlow.Receive`
 ensures that our node can de-anonymise any confidential identities in the transaction it’s about to be asked to sign.
 
 Next, we call another subflow called `SignTransactionFlow`. `SignTransactionFlow` automates the process of:
@@ -476,20 +477,20 @@ As you can see, the flow logic is straightforward and does not contain any callb
 the fact that it takes minimal resources and can survive node restarts.
 
 
-## Flow sessions
+## Initiating flow sessions
 
 It will be useful to describe how flows communicate with each other. A node may have many flows running at the same
-time, and perhaps communicating with the same counterparty node but for different purposes. Therefore flows need a
+time, and perhaps communicating with the same counterparty node but for different purposes. Therefore, flows need a
 way to segregate communication channels so that concurrent conversations between flows on the same set of nodes do
 not interfere with each other.
 
-To achieve this in order to communicate with a counterparty one needs to first initiate such a session with a `Party`
-using `initiateFlow`, which returns a `FlowSession` object, identifying this communication. Subsequently the first
+To communicate with a counterparty, you need to first initiate such a session with a `Party`
+using `initiateFlow`, which returns a `FlowSession` object, identifying this communication. Subsequently, the first
 actual communication will kick off a counter-flow on the other side, receiving a “reply” session object. A session ends
-when either flow ends, whether as expected or pre-maturely. If a flow ends pre-maturely then the other side will be
+when either flow ends, whether as expected or prematurely. If a flow ends prematurely, then the other side will be
 notified of that and they will also end, as the whole point of flows is a known sequence of message transfers. Flows end
-pre-maturely due to exceptions, and as described above, if that exception is `FlowException` or a sub-type then it
-will propagate to the other side. Any other exception will not propagate.
+prematurely due to exceptions. If that exception is `FlowException` or a sub-type, then it
+will propagate to the other side; any other exception will not propagate.
 
 Taking a step back, we mentioned that the other side has to accept the session request for there to be a communication
 channel. A node accepts a session request if it has registered the flow type (the fully-qualified class name) that is
@@ -499,7 +500,7 @@ flow session as the annotation parameter.
 
 
 
-## Sub-flows
+## Implementing sub-flows
 
 Flows can be composed via nesting. Invoking a sub-flow looks similar to an ordinary function call:
 
@@ -533,9 +534,8 @@ Let’s take a look at the three subflows we invoke in this flow.
 
 On the buyer side, we use `FinalityFlow` to finalise the transaction. It will:
 
-
 * Send the transaction to the chosen notary and, if necessary, satisfy the notary that the transaction is valid.
-* Record the transaction in the local vault, if it is relevant (i.e. involves the owner of the node).
+* Record the transaction in the local vault, if it is relevant (that is, involves the owner of the node).
 * Send the fully signed transaction to the other participants for recording as well.
 
 On the seller side we use `ReceiveFinalityFlow` to receive and record the finalised transaction.
@@ -566,13 +566,12 @@ dependencies itself. It must do, otherwise it could not have convinced itself th
 valid. It’s important to realise that requesting only the transactions we require is a privacy leak, because if
 we don’t download a transaction from the peer, they know we must have already seen it before. Fixing this privacy
 leak will come later.
-
 {{< /note >}}
 
 #### Finalizing transactions with only one participant
 
 In some cases, transactions will only have one participant, the initiator. In these instances, there are no other
-parties to send the transactions to during `FinalityFlow`. In these cases the `counterpartySession` list must exist,
+parties to send the transactions to during `FinalityFlow`. In these cases, the `counterpartySession` list must exist,
 but be empty.
 
 
@@ -588,21 +587,21 @@ These flows communicate to gather all the required signatures for the proposed t
 will:
 
 
-* Verify any signatures collected on the transaction so far
-* Verify the transaction itself
-* Send the transaction to the remaining required signers and receive back their signatures
-* Verify the collected signatures
+* Verify any signatures collected on the transaction so far.
+* Verify the transaction itself.
+* Send the transaction to the remaining required signers and receive back their signatures.
+* Verify the collected signatures.
 
 `SignTransactionFlow` responds by:
 
 
-* Receiving the partially-signed transaction off the wire
-* Verifying the existing signatures
-* Resolving the transaction’s dependencies
-* Verifying the transaction itself
-* Running any custom validation logic
-* Sending their signature back to the buyer
-* Waiting for the transaction to be recorded in their vault
+* Receiving the partially-signed transaction off the wire.
+* Verifying the existing signatures.
+* Resolving the transaction’s dependencies.
+* Verifying the transaction itself.
+* Running any custom validation logic.
+* Sending their signature back to the buyer.
+* Waiting for the transaction to be recorded in their vault.
 
 We cannot instantiate `SignTransactionFlow` itself, as it’s an abstract class. Instead, we need to subclass it and
 override `checkTransaction()` to add our own custom validation logic:
@@ -649,12 +648,12 @@ If you look at the code for `FinalityFlow`, `CollectSignaturesFlow` and `SignTra
 to both `receive` and `sendAndReceive`. Once either of these methods is called, the `call` method will be
 suspended into a continuation and saved to persistent storage. If the node crashes or is restarted, the flow will
 effectively continue as if nothing had happened. Your code may remain blocked inside such a call for seconds,
-minutes, hours or even days in the case of a flow that needs human interaction!
+minutes, hours, or even days in the case of a flow that needs human interaction!
 
 {{< note >}}
 There are a couple of rules you need to bear in mind when writing a class that will be used as a continuation.
 The first is that anything on the stack when the function is suspended will be stored into the heap and kept alive by
-the garbage collector. So try to avoid keeping enormous data structures alive unless you really have to.  You can
+the garbage collector. So try to avoid keeping enormous data structures alive unless you really have to. You can
 always use private methods to keep the stack uncluttered with temporary variables, or to avoid objects that
 Kryo is not able to serialise correctly.
 
@@ -666,7 +665,6 @@ logic and only do I/O via the methods exposed by the flow framework.
 It’s OK to keep references around to many large internal node services though: these will be serialised using a
 special token that’s recognised by the platform, and wired up to the right instance when the continuation is
 loaded off disk again.
-
 {{< /note >}}
 
 {{< warning >}}
@@ -680,7 +678,6 @@ state for a long period of time, as this will obstruct necessary upgrades to Cor
 long-running business process should therefore be structured as a series of discrete transactions,
 written to the vault, rather than a single flow persisted over time through the flow checkpointing
 mechanism.
-
 {{< /warning >}}
 
 
@@ -690,7 +687,7 @@ tampered with or be unexpected in other ways. It doesn’t add any functionality
 the data before use.
 
 
-## Exception handling
+## Handling exceptions
 
 Flows can throw exceptions to prematurely terminate their execution. The flow framework gives special treatment to
 `FlowException` and its subtypes. These exceptions are treated as error responses of the flow and are propagated
@@ -705,15 +702,15 @@ generic exception.
 {{< note >}}
 A future version will extend this to give the node administrator more control on what to do with such erroring
 flows.
-
 {{< /note >}}
+
 Throwing a `FlowException` enables a flow to reject a piece of data it has received back to the sender. This is typically
 done in the `unwrap` method of the received `UntrustworthyData`. In the above example the seller checks the price
 and throws `FlowException` if it’s invalid. It’s then up to the buyer to either try again with a better price or give up.
 
 
 
-## Progress tracking
+## Tracking progress
 
 Not shown in the code snippets above is the usage of the `ProgressTracker` API. Progress tracking exports information
 from a flow about where it’s got up to in such a way that observers can render it in a useful manner to humans who
@@ -857,9 +854,8 @@ the features we have planned:
 
 
 * Exception management, with a “flow hospital” tool to manually provide solutions to unavoidable
-problems (e.g. the other side doesn’t know the trade)
+problems (for example, the other side doesn’t know about the trade).
 * Being able to interact with people, either via some sort of external ticketing system, or email, or a custom UI.
-For example to implement human transaction authorisations
+For example to implement human transaction authorisations.
 * A standard library of flows that can be easily sub-classed by local developers in order to integrate internal
-reporting logic, or anything else that might be required as part of a communications lifecycle
-
+reporting logic, or anything else that might be required as part of a communications lifecycle.

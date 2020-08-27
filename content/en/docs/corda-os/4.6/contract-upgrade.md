@@ -7,8 +7,8 @@ date: '2020-04-07T12:00:00Z'
 menu:
   corda-os-4-6:
     identifier: corda-os-4-6-contract-upgrade
-    parent: corda-os-4-6-tutorials-index
-    weight: 1060
+    parent: corda-os-4-6-supplementary-tutorials-index
+    weight: 1070
 tags:
 - contract
 - upgrade
@@ -20,6 +20,10 @@ title: Upgrading contracts
 
 # Upgrading contracts
 
+This tutorial will take you through the steps involved in upgrading a contract.
+
+## Introduction
+
 While every care is taken in development of contract code, inevitably upgrades will be required to fix bugs (in either
 design or implementation). Upgrades can involve a substitution of one version of the contract code for another or
 changing to a different contract that understands how to migrate the existing state objects. When state objects are
@@ -27,33 +31,32 @@ added as outputs to transactions, they are linked to the contract code they are 
 `StateAndContract` type. Changing a state’s contract only requires substituting one `ContractClassName` for another.
 
 
-## Workflow
+## Workflow for upgrading a contract
 
-Here’s the workflow for contract upgrades:
+To upgrade a contract, the following workflow is required:
 
-
-* Banks A and B negotiate a trade, off-platform
+* Banks A and B negotiate a trade, off-platform.
 * Banks A and B execute a flow to construct a state object representing the trade, using contract X, and include it in
-a transaction (which is then signed and sent to the consensus service)
-* Time passes
+a transaction (which is then signed and sent to the consensus service).
+* Time passes.
 * The developer of contract X discovers a bug in the contract code, and releases a new version, contract Y. The
 developer will then notify all existing users (e.g. via a mailing list or CorDapp store) to stop their nodes from
-issuing further states with contract X
+issuing further states with contract X.
 * Banks A and B review the new contract via standard change control processes and identify the contract states they
 agree to upgrade (they may decide not to upgrade some contract states as these might be needed for some other
-obligation contract)
+obligation contract).
 * Banks A and B instruct their Corda nodes (via RPC) to be willing to upgrade state objects with contract X to state
-objects with contract Y using the agreed upgrade path
+objects with contract Y using the agreed upgrade path.
 * One of the parties (the `Initiator`) initiates a flow to replace state objects referring to contract X with new
-state objects referring to contract Y
+state objects referring to contract Y.
 * A proposed transaction (the `Proposal`), with the old states as input and the reissued states as outputs, is
-created and signed with the node’s private key
+created and signed with the node’s private key.
 * The `Initiator` node sends the proposed transaction, along with details of the new contract upgrade path that it
-is proposing, to all participants of the state object
+is proposing, to all participants of the state object.
 * Each counterparty (the `Acceptor` s) verifies the proposal, signs or rejects the state reissuance accordingly, and
-sends a signature or rejection notification back to the initiating node
+sends a signature or rejection notification back to the initiating node.
 * If signatures are received from all parties, the `Initiator` assembles the complete signed transaction and sends
-it to the notary
+it to the notary.
 
 
 ## Authorising an upgrade
@@ -167,8 +170,8 @@ class DummyContractV2 : UpgradedContractWithLegacyConstraint<DummyContract.State
 * Bank A instructs its node to accept the contract upgrade to `DummyContractV2` for the contract state.
 
 {{< tabs name="tabs-1" >}}
-{{% tab name="none" %}}
-```none
+{{% tab name="kotlin" %}}
+```kotlin
 val rpcClient : CordaRPCClient = << Bank A's Corda RPC Client >>
 val rpcA = rpcClient.proxy()
 rpcA.startFlow(ContractUpgradeFlow.Authorise(<<StateAndRef of the contract state>>, DummyContractV2::class.java))
@@ -183,8 +186,8 @@ participants of the contract state will sign and return the contract state upgra
 and agreed with the upgrade. The upgraded transaction will be recorded in every participant’s node by the flow.
 
 {{< tabs name="tabs-2" >}}
-{{% tab name="none" %}}
-```none
+{{% tab name="kotlin" %}}
+```kotlin
 val rpcClient : CordaRPCClient = << Bank B's Corda RPC Client >>
 val rpcB = rpcClient.proxy()
 rpcB.startFlow({ stateAndRef, upgrade -> ContractUpgradeFlow(stateAndRef, upgrade) },

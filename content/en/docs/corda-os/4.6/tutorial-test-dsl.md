@@ -7,29 +7,27 @@ date: '2020-04-07T12:00:00Z'
 menu:
   corda-os-4-6:
     identifier: corda-os-4-6-tutorial-test-dsl
-    parent: corda-os-4-6-tutorials-index
+    parent: corda-os-4-6-core-tutorials-index
     weight: 1050
 tags:
 - tutorial
 - test
 - dsl
-title: Writing a contract test
+title: Writing contract tests
 ---
 
+# Writing contract tests
 
+This tutorial will take you through the steps required to write a contract test.
 
+## Introduction
 
-# Writing a contract test
-
-This tutorial will take you through the steps required to write a contract test using Kotlin and Java.
-
-The testing DSL allows one to define a piece of the ledger with transactions referring to each other, and ways of
-verifying their correctness.
-
+The testing DSL allows you to define a piece of the ledger with transactions referring to each other, and ways of
+verifying their correctness. Before writing the individual tests, the general test setup must be configured. Once that has been done, you can proceed to test individual transactions.
 
 ## Setting up the test
 
-Before writing the individual tests, the general test setup must be configured:
+Configure your test setup, as shown in the following examples:
 
 {{< tabs name="tabs-1" >}}
 {{% tab name="kotlin" %}}
@@ -850,4 +848,3 @@ public void chainCommercialPaperTweak() {
 [TutorialTestDSL.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/kotlin/net/corda/docs/kotlin/tutorial/testdsl/TutorialTestDSL.kt) | [TutorialTestDSL.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/java/net/corda/docs/java/tutorial/testdsl/TutorialTestDSL.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
-

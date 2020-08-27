@@ -23,7 +23,7 @@ In Corda, shared facts on the blockchain are represented as states. Our first ta
 represent an IOU.
 
 
-## The ContractState interface
+## Implementing the ContractState interface
 
 A Corda state is any instance of a class that implements the `ContractState` interface. The `ContractState`
 interface is defined as follows:
@@ -40,10 +40,10 @@ interface ContractState {
 
 {{< /tabs >}}
 
-We can see that the `ContractState` interface has a single field, `participants`. `participants` is a list of the
+As you can see, the `ContractState` interface has a single field, `participants`. `participants` is a list of the
 entities for which this state is relevant.
 
-Beyond this, our state is free to define any fields, methods, helpers or inner classes it requires to accurately
+Beyond this, you state is free to define any fields, methods, helpers or inner classes that the state requires to accurately
 represent a given type of shared fact on the blockchain.
 
 {{< note >}}
@@ -63,8 +63,8 @@ If you do want to dive into Kotlin, there’s an official
 
 ## Modelling IOUs
 
-How should we define the `IOUState` representing IOUs on the blockchain? Beyond implementing the `ContractState`
-interface, our `IOUState` will also need properties to track the relevant features of the IOU:
+How should you define the `IOUState` representing IOUs on the blockchain? Beyond implementing the `ContractState`
+interface, your `IOUState` will also need properties to track the relevant features of the IOU:
 
 
 * The value of the IOU
@@ -77,8 +77,29 @@ later is often as simple as adding an additional property to your class definiti
 
 ## Defining IOUState
 
-Let’s get started by opening `TemplateState.java` (for Java) or `TemplateState.kt` (for Kotlin) and updating
-`TemplateState` to define an `IOUState`:
+Let’s get started by opening `TemplateState.java` (for Java) or `TemplateState.kt` (for Kotlin).
+
+If you’re following along in Kotlin, you'll need to begin by updating `TemplateState` to define an `IOUState`, as shown in the following code example.
+
+If you’re following along in Java, you’ll need to first rename `TemplateState.java` to `IOUState.java`.
+
+To define `IOUState`, you'll also need to make the following changes:
+
+
+* You'll need to rename the `TemplateState` class to `IOUState`
+* You'll need to add properties for `value`, `lender` and `borrower`, along with the required getters and setters in
+Java:
+    * `value` is of type `int` (in Java)/`Int` (in Kotlin)
+    * `lender` and `borrower` are of type `Party`
+        * `Party` is a built-in Corda type that represents an entity on the network
+
+* You'll need to overridde `participants` to return a list of the `lender` and `borrower`
+    * `participants` is a list of all the parties who should be notified of the creation or consumption of this state
+
+The IOUs that you issue onto a ledger will simply be instances of this class.
+
+The code examples below show how your code should be looking after doing all of the above:
+
 
 {{< tabs name="tabs-2" >}}
 {{% tab name="kotlin" %}}
@@ -137,38 +158,14 @@ public class IOUState implements ContractState {
 {{% /tab %}}
 
 
-
-
-[IOUState.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/helloworld/IOUState.kt) | [IOUState.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/helloworld/IOUState.java) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
 
-If you’re following along in Java, you’ll also need to rename `TemplateState.java` to `IOUState.java`.
-
-To define `IOUState`, we’ve made the following changes:
-
-
-* We’ve renamed the `TemplateState` class to `IOUState`
-* We’ve added properties for `value`, `lender` and `borrower`, along with the required getters and setters in
-Java:
-    * `value` is of type `int` (in Java)/`Int` (in Kotlin)
-    * `lender` and `borrower` are of type `Party`
-        * `Party` is a built-in Corda type that represents an entity on the network
-
-
-
-
-* We’ve overridden `participants` to return a list of the `lender` and `borrower`
-    * `participants` is a list of all the parties who should be notified of the creation or consumption of this state
-
-
-
-The IOUs that we issue onto a ledger will simply be instances of this class.
+[IOUState.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/helloworld/IOUState.kt) | [IOUState.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/helloworld/IOUState.java)
 
 
 ## Progress so far
 
-We’ve defined an `IOUState` that can be used to represent IOUs as shared facts on a ledger. As we’ve seen, states in
+You've defined an `IOUState` that can be used to represent IOUs as shared facts on a ledger. As you've seen, states in
 Corda are simply classes that implement the `ContractState` interface. They can have any additional properties and
 methods you like.
 
@@ -182,4 +179,3 @@ If you’ve read the white paper or Key Concepts section, you’ll know that eac
 imposes invariants on how the state evolves over time. Including a contract isn’t crucial for our first CorDapp, so
 we’ll just use the empty `TemplateContract` and `TemplateContract.Commands.Action` command defined by the template
 for now. In the next tutorial, we’ll implement our own contract and command.
-

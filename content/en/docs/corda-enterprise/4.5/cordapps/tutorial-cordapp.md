@@ -15,13 +15,13 @@ tags:
 - cordapp
 - deploy
 - quickstart
-title: Running an example CorDapp
+title: Running a sample CorDapp
 weight: 3
 
 ---
 
 
-# Running an example CorDapp
+# Running a sample CorDapp
 
 To help you get up and running on Corda, a number of example CorDapps for both Java and Kotlin are available from the [Corda page on GitHub](https://github.com/corda) &mdash;
  see the [Java samples repository](https://github.com/corda/samples-java) and the [Kotlin samples repository](https://github.com/corda/samples-kotlin). This topic describes how to deploy and run an example CorDapp.
