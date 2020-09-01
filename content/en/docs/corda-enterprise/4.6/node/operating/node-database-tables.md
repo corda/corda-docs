@@ -304,17 +304,73 @@ These tables should be append only.
 
 Read more in node-services
 
-
 {{< table >}}
 
-|NODE_CHECKPOINTS|Stores the flow checkpoints.|
+|NODE_CHECKPOINTS|Stores high-level information about checkpoints|
 |------------------------------|------------------------------------------------------------------------------------------|
-|CHECKPOINT_ID|Primary key|
-|CHECKPOINT_VALUE|Serialized application stack.|
+|FLOW_ID|Primary key|
+|STATUS|The status of the flow|
+|COMPATIBLE|Whether the checkpoint is compatible with the current CorDapps/Corda version|
+|PROGRESS_STEP|The progress step that the flow reached|
+|FLOW_IO_REQUEST|The request type the flow suspended on|
+|TIMESTAMP|The timestamp|
 
 {{< /table >}}
 
-This table will see the most intense read-write activity. Depending on the installed flows and the traffic on the node the I/O operations on this
+{{< table >}}
+
+|NODE_CHECKPOINT_BLOBS|Stores serialized flow checkpoint blobs|
+|------------------------------|------------------------------------------------------------------------------------------|
+|FLOW_ID|Primary key|
+|CHECKPOINT_VALUE|Serialized information about the flow|
+|FLOW_STATE|Serialized application stack|
+|TIMESTAMP|The timestamp|
+
+{{< /table >}}
+
+{{< table >}}
+
+|NODE_FLOW_RESULTS|Stores results of flows|
+|------------------------------|------------------------------------------------------------------------------------------|
+|FLOW_ID|Primary key|
+|RESULT_VALUE|Serialized result of the flow|
+|TIMESTAMP|The timestamp|
+
+{{< /table >}}
+
+{{< table >}}
+
+|NODE_FLOW_EXCEPTIONS|Stores exceptions thrown by flows|
+|------------------------------|------------------------------------------------------------------------------------------|
+|FLOW_ID|Primary key|
+|TYPE|The class name of the exception|
+|EXCEPTION_MESSAGE|The message of the exception|
+|STACK_TRACE|The stack trace of the exception|
+|EXCEPTION_VALUE|Serialized exception thrown by the flow|
+|TIMESTAMP|The timestamp|
+
+{{< /table >}}
+
+{{< table >}}
+
+|NODE_FLOW_METADATA|Stores exceptions thrown by flows|
+|------------------------------|------------------------------------------------------------------------------------------|
+|FLOW_ID|Primary key|
+|INVOCATION_ID|The invocation id of the flow|
+|FLOW_NAME|The class name of the flow|
+|FLOW_IDENTIFIER|The identifier of the flow|
+|STARTED_TYPE|How the flow was started|
+|FLOW_PARAMETERS|The parameters the flow was started with|
+|CORDAPP_NAME|The name of the CorDapp that contains the flow|
+|PLATFORM_VERSION|The platform version at the start time of the flow|
+|STARTED_BY|The RPC user that started the flow|
+|INVOCATION_TIME|The time the flow was originally invoked by RPC|
+|START_TIME|The time the flow started inside the state machine|
+|FINISH_TIME|The finish time of the flow|
+
+{{< /table >}}
+
+These tables will see the most intense read-write activity, especially `NODE_CHECKPOINTS` and `NODE_CHECKPOINT_BLOBS`. Depending on the installed flows and the traffic on the node the I/O operations on this
 table will be the main bottleneck of the node performance.
 There will be an entry for every running flow.
 Draining the node means waiting for this table to become emtpy. Read more in: [Upgrading CorDapps on a node](node-operations-upgrade-cordapps.md).
