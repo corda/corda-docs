@@ -362,6 +362,10 @@ java -jar corda-tools-metering-rpc-client.jar  \
 
 This command will attempt to update the previous collection results by contacting _only_ the nodes in `unresponsiveNodeList`. The data retrieved during this new collection will be merged with the previous report to form a new report. 
 
+{{< note >}}
+If a node has been reported as misconfigured for a particular filter, no data associated with this node will be added to the report.
+{{< /note >}}
+
 To avoid overwriting the previous report, the name of the new report will have the format `[previous-report]-[timestamp].json`, where `[previous-report]` is the file name of the previous report and `[timestamp]` is a timestamp indicating when the collection finished. For example: 
 
 * If the previous report was `output.json` and the repeat collection finished at 10:33 on 22 July 2020, the new report will be `output-2020-07-22_10-33-00.json`. 
