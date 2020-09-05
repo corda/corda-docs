@@ -170,7 +170,13 @@ Corda 4.4 also provides a callback (`AppServiceHub.register`) to allow Corda ser
 
 #### Changes to integration testing
 
-The "out-of-process" nodes spawned through Driver DSL (see [Integration testing](tutorial-integration-testing.md)) will
+Driver DSL (see [Integration testing](tutorial-integration-testing.md)) tests now
+default to on-disk H2 databases instead of in-memory. This is done to enable use
+of a snapshot database schema, to reduce time spent creating the database schema
+on each node startup. User tests are not expected to be impacted, but in case of
+issues you can set `inMemoryDB = true` on the driver parameters to revert.
+
+The "out-of-process" nodes spawned through Driver DSL  will
 no longer accidentally contain your CorDapps on their application classpath. The following items will be filtered out:
 
 * Directories (only files are allowed)
