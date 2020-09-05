@@ -101,7 +101,7 @@ You can find examples of configuration files [available here](../corda-firewall-
 
 * Upload the appropriate `corda-<version>.jar` file to the Node root directory.
 * In the root of your Node directory, create a folder called `/certificates`.
-* The R3 Operations team will provide you with a `network-root-truststore.jks` which will be used for authentication.
+* The network operator will provide you with a `network-root-truststore.jks` which will be used for authentication during initial registration.
 * Upload the `network-root-truststore.jks` file to this directory.
 * In the root of your Node directory, create a folder called `cordapps`.  Upload your CorDapps to this folder.
 
@@ -513,4 +513,3 @@ The additional benefit of utilizing a SOCKS server is that it facilitates organi
 ```
 
 [socks.conf](../../resources/socks.conf)
-
