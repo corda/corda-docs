@@ -18,6 +18,10 @@ The [Metering Collection Tool](metering-collector.md) collects metering data fro
 Destination nodes must be configured to share their metering data with the designated collector node. For more information, see [How metering data is shared](metering-collector.md#how-metering-data-is-shared).
 {{< /note >}}
 
+{{< note >}} 
+Only the transactions that cause a ledger update are reported (i.e., NORMAL, CONTRACT_UPGRADE, and NOTARY_CHANGE). The transactions that do not cause a ledger update are not included in the metering report. For more information, see [available transaction types](metering-collector.md#filtering-by-transaction-type).
+{{< /note >}}
+
 Any Corda Enterprise Node can be used as a designated collector node as long as the destination nodes have been configured to share metering data with it. If one or more destination nodes have not been configured to share metering data with the designated collector node, then the collected data will not include metering data from those nodes, but the metering report will include information that the node has not been configured to share data the requested data. 
 
 ## Configuration
