@@ -155,7 +155,7 @@ Database configuration
   * When `initialiseSchema` is set to `false`, then `initialiseAppSchema` may be set as `VALID` or `NONE` only.
   * *Default:* CorDapp schema creation is controlled with `initialiseSchema`.
 * `runMigration`
-  * Boolean on whether to run the database migration scripts at startup. In production please keep it false. For more information please check [Understanding the node database](../../node/operating/node-database.md). If migration is not run, on startup, the node will check if it's running on the correct database version.
+  * Boolean on whether to run the database migration scripts at startup. In production please keep it false. For more information please check [Database management scripts](../../cordapps/database-management.md). If migration is not run, on startup, the node will check if it's running on the correct database version.
     The property is used only when a node runs against a database other than H2, and it's replaced by the ``initialiseSchema`` property for other databases.
   * *Default:* false
 * `schema`
