@@ -279,7 +279,7 @@ If an item in a list is overridden via an environment variable/system property, 
   The password to unlock the KeyStore file (`<workspace>/certificates/sslkeystore.jks`) containing the node certificate and private key.
 
   **Important: This is the non-secret value for the development certificates automatically generated during the first node run.
-  Longer term these keys will be managed in secure hardware devices.**
+  Alternatively, these keys can be managed in secure hardware devices.**
 
   *Default:* cordacadevpass
 
