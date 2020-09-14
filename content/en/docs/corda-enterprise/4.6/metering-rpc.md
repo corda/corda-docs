@@ -18,7 +18,7 @@ The [Metering Collection Tool](metering-collector.md) collects metering data fro
 Destination nodes must be configured to share their metering data with the designated collector node. For more information, see [How metering data is shared](metering-collector.md#how-metering-data-is-shared).
 {{< /note >}}
 
-{{< note >}} 
+{{< note >}}
 Only the transactions that cause a ledger update are reported (i.e., NORMAL, CONTRACT_UPGRADE, and NOTARY_CHANGE). The transactions that do not cause a ledger update are not included in the metering report. For more information, see [available transaction types](metering-collector.md#filtering-by-transaction-type).
 {{< /note >}}
 
@@ -74,7 +74,7 @@ The designated collector node is the node which collects the data from the desti
 
 ```
 nodeRpcLogin {
-    address = "<hostname>:<port>"   // e.g., address = "localhost:10009" 
+    address = "<hostname>:<port>"   // e.g., address = "localhost:10009"
     username = "<username>"         // e.g., username = "rpcUsername"
     password = "<password>"         // e.g., password = "rpcPassword"
 }
@@ -116,7 +116,7 @@ Metering data will be collected for each listed CorDapp. You can list the CorDap
 
 These lists are specified by `cordappsByName`, `cordappsByJarHash`, and `cordappsBySignatureHash`.
 
-If none of these are specified, then the client will return a list of CorDapps that are visible to the designated collector node. 
+If none of these are specified, then the client will return a list of CorDapps that are visible to the designated collector node.
 
 If a listed CorDapp does not exist on any of the destination nodes, the report will not show any metering records for that CorDapp. The `unresponsiveNodeList` will be updated with a `Node not configured to share data for filters:` message for each node that does not have CorDapps associated that filter.
 
@@ -344,13 +344,13 @@ An example output file is shown below.
 }
 ```
 
-{{% note %}}
+{{< note >}}
 A signing event can be assigned to multiple CorDapps. The total count for each CorDapp will include every event assigned to it, even if that event is also assigned to another CorDapp.
-{{% /note %}}
+{{< /note >}}
 
-{{% note %}}
-If a CorDapp has no metering events associated with it, the metering report will report 0 counts associated with that particular CorDapp. 
-{{% /note %}}
+{{< note >}}
+If a CorDapp has no metering events associated with it, the metering report will report 0 counts associated with that particular CorDapp.
+{{< /note >}}
 
 ## Fault tolerance
 
@@ -364,7 +364,7 @@ java -jar corda-tools-metering-rpc-client.jar  \
   --previous-report="path/to/previous/output.json"  
 ```
 
-This command will attempt to update the previous collection results by contacting _only_ the nodes in `unresponsiveNodeList`. The data retrieved during this new collection will be merged with the previous report to form a new report. 
+This command will attempt to update the previous collection results by contacting _only_ the nodes in `unresponsiveNodeList`. The data retrieved during this new collection will be merged with the previous report to form a new report.
 
 {{< note >}}
 If a node has been reported as misconfigured for a particular filter, no data associated with this node will be added to the report.
