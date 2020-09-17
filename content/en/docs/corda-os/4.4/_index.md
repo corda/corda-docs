@@ -1,8 +1,6 @@
 ---
 aliases:
 - /releases/release-V4.4/index.html
-- /docs/corda-os/head/index.html
-- /docs/corda-os/index.html
 date: '2020-01-08T09:59:25Z'
 menu:
   versions:
@@ -18,9 +16,7 @@ version: '4.4'
 
 [Corda](https://www.corda.net/) is an open-source blockchain platform. If you’d like a quick introduction to blockchains and how Corda is different, then watch this short video:
 
-<embed>
-<iframe src="https://player.vimeo.com/video/205410473" width="640" height="360" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true"></iframe>
-</embed>
+{{< vimeo 205410473 >}}
 
 
 **Want to start coding on Corda?** Developers new to blockchain can get a brief overview of [blockchain basics](https://training.corda.net/fundamentals/introduction/). Next, find out [what is Corda](https://training.corda.net/key-concepts/introduction/) including design and key concepts. Finally, when you're ready to dive into code - [Get Started](https://training.corda.net/prepare-and-discover/introduction/).

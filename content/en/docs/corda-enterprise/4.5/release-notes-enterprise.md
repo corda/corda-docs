@@ -16,6 +16,29 @@ weight: 1
 
 # Corda Enterprise release notes
 
+## Corda Enterprise 4.5.1
+
+Corda Enterprise 4.5.1 is a patch release of Corda Enterprise that introduces fixes to known issues in Corda Enterprise 4.5.
+
+### Upgrade recommendation
+
+As a developer, you should upgrade to the [latest released version of Corda](https://docs.corda.net/docs/corda-enterprise/index.html) as soon as possible. Check the latest Corda Enterprise release notes and upgrade guide [here](https://docs.corda.net/docs/corda-enterprise/release-notes-index.html).
+
+As a node operator, you should upgrade to the [latest released version of Corda](https://docs.corda.net/docs/corda-enterprise/index.html) if the fixed issues listed below are relevant to your work.
+
+### Fixed issues
+
+* Fixed an issue where the Classloader failed to find a Command class when Optional generic was used on Type definition.
+* The [Configuraton Obfuscator tool](tools-config-obfuscator.md) has been fixed to work for HSM configuration files.
+* Fixed an issue where retrying session inits could fail due to database connectivity.
+* The H2 version has been reverted to 1.4.197 to avoid a dependency issue introduced after the previous upgrade.
+* The CPU usage of the `NodeMeteringBackground` process has been decreased.
+* A security update to prevent AMQP header spoofing has been applied.
+* Fixed an issue where passing two sessions with the same counterparty to the `CollectSignaturesFlow` led to both counterparties' flows having to wait infinitely for messages from the other party.
+* A previously unhandled exception in `FlowStateMachineImpl.run().initialiseFlow()` is now handled correctly.
+* Fixed an issue where Corda Firewall did not start if its main configuration and its HSM configuration were obfuscated.
+* Fixed an issue where a TLS handshake timeout led to blacklisting endpoint.
+* Added support to the spent state audit command for specifying state references in the form `txId(outputIdx)` in addition to the existing `txId:outputIdx`.
 
 ## Corda Enterprise 4.5 release overview
 
@@ -92,7 +115,7 @@ The CorDapp is designed to diagnose ledger inconsistencies caused by either of t
 * A disaster affecting a node’s relational datastore.
 * More rarely, a hardware or connectivity fault.
 
-`LedgerSync` can be run either on demand or on a regular basis. The app contacts all peers of the initiating node that are on the same business network, and produces a report detailing if all transactions relevant to both the node and the target peers, held in the initiating node’s ledger (transactions are considered relevant to a node if it was involved as either state participant or owner). If `LedgerSync` finds that the initiating tool is missing any relevant transaction, it flags the discrepancy to the operator, who can then proceed to recover the missing data.
+`LedgerSync` can be run either on demand or on a regular basis. The app contacts all peers of the initiating node that are on the same business network, and produces a report detailing all transactions relevant to both the node and the target peers, held in the initiating node’s ledger (transactions are considered relevant to a node if it was involved as either state participant or owner). If `LedgerSync` finds that the initiating tool is missing any relevant transaction, it flags the discrepancy to the operator, who can then proceed to recover the missing data.
 
 `LedgerSync` is designed to be compliant with the Corda privacy model. It does not share any transaction information with network peers that shouldn’t already have access to it.
 
@@ -150,7 +173,7 @@ The following libraries have been updated:
 The Tokens SDK has been extended to provide a consistent API for use in both Java and Kotlin.
 
 The documentation has been relocated to the main Corda and Corda Enterprise documentation site, and a comprehensive training module for developers added to the Corda training site.
-[Read the documentation](token-sdk-introduction.md).
+[Read the documentation](cordapps/token-sdk-introduction.md).
 [Explore the training module](https://training.corda.net/libraries/tokens-sdk/).
 
 ### Other improvements
@@ -176,7 +199,7 @@ For more information about platform versions, see [Versioning](../../corda-os/4.
 * We have fixed an issue where Corda's internal `providerMap` field in `core`, which is supposed to be private, was both public and mutable.
 * We have fixed an issue with failing session init messages when the state machine replayed them from the Artemis queue in order to retry flows that had not yet persisted their first checkpoint, due to problems with database connectivity.
 * We have fixed an issue where the `com.r3.corda.enterprise.settlementperftestcordapp.flows.SwapStockForCashFlowTest` failed for Oracle 11 due to failed migration.
-+ * We have fixed an issue where `Level.WARN` and `Level.FATAL` logs did not include the original log message after updating them to extract more information from the stack traces.
+* We have fixed an issue where `Level.WARN` and `Level.FATAL` logs did not include the original log message after updating them to extract more information from the stack traces.
 * We have fixed an issue where a race condition would occur when a flow hung while waiting for the ledger to commit a transaction with hash even when that transaction was present in the database.
 * We have fixed an issue where no CRL check was done when using embedded Artemis, which could cause nodes to continue to be involved in transactions after they had been blacklisted.
 * We have fixed an issue with inconsistent error messages on starting components if HSM was not available.

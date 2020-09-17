@@ -27,14 +27,13 @@ title: Node database
 
 By default, nodes store their data in an H2 database. See [Database access when running H2](node-database-access-h2.md).
 
-Nodes can also be configured to use PostgreSQL and SQL Server. However, these are experimental community contributions.
-The Corda continuous integration pipeline does not run unit tests or integration tests of these databases.
-
 
 ### PostgreSQL
 
-Nodes can also be configured to use PostgreSQL 9.6, using PostgreSQL JDBC Driver 42.2.8. Here is an example node
-configuration for PostgreSQL:
+Nodes can also be configured to use PostgreSQL 9.6, using PostgreSQL JDBC Driver 42.2.8. However, this is an experimental community contribution.
+The Corda continuous integration pipeline does not run unit tests or integration tests of this databases.
+
+Here is an example node configuration for PostgreSQL:
 
 ```groovy
 dataSourceProperties = {
@@ -67,32 +66,6 @@ CREATE SEQUENCE my_schema.hibernate_sequence INCREMENT BY 1 MINVALUE 1 MAXVALUE 
 
 
 * The PostgreSQL JDBC database driver must be placed in the `drivers` directory in the node.
-
-
-### SQLServer
-
-Nodes also have untested support for Microsoft SQL Server 2017, using Microsoft JDBC Driver 6.4 for SQL Server. Here is
-an example node configuration for SQLServer:
-
-```groovy
-dataSourceProperties = {
-    dataSourceClassName = "com.microsoft.sqlserver.jdbc.SQLServerDataSource"
-    dataSource.url = "jdbc:sqlserver://[HOST]:[PORT];databaseName=[DATABASE_NAME]"
-    dataSource.user = [USER]
-    dataSource.password = [PASSWORD]
-}
-database = {
-    transactionIsolationLevel = READ_COMMITTED
-}
-jarDirs = ["[FULL_PATH]/sqljdbc_6.4/enu/"]
-```
-
-Note that:
-
-
-* Ensure the directory referenced by jarDirs contains only one JDBC driver JAR file; by default, the
-`sqljdbc_6.4/enu/` contains multiple JDBC JAR files for different Java versions.
-
 
 ## Node database tables
 
