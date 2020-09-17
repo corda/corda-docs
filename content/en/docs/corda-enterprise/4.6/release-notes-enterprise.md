@@ -43,6 +43,10 @@ Node operators can now use the Multi RPC client to interact with a Corda Enterpr
 
 All of these interfaces are located in the `:client:extensions-rpc` module. Corda Enterprise customers can extend these interfaces to add custom, user-defined functionality to help manage their Corda Enterprise nodes.
 
+{{< note >}}
+`COMPLETED`, `FAILED` and `KILLED` flows can only be queried when started by the `startFlowWithClientId` or `startFlowDynamicWithClientId` APIs.
+{{< /note >}}
+
 For more information, see the [Interacting with a node](../4.6/node/operating/clientrpc.md) documentation section or see [MultiRPCClient](https://api.corda.net/api/corda-enterprise/4.6/html/api/javadoc/net/corda/client/rpc/ext/MultiRPCClient.html) in the API documentation.
 
 ### Ability to query flow data via RPC and via the node shell
