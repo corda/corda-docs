@@ -79,8 +79,7 @@ The sample CorDapp that we are going to run and deploy is the **Basic** CorDapp 
 
 To open the sample CorDapp in the IntelliJ IDEA:
 
-1. Open IntelliJ.
-2. From the splash screen, click **Open**, navigate to the `Basic\cordapp-example` sub-folder, and click **OK**. The project containing the sample CorDapp should open.
+1. Open IntelliJ. From the splash screen, click **Open**, navigate to the `Basic\cordapp-example` sub-folder, and click **OK**. The sample CorDapp opens.
 3. Specify which JDK you are using. To do this:
     * Click **File** >  **Project Structure**.
     * Under **Project Settings**, click the **Project** option (if not displayed by default).

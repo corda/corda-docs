@@ -80,13 +80,12 @@ The sample CorDapp that we are going to run and deploy is the **Basic** CorDapp 
 
 To open the sample CorDapp in the IntelliJ IDEA:
 
-1. Open IntelliJ.
-2. From the splash screen, click **Open**, navigate to the `Basic\cordapp-example` sub-folder, and click **OK**. The project containing the sample CorDapp should open.
-3. Specify which JDK you are using. To do this:
+1. Open IntelliJ. From the splash screen, click **Open**, navigate to the `Basic\cordapp-example` sub-folder, and click **OK**. The sample CorDapp opens.
+2. Specify which JDK you are using. To do this:
     * Click **File** >  **Project Structure**.
     * Under **Project Settings**, click the **Project** option (if not displayed by default).
     * In the **Project SDK** section, click **New…** > **JDK**, then select the home directory of your JDK and click **OK**.
-4. Specify the following additional settings:
+3. Specify the following additional settings:
     * Select **Modules**, then click the **+** button located just above the `cordapp-example` folder and select **Import Module**.
     * On the **Select File or Directory to Import** window, navigate to `samples-java\Basic\cordapp-example` and click **OK**.
     * On the **Import Module** window, select the **Import module from external model** option, then select **Gradle** from the list of options and click **Next**.
