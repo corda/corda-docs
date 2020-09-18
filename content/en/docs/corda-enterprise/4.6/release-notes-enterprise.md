@@ -85,6 +85,18 @@ You can now collect metering data from Corda Enterprise Nodes remotely. For info
 
 The notaries list can now be hotloaded. For more information see [Hotloading](network/network-map.md#hotloading) in [Network map](network/network-map.md).
 
+### Migrating Notary data to CockroachDB
+
+Notary data stored in a Percona database can now be migrated to Cockroach DB. For more information, see [Upgrading a notary](notary/upgrading-a-notary.md).
+
+### Notary identity configuration
+
+When registering a notary, the new field `notary.serviceLegalName` must be defined, this allows single-node notaries to be upgraded to HA notaries. For more information, see [Running a notary](notary/running-a-notary.md).
+
+### Improved CockroachDB performance
+
+A new configuration flag has been introduced, enabling native SQL for CockroachDB with multi-row insert statements. See [Node configuration reference](node/setup/corda-configuration-fields.md)
+
 ## Fixed issues
 
 ### Important fixed issues
