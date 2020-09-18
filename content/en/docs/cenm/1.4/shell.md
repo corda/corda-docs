@@ -209,8 +209,6 @@ The current supported commands that can be run from the shell are:
 
 ```
 
-[NetworkMapShellCommands.kt](https://github.com/corda/network-services/blob/release/1.2/services/src/main/kotlin/com/r3/enm/services/networkmap/shell/NetworkMapShellCommands.kt)
-
 
 ### Identity Manager Service
 
@@ -254,8 +252,6 @@ The current supported commands that can be run from the shell are:
 
 ```
 
-[IdentityManagerShellCommands.kt](https://github.com/corda/network-services/blob/release/1.2/services/src/main/kotlin/com/r3/enm/services/identitymanager/shell/IdentityManagerShellCommands.kt)
-
 
 ### Signing Service
 
@@ -278,5 +274,3 @@ The current supported commands that can be run from the shell are:
     fun clientHealthCheck()
 
 ```
-
-[SignerShellCommands.kt](https://github.com/corda/network-services/blob/release/1.2/services/src/main/kotlin/com/r3/enm/services/signer/shell/SignerShellCommands.kt)

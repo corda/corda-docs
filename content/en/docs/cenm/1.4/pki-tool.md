@@ -206,8 +206,6 @@ certificates = {
 }
 ```
 
-[pki-tool-template-basic.conf](https://github.com/corda/network-services/blob/release/1.2/pki-tool/src/test/resources/configs/pki-tool-template-basic.conf)
-
 {{< note >}}
 This is the same configuration that is used as the default when no configuration file is passed to the PKI Tool. It
 represents the minimal configuration required to create a Corda network certificate hierarchy. It is mainly intended
@@ -282,9 +280,6 @@ certificates = {
     "::CORDA_NETWORK_MAP"
 }
 ```
-
-[pki-tool-template-custom.conf](https://github.com/corda/network-services/blob/release/1.2/pki-tool/src/test/resources/configs/pki-tool-template-custom.conf)
-
 
 ##### Free-form Certificates
 
@@ -912,8 +907,6 @@ certificates = {
 }
 ```
 
-[pki-tool-local.conf](https://github.com/corda/network-services/blob/release/1.2/pki-tool/src/test/resources/configs/pki-tool-local.conf)
-
 
 #### Utimaco HSM Configuration
 
@@ -992,8 +985,6 @@ certificates = {
 }
 ```
 
-[pki-tool-utimaco-hsm.conf](https://github.com/corda/network-services/blob/release/1.2/pki-tool/src/test/resources/configs/pki-tool-utimaco-hsm.conf)
-
 
 #### Gemalto HSM Configuration
 
@@ -1069,8 +1060,6 @@ certificates = {
     }
 }
 ```
-
-[pki-tool-gemalto-hsm.conf](https://github.com/corda/network-services/blob/release/1.2/pki-tool/src/test/resources/configs/pki-tool-gemalto-hsm.conf)
 
 
 #### Securosys HSM Configuration
@@ -1148,8 +1137,6 @@ certificates = {
     }
 }
 ```
-
-[pki-tool-securosys-hsm.conf](https://github.com/corda/network-services/blob/release/1.2/pki-tool/src/test/resources/configs/pki-tool-securosys-hsm.conf)
 
 
 #### Azure Key Vault HSM Configuration
@@ -1231,8 +1218,6 @@ certificates = {
     }
 }
 ```
-
-[pki-tool-azure-key-vault-hsm.conf](https://github.com/corda/network-services/blob/release/1.2/pki-tool/src/test/resources/configs/pki-tool-azure-key-vault-hsm.conf)
 
 
 #### AWS CloudHSM Configuration
@@ -1316,5 +1301,3 @@ certificates = {
     }
 }
 ```
-
-[pki-tool-aws-cloud-hsm.conf](https://github.com/corda/network-services/blob/release/1.2/pki-tool/src/test/resources/configs/pki-tool-aws-cloud-hsm.conf)
