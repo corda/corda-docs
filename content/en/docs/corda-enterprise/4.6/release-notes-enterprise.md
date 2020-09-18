@@ -85,6 +85,17 @@ You can now collect metering data from Corda Enterprise Nodes remotely. For info
 
 The notaries list can now be hotloaded. For more information see [Hotloading](network/network-map.md#hotloading) in [Network map](network/network-map.md).
 
+### LedgerGraph available as a stand-alone CorDapp
+
+LedgerGraph enables other CorDapps, such as the set of [Collaborative Recover CorDapps](resources/collaborative-recovery-dr-setup.md), to have near real-time access to data concerning all of a node’s transactions and their relationships. LedgerGraph has been in use in some solutions already, but is now available as a CorDapp in its own right.
+
+### Archive service
+
+The [Archive Service](operations/monitoring-logging/archive-service/archive-service-main.md) can be used to archive transactions and attachments from the Corda vault which can no longer be part of an ongoing or new transaction flow. These archivable transactions and attachments are only associated with transactions which have no unconsumed transaction outputs (UTXOs).
+
+
+
+
 ## Fixed issues
 
 ### Important fixed issues
