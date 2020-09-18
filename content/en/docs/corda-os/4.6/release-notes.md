@@ -27,7 +27,7 @@ When creating a Docker container, you can now map the SSH port on the host to th
 
 ### Hotloading of notaries list
 
-In previous versions of Corda, if the list of notaries changed, the node had to be manually stopped and restarted. This is no longer the case: the notaries list can now be hotloaded. For more information see [Hotloading](network-map.md#hotloading) in [The network map](network-map.md).
+The notaries list can now be hotloaded. For more information see [Hotloading](network-map.md#hotloading) in [The network map](network-map.md).
 
 ## Corda 4.5 release overview
 
