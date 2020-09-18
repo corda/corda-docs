@@ -17,6 +17,18 @@ title: Release notes
 
 # Corda release notes
 
+## Corda 4.6 release overview
+
+## New features in Corda 4.6
+
+### Host to Container SSH port mapping for Dockerform
+
+When creating a Docker container, you can now map the SSH port on the host to the same port on the container. For more information, see [Optional configuration](generating-a-node.md#optional-configuration) in [Creating nodes locally](generating-a-node.md).
+
+### Hotloading of notaries list
+
+In previous versions of Corda, if the list of notaries changed, the node had to be manually stopped and restarted. This is no longer the case: the notaries list can now be hotloaded. For more information see [Hotloading](network-map.md#hotloading) in [The network map](network-map.md).
+
 ## Corda 4.5 release overview
 
 Welcome to the Corda 4.5 release notes.
