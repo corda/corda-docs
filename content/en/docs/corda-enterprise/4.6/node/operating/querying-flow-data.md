@@ -37,7 +37,7 @@ To use the `net.corda.client.rpc.proxy.NodeFlowStatusRpcOps` interface to query 
 
 To be able to use the `net.corda.client.rpc.proxy.NodeFlowStatusRpcOps` interface to interact with your node and query flow status via RPC, you must build a Multi RPC Client that uses the `NodeFlowStatusRpcOps::class.java` interface class for communication. The following code snippet provides an example of how to do this:
 
-```
+```kotlin
 val rpcAddress = NetworkHostAndPort("nodeAddress", 1000)
 val client = MultiRPCClient(rpcAddress, NodeFlowStatusRpcOps::class.java, rpcUser.username, rpcUser.password)
 val connFuture = client.start()
@@ -78,6 +78,10 @@ The available search parameters and their required formats are outlined in the t
 | `flowStart` | Uses the `net.corda.core.contracts.TimeWindow` class to define an open or closed time window for when the flow was first started.  The start time of the time-window in which the flow was started. A start-open window will return all flows started before the Unix 0 Instant (that is, the time 00:00 on January 1, 1970). An end-open window will return all flows started after a given time and before the current Instant. All times specified are inclusive. | net.corda.core.contracts.TimeWindow |  
 {{< /table >}}
 
+{{< warning >}}
+`COMPLETED`, `FAILED` and `KILLED` flows can only be queried when started by the `startFlowWithClientId` or `startFlowDynamicWithClientId` APIs.
+{{< /warning >}}
+
 The code example below shows how you can define a query that will return all flows that have not completed as expected and which meet the following criteria:
 
 * The flow belongs to the `IssueToken` flow class.
@@ -88,7 +92,7 @@ The code example below shows how you can define a query that will return all flo
 * The flow has remained suspended for at least 10 minutes.
 * The flow started in the last 30 minutes.
 
-```
+```kotlin
 val rpcAddress = NetworkHostAndPort("nodeAddress", 1000)
 val client = MultiRPCClient(rpcAddress, NodeFlowStatusRpcOps::class.java, rpcUser.username, rpcUser.password)
 val connFuture = client.start()
@@ -168,6 +172,10 @@ The available search parameters and their required formats are outlined in the t
 | `progressStep` | If the flow implements progress tracking, specifies the latest step that was encountered before checkpointing. A progressStep is a user-defined value which is defined by the CorDapp developer - you can specify the name of any progressStep defined in your CorDapp. | String |  
 | `suspensionDuration` | The minimum duration for which a flow must have remained suspended (that is, "stuck") at a checkpoint. This is entered in the format `"<value>, <unit>"` where `<value>` is a numerical value and `<unit>` is the unit of time, specified as `SECONDS`, `MINUTES`, `HOURS` or `DAYS`). | String |  
 {{< /table >}}
+
+{{< warning >}}
+`COMPLETED`, `FAILED` and `KILLED` flows can only be queried when started by the `startFlowWithClientId` or `startFlowDynamicWithClientId` APIs.
+{{< /warning >}}
 
 \*  See [Sample query to view all suspended flows within a particular time-window](#sample-query-to-view-all-suspended-flows-within-a-particular-time-window).
 
