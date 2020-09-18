@@ -93,8 +93,17 @@ LedgerGraph enables other CorDapps, such as the set of [Collaborative Recover Co
 
 The [Archive Service](operations/monitoring-logging/archive-service/archive-service-main.md) can be used to archive transactions and attachments from the Corda vault which can no longer be part of an ongoing or new transaction flow. These archivable transactions and attachments are only associated with transactions which have no unconsumed transaction outputs (UTXOs).
 
+### Migrating Notary data to CockroachDB
 
+Notary data stored in a Percona database can now be migrated to Cockroach DB. For more information, see [Upgrading a notary](notary/upgrading-a-notary.md).
 
+### Notary identity configuration
+
+When registering a notary, the new field `notary.serviceLegalName` must be defined, this allows single-node notaries to be upgraded to HA notaries. For more information, see [Running a notary](notary/running-a-notary.md).
+
+### Improved CockroachDB performance
+
+A new configuration flag has been introduced, enabling native SQL for CockroachDB with multi-row insert statements. See [Node configuration reference](node/setup/corda-configuration-fields.md)
 
 ## Fixed issues
 
