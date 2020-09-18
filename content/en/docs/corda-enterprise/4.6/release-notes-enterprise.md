@@ -73,7 +73,18 @@ Querying the node using either method enables node operators to:
 
 See the [Querying flow data](../4.6/node/operating/querying-flow-data.md) documentation section for more information.
 
+### Host to Container SSH port mapping for Dockerform
 
+When creating a Docker container, you can now map the SSH port on the host to the same port on the container. For more information, see [Optional configuration](node/deploy/generating-a-node.md#optional-configuration) on [Creating nodes locally](node/deploy/generating-a-node.md).
+
+### Metering client for the Metering Collection Tool
+
+You can now collect metering data from Corda Enterprise Nodes remotely. For information, see [Metering client for the Metering Collection Tool](metering-rpc.md).
+
+
+### Hotloading of notaries list
+
+In previous versions of Corda, if the list of notaries changed, the node had to be manually stopped and restarted. This is no longer the case: the notaries list can now be hotloaded. For more information see [Hotloading](network/network-map.md#hotloading).
 
 ## Fixed issues
 
