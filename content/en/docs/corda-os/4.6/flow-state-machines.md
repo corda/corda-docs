@@ -179,11 +179,6 @@ object TwoPartyTradeFlow {
 ```
 {{% /tab %}}
 
-
-
-
-[TutorialFlowStateMachines.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/flowstatemachines/TutorialFlowStateMachines.kt) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
 
 This code defines several classes nested inside the main `TwoPartyTradeFlow` singleton. Some of the classes are
@@ -770,11 +765,6 @@ private static final ProgressTracker.Step RECORDING = new ProgressTracker.Step(
 ```
 {{% /tab %}}
 
-
-
-
-[TwoPartyTradeFlow.kt](https://github.com/corda/corda/blob/release/os/4.6/finance/workflows/src/main/kotlin/net/corda/finance/flows/TwoPartyTradeFlow.kt) | [TutorialFlowStateMachines.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/flowstatemachines/TutorialFlowStateMachines.java) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
 
 Each step exposes a label. By defining your own step types, you can export progress in a way that’s both human readable
@@ -815,7 +805,7 @@ private static final ProgressTracker.Step VERIFYING_AND_SIGNING = new ProgressTr
 
 
 
-[TwoPartyTradeFlow.kt](https://github.com/corda/corda/blob/release/os/4.6/finance/workflows/src/main/kotlin/net/corda/finance/flows/TwoPartyTradeFlow.kt) | [TutorialFlowStateMachines.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/flowstatemachines/TutorialFlowStateMachines.java) | ![github](/images/svg/github.svg "github")
+[TwoPartyTradeFlow.kt](https://github.com/corda/corda/blob/release/os/4.6/finance/workflows/src/main/kotlin/net/corda/finance/flows/TwoPartyTradeFlow.kt) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 

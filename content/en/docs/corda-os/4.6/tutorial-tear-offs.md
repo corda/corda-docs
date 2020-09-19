@@ -50,9 +50,6 @@ val filtering = Predicate<Any> {
 {{% /tab %}}
 {{< /tabs >}}
 
-
-[TutorialTearOffs.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/tearoffs/TutorialTearOffs.kt)
-
 ## Constructing a filtered transaction
 
 We can now use our filtering function to construct a `FilteredTransaction`:
@@ -65,9 +62,6 @@ val ftx: FilteredTransaction = stx.buildFilteredTransaction(filtering)
 ```
 {{% /tab %}}
 {{< /tabs >}}
-
-[TutorialTearOffs.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/tearoffs/TutorialTearOffs.kt)
-
 
 In the oracle example, this step takes place in `RatesFixFlow` by overriding the `filtering` function. See
 [Using an oracle](oracles.md#filtering-ref).
@@ -89,8 +83,6 @@ val timeWindow: TimeWindow? = ftx.timeWindow
 {{% /tab %}}
 
 {{< /tabs >}}
-
-[TutorialTearOffs.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/tearoffs/TutorialTearOffs.kt)
 
 ## Implementing transaction signing
 

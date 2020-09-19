@@ -94,9 +94,6 @@ driver(new DriverParameters()
 {{% /tab %}}
 {{< /tabs >}}
 
-
-[KotlinIntegrationTestingTutorial.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/integration-test/kotlin/net/corda/docs/kotlin/tutorial/test/KotlinIntegrationTestingTutorial.kt) | [JavaIntegrationTestingTutorial.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/integration-test/java/net/corda/docs/java/tutorial/test/JavaIntegrationTestingTutorial.java)
-
 The above code starts two nodes:
 
 * A node for Alice, configured with an RPC user who has permissions to start the `CashIssueAndPaymentFlow` flow on it and query
@@ -138,9 +135,6 @@ CordaRPCOps bobProxy = bobClient.start("bobUser", "testPassword2").getProxy();
 {{% /tab %}}
 {{< /tabs >}}
 
-
-[KotlinIntegrationTestingTutorial.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/integration-test/kotlin/net/corda/docs/kotlin/tutorial/test/KotlinIntegrationTestingTutorial.kt) | [JavaIntegrationTestingTutorial.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/integration-test/java/net/corda/docs/java/tutorial/test/JavaIntegrationTestingTutorial.java)
-
 ## Connecting to each node via RPC
 
 Next, you must connect to Alice and Bob from the test process using the test users created earlier. To be able to start flows and query states, you must establish an RPC connection to each node.
@@ -165,9 +159,6 @@ Observable<Vault.Update<Cash.State>> aliceVaultUpdates = aliceProxy.vaultTrack(C
 {{% /tab %}}
 
 {{< /tabs >}}
-
-
-[KotlinIntegrationTestingTutorial.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/integration-test/kotlin/net/corda/docs/kotlin/tutorial/test/KotlinIntegrationTestingTutorial.kt) | [JavaIntegrationTestingTutorial.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/integration-test/java/net/corda/docs/java/tutorial/test/JavaIntegrationTestingTutorial.java)
 
 ## Monitoring changes to the vaults
 
@@ -227,9 +218,6 @@ expectEvents(bobVaultUpdates, true, () ->
 
 {{< /tabs >}}
 
-
-[KotlinIntegrationTestingTutorial.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/integration-test/kotlin/net/corda/docs/kotlin/tutorial/test/KotlinIntegrationTestingTutorial.kt) | [JavaIntegrationTestingTutorial.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/integration-test/java/net/corda/docs/java/tutorial/test/JavaIntegrationTestingTutorial.java)
-
 ## Starting a flow
 
 Now that you’re all set up, you can finally get some cash action going!
@@ -280,10 +268,6 @@ expectEvents(aliceVaultUpdates, true, () ->
 ```
 {{% /tab %}}
 {{< /tabs >}}
-
-
-[KotlinIntegrationTestingTutorial.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/integration-test/kotlin/net/corda/docs/kotlin/tutorial/test/KotlinIntegrationTestingTutorial.kt) | [JavaIntegrationTestingTutorial.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/integration-test/java/net/corda/docs/java/tutorial/test/JavaIntegrationTestingTutorial.java)
-
 
 As a next step, you might like to try setting up a test where Bob sends this cash back to Alice.
 
