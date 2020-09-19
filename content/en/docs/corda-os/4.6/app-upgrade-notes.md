@@ -43,6 +43,7 @@ If you are using them you should re-namespace them to a package namespace you co
 {{< table >}}
 | Corda release  | Platform version |
 | :------------- | :------------- |
+| 4.6 | 8 |
 | 4.5 | 7 |
 | 4.4 | 6 |
 | 4.3 | 5 |
@@ -51,6 +52,14 @@ If you are using them you should re-namespace them to a package namespace you co
 | 4.0 | 4 |
 | 3.3 | 3 |
 {{< /table >}}
+
+## Upgrading apps to Platform Version 8
+
+To successfully build a CorDapp against Platform Version 8 and Corda 4.6, you need to use version `5.0.12` of the Corda Gradle Plugins:
+
+```
+ext.corda_gradle_plugins_version = '5.0.12'
+```
 
 ## Upgrading apps to Platform Versions 6 and 7
 

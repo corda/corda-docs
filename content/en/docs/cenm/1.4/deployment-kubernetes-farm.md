@@ -34,7 +34,7 @@ helm install cenm-farm farm --set prefix=cenm --set acceptLicense=Y --set volume
 | ----------------------------- | -------------------------------------------------------- | --------------------- |
 | `bashDebug`                   | Display additional information while running bash scripts (useful while investigating issues) | `false` |
 | `farmImage.repository`        | URL to FARM Docker image repository                      | `acrcenm.azurecr.io/auth/auth` |
-| `farmImage.tag`               | Docker image tag | `1.3` |
+| `farmImage.tag`               | Docker image tag | `1.4` |
 | `farmImage.pullPolicy`        | Image pull policy. Ref.: https://kubernetes.io/docs/concepts/containers/images/#updating-images | `Always` |
 | `volumeSizeFarmEtc`           | Volume size for the `etc/` directory | `1Gi` |
 | `volumeSizeFarmLogs`          | Volume size for the `h2/` directory | `5Gi` |

@@ -46,7 +46,7 @@ In addition, the CENM Command-Line Interface (CLI) tool is required so you can c
 
 ### Compatibility
 
-The deployment scripts are compatible with Corda Enterprise Network Manager version 1.3 only.
+The deployment scripts are compatible with Corda Enterprise Network Manager version 1.4 only.
 The deployed network runs on Kubernetes minimum version 1.16.9 and Helm minimum version 3.1.1.
 
 ## Deployment
@@ -108,7 +108,7 @@ The deployment steps are given below:
 - Download the Docker image with CENM [Command-Line Interface (CLI) tool](cenm-cli-tool.md) so you can manage CENM services:
 
     ```bash
-    docker pull cenm-cli:1.3-zulu-openjdk8u242
+    docker pull cenm-cli:1.4-zulu-openjdk8u242
     ```
 
 #### 2. Set up the Kubernetes cluster
@@ -204,7 +204,7 @@ Use the CENM [Command Line Interface (CLI) Tool](cenm-cli-tool.md) to access the
 To star CENM CLI Tool run Docker command starting Docker container with the tool:
 
   ```bash
-  docker run  -it --env ACCEPT_LICENSE=Y --name=cenm-cli cenm-cli:1.3-zulu-openjdk8u242
+  docker run  -it --env ACCEPT_LICENSE=Y --name=cenm-cli cenm-cli:1.4-zulu-openjdk8u242
   ```
 
 The welcome message will appear:
@@ -567,13 +567,13 @@ The Docker images used for the Kubernetes deployment are listed below for refere
 
 | Service           | Image Name                         | Tag |
 |-------------------|------------------------------------|-----|
-| Identity Manager  | acrcenm.azurecr.io/nmap/nmap       | 1.3 |
-| Network Map       | acrcenm.azurecr.io/nmap/nmap       | 1.3 |
-| Signing           | acrcenm.azurecr.io/signer/signer   | 1.3 |
-| Zone              | acrcenm.azurecr.io/zone/zone       | 1.3 |
-| Auth              | acrcenm.azurecr.io/auth/auth       | 1.3 |
-| Farm              | acrcenm.azurecr.io/farm/farm       | 1.3 |
-| PKI Tool          | acrcenm.azurecr.io/pkitool/pkitool | 1.3 |
-| Notary            | acrcenm.azurecr.io/notary/notary   | 1.3 |
+| Identity Manager  | acrcenm.azurecr.io/nmap/nmap       | 1.4 |
+| Network Map       | acrcenm.azurecr.io/nmap/nmap       | 1.4 |
+| Signing           | acrcenm.azurecr.io/signer/signer   | 1.4 |
+| Zone              | acrcenm.azurecr.io/zone/zone       | 1.4 |
+| Auth              | acrcenm.azurecr.io/auth/auth       | 1.4 |
+| Farm              | acrcenm.azurecr.io/farm/farm       | 1.4 |
+| PKI Tool          | acrcenm.azurecr.io/pkitool/pkitool | 1.4 |
+| Notary            | acrcenm.azurecr.io/notary/notary   | 1.4 |
 
 {{< /table >}}

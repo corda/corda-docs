@@ -39,6 +39,7 @@ If you are using them you should re-namespace them to a package namespace you co
 {{< table >}}
 | Corda release  | Platform version |
 | :------------- | :------------- |
+| 4.6 | 8 |
 | 4.5 | 7 |
 | 4.4 | 6 |
 | 4.3 | 5 |
@@ -47,6 +48,14 @@ If you are using them you should re-namespace them to a package namespace you co
 | 4.0 | 4 |
 | 3.3 | 3 |
 {{< /table >}}
+
+## Upgrading apps to Platform Version 8
+
+To successfully build a CorDapp against Platform Version 8 and Corda Enterprise 4.6, you need to use version `5.0.12` of the Corda Gradle Plugins:
+
+```
+ext.corda_gradle_plugins_version = '5.0.12'
+```
 
 ## Upgrading apps to Platform Versions 6 and 7
 
@@ -381,10 +390,6 @@ public static class SimpleFlowUsingOldApi extends FlowLogic<SignedTransaction> {
 {{% /tab %}}
 
 
-
-
-[FinalityFlowMigration.kt](https://github.com/corda/enterprise/blob/release/ent/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/FinalityFlowMigration.kt) | [FinalityFlowMigration.java](https://github.com/corda/enterprise/blob/release/ent/4.5/docs/source/example-code/src/main/java/net/corda/docs/java/FinalityFlowMigration.java) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
 
 To use the new API, this flow needs to be annotated with `InitiatingFlow` and a `FlowSession` to the participant(s) of the transaction must be
@@ -430,10 +435,6 @@ public static class SimpleFlowUsingNewApi extends FlowLogic<SignedTransaction> {
 {{% /tab %}}
 
 
-
-
-[FinalityFlowMigration.kt](https://github.com/corda/enterprise/blob/release/ent/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/FinalityFlowMigration.kt) | [FinalityFlowMigration.java](https://github.com/corda/enterprise/blob/release/ent/4.5/docs/source/example-code/src/main/java/net/corda/docs/java/FinalityFlowMigration.java) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
 
 If there are more than one transaction participants then a session to each one must be initiated, excluding the local party
@@ -476,10 +477,6 @@ public static class SimpleNewResponderFlow extends FlowLogic<Void> {
 ```
 {{% /tab %}}
 
-
-
-
-[FinalityFlowMigration.kt](https://github.com/corda/enterprise/blob/release/ent/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/FinalityFlowMigration.kt) | [FinalityFlowMigration.java](https://github.com/corda/enterprise/blob/release/ent/4.5/docs/source/example-code/src/main/java/net/corda/docs/java/FinalityFlowMigration.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -556,10 +553,6 @@ public static class ExistingInitiatingFlow extends FlowLogic<SignedTransaction> 
 {{% /tab %}}
 
 
-
-
-[FinalityFlowMigration.kt](https://github.com/corda/enterprise/blob/release/ent/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/FinalityFlowMigration.kt) | [FinalityFlowMigration.java](https://github.com/corda/enterprise/blob/release/ent/4.5/docs/source/example-code/src/main/java/net/corda/docs/java/FinalityFlowMigration.java) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
 
 For the responder flow, insert a call to `ReceiveFinalityFlow` at the location where it’s expecting to receive the
@@ -615,10 +608,6 @@ if (otherSide.getCounterpartyFlowInfo().getFlowVersion() >= 2) {
 ```
 {{% /tab %}}
 
-
-
-
-[FinalityFlowMigration.kt](https://github.com/corda/enterprise/blob/release/ent/4.5/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/FinalityFlowMigration.kt) | [FinalityFlowMigration.java](https://github.com/corda/enterprise/blob/release/ent/4.5/docs/source/example-code/src/main/java/net/corda/docs/java/FinalityFlowMigration.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
