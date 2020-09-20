@@ -113,19 +113,14 @@ List of `.jar` file hashes (given as strings) containing the contract class.
   * **attachmentIds**:
     The list of `.jar` file hashes (given as strings) containing the contract class.
 
-
 * **packageOwnership**:
-List of the network-wide Java packages that have been claimed by their owners along with the owners
-public keys. More information about this can be found here: [Package Ownership](https://docs.corda.net/design/data-model-upgrades/package-namespace-ownership.html)
-(Optional) The list should consist of entries with the following parameters:
+List of the network-wide Java packages that have been claimed by their owners along with the owners' public keys. Optionally, the list should consist of entries with the following parameters:
 
   * **packageName**:
   The full package name in string format.
 
-
   * **publicKeyPath**:
   The file path to the public key. Note that this public key needs to be in a `.pem` [file format](https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail).
-
 
   * **algorithm**:
   The algorithm used to generate the public key (for example, RSA or EC). This parameter is optional and defaults to RSA.
