@@ -113,11 +113,6 @@ private static final TestIdentity bigCorp = new TestIdentity(new CordaX500Name("
 ```
 {{% /tab %}}
 
-
-
-
-[TutorialTestDSL.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/kotlin/net/corda/docs/kotlin/tutorial/testdsl/TutorialTestDSL.kt) | [TutorialTestDSL.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/java/net/corda/docs/java/tutorial/testdsl/TutorialTestDSL.java) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
 
 It’s a `CommercialPaper` issued by `MEGA_CORP` with face value of $1000 and maturity date in 7 days.
@@ -223,11 +218,6 @@ public void simpleCP() {
 ```
 {{% /tab %}}
 
-
-
-
-[TutorialTestDSL.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/kotlin/net/corda/docs/kotlin/tutorial/testdsl/TutorialTestDSL.kt) | [TutorialTestDSL.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/java/net/corda/docs/java/tutorial/testdsl/TutorialTestDSL.java) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
 
 Let’s take a look at a transaction that fails.
@@ -273,11 +263,6 @@ public void simpleCPMove() {
 
 ```
 {{% /tab %}}
-
-
-
-
-[TutorialTestDSL.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/kotlin/net/corda/docs/kotlin/tutorial/testdsl/TutorialTestDSL.kt) | [TutorialTestDSL.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/java/net/corda/docs/java/tutorial/testdsl/TutorialTestDSL.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -341,11 +326,6 @@ public void simpleCPMoveFails() {
 ```
 {{% /tab %}}
 
-
-
-
-[TutorialTestDSL.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/kotlin/net/corda/docs/kotlin/tutorial/testdsl/TutorialTestDSL.kt) | [TutorialTestDSL.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/java/net/corda/docs/java/tutorial/testdsl/TutorialTestDSL.java) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
 
 We can continue to build the transaction until it `verifies`:
@@ -393,11 +373,6 @@ public void simpleCPMoveSuccessAndFailure() {
 
 ```
 {{% /tab %}}
-
-
-
-
-[TutorialTestDSL.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/kotlin/net/corda/docs/kotlin/tutorial/testdsl/TutorialTestDSL.kt) | [TutorialTestDSL.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/java/net/corda/docs/java/tutorial/testdsl/TutorialTestDSL.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -461,11 +436,6 @@ public void simpleIssuanceWithTweak() {
 ```
 {{% /tab %}}
 
-
-
-
-[TutorialTestDSL.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/kotlin/net/corda/docs/kotlin/tutorial/testdsl/TutorialTestDSL.kt) | [TutorialTestDSL.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/java/net/corda/docs/java/tutorial/testdsl/TutorialTestDSL.java) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
 
 `tweak` creates a local copy of the transaction. This makes possible to locally “ruin” the transaction while not
@@ -520,11 +490,6 @@ public void simpleIssuanceWithTweakTopLevelTx() {
 
 ```
 {{% /tab %}}
-
-
-
-
-[TutorialTestDSL.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/kotlin/net/corda/docs/kotlin/tutorial/testdsl/TutorialTestDSL.kt) | [TutorialTestDSL.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/java/net/corda/docs/java/tutorial/testdsl/TutorialTestDSL.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -610,11 +575,6 @@ public void chainCommercialPaper() {
 
 ```
 {{% /tab %}}
-
-
-
-
-[TutorialTestDSL.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/kotlin/net/corda/docs/kotlin/tutorial/testdsl/TutorialTestDSL.kt) | [TutorialTestDSL.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/java/net/corda/docs/java/tutorial/testdsl/TutorialTestDSL.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -728,11 +688,6 @@ public void chainCommercialPaperDoubleSpend() {
 ```
 {{% /tab %}}
 
-
-
-
-[TutorialTestDSL.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/kotlin/net/corda/docs/kotlin/tutorial/testdsl/TutorialTestDSL.kt) | [TutorialTestDSL.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/java/net/corda/docs/java/tutorial/testdsl/TutorialTestDSL.java) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
 
 The transactions `verifies()` individually, however the state was spent twice! That’s why we need the global ledger
@@ -841,10 +796,5 @@ public void chainCommercialPaperTweak() {
 
 ```
 {{% /tab %}}
-
-
-
-
-[TutorialTestDSL.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/kotlin/net/corda/docs/kotlin/tutorial/testdsl/TutorialTestDSL.kt) | [TutorialTestDSL.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/java/net/corda/docs/java/tutorial/testdsl/TutorialTestDSL.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}

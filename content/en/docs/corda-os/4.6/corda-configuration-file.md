@@ -232,7 +232,6 @@ devMode = true
 
 ```
 
-[example-node.conf](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/resources/example-node.conf)
 
 ```none
 myLegalName = "O=Notary Service,OU=corda,L=London,C=GB"
@@ -285,8 +284,6 @@ networkServices {
 }
 
 ```
-
-[example-node-with-networkservices.conf](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/resources/example-node-with-networkservices.conf)
 
 ## Generating a public key hash
 

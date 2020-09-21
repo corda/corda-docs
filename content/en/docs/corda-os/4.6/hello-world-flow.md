@@ -181,10 +181,7 @@ public class IOUFlow extends FlowLogic<Void> {
 ```
 {{% /tab %}}
 
-
 {{< /tabs >}}
-
-[IOUFlow.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/helloworld/IOUFlow.kt) | [IOUFlow.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/helloworld/IOUFlow.java)
 
 If you’re following along in Java, you’ll also need to rename `Initiator.java` to `IOUFlow.java`.
 
@@ -338,12 +335,8 @@ public class IOUFlowResponder extends FlowLogic<Void> {
 
 ```
 {{% /tab %}}
+
 {{< /tabs >}}
-
-
-
-[IOUFlowResponder.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/helloworld/IOUFlowResponder.kt) | [IOUFlowResponder.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/helloworld/IOUFlowResponder.java)
-
 
 As with the `IOUFlow`, our `IOUFlowResponder` flow is a `FlowLogic` subclass where we’ve overridden `FlowLogic.call`.
 

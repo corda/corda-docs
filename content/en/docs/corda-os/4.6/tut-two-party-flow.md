@@ -70,11 +70,6 @@ import java.util.List;
 ```
 {{% /tab %}}
 
-
-
-
-[IOUFlow.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/twoparty/IOUFlow.kt) | [IOUFlow.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/twoparty/IOUFlow.java) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
 
 Next, update `IOUFlow.call` to the following:
@@ -149,11 +144,6 @@ return null;
 
 ```
 {{% /tab %}}
-
-
-
-
-[IOUFlow.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/twoparty/IOUFlow.kt) | [IOUFlow.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/twoparty/IOUFlow.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -247,11 +237,6 @@ public Void call() throws FlowException {
 
 ```
 {{% /tab %}}
-
-
-
-
-[IOUFlowResponder.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/twoparty/IOUFlowResponder.kt) | [IOUFlowResponder.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/twoparty/IOUFlowResponder.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 

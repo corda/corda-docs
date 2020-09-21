@@ -81,11 +81,6 @@ public class MockNetworkTestsTutorial {
 ```
 {{% /tab %}}
 
-
-
-
-[MockNetworkTestsTutorial.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/MockNetworkTestsTutorial.kt) | [MockNetworkTestsTutorial.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/java/net/corda/docs/java/MockNetworkTestsTutorial.java) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
 
 The `MockNetwork` requires at a minimum a list of CorDapps to be installed on each `StartedMockNode`. The CorDapps are looked up on the
@@ -131,11 +126,6 @@ Nodes are created on the `MockNetwork` using:
 
 ```
 {{% /tab %}}
-
-
-
-
-[MockNetworkTestsTutorial.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/MockNetworkTestsTutorial.kt) | [MockNetworkTestsTutorial.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/java/net/corda/docs/java/MockNetworkTestsTutorial.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -301,11 +291,6 @@ private static final TestIdentity bigCorp = new TestIdentity(new CordaX500Name("
 ```
 {{% /tab %}}
 
-
-
-
-[TutorialTestDSL.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/kotlin/net/corda/docs/kotlin/tutorial/testdsl/TutorialTestDSL.kt) | [TutorialTestDSL.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/java/net/corda/docs/java/tutorial/testdsl/TutorialTestDSL.java) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
 
 `TestIdentity` exposes the following fields and methods:
@@ -396,11 +381,6 @@ private val ledgerServices = MockServices(
 ```
 {{% /tab %}}
 
-
-
-
-[TutorialTestDSL.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/kotlin/net/corda/docs/kotlin/tutorial/testdsl/TutorialTestDSL.kt) | [TutorialTestDSL.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/java/net/corda/docs/java/tutorial/testdsl/TutorialTestDSL.java) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
 
 Alternatively, there is a helper constructor which just accepts a list of `TestIdentity`. The first identity provided is
@@ -437,11 +417,6 @@ private final MockServices simpleLedgerServices = new MockServices(
 
 ```
 {{% /tab %}}
-
-
-
-
-[TutorialTestDSL.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/kotlin/net/corda/docs/kotlin/tutorial/testdsl/TutorialTestDSL.kt) | [TutorialTestDSL.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/java/net/corda/docs/java/tutorial/testdsl/TutorialTestDSL.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -497,11 +472,6 @@ public void simpleCPMoveSuccess() {
 ```
 {{% /tab %}}
 
-
-
-
-[TutorialTestDSL.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/kotlin/net/corda/docs/kotlin/tutorial/testdsl/TutorialTestDSL.kt) | [TutorialTestDSL.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/java/net/corda/docs/java/tutorial/testdsl/TutorialTestDSL.java) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
 
 Once all the transaction components have been specified, you can run `verifies()` to check that the given transaction is valid.
@@ -552,11 +522,6 @@ public void simpleCPMoveFails() {
 
 ```
 {{% /tab %}}
-
-
-
-
-[TutorialTestDSL.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/kotlin/net/corda/docs/kotlin/tutorial/testdsl/TutorialTestDSL.kt) | [TutorialTestDSL.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/java/net/corda/docs/java/tutorial/testdsl/TutorialTestDSL.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -615,11 +580,6 @@ public void simpleCPMoveSuccessAndFailure() {
 ```
 {{% /tab %}}
 
-
-
-
-[TutorialTestDSL.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/kotlin/net/corda/docs/kotlin/tutorial/testdsl/TutorialTestDSL.kt) | [TutorialTestDSL.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/java/net/corda/docs/java/tutorial/testdsl/TutorialTestDSL.java) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
 
 You can also use the `tweak` function to create a locally scoped transaction that you can make changes to
@@ -670,11 +630,6 @@ public void simpleIssuanceWithTweakTopLevelTx() {
 
 ```
 {{% /tab %}}
-
-
-
-
-[TutorialTestDSL.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/kotlin/net/corda/docs/kotlin/tutorial/testdsl/TutorialTestDSL.kt) | [TutorialTestDSL.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/java/net/corda/docs/java/tutorial/testdsl/TutorialTestDSL.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -783,11 +738,6 @@ public void chainCommercialPaperDoubleSpend() {
 
 ```
 {{% /tab %}}
-
-
-
-
-[TutorialTestDSL.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/kotlin/net/corda/docs/kotlin/tutorial/testdsl/TutorialTestDSL.kt) | [TutorialTestDSL.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/test/java/net/corda/docs/java/tutorial/testdsl/TutorialTestDSL.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 

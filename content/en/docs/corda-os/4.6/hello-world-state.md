@@ -157,11 +157,7 @@ public class IOUState implements ContractState {
 ```
 {{% /tab %}}
 
-
 {{< /tabs >}}
-
-[IOUState.kt](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/kotlin/net/corda/docs/kotlin/tutorial/helloworld/IOUState.kt) | [IOUState.java](https://github.com/corda/corda/blob/release/os/4.6/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/helloworld/IOUState.java)
-
 
 ## Progress so far
 
