@@ -21,22 +21,22 @@ Allowed parameters are:
 
 
 * **minimumPlatformVersion**:
-The minimum platform version that the nodes must be running. Any node which is below this will
+The minimum platform version that the nodes must be running on. Any node running a platform version below this will
 not start.
-
-Once a network has started, the only supported changes to notaries are to add new notaries at the end of the list or to remove existing ones as part of a decommissioning process.
 
 * **notaries**:
 Ordered list of file paths to the node info files, or X500 names, of the notaries which are permitted in the
 network.
- <!--Add the note here below  -->
-{{< note>}} Once a network has started, the only supported changes to notaries are to add new notaries at the end of the list or to remove existing ones as part of a decommissioning process.{{< /note>}}  Notaries can
-be removed from the list, in which case no new states can be created and reference it. The existing states which reference
+
+{{< note >}}
+Once a network has started, the only supported changes to notaries are to add new notaries at the end of the list or to remove existing ones as part of a decommissioning process.
+{{< /note >}}  
+Notaries can be removed from the list, in which case no new states can be created and reference it. The existing states which reference
 the removed Notary have to be moved to a new Notary before the pointed one is decommissioned. Notaries must be added
 to the end as Flows often use the ordering of notaries during selection (i.e. pick the first),
 and therefore changing the order could cause errors elsewhere.
 Also note you can provide only file path to the node info file or X500 name of the notary, not both.
-Guidance on using notaries in flows: [https://docs.corda.net/api-flows.html?highlight=flow#notaries](https://docs.corda.net/api-flows.html?highlight=flow#notaries)
+For guidance on using notaries in flows, see [the API Flows page](../../corda-os/4.6/api-flows.html?highlight=flow#notaries).
 
 ## Configuration parameters
 
@@ -113,19 +113,14 @@ List of `.jar` file hashes (given as strings) containing the contract class.
   * **attachmentIds**:
     The list of `.jar` file hashes (given as strings) containing the contract class.
 
-
 * **packageOwnership**:
-List of the network-wide Java packages that have been claimed by their owners along with the owners
-public keys. More information about this can be found here: [Package Ownership](https://docs.corda.net/design/data-model-upgrades/package-namespace-ownership.html)
-(Optional) The list should consist of entries with the following parameters:
+List of the network-wide Java packages that have been claimed by their owners along with the owners' public keys. Optionally, the list should consist of entries with the following parameters:
 
   * **packageName**:
   The full package name in string format.
 
-
   * **publicKeyPath**:
   The file path to the public key. Note that this public key needs to be in a `.pem` [file format](https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail).
-
 
   * **algorithm**:
   The algorithm used to generate the public key (for example, RSA or EC). This parameter is optional and defaults to RSA.
