@@ -18,7 +18,7 @@ A Corda Network is a peer-to-peer network of [Nodes](./node/component-topology.h
 These Nodes run Corda applications [(CorDapps)](./cordapps/cordapp-overview.html), and transact between Nodes using public or
 confidential identities.
 
-When one or more Nodes are involved in a transaction, the transaction must be notarised. [Notaries](./notary/ha-notary-service-overview.html) are a specialized type
+When one or more Nodes are involved in a transaction, the transaction must be notarised. [Notaries](./notary/ha-notary-service-overview.html) are a specialised type
 of Node that provides uniqueness consensus by attesting that, for a given transaction, it has not already signed other
 transactions that consumes any of the proposed transaction’s input states.
 
@@ -26,9 +26,9 @@ For all Corda release notes, see the [Release Notes](release-notes-index.md) ind
 
 ## Corda Enterprise
 
-Corda Enterprise is a commercial edition of the Corda platform, specifically optimized to meet the privacy, security and
+Corda Enterprise is a commercial edition of the Corda platform, specifically optimised to meet the privacy, security and
 throughput demands of modern day business. Corda Enterprise is interoperable and compatible with Corda open source and
-is designed for organizations with exacting requirements around quality of service and the network infrastructure in
+is designed for organisations with exacting requirements around quality of service and the network infrastructure in
 which they operate.
 
 Corda Enterprise contains all the core Corda functionality, but also includes the [Corda Firewall](./node/corda-firewall-component.html),
@@ -99,7 +99,7 @@ More details on Corda Enterprise features compared to Corda open source features
 |Feature|Corda open source|Corda Enterprise|
 |------------------------------------------------------------|------------------------------|------------------------------|
 |H2 (development use only)|&#9745;|&#9745;|
-|Postgres|&#9745; Please note that this will be harmonised with Corda Enterprise in Corda 4.5 to allow for in-place upgrades|&#9745;|
+|Postgres|&#9745; Please note that this has been harmonised with Corda Enterprise in Corda 4.5 to allow for in-place upgrades|&#9745;|
 |SQL Server|Experimental only|&#9745;|
 |Oracle|&#9746;|&#9745;|
 

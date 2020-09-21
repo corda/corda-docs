@@ -21,7 +21,7 @@ The initial network parameters can be subsequently changed through an update pro
 be advertised to the entire network to allow nodes time to agree to the changes.
 
 {{< note >}}
-This process has changed extensively in CENM 1.3. The legacy process is still
+This process changed extensively in CENM 1.3. The legacy process is still
 supported for services which use the shell interface instead of the admin RPC
 interface - for example, in the CENM Command-Line Interface (CLI) tool. However, this document presumes  that you
 use admin RPC. For information about the legacy process, see the [CENM 1.2 documentation](../1.2/updating-network-parameters.md).

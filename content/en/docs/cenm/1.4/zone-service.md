@@ -1,7 +1,6 @@
 ---
 aliases:
 - /zone-service.html
-- /releases/release-1.3/zone-service.html
 date: '2020-06-04T13:44:00Z'
 menu:
   cenm-1-4:
@@ -83,7 +82,7 @@ The Zone Service sets the Auth Service configuration for the Identity Manager Se
 The Auth Service trust store location and password must match on the hosts of the Zone Service and the Identity Manager Service. It is recommended that the trust store location is set as a relative path to the working directory on each host (for example, `certificates/auth-trust-store.jks`) rather than as an absolute path.
 
 {{< note >}}
-The shell UI used in CENM 1.2 (and below) is not supported in combination with the RPC API functionality in CENM 1.3, so configurations *must not* specify a shell configuration or they will be rejected by the respected services.
+The shell UI used in CENM 1.2 (and below) is not supported in combination with the RPC API functionality in CENM 1.3 and above, so configurations *must not* specify a shell configuration or they will be rejected by the respected services.
 {{< /note >}}
 
 ### Network Map Service configuration

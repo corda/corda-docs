@@ -93,7 +93,7 @@ During the certificate revocation list validation process the trust store is con
 
 **What is the expected behaviour if a certificate is revoked?**
 
-Once a certificate is revoked (including the signing of a new CRL), nodes on the network should identify the change quickly. In CENM 1.3, this takes around 30 seconds. In future releases this time frame is likely to increase because having every node in a network poll for changes is a poor scaling experience.
+Once a certificate is revoked (including the signing of a new CRL), nodes on the network should identify the change quickly. In CENM 1.3 and above, this takes around 30 seconds. In future releases this time frame is likely to increase because having every node in a network poll for changes is a poor scaling experience.
 At this point Nodes will refuse to accept signatures from the revoked certificate. As a result, any transactions that have not yet been notarised, as well as any future transactions the revoked certificate would have signed, will be invalidated.
 In addition, the Network Map Service(s) will refresh their internal cache of the CRL and will refuse to serve node info for the affected nodes. As a result, any new nodes joining the network will be completely unaware of the affected node.
 
@@ -103,7 +103,7 @@ Nodes do not check certificates on transactions, only on communication. The purp
 
 **What is the expected behaviour if the CRL is not reachable due to a network error?**
 
-This depends on whether the nodes are configured for hard or soft failure. However, in the recommended production setup (hard failure) any and all certificate validation will fail until the endpoint is reachable. This is addressed in the updated CENM 1.3 documentation on highly available CRL endpoints using an HTTP proxy.
+This depends on whether the nodes are configured for hard or soft failure. However, in the recommended production setup (hard failure) any and all certificate validation will fail until the endpoint is reachable. This is addressed in the updated CENM 1.3 and 1.4 documentation on highly available CRL endpoints using an HTTP proxy.
 
 **What is the expected behaviour if the CRL expires on existing nodes and new prospect nodes?**
 

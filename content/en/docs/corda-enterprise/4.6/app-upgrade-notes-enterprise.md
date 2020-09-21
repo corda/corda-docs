@@ -45,9 +45,9 @@ Re-compiling your CorDapp requires updating its associated Gradle build file as 
 ```shell
 ext.corda_release_distribution = 'com.r3.corda'
 ext.corda_core_release_distribution = 'net.corda'
-ext.corda_release_version = '4.5'
-ext.corda_core_release_version = '4.5'
-ext.corda_gradle_plugins_version = '5.0.8'
+ext.corda_release_version = '4.6'
+ext.corda_core_release_version = '4.6'
+ext.corda_gradle_plugins_version = '5.0.12'
 ext.kotlin_version = '1.2.71'
 ext.quasar_version = '0.7.12_r3'
 ```
@@ -101,7 +101,7 @@ testCompile "$corda_release_distribution:corda-node-driver:$corda_release_versio
 ```
 
 {{< note >}}
-Corda Enterprise 4.5 binaries are not available in a public repository. In order to make the dependencies available for development, either
+Corda Enterprise 4.6 binaries are not available in a public repository. In order to make the dependencies available for development, either
 create a mirror repository and upload them there, or add them to the local Maven repository.
 
 Please consult your R3 support contact to request a copy of the Corda Enterprise Developer Pack (this contains a Maven repository mirror
@@ -140,7 +140,7 @@ Therefore you have to add the following variables to your build configuration:
 
 ```shell
 ext.corda_core_release_distribution = 'net.corda'
-ext.corda_core_release_version = '4.5'
+ext.corda_core_release_version = '4.6'
 ```
 
 Any dependency on `corda-core` (or `corda-serialization`) has to use these new variables to depend on the open source version of those

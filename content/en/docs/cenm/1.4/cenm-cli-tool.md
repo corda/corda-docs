@@ -29,7 +29,7 @@ Once you have the required permissions to access the CENM service you require, y
 
 ## Install the CENM CLI Tool
 
-The CLI Tool comes as a part of your CENM upgrade to 1.3 as a `.jar` file. If you cannot access the `.jar` file, you can install via Docker image.
+The CLI Tool comes as a part of CENM 1.4 as a `.jar` file. If you cannot access the `.jar` file, you can install via Docker image.
 
 To install using Docker:
 
@@ -38,7 +38,7 @@ To install using Docker:
 2. Use the command line to download the Docker image with CENM CLI:
 
      ```bash
-     docker pull cenm-cli:1.3-zulu-openjdk8u242
+     docker pull cenm-cli:1.4-zulu-openjdk8u242
      ```
 
 You have installed the Docker image with CENM CLI tool.
