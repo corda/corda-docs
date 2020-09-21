@@ -33,14 +33,14 @@ helm install cenm-gateway gateway --set prefix=cenm --set acceptLicense=Y --set 
 | Parameter                     | Description                                              | Default value         |
 | ----------------------------- | -------------------------------------------------------- | --------------------- |
 | `bashDebug`                   | Display additional information while running bash scripts (useful while investigating issues) | `false` |
-| `farmImage.repository`        | URL to Gateway Docker image repository                      | `acrcenm.azurecr.io/auth/auth` |
-| `farmImage.tag`               | Docker image tag | `1.3` |
-| `farmImage.pullPolicy`        | Image pull policy. Ref.: https://kubernetes.io/docs/concepts/containers/images/#updating-images | `Always` |
+| `gatewayPortImage.repository`        | URL to Gateway Docker image repository                      | `acrcenm.azurecr.io/auth/auth` |
+| `gatewayImage.tag`               | Docker image tag | `1.3` |
+| `gatewayImage.pullPolicy`        | Image pull policy. Ref.: https://kubernetes.io/docs/concepts/containers/images/#updating-images | `Always` |
 | `volumeSizeFarmEtc`           | Volume size for the `etc/` directory | `1Gi` |
 | `volumeSizeFarmLogs`          | Volume size for the `h2/` directory | `5Gi` |
 | `sleepTimeAfterError`         | Sleep time (in seconds) after an error occurred | `120` |
 | `authPort`                    | Auth Service port | `8081` |
-| `farmPort`                    | Farm Service port | `8080` |
+| `gatewayPort`                    | Gateway Service port | `8080` |
 | `zonePort`                    | Zone Service port | `12345` |
 | `logsContainersEnabled`       | Enable container displaying live logs | `true`
 {{< /table >}}
