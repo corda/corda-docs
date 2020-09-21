@@ -28,6 +28,10 @@ two sources:
 The network map server also distributes the parameters file that define values for various settings that all nodes need
 to agree on to remain in sync.
 
+{{< warning >}}
+**The network map cannot be redirected. Only HTTP OK (response code 200) is supported - any other kind of response codes, including HTTP redirects (for example, response code 301), are NOT supported.**
+{{< /warning >}}
+
 {{< note >}}
 In Corda 3 no implementation of the HTTP network map server is provided. This is because the details of how
 a network manages its membership (the databases, ticketing workflows, HSM hardware etc) is expected to vary
@@ -164,9 +168,7 @@ permitted in the network.
 
 
 * **maxMessageSize**:
-Maximum allowed size in bytes of an individual message sent over the wire. Note that attachments are a
-special case and may be fragmented for streaming transfer, however, an individual transaction or flow
-message may not be larger than this value.
+Maximum allowed size in bytes of an individual message sent over the wire.
 
 
 * **maxTransactionSize**:
