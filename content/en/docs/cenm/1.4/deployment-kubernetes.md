@@ -200,7 +200,7 @@ cd network-services/deployment/k8s/helm
 
 ## Network operations
 
-Use the CENM [Command Line Interface (CLI) Tool](cenm-cli-tool.md) to access the [FARM Service](gateway-service.md) from your local machine.
+Use the CENM [Command Line Interface (CLI) Tool](cenm-cli-tool.md) to access the [Gateway Service](gateway-service.md) from your local machine.
 To star CENM CLI Tool run Docker command starting Docker container with the tool:
 
   ```bash
@@ -220,10 +220,10 @@ The welcome message will appear:
 You can now use `cemn` commands from within the running Docker container:
 
   ```bash
-  ./cenm context login -s -u <USER> -p <PASSWORD> http://<FARM-SERVICE-IP>:8080
+  ./cenm context login -s -u <USER> -p <PASSWORD> http://<GATEWAY-SERVICE-IP>:8080
   ```
 
-The [FARM Service](gateway-service.md) is a gateway between the [Auth Service](auth-service.md) and front end services in CENM. It allows you to perform all network operations on the [Identity Manager Service](identity-manager.md), the [Network Map Service](network-map.md), and the [Signing Service](signing-service.md).
+The [Gateway Service](gateway-service.md) is a gateway between the [Auth Service](auth-service.md) and front end services in CENM. It allows you to perform all network operations on the [Identity Manager Service](identity-manager.md), the [Network Map Service](network-map.md), and the [Signing Service](signing-service.md).
 The IP address is dynamically allocated for each deployment and can be found with `kubectl get svc`.
 Use the following command to ensure that you are pointing at the correct namespace:
 
@@ -245,7 +245,7 @@ If the Docker container was not running, you need to restart it by reconnecting:
 
 ## Assigning permissions to users
 
-Login to web application ``http://<FARM-SERVICE-IP>:8080/admin`` using admin user and credentials.
+Login to web application ``http://<GATEWAY-SERVICE-IP>:8080/admin`` using admin user and credentials.
 The CENM network has no permissions assigned to Main Zone by default, you need to assign them manually.
 
 ### Join your network
@@ -364,7 +364,7 @@ The environment can be deleted via Helm, by deleting each deployed chart individ
 
 ```bash
 export CENM_PREFIX=cenm
-helm delete ${CENM_PREFIX}-auth ${CENM_PREFIX}-farm ${CENM_PREFIX}-idman ${CENM_PREFIX}-nmap ${CENM_PREFIX}-notary ${CENM_PREFIX}-pki ${CENM_PREFIX}-hsm ${CENM_PREFIX}-signer ${CENM_PREFIX}-zone ${CENM_PREFIX}-idman-ip ${CENM_PREFIX}-notary-ip
+helm delete ${CENM_PREFIX}-auth ${CENM_PREFIX}-gateway ${CENM_PREFIX}-idman ${CENM_PREFIX}-nmap ${CENM_PREFIX}-notary ${CENM_PREFIX}-pki ${CENM_PREFIX}-hsm ${CENM_PREFIX}-signer ${CENM_PREFIX}-zone ${CENM_PREFIX}-idman-ip ${CENM_PREFIX}-notary-ip
 ```
 
 ### Delete the whole environment without deleting IPs
@@ -373,7 +373,7 @@ If you run several ephemeral test networks in your development cycle, you might 
 
 ```bash
 export CENM_PREFIX=cenm
-helm delete ${CENM_PREFIX}-auth ${CENM_PREFIX}-farm ${CENM_PREFIX}-idman ${CENM_PREFIX}-nmap ${CENM_PREFIX}-notary ${CENM_PREFIX}-pki ${CENM_PREFIX}-hsm ${CENM_PREFIX}-signer ${CENM_PREFIX}-zone
+helm delete ${CENM_PREFIX}-auth ${CENM_PREFIX}-gateway ${CENM_PREFIX}-idman ${CENM_PREFIX}-nmap ${CENM_PREFIX}-notary ${CENM_PREFIX}-pki ${CENM_PREFIX}-hsm ${CENM_PREFIX}-signer ${CENM_PREFIX}-zone
 ```
 
 ## Deployment Customisation
@@ -429,7 +429,7 @@ There are a number of settings provided on each Helm chart, which allow easy cus
 common options. Each CENM service has its own dedicated page with more detailed documentation:
 
 * [Auth Service](deployment-kubernetes-auth.md)
-* [FARM Service](deployment-kubernetes-farm.md)
+* [Gateway Service](deployment-kubernetes-gateway.md)
 * [Identity Manager Service](deployment-kubernetes-idman.md)
 * [Network Map Service](deployment-kubernetes-nmap.md)
 * [Corda Notary](deployment-kubernetes-notary.md)
@@ -527,7 +527,7 @@ where each command creates a CENM service consisting of the following:
 * Identity Manager Service
 * Network Map Service
 * Auth Service
-* FARM Service
+* Gateway Service
 * Corda Notary
 
 They need to be run in the correct order, as shown below:
@@ -538,12 +538,12 @@ cd network-services/deployment/k8s/helm
 # These Helm charts trigger public IP allocation
 helm install idman-ip idman-ip
 helm install notary-ip notary-ip
-helm install farm-ip farm-ip
+helm install gateway-ip gateway-ip
 
 # Run these commands to display allocated public IP addresses:
 kubectl get svc --namespace cenm idman-ip --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"   # step 1
 kubectl get svc --namespace cenm notary-ip --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"  # step 2
-kubectl get svc --namespace cenm farm-ip --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"  # step 3
+kubectl get svc --namespace cenm gateway-ip --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"  # step 3
 
 # These Helm charts bootstrap CENM
 helm install cenm-auth auth --set prefix=cenm --set acceptLicense=YES
@@ -553,7 +553,7 @@ helm install cenm-signer signer --set prefix=cenm --set acceptLicense=YES
 helm install cenm-idman idman --set prefix=cenm --set acceptLicense=Y --set idmanPublicIP=[use IP from step 1]
 helm install notary notary --set prefix=cenm --set acceptLicense=YES --set notaryPublicIP=[use IP from step 2]
 helm install cenm-nmap nmap --set prefix=cenm --set acceptLicense=YES
-helm install cenm-farm farm --set prefix=cenm --set acceptLicense=YES --set idmanPublicIP=[use IP from step 3]
+helm install cenm-gateway gateway --set prefix=cenm --set acceptLicense=YES --set idmanPublicIP=[use IP from step 3]
 
 # Run these commands to display allocated public IP for Network Map Service:
 kubectl get svc --namespace cenm nmap --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"
@@ -572,7 +572,7 @@ The Docker images used for the Kubernetes deployment are listed below for refere
 | Signing           | acrcenm.azurecr.io/signer/signer   | 1.3 |
 | Zone              | acrcenm.azurecr.io/zone/zone       | 1.3 |
 | Auth              | acrcenm.azurecr.io/auth/auth       | 1.3 |
-| Farm              | acrcenm.azurecr.io/farm/farm       | 1.3 |
+| Gateway              | acrcenm.azurecr.io/gateway/gateway       | 1.3 |
 | PKI Tool          | acrcenm.azurecr.io/pkitool/pkitool | 1.3 |
 | Notary            | acrcenm.azurecr.io/notary/notary   | 1.3 |
 

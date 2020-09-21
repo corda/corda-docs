@@ -425,7 +425,7 @@ There are a number of settings provided on each Helm chart, which allow easy cus
 common options. Each CENM service has its own dedicated page with more detailed documentation:
 
 * [Auth Service](deployment-kubernetes-auth.md)
-* [FARM Service](deployment-kubernetes-farm.md)
+* [FARM Service](deployment-kubernetes-gateway.md)
 * [Identity Manager Service](deployment-kubernetes-idman.md)
 * [Network Map Service](deployment-kubernetes-nmap.md)
 * [Corda Notary](deployment-kubernetes-notary.md)
