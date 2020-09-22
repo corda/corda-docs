@@ -52,7 +52,7 @@ certificates.
 
 We can visualise the permissioning structure as follows:
 
-![certificate structure](/en/images/certificate_structure.png "certificate structure")
+{{< figure alt="certificate structure" zoom="/en/images/certificate_structure.png" >}}
 
 ## Key pair and certificate formats
 

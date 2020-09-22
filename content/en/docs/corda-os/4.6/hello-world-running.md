@@ -115,7 +115,7 @@ terminal windows in all. Give each node a moment to start - you’ll know it’s
 the message, “Welcome to the Corda interactive shell.”.
 
 
-![running node](/en/images/running_node.png "running node")
+{{< figure alt="running node" zoom="/en/images/running_node.png" >}}
 
 
 ## Interacting with the nodes

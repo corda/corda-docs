@@ -62,7 +62,7 @@ the total amount held that is important, rather than the actual units held.
 
 We can picture the hierarchy as follows:
 
-![state hierarchy](/en/images/state-hierarchy.png "state hierarchy")
+{{< figure alt="state hierarchy" zoom="/en/images/state-hierarchy.png" >}}
 
 ### LinearState
 

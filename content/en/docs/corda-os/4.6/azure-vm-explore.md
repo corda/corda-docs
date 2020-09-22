@@ -40,10 +40,10 @@ Browse to [https://portal.azure.com](https://portal.azure.com) and log in with y
 
 Click on the “Resource groups” link in the side nav in the Azure Portal and then click “Add”:
 
-![azure rg](/en/images/azure-rg.png "azure rg")
+{{< figure alt="azure rg" zoom="/en/images/azure-rg.png" >}}
 Fill in the form and click “Create”:
 
-![azure rg 2](/en/images/azure-rg-2.png "azure rg 2")
+{{< figure alt="azure rg 2" zoom="/en/images/azure-rg-2.png" >}}
 
 ### STEP 2: Launch the VM
 
@@ -51,7 +51,7 @@ At the top of the left sidenav click on the button with the green cross “Creat
 
 In this example we are going to use an Ubuntu server so select the latest Ubuntu Server option:
 
-![azure select ubuntu](/en/images/azure-select-ubuntu.png "azure select ubuntu")
+{{< figure alt="azure select ubuntu" zoom="/en/images/azure-select-ubuntu.png" >}}
 Fill in the form:
 
 
@@ -61,23 +61,23 @@ Fill in the form:
 
 Click on “OK”:
 
-![azure vm form](/en/images/azure-vm-form.png "azure vm form")
+{{< figure alt="azure vm form" zoom="/en/images/azure-vm-form.png" >}}
 Choose a size (“D4S_V3 Standard” is recommended if available) and click “Select”:
 
-![azure instance type](/en/images/azure-instance-type.png "azure instance type")
+{{< figure alt="azure instance type" zoom="/en/images/azure-instance-type.png" >}}
 Click on “Public IP address” to open the “Settings” panel
 
-![azure vm settings](/en/images/azure-vm-settings.png "azure vm settings")
+{{< figure alt="azure vm settings" zoom="/en/images/azure-vm-settings.png" >}}
 Set the IP address to “Static” under “Assignment” and click “OK”:
 
 {{< note >}}
 This is so the IP address for your node does not change frequently in the global network map.
 
 {{< /note >}}
-![azure set static ip](/en/images/azure-set-static-ip.png "azure set static ip")
+{{< figure alt="azure set static ip" zoom="/en/images/azure-set-static-ip.png" >}}
 Next toggle “Network Security Group” to advanced and click on “Network security group (firewall)”:
 
-![azure nsg](/en/images/azure-nsg.png "azure nsg")
+{{< figure alt="azure nsg" zoom="/en/images/azure-nsg.png" >}}
 Add the following inbound rules for ports 8080 (webserver), and 10002-10003 for the P2P and RPC ports used by the Corda
 node respectively:
 
@@ -93,23 +93,23 @@ The priority has to be unique number in the range 900 (highest) and 4096 (lowest
 rule has a unique priority or there will be a validation failure and error message.
 
 {{< /note >}}
-![azure nsg 2](/en/images/azure-nsg-2.png "azure nsg 2")
+{{< figure alt="azure nsg 2" zoom="/en/images/azure-nsg-2.png" >}}
 Click “OK” and “OK” again on the “Settings” panel:
 
-![azure settings ok](/en/images/azure-settings-ok.png "azure settings ok")
+{{< figure alt="azure settings ok" zoom="/en/images/azure-settings-ok.png" >}}
 Click “Create” and wait a few minutes for your instance to be provisioned and start running:
 
-![azure create vm](/en/images/azure-create-vm.png "azure create vm")
+{{< figure alt="azure create vm" zoom="/en/images/azure-create-vm.png" >}}
 
 ### STEP 3: Connect to your VM and set up the environment
 
 Once your instance is running click on the “Connect” button and copy the ssh command:
 
-![azure ssh](/en/images/azure-ssh.png "azure ssh")
+{{< figure alt="azure ssh" zoom="/en/images/azure-ssh.png" >}}
 Enter the ssh command into your terminal. At the prompt, type “yes” to continue connecting and then enter the password
 you configured earlier to log into the remote VM:
 
-![azure shell](/en/images/azure-shell.png "azure shell")
+{{< figure alt="azure shell" zoom="/en/images/azure-shell.png" >}}
 
 ### STEP 4: Download and set up your Corda node
 
@@ -127,7 +127,7 @@ You can generate as many Testnet identites as you like by clicking “Generate n
 link.
 
 {{< /note >}}
-![testnet platform](/en/images/testnet-platform.png "testnet platform")
+{{< figure alt="testnet platform" zoom="/en/images/testnet-platform.png" >}}
 In the terminal of your cloud instance, paste the command you just copied to install and run your Corda node:
 
 ```bash

@@ -34,7 +34,7 @@ Users looking for long-lasting supported networks should consider the [Corda Net
 
 The Corda Testnet is accessible via [https://marketplace.r3.com/](https://marketplace.r3.com/).
 
-[![testnet landing](../resources/testnet-landing.png "testnet landing")](https://marketplace.r3.com/network)
+[{{< figure alt="testnet landing" zoom="../resources/testnet-landing.png" >}}
 Click on “Join the Corda Testnet” to begin joining the network.
 
 This will create an account with the Testnet on-boarding application which will enable you to provision and manage multiple Corda nodes on Testnet. You will log in to this account to view and manage you Corda Testnet identity certificates.
@@ -43,7 +43,7 @@ When creating a new node you can now choose how to deploy it to the Corda Testne
 
 Select the cloud provider you wish to use for documentation on how to specifically configure Corda for that environment.
 
-![testnet platform](../resources/testnet-platform.png "testnet platform")
+{{< figure alt="testnet platform" zoom="../resources/testnet-platform.png" >}}
 Once your cloud instance is set up you can install and run your Testnet pre-provisioned Corda node by clicking on “Copy” and pasting the one time link into your remote cloud terminal.
 
 The installation script will download the Corda binaries as well as your PKI certificates, private keys and supporting files and will install and run Corda on your fresh cloud VM. Your node will register itself with the Corda Testnet when it first runs and be added to the global network map and be visible to counterparties after approximately 5 minutes.

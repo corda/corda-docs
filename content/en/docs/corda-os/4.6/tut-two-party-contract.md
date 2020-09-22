@@ -89,7 +89,7 @@ And finally, you'll want to impose constraints on who is required to sign the tr
 
 You can visualise this transaction as follows:
 
-![simple tutorial transaction 2](/en/images/simple-tutorial-transaction-2.png "simple tutorial transaction 2")
+{{< figure alt="simple tutorial transaction 2" zoom="/en/images/simple-tutorial-transaction-2.png" >}}
 
 ## Defining the IOUContract
 

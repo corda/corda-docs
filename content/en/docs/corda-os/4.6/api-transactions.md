@@ -40,7 +40,7 @@ references to actual states - allowing the transaction to be fully inspected.
 
 We can visualise the transitions between the three stages as follows:
 
-![transaction flow](/en/images/transaction-flow.png "transaction flow")
+{{< figure alt="transaction flow" zoom="/en/images/transaction-flow.png" >}}
 
 ## Transaction components
 

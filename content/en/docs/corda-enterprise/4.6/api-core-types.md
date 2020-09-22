@@ -41,11 +41,11 @@ signatures it requires.
 
 An illustration of an *“either Alice and Bob, or Charlie”* composite key:
 
-![composite key](./resources/composite-key.png "composite key")
+{{< figure alt="composite key" zoom="./resources/composite-key.png" >}}
 To allow further flexibility, each child node can have an associated custom *weight* (the default is 1). The *threshold*
 then specifies the minimum total weight of all children required. Our previous example can also be expressed as:
 
-![composite key 2](./resources/composite-key-2.png "composite key 2")
+{{< figure alt="composite key 2" zoom="./resources/composite-key-2.png" >}}
 Signature verification is performed in two stages:
 
 

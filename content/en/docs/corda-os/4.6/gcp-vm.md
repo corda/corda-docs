@@ -39,19 +39,19 @@ Google credentials.
 In the project drop down click on the plus icon to create a new
 project to house your Corda resources.
 
-![consolegcp](/en/images/consolegcp.png "consolegcp")
-![console2](/en/images/console2.png "console2")
-![newprojectgcp](/en/images/newprojectgcp.png "newprojectgcp")
+{{< figure alt="consolegcp" zoom="/en/images/consolegcp.png" >}}
+{{< figure alt="console2" zoom="/en/images/console2.png" >}}
+{{< figure alt="newprojectgcp" zoom="/en/images/newprojectgcp.png" >}}
 Enter a project name and click Create.
 
 **STEP 2: Launch the VM**
 
 In the left hand side nav click on Compute Engine.
 
-![gcpcompute](/en/images/gcpcompute.png "gcpcompute")
+{{< figure alt="gcpcompute" zoom="/en/images/gcpcompute.png" >}}
 Click on Create Instance.
 
-![consolegcpcreatevm](/en/images/consolegcpcreatevm.png "consolegcpcreatevm")
+{{< figure alt="consolegcpcreatevm" zoom="/en/images/consolegcpcreatevm.png" >}}
 Fill in the form with the desired VM specs:
 
 Recommended minimum 4vCPU with 15GB memory and 40GB Persistent disk.
@@ -61,7 +61,7 @@ Allow full API access.
 
 Dont worry about firewall settings as you will configure those later.
 
-![gcpconsolevmsettings](/en/images/gcpconsolevmsettings.png "gcpconsolevmsettings")
+{{< figure alt="gcpconsolevmsettings" zoom="/en/images/gcpconsolevmsettings.png" >}}
 Click Create and wait a few sections for your instance to provision
 and start running.
 
@@ -70,8 +70,8 @@ and start running.
 Once your instance is running click on the SSH button to launch a
 cloud SSH terminal in a new window.
 
-![gcpconsolelaunchssh](/en/images/gcpconsolelaunchssh.png "gcpconsolelaunchssh")
-![gcpshell](/en/images/gcpshell.png "gcpshell")
+{{< figure alt="gcpconsolelaunchssh" zoom="/en/images/gcpconsolelaunchssh.png" >}}
+{{< figure alt="gcpshell" zoom="/en/images/gcpshell.png" >}}
 Run the following to configure the firewall to allow Corda traffic
 
 ```bash
@@ -112,7 +112,7 @@ time installation script.
 If you have not already set up your account on Testnet then please visit [https://marketplace.r3.com/network/testnet](https://marketplace.r3.com/network/testnet) and sign up.
 
 {{< /note >}}
-![testnet platform](/en/images/testnet-platform.png "testnet platform")
+{{< figure alt="testnet platform" zoom="/en/images/testnet-platform.png" >}}
 You can generate as many Testnet identites as you like by refreshing
 this page to generate a new one time link.
 

@@ -156,7 +156,7 @@ Navigate to [https://marketplace.r3.com/network/testnet/install-node](https://ma
 Click on the `Download Corda Node` button and wait for the ZIP
 file to download:
 
-![testnet download](/en/images/testnet-download.png "testnet download")
+{{< figure alt="testnet download" zoom="/en/images/testnet-download.png" >}}
 
 Unzip the file in your Corda root directory:
 

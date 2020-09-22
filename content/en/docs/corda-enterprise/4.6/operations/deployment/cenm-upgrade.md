@@ -280,13 +280,13 @@ Once this has been done the following steps should be followed to upgrade the se
 
 For example for the Doorman service:
 
-![doorman migration](/en/images/doorman-migration.png "doorman migration")
+{{< figure alt="doorman migration" zoom="/en/images/doorman-migration.png" >}}
 
 These steps should be followed for both the Doorman and Network Map Services. This process is *non-destructive* - it
 should leave the old database untouched, only copying the data across to the new databases. Once both services have been migrated
 via the above process they will be fully functional:
 
-![separated services](/en/images/separated-services.png "separated services")
+{{< figure alt="separated services" zoom="/en/images/separated-services.png" >}}
 
 ### Other required changes
 

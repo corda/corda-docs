@@ -43,7 +43,7 @@ value of the commercial paper.
 
 This lifecycle for commercial paper is illustrated in the diagram below:
 
-![contract cp](/en/images/contract-cp.png "contract cp")
+{{< figure alt="contract cp" zoom="/en/images/contract-cp.png" >}}
 
 ## Defining the class
 
@@ -90,7 +90,7 @@ piece of issued paper.
 
 A state is a class that stores data that is checked by the contract. A commercial paper state is structured as below:
 
-![contract cp state](/en/images/contract-cp-state.png "contract cp state")
+{{< figure alt="contract cp state" zoom="/en/images/contract-cp-state.png" >}}
 {{< tabs name="tabs-2" >}}
 {{% tab name="kotlin" %}}
 ```kotlin

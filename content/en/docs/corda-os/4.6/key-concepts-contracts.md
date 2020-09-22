@@ -43,7 +43,7 @@ valid
 
 We can picture this situation as follows:
 
-![tx validation](/en/images/tx-validation.png "tx validation")
+{{< figure alt="tx validation" zoom="/en/images/tx-validation.png" >}}
 The contract code has access to the full capabilities of the language,
 including:
 

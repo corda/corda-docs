@@ -55,7 +55,7 @@ database to store its node state (e.g. its identity information).
 We can visualise this set-up as follows, with the regular Corda nodes in green, the Corda notary worker nodes in red, and the standard node
 databases and notary state database replicas in blue.
 
-![ha notary overview2](../resources/ha-notary-overview2.png "ha notary overview2")
+{{< figure alt="ha notary overview2" zoom="../resources/ha-notary-overview2.png" >}}
 Nodes requesting notarisation from a highly-available notary will connect to the notary workers in round-robin fashion.
 
 Provided there are multiple notary workers and the notary state database is configured to be highly-available, the overall notary service
@@ -70,7 +70,7 @@ depending on your throughput and latency requirements.
 {{< /note >}}
 If desired, you can choose to run each database server and its Corda notary worker on the same machine:
 
-![ha notary colocated](../resources/ha-notary-colocated.png "ha notary colocated")
+{{< figure alt="ha notary colocated" zoom="../resources/ha-notary-colocated.png" >}}
 
 ## Notary configuration
 

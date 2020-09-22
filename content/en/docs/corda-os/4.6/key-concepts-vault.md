@@ -65,7 +65,7 @@ The vault supports the management of data in both authoritative (“on-ledger”
 
 The following diagram illustrates the breakdown of the vault into sub-system components:
 
-![vault](/en/images/vault.png "vault")
+{{< figure alt="vault" zoom="/en/images/vault.png" >}}
 Note the following:
 
 

@@ -41,21 +41,21 @@ Browse to [https://console.aws.amazon.com](https://console.aws.amazon.com) and l
 
 Click on Launch a virtual machine with EC2.
 
-![aws launch](/en/images/aws-launch.png "aws launch")
+{{< figure alt="aws launch" zoom="/en/images/aws-launch.png" >}}
 In the quick start wizard scroll down and select the most recent Ubuntu machine image as the Amazon Machine Image (AMI).
 
-![aws select ubuntu](/en/images/aws_select_ubuntu.png "aws select ubuntu")
+{{< figure alt="aws select ubuntu" zoom="/en/images/aws_select_ubuntu.png" >}}
 Select the instance type (for example t2.xlarge).
 
-![aws instance type](/en/images/aws-instance-type.png "aws instance type")
+{{< figure alt="aws instance type" zoom="/en/images/aws-instance-type.png" >}}
 Configure a couple of other settings before we review and launch
 
 Under the storage tab (Step 4) increase the storage to 40GB:
 
-![aws storage](/en/images/aws-storage.png "aws storage")
+{{< figure alt="aws storage" zoom="/en/images/aws-storage.png" >}}
 Configure the security group (Step 6) to open the firewall ports which Corda uses.
 
-![aws firewall](/en/images/aws-firewall.png "aws firewall")
+{{< figure alt="aws firewall" zoom="/en/images/aws-firewall.png" >}}
 Add a firewall rule for port range 10002-10003 and allow connection from Anywhere. Add another rule for the webserver on port 8080.
 
 Click on the Review and Launch button then if everything looks ok click Launch.
@@ -66,22 +66,22 @@ You will be prompted to set up keys to securely access the VM remotely over ssh.
 These keys are just for connecting to your VM and are separate from the keys Corda will use to sign transactions. These keys will be generated as part of the download bundle.
 
 {{< /note >}}
-![aws keys](/en/images/aws-keys.png "aws keys")
+{{< figure alt="aws keys" zoom="/en/images/aws-keys.png" >}}
 Click “Launch Instances”.
 
 Click on the link to go to the Instances pages in the AWS console where after a few minutes you will be able to see your instance running.
 
-![aws instances](/en/images/aws-instances.png "aws instances")
+{{< figure alt="aws instances" zoom="/en/images/aws-instances.png" >}}
 **STEP 2: Set up static IP address**
 
 On AWS a permanent IP address is called an Elastic IP. Click on the
 “Elastic IP” link in the navigation panel on the left hand side of the console and then click on “Allocate new address”:
 
-![aws elastic](/en/images/aws-elastic.png "aws elastic")
+{{< figure alt="aws elastic" zoom="/en/images/aws-elastic.png" >}}
 Follow the form then once the address is allocated click on “Actions”
 then “Associate address”:
 
-![aws elastic actions](/en/images/aws-elastic-actions.png "aws elastic actions")
+{{< figure alt="aws elastic actions" zoom="/en/images/aws-elastic-actions.png" >}}
 Then select the instance you created for your Corda node to attach the
 IP address to.
 
@@ -89,8 +89,8 @@ IP address to.
 
 In the instances console click on “Connect” and follow the instructions to connect to your instance using ssh.
 
-![aws instances connect](/en/images/aws-instances-connect.png "aws instances connect")
-![aws connect](/en/images/aws-connect.png "aws connect")
+{{< figure alt="aws instances connect" zoom="/en/images/aws-instances-connect.png" >}}
+{{< figure alt="aws connect" zoom="/en/images/aws-connect.png" >}}
 **STEP 4: Download and set up your Corda node**
 
 Now your AWS environment is configured you can switch back to the Testnet
@@ -101,7 +101,7 @@ time installation script.
 If you have not already set up your account on Testnet then please visit [https://marketplace.r3.com/network/testnet](https://marketplace.r3.com/network/testnet) and sign up.
 
 {{< /note >}}
-![testnet platform](/en/images/testnet-platform.png "testnet platform")
+{{< figure alt="testnet platform" zoom="/en/images/testnet-platform.png" >}}
 You can generate as many Testnet identites as you like by refreshing
 this page to generate a new one time link.
 
