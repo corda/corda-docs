@@ -25,7 +25,7 @@ helm install cenm-gateway gateway --set prefix=cenm --set acceptLicense=Y
 In the example below, the default values are overwritten:
 
 ```bash
-helm install cenm-gateway gateway --set prefix=cenm --set acceptLicense=Y --set volumeSizeFarmLogs=5Gi
+helm install cenm-gateway gateway --set prefix=cenm --set acceptLicense=Y --set volumeSizeGatewayLogs=5Gi
 ```
 
 ## Configuration
@@ -36,8 +36,8 @@ helm install cenm-gateway gateway --set prefix=cenm --set acceptLicense=Y --set 
 | `gatewayPortImage.repository`        | URL to Gateway Docker image repository                      | `acrcenm.azurecr.io/auth/auth` |
 | `gatewayImage.tag`               | Docker image tag | `1.3` |
 | `gatewayImage.pullPolicy`        | Image pull policy. Ref.: https://kubernetes.io/docs/concepts/containers/images/#updating-images | `Always` |
-| `volumeSizeFarmEtc`           | Volume size for the `etc/` directory | `1Gi` |
-| `volumeSizeFarmLogs`          | Volume size for the `h2/` directory | `5Gi` |
+| `volumeSizeGatewayEtc`           | Volume size for the `etc/` directory | `1Gi` |
+| `volumeSizeGatewayLogs`          | Volume size for the `h2/` directory | `5Gi` |
 | `sleepTimeAfterError`         | Sleep time (in seconds) after an error occurred | `120` |
 | `authPort`                    | Auth Service port | `8081` |
 | `gatewayPort`                    | Gateway Service port | `8080` |

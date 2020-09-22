@@ -71,7 +71,7 @@ To set up a new network with the CLI:
 
     `./cenm context login http://10.230.41.12 -u alice.barthes -p w34rfrt45g4y65EERTR5`
 
-2. Set the Identity Manager's external admin address. This must be the address that the gateway FARM service uses to communicate with the Identity Manager:
+2. Set the Identity Manager's external admin address. This must be the address that the gateway Gateway service uses to communicate with the Identity Manager:
 
     `./cenm identity-manager config set-admin-address -a=identity-manager:5053`
 
@@ -79,7 +79,7 @@ To set up a new network with the CLI:
 
     `./cenm identity-manager config set -f config/identitymanager.conf --zone-token`
 
-4. Create a new subzone - including the admin address for Network Map. This must be the address that the gateway FARM service uses to communicate with the Network Map:
+4. Create a new subzone - including the admin address for Network Map. This must be the address that the gateway Gateway service uses to communicate with the Network Map:
 
     `./cenm zone create-subzone --config-file=config/networkmap.conf --label=Subzone --label-color="#000000" --network-map-address=networkmap:8080 --network-parameters=config/params.conf`
 
@@ -91,7 +91,7 @@ You can update the Network Map admin address using a command like this: `./cenm 
 
     `./cenm netmap config set -s 1 -f config/networkmap.conf --zone-token`
 
-6. Set the Signing Service's external admin address. This must be the address that the gateway FARM service uses to communicate with the Identity Manager:
+6. Set the Signing Service's external admin address. This must be the address that the gateway Gateway service uses to communicate with the Identity Manager:
 
     `./cenm signer config set-admin-address -a=signer:9087`
 
@@ -172,9 +172,9 @@ Network-map management features.
 
 ## Define contexts and servers
 
-Your interaction with CENM services through the CLI is managed by the Front-end Application for Remote Management (FARM) service. This service handles security checks and HTTP translation during your session, and acts as a gateway between the CLI and CENM.
+Your interaction with CENM services through the CLI is managed by the Front-end Application for Remote Management (Gateway) service. This service handles security checks and HTTP translation during your session, and acts as a gateway between the CLI and CENM.
 
-When you log in to each session, you specify the full endpoint address of the FARM service instance you are accessing, for example: `http://10.230.41.12`. You do this using the argument `<server>` in the command line. This endpoint forms the **context** for your session.
+When you log in to each session, you specify the full endpoint address of the Gateway service instance you are accessing, for example: `http://10.230.41.12`. You do this using the argument `<server>` in the command line. This endpoint forms the **context** for your session.
 
 Setting a context means that your session can last for the full session duration set in your [Auth Service](auth-service) configuration, without being interrupted by any natural time-outs in your CENM service. It also means you can switch between servers, like staging and production servers, simply by switching from one context alias to another.
 
@@ -216,7 +216,7 @@ Username for password based authentication.
 **Arguments**
 
 ``<server>``
-URL for the targeted CENM API Gateway - the FARM service.
+URL for the targeted CENM API Gateway - the Gateway service.
 
 
 ## Log in to a CENM session
@@ -243,7 +243,7 @@ Username for password based authentication.
 
 #### Arguments
 **<server>**
-Url for the targeted CENM API Gateway (FARM).
+Url for the targeted CENM API Gateway (Gateway).
 
 ### Example
 

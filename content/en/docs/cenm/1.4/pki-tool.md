@@ -525,14 +525,14 @@ keyStores = {
          file = "./key-stores/ssl-auth-key-store.jks"
          password = "password"
     }
-    "corda-ssl-farm-keys" = {
+    "corda-ssl-gateway-keys" = {
          type = LOCAL
-         file = "./key-stores/corda-ssl-farm-keys.jks"
+         file = "./key-stores/corda-ssl-gateway-keys.jks"
          password = "key-password"
     }
-    "corda-ssl-farm-private-keys" = {
+    "corda-ssl-gateway-private-keys" = {
          type = LOCAL
-         file = "./key-stores/corda-ssl-farm-private-keys.jks"
+         file = "./key-stores/corda-ssl-gateway-private-keys.jks"
          password = "key-password"
     }
     "corda-ssl-identity-manager-keys" = {
@@ -762,10 +762,10 @@ certificates = {
         subject = "CN=Test Auth SSL Certificate, OU=HQ, O=HoldCo LLC, L=New York, C=US"
         includeIn = ["corda-ssl-trust-store"]
     },
-    "cordasslfarm" = {
+    "cordasslgateway" = {
        key = {
             type = LOCAL
-            includeIn = ["corda-ssl-farm-keys"]
+            includeIn = ["corda-ssl-gateway-keys"]
             algorithm = "ECDSA_SECP256R1_SHA256"
             password = "key-password"
         }
@@ -775,13 +775,13 @@ certificates = {
         keyPurposes = [SERVER_AUTH, CLIENT_AUTH]
         validDays = 7300
         issuesCertificates = false
-        subject = "CN=Test Farm TLS Signer Certificate, OU=Corda, O=R3 HoldCo LLC, L=New York, C=US"
+        subject = "CN=Test Gateway TLS Signer Certificate, OU=Corda, O=R3 HoldCo LLC, L=New York, C=US"
         includeIn = ["corda-ssl-trust-store"]
     },
-    "cordasslfarm-private" = {
+    "cordasslgateway-private" = {
         key = {
              type = LOCAL
-             includeIn = ["corda-ssl-farm-private-keys"]
+             includeIn = ["corda-ssl-gateway-private-keys"]
              algorithm = "ECDSA_SECP256R1_SHA256"
              password = "key-password"
          }
@@ -791,7 +791,7 @@ certificates = {
          keyPurposes = [SERVER_AUTH, CLIENT_AUTH]
          validDays = 7300
          issuesCertificates = false
-         subject = "CN=Test Farm Private TLS Signer Certificate, OU=Corda, O=R3 HoldCo LLC, L=New York, C=US"
+         subject = "CN=Test Gateway Private TLS Signer Certificate, OU=Corda, O=R3 HoldCo LLC, L=New York, C=US"
          includeIn = ["corda-ssl-trust-store"]
      },
      "cordasslzone" = {

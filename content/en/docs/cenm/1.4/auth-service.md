@@ -24,9 +24,9 @@ The Auth service is the user authentication and authorization service for CENM. 
 
 Whenever you use the [User admin tool](user-admin) to create new users, groups or roles, the Auth service is updated to authenticate those users and their permissions. If you use the [CENM Command Line Interface](cenm-cli-tool), the auth service verifies your security clearance to operate on the required context of the service.
 
-When you use any front end interface for CENM, the Auth service is activated and updated via a front-end gateway, called the [FARM service](gateway-service).
+When you use any front end interface for CENM, the Auth service is activated and updated via a front-end gateway, called the [Gateway service](gateway-service).
 
-You do not need to interact directly with the Auth Service once it has been installed and configured. To protect the integrity of this secure service, there is no direct API contact with the Auth Service - all front-end communications go via the FARM service.
+You do not need to interact directly with the Auth Service once it has been installed and configured. To protect the integrity of this secure service, there is no direct API contact with the Auth Service - all front-end communications go via the Gateway service.
 
 ## Install the Auth service
 
@@ -81,10 +81,10 @@ To do this:
 
 To deploy the Auth service, you need to create a configuration file.
 
-When you create your config file, you establish its connection to your [FARM Service](farm-service). Make sure you know:
+When you create your config file, you establish its connection to your [Gateway Service](gateway-service). Make sure you know:
 
-* Your FARM service ID.
-* Your FARM service secret.
+* Your Gateway service ID.
+* Your Gateway service secret.
 
 In the sample below, you can see the initial configuration process:
 
@@ -92,7 +92,7 @@ In the sample below, you can see the initial configuration process:
 
 2. JSON Web Key configuration. Set the username, password, and location of the RSA keypair store for signing. The location must be the absolute path.
 
-3. Configure the connection to the FARM service. Add the ID, secret, and scope of services that you use when setting up the FARM service.
+3. Configure the connection to the Gateway service. Add the ID, secret, and scope of services that you use when setting up the Gateway service.
 
 4. Configure the web server.
 
@@ -118,25 +118,25 @@ jwk {
     # Key alias for the RSA keypair, default value is 'cordaauthjwk'
     keyAlias = "oauth-test-jwt"
 }
-# Client configuration, this should contain credentials and config for FARM service instances
+# Client configuration, this should contain credentials and config for Gateway service instances
 clientConfig = {
     clients = [
         {
-            # Client id, must be the same as configured for FARM
-            clientId = "farm1"
-            # Client secret, must be the same as configured for FARM
+            # Client id, must be the same as configured for Gateway
+            clientId = "gateway1"
+            # Client secret, must be the same as configured for Gateway
             clientSecret = "secret1"
-            # Available scopes for this FARM service instance, can be any of the below:
+            # Available scopes for this Gateway service instance, can be any of the below:
             #  - accounts:admin
-            #    - indicates access to user management from the FARM service
+            #    - indicates access to user management from the Gateway service
             #  - accounts:user
-            #    - indicates zone access from the FARM service
+            #    - indicates zone access from the Gateway service
             # default value is 'accounts:user'
             scopes = [
                 "accounts:admin"
             ]
             # This is a list of services that will accept the token generated through
-            # this FARM instance, possible values (it is case sensitive):
+            # this Gateway instance, possible values (it is case sensitive):
             #  - zone (zone service)
             #  - identity-manager (doorman service)
             #  - signer (signer service)
