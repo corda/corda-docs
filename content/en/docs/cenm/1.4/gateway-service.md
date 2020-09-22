@@ -22,9 +22,9 @@ The Gateway Service provides a transfer layer between front-end Corda Enterprise
 
 Once installed and configured, users can connect with the Gateway Service via the [CENM CLI Tool](cenm-cli-tool) to manage CENM service tasks. Administrators can use the Gateway Service address plus `/admin` to access the (CENM User Admin Tool)[user-admin] via a web browser.
 
-{{% alert title="Note" color="primary" %}}
+{{< warning >}}
 The Gateway Service does not need its own database - so there is no database configuration required when you are setting up.
-{{% /alert %}}
+{{< /warning >}}
 
 
 ### Install the gateway Gateway service
