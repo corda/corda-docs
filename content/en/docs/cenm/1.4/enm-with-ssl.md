@@ -9,6 +9,7 @@ menu:
     weight: 250
 tags:
 - enm
+- cenm
 - ssl
 title: Configuring the CENM services to use SSL
 ---
@@ -26,7 +27,7 @@ The following components of the CENM suite can all be configured to encrypt thei
 How to configure this is discussed in this section, whilst the flow of information between these various components
 is shown in the following diagram
 
-![enm with ssl](/en/images/enm-with-ssl.png "enm with ssl")
+![CENM with SSL](/en/images/enm-with-ssl.png "CENM with SSL")
 
 ## Recommended Key and Cert hierarchy
 
@@ -41,7 +42,7 @@ that chains back to the common root.
 
 {{< important >}}
 For the avoidance of doubt, the trust root, certificates and keys used to secure communication between
-ENM components are completely independent of those created/managed by this toolset for the management of
+CENM components are completely independent of those created/managed by this toolset for the management of
 a Corda network.
 
 

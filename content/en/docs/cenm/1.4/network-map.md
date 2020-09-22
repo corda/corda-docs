@@ -109,7 +109,7 @@ Similar to the Identity Manager the main elements that need to be configured for
 * [Network Data Signing Mechanism](#network-data-signing-mechanism)
 * [Cache Timeout](#cache-timeout)
 * [Node Certificate Revocation Checking](#node-certificate-revocation-checking)
-* [ENM Internal Server](#enm-internal-server)
+* [CENM Internal Server](#cenm-internal-server)
 * [Identity Manager & Revocation Communication](#identity-manager-revocation-communication)
 * [Restricting A Node’s Corda Version (optional)](#restricting-a-node-s-corda-version-optional)
 * [Admin RPC Interface](#admin-rpc-interface)
@@ -272,7 +272,7 @@ network map or parameter changes. It should be used in all production environmen
 checks are required.
 
 In order to retrieve the network map and parameter data, the signing service will communicate with the Network Map
-service via its [ENM internal server](#enm-internal-server). This is the only configuration option that is needed if signing is being done
+service via its [CENM internal server](#cenm-internal-server). This is the only configuration option that is needed if signing is being done
 via the external signing service.
 
 
