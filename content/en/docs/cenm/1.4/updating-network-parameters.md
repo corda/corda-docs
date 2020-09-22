@@ -89,7 +89,7 @@ the latest Network Map, they will be notified of the proposed parameter update.
 
 You must execute the commands listed below on the Signing Service - this means that
 you must run the commands from within the same secure network as the service.
-The recommended deployment includes a FARM Service dedicated to these high
+The recommended deployment includes a Gateway Service dedicated to these high
 security actions:
 
 * Fetch the unsigned network parameters - command: `cenm signer netmap netparams unsigned`.

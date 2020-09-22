@@ -2,12 +2,11 @@
 date: '2020-06-06T18:19:00Z'
 menu:
   cenm-1-4:
-    identifier: cenm-1-4-farm
+    identifier: cenm-1-4-gateway
     parent: cenm-1-4-operations
     weight: 27
 tags:
 - contexts
-- FARM
 - auth
 - login CENM
 - gateway
