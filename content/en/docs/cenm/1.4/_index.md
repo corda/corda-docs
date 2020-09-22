@@ -54,7 +54,7 @@ Operations
 
 * [Deployment with Kubernetes](deployment-kubernetes.md)
   * [CENM Auth Service Helm Chart](deployment-kubernetes-auth.md)
-  * [CENM Farm Service Helm Chart](deployment-kubernetes-farm.md)
+  * [CENM Gateway Service Helm Chart](deployment-kubernetes-gateway.md)
   * [CENM Identity Manager Helm Chart](deployment-kubernetes-idman.md)
   * [CENM Network Map Helm Chart](deployment-kubernetes-nmap.md)
   * [CENM Notary Helm Chart](deployment-kubernetes-notary.md)
