@@ -19,6 +19,14 @@ title: Release notes
 
 ## Corda 4.6 release overview
 
+Welcome to the Corda 4.6 release notes.
+
+Please read these carefully to understand what’s new in this release and how the new features and enhancements can help you.
+
+Just as prior releases have brought with them commitments to wire and API stability, Corda 4.6 comes with those same guarantees.
+
+States and apps valid in Corda 3.0 and above are usable in Corda 4.6.
+
 ## New features in Corda 4.6
 
 ### Host to Container SSH port mapping for Dockerform
@@ -28,6 +36,29 @@ When creating a Docker container, you can now map the SSH port on the host to th
 ### Hotloading of notaries list
 
 The notaries list can now be hotloaded. For more information see [Hotloading](network-map.md#hotloading) in [The network map](network-map.md).
+
+## Platform version change
+
+The platform version of Corda 4.6 has been bumped up from 7 to 8.
+
+For more information about platform versions, see [Versioning](versioning.md).
+
+## Fixed issues
+
+TO DO: add all OS fixes from this filter:
+
+project in (ENT, CORDA, EG, AG) AND fixVersion in ("CENM 1.4", "Corda 4.6", "Corda Enterprise 4.6", "Q3 2020") AND issueType = bug AND "Epic Link" is EMPTY AND fixVersion = "Corda 4.6" ORDER BY priority DESC
+
+https://r3-cev.atlassian.net/issues/?jql=project%20in%20(ENT%2C%20CORDA%2C%20EG%2C%20AG)%20AND%20fixVersion%20in%20(%22CENM%201.4%22%2C%20%22Corda%204.6%22%2C%20%22Corda%20Enterprise%204.6%22%2C%20%22Q3%202020%22)%20AND%20issueType%20%3D%20bug%20AND%20%22Epic%20Link%22%20is%20EMPTY%20AND%20fixVersion%20%3D%20%22Corda%204.6%22%20ORDER%20BY%20priority%20DESC
+
+## Known issues
+
+TO DO - add if needed, else remove section
+
+
+
+
+
 
 ## Corda 4.5 release overview
 
