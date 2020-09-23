@@ -352,6 +352,10 @@ A signing event can be assigned to multiple CorDapps. The total count for each C
 If a CorDapp has no metering events associated with it, the metering report will report 0 counts associated with that particular CorDapp.
 {{< /note >}}
 
+{{% note %}}
+The metering collection functionality Filtering by CorDapp name is case insensitive for MSSQL Server. For more information, see [Database configuration - SQL Server](node/operating/node-database-admin.md#sql-server-3)
+{{% /note %}}
+
 ## Fault tolerance
 
 As mentioned in [Output format](#output-format), collection from some nodes may fail, meaning that not all of the required data is returned. You can manually re-run the collection to collect the remaining data, and you can re-run it multiple times until all the nodes have responded (meaning the `unresponsive` list will be empty).
