@@ -45,20 +45,43 @@ For more information about platform versions, see [Versioning](versioning.md).
 
 ## Fixed issues
 
-TO DO: add all OS fixes from this filter:
-
-project in (ENT, CORDA, EG, AG) AND fixVersion in ("CENM 1.4", "Corda 4.6", "Corda Enterprise 4.6", "Q3 2020") AND issueType = bug AND "Epic Link" is EMPTY AND fixVersion = "Corda 4.6" ORDER BY priority DESC
-
-https://r3-cev.atlassian.net/issues/?jql=project%20in%20(ENT%2C%20CORDA%2C%20EG%2C%20AG)%20AND%20fixVersion%20in%20(%22CENM%201.4%22%2C%20%22Corda%204.6%22%2C%20%22Corda%20Enterprise%204.6%22%2C%20%22Q3%202020%22)%20AND%20issueType%20%3D%20bug%20AND%20%22Epic%20Link%22%20is%20EMPTY%20AND%20fixVersion%20%3D%20%22Corda%204.6%22%20ORDER%20BY%20priority%20DESC
+* We have fixed an issue where the RPC `startFlow` could not reattach to existing client id flows when flow draining mode was enabled.
+* We have fixed an issue where the Classloader failed to find the class when a CorDapp class was used.
+* We have fixed an issue where the `FlowSessionCloseTest.flow` could not access a closed session unless it was a duplicate close that was handled gracefully.
+* We have fixed an issue where the `RetryFlowMockTest - flakey test` returned flakey due to restart not setting `senderUUID` and the early end session message not hanging the receiving flow.
+* We have fixed an issue where the `ExceptionsErrorCodeFunctionsTest` failed due to timeout.
+* We have fixed an issue where the expected `error_code="5"` error was missing in logs run with custom CorDapps without the Liquibase schema.
+* We have fixed an issue with inconsistent behaviour between killed client ID flows and flows with other statuses.
+* We have fixed an issue where IVNO CorDapps that were working on Corda 4.3 were not registered when Corda was upgraded to version 4.5.
+* The path for network parameters is now configurable and the network parameters file is stored in the location specified by the node configuration.
+* We have fixed an issue where logging was detecting but not printing an issue with certificates.
+* We have fixed an issue where the end session message did not hang when a flow flakey test was received.
+* We have fixed an issue where the `MembershipAuthorisationException` message contained `StateAndRef<MembershipState>` instead of the flow name.
+* We have fixed an issue in the Demo CorDapp where the mandatory `notary` parameter was missing in the `ModifyGroupFlow` description.
+* We have fixed an issue in the Demo CorDapp where the nodes failed to start due to an incompatible database schema error.
+* We have fixed an issue where the optional `file:prefix` was stripped from the classpath element passed to the `ClassGraph()` filter function, resulting in the filter function not recognising the element.
+* We have fixed an issue where flows would start executing when the `StateMachineManager.start` database transaction had not started yet.
+* We have reverted to Jackson 2.9.7 to resolve an issue where R3 Tools could not work properly with the upgraded version.
+* We have fixed an issue where `Paths.get("")` returns `null` instead of the current working directory.
 
 ## Known issues
 
-TO DO - add if needed, else remove section
-
-
-
-
-
+* The node does not connect to the HSM on the second registration attempt if the first attempt was not successful due to HSM inaccessibility.
+* Using the local network bootstrapper takes longer than in previous versions of Corda.
+* The new operation on the `FlowRPCOps` RPC interface takes a `StateMachineID` as an argument parameter, leading to repetitive invocations of the form.
+* The Accounts workflows/contracts jars prevent 4.5 nodes from upgrading to 4.6. A fresh 4.6 node cannot be started when the `accounts-workflows-1.0.1.jar`, though this is possible if the earlier version is used: `accounts-workflows-1.0.jar`.
+* An SSL connection cannot be established between two nodes when one of the nodes does not have access to IdentityManager and, as a result, to CRL distribution points.
+* A node cannot be run with the `--dev-mode` option unless `devModeOptions.allowCompatibilityZone=true` is added to the node configuration.
+* When a valid command is run in the wrong location, a large exception occurs rather than a clear error message.
+* In HA Utilities, the `notary-registration` option does not write CSR details to the log file.
+* In the Attachment Demo, the `runSender` task uses `myLegalName` instead of `serviceLegalName` for notarisation.
+* Some samples cannot be run on Windows due to an issue with long file names.
+* The Database Manager does not work with Corda 4.6 when `dataSourceProperties` is in a separate file.
+* Business Network roles are not displayed when membership state is queried via CLI.
+* The SSH Client returns inconsistent exit codes after `gracefulShutdown` is run, indicating that an error has occurred.
+* The node rejects the incoming P2P connection from from a node with a revoked certificate, with warnings and errors, but does not block any attempts to re-establish it. This leads to a quick accumulation of warnings and errors in the node log.
+* The error text is repeated in the console when trying to register a node with the forbidden characters in the Organisation (`O`) name.
+* The `<install-shell-extensions>` sub-command of Corda node creates log files in the home folder, while all other sub-commands create log files the `logs` subfolder.
 
 ## Corda 4.5 release overview
 
