@@ -128,7 +128,7 @@ A new configuration flag has been introduced, enabling native SQL for CockroachD
 * We have fixed an issue where the Health-Survey Tool was hanging after performing all checks when Artemis was shut down during the Health Survey test.
 * There is now an informative error message if HSM is unavailable.
 * CRaSH Flow query now displays Data and Time information correctly.
-* We fixed an issue where the optional file:prefix was stripped from the classpath element passed to the `ClassGraph()` filter function, resulting in the filter function not recognising the element.
+* We fixed an issue where the optional `file:prefix` was stripped from the classpath element passed to the `ClassGraph()` filter function, resulting in the filter function not recognising the element.
 * We fixed an issue were flows would start executing when the `StateMachineManager.start` database transaction had not started yet.
 * We have reverted to Jackson 2.9.7 to resolve r3-tools breaking with the upgraded version.
 * We have fixed an issue where `Paths.get("")` returns `null` instead of the current working directory.
