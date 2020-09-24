@@ -497,6 +497,9 @@ Map of human-readable aliases (string) to CENM service location configurations. 
 services that are used within the signing processes defined in the signers map. See the
 [service location map entry example](#service-location-map-entry-example) below for the expected format.
 
+  * **timeout**
+  An optional parameter
+
 
 * **caSmrLocation**:
 *(Optional, use instead of CA related serviceLocations)* CA part of Signable Material Retriever CENM
