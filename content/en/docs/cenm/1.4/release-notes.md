@@ -16,6 +16,26 @@ title: Release notes
 
 # Release notes
 
+## CENM 1.4 release overview
+
+CENM 1.4 introduces ...
+
+While this release is backward-compatible, you should consider upgrading to this release from earlier versions of the Corda Enterprise Network Manager.
+
+Read more about improvements of this release below.
+
+### New features and enhancements
+
+#### ...
+
+
+#### Other changes
+- We have added support for PostgreSQL 11.5 (JDBC 42.2.8), as noted in [CENM Databases](database-set-up.html#supported-databases).
+
+### Fixed issues
+
+
+
 ## Release 1.3.1
 
 CENM 1.3.1 introduces fixes to known issues in CENM 1.3.
