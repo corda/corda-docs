@@ -125,7 +125,7 @@ A new configuration flag has been introduced, enabling native SQL for CockroachD
 * We have fixed an issue where the configuration file path for TLS crypto was resolved incorrectly, leading to error when registering the node.
 * The Corda Health Survey Tool now displays a warning message when network information is resolved and an HTTP redirect occurs.
 * We have fixed an issue where an error occurred on node shutdown with the message: `The configuration values provided for message cleanup are invalid`.
-* We have fixed an issue where the Health-Survey Tool was hanging after performing all checks when Artemis was shut down during the Health Survey test.
+* We have fixed an issue where the Corda Health Survey Tool was hanging after performing all checks when Artemis was shut down during the Health Survey Tool test.
 * There is now an informative error message if HSM is unavailable.
 * CRaSH Flow query now displays `Data` and `Time` information correctly.
 * We fixed an issue where the optional `file:prefix` was stripped from the classpath element passed to the `ClassGraph()` filter function, resulting in the filter function not recognising the element.
