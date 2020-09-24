@@ -103,7 +103,7 @@ A new configuration flag has been introduced, enabling native SQL for CockroachD
 
 ## Fixed issues
 
-* We have fixed an issue where the FutureX provider threw a `javax.security.auth.login.LoginException` when trying to establish connection with HSM.
+* We have fixed an issue where the FutureX provider threw a `javax.security.auth.login.LoginException` when trying to establish a connection with the HSM.
 * We have fixed an issue where a Corda node in dev mode did not start up without NMS running.
 * We have fixed an issue with failing `flows continue despite errors – net.corda.node.flows.FlowRetryTest` tests.
 * We have fixed an issue where an unexpected error with unique constraints in the `node_metering_data_pkey` occurred following upgrade from CE 4.5.1 with the data management tool.
