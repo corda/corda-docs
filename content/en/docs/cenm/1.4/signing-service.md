@@ -498,8 +498,7 @@ services that are used within the signing processes defined in the signers map. 
 [service location map entry example](#service-location-map-entry-example) below for the expected format.
 
   * **timeout**
-  An optional parameter
-
+  An optional parameter that enables you to modify the Network Map code and Signing Service timeouts in a way that allows high node count network maps to get signed and to operate at reliable performance levels. The default value is 10000 ms.
 
 * **caSmrLocation**:
 *(Optional, use instead of CA related serviceLocations)* CA part of Signable Material Retriever CENM
