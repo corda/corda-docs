@@ -24,16 +24,43 @@ While this release is backward-compatible, you should consider upgrading to this
 
 Read more about improvements of this release below.
 
+### Important note
+
+The SMR (Signable Material Retriever) Service, which was used to handle plug-ins for signing data, has been replaced by a plug-in loading logic inside the Signing Service. As a result, **all users must update existing their Signing Service configuration** when [upgrading](upgrade-notes.md) to Corda Enterprise Network Manager 1.4. See [SMR (Signable Material Retriever) Service merged into Signing Service](#smr-signable-material-retriever-service-merged-into-signing-service) below for details.
+
+
 ### New features and enhancements
 
-#### ...
+#### SMR (Signable Material Retriever) Service merged into Signing Service
 
+... add content...
+
+To update your Signing Service configuration:
+
+1. Remove the `serviceLocationAlias` property from the signing task.
+2. Remove the `serviceLocations` property and move the locations defined there to `serviceLocation` properties inside each signing task. Note that as a result Network Parameters signing tasks and Network Map signing tasks will have the same `serviceLocation` property.
+3. Remove the `caSmrLocation` property.
+4. Remove the `nonCaSmrLocation` property.
+5. Configure the `pluginClass` and `pluginJar` properties inside each signing task to use the following structure:
+  ```
+  plugin {
+    pluginClass =
+    pluginJar   
+  }
+  ```
+
+See the [Signing Service](signing-service.md) documentation for more information.
 
 #### Other changes
-- We have added support for PostgreSQL 11.5 (JDBC 42.2.8), as noted in [CENM Databases](database-set-up.md#supported-databases) and [CENM support matrix](cenm-support-matrix.md#cenm-databases).
+* We have added support for PostgreSQL 11.5 (JDBC 42.2.8), as noted in [CENM Databases](database-set-up.md#supported-databases) and [CENM support matrix](cenm-support-matrix.md#cenm-databases).
 
 ### Fixed issues
 
+* We have fixed an issue where...
+
+### Known issues
+
+* Cloud deployment of CENM 1.4 on Azure or AWS will not work on the same cluster if CENM 1.2 or 1.3 is already running on that cluster (and vice versa). This is due to a conflict in the naming of some Kubernetes components used in both deployments, which currently prevents versions 1.2/1.3 and 1.4 from running on the same cluster.
 
 
 ## Release 1.3.1
