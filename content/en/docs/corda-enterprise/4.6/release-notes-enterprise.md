@@ -118,12 +118,12 @@ A new configuration flag has been introduced, enabling native SQL for CockroachD
 * We have fixed an issue with inconsistent behaviour between killed client ID flows and flows with other statuses.
 * We have fixed an issue where restarting the Corda node without the `--pause-all-flows` flag would cause the node to remain in flow draining mode, pausing flow processing until the mode was manually disabled.
 * We have fixed an issue where it was not possible to register multiple notaries configured to use TLS keys in one HSM.
-* We have fixed an issue where HA Utilities did not log information about the used `tlsCryptoServiceConfig` configuration.
+* We have fixed an issue where the HA Utilities did not log information about the used `tlsCryptoServiceConfig` configuration.
 * We have fixed an issue where months and years were not supported values in `rpcAuditDataRetentionPeriod`.
 * We have fixed an issue where a node failed to shut down when the `senderRetentionPeriodInDays` was set to a negative integer.
 * We have fixed an issue where IVNO CorDapps that were working on Corda 4.3 were not registered when Corda was upgraded to version 4.5.
 * We have fixed an issue where the configuration file path for TLS crypto was resolved incorrectly, leading to an error when registering the node.
-* The Corda Health Survey now displays a warning message when network information is resolved and an HTTP redirect occurs.
+* The Corda Health Survey Tool now displays a warning message when network information is resolved and an HTTP redirect occurs.
 * We have fixed an issue where an error occurred on node shutdown with the message: `The configuration values provided for message cleanup are invalid`.
 * We have fixed an issue where the Corda Health Survey Tool was hanging after performing all checks when Artemis was shut down during the Health Survey Tool test.
 * There is now an informative error message if HSM is unavailable.
