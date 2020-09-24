@@ -109,7 +109,7 @@ A new configuration flag has been introduced, enabling native SQL for CockroachD
 * We have fixed an issue where an unexpected error with unique constraints in the `node_metering_data_pkey` occurred following upgrade from CE 4.5.1 with the data management tool.
 * We have fixed an issue where the RPC `startFlow` could not reattach to existing client id flows when flow draining mode was enabled.
 * We have fixed an issue where the Health Survey Tool could not verify the connection to the node's Artemis broker.
-* We have fixed an issue where the `FlowSessionCloseTest.flow` could not access a closed session unless it was a duplicate close which is handled gracefully.
+* We have fixed an issue where the `FlowSessionCloseTest.flow` could not access a closed session unless it was a duplicate close that was handled gracefully.
 * We have fixed an issue where the `RetryFlowMockTest - flakey test` returned flakey due to restart not setting `senderUUID` and the early end session message not hanging the receiving flow.
 * We have fixed an issue where `--allow-hibernate-to-manage-app-schema` could not manage app schemas when running a proper node.
 * We have fixed an issue where Corda did not write the error message for a start up error into the log file.
