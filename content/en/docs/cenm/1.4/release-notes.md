@@ -63,11 +63,41 @@ See the [Signing Service](signing-service.md) documentation for more information
 
 ### Fixed issues
 
-* We have fixed an issue where...
+* We have fixed an issue where the Auth service could not start during database schema initialisation for PostgreSQL.
+* A `non-ca-plugin.jar` has been added to `signing-service-plugins` in Artifactory.
+* We have fixed an issue where the Signer Service failed to start up following setup without SMR, producing a `serviceLocations` config error.
+* We have fixed an issue where PKI generation was unsuccessful due to files `azure-keyvault-with-deps.jar` and `out.pkcs12` not being copied to the `pki-pod`.
+* We have fixed an issue where HSM passwords were not hidden in service logs.
+* We have fixed an issue where the Zone Service removed the `mode` field from the Signer's config with Utimaco and then failed to return this field to the Angel service.
+* Commands for Doorman and Network Map that previously returned no information will now indicate when no data is available.
+* We have fixed an issue where FARM Service logs were not available in the `logs-farm` container.
+* We have fixed an issue where submitting a CRR request with CENM CLI failed with the unexpected error `method parameters invalid`.
+* The Signing Service now prompts a specific user to login in while all are being authenticated.
+* The `context current` command now shows the current active user and the current URL.
 
 ### Known issues
 
 * Cloud deployment of CENM 1.4 on Azure or AWS will not work on the same cluster if CENM 1.2 or 1.3 is already running on that cluster (and vice versa). This is due to a conflict in the naming of some Kubernetes components used in both deployments, which currently prevents versions 1.2/1.3 and 1.4 from running on the same cluster.
+* The CLI request status command does not work for completed requests.
+* When there are incorrect `signer-ca` settings or a `ca-plugin` has stopped, an exception appears instead of a description of the issue.
+* The gateway service error `Invalid character found in method name. HTTP method names must be tokens` may occur after successfully deploying CENM on Kubernetes, registering new nodes, and performing flows successfully. However, there is no side effect to this error and the user is able to connect to CLI and execute CLI commands.
+* There are currently two inconsistencies in service console error codes: `config-parse-error` does not display help while `config-file-not-readable` does; `config-parse-error` does not color the error code red while `config-file-not-readable` does.
+* Various CENM services are inconsistently handling and writing new error codes to the logs. The Signer Service, Identity Manager Service, and Network Map Service write error codes to the `DUMP` log. The Auth Service and Gateway Service write error codes to both the `OPS` and `DUMP` logs.
+* The `config-substitution-error` code is not triggered when it should be. The Signer's Angel service displays error code `config-file-doesnt-exist` in the `DUMP` log and the Zone service throws an exception in the `OPS` and `DUMP` logs.
+* The `config-parsing-and-validation-error` code cannot be triggered and appears as `config-parse-error`.
+* The Auth and Gateway Services provide display two error messages when their config does not exist. The correct error for the Auth Service is: `ERROR: Config file does not exist.` The correct error for the Gateway Service is: `ERROR: The file does not exist.`
+* Network Map Service updates get stuck after the registration of about 2,500 nodes.
+* The `smr` command in the CLI tool is only used in CENM version 1.3. Its usage in later versions needs to be clarified.
+* The Admin-RPC client incorrectly throws an `RpcServerException` with a `GENERAL_ERROR` code and null message. It should throw an `RpcServerException` with a `SIGNER_SIGNABLE_MATERIAL_SOURCE_UNREACHABLE` error code.
+* On execution of `submitCertificateRevocationRequestWithLegalName` when the Identity Manager Service config does not have a `REVOCATION` workflow, the Client does not throw exceptions as expected and returns empty responses. Two `RpcServerException`s with `IDENTITY_MANAGER_INVALID_REVOCATION_REASON` and `IDENTITY_MANAGER_CERTIFICATE_NOT_FOUND` codes or an exception noting that the `REVOCATION` workflow is not set up should be thrown.
+*  The `config-file-doesnt-exist` error code does not appear when the Signing Service is started with a non-existing configuration file. No error code or link to relevant documentation appears in the console or logs.
+* When creating a user in the CENM User Admin Tool, there is a typo in the "Role Name" notification. The notification should read: "Role name field should not contain empty spaces!"
+* When several CRR requests are submitted and the `plugin-ca`/`signer-ca` is used, the following should occur: the CRL with CRR signed, records in the `workflow_crr` table are updated, and the certificate statuses are updated from `VALID` to `REVOKED`. Currently the `signer-ca` shows revoked node details, the records in the `workflow_crr` table are `Pending`, and certificates are `VALID` instead of `REVOKED`.
+* There is an inconsistency in how config validation handles an incorrect `trustStore` location. For some parameters, a service will not start. For others, a service will try to start then fail.
+* The CLI tool is throwing Java `DUMP` exceptions such as `java.io.FileNotFoundException` for issues including adding the wrong file name or having a space in the path of a file. This should produce an error code, not throw an exception.
+* Information on the running version of CENM components is missing from the logs.
+* The app version is not displayed when running Helm Charts.
+* When a Signer is started with an incomplete/erroneous config, a stack trace occurs. This should be handled as an exception.
 
 
 ## Release 1.3.1
