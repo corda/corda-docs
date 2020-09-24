@@ -118,7 +118,7 @@ A new configuration flag has been introduced, enabling native SQL for CockroachD
 * We have fixed an issue with inconsistent behaviour between killed client ID flows and flows with other statuses.
 * We have fixed an issue where restarting the Corda node without the `--pause-all-flows` flag would cause the node to remain in flow draining mode, pausing flow processing until the mode was manually disabled.
 * We have fixed an issue where it was not possible to register multiple notaries configured to use tls keys in one HSM.
-* We have fixed an issue where HA-Utilities did not log information about the used `tlsCryptoServiceConfig` configuration.
+* We have fixed an issue where the HA Utilities did not log information about the used `tlsCryptoServiceConfig` configuration.
 * We have fixed an issue where months and years were not supported values in `rpcAuditDataRetentionPeriod`.
 * We have fixed an issue where a node failed to shut down when the `senderRetentionPeriodInDays` was set to a negative integer.
 * We have fixed an issue where IVNO CorDapps that were working on Corda 4.3 were not being registered when Corda was upgraded to version 4.5.
