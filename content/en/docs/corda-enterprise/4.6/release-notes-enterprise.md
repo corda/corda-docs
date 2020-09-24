@@ -109,16 +109,40 @@ For more information about platform versions, see [Versioning](cordapps/versioni
 
 ## Fixed issues
 
-### Important fixed issues
+* We have fixed an issue where the FutureX provider threw a `javax.security.auth.login.LoginException` when trying to establish a connection with the HSM.
+* We have fixed an issue where a Corda node in dev mode did not start up without the Network Map Service running.
+* We have fixed an issue with failing `flows continue despite errors – net.corda.node.flows.FlowRetryTest` tests.
+* We have fixed an issue where an unexpected error with unique constraints in the `node_metering_data_pkey` occurred following an upgrade from Corda Enterprise 4.5.1 with the Database Management Tool.
+* We have fixed an issue where the RPC `startFlow` could not reattach to existing client id flows when flow draining mode was enabled.
+* We have fixed an issue where the Health Survey Tool could not verify the connection to the node's Artemis broker.
+* We have fixed an issue where the `FlowSessionCloseTest.flow` could not access a closed session unless it was a duplicate close that was handled gracefully.
+* We have fixed an issue where the `RetryFlowMockTest - flakey test` returned flakey due to restart not setting `senderUUID` and the early end session message not hanging the receiving flow.
+* We have fixed an issue where `--allow-hibernate-to-manage-app-schema` could not manage app schemas when running a node.
+* We have fixed an issue where Corda did not write the error message for a start-up error into the log file.
+* We have fixed an issue where the expected `error_code="5"` error was missing in logs run with custom CorDapps without the Liquibase schema.
+* We have fixed an issue where a flow could fail with a null error and stack trace if the counterparty was busy.
+* We have fixed an issue with inconsistent behaviour between killed client ID flows and flows with other statuses.
+* We have fixed an issue where restarting the Corda node without the `--pause-all-flows` flag would cause the node to remain in flow draining mode, pausing flow processing until the mode was manually disabled.
+* We have fixed an issue where it was not possible to register multiple notaries configured to use TLS keys in one HSM.
+* We have fixed an issue where the HA Utilities did not log information about the used `tlsCryptoServiceConfig` configuration.
+* We have fixed an issue where months and years were not supported values in `rpcAuditDataRetentionPeriod`.
+* We have fixed an issue where a node failed to shut down when the `senderRetentionPeriodInDays` was set to a negative integer.
+* We have fixed an issue where IVNO CorDapps that were working on Corda 4.3 were not registered when Corda was upgraded to version 4.5.
+* We have fixed an issue where the configuration file path for TLS crypto was resolved incorrectly, leading to an error when registering the node.
+* The Corda Health Survey Tool now displays a warning message when network information is resolved and an HTTP redirect occurs.
+* We have fixed an issue where an error occurred on node shutdown with the message: `The configuration values provided for message cleanup are invalid`.
+* We have fixed an issue where the Corda Health Survey Tool was hanging after performing all checks when Artemis was shut down during the Health Survey Tool test.
+* There is now an informative error message if HSM is unavailable.
+* CRaSH Flow query now displays `Data` and `Time` information correctly.
+* We fixed an issue where the optional `file:prefix` was stripped from the classpath element passed to the `ClassGraph()` filter function, resulting in the filter function not recognising the element.
+* We fixed an issue were flows would start executing when the `StateMachineManager.start` database transaction had not started yet.
+* We have reverted to Jackson 2.9.7 to resolve an issue where R3 Tools could not work properly with the upgraded version.
+* We have fixed an issue where `Paths.get("")` returns `null` instead of the current working directory.
+* We have fixed an issue where the sample web app for IRS demo could not be run due to the following error: `no main manifest attribute, in web-4.6-RC05-thin.jar`.
+* A warning now appears after sleep task execution because the next maintenance event was not triggered due to a long execution of the current event.
+* A previously unhandled exception when the password for an RPC user was wrong is now handled correctly.
+* A previously unhandled exception with problems accessing DB is now treated as a `HikariPool.PoolInitializationException`.
 
-### Minor fixed issues
-
-* We have fixed an issue where
-* We have fixed an issue where
-* We have fixed an issue where
-* We have fixed an issue where
-* We have fixed an issue where
-* We have fixed an issue where
 
 ###  Changelog/other fixed issues
 
