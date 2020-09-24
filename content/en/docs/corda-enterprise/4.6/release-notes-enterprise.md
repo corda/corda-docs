@@ -107,7 +107,7 @@ A new configuration flag has been introduced, enabling native SQL for CockroachD
 * We have fixed an issue where a Corda node in dev mode did not start up without NMS running.
 * We have fixed an issue with failing `flows continue despite errors – net.corda.node.flows.FlowRetryTest` tests.
 * We have fixed an issue where an unexpected error with unique constraints in the `node_metering_data_pkey` occurred following upgrade from CE 4.5.1 with the data management tool.
-* We have fixed an issue where the RPC `startFlow` could not reattach to existing client id flows when flows draining mode was enabled.
+* We have fixed an issue where the RPC `startFlow` could not reattach to existing client id flows when flow draining mode was enabled.
 * We have fixed an issue where the Health-Survey tool could not verify connection to the node Artemis broker.
 * We have fixed an issue where the `FlowSessionCloseTest.flow` could not access a closed session unless it was a duplicate close which is handled gracefully.
 * We have fixed an issue where the `RetryFlowMockTest - flakey test` returned flakey due to restart not setting `senderUUID` and the early end session message not hanging the receiving flow.
