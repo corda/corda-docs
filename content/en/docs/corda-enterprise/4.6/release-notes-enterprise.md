@@ -123,7 +123,7 @@ A new configuration flag has been introduced, enabling native SQL for CockroachD
 * We have fixed an issue where a node failed to shut down when the `senderRetentionPeriodInDays` was set to a negative integer.
 * We have fixed an issue where IVNO CorDapps that were working on Corda 4.3 were not being registered when Corda was upgraded to version 4.5.
 * We have fixed an issue where the configuration file path for TLS crypto was resolved incorrectly, leading to error when registering the node.
-* The Corda Health Survey now displays a warning message when network information is being resolved and HTTP redirect occurs.
+* The Corda Health Survey Tool now displays a warning message when network information is resolved and an HTTP redirect occurs.
 * We have fixed an issue where an error occurred on node shutdown with the message: `The configuration values provided for message cleanup are invalid`.
 * We have fixed an issue where the Health-Survey Tool was hanging after performing all checks when Artemis was shut down during the Health Survey test.
 * There is now an informative error message if HSM is unavailable.
