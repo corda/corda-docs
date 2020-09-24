@@ -31,6 +31,13 @@ The SMR (Signable Material Retriever) Service, which was used to handle plug-ins
 
 ### New features and enhancements
 
+#### CENM error condition knowledge base
+
+In CENM 1.4, we have adapted to CENM the internal Corda error handling logic introduced in [Corda 4.5](../../corda-os/4.5/error-codes.md) and [Corda Enterprise 4.5](../../corda-enterprise/4.5/node/operating/error-codes.md) for Corda nodes.
+
+As a result, CENM exceptions are now treated as CENM error codes and an error code is generated for each exception. The initial set of error codes, related to configuration parsing/validation errors, are described in the new [CENM error codes documentation page](cenm-error-codes.md). This is the start of a growing CENM error condition knowledge base, which will expand in future releases.
+
+
 #### SMR (Signable Material Retriever) Service merged into Signing Service
 
 ... add content...
