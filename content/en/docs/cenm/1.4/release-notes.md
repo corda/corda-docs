@@ -52,7 +52,7 @@ To update your Signing Service configuration:
 See the [Signing Service](signing-service.md) documentation for more information.
 
 #### Other changes
-* We have added support for PostgreSQL 11.5 (JDBC 42.2.8), as noted in [CENM Databases](database-set-up.md#supported-databases) and [CENM support matrix](cenm-support-matrix.md#cenm-databases).
+* We have added support for PostgreSQL 10.10 and 11.5 (JDBC 42.2.8), as noted in [CENM Databases](database-set-up.md#supported-databases) and [CENM support matrix](cenm-support-matrix.md#cenm-databases).
 
 ### Fixed issues
 
