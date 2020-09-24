@@ -30,7 +30,7 @@ Read more about improvements of this release below.
 
 
 #### Other changes
-- We have added support for PostgreSQL 11.5 (JDBC 42.2.8), as noted in [CENM Databases](database-set-up.html#supported-databases).
+- We have added support for PostgreSQL 11.5 (JDBC 42.2.8), as noted in [CENM Databases](database-set-up.md#supported-databases) and [CENM support matrix](cenm-support-matrix.md#cenm-databases).
 
 ### Fixed issues
 
