@@ -69,17 +69,16 @@ For more information about platform versions, see [Versioning](versioning.md).
 * The node does not connect to the HSM on the second registration attempt if the first attempt was not successful due to HSM inaccessibility.
 * Using the local network bootstrapper takes longer than in previous versions of Corda.
 * The new operation on the `FlowRPCOps` RPC interface takes a `StateMachineID` as an argument parameter, leading to repetitive invocations of the form.
-* The Accounts workflows/contracts jars prevent 4.5 nodes from upgrading to 4.6. A fresh 4.6 node cannot be started when the `accounts-workflows-1.0.1.jar`, though this is possible if the earlier version is used: `accounts-workflows-1.0.jar`.
-* An SSL connection cannot be established between two nodes when one of the nodes does not have access to IdentityManager and, as a result, to CRL distribution points.
+* An SSL connection cannot be established between two nodes when one of the nodes does not have access to the Identity Manager Service and, as a result, to CRL distribution points.
 * A node cannot be run with the `--dev-mode` option unless `devModeOptions.allowCompatibilityZone=true` is added to the node configuration.
 * When a valid command is run in the wrong location, a large exception occurs rather than a clear error message.
 * In HA Utilities, the `notary-registration` option does not write CSR details to the log file.
 * In the Attachment Demo, the `runSender` task uses `myLegalName` instead of `serviceLegalName` for notarisation.
 * Some samples cannot be run on Windows due to an issue with long file names.
-* The Database Manager does not work with Corda 4.6 when `dataSourceProperties` is in a separate file.
+* The Database Management Tool does not work with Corda 4.6 when `dataSourceProperties` is in a separate file.
 * Business Network roles are not displayed when membership state is queried via CLI.
 * The SSH Client returns inconsistent exit codes after `gracefulShutdown` is run, indicating that an error has occurred.
-* The node rejects the incoming P2P connection from from a node with a revoked certificate, with warnings and errors, but does not block any attempts to re-establish it. This leads to a quick accumulation of warnings and errors in the node log.
+* The node rejects the incoming P2P connection from a node with a revoked certificate, with warnings and errors, but does not block any attempts to re-establish it. This leads to a quick accumulation of warnings and errors in the node log.
 * The error text is repeated in the console when trying to register a node with the forbidden characters in the Organisation (`O`) name.
 * The `<install-shell-extensions>` sub-command of Corda node creates log files in the home folder, while all other sub-commands create log files the `logs` subfolder.
 
