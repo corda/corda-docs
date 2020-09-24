@@ -101,6 +101,12 @@ When registering a notary, the new field `notary.serviceLegalName` must be defin
 
 A new configuration flag has been introduced, enabling native SQL for CockroachDB with multi-row insert statements. See [Node configuration reference](node/setup/corda-configuration-fields.md)
 
+## Platform version change
+
+The platform version of Corda 4.6 has been bumped up from 7 to 8.
+
+For more information about platform versions, see [Versioning](cordapps/versioning.md).
+
 ## Fixed issues
 
 ### Important fixed issues
