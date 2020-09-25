@@ -521,7 +521,7 @@ services that are used within the signing processes defined in the signers map. 
   }
   ```
 
-  {{< note >}}The `timeout` value uses a new column in the [Zone Service](zone-service.md)'s database tables `socket_config` and `signer_config` called `timeout`. This value can remain `null`, in which case the default 10 seconds timeout (`timeout = 10000`) will be used wherever applicable. Please note that currently, due to a known issue with `serviceLocations`, when the `timeout` parameter is passed to the Zone Service via the Signing Services `serviceLocations` configuration block, only the first `serviceLocations` location's `timeout` value will be taken into account and used for all other service locations.{{< /note >}}
+  {{< note >}}The `timeout` parameter's value is stored a new column in the [Zone Service](zone-service.md)'s database tables `socket_config` and `signer_config` called `timeout`. This value can remain `null`, in which case the default 10 seconds timeout (`timeout = 10000`) will be used wherever applicable. Please note that currently, due to a known issue with `serviceLocations`, when the `timeout` parameter is passed to the Zone Service via the Signing Service's `serviceLocations` configuration block, only the `timeout` value of the first `serviceLocations` location will be taken into account and used for all other service locations.{{< /note >}}
 
 * **caSmrLocation**:
 *(Optional, use instead of CA related serviceLocations)* CA part of Signable Material Retriever CENM

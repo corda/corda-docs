@@ -175,3 +175,5 @@ Angel Services regularly poll the network's Zone Service for jobs.
 The Zone Service maintains its database and decides if a configuration update or a lifecycle event is needed for the underlying Angel Service. If needed, it sends the relevant response.
 
 If a Flag Day is triggered, the Zone Service sends the required step (initiate, start, or cancel Flag Day) to the Angel Service that manages the Network Map. The Angel Service always reports the status of the current action back to the Zone Service.
+
+## 
