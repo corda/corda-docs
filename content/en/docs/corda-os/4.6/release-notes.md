@@ -37,6 +37,12 @@ When creating a Docker container, you can now map the SSH port on the host to th
 
 The notaries list can now be hotloaded. For more information see [Hotloading](network-map.md#hotloading) in [The network map](network-map.md).
 
+### Business Network membership extension
+
+The [Business Network Membership](business-network-membership) extension for creating and managing business networks allows a you (a node operator) to define and create a logical network based on a set of common CorDapps as well as a shared business context. Corda nodes outside of your Business Network are not aware of its members.
+
+With this extension, you can use a set of workflows to add members to the network, remove members, and manage their permissions.
+
 ## Platform version change
 
 The platform version of Corda 4.6 has been bumped up from 7 to 8.
