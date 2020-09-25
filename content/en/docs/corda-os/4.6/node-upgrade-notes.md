@@ -13,11 +13,11 @@ tags:
 - node
 - upgrade
 - notes
-title: Upgrading your node to Corda 4
+title: Upgrading your node to Corda 4.6
 ---
 
 
-# Upgrading your node to Corda 4
+# Upgrading your node to Corda 4.6
 
 Corda releases strive to be backwards compatible, so upgrading a node is fairly straightforward and should not require changes to
 applications. It consists of the following steps:
@@ -67,7 +67,7 @@ for further information.
 
 ## Step 4. Replace `corda.jar` with the new version
 
-Download the latest version of Corda from [our Artifactory site]<https://software.r3.com/artifactory/webapp/#/artifacts/browse/simple/General/corda/net/corda/corda-node).>
+Download the latest version of Corda from [our Artifactory site](https://software.r3.com/artifactory/webapp/#/artifacts/browse/simple/General/corda/net/corda/corda-node).
 Make sure it’s available on your path, and that you’ve read the [Release notes](release-notes.md), in particular to discover what version of Java this
 node requires.
 
@@ -76,10 +76,22 @@ Corda 4 requires Java 8u171 or any higher Java 8 patchlevel. Java 9+ is not curr
 
 {{< /important >}}
 
-## Step 5. Start up the node
+## Step 5. Start the node with `run-migration-scripts` sub-command
 
-Start the node in the usual manner you have selected. The node will perform any automatic data migrations required, which may take some
-time. If the migration process is interrupted it can be continued simply by starting the node again, without harm.
+{{< note >}} This step is only required when upgrading to Corda Enterpise 4.6. {{< /note >}}
+
+Start the node with the `run-migration-scripts` sub-command with `--core-schemas` and `--app-schemas`.
+
+```bash
+java -jar corda.jar run-migration-scripts --core-schemas --app-schemas
+```
+
+The node will perform any automatic data migrations required, which may take some
+time. If the migration process is interrupted it can be continued simply by starting the node again, without harm. The node will stop automatically when migration is complete.
+
+## Step 6. Start the node in the normal way.
+
+Start the node in the normal way.
 
 ## Step 6. Undrain the node
 
