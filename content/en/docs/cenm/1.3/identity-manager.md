@@ -24,6 +24,9 @@ The Identity Manager Service acts as the gatekeeper to the network. It is formed
 * **Issuance**: Responsible for issuing certificates to new nodes wanting to join the network.
 * **Revocation**: *(Optional)* Responsible for handling certificate revocation requests as well as hosting the CRL endpoints that are used by participants to check a certificate’s revocation status.
 
+{{< warning >}}
+**The Identity Manager Service cannot be redirected. Only HTTP OK (response code 200) is supported - any other kind of response codes, including HTTP redirects (for example, response code 301), are NOT supported.**
+{{< /warning >}}
 
 ## Running The Identity Manager Service
 
@@ -321,7 +324,7 @@ external signing service.
 
 #### Issuance Internal Interface
 
-Similarly to the other Enterprise Network Manager (ENM) services, the Identity Manager is designed to be able to communicate between other services
+Similarly to the other Corda Enterprise Network Manager (CENM) services, the Identity Manager is designed to be able to communicate between other services
 such as the Network Map and Signing services. Both the Issuance and, optionally, the Revocation workflows have their own
 internal listening socket interface that is created on start-up which can receive and respond to messages from other CENM services.
 For example, the Revocation workflow’s CENM listener can respond to messages from the Network Map regarding certificate

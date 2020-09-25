@@ -122,7 +122,7 @@ It is needed as this URL is encoded in certificates issued by the Identity Manag
   *(Optional - defaults to `false`)* A boolean parameter that determines whether Certificate Signing Request (CSR) should be rejected for all nodes running an outdated version of Corda that does not support the new PKI structure (arbitrary length certificate chains).
 * **“revocation workflow”**:
   * **crlCacheTimeout**:
-  The number  of times the Revocation Workflow Processor needs to synchronise Certificate Revocation Requests (CRR) statuses, as well as the duration after the CRL cache in Revocation Web Service is cleared.
+  The interval after which the Revocation Workflow Processor needs to synchronise Certificate Revocation Requests (CRR) statuses, as well as the duration after the CRL cache in Revocation Web Service is cleared.
   * **crlFiles**:
 A list of CRLs hosted by the Identity Manager Service, in addition to the CRLs hosted by node operators. This allows the Identity Manager Service to host the CRLs for node operators that will not host their own CRL infrastructure, at the cost of not being able to revoke TLS certificates issued by the node.
 * **adminListener**:
@@ -161,3 +161,7 @@ If the `adminListener` property is present in the configuration, this means that
 
 To view the latest changes to the obfuscated configuration files,
 see [Obfuscation configuration file changes](obfuscated-config-file-changes.md).
+
+## Redirection forbidden
+
+The Identity Manager cannot be redirected. Only HTTP OK (response code 200) is supported - any other kind of response codes, including HTTP redirects (for example, response code 301), are NOT supported.
