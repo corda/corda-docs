@@ -164,7 +164,7 @@ For more information about platform versions, see [Versioning](cordapps/versioni
 * The new operation on the `FlowRPCOps` RPC interface takes a `StateMachineID` as an argument parameter, leading to repetitive invocations of the form.
 * An SSL connection cannot be established between two nodes when one of the nodes does not have access to the Identity Manager Service and, as a result, to CRL distribution points.
 * A node cannot be run with the `--dev-mode` option unless `devModeOptions.allowCompatibilityZone=true` is added to the node configuration.
-* If a notary registration fails when using HA Utilities, a dummy notary keystore file is created. If users are unaware that this keystore file has been crated, it cases issues when they attempt to register the notary again.
+* If a notary registration fails when using HA Utilities, a dummy notary keystore file is created. If users are unaware that this keystore file has been created, it causes issues when they attempt to register the notary again.
 * When a valid command is run in the wrong location, an exception occurs rather than a clear error message.
 * In HA Utilities, the notary-registration option does not write CSR details to the log file.
 * In the Attachment Demo, the `runSender` task uses `myLegalName` instead of `serviceLegalName` for notarisation.
