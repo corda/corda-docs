@@ -414,7 +414,7 @@ floatOuterConfig {
 * A supported Java distribution (see [Getting set up for CorDapp development](getting-set-up.md))
 * Corda Enterprise JAR
 * Corda Firewall JAR
-* Zookeeper v3.5.4-beta
+* Zookeeper v3.6.1
 * Optional: SOCKS Proxy
 
 Finally, we show a full HA solution as recommended for production. This does require adding an external ZooKeeper
@@ -550,7 +550,7 @@ More specifically, in order to ensure optimal performance it is required:
 * Corda Enterprise JAR
 * Corda Firewall JAR
 * Apache Artemis v2.6.2 or RedHat amq broker v7.2.2
-* Optional: Zookeeper v3.5.4-beta if using Bridge cluster
+* Optional: Zookeeper v3.6.1 if using Bridge cluster
 
 It is possible to allow two or more Corda nodes (HA and/or non-HA) handle outgoing and incoming P2P communication through a shared bridge. This is possible by configuring the nodes to use
 an external Artemis messaging broker which can be easily configured using the ha-tool. For more information, please see HA Utilities. While this example is the simplest deployment
@@ -702,12 +702,8 @@ The ZooKeeper instance is also used for signals failover when the active bridge 
 
 ZooKeeper can be deployed in single-server or multi-server setup. A clustered (multi-Server) setup is recommended for production use, for added fault tolerance and reliability.
 
-Detailed setup instructions can be found in [Apache ZooKeeper documentation](https://zookeeper.apache.org/doc/r3.5.4-beta/zookeeperAdmin.html#sc_zkMulitServerSetup).
+Detailed setup instructions can be found in [Apache ZooKeeper documentation](https://zookeeper.apache.org/doc/r3.6.1/zookeeperAdmin.html#sc_zkMulitServerSetup).
 
-{{< note >}}
-Only Apache ZooKeeper version 3.5.4-beta is compatible due to Apache Curator v4.2.0 dependencies.
-
-{{< /note >}}
 
 ### Sharing ZooKeeper
 
