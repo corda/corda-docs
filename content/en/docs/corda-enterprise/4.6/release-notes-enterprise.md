@@ -164,7 +164,6 @@ For more information about platform versions, see [Versioning](cordapps/versioni
 * An SSL connection cannot be established between two nodes when one of the nodes does not have access to the Identity Manager Service and, as a result, to CRL distribution points.
 * A node cannot be run with the `--dev-mode` option unless `devModeOptions.allowCompatibilityZone=true` is added to the node configuration.
 * Corda throws an exception instead of producing a clear error message when a log cannot be created.
-* When a valid command is run in the wrong location, an exception occurs rather than a clear error message.
 * In HA Utilities, the `notary-registration` option does not write CSR details to the log file.
 * In the Attachment Demo, the `runSender` task uses `myLegalName` instead of `serviceLegalName` for notarisation.
 * Some samples cannot be run on Windows due to an issue with long file names.
