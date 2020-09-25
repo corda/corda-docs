@@ -89,6 +89,10 @@ The notaries list can now be hotloaded. For more information see [Hotloading](ne
 
 LedgerGraph enables other CorDapps, such as the set of [Collaborative Recover CorDapps](node/collaborative-recovery/introduction-cr.md), to have near real-time access to data concerning all of a node’s transactions and their relationships. LedgerGraph has been in use in some solutions already, but is now available as a CorDapp in its own right.
 
+### Collaborative Recovery upgraded to V1.1
+
+As LedgerGraph is now available as a stand alone CorDapp, the Collaborative Recovery CorDapps have been upgraded to reflect this change. In order [to use Collaborative Recovery V1.1](node/collaborative-recovery/introduction-cr.md) you must have a corresponding LedgerGraph CorDapp installed. If you use Confidential Identities with Collaborative Recovery, in V1.1 you must configure LedgerGraph to handle this. In V1.0, Confidential Identities configuration needed to be added to the **LedgerSync** CorDapp. 
+
 ### Migrating Notary data to CockroachDB
 
 Notary data stored in a Percona database can now be migrated to Cockroach DB. For more information, see [Upgrading a notary](notary/upgrading-a-notary.md).
