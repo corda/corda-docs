@@ -147,7 +147,6 @@ For more information about platform versions, see [Versioning](cordapps/versioni
 * A previously unhandled exception when the password for an RPC user was wrong is now handled correctly.
 * A previously unhandled exception with problems accessing DB is now treated as a `HikariPool.PoolInitializationException`.
 * We have fixed an issue where the Classloader failed to find the class when a CorDapp class was used.
-* We have fixed an issue in the AWS and Azure templates where the latest Corda Enterprise version was not deployed.
 * The path for network parameters is now configurable and the network parameters file is stored in the location specified by the node configuration.
 
 
@@ -155,24 +154,24 @@ For more information about platform versions, see [Versioning](cordapps/versioni
 
 
 ## Known issues
-* The HA Utilities and Health Survey Tools do not process configuration `include` commands correctly if the configuration is located in the tool's root directory.
+* The HA Utilities tool and the Health Survey Tool do not process configuration `include` commands correctly if the configuration is located in the tool's root directory.
 * It is currently not possible to build a Kotlin CorDapp template against Corda Enterprise 4.6.
 * There are inconsistencies in code stubs and actual code between the Kotlin and Java CorDapp templates.
 * The Database Management Tool and Corda Enterprise do not run with the same configuration in the Command-line Interface options and configuration files.
 * The node does not connect to the HSM on the second registration attempt if the first attempt was not successful due to HSM inaccessibility.
 * Using the local network bootstrapper takes longer than in previous versions of Corda.
-* The new operation on the `FlowRPCOps` RPC interface takes a `StateMachineID` as an argument parameter, leading to repetitive invocations of the form.
+* The "new" operation on the `FlowRPCOps` RPC interface takes a `StateMachineID` as an argument, leading to repetitive invocations of the form.
 * An SSL connection cannot be established between two nodes when one of the nodes does not have access to the Identity Manager Service and, as a result, to CRL distribution points.
 * A node cannot be run with the `--dev-mode` option unless `devModeOptions.allowCompatibilityZone=true` is added to the node configuration.
-* If a notary registration fails when using HA Utilities, a dummy notary keystore file is created. If users are unaware that this keystore file has been crated, it cases issues when they attempt to register the notary again.
+* Corda throws an exception instead of producing a clear error message when a log cannot be created.
 * When a valid command is run in the wrong location, an exception occurs rather than a clear error message.
-* In HA Utilities, the notary-registration option does not write CSR details to the log file.
+* In HA Utilities, the `notary-registration` option does not write CSR details to the log file.
 * In the Attachment Demo, the `runSender` task uses `myLegalName` instead of `serviceLegalName` for notarisation.
 * Some samples cannot be run on Windows due to an issue with long file names.
 * The Database Management Tool does not work with Corda Enterprise 4.6 when `dataSourceProperties` is in a separate file.
 * Business Network roles are not displayed when `MembershipState` is queried via the Shell Command-line Interface. It is also not possible to change the participant roles via the Shell Command-line Interface.
 * Filtering flows by `FlowStart` using the constants `Instant.MAX` and `Instant.MIN` returns an exception.
-* The SSH Client returns inconsistent exit codes after gracefulShutdown is run, indicating that an error has occurred.
+* The SSH Client returns inconsistent exit codes after `gracefulShutdown` is run, indicating that an error has occurred.
 * The Docker node does not generate configuration and certificates against Testnet.
 * The node rejects the incoming P2P connection from a node with a revoked certificate, with warnings and errors, but does not block any attempts to re-establish it. This leads to a quick accumulation of warnings and errors in the node log.
 * The error text is repeated in the console when trying to register a node with forbidden characters in the Organisation (`O`) name.
