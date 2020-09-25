@@ -155,7 +155,7 @@ For more information about platform versions, see [Versioning](cordapps/versioni
 
 
 ## Known issues
-* The HA Utilities and Health Survey Tools do not process configuration `include` commands correctly if the configuration is located in the tool's root directory.
+* The HA Utilities tool and the Health Survey Tool do not process configuration `include` commands correctly if the configuration is located in the tool's root directory.
 * It is currently not possible to build a Kotlin CorDapp template against Corda Enterprise 4.6.
 * There are inconsistencies in code stubs and actual code between the Kotlin and Java CorDapp templates.
 * The Database Management Tool and Corda Enterprise do not run with the same configuration in the Command-line Interface options and configuration files.
