@@ -115,7 +115,7 @@ with multiple accounts for each task The Signing Service now prompts a specific 
 * When a Signing Service is started with an incomplete or incorrect configuration, a stack trace occurs. This should be handled as an exception.
 * Due to a known issue with `serviceLocations`, when the new optional `timeout` [parameter](signing-service.md#signing-service-configuration-parameters) is passed to the Zone Service via the Signing Service's `serviceLocations` configuration block, only the `timeout` value of the first `serviceLocations` location will be taken into account and used for all other service locations.
 * The CENM Command-line Interface Tool supports the following additional certificate revocation reasons, which are not supported by the Identity Manager Service: `CERTIFICATE_HOLD`, `UNUSED`, `REMOVE_FROM_CRL`, `AA_COMPROMISE`, and `UNSPECIFIED`.
-* When creating an AWS Postgres database, the user is unable to connect to the database when they have selected the Virtual private cloud (VPC) of their Elastic Kubernetes Service (EKS) Cluster. However, they are able to connect when they have selected the default VPC. 
+* When creating an AWS Postgres database, users are unable to connect to the database when they have selected the Virtual Private Cloud (VPC) of their Elastic Kubernetes Service (EKS) Cluster. However, they are able to connect when they have selected the default VPC. 
 
 
 ## Release 1.3.1
