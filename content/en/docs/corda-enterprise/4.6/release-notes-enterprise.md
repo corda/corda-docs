@@ -166,7 +166,7 @@ For more information about platform versions, see [Versioning](cordapps/versioni
 * A node cannot be run with the `--dev-mode` option unless `devModeOptions.allowCompatibilityZone=true` is added to the node configuration.
 * If a notary registration fails when using HA Utilities, a dummy notary keystore file is created. If users are unaware that this keystore file has been created, it causes issues when they attempt to register the notary again.
 * When a valid command is run in the wrong location, an exception occurs rather than a clear error message.
-* In HA Utilities, the notary-registration option does not write CSR details to the log file.
+* In HA Utilities, the `notary-registration` option does not write CSR details to the log file.
 * In the Attachment Demo, the `runSender` task uses `myLegalName` instead of `serviceLegalName` for notarisation.
 * Some samples cannot be run on Windows due to an issue with long file names.
 * The Database Management Tool does not work with Corda Enterprise 4.6 when `dataSourceProperties` is in a separate file.
