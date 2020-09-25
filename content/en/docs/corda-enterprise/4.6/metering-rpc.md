@@ -12,7 +12,7 @@ weight: 135
 
 # Metering client for the Metering Collection Tool
 
-The [Metering Collection Tool](metering-collector.md) collects metering data from one or more Corda Enterprise Nodes. The purpose of the metering _client_ is to perform this remotely without deploying a Corda Enterprise Node. To do this, the metering client uses RPC to connect to a designated collector node. The designated collector node then runs the Metering Collection Tool to collect the metering data from the specified set of nodes: these are known as the destination nodes. The data is then returned to the metering client. The metering client saves the results to a file.
+The [Metering Collection Tool](metering-collector.md) collects metering data from one or more Corda Enterprise Nodes. The purpose of the metering _client_ is to perform this remotely without having to access the environment where the collector node is running, or opening a [Shell](node/operating/shell.md) for it. To do this, the metering client uses RPC to connect to a designated collector node. The designated collector node then runs the Metering Collection Tool to collect the metering data from the specified set of nodes: these are known as the destination nodes. The data is then returned to the metering client. The metering client saves the results to a file.
 
 {{< note >}}
 Destination nodes must be configured to share their metering data with the designated collector node. For more information, see [How metering data is shared](metering-collector.md#how-metering-data-is-shared).
@@ -22,7 +22,7 @@ Destination nodes must be configured to share their metering data with the desig
 Only the transactions that cause a ledger update are reported (i.e., NORMAL, CONTRACT_UPGRADE, and NOTARY_CHANGE). The transactions that do not cause a ledger update are not included in the metering report. For more information, see [available transaction types](metering-collector.md#filtering-by-transaction-type).
 {{< /note >}}
 
-Any Corda Enterprise Node can be used as a designated collector node as long as the destination nodes have been configured to share metering data with it. If one or more destination nodes have not been configured to share metering data with the designated collector node, then the collected data will not include metering data from those nodes, but the metering report will include information that the node has not been configured to share data the requested data. 
+Any Corda Enterprise Node can be used as a designated collector node as long as the destination nodes have been configured to share metering data with it. If one or more destination nodes have not been configured to share metering data with the designated collector node, then the collected data will not include metering data from those nodes, but the metering report will include information that the node has not been configured to share data the requested data.
 
 ## Configuration
 
@@ -374,7 +374,7 @@ This command will attempt to update the previous collection results by contactin
 If a node has been reported as misconfigured for a particular filter, no data associated with this node will be added to the report.
 {{< /note >}}
 
-To avoid overwriting the previous report, the name of the new report will have the format `[previous-report]-[timestamp].json`, where `[previous-report]` is the file name of the previous report and `[timestamp]` is a timestamp indicating when the collection finished. For example: 
+To avoid overwriting the previous report, the name of the new report will have the format `[previous-report]-[timestamp].json`, where `[previous-report]` is the file name of the previous report and `[timestamp]` is a timestamp indicating when the collection finished. For example:
 
-* If the previous report was `output.json` and the repeat collection finished at 10:33 on 22 July 2020, the new report will be `output-2020-07-22_10-33-00.json`. 
+* If the previous report was `output.json` and the repeat collection finished at 10:33 on 22 July 2020, the new report will be `output-2020-07-22_10-33-00.json`.
 * If the previous report was `output-2020-07-22_10-20-00.json`, then the new report would be `output-2020-07-22_10-20-00-2020-07-22_10-33-00.json`.
