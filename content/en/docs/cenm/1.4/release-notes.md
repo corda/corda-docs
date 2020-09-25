@@ -108,7 +108,7 @@ with multiple accounts for each task The Signing Service now prompts a specific 
 *  The `config-file-doesnt-exist` error code does not appear when the Signing Service is started with a non-existing configuration file. No error code or link to relevant documentation appears in the console or logs.
 * When creating a user in the [CENM User Admin Tool](user-admin.md), there is a typo in the "Role Name" notification. The notification should read: "Role name field should not contain empty spaces!"
 * When several CRR requests are submitted and the `plugin-ca`/`signer-ca` is used, the CRL with CRR should be signed, records in the `workflow_crr` table should be updated, and the certificate statuses should be updated from `VALID` to `REVOKED`. However, currently the `signer-ca` shows revoked node details, the records in the `workflow_crr` table are `Pending`, and certificates are `VALID` instead of `REVOKED`.
-* There is an inconsistency in how config validation handles an incorrect `trustStore` location. For some parameters, a service will not start. For others, a service will try to start then fail.
+* There is an inconsistency in how configuration validation handles an incorrect `trustStore` location. For some parameters, a service will not start. For others, a service will try to start and will then fail.
 * The Command-line Interface (CLI) Tool should produce an error code instead of throwing Java `DUMP` exceptions (such as `java.io.FileNotFoundException`) for issues like adding the wrong file name or having a space in the path of a file.
 * Information about the running version of CENM components is missing from the logs.
 * The app version is not displayed when running Helm Charts.
