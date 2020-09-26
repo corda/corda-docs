@@ -9,7 +9,7 @@ tags:
 - install
 - node operator
 
-title: Install Collaborative Recovery
+title: Install Collaborative Recovery V1.1
 weight: 150
 ---
 
