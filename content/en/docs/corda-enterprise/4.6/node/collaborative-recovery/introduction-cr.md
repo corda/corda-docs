@@ -45,7 +45,7 @@ Before installing and using the Collaborative Recovery CorDapps, you need to kno
 
 ### Changes from V1.0 to V1.1
 
-Collaborative Recovery 1.1 now makes use of **LedgerGraph** as a stand alone CorDapp. In previous versions, this feature could not be used independently. Support for **Confidential Identities** has been moved from **LedgerSync** to **LedgerGraph** CorDapps.
+Collaborative Recovery 1.1 now makes use of **LedgerGraph** as a stand-alone CorDapp. In previous versions, this feature could not be used independently. Support for **Confidential Identities** has been moved from **LedgerSync** to **LedgerGraph** CorDapps.
 
 ## Main stages of Collaborative Recovery
 
