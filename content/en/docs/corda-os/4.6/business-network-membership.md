@@ -38,9 +38,9 @@ With this extension, you can use a set of flows to:
 
 This is an extension of Corda OS 4.6. If you have this version of Corda, and want to set up and run a Business Network, you can make use of the extension flows.
 
-### Create a business network
+## Create a business network
 
-Either from the node shell or from an RPC client, run `CreateBusinessNetworkFlow`. This will self-issue a membership with an exhaustive permissions set that allows the calling node to manage future operations for the newly created network.
+From either the node shell or from an RPC client, run `CreateBusinessNetworkFlow`. This will self-issue a membership with an exhaustive permissions set that allows the calling node to manage future operations for the newly created network.
 
 **Flow arguments:**
 
@@ -62,9 +62,9 @@ CordaRPCClient(rpcAddress).start(user.userName, user.password).use {
 }
 ```
 
-### On-board a new member
+## On-board a new member
 
-Joining a business network is a 2 step process.
+Joining a business network is a 2 step process. First the prospective member must send a request. Then the request is approved and the member is added.
 
 ### Step 1 - prospective member sends a membership request
 
@@ -134,13 +134,22 @@ CordaRPCClient(rpcAddress).start(user.userName, user.password).use {
 }
 ```
 
-### Amend a membership
+## Amend a membership
 
-There are several ways in which a member's information can be updated, not including network operations such as membership suspension or revocation. These attributes which can be amended are:
-business network identity, membership list or group, and roles.
+There are attributes of a member's information that can be updated, not including network operations such as membership suspension or revocation. TO perform these amendments, you must be an authorised network party.
 
-To update a member's business identity attribute, one of the authorised network parties needs to run the ```ModifyBusinessIdentityFlow``` which then requires all network members with
-sufficient permissions to approve the proposed change.
+The attributes which can be amended are:
+
+* Business network identity.
+* Membership list or group.
+* Roles.
+
+### Update a members business identity attribute
+
+To update a member's business identity attribute:
+
+1. Run the ```ModifyBusinessIdentityFlow```.
+2. All network members with sufficient permissions approve the proposed change.
 
 **ModifyBusinessIdentityFlow arguments**:
 
@@ -164,15 +173,20 @@ CordaRPCClient(rpcAddress).start(user.userName, user.password).use {
 }
 ```
 
-Updating a member's roles and permissions in the business network is done in a similar fashion by using the ```ModifyRolesFlow```. Depending on the proposed changes, the updated member may become
-an authorised member. If that happens, an important thing to note is that this enhancement will have to be preceded by an execution of the ```ModifyGroupsFlow``` to add the member to all membership
-lists it will have administrative powers over.
+### Update a members business identity attribute
+
+You can update a member's business identity attributes - by modifying their roles. Depending on your proposed changes, the updated member may become an **authorised member**. In this case, your enhancement must be preceded by an execution of the [`ModifyGroupsFlow`](#modify-a-group) to add the member to all membership lists that it will have administrative powers over.
+
+To update a member's roles and permissions in the business network:
+
+1. Run the `ModifyRolesFlow`.
+2. All network members with sufficient permissions approve the proposed change.
 
 **ModifyRolesFlow arguments**:
 
-- ```membershipId``` ID of the membership to assign roles
-- ```roles``` Set of roles to be assigned to membership
-- ```notary``` Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used
+- `membershipId` ID of the membership to assign roles
+- `roles` Set of roles to be assigned to membership
+- `notary` Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used
 
 *Example*:
 
@@ -190,20 +204,28 @@ CordaRPCClient(rpcAddress).start(user.userName, user.password).use {
 }
 ```
 
-To manage the membership lists or groups, one of the authorised members of the network can use ```CreateGroupFlow```, ```DeleteGroupFlow``` and ```ModifyGroupFlow```.
+## Manage groups
+
+To manage the membership lists or groups, one of the authorised members of the network can use `CreateGroupFlow`, `DeleteGroupFlow` and `ModifyGroupFlow`.
+
+### Create a group
+
+To create a new group:
+
+1. Run `CreateGroupFlow`. 
 
 **CreateGroupFlow arguments**:
 
-- ```networkId``` ID of the Business Network that Business Network Group will relate to.
-- ```groupId``` Custom ID to be given to the issued Business Network Group. If not specified, randomly selected one will be used.
-- ```groupName``` Optional name to be given to the issued Business Network Group.
-- ```additionalParticipants``` Set of participants to be added to issued Business Network Group alongside initiator's identity.
-- ```notary``` Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used.
+- `networkId` ID of the Business Network that Business Network Group will relate to.
+- `groupId` Custom ID to be given to the issued Business Network Group. If not specified, randomly selected one will be used.
+- `groupName` Optional name to be given to the issued Business Network Group.
+- `additionalParticipants` Set of participants to be added to issued Business Network Group alongside initiator's identity.
+- `notary` Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used.
 
 There are two additional flows that can be used to quickly assign roles to a membership: ```AssignBNORoleFlow``` and ```AssignMemberRoleFlow```. They both share the same arguments:
 
-- ```membershipId``` ID of the membership to assign the role.
-- ```notary``` Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used.
+- `membershipId` ID of the membership to assign the role.
+- `notary` Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used.
 
 **Example**:
 
@@ -220,10 +242,12 @@ CordaRPCClient(rpcAddress).start(user.userName, user.password).use {
 
 **DeleteGroupFlow arguments**:
 
-- ```groupId``` ID of group to be deleted
-- ```notary``` Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used
+- `groupId` ID of group to be deleted
+- `notary` Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used
 
-The ```ModifyGroupFlow``` can update the name of a group and/or its list of members. At least one of the *name* or *participants* arguments
+### Modify a group
+
+The `ModifyGroupFlow` can update the name of a group and/or its list of members. At least one of the *name* or *participants* arguments
 must be provided.
 
 **ModifyGroupFlow arguments**:
@@ -249,7 +273,7 @@ CordaRPCClient(rpcAddress).start(user.userName, user.password).use {
 }
 ```
 
-### Suspend or revoke a membership
+## Suspend or revoke a membership
 
 Temporarily suspending a member or completely removing it from the business network is done using ```SuspendMembershipFlow``` and ```RevokeMembershipFlow```. They both use the same exactly arguments:
 
