@@ -379,7 +379,7 @@ Observe that endpoint's name starts with `get`.
 
 #### Parameters
 
-`maxLength`: Integer. DAGs whose lengths exceed this value will be included in the number of DAGs that exceed the length threshold.
+`maxLength`: Integer. DAGs whose lengths exceed this value will be counted in the number of DAGs that exceed the length threshold.
 
 #### Return Type
 
