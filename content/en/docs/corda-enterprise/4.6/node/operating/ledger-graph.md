@@ -34,7 +34,7 @@ LedgerGraph is a dependency for the set of Collaborative Recovery CorDapps V1.1 
 
 * **Node Minimum Platform Version (MPV)** > 6
 
-    LedgerGraph requires operative Corda nodes to have a Minimum Platform Version (MPV) of 6 or greater, which corresponds with [Corda Enterprise 4.4 or newer](https://docs.corda.net/docs/corda-enterprise/4.5/app-upgrade-notes.html#platform-version-matrix).
+    LedgerGraph requires operative Corda nodes to have a Minimum Platform Version (MPV) of 6 or greater, which corresponds with Corda Enterprise 4.4 or newer.
 
 * **Network MPV** > 6
 
