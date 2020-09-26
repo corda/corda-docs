@@ -89,7 +89,7 @@ There are three CorDapps to install:
 
 * **LedgerSync**
 * **LedgerRecovery**
-* **LedgerGraph** if you have not already installed this separately. If you have already instaled LedgerGraph, please ensure the version matches this version of Collaborative Recovery - V1.1.
+* **LedgerGraph** if you have not already installed this separately. If you have already installed LedgerGraph, please ensure the version matches this version of Collaborative Recovery - V1.1.
 
 Using the file transfer protocol of your choice, transfer the `.jar` files representing the required CordApps to the CorDapps directory of the Corda node.
 
