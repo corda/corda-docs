@@ -85,16 +85,6 @@ If this list is empty, the node has been successfully drained. If the list conta
 
 There are no earlier versions of this CorDapp. However, if you are upgrading from version 1.0 of **Collaborative Recovery**, then you should replace `ledger-sync-confidential-identities-1.0.jar` with `ledger-graph-1.1.jar`
 
-{{< note >}}
-You should make backup copies of any files before deleting them, in case you need to roll back to an earlier version.
-{{< /note >}}
-
-```sh
-ledger-graph-X.Y.jar
-ledger-graph-confidential-identities-X.Y.jar †
-```
-&dagger; This file might not be present in your installation if you do not make use of the Confidential Identities CorDapp.
-
 ### Install the CorDapps
 
 {{< warning >}}
