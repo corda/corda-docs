@@ -4,12 +4,11 @@ menu:
   corda-enterprise-4-6:
     parent: corda-enterprise-4-6-corda-nodes-operating
 tags:
-- disaster recovery
-- collaborative recovery
+- in memory 
+- transaction data
 - install
 - node operator
-- LedgerRecover
-- ledger recovery
+- DAG
 - ledger graph
 
 title: LedgerGraph
