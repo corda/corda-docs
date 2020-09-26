@@ -49,7 +49,7 @@ to the server at the `networkMapUrl` (and each time it changes on start-up) and 
 the same server. The network map consists of a list of `NodeInfo` hashes. The node periodically polls for the network map
 (based on the HTTP cache expiry header) and any new entries are downloaded and cached. Entries which no longer exist are deleted from the node’s cache.
 
-The set of REST end-points for the Network Map Service are as follows. This defines the first commited version of the Corda Network Map protocol.
+The set of REST end-points for the Network Map Service are as follows. This defines the first committed version of the Corda Network Map protocol.
 
 
 {{< table >}}

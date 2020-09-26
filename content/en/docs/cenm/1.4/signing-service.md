@@ -498,7 +498,7 @@ services that are used within the signing processes defined in the signers map. 
 [service location map entry example](#service-location-map-entry-example) below for the expected format.
 
   * **timeout**
-  An optional parameter that enables you to modify Signing Service timeouts in a way that allows high node count network maps to get signed and to operate at reliable performance levels. The `timeout` value is set in milliseconds and the default value is 10000 milliseconds. An example of a `serviceLocations` configuration block using the `timeout` parameter follows below:
+  An optional parameter that enables you to set a Signing Service timeout for communication to each of the services used within the signing processes defined in the signers map, in a way that allows high node count network maps to get signed and to operate at reliable performance levels. The `timeout` value is set in milliseconds and the default value is 10000 milliseconds. The example below shows a `serviceLocations` configuration block for the Network Map Service using the `timeout` parameter:
 
   ```yaml
   serviceLocations = {
