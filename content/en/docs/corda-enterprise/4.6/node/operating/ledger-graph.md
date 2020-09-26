@@ -95,7 +95,7 @@ Using the file transfer protocol of your choice, add the necessary JAR files for
 
 Before proceeding, check to ensure that your transfer completed successfully and that the files' sizes don't differ from the originals that you received.
 
-If you're installing the <nobr>`ledger-graph-confidential-identities`</nobr> CorDapp, please refer to the [LedgerGraph](./ledger-graph.md) operations guide for information on how to configure it to properly handle confidential identities.
+If you're installing the <nobr>`ledger-graph-confidential-identities`</nobr> CorDapp, please refer to the Confidential Identities section of this document.
 
 ### Restart the Node
 
