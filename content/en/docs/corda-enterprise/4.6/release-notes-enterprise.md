@@ -111,6 +111,10 @@ The platform version of Corda 4.6 has been bumped up from 7 to 8.
 
 For more information about platform versions, see [Versioning](cordapps/versioning.md).
 
+## Other changes
+
+* To reduce the risk of vulnerabilities, we have upgraded the Apache Zookeeper used by the Corda Enterprise [Firewall component](node/corda-firewall-component.md#prerequisites-4) from 3.5.4-Beta to 3.61. See [Apache ZooKeeper setup](operations/deployment/corda-firewall-configuration-file.md#apache-zookeeper-setup) for more information.
+
 ## Fixed issues
 
 * We have fixed an issue where the FutureX provider threw a `javax.security.auth.login.LoginException` when trying to establish a connection with the HSM.
