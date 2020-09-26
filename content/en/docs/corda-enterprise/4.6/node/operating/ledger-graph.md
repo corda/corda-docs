@@ -23,7 +23,7 @@ weight: 500
 **LedgerGraph** enables other CorDapps, such as the set of [Collaborative Recover CorDapps](../collaborative-recovery/introduction-cr), to have near real-time access to data concerning all of a node's transactions and their relationships. Without it, many operations would be unacceptably slow and impractical.
 
 {{< warning >}}
-LedgerGraph is a dependency for the Collaborative Recovery set of CorDapps V1.1 and above. If you are using an earlier version of Collaborative Recovery, you should not install the stand-alone LedgerGraph.
+LedgerGraph is a dependency for the set of Collaborative Recovery CorDapps V1.1 and above. If you are using an earlier version of Collaborative Recovery, you should not install the stand-alone LedgerGraph.
 {{< /warning >}}
 
 ## Installation requirements
