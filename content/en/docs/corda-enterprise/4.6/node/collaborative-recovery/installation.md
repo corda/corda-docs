@@ -49,7 +49,7 @@ Outline of steps for installation:
 
 * **Network MPV > 6** In addition to a CPV of greater than 6, the network itself must have a sufficient MPV.
 
-* **Database requirements** Collaborative Recovery CorDapps are tested against Corda Enterprise and will work according to the [platform support matrix](../../platform-support-matrix.html).
+* **Database requirements** Collaborative Recovery CorDapps are tested against Corda Enterprise and will work according to the [platform support matrix](../../platform-support-matrix).
 
 
 ## Install the CorDapps
@@ -89,7 +89,7 @@ There are three CorDapps to install:
 
 * **LedgerSync**
 * **LedgerRecovery**
-* **LedgerGraph** if you have not already installed this separately. 
+* **LedgerGraph** if you have not already installed this separately.
 
 Using the file transfer protocol of your choice, transfer the `.jar` files representing the required CorDapps to the `cordapps` directory of the Corda node.
 

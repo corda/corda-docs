@@ -36,7 +36,7 @@ The **LedgerSync** CorDapp requires participating Corda nodes to
  - be using Corda Enterprise, not Corda Open Source (OS); and
  - be using Corda Minimum Platform Version (MPV) >= 6; and
  - have the matching version of the LedgerGraph CorDapp installed; and
- - running on top of a supported [database technology](https://docs.corda.r3.com/platform-support-matrix.html).
+ - running on top of a supported [database technology](../../platform-support-matrix).
 
 ## Configuration parameters
 
