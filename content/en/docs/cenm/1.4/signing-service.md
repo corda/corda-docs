@@ -10,54 +10,50 @@ menu:
 tags:
 - signing
 - service
-title: Signing and SMR Services
+title: Signing Service
 ---
 
 
-# Signing and SMR Services
+# Signing Service
 
 
 
 ## Purpose
 
-The Signing Service and the optional Signable Material Retriever (SMR) are services that form part of
-Corda Enterprise Network Manager, alongside the Identity Operator and Network Map. They act as
-a bridge between the main CENM services and PKI/HSM infrastructure, enabling a network operator
-to verify and sign incoming requests and changes to the network.
+The Signing Service acts as a bridge between the main CENM services and the PKI/HSM infrastructure, enabling a network operator to verify and sign incoming requests and changes to the network.
 
-As mentioned in the CENM service documentation ([Identity Manager Service](identity-manager.md) and [Network Map Service](network-map.md)), the main CENM services
+The Signing Service forms a part of the main Corda Enterprise Network Manager (CENM) services, alongside the [Identity Manager Service](identity-manager.md) and the [Network Map Service](network-map.md) (and complemented by the [Auth Service](auth-service), the [Zone Service](zone-service.md), the [Angel Service](angel-service.md), and the [Gateway Service](gateway-service.md)).
+
+As mentioned in other CENM service documentation ([Identity Manager Service](identity-manager.md) and [Network Map Service](network-map.md)), the main CENM services
 can be configured with an integrated *local signer* that will automatically sign all unsigned data using a provided key.
-While this is convenient, it is intended for use within for development and testing environments, and **should not** be used in
+While this is convenient, it is intended for use for development and testing environments, and **should not** be used in
 production environments. Instead, large and important changes to the network should go through a series of checks before
-being approved and signed, ideally with a network operator manually verifying and signing new CSRs, CRLs and Network
+being approved and signed, ideally with a network operator manually verifying and signing new CSRs, CRLs, and Network
 Parameter changes. The Signing Service provides this behaviour, with HSM integration enabling the signing of any
 particular data to require authentication from multiple users.
 
 
-## Signing Service
+## Signing Service overview
 
 CENM’s Signing Service supports the following HSMs (see [CENM support matrix](cenm-support-matrix.md) for more information):
 
-
-* Utimaco
-* Gemalto Luna
-* Securosys PrimusX
-* Azure Key Vault
-* AWS CloudHSM
+* Utimaco.
+* Gemalto Luna.
+* Securosys PrimusX.
+* Azure Key Vault.
+* AWS CloudHSM.
 
 The verification and signing of data is done via the set of user configured signing tasks within the service, with each
 task being configured with:
 
-
-* **Data type:** CSR, CRL, Network Map or Network Parameters
-* **Data source:** the CENM service to retrieve unsigned data and persist signed data *(e.g. a network’s Identity Manager)*
-* **Signing key:** the key that should be used to sign the data *(e.g. a particular key within a HSM using keycard authentication)*
+* **Data type:** CSR, CRL, Network Map or Network Parameters.
+* **Data source:** the CENM service to retrieve unsigned data and persist signed data *(for example, a network’s Identity Manager Service)*.
+* **Signing key:** the key that should be used to sign the data *(for example, a particular key within a HSM using keycard authentication)*.
 
 Once the service has been configured with this set of signing tasks, an execution of a given signing task will:
 
-
-* Retrieve unsigned data from the data source
-* Signing it using the provided key, requesting manual authentication if required.
+* Retrieve unsigned data from the data source.
+* Sign it using the provided key, requesting manual authentication if required.
 * Persist the signed data back to the data source.
 
 Each signing task is configured independently from one another, meaning different keys can (and should) be used to sign
@@ -111,7 +107,7 @@ The service can then be accessed via ssh, either locally on the machine or from 
 closed network that the service is being run on.
 
 
-### Executing a Signing task
+### Executing a signing task
 
 Once the configured service is up and running, a user can execute a signing task via the interactive shell via the `run
 signer name: <SIGNING_TASK_ALIAS>` command. This will execute the task, prompting the user for signing key
@@ -122,7 +118,7 @@ Any configured task can be run through the shell, even automated scheduled tasks
 
 {{< /note >}}
 
-### Viewing available Signing tasks
+### Viewing available signing tasks
 
 A user can see what signing tasks are available by executing the `view signers` command within the shell. This will
 output all tasks that can be run along with their schedule, if applicable.
@@ -137,7 +133,7 @@ is especially useful after the initial setup to verify that the Signing and CENM
 correctly.
 
 
-## Signing Service Configuration
+## Signing Service configuration
 
 The configuration for the Signing Service consists of the following sections:
 
@@ -148,17 +144,17 @@ The configuration for the Signing Service consists of the following sections:
 * The [signing tasks](#signing-tasks) that can be run through the service
 
 
-### Global Configuration Options
+### Global configuration options
 
 
-#### Shell Configuration
+#### Shell configuration
 
 The Signing Service is interacted with via the shell, which is configured at the top level of the configuration file. This
 shell is similar to the interactive shell available in other CENM services and is configured in a similar way. See
 [Shell Configuration](shell.md#shell-config) for more information on how to configure the shell.
 
 
-#### HSM Libraries
+#### HSM libraries
 
 If using the Signing Service with a HSM then, due to the proprietary nature of the HSM libraries, the appropriate Jars
 need to be provided separately and referenced within the configuration file. The libraries that are required will depend
@@ -253,7 +249,7 @@ globalCertificateStore = {
 ```
 
 
-### Signing Keys
+### Signing keys
 
 The signing keys that are used across all signing task need to be configured. As, potentially, one signing key could be
 reused across several signing tasks these are configured in the form of a map of human-readable aliases (referenced by
@@ -332,10 +328,10 @@ schedule if applicable.
 Each signing task maps to exactly one of four possibly data types:
 
 
-* **CSR data** - signing approved but unsigned Certificate Signing Requests
-* **CRL data** - building and signing new Certificate Revocation Lists using newly approved Certificate Revocation Requests
-* **Network Map** - building and signing a new Network Map
-* **Network Parameters** - signing new Network Parameters and Network Parameter Updates
+* **CSR data** - signing approved but unsigned Certificate Signing Requests.
+* **CRL data** - building and signing new Certificate Revocation Lists using newly approved Certificate Revocation Requests.
+* **Network Map** - building and signing a new Network Map.
+* **Network Parameters** - signing new Network Parameters and Network Parameter Updates.
 
 
 #### Scheduling Signing tasks
@@ -347,7 +343,7 @@ well as automating the signing of lower risk changes such as Network Map changes
 
 
 {{< warning >}}
-Automated, scheduled signing of important changes such as Network Parameter updates, CSRs and CRLs should
+Automated, scheduled signing of important changes such as Network Parameter updates, CSRs, and CRLs should
 not be configured in production environments.
 
 {{< /warning >}}
@@ -498,6 +494,16 @@ services that are used within the signing processes defined in the signers map. 
 [service location map entry example](#service-location-map-entry-example) below for the expected format.
 
 
+
+
+
+
+
+
+
+
+
+
 * **caSmrLocation**:
 *(Optional, use instead of CA related serviceLocations)* CA part of Signable Material Retriever CENM
 service location configuration.
@@ -506,6 +512,12 @@ service location configuration.
 * **nonCaSmrLocation**:
 *(Optional, use instead of non CA related serviceLocations)* Non CA part of Signable Material
 Retriever CENM service location configuration.
+
+
+
+
+
+
 
 
 * **signers**:
@@ -750,81 +762,6 @@ The password for the local certificate store
 
 
 
-### Service Location Map Entry Example
-
-Each entry in the `serviceLocations` map should be keyed on the user-defined, human-readable alias. This can be any
-string and is used only within the configuration to map the service locations to each signing task that use it.
-
-
-* **enmService**:
-The connection details for the CENM service that acts as the data source
-  * **host**:
-  The host name (or IP address) that the CENM service is running on.
-  * **port**:
-  The port that the CENM service is listening on (for inter-CENM communication).
-  * **verbose**:
-  A boolean parameter that determines whether debug information for the IPC between the Signing Service and the remote service
-  should be displayed.
-  * **ssl**:
-  *(Optional)* SSL Information for connection with the CENM service.
-    * **keyStore**:
-    The key store configuration for the Signing Service SSL key pair.
-      * **location**:
-      The location in the file system of the keystore containing the SSL public / private key pair.
-      of the Signing Service.
-      * **password**:
-      The password for the keystore.
-      * **keyPassword**:
-      *(Optional)* The password for the key pair - can be omitted if it is the same as the keystore password.
-    * **trustStore**:
-    Trust store configuration for the SSL PKI root of trust.
-      * **location**:
-      The location in the file system of the keystore containing the SSL PKI root of trust.
-      * **password**:
-      The password for the trust root keystore.
-
-
-### Signable Material Retriever Location Example
-
-When Signing Service connects to CA part of SMR Service instead of directly to CA related CENM Service Locations,
-then `caSmrLocation` replaces CA related inputs of `serviceLocations`.
-
-When Signing Service connects to non CA part of SMR Service instead of directly to non CA related CENM Service
-Locations, then `nonCaSmrLocation` replaces non CA related inputs of `serviceLocations`.
-
-
-* **caSmrLocation**:
-The connection details for the CA part of Signable Material Retriever (SMR) Service that acts as the data source
-  * **host**:
-  Host name (or IP address) that the CA part of SMR service is running on.
-  * **port**:
-  Port that the CA part of SMR service is listening on (for inter-CENM communication).
-  * **verbose**:
-  A boolean parameter representing whether debug information for the IPC between the Signing Service and the remote service
-  should be displayed.
-  * **ssl**:
-  *(Optional)* SSL Information for connection with the CA part of the SMR service.
-    * **keyStore**:
-    Keystore configuration for the Signing Service SSL key pair.
-      * **location**:
-      Location on the file system of the keystore containing the SSL public / private key pair
-      of the Signing Service.
-      * **password**:
-      Password for the keystore.
-      * **keyPassword**:
-      *(Optional)* Password for the key pair - can be omitted if it is the same as the keystore password.
-    * **trustStore**:
-    Truststore configuration for the SSL PKI root of trust.
-      * **location**:
-      Location in the file system of the keystore containing the SSL PKI root of trust.
-      * **password**:
-      Password for the trust root keystore.
-* **nonCaSmrLocation**:
-Same as per **caSmrLocation**, just for the non-CA part of the SMR Service.
-
-
-
-
 ### Signers Map Entry Example
 
 Each entry in the `signers` map should be keyed on the user-defined, human-readable alias. This can be any
@@ -842,9 +779,31 @@ The alias for the signing key used by the signing task. Should refer to one of t
 `signingKeys` map defined above.
 
 
+
+
+
+
+
+
+
+
 * **serviceLocationAlias**:
 *(Use when serviceLocations are specified)* The alias for the service location used by the signing task. Should refer to one of the aliases
 in the `serviceLocations` map defined above.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 * **crlDistributionPoint**:
@@ -1221,319 +1180,12 @@ signers = {
 
 ```
 
-### Singing Keys Form Local Key Store with SMR Service as data source
-
-```docker
-shell = {
-  sshdPort = 20003
-  user = "testuser"
-  password = "example-password"
-}
-
-#############################################
-# All individual keys used in signing tasks #
-#############################################
-signingKeys = {
-    "IdentityManagerLocal" = {
-        alias = "example-key-alias-2"
-        type = LOCAL
-        password = "example-key-password-2"
-        keyStore {
-            file = "exampleKeyStore.jks"
-            password = "example-password"
-        }
-    },
-    "NetworkMapLocal" = {
-        alias = "example-key-alias"
-        type = LOCAL
-        password = "example-key-password"
-        keyStore {
-            file = "exampleKeyStore.jks"
-            password = "example-password"
-        }
-    }
-}
-
-##########################################################
-# All CENM service endpoints for fetching/persisting data #
-##########################################################
-caSmrLocation = {
-    host = localhost
-    port = 5010
-    verbose = true
-    ssl = {
-        keyStore = {
-            location = "exampleKeyStore.jks"
-            password = "example-password"
-        }
-        trustStore = {
-            location = "exampleCertificateStore.jks"
-            password = "example-password"
-        }
-    }
-}
-
-nonCaSmrLocation = {
-    host = localhost
-    port = 5011
-    verbose = true
-    ssl = {
-        keyStore = {
-            location = "exampleKeyStore.jks"
-            password = "example-password"
-        }
-        trustStore = {
-            location = "exampleCertificateStore.jks"
-            password = "example-password"
-        }
-    }
-}
-###################################################
-# Signing tasks to be run (manually or scheduled) #
-###################################################
-signers = {
-    "Example CSR Signer" = {
-        type = CSR
-        signingKeyAlias = "IdentityManagerLocal"
-        crlDistributionPoint = "http://localhost:10000/certificate-revocation-list/doorman"
-        validDays = 7300 # 20 year certificate expiry
-        schedule {
-            interval = 1minute
-        }
-    },
-    "Example CRL Signer" = {
-        type = CRL
-        signingKeyAlias = "IdentityManagerLocal"
-        crlDistributionPoint = "http://localhost:10000/certificate-revocation-list/doorman"
-        updatePeriod = 86400000 # 1 day CRL expiry
-        schedule {
-            interval = 60minute
-        }
-    },
-    "Example Network Map Signer" = {
-        type = NETWORK_MAP
-        signingKeyAlias = "NetworkMapLocal"
-        schedule {
-            interval = 1minute
-        }
-    },
-    "Example Network Parameters Signer" = {
-        type = NETWORK_PARAMETERS
-        signingKeyAlias = "NetworkMapLocal"
-        schedule {
-            interval = 10minute
-        }
-    }
-}
-
-```
-
-## Signable Material Retriever
-
-The Signable Material Retriever (SMR) service is an optional service which acts as a bridge between other CENM services and one or more
-signing services. It delegates signing to a plugin, which routes work either to the CENM Signing Service,
-or to a third party service. Third party integration plugins are not provided as part of CENM.
-
-{{< note >}}
-The SMR is not currently configurable via the Zone and Angel Services, and
-must be manually edited in 1.3. This will be addressed in a future release.
-{{< /note >}}
-
-### Running the Signable Material Retriever Service
-
-Once the Signable Material Retriever has been configured, it can be run via the command:
-
-```bash
-java -jar smr-<VERSION>.jar --config-file <CONFIG_FILE>
-```
-
-Optional parameter:
-
-```bash
---working-dir=<DIR>
-```
-
-This will set the working directory to the specified folder. The service will look for files in that folder. This means
-certificates, configuration files etc. should be under the working directory.
-If not specified it will default to the current working directory (the directory from which the service has been started).
-
-On success you should see a message similar to:
-
-```kotlin
-Plugin started
-SMR Service started
-```
-
-
-### SMR Configuration
-
-The configuration of the SMR Service consists of the following two components:
-
-
-* [CENM service locations](#cenm-service-locations) which determine SMR’s data sources
-* [Material Management Tasks](#material-management-tasks) parameters modeling how each signable material is managed by SMR
-
-
-#### CENM Service Locations
-
-For each material management task, the data source for getting the unsigned data and persisting signed data must be
-defined. One data source could be potentially used across multiple material management tasks, hence they are configured
-as a map of human-readable aliases (referenced by the material management task configuration) to CENM service locations.
-
-{{< note >}}
-Communication with the configured SMR Service location can be configured to use SSL for a secure, encrypted
-connection. This is strongly recommended for production deployments. See [Configuring the CENM services to use SSL](enm-with-ssl.md) for more
-information.
-
-{{< /note >}}
-Configuration parameters are same as in [Service Location Map Entry Example](#service-location-map-entry-example)
-
-
-#### Material Management Tasks
-
-Each material management task is configured as a map of human-readable aliases (exactly the same as in singing tasks
-configuration of Signing Service) to Material Management Task configuration.
-
-Here are configuration parameters:
-
-
-* **type**:
-The data type for the signing task. Should be one of `CSR`, `CRL`, `NETWORK_MAP` or `NETWORK_PARAMETERS`.
-
-
-* **location**:
-The alias for the service location used by the material management task. Should refer to one of the aliases
-in the serviceLocations map defined above.
-
-
-* **schedule**:
-The schedule for automated execution of the material management task.
-
-
-  * **interval**:
-  The duration interval between signing executions. Either a number representing the millisecond
-  duration or a string duration with unit suffix. See the scheduling signing tasks section below for information about the
-  accepted format.
 
 
 
 
-* **pluginJar**:
-The absolute path to signing plugin `.jar` file
 
-
-* **pluginClass**:
-The class that will be loaded from plugin `.jar` file and will be its entry point from SMR
-
-
-
-{{< note >}}
-It is recommended to set schedule’s interval to a proper value in order for SMR to feed plugin with the new
-signable material as soon as possible, but not too often to avoid plugin being spammed. For instance, the
-value of interval between 1 and 10 seconds should be sufficient.
-
-{{< /note >}}
-
-### Example SMR Configuration
-
-Here is example of complete SMR configuration:
-
-```docker
-serviceLocations = {
-    "identity-manager" = {
-        host = localhost
-        port = 5051
-        verbose = true
-        ssl = {
-            keyStore = {
-                location = "./certificates/corda-ssl-signer-keys.jks"
-                password = password
-            }
-            trustStore = {
-                location = "./certificates/corda-ssl-trust-store.jks"
-                password = trustpass
-            }
-        }
-    },
-    "network-map-1" = {
-        host = localhost
-        port = 5050
-        verbose = true
-        ssl = {
-            keyStore = {
-                location = "./certificates/corda-ssl-signer-keys.jks"
-                password = password
-            }
-            trustStore = {
-                location = "./certificates/corda-ssl-trust-store.jks"
-                password = trustpass
-            }
-        }
-    },
-    "revocation" = {
-        host = localhost
-        port = 5052
-        verbose = true
-        ssl = {
-            keyStore = {
-                location = "./certificates/corda-ssl-signer-keys.jks"
-                password = password
-            }
-            trustStore = {
-                location = "./certificates/corda-ssl-trust-store.jks"
-                password = trustpass
-            }
-        }
-    }
-}
-
-materialManagementTasks = {
-    # Assuming Signing Service configuration contains alias "CSR" in "signers" map.
-    "CSR" = {
-        type = CSR
-        location = "identity-manager"
-        schedule = {
-            interval = 10s
-        }
-        pluginJar = "plugin/smr-default-plugin-ca-1.2.0.jar"
-        pluginClass = "com.r3.enm.smrplugins.defaultplugin.ca.CASMRSigningPlugin"
-    }
-    # Assuming Signing Service configuration contains alias "CRL" in "signers" map.
-    "CRL" = {
-        type = CRL
-        location = "revocation"
-        schedule = {
-            interval = 10s
-        }
-        pluginJar = "plugin/smr-default-plugin-ca-1.2.0.jar"
-        pluginClass = "com.r3.enm.smrplugins.defaultplugin.ca.CASMRSigningPlugin"
-    }
-    # Assuming Signing Service configuration contains alias "NetMap" in "signers" map.
-    "NetMap" = {
-        type = NETWORK_MAP
-        location = "network-map"
-        schedule = {
-            interval = 10s
-        }
-        pluginJar = "plugin/smr-default-plugin-nonca-1.2.0.jar"
-        pluginClass = "com.r3.enm.smrplugins.defaultplugin.nonca.NonCASMRSigningPlugin"
-    }
-    # Assuming Signing Service configuration contains alias "Params" in "signers" map.
-    "Params" = {
-        type = NETWORK_PARAMETERS
-        location = "network-map"
-        schedule = {
-            interval = 10s
-        }
-        pluginJar = "plugin/smr-default-plugin-nonca-1.2.0.jar"
-        pluginClass = "com.r3.enm.smrplugins.defaultplugin.nonca.NonCASMRSigningPlugin"
-    }
-}
-
-```
-
-
-### Developing Signing Plugins
+## Developing Signing Plugins
 
 As mentioned before, we enable possibility of writing custom plugin to support external Signing infrastructures. A plugin
 class must implement `CASigningPlugin` or `NonCASigningPlugin` interface depending on type of signable material type
@@ -1566,7 +1218,7 @@ public enum SigningStatus {PENDING, COMPLETED}
 ```
 
 
-#### CA Signing Plugin
+### CA Signing Plugin
 
 This type of plugin handles Certificate Signing Requests (CSR) and Certificate Revocation List (CRL) signing. A plugin
 class must implement following methods with predefined input and output parameters:
@@ -1735,7 +1387,7 @@ public final class CRLSigningData {
 ```
 
 
-#### Non CA Signing Plugin
+### Non CA Signing Plugin
 
 This type of plugin handles Network Map and Network Parameters signing. A plugin class must implement following methods
 with predefined input and output parameters:
