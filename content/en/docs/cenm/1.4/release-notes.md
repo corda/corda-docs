@@ -28,12 +28,12 @@ Read more about improvements of this release below.
 
 #### Manual update of all existing Signing Service configurations
 
-The SMR (Signable Material Retriever) Service, which prior to CENM 1.4 was used to handle plug-ins for signing data, has been replaced by a plug-in loading logic inside the Signing Service. As a result, **all users must update their existing Signing Service configuration** when upgrading to CENM 1.4 - see the [CENM Upgrade Guide](upgrade-notes.md) for details.
+The SMR (Signable Material Retriever) Service, which prior to CENM 1.4 was used to handle plug-ins for signing data, has been replaced by a plug-in loading logic inside the Signing Service. As a result, **all users must update their existing Signing Service configuration** when upgrading to CENM 1.4 - see the [CENM Upgrade Guide](upgrade-notes.md#manual-update-of-all-existing-signing-service-configurations) for details.
 
 
 #### Zone Service database migration
 
-If you are upgrading to CENM 1.4 from CENM 1.3, you **must** set `runMigration = true` in the database configuration. See the [CENM Upgrade Guide](upgrade-notes.md) for details
+If you are upgrading to CENM 1.4 from CENM 1.3, you **must** set `runMigration = true` in the database configuration. See the [CENM Upgrade Guide](upgrade-notes.md#zone-service-database-migration) for details.
 
 
 ### New features and enhancements
@@ -69,7 +69,7 @@ See the [Signing Service](signing-service.md) documentation for more information
 * We have added support for PostgreSQL 10.10 and 11.5 (JDBC 42.2.8), as noted in [CENM Databases](database-set-up.md#supported-databases) and [CENM support matrix](cenm-support-matrix.md#cenm-databases).
 * A `non-ca-plugin.jar` has been added to `signing-service-plugins` in Artifactory.
 * We have renamed the FARM Service, introduced in CENM 1.3, to [Gateway Service](gateway-service.md). As a result, if you are [upgrading](upgrade-notes.md) from CENM 1.3 to CENM 1.4, the FARM Service `.jar` file used in CENM 1.3 should be replaced with the Gateway Service `.jar` file used in CENM 1.4.
-* In CENM 1.4 we have changed the way `subZoneID` is set in Signing Service configuration - see the [CENM upgrade guide](upgrade-notes.md) for more details.
+* In CENM 1.4 we have changed the way `subZoneID` is set in Signing Service configuration - see the [CENM upgrade guide](upgrade-notes.md#change-in-setting-subzoneid-in-signing-service-configurations) for more details.
 
 ### Fixed issues
 
