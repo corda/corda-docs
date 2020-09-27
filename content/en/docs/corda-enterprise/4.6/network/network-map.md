@@ -42,6 +42,18 @@ to the server at that URL (and each time it changes on startup) and then proceed
 the same server. The network map consists of a list of `NodeInfo` hashes. The node periodically polls for the network map
 (based on the HTTP cache expiry header) and any new entries are downloaded and cached. Entries which no longer exist are deleted from the node’s cache.
 
+{{< note >}}
+**New Headers**
+
+CENM 1.4 introduces a header in all Network Map API responses (except for internal error responses with code 5xx), which indicates the version of the Network Map and the available calls. This header is called `X-Corda-Server-Version` and for CENM 1.4 it has a default value of `2`.
+
+In addition, CENM 1.4 supports for two new headers, which replace existing headers as follows:
+* `X-Corda-Platform-Version` replaces `Platform-version`.
+* `X-Corda-Client-Version` replaces `Client-version`.
+
+**The old header names are still fully supported.**
+{{< /note >}}
+
 The set of REST end-points for the network map service are as follows.
 
 
@@ -56,14 +68,13 @@ The set of REST end-points for the network map service are as follows.
 |GET|/network-map/node-info/{hash}|Retrieve a signed `NodeInfo` as specified in the network map object.|
 |GET|/network-map/network-parameters/{hash}|Retrieve the signed network parameters (see below). The entire object is signed with the network map certificate which is also attached.|
 |GET|/network-map/my-hostname|Retrieve the IP address of the caller (and **not** of the network map).|
+|GET|/network-map/node-infos|Retrieve a list of all signed `NodeInfo` objects for _all_ the nodes in the network at once, included in the second item in the returned pair `Pair<SignedDataWithCert<NetworkMap>, List<SignedNodeInfo>>` in a binary format. (The first item in the returned pair is the same as the response expected from the `GET network-map` endpoint mentioned above).|
 
 {{< /table >}}
 
-{{< note >}}
-
-Note that only HTTP OK (response code 200) is supported - any other kind of response codes, including HTTP redirects (for example, response code 301), are not supported.
-
-{{< /note >}}
+{{< warning >}}
+**The Network Map Service cannot be redirected. Only HTTP OK (response code 200) is supported - any other kind of response codes, including HTTP redirects (for example, response code 301), are NOT supported.**
+{{< /warning >}}
 
 
 ### Additional endpoints from R3
