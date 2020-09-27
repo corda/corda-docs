@@ -24,17 +24,19 @@ While this release is backward-compatible, you should consider upgrading to this
 
 Read more about improvements of this release below.
 
-### Important notes
+{{< warning >}}
 
-#### Manual update of all existing Signing Service configurations
+**Important upgrade notes**
 
-The SMR (Signable Material Retriever) Service, which prior to CENM 1.4 was used to handle plug-ins for signing data, has been replaced by a plug-in loading logic inside the Signing Service. As a result, **all users must update their existing Signing Service configuration** when upgrading to CENM 1.4 - see the [CENM Upgrade Guide](upgrade-notes.md#manual-update-of-all-existing-signing-service-configurations) for details.
+* Manual update of all existing Signing Service configurations
 
+  The SMR (Signable Material Retriever) Service, which prior to CENM 1.4 was used to handle plug-ins for signing data, [has been replaced](#smr-signable-material-retriever-service-merged-into-signing-service) by a plug-in loading logic inside the Signing Service. As a result, **all users must update their existing Signing Service configuration** when upgrading to CENM 1.4 - see the [CENM Upgrade Guide](upgrade-notes.md#manual-update-of-all-existing-signing-service-configurations) for details.
 
-#### Zone Service database migration
+* Zone Service database migration
 
-If you are upgrading to CENM 1.4 from CENM 1.3, you **must** set `runMigration = true` in the database configuration. See the [CENM Upgrade Guide](upgrade-notes.md#zone-service-database-migration) for details.
+  If you are upgrading to CENM 1.4 from CENM 1.3, you **must** set `runMigration = true` in the database configuration. See the [CENM Upgrade Guide](upgrade-notes.md#zone-service-database-migration) for details. This is required due to a [Zone Service database schema change](#network-map-service-performance-enhancements).
 
+{{< /warning >}}
 
 ### New features and enhancements
 
@@ -43,6 +45,25 @@ If you are upgrading to CENM 1.4 from CENM 1.3, you **must** set `runMigration =
 In CENM 1.4, we have adapted to CENM the internal Corda error handling logic introduced in [Corda 4.5](../../corda-os/4.5/error-codes.md) and [Corda Enterprise 4.5](../../corda-enterprise/4.5/node/operating/error-codes.md) for Corda nodes.
 
 As a result, CENM exceptions are now treated as CENM error codes and an error code is generated for each exception. The initial set of error codes, related to configuration parsing/validation errors, are described in the new [CENM error codes documentation page](cenm-error-codes.md). This is the start of a growing CENM error condition knowledge base, which will expand in future releases.
+
+#### Network Map Service performance enhancements
+
+CENM 1.4 introduces performance improvements in the Network Map Service to ensure stable operations with a large amount of active participants in a network.
+
+Performance and reliability improvements can be observed on the unsigned Network Map nodes' response, due to the serialization of fewer fields during the database information retrieval. This speeds up the response generation and avoids potential deadlocks, which could happen in previous CENM versions when more than one unsigned network map node calls were executed simultaneously.
+
+Performance is enhanced through the following combination of changes:
+
+* A new, optional `timeout` parameter now enables you to set specific [Signing Service timeouts](signing-service.md#signing-service-configuration-parameters) for communication to each of the services used within the signing processes defined in the network map, in a way that allows high node count network maps to get signed and to operate at reliable performance levels. You can also use the `timeout` parameter to set specific Network Map Service timeouts for communication to the [Identity Manager and Revocation services](network-map.md#identity-manager--revocation-communication). The `timeout` parameter's values are stored in a new `timeout` column in the [Zone Service](zone-service.md#signing-services-configuration)'s database tables `socket_config` and `signer_config` (refer to the [CENM Upgrade Guide](upgrade-notes.md#zone-service-database-migration) for important details about migrating the Zone Service database from CENM 1.3).
+
+* A [new API endpoint](network-map-overview.md#http-network-map-protocol), `GET network-map/node-infos`, enables you to retrieve a list of all signed `NodeInfo` objects for _all_ the nodes in the network at once.
+
+* The following [new headers](network-map-overview.md#http-network-map-protocol) for Network Map API responses now make headers more closely aligned with HTTP standards:
+  * The new header `X-Corda-Server-Version` has been added for all Network Map API responses (except for internal error responses with code 5xx) indicates the version of the Network Map and the available calls. It has a default value of `2`.
+  * The new header `X-Corda-Platform-Version` replaces `Platform-version`. The old header name continues to be supported.
+  * The new header `X-Corda-Client-Version` replaces `Client-version`. The old header name continues to be supported.
+
+
 
 
 #### SMR (Signable Material Retriever) Service merged into Signing Service
