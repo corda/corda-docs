@@ -13,10 +13,7 @@ tags:
 title: Signing Service
 ---
 
-
 # Signing Service
-
-
 
 ## Purpose
 
@@ -32,12 +29,11 @@ being approved and signed, ideally with a network operator manually verifying an
 Parameter changes. The Signing Service provides this behaviour, with HSM integration enabling the signing of any
 particular data to require authentication from multiple users.
 
-
 ## Signing Service overview
 
-CENM’s Signing Service supports the following HSMs (see [CENM support matrix](cenm-support-matrix.md) for more information):
+The Signing Service supports the following HSMs (see [CENM support matrix](cenm-support-matrix.md#hardware-security-modules-hsms) for more information):
 
-* Utimaco.
+* Utimaco SecurityServer Se Gen2.
 * Gemalto Luna.
 * Securosys PrimusX.
 * Azure Key Vault.
@@ -46,9 +42,9 @@ CENM’s Signing Service supports the following HSMs (see [CENM support matrix](
 The verification and signing of data is done via the set of user configured signing tasks within the service, with each
 task being configured with:
 
-* **Data type:** CSR, CRL, Network Map or Network Parameters.
-* **Data source:** the CENM service to retrieve unsigned data and persist signed data *(for example, a network’s Identity Manager Service)*.
-* **Signing key:** the key that should be used to sign the data *(for example, a particular key within a HSM using keycard authentication)*.
+* **Data type:** CSR, CRL, Network Map, or Network Parameters.
+* **Data source:** the CENM service to retrieve unsigned data and persist signed data - for example, a network’s Identity Manager Service.
+* **Signing key:** the key that should be used to sign the data - for example, a particular key within a HSM using keycard authentication.
 
 Once the service has been configured with this set of signing tasks, an execution of a given signing task will:
 
@@ -56,56 +52,51 @@ Once the service has been configured with this set of signing tasks, an executio
 * Sign it using the provided key, requesting manual authentication if required.
 * Persist the signed data back to the data source.
 
-Each signing task is configured independently from one another, meaning different keys can (and should) be used to sign
+Each signing task is configured independently from one another, meaning that different keys can (and should) be used to sign
 different data types or data from different sources. The independence of each signing task also means that the Signing
-Service is not constrained to a given network. For a given signing task, as long as the Signing Service can reach the
-configured data source and access the configured signing key (or HSM) then the task can be executed. Therefore one
-Signing Service can be used to manage several networks/sub-zones.
+Service is not constrained to a given network. For a given signing task, the task can be executed as long as the Signing Service can reach the
+configured data source and access the configured signing key (or HSM). Therefore one Signing Service can be used to manage several networks/sub-zones.
 
-Due to security concerns, the signing service should be hosted on private premises, **not** in a cloud environment. As
-mentioned above, the only communication requirements are outgoing connections to the CENM services as data sources
-or outgoing connection to SMR Service configured as data source which then connects to CENM services (Identity Manager and Network Maps), and outgoing connections to the HSMs
-for the configured signing keys. The overall flow of communication can be seen in the below diagram:
+Due to security concerns, the Signing Service should be hosted on private premises and **not** in a cloud environment.
+As mentioned above, the only communication requirements are outgoing connections to the CENM services as data sources, and outgoing connections to the HSMs
+for the configured signing keys. The overall flow of communication can be seen in the following diagram:
 
 ![signing service communication](/en/images/signing-service-communication.png "signing service communication")
+
 {{< note >}}
 All inter-service communication can be configured with SSL support to ensure the connection is encrypted. See
-[Configuring the CENM services to use SSL](enm-with-ssl.md)
-
+[Configuring the CENM services to use SSL](enm-with-ssl.md) for more information.
 {{< /note >}}
-{{< note >}}
-This document does not cover HSM setup, rather assumes that the HSM(s) have already been configured - the
-users and certificates should have been previously setup on the box.
 
+{{< note >}}
+This document does not cover HSM setup. It is based on the assumption that the HSM(s) have already been configured - the
+users and certificates should have previously been set up on the box.
 {{< /note >}}
 
 ### Running the Signing Service
 
-Once the Signing Service has been configured, it can be run via the command:
+Once the Signing Service has been configured, you can run it using the following command:
 
 ```bash
 java -jar signer-<VERSION>.jar --config-file <CONFIG_FILE>
 ```
 
-Optional parameter:
+You can use the following optional parameter to specify the working directory:
 
 ```bash
 --working-dir=<DIR>
 ```
 
-This will set the working directory to the specified folder. The service will look for files in that folder. This means
-certificates, configuration files etc. should be under the working directory.
-If not specified it will default to the current working directory (the directory from which the service has been started).
+If a specific working directory is set in this way, the Signing Service will look for files in that directory, meaning that all certificates and configuration files should be located in that directory.
+If not specified, the Signing Service use the current working directory - this is the directory from which the service has been started.
 
 On success you should see a message similar to:
 
 ```kotlin
 2019-01-01T12:34:56,789 [main] INFO - Binding Shell SSHD server on port <SSH PORT>
 ```
-
-The service can then be accessed via ssh, either locally on the machine or from another machine within the same secure,
+The service can then be accessed via SSH, either locally on the machine or from another machine within the same secure,
 closed network that the service is being run on.
-
 
 ### Executing a signing task
 
