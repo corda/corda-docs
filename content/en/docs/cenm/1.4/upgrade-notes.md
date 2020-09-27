@@ -75,8 +75,6 @@ pluginJar
 
 ### Change in setting `subZoneID` in Signing Service configurations
 
-It worth noting that subZoneID in Signer(SMR) configuration now set in a different way:
-
 In CENM 1.3 (and older versions), `subZoneID` was defined in Signing Service configurations as part of the service location alias (`serviceLocationAlias`), as shown below:
 
 ```
