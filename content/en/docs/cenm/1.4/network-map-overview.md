@@ -49,8 +49,19 @@ to the server at the `networkMapUrl` (and each time it changes on start-up) and 
 the same server. The network map consists of a list of `NodeInfo` hashes. The node periodically polls for the network map
 (based on the HTTP cache expiry header) and any new entries are downloaded and cached. Entries which no longer exist are deleted from the node’s cache.
 
-The set of REST end-points for the Network Map Service are as follows. This defines the first committed version of the Corda Network Map protocol.
+{{< note >}}
+**New Headers**
 
+CENM 1.4 introduces a header in all Network Map API responses (except for internal error responses with code 5xx), which indicates the version of the Network Map and the available calls. This header is called `X-Corda-Server-Version` and for CENM 1.4 it has a default value of `2`.
+
+In addition, CENM 1.4 supports for two new headers, which replace existing headers as follows:
+* `X-Corda-Platform-Version` replaces `Platform-version`.
+* `X-Corda-Client-Version` replaces `Client-version`.
+
+The old header names are still fully supported. The reason for this improvement is to make headers more closely aligned to HTTP standards.
+{{< /note >}}
+
+The set of REST endpoints for the Network Map Service are as follows. This defines the first committed version of the Corda Network Map protocol.
 
 {{< table >}}
 
@@ -61,6 +72,7 @@ The set of REST end-points for the Network Map Service are as follows. This defi
 |GET|/network-map|Retrieve the current signed public network map object. The entire object is signed with the network map certificate which is also attached.|
 |GET|/network-map/node-info/{hash}|Retrieve a signed `NodeInfo` as specified in the network map object.|
 |GET|/network-map/network-parameters/{hash}|Retrieve the signed network parameters (see below). The entire object is signed with the network map certificate which is also attached.|
+|GET|/network-map/node-infos|Retrieve a list of all signed `NodeInfo` for _all_ the nodes in the network at once, included in the second item in the returned pair `Pair<SignedDataWithCert<NetworkMap>, List<SignedNodeInfo>>` in a binary format.  The first item in the returned pair is the same as the response expected from the `GET network-map` endpoint (see above).|
 
 {{< /table >}}
 
