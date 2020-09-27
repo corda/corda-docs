@@ -24,6 +24,80 @@ in question. If not specified, you may assume the versions you are currently usi
 Before you start the upgrade, you must consult the [CENM Release Notes](release-notes.md) to confirm all changes between releases.
 {{< /warning >}}
 
+## 1.3.x to 1.4
+
+CENM 1.4 includes a few changes and improvements that require some additional upgrade steps, as described below.
+
+The general procedure for upgrading from CENM 1.3 to CENM 1.4 is as follows:
+
+1. Stop all CENM 1.3 services.
+2. To prevent picking up old configurations for the new services by the Angel Service, remove or rename all configuration files that have to be updated (see the sections below).
+3. Update Signing Service configuration files, as [described below](#manual-update-of-all-existing-signing-service-configurations). Note that there is a change in the way `subZoneID` is set in Signing Service configurations, as [described below](#change-in-setting-subzoneid-in-signing-service-configurations).
+4. Replace the `.jar` files for all services with the latest CENM 1.4 `.jar` files. **ImportantL** In CENM 1.4, the FARM Service has been renamed to "Gateway Service", so the FARM Service `.jar` file used in CENM 1.3 should be replaced with the Gateway Service `.jar` file used in CENM 1.4.
+5. Start the Auth Service, the Zone Service, and the Gateway Service. **Important:** The Zone Service requires the `--run-migration` option to be set to `true`, as [described below](#zone-service-database-migration).
+6. Submit the updated configurations to the Zone Service.
+7. Start the Identity Manager Service, the Signing Service, and the Network Map Service.
+
+### Zone Service database migration
+
+If you are upgrading to CENM 1.4 from CENM 1.3, you **must** set `runMigration = true` in the database configuration. This is required due to a change in the Zone Service database schema - a new column in the database tables `socket_config` and `signer_config` called `timeout` is used to record the new optional `timeout` parameter values used in `serviceLocations` configuration blocks (Signing Services) and `identityManager` and `revocation` configuration blocks (Network Map Service). This value can remain `null`,
+in which case the default 10 seconds timeout will be used wherever applicable.
+
+An example follows below:
+
+```
+database = {
+  driverClassName = "org.h2.Driver"
+  user = "testuser"
+  password = "password"
+  url = "jdbc:h2:file:/etc/corda/db;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=10000;WRITE_DELAY=0;AUTO_SERVER_PORT=0"
+  runMigration = true
+}
+```
+
+### Manual update of all existing Signing Service configurations
+
+The SMR (Signable Material Retriever) Service, which prior to CENM 1.4 was used to handle plug-ins for signing data, has been replaced by a plug-in loading logic inside the Signing Service. As a result, **all users must update their existing Signing Service configuration** when upgrading to CENM 1.4.
+
+To update your Signing Service configuration:
+
+1. Remove the `serviceLocationAlias` property from the signing task.
+2. Remove the `serviceLocations` property and move the locations defined there to `serviceLocation` properties inside each signing task. Note that as a result Network Parameters signing tasks and Network Map signing tasks will have the same `serviceLocation` property.
+3. Remove the `caSmrLocation` property.
+4. Remove the `nonCaSmrLocation` property.
+5. Configure the `pluginClass` and `pluginJar` properties inside each signing task to use the following structure:
+
+```
+plugin {
+pluginClass =
+pluginJar
+}
+```
+
+### Change in setting `subZoneID` in Signing Service configurations
+
+It worth noting that subZoneID in Signer(SMR) configuration now set in a different way:
+
+In CENM 1.3 (and older versions), `subZoneID` was defined in Signing Service configurations as part of the service location alias (`serviceLocationAlias`), as shown below:
+
+```
+serviceLocations.network-map-<subzone ID>
+```
+
+And:
+
+```
+signers.NetworkMap.serviceLocationAlias = "network-map-<subzone ID>"
+signers.NetworkParameters.serviceLocationAlias = "network-map-<subzone ID>"
+```
+
+In CENM 1.4, you must define `subZoneID` as new property value, as follows:
+
+```
+signers.NetworkMap.subZoneId = <subzone ID>
+signers.NetworkParameters.subZoneId = <subzone ID>
+```
+
 ## 1.2.x to 1.3
 
 CENM 1.3 introduces a significant number of services. You should upgrade to CENM 1.2.2 before upgrading to 1.3.
@@ -149,7 +223,7 @@ The upgrade process for 1.2.1 to 1.2.2 is a drop-in replacement of the existing 
 
 ## 1.1 to 1.2.1
 
- See the upgrade note for 1.1 to 1.2.
+See the upgrade note for 1.1 to 1.2.
 
 ## 1.1 to 1.2
 
