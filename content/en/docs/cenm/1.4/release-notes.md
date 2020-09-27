@@ -16,27 +16,29 @@ title: Release notes
 
 # Release notes
 
-## CENM 1.4 release overview
+## Corda Enterprise Network Manager 1.4
 
-CENM 1.4 introduces ...
+CENM 1.4 introduces a range of new features and enhancements, including a [CENM error condition knowledge base](#cenm-error-condition-knowledge-base), a number of [Network Map Service performance enhancements](#network-map-service-performance-enhancements), a [new Signing Service plug-in functionality](#new-signing-service-plug-in-functionality-replaces-the-smr-signable-material-retriever-service) that replaces the SMR (Signable Material Retriever) Service, and [extended support for AWS native network deployment](#aws-native-network-deployment---reference-deployment-on-aws-eks-cloudhsm-postgresql) using [EKS](https://aws.amazon.com/eks/), [CloudHSM](https://aws.amazon.com/cloudhsm/), and [AWS PostgreSQL](https://aws.amazon.com/rds/postgresql/).
 
 While this release is backward-compatible, you should consider upgrading to this release from earlier versions of the Corda Enterprise Network Manager.
-
-Read more about improvements of this release below.
 
 {{< warning >}}
 
 **Important upgrade notes**
 
-* Manual update of all existing Signing Service configurations
+Upgrading from CENM 1.3 to CENM 1.4 requires the following actions:
 
-  The SMR (Signable Material Retriever) Service, which prior to CENM 1.4 was used to handle plug-ins for signing data, [has been replaced](#smr-signable-material-retriever-service-merged-into-signing-service) by a plug-in loading logic inside the Signing Service. As a result, **all users must update their existing Signing Service configuration** when upgrading to CENM 1.4 - see the [CENM Upgrade Guide](upgrade-notes.md#manual-update-of-all-existing-signing-service-configurations) for details.
+* Manual update of all existing Signing Service configurations.
 
-* Zone Service database migration
+  The SMR (Signable Material Retriever) Service, which prior to CENM 1.4 was used to handle plug-ins for signing data, [has been replaced](#new-signing-service-plug-in-functionality-replaces-the-smr-signable-material-retriever-service) by a plug-in loading logic inside the Signing Service. As a result, **all users must update their existing Signing Service configuration** when upgrading to CENM 1.4 - see the [CENM Upgrade Guide](upgrade-notes.md#manual-update-of-all-existing-signing-service-configurations) for details.
+
+* Zone Service database migration.
 
   If you are upgrading to CENM 1.4 from CENM 1.3, you **must** set `runMigration = true` in the database configuration. See the [CENM Upgrade Guide](upgrade-notes.md#zone-service-database-migration) for details. This is required due to a [Zone Service database schema change](#network-map-service-performance-enhancements).
 
 {{< /warning >}}
+
+Read more about improvements of this release below.
 
 ### New features and enhancements
 
@@ -63,34 +65,73 @@ Performance is enhanced through the following combination of changes:
   * The new header `X-Corda-Platform-Version` replaces `Platform-version`. The old header name continues to be supported.
   * The new header `X-Corda-Client-Version` replaces `Client-version`. The old header name continues to be supported.
 
+#### New Signing Service plug-in functionality replaces the SMR (Signable Material Retriever) Service
+
+The SMR (Signable Material Retriever) Service was introduced in CENM 1.2 with the purpose of handling plug-ins for signing data. In CENM 1.4 we have replaced it with a plug-in loading logic as part of the Signing Service by fetching the signable data from the Identity Manager Service and the Network Map Service and sending it to either the new plug-in (if specified) or to the default Signing Service processing logic.
+
+As a result we have removed the SMR Service completely, thus reducing the number of CENM services and eliminating the need to maintain RPC servers and storage previously created by the default SMR plug-in.
+
+A range of new functionality and changes, introduced to that effect, are described below. See the [Signing Service](signing-service.md) documentation for full details.
+
+**Configuration changes**
+
+* The new `serviceLocation` property replaces `serviceLocationAlias`.
+
+  The Signing Service configuration has been changed so that each signing task must now take in a `serviceLocation` property instead of a `serviceLocationAlias`.
+  Multiple locations (one for each sub-zone) can be defined for non-CA signing tasks (Network Map, Network Parameters) using the new property.
+  The `serviceLocationAlias` property cannot be used in CENM 1.4 (if used it will cause a configuration parsing error).
+
+* Option to configure plug-in based or default signing.
+
+  Each signing task has a new property called `plugin`, which consists of `pluginJar` and `pluginClass`. If the `plugin` property is set, the Signing Service will use the plug-in to sign data; if not set, the Signing Service will use the default signing mechanism. If the `plugin` property is used, `signingKeyAlias` must not be present because the default Signing Service keys will not be used. The `plugin` property must be the same for signing tasks of the same type - CA (CSR or CRL) or non-CA (Network Map or Network Parameters); however, plug-in based and default signing can be mixed - for example, you can use plug-in based signing for CA Signing Services (CSR/CRL), and default signing for non-CA Signing Services (Network Map / Network Parameters). If both CA and non-CA signing tasks use plug-ins, the `signingKeys` property must not be set.
+
+**Asynchronous signing**
+
+Asynchronous signing is a new feature inside the plug-in API, which allows to delay signing when the Signing Service plug-in is used: when a signing request is sent to the plug-in, it might not be signed immediately and in that case it will return a `PENDING` status.
+
+How it works:
+1. The Signing Service polls for status changes of the signing request. If the status returned from the plug-in is `PENDING`, the Signing Service keeps polling. There is no maximum set timeout for a request status change to be returned - the Signing Service keeps polling until the status becomes either `COMPLETED` or `FAILED`.
+2. If the returned status is `FAILED`, the request is not persisted.
+3. If the status is `COMPLETED`, the request is marked as done and it is persisted to the respective CENM services (Identity Manager Service or Network Map Service).
+
+The following changes have been made as a result of the introduction of asynchronous signing:
+
+* API changes. To allow the Signing Service to query the signing status from the plug-in, new functions have been added for CA and non-CA plug-ins. In addition, all response classes now contain an optional `requestId` that is filled in by the plug-in - if the status is returned as `PENDING` but no `requestId` (tracking id) is provided, the signing will stop and the request will be discarded.
+* Shell signing. If the signing is done via Shell, the asynchronous tracking ids and statuses are printed to the console. In addition, new Shell menu items have been added for each signing task, which allow you to track the Asynchronous Signing request status.
+* RPC function changes. To enable the complex task of returning Asynchronous Signing tracking ids and statuses when the signing is done via RPC, a number of changes have been made to RPC functions, including changes to requests and the addition of four new RPC requests used to query the status of each request via RPC. See the [Signing Service](signing-service.md) documentation for more information.
+
+**Code changes**
+
+* Common signers. We have the `common` module, making signer classes abstract and adding two implementation for each signer - one for the default logic and another one for the plug-in logic.
+* `SigningServicePluginLoader`. This class is used to load the defined plug-ins from the configuration. It uses a Java `URLClassLoader` and a parent `ClassLoader` that can be provided as a constructor argument.
+
+**Example CA plug-in**
+
+CENM 1.4 ships with an example CA plug-in, which equips users with everything they need to know when creating their own plug-in. See the [Signing Service](signing-service.md) documentation for more information.
 
 
+#### AWS native network deployment - reference deployment on AWS EKS, CloudHSM, PostgreSQL
 
-#### SMR (Signable Material Retriever) Service merged into Signing Service
+We are expanding our support to AWS native network deployment by supporting EKS in our Kubernetes & Helm reference deployment, using.:
+* [EKS](https://aws.amazon.com/eks/).
+* [CloudHSM](https://aws.amazon.com/cloudhsm/).
+* [AWS PostgreSQL](https://aws.amazon.com/rds/postgresql/).
 
-... add content...
+Supported deployment scenarios in CENM 1.4:
+* AWS with external PostgreSQL.
+* Azure with PostgreSQL deployed in cluster.
+* Azure with external PostgreSQL.
 
-To update your Signing Service configuration:
+Not supported in CENM 1.4:
+* AWS with PostgreSQL deployed in cluster.
 
-1. Remove the `serviceLocationAlias` property from the signing task.
-2. Remove the `serviceLocations` property and move the locations defined there to `serviceLocation` properties inside each signing task. Note that as a result Network Parameters signing tasks and Network Map signing tasks will have the same `serviceLocation` property.
-3. Remove the `caSmrLocation` property.
-4. Remove the `nonCaSmrLocation` property.
-5. Configure the `pluginClass` and `pluginJar` properties inside each signing task to use the following structure:
-  ```
-  plugin {
-    pluginClass =
-    pluginJar   
-  }
-  ```
-
-See the [Signing Service](signing-service.md) documentation for more information.
+See the [CENM deployment](deployment-index.md) section for more information.
 
 #### Other changes
 * We have added support for PostgreSQL 10.10 and 11.5 (JDBC 42.2.8), as noted in [CENM Databases](database-set-up.md#supported-databases) and [CENM support matrix](cenm-support-matrix.md#cenm-databases).
 * A `non-ca-plugin.jar` has been added to `signing-service-plugins` in Artifactory.
 * We have renamed the FARM Service, introduced in CENM 1.3, to [Gateway Service](gateway-service.md). As a result, if you are [upgrading](upgrade-notes.md) from CENM 1.3 to CENM 1.4, the FARM Service `.jar` file used in CENM 1.3 should be replaced with the Gateway Service `.jar` file used in CENM 1.4.
-* In CENM 1.4 we have changed the way `subZoneID` is set in Signing Service configuration - see the [CENM upgrade guide](upgrade-notes.md#change-in-setting-subzoneid-in-signing-service-configurations) for more details.
+* In CENM 1.4 we have changed the way `subZoneID` is set in Signing Service configurations - see the [CENM upgrade guide](upgrade-notes.md#change-in-setting-subzoneid-in-signing-service-configurations) for more details.
 
 ### Fixed issues
 
@@ -136,7 +177,7 @@ with multiple accounts for each task The Signing Service now prompts a specific 
 * When creating an AWS Postgres database, users are unable to connect to the database when they have selected the Virtual Private Cloud (VPC) of their Elastic Kubernetes Service (EKS) Cluster. However, they are able to connect when they have selected the default VPC.
 
 
-## Release 1.3.1
+## Corda Enterprise Network Manager 1.3.1
 
 CENM 1.3.1 introduces fixes to known issues in CENM 1.3.
 
@@ -148,7 +189,7 @@ CENM 1.3.1 introduces fixes to known issues in CENM 1.3.
 * Fixed an issue where `keyPassword` was not hidden in log files for each CENNM Service with a configuration file.
 * Fixed an issue with an unclear error message for unhandled exceptions.
 
-## CENM 1.3 release overview
+## Corda Enterprise Network Manager 1.3
 
 CENM 1.3 introduces a new Command-Line Interface (CLI) tool for network operators to manage CENM services. This functionality ships with new services that enable you to manage CENM configurations (the new Zone Service), to create new users and roles (the new User Admin tool), and to authenticate and authorise users (the new Auth Service). The Auth Service supports full Role-Based Access Control (RBAC) and provides a web-based management interface for system administrators to create and manage user groups and entitlements.
 
@@ -203,7 +244,7 @@ Our documentation now provides some deployment recommendations on how to make th
 - The bootstrap deployment script does not set up an Angel Service for the Signing Service, and any changes to the configuration must be made using the old process used for CENM 1.2 (in this scenario only). The Signing Service does support the Angel Service, and can be configured via the Zone Service if managed by an Angel Service.
 - The `netmap netparams` update status CLI command renders raw `JSON` only.
 
-## Release 1.2.2
+## Corda Enterprise Network Manager 1.2.2
 
 CENM 1.2.2 introduces fixes to known issues in CENM 1.2.
 
@@ -212,7 +253,7 @@ Fixed issues
 * Using `csr_token` as part of a node registration causes the registration to fail when the Identity Manager is set up to use a supported version of Oracle database.
 * Creating and signing the CRL fails when upgrading from CENM 0.4 if the existing revoked certificates lacked a revocation reason.
 
-## Release 1.2
+## Corda Enterprise Network Manager 1.2
 
 ### Major Features
 
@@ -228,9 +269,9 @@ See [Kubernetes deployment documentation](deployment-kubernetes.md) for more det
 
 To satisfy clients who wish to use third party software or service providers to handle the supported lifecycle of certificates and network services signing events in a Corda network, the Signing Service has been separated into Signable Material Retriever Service (SMR) and CENM Signing Service in order to offer a pluggable interface.
 
-The new service (SMR) extracts signable material from the Identity Manager and Network Map services, and then delegates signing to a plugin. Customers can implement their own plugins to integrate with external signing infrastructure and return signed material back to SMR to pass to the relevant CENM service.
+The new service (SMR) extracts signable material from the Identity Manager and Network Map services, and then delegates signing to a plug-in. Customers can implement their own plug-ins to integrate with external signing infrastructure and return signed material back to SMR to pass to the relevant CENM service.
 
-See [Signing Services](signing-service.md) for more details. Also see [EJBCA Sample Plugin](ejbca-plugin.md) for a sample open source CA implementation.
+See [Signing Services](signing-service.md) for more details. Also see [EJBCA Sample plug-in](ejbca-plugin.md) for a sample open source CA implementation.
 
 **CRL Endpoint Check tool**
 
@@ -312,7 +353,7 @@ are currently being processed and reject surplus creation attempts. The Identity
 as warning: “There is already a ticket: ‘<TICKET ID>’ corresponding to *Request ID* = <VALUE>, not creating a new one.”
 
 
-## Release 1.1
+## Corda Enterprise Network Manager 1.1
 
 The R3 Network Services team is excited to announce the release of CENM 1.1,
 introducing support for a number of additional HSMs as well as adding support for Oracle DB.
@@ -370,7 +411,7 @@ This is intentional in order as the operator needs to make decisions on this con
 * PKI tool reports “Error whilst attempt to read config lines.” if it cannot find a configuration file, rather than a more specific error message.
 
 
-## Release 1.0
+## Corda Enterprise Network Manager 1.0
 
 R3 and The Network Services team are proud to deliver the inaugural release of the Corda Enterprise
 Network Manager version 1.0. The CENM can be used to operate a bespoke Corda network when the requirement
