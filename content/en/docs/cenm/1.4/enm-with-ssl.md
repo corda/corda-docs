@@ -549,43 +549,6 @@ signingKeys = {
     }
 }
 
-##########################################################
-# All CENM service endpoints for fetching/persisting data #
-##########################################################
-caSmrLocation = {
-    host = localhost
-    port = 5010
-    verbose = true
-    # note that this SSL configuration could use different keys to the other locations if desired
-    ssl {
-        keyStore {
-            location = exampleSslKeyStore.jks
-            password = "password"
-        }
-        trustStore {
-            location = exampleSslTrustStore.jks
-            password = "trustpass"
-        }
-    }
-}
-
-nonCaSmrLocation = {
-    host = localhost
-    port = 5011
-    verbose = true
-    # note that this SSL configuration could use different keys to the other locations if desired
-    ssl {
-        keyStore {
-            location = exampleSslKeyStore.jks
-            password = "password"
-        }
-        trustStore {
-            location = exampleSslTrustStore.jks
-            password = "trustpass"
-        }
-    }
-}
-
 ###################################################
 # Signing tasks to be run (manually or scheduled) #
 ###################################################
