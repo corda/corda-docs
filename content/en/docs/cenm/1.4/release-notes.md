@@ -72,7 +72,8 @@ See the [Signing Service](signing-service.md) documentation for more information
 #### Other changes
 * We have added support for PostgreSQL 10.10 and 11.5 (JDBC 42.2.8), as noted in [CENM Databases](database-set-up.md#supported-databases) and [CENM support matrix](cenm-support-matrix.md#cenm-databases).
 * A `non-ca-plugin.jar` has been added to `signing-service-plugins` in Artifactory.
-* We have renamed the FARM Service, introduced in CENM 1.2, to [Gateway Service](gateway-service.md).
+* We have renamed the FARM Service, introduced in CENM 1.3, to [Gateway Service](gateway-service.md). As a result, if you are [upgrading](upgrade-notes.md) from CENM 1.3 to CENM 1.4, the FARM Service `.jar` file used in CENM 1.3 should be replaced with the Gateway Service `.jar` file used in CENM 1.4.
+* In CENM 1.4 we have changed the way `subZoneID` is set in Signing Service configuration - see the [CENM upgrade guide](upgrade-notes.md) for more details.
 
 ### Fixed issues
 
@@ -115,7 +116,7 @@ with multiple accounts for each task The Signing Service now prompts a specific 
 * When a Signing Service is started with an incomplete or incorrect configuration, a stack trace occurs. This should be handled as an exception.
 * Due to a known issue with `serviceLocations`, when the new optional `timeout` [parameter](signing-service.md#signing-service-configuration-parameters) is passed to the Zone Service via the Signing Service's `serviceLocations` configuration block, only the `timeout` value of the first `serviceLocations` location will be taken into account and used for all other service locations.
 * The CENM Command-line Interface Tool supports the following additional certificate revocation reasons, which are not supported by the Identity Manager Service: `CERTIFICATE_HOLD`, `UNUSED`, `REMOVE_FROM_CRL`, `AA_COMPROMISE`, and `UNSPECIFIED`.
-* When creating an AWS Postgres database, users are unable to connect to the database when they have selected the Virtual Private Cloud (VPC) of their Elastic Kubernetes Service (EKS) Cluster. However, they are able to connect when they have selected the default VPC. 
+* When creating an AWS Postgres database, users are unable to connect to the database when they have selected the Virtual Private Cloud (VPC) of their Elastic Kubernetes Service (EKS) Cluster. However, they are able to connect when they have selected the default VPC.
 
 
 ## Release 1.3.1
