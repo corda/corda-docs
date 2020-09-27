@@ -58,7 +58,7 @@ In addition, CENM 1.4 supports for two new headers, which replace existing heade
 * `X-Corda-Platform-Version` replaces `Platform-version`.
 * `X-Corda-Client-Version` replaces `Client-version`.
 
-The old header names are still fully supported. The reason for this improvement is to make headers more closely aligned to HTTP standards.
+**The old header names are still fully supported.**
 {{< /note >}}
 
 The set of REST endpoints for the Network Map Service are as follows. This defines the first committed version of the Corda Network Map protocol.
@@ -72,7 +72,7 @@ The set of REST endpoints for the Network Map Service are as follows. This defin
 |GET|/network-map|Retrieve the current signed public network map object. The entire object is signed with the network map certificate which is also attached.|
 |GET|/network-map/node-info/{hash}|Retrieve a signed `NodeInfo` as specified in the network map object.|
 |GET|/network-map/network-parameters/{hash}|Retrieve the signed network parameters (see below). The entire object is signed with the network map certificate which is also attached.|
-|GET|/network-map/node-infos|Retrieve a list of all signed `NodeInfo` for _all_ the nodes in the network at once, included in the second item in the returned pair `Pair<SignedDataWithCert<NetworkMap>, List<SignedNodeInfo>>` in a binary format.  The first item in the returned pair is the same as the response expected from the `GET network-map` endpoint (see above).|
+|GET|/network-map/node-infos|Retrieve a list of all signed `NodeInfo` objects for _all_ the nodes in the network at once, included in the second item in the returned pair `Pair<SignedDataWithCert<NetworkMap>, List<SignedNodeInfo>>` in a binary format. (The first item in the returned pair is the same as the response expected from the `GET network-map` endpoint mentioned above).|
 
 {{< /table >}}
 
