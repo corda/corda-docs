@@ -26,18 +26,14 @@ Read more about improvements of this release below.
 
 ### Important notes
 
-The SMR (Signable Material Retriever) Service, which was used to handle plug-ins for signing data, has been replaced by a plug-in loading logic inside the Signing Service. As a result, **all users must update existing their Signing Service configuration** when [upgrading](upgrade-notes.md) to Corda Enterprise Network Manager 1.4. See [SMR (Signable Material Retriever) Service merged into Signing Service](#smr-signable-material-retriever-service-merged-into-signing-service) below for details.
+#### Manual update of all existing Signing Service configurations
 
-As a result of the introduction of an optional `timeout` parameter used in Signing Service `serviceLocations` and Network Map Service `identityManager` and `revocation` configuration blocks, the Zone Service's database schema has been changed to accommodate the new field. When migrating from CENM 1.3 to CENM 1.4, you must set the `runMigration` option to `true`, as shown in the example below:
-```
-database = {
-	driverClassName = "org.h2.Driver"
-    user = "testuser"
-	password = "password"
-	url = "jdbc:h2:file:/etc/corda/db;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=10000;WRITE_DELAY=0;AUTO_SERVER_PORT=0"
-    runMigration = true
-}
-```
+The SMR (Signable Material Retriever) Service, which prior to CENM 1.4 was used to handle plug-ins for signing data, has been replaced by a plug-in loading logic inside the Signing Service. As a result, **all users must update their existing Signing Service configuration** when upgrading to CENM 1.4 - see the [CENM Upgrade Guide](upgrade-notes.md) for details.
+
+
+#### Zone Service database migration
+
+If you are upgrading to CENM 1.4 from CENM 1.3, you **must** set `runMigration = true` in the database configuration. See the [CENM Upgrade Guide](upgrade-notes.md) for details
 
 
 ### New features and enhancements
@@ -92,6 +88,7 @@ with multiple accounts for each task The Signing Service now prompts a specific 
 ### Known issues
 
 * Cloud deployment of CENM 1.4 on Azure or AWS will not work on the same cluster if CENM 1.2 or 1.3 is already running on that cluster (and vice versa). This is due to a conflict in the naming of some Kubernetes components used in both deployments, which currently prevents versions 1.2/1.3 and 1.4 from running on the same cluster.
+* Due to a known issue with `serviceLocations`, when the new optional `timeout` [parameter](signing-service.md#signing-service-configuration-parameters) is passed to the Zone Service via the Signing Service's `serviceLocations` configuration block, only the `timeout` value of the first `serviceLocations` location will be taken into account and used for all other service locations.
 * The Command-line Interface Tool `request status` command does not work for completed requests.
 * When there are incorrect `signer-ca` settings or a `ca-plugin` has stopped, an exception appears instead of a description of the issue.
 * The Gateway Service error `Invalid character found in method name. HTTP method names must be tokens` may occur after successfully deploying CENM on Kubernetes, registering new nodes, and performing flows. However, there is no side effect to this error and the user is able to connect to the Command-line Interface Tool and execute Command-line Interface commands.
@@ -114,7 +111,6 @@ with multiple accounts for each task The Signing Service now prompts a specific 
 * Information about the running version of CENM components is missing from the logs.
 * The app version is not displayed when running Helm Charts.
 * When a Signing Service is started with an incomplete or incorrect configuration, a stack trace occurs. This should be handled as an exception.
-* Due to a known issue with `serviceLocations`, when the new optional `timeout` [parameter](signing-service.md#signing-service-configuration-parameters) is passed to the Zone Service via the Signing Service's `serviceLocations` configuration block, only the `timeout` value of the first `serviceLocations` location will be taken into account and used for all other service locations.
 * The CENM Command-line Interface Tool supports the following additional certificate revocation reasons, which are not supported by the Identity Manager Service: `CERTIFICATE_HOLD`, `UNUSED`, `REMOVE_FROM_CRL`, `AA_COMPROMISE`, and `UNSPECIFIED`.
 * When creating an AWS Postgres database, users are unable to connect to the database when they have selected the Virtual Private Cloud (VPC) of their Elastic Kubernetes Service (EKS) Cluster. However, they are able to connect when they have selected the default VPC.
 
