@@ -212,12 +212,13 @@ To manage the membership lists or groups, one of the authorised members of the n
 
 To create a new group:
 
-1. Run `CreateGroupFlow`. 
+1. Run `CreateGroupFlow`.
+2. All network members with sufficient permissions approve the proposed change.
 
 **CreateGroupFlow arguments**:
 
-- `networkId` ID of the Business Network that Business Network Group will relate to.
-- `groupId` Custom ID to be given to the issued Business Network Group. If not specified, randomly selected one will be used.
+- `networkId` ID of the Business Network that the target Business Network Group will relate to.
+- `groupId` Custom ID to be given to the issued Business Network Group. If not specified, a randomly generated ID will be used.
 - `groupName` Optional name to be given to the issued Business Network Group.
 - `additionalParticipants` Set of participants to be added to issued Business Network Group alongside initiator's identity.
 - `notary` Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used.
@@ -240,6 +241,13 @@ CordaRPCClient(rpcAddress).start(user.userName, user.password).use {
 }
 ```
 
+### Delete a group
+
+To delete a group:
+
+1. Run `DeleteGroupFlow`.
+2. All network members with sufficient permissions approve the proposed change.
+
 **DeleteGroupFlow arguments**:
 
 - `groupId` ID of group to be deleted
@@ -250,14 +258,19 @@ CordaRPCClient(rpcAddress).start(user.userName, user.password).use {
 The `ModifyGroupFlow` can update the name of a group and/or its list of members. At least one of the *name* or *participants* arguments
 must be provided.
 
+To modify a group:
+
+1. Run `ModifyGroupFlow`.
+2. All network members with sufficient permissions approve the proposed change.
+
 **ModifyGroupFlow arguments**:
 
-- ```groupId``` ID of group to be modified
-- ```name``` New name of modified group
-- ```participants``` New participants of modified group
-- ```notary``` Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used
+- `groupId` ID of group to be modified
+- `name` New name of modified group
+- `participants` New participants of modified group
+- `notary` Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used
 
-*Example*:
+**Example**:
 
 ```kotlin
 val bnService = serviceHub.cordaService(BNService::class.java)
@@ -275,15 +288,24 @@ CordaRPCClient(rpcAddress).start(user.userName, user.password).use {
 
 ## Suspend or revoke a membership
 
-Temporarily suspending a member or completely removing it from the business network is done using ```SuspendMembershipFlow``` and ```RevokeMembershipFlow```. They both use the same exactly arguments:
+You can temporarily suspend a member or completely remove them from the business network. Suspending a member will result in a membership status change to `SUSPENDED` and still allow said member to be in the business network. Revocation means that the membership is marked as historic/spent and and a new one will have to be requested and activated in order for the member to re-join the network.
 
-- ```membershipId``` ID of the membership to be suspended/revoked
-- ```notary``` Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used
+To suspend a member of the network:
 
-Suspending a member will result in a membership status change to ```SUSPENDED``` and still allow said member to be in the business network. Revocation means that the membership is marked as historic/spent
-and and a new one will have to be requested and activated in order for the member to re-join the network.
+1. Run `SuspendMembershipFlow`.
+2. All network members with sufficient permissions approve the proposed change.
 
-*Example*:
+To remove membership completely:
+
+1. Run `RevokeMembershipFlow`.
+2. All network members with sufficient permissions approve the proposed change.
+
+Both `SuspendMembershipFlow` and `RevokeMembershipFlow` use the same arguments:
+
+- `membershipId` ID of the membership to be suspended/revoked
+- `notary` Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used
+
+**Example**:
 
 ```kotlin
 val notary = serviceHub.networkMapCache.notaryIdentities.first())
