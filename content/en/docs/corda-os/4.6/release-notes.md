@@ -114,7 +114,7 @@ Corda’s RPC client now allows each flow to be started with a unique client-pro
 
 
 
-#### Other changes
+#### Other changes and improvements
 
 * In Corda 4.6 we have introduced a set of improvements to make the flow state machine more resilient.
 * As of Corda 4.6, support for [DemoBench](demobench.md) is deprecated.
