@@ -62,6 +62,7 @@ States and apps valid in Corda 3.0 and above are usable in Corda 4.6.
 {{< /note >}}
 
 {{< warning >}}
+
 **Important upgrade notes**
 
 As part of the operational improvements around [database schema harmonisation](#database-schema-harmonisation), we have made in Corda 4.6 require a number of manual steps when upgrading to Corda 4.6 from a previous version. These changes are described in detail in the following pages:
@@ -87,6 +88,14 @@ the node, or after upgrading but before synchronising the app schemas.
 
 Corda 4.6 drops the support for retro-fitting the database changelog when migrating from Corda versions older than 4.0. Thus it is required to migrate to a previous 4.x version before
 migrating to Corda 4.6 - for example, 3.3 to 4.5, and then 4.5 to 4.6.
+
+**Important note about running the initial node registration command**
+
+In Corda 4.6, database migrations are run on initial node registration **by default**.
+
+To prevent this, use the `--skip-schema-creation` flag alongside the `--initial-registration` command.
+
+The `initial-registration` command is described in [Node command-line options](node-commandline.md#sub-commands) and [Joining a compatibility zone](joining-a-compatibility-zone.md#joining-an-existing-compatibility-zone).
 
 {{< /warning >}}
 
@@ -205,8 +214,7 @@ exception on startup if it finds any them:
 
 Please check the schema management documentation to see what adjustments are needed to your CorDapp packaging process.
 
-
-## Schema migration from Corda version pre v-4
+**Schema migration from Corda versions prior to V4.0**
 
 This version drops the automatic migration of database tables from Corda 3 and earlier - i.e. creating the changelog for
 tables that predate the introduction of liquibase for core tables in Open Source.
@@ -214,7 +222,16 @@ tables that predate the introduction of liquibase for core tables in Open Source
 To migrate from Corda 3.x to 4.6 and keep the contents of the database, you need to migrate to a previous version of Corda 4
 before, e.g. 3.3 -> 4.5 -> 4.6.
 
-...............
+
+
+
+
+
+
+
+
+
+
 
 
 
