@@ -121,7 +121,7 @@ For more information about platform versions, see [Versioning](versioning.md).
 ### Other changes
 
 * In Corda 4.6 we have introduced a set of improvements to make the flow state machine more resilient.
-
+* As of Corda 4.6, support for [DemoBench](demobench.md) is deprecated.
 
 ### Fixed issues
 
