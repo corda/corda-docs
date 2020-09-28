@@ -476,7 +476,7 @@ the package `com.mycompany.myapp.contracts`, but the fully-qualified contract na
 ### Contract `.jar` files are only signed by blacklisted keys
 
 If a contract is signed by blacklisted keys (probably development keys), the node will shut down and an `InvalidCordappException` will be thrown.
-The following error message will be received before the shuts down:
+The following error message will be received before the node shuts down:
 
 ```
 [ERROR] 10:59:11+0100 [main] internal.NodeStartupLogging. - Invalid Cordapps found, that couldn't be loaded:
