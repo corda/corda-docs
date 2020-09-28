@@ -93,7 +93,7 @@ time. If the migration process is interrupted it can be continued simply by star
 
 Start the node in the normal way.
 
-## Step 6. Undrain the node
+## Step 7. Undrain the node
 
 You may now do any checks that you wish to perform, read the logs, and so on. When you are ready, use this command at the shell:
 
