@@ -105,17 +105,17 @@ When registering a notary, the new field `notary.serviceLegalName` must be defin
 
 A new configuration flag has been introduced, enabling native SQL for CockroachDB with multi-row insert statements. See [Node configuration reference](node/setup/corda-configuration-fields.md)
 
+### Other changes
+
+* To reduce the risk of vulnerabilities, we have upgraded the Apache Zookeeper used by the Corda Enterprise [Firewall component](node/corda-firewall-component.md#prerequisites-4) from 3.5.4-Beta to 3.61. See [Apache ZooKeeper setup](operations/deployment/corda-firewall-configuration-file.md#apache-zookeeper-setup) for more information.
+* We have upgraded `commons-beanutils` to version 1.9.4 for improved security.
+* As of Corda Enterprise 4.6, support for [DemoBench](demobench.md) is deprecated.
+
 ## Platform version change
 
 The platform version of Corda 4.6 has been bumped up from 7 to 8.
 
 For more information about platform versions, see [Versioning](cordapps/versioning.md).
-
-## Other changes
-
-* To reduce the risk of vulnerabilities, we have upgraded the Apache Zookeeper used by the Corda Enterprise [Firewall component](node/corda-firewall-component.md#prerequisites-4) from 3.5.4-Beta to 3.61. See [Apache ZooKeeper setup](operations/deployment/corda-firewall-configuration-file.md#apache-zookeeper-setup) for more information.
-* We have upgraded `commons-beanutils` to version 1.9.4 for improved security.
-* As of Corda Enterprise 4.6, support for [DemoBench](demobench.md) is deprecated.
 
 ## Fixed issues
 
