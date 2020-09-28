@@ -476,33 +476,8 @@ defined. Should contain all certificates to build the entire certificate chain f
 * **signingKeys**:
 Map of human-readable aliases (string) to signing key configurations. Should contain all signing keys that
 are used within the signing processes defined in the signers map. See the [signing key map entry example](#signing-key-map-entry-example)
-below for the expected format.
-
-
-* **serviceLocations**:
-Map of human-readable aliases (string) to CENM service location configurations. Should contain all
-services that are used within the signing processes defined in the signers map. See the
-[service location map entry example](#service-location-map-entry-example) below for the expected format.
-
-
-
-
-
-
-
-
-
-
-
-
-* **caSmrLocation**:
-*(Optional, use instead of CA related serviceLocations)* CA part of Signable Material Retriever CENM
-service location configuration.
-
-
-* **nonCaSmrLocation**:
-*(Optional, use instead of non CA related serviceLocations)* Non CA part of Signable Material
-Retriever CENM service location configuration.
+below for the expected format. Please note that if a plugin is used for all the signing tasks in the config then this property must not be present since
+it will not be used at all.
 
 
 
@@ -767,7 +742,7 @@ The data type for the signing task. Should be one of `CSR`, `CRL`, `NETWORK_MAP`
 
 * **signingKeyAlias**:
 The alias for the signing key used by the signing task. Should refer to one of the aliases in the
-`signingKeys` map defined above.
+`signingKeys` map defined above. Please note that if a plugin is used this property must not be present since it is not going to be used.
 
 
 
@@ -778,24 +753,35 @@ The alias for the signing key used by the signing task. Should refer to one of t
 
 
 
-* **serviceLocationAlias**:
-*(Use when serviceLocations are specified)* The alias for the service location used by the signing task. Should refer to one of the aliases
-in the `serviceLocations` map defined above.
+* **serviceLocation**:
+An array containing one or more service locations. For non-CA (Network Map) signing tasks this can be multiple (with subzones).
+Expected format:
+```docker
+serviceLocation = [
+    {
+        host = localhost
+        port = 5050
+        verbose = true
+        reconnect = true
+        ssl = {
+            keyStore = {
+                location = "./corda-ssl-signer-keys.jks"
+                password = password
+            }
+            trustStore = {
+                location = "./corda-ssl-trust-store.jks"
+                password = trust-store-password
+            }
+            validate = true
+        }
+        timeout = 10000
+        subZoneId = 12
+    }
+]
+```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Only the host and port are mandatory, the rest of the properties are optional.
+When using a CSR or CRL task please make sure that no `subZoneId` is provided since that is only valid when using a Network Map.
 
 * **crlDistributionPoint**:
 Relevant only if type is `CRL` or `CSR` (optional for `CSR`). The endpoint that the CRL is
@@ -834,9 +820,17 @@ signing key using `PASSWORD` or `KEY_FILE` authentication with the password prec
   The duration interval between signing executions. Either a number representing the millisecond duration
   or a string duration with unit suffix. See the [scheduling signing tasks](#scheduling-signing-tasks) section above for information about the accepted format.
 
+* **plugin**:
+*(Optional)* Defines which plugin to use for the given signing tawsk.
+If this property is present both sub-properties must be present as well.
+If a plugin is used the `signingKeyAlias` field must not be present.
 
+  * **pluginJar**:
+  A path where the plugin `.jar` file is located. It can be either absolute or relative.
 
-
+  * **pluginClass**: A package path where the plugin class is located.
+  The plugin class must implement either the `NonCASigningPlugin` or the `CASigningPlugin` interface.
+  If it does not, an error will be thrown.
 
 
 ## Example Signing Service Configuration
@@ -878,27 +872,6 @@ signingKeys = {
     }
 }
 
-##########################################################
-# All CENM service endpoints for fetching/persisting data #
-##########################################################
-serviceLocations = {
-    "identity-manager" = {
-        host = localhost
-        port = 5050
-        verbose = true
-    },
-    "network-map-1" = {
-        host = localhost
-        port = 5053
-        verbose = true
-    },
-    "revocation" = {
-        host = localhost
-        port = 5051
-        verbose = true
-    }
-}
-
 ###################################################
 # Signing tasks to be run (manually or scheduled) #
 ###################################################
@@ -912,6 +885,13 @@ signers = {
         schedule {
             interval = 1minute
         }
+        serviceLocation = [
+            {
+                host = localhost
+                port = 5050
+                verbose = true
+            }
+        ]
     },
     "Example CRL Signer" = {
         type = CRL
@@ -922,6 +902,13 @@ signers = {
         schedule {
             interval = 60minute
         }
+        serviceLocation = [
+            {
+                host = localhost
+                port = 5051
+                verbose = true
+            }
+        ]
     },
     "Example Network Map Signer" = {
         type = NETWORK_MAP
@@ -930,6 +917,14 @@ signers = {
         schedule {
             interval = 1minute
         }
+        serviceLocation = [
+            {
+                host = localhost
+                port = 5051
+                verbose = true
+                subZoneId = 1
+            }
+        ]
     },
     "Example Network Parameters Signer" = {
         type = NETWORK_PARAMETERS
@@ -938,12 +933,20 @@ signers = {
         schedule {
             interval = 10minute
         }
+        serviceLocation = [
+            {
+                host = localhost
+                port = 5051
+                verbose = true
+                subZoneId = 1
+            }
+        ]
     }
 }
 
 ```
 
-### Signing Keys From HSM
+### Signing Keys From HSM (no plugin)
 
 ```docker
 shell = {
@@ -1103,43 +1106,6 @@ signingKeys = {
     }
 }
 
-##########################################################
-# All CENM service endpoints for fetching/persisting data #
-##########################################################
-caSmrLocation = {
-    host = localhost
-    port = 5010
-    verbose = true
-    # note that this SSL configuration could use different keys to the other locations if desired
-    ssl {
-        keyStore {
-            location = exampleSslKeyStore.jks
-            password = "password"
-        }
-        trustStore {
-            location = exampleSslTrustStore.jks
-            password = "trustpass"
-        }
-    }
-}
-
-nonCaSmrLocation = {
-    host = localhost
-    port = 5011
-    verbose = true
-    # note that this SSL configuration could use different keys to the other locations if desired
-    ssl {
-        keyStore {
-            location = exampleSslKeyStore.jks
-            password = "password"
-        }
-        trustStore {
-            location = exampleSslTrustStore.jks
-            password = "trustpass"
-        }
-    }
-}
-
 ###################################################
 # Signing tasks to be run (manually or scheduled) #
 ###################################################
@@ -1149,12 +1115,26 @@ signers = {
         signingKeyAlias = "CSRUtimacoHsmSigningKey"
         crlDistributionPoint = "http://localhost:10000/certificate-revocation-list/doorman"
         validDays = 7300 # 20 year certificate expiry
+        serviceLocation = [
+            {
+                host = localhost
+                port = 5050
+                verbose = true
+            }
+        ]
     },
     "Example CRL Signer" = {
         type = CRL
         signingKeyAlias = "CRLUtimacoHsmSigningKey"
         crlDistributionPoint = "http://localhost:10000/certificate-revocation-list/doorman"
         updatePeriod = 5184000000 # 60 day CRL expiry
+        serviceLocation = [
+            {
+                host = localhost
+                port = 5051
+                verbose = true
+            }
+        ]
     },
     "Example Network Map Signer" = {
         type = NETWORK_MAP
@@ -1162,10 +1142,26 @@ signers = {
         schedule {
             interval = 1minute
         }
+        serviceLocation = [
+            {
+                host = localhost
+                port = 5052
+                verbose = true
+                subZoneId = 1
+            }
+        ]
     },
     "Example Network Parameter Signer" = {
         type = NETWORK_PARAMETERS
         signingKeyAlias = "NetworkParametersUtimacoHsmSigningKey"
+        serviceLocation = [
+            {
+                host = localhost
+                port = 5052
+                verbose = true
+                subZoneId = 1
+            }
+        ]
     }
 }
 
@@ -1176,6 +1172,196 @@ signers = {
 
 
 
+### CA plugin and non-CA default mechanism
+
+```docker
+# In this config a plugin is handling the CA signing and the default CENM signing handles the non-CA signing
+
+shell = {
+  sshdPort = 20003
+  user = "testuser"
+  password = "example-password"
+}
+
+#############################################
+# All individual keys used in signing tasks #
+#############################################
+signingKeys = {
+    "NetworkMapLocal" = {
+        alias = "example-key-alias"
+        type = LOCAL
+        password = "example-key-password"
+        keyStore {
+            file = "exampleKeyStore.jks"
+            password = "example-password"
+        }
+    }
+}
+
+###################################################
+# Signing tasks to be run (manually or scheduled) #
+###################################################
+signers = {
+    "Example CSR Signer" = {
+        type = CSR
+        crlDistributionPoint = "http://localhost:10000/certificate-revocation-list/doorman"
+        validDays = 7300 # 20 year certificate expiry
+        serviceLocation = [
+            {
+                host = localhost
+                port = 5053
+                verbose = true
+            }
+        ]
+        schedule {
+            interval = 1minute
+        }
+        plugin {
+            pluginJar = "./MySigningPlugin.jar"
+            pluginClass = "com.package.MySigningPlugin"
+        }
+    },
+    "Example CRL Signer" = {
+        type = CRL
+        crlDistributionPoint = "http://localhost:10000/certificate-revocation-list/doorman"
+        updatePeriod = 86400000 # 1 day CRL expiry
+        schedule {
+            interval = 60minute
+        }
+        serviceLocation = [
+            {
+                host = localhost
+                port = 5054
+                verbose = true
+            }
+        ]
+        plugin {
+            pluginJar = "./MySigningPlugin.jar"
+            pluginClass = "com.package.MySigningPlugin"
+        }
+    },
+    "Example Network Map Signer" = {
+        type = NETWORK_MAP
+        signingKeyAlias = "NetworkMapLocal"
+        schedule {
+            interval = 1minute
+        }
+        serviceLocation = [
+            {
+                host = localhost
+                port = 5050
+                verbose = true
+                subZoneId = 12
+            }
+        ]
+    },
+    "Example Network Parameters Signer" = {
+        type = NETWORK_PARAMETERS
+        signingKeyAlias = "NetworkMapLocal"
+        schedule {
+            interval = 10minute
+        }
+        serviceLocation = [
+            {
+                host = localhost
+                port = 5050
+                verbose = true
+                subZoneId = 12
+            }
+        ]
+    }
+}
+
+authServiceConfig = {
+    disableAuthentication = true
+}
+```
+
+### Plugin for CA and non-CA tasks
+
+```docker
+shell = {
+  sshdPort = 20003
+  user = "testuser"
+  password = "example-password"
+}
+
+###################################################
+# Signing tasks to be run (manually or scheduled) #
+###################################################
+signers = {
+    "Example CSR Signer" = {
+        type = CSR
+        crlDistributionPoint = "http://localhost:10000/certificate-revocation-list/doorman"
+        validDays = 7300 # 20 year certificate expiry
+        serviceLocation = [
+            {
+                host = localhost
+                port = 5050
+                verbose = true
+            }
+        ]
+        plugin {
+            pluginJar = "./MySigningPlugin.jar"
+            pluginClass = "com.package.MySigningPlugin"
+        }
+    },
+    "Example CRL Signer" = {
+        type = CRL
+        crlDistributionPoint = "http://localhost:10000/certificate-revocation-list/doorman"
+        updatePeriod = 5184000000 # 60 day CRL expiry
+        serviceLocation = [
+            {
+                host = localhost
+                port = 5051
+                verbose = true
+            }
+        ]
+        plugin {
+            pluginJar = "./MySigningPlugin.jar"
+            pluginClass = "com.package.MySigningPlugin"
+        }
+    },
+    "Example Network Map Signer" = {
+        type = NETWORK_MAP
+        schedule {
+            interval = 1minute
+        }
+        serviceLocation = [
+            {
+                host = localhost
+                port = 5052
+                verbose = true
+                subZoneId = 1
+            }
+        ]
+        plugin {
+            pluginJar = "./MySigningPlugin.jar"
+            pluginClass = "com.package.MySigningPlugin"
+        }
+    },
+    "Example Network Parameter Signer" = {
+        type = NETWORK_PARAMETERS
+        serviceLocation = [
+            {
+                host = localhost
+                port = 5052
+                verbose = true
+                subZoneId = 1
+            }
+        ]
+        plugin {
+            pluginJar = "./MySigningPlugin.jar"
+            pluginClass = "com.package.MySigningPlugin"
+        }
+    }
+}
+
+authServiceConfig = {
+    disableAuthentication = true
+}
+
+```
 ## Developing Signing Plugins
 
 As mentioned before, we enable possibility of writing custom plugin to support external Signing infrastructures. A plugin
@@ -1183,7 +1369,7 @@ class must implement `CASigningPlugin` or `NonCASigningPlugin` interface dependi
 it will handle.
 
 Both interfaces extend common `StartablePlugin` interface containing a single method `start()`. The method is run by
-SMR Service upon the service start-up and it’s intended to contain plugin’s initialization code (e.g. a database
+Signing Service upon the service start-up and it’s intended to contain plugin’s initialization code (e.g. a database
 connection initialization).
 
 ```java
@@ -1208,6 +1394,21 @@ Each signable material submission plugin method must return its’ status:
 public enum SigningStatus {PENDING, COMPLETED}
 ```
 
+### Asynchronous signing
+
+In 1.4 a new asynchronous infrastructure has been added to the plugins.
+If your plugin does not sign requests immediately, you can easily return a tracking id (`String` type) and the Signing Service will keep checking
+whether the plugin has already signed that particular request.
+
+That's why the plugin interfaces contain new methods called `check*SubmissionStatus()`.
+If your plugin simply does not support asynchronous signing you can ignore these tracking functions and just return `null`.
+This way the Signing Service will know that the plugin is not asynchronous and will not force tracking the request.
+
+Please note that an optional `requestId` has been added to the plugin response objects (for example `CSRResponse`).
+These values are also nullable so when your plugin assembles these please use `null` if your plugin is not asynchronous.
+
+However if your plugin is asynchronous then the returned `SigningStatus` must be `PENDING` and the `requestId` must be present.
+This is the only way the Signing Service will be able to track the request.
 
 ### CA Signing Plugin
 
@@ -1217,28 +1418,53 @@ class must implement following methods with predefined input and output paramete
 ```java
 
 /**
- * This is the interface which each CA SMR plugin must implement. This is basically the entry point of external Signing
+ * This is the interface which each CA Signing Service plugin must implement. This is basically the entry point of external Signing
  * Service communication. Each submission request method retrieves signable material and retrieves response containing
  * a signing status (PENDING, COMPLETED) and supporting data to be stored in CENM services.
  */
 public interface CASigningPlugin extends StartablePlugin {
 
     /**
-     * Handle retrieved Certificate Signing Requests (CSR) retrieved from SMR.
+     * Handle retrieved Certificate Signing Requests (CSR) retrieved from Signing Service.
      *
      * @param csr the signing request to route.
      * @return a response describing the status of the request.
+     * The response might return a pending status and a request
+     * UUID that can be used to check the request status later.
      */
     CSRResponse submitCSR(CertificateSigningRequest csr);
 
     /**
-     * Handle retrieved CRL and CRRs retrieved from SMR.
+     * Handle retrieved CRL and CRRs retrieved from Signing Service.
      *
      * @param crl     the signing request to route.
      * @param newCRRs the set of new revocation requests in this batch.
      * @return a response describing the status of the request.
+     * The response might return a pending status and a request
+     * UUID that can be used to check the request status later.
      */
-    CRLResponse submitCRL(@Nullable X509CRL crl, Set<CertificateRevocationRequest> newCRRs);
+    CRLResponse submitCRL(@Nullable X509CRL crl, @Nonnull Set<CertificateRevocationRequest> newCRRs);
+
+    /**
+     * Retrieves the status of an ongoing CSR signing request.
+     *
+     * @param requestId The ID of the request
+     * @return a response describing the status of the request.
+     * This function should only be called after the
+     * {@link #submitCSR(CertificateSigningRequest)}
+     * returned a {@link SigningStatus#PENDING} status and an ID.
+     */
+    @Nullable CSRResponse checkCSRSubmissionStatus(@Nonnull String requestId);
+
+    /**
+     * Retrieves the status of an ongoing CRL signing request.
+     *
+     * @param requestId The ID of the request
+     * @return a response describing the status of the request.
+     * This function should only be called after the {@link #submitCRL(X509CRL, Set)}
+     * returned a {@link SigningStatus#PENDING} status and an ID.
+     */
+    @Nullable CRLResponse checkCRLSubmissionStatus(@Nonnull String requestId);
 }
 
 ```
@@ -1264,12 +1490,28 @@ public final class CSRResponse {
     public final CSRSigningData getCsrSigningData();
 
     /**
+     * Returns the ID of the request. Might be null if the request is completed immediately and no ID is provided
+     * for later use.
+     */
+    @Nullable
+    public String getRequestId() {
+        return requestId;
+    }
+    
+    /**
      * Constructs a response with CRL request status. with the specified data.
      *
      * @param status         Signing status, should be non null otherwise a {@link IllegalArgumentException} is thrown.
      * @param csrSigningData Signed Certificate Request.
+     * @param requestId The id of the request for tracking, if the request can be tracked
      */
-    public CSRResponse(@Nonnull SigningStatus status, @Nullable CSRSigningData csrSigningData);
+    @ConstructorForDeserialization
+    public CSRResponse(@Nonnull SigningStatus status, @Nullable CSRSigningData csrSigningData, @Nullable String requestId) {
+        checkParameterIsNotNull(status, "status", "constructor");
+        this.status = status;
+        this.csrSigningData = csrSigningData;
+        this.requestId = requestId;
+    }
 }
 
 /**
@@ -1310,24 +1552,33 @@ CRL submission method output:
 public final class CRLResponse {
 
     /**
-     * Returns material's signing status.
-     */
+    * Returns material's signing status.
+    */
     @Nonnull
     public final SigningStatus getStatus();
-
+    
     /**
-     * Returns signed certificate revocation list (CRL).
-     */
+    * Returns signed certificate revocation list (CRL).
+    */
     @Nullable
     public final CRLSigningData getCrlSigningData();
-
+    
     /**
-     * Constructs a response with the specified status and signed CRL.
-     *
-     * @param status         Signing status, should be non null otherwise a {@link IllegalArgumentException} is thrown.
-     * @param crlSigningData Signed Certificate Revocation List (CRL).
-     */
-    public CRLResponse(@Nonnull SigningStatus status, @Nullable CRLSigningData crlSigningData);
+    * Returns the ID of the request. Might be null if the request is completed immediately and no ID is provided
+    * for later use.
+    */
+    @Nullable
+    public String getRequestId();
+    
+    /**
+    * Constructs a response with the specified status and signed CRL.
+    *
+    * @param status         Signing status, should be non null otherwise a {@link IllegalArgumentException} is thrown.
+    * @param crlSigningData Signed Certificate Revocation List (CRL).
+    * @param requestId The id of the request for tracking, if the request can be tracked
+    */
+    @ConstructorForDeserialization
+    public CRLResponse(@Nonnull SigningStatus status, @Nullable CRLSigningData crlSigningData, @Nullable String requestId);
 }
 
 /**
@@ -1386,7 +1637,7 @@ with predefined input and output parameters:
 ```java
 
 /**
- * This is the interface which each non-CA SMR plugin must implement. This is basically the entry point of external Signing
+ * This is the interface which each non-CA Signing Service plugin must implement. This is basically the entry point of external Signing
  * Service communication. Each submission request method retrieves signable material and retrieves response containing a
  * singing status (PENDING, COMPLETED) and supporting data to be stored in CENM services.
  */
@@ -1399,7 +1650,8 @@ public interface NonCASigningPlugin extends StartablePlugin {
      *                   the subzone the network map is associated with.
      * @return a response describing the status of the request.
      */
-    NetworkMapResponse submitNetworkMap(NetworkMap networkMap, String signerName);
+    NetworkMapResponse submitNetworkMap(@Nonnull NetworkMap networkMap,
+                                        @Nonnull String signerName);
 
     /**
      * Handle routing network parameters to a signing backend.
@@ -1408,8 +1660,29 @@ public interface NonCASigningPlugin extends StartablePlugin {
      *                   the subzone the network parameters are associated with.
      * @return a response describing the status of the request.
      */
-    NetworkParametersResponse submitNetworkParameters(UnsignedNetworkParametersData networkParametersData,
-                                                      String signerName);
+    NetworkParametersResponse submitNetworkParameters(@Nonnull UnsignedNetworkParametersData networkParametersData,
+                                                      @Nonnull String signerName);
+
+    /**
+     * Retrieves the status of an ongoing Network Map signing request.
+     *
+     * @param requestId The ID of the request
+     * @return a response describing the status of the request.
+     * This function should only be called after the {@link #submitNetworkMap(NetworkMap, String)}
+     * returned a {@link SigningStatus#PENDING} status and an ID.
+     */
+    @Nullable NetworkMapResponse checkNetworkMapSubmissionStatus(String requestId);
+
+    /**
+     * Retrieves the status of an ongoing Network Parameters signing request.
+     *
+     * @param requestId The ID of the request
+     * @return a response describing the status of the request.
+     * This function should only be called after the
+     * {@link #submitNetworkParameters(UnsignedNetworkParametersData, String)}
+     * returned a {@link SigningStatus#PENDING} status and an ID.
+     */
+    @Nullable NetworkParametersResponse checkNetworkParametersSubmissionStatus(String requestId);
 }
 
 ```
@@ -1418,8 +1691,9 @@ Network Map submission method output:
 
 ```java
 /**
- * Signable Material Retriever (SMR) service response containing the status of a Network Map signing request.
+ * Signing Service plugin response containing the status of a Network Map signing request.
  */
+@CordaSerializable
 public final class NetworkMapResponse {
 
     /**
@@ -1427,6 +1701,13 @@ public final class NetworkMapResponse {
      */
     @Nonnull
     public final SigningStatus getStatus();
+
+    /**
+     * Returns the ID of the request. Might be null if the request is completed immediately and no ID is provided
+     * for later use.
+     */
+    @Nullable
+    public String getRequestId();
 
     /**
      * Returns signed Network Map
@@ -1438,9 +1719,11 @@ public final class NetworkMapResponse {
      * Constructs a response object.
      *
      * @param status        Signing status, should be non null otherwise a {@link IllegalArgumentException} is thrown.
-     * @param nmSigningData
+     * @param nmSigningData Signed Network Map data
+     * @param requestId The id of the request for tracking, if the request can be tracked
      */
-    public NetworkMapResponse(@Nonnull SigningStatus status, @Nullable NMSigningData nmSigningData);
+    @ConstructorForDeserialization
+    public NetworkMapResponse(@Nonnull SigningStatus status, @Nullable NMSigningData nmSigningData, @Nullable String requestId);
 }
 ```
 
@@ -1448,8 +1731,9 @@ Network Parameters submission method output:
 
 ```java
 /**
- * Signable Material Retriever (SMR) service response containing the status of a Network Parameters signing request.
+ * Signing Service plugin response containing the status of a Network Parameters signing request.
  */
+@CordaSerializable
 public final class NetworkParametersResponse {
 
     /**
@@ -1458,6 +1742,13 @@ public final class NetworkParametersResponse {
     @Nonnull
     public final SigningStatus getStatus();
 
+    /**
+     * Returns the ID of the request. Might be null if the request is completed immediately and no ID is provided
+     * for later use.
+     */
+    @Nullable
+    public String getRequestId();
+    
     /**
      * Returns signed Network Parameters
      */
