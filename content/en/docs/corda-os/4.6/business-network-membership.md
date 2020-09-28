@@ -126,7 +126,7 @@ CordaRPCClient(rpcAddress).start(user.userName, user.password).use {
 
     // add newly activated member to a membership list
     val newParticipantsList = bnService.getBusinessNetworkGroup(groupId).state.data.participants.map {
-        BNService.getMembership(networkId, it)!!.state.data.linearId
+        bnService.getMembership(networkId, it)!!.state.data.linearId
     } + membershipId
 
     it.proxy.startFlow(::ModifyGroupFlow, groupId, groupName, newParticipantsList, notary)
