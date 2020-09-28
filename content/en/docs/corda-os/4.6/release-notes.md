@@ -51,7 +51,7 @@ We are focused on improving the overall developer experience to ensure Corda mai
 **Operational improvements**
 
 * Corda 4.6 introduces a set of improvements to make the flow state machine more resilient.
-* We have
+* We have rationalised the way in which database schema management is performed across Corda open source and Corda Enterprise.
 
 Plus a lot more - please read these release notes carefully to understand what’s new in this release and how the new features and enhancements can help you.
 
