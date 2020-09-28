@@ -35,7 +35,8 @@ If you are new to Corda, and want a guided tutorial on using the Tokens SDK for 
 
 ## Upgrade from V1.1 to V1.2.1
 
-If you have developed a CorDapp that uses the Tokens SDK V1.1, you can upgrade to 1.2.1
+If you have developed a CorDapp that uses the Tokens SDK V1.1, you can upgrade to 1.2.1.
+
 
 ### Compatibility
 
@@ -49,13 +50,17 @@ Overview of changes:
 
 * All of the utility methods, subflows and RPC enabled flows have been annotated with @JVMOverloads to ensure the appropriate Java constructors are generated where the source Kotlin constructor contains nullable arguments. This ensures a seamless experience when using the Tokens SDK from a Java code base.
 * The `selection` and `money` `.jar` files have been moved into the `workflows` `.jar` file.
-* Upgraded database interaction for compatibility with Corda 4.6 and Corda Enterprise 4.6. 
+* Upgraded database interaction for compatibility with Corda 4.6 and Corda Enterprise 4.6.
 
 To upgrade from Tokens SDK V1.1 to V1.2:
 
-1. Change the V number (version number) in your CorDapp's relevant Gradle file from 1.1 to 1.2.
+{{< warning >}}
+Before upgrading, make sure the platform database schema is properly migrated and the changelog syncrhonised - consult the [upgrade documentation for Corda Enterprise 4.6](./../app-upgrade-notes.md). If you have not migrated the schema, the Tokens SDK may not upgrsade correctly.
+{{< /warning >}}
 
-2. Remove all references to `selection` and `money` `.jar` files from your build function (in many cases, Gradle). The functions of these JARS has been moved into `workflows` in V1.2.
+1. Change the V number (version number) in your CorDapp's relevant Gradle file from 1.1 to 1.2.1.
+
+2. Remove all references to `selection` and `money` `.jar` files from your build function (in many cases, Gradle). The functions of these JARS has been moved into `workflows` in V1.2.1.
 
 3. Recompile your CorDapp.
 

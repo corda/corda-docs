@@ -35,7 +35,7 @@ If you are new to Corda, and want a guided tutorial on using the Tokens SDK for 
 
 ## Upgrade from V1.1 to V1.2.1
 
-If you have developed a CorDapp that uses the Tokens SDK V1.1, you can upgrade to 1.2.1
+If you have developed a CorDapp that uses the Tokens SDK V1.1, you can upgrade to 1.2.1.
 
 ### Compatibility
 
@@ -53,7 +53,11 @@ Overview of changes:
 
 To upgrade from Tokens SDK V1.1 to V1.2.1:
 
-1. Change the V number (version number) in your CorDapp's relevant Gradle file from 1.1 to 1.2.
+{{< warning >}}
+Before upgrading, make sure the platform database schema is properly migrated and the changelog syncrhonised - consult the [upgrade documentation for Corda 4.6](./app-upgrade-notes.md). If you have not migrated the schema, the Tokens SDK may not upgrsade correctly.
+{{< /warning >}}
+
+1. Change the V number (version number) in your CorDapp's relevant Gradle file from 1.1 to 1.2.1.
 
 2. Remove all references to `selection` and `money` `.jar` files from your build function (in many cases, Gradle). The functions of these JARS has been moved into `workflows` in V1.2.
 
