@@ -689,7 +689,7 @@ snakeyaml 1.23
 http://www.snakeyaml.org/
 https://bitbucket.org/asomov/snakeyaml/src/default/LICENSE.txt
 
-zookeeper 3.5.4-beta
+zookeeper 3.6.1
 Copyright © 2010-2019 The Apache Software Foundation
 https://zookeeper.apache.org/
 https://www.apache.org/licenses/LICENSE-2.0
