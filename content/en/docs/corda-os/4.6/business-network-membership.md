@@ -115,7 +115,7 @@ To finalise the on-boarding process:
 val bnService = serviceHub.cordaService(BNService::class.java)
 val networkId = "MyBusinessNetwork"
 val newMemberPartyObject = ... // get the [Party] object of the member whose membership is being activated
-val membershipId = bnService.getMembership("MyBusinessNetwork", newMemberPartyObject)
+val membershipId = bnService.getMembership(networkId, newMemberPartyObject)
 val groupName = "Group 1"
 val groupId = ... // identifier of the group which the member will be assigned to
 val notary = serviceHub.networkMapCache.notaryIdentities.first())
