@@ -337,7 +337,7 @@ RPC exposed flows can be divided into 2 groups:
 
 ### CorDapp specific flows
 
-- `AssignBICFlow` assigns **BIC** as a business identity of a bank node.
+- `AssignBICFlow` assigns **BIC** (Swift Business Identifier Code) as a business identity of a bank node.
     - Usage: `flow start AssignBICFlow membershipId: <UNIQUE_IDENTIFIER>, bic: <STRING>, notary: <OPTIONAL_NOTARY_IDENTITY>`.
 - `AssignLoanIssuerRoleFlow` grants loan issuance permission to a calling party.
     - Usage: `flow start AssignLoanIssuerRoleFlow networkId: <STRING>, notary: <OPTIONAL_NOTARY_IDENTITY>`.
