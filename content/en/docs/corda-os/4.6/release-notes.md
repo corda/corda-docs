@@ -236,22 +236,22 @@ For more information about platform versions, see [Versioning](versioning.md).
 
 * We have fixed an issue where the RPC `startFlow` could not reattach to existing client id flows when flow draining mode was enabled.
 * We have fixed an issue where the Classloader failed to find the class when a CorDapp class was used.
-* We have fixed an issue where the `FlowSessionCloseTest.flow` could not access a closed session unless it was a duplicate close that was handled gracefully.
-* We have fixed an issue where the `RetryFlowMockTest - flakey test` returned flakey due to restart not setting `senderUUID` and the early end session message not hanging the receiving flow.
-* We have fixed an issue where the `ExceptionsErrorCodeFunctionsTest` failed due to timeout.
+* We have fixed an issue where the `FlowSessionCloseTest.flow` could not access a closed session unless it was a duplicate close that was handled gracefully [[CORDA-3986](https://r3-cev.atlassian.net/browse/CORDA-3986)].
+* We have fixed an issue where the `RetryFlowMockTest - flakey test` returned flakey due to restart not setting `senderUUID` and the early end session message not hanging the receiving flow [[CORDA-3946](https://r3-cev.atlassian.net/browse/CORDA-3946)].
+* We have fixed an issue where the `ExceptionsErrorCodeFunctionsTest` failed due to timeout [[CORDA-3944](https://r3-cev.atlassian.net/browse/CORDA-3944)].
 * We have fixed an issue where the expected `error_code="5"` error was missing in logs run with custom CorDapps without the Liquibase schema.
 * We have fixed an issue with inconsistent behaviour between killed client ID flows and flows with other statuses.
 * We have fixed an issue where IVNO CorDapps that were working on Corda 4.3 were not registered when Corda was upgraded to version 4.5.
 * The path for network parameters is now configurable and the network parameters file is stored in the location specified by the node configuration.
-* We have fixed an issue where logging was detecting but not printing an issue with certificates.
-* We have fixed an issue where the end session message did not hang when a flow flakey test was received.
-* We have fixed an issue where the `MembershipAuthorisationException` message contained `StateAndRef<MembershipState>` instead of the flow name.
-* We have fixed an issue in the Demo CorDapp where the mandatory `notary` parameter was missing in the `ModifyGroupFlow` description.
-* We have fixed an issue in the Demo CorDapp where the nodes failed to start due to an incompatible database schema error.
-* We have fixed an issue where the optional `file:prefix` was stripped from the classpath element passed to the `ClassGraph()` filter function, resulting in the filter function not recognising the element.
-* We have fixed an issue where flows would start executing when the `StateMachineManager.start` database transaction had not started yet.
-* We have reverted to Jackson 2.9.7 to resolve an issue where R3 Tools could not work properly with the upgraded version.
-* We have fixed an issue where `Paths.get("")` returns `null` instead of the current working directory.
+* We have fixed an issue where logging was detecting but not printing an issue with certificates [[CORDA-4036](https://r3-cev.atlassian.net/browse/CORDA-4036)].
+* We have fixed an issue where the end session message did not hang when a flow flakey test was received [[CORDA-4026](https://r3-cev.atlassian.net/browse/CORDA-4026)].
+* We have fixed an issue where the `MembershipAuthorisationException` message contained `StateAndRef<MembershipState>` instead of the flow name [[CORDA-4017](https://r3-cev.atlassian.net/browse/CORDA-4017)].
+* We have fixed an issue in the Demo CorDapp where the mandatory `notary` parameter was missing in the `ModifyGroupFlow` description [[CORDA-4013](https://r3-cev.atlassian.net/browse/CORDA-4013)].
+* We have fixed an issue in the Demo CorDapp where the nodes failed to start due to an incompatible database schema error [[CORDA-4010](https://r3-cev.atlassian.net/browse/CORDA-4010)].
+* We have fixed an issue where the optional `file:prefix` was stripped from the classpath element passed to the `ClassGraph()` filter function, resulting in the filter function not recognising the element [[CORDA-4003](https://r3-cev.atlassian.net/browse/CORDA-4003)].
+* We have fixed an issue where flows would start executing when the `StateMachineManager.start` database transaction had not started yet [[CORDA-3998](https://r3-cev.atlassian.net/browse/CORDA-3998)].
+* We have reverted to Jackson 2.9.7 to resolve an issue where R3 Tools could not work properly with the upgraded version [[CORDA-3982](https://r3-cev.atlassian.net/browse/CORDA-3982)].
+* We have fixed an issue where `Paths.get("")` returns `null` instead of the current working directory [[CORDA-3831](https://r3-cev.atlassian.net/browse/CORDA-3831)].
 
 ### Known issues
 
