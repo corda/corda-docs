@@ -105,6 +105,21 @@ When registering a notary, the new field `notary.serviceLegalName` must be defin
 
 A new configuration flag has been introduced, enabling native SQL for CockroachDB with multi-row insert statements. See [Node configuration reference](node/setup/corda-configuration-fields.md)
 
+### Database Management Tool improvements
+
+We have improved the [Database Management Tool](database-management-tool.md) in order to facilitate database migrations from Corda to Corda Enterprise.
+
+The changes are briefly described below.
+
+* A new `sync-app-schemas` command has been added. It updates the migration changelog for all available CorDapps.
+* The `dry-run` command has two new parameters: `--core-schemas` (the tool outputs DB-specific DDL to apply the core node schema migrations) and `--app-schemas` (the tool outputs DB-specific DDL to apply the migrations for custom CorDapp schemas).
+* The `execute-migration command` has three new parameters: `--core-schemas` (the tool will attempt to run the node Liquibase core schema migrations), `--app-schemas` (the tool will attempt to run Liquibase migrations for custom CorDapp schemas), and `--db-admin-config <path/to/adminconfigfile>` (this parameter specifies the location on disk of a config file holding elevated access credentials for the DB - the tool will use the credentials listed in the config file to connect to the node database an apply the changes).
+* Obfuscated passwords are now allowed. To enable the tool to de-obfuscate the obfuscated fields, the following command-line options are provided for setting the passphrase and seed if necessary: `--config-obfuscation-passphrase` and `--config-obfuscation-seed`.
+* Base directory, which defaults to the current working directory if not set.
+* Location of output file when `dry-run` is used. The output file will now be created relative to the current working directory rather than the base directory.
+
+For full details, see [Database Management Tool](database-management-tool.md).
+
 ### Other changes
 
 * To reduce the risk of vulnerabilities, we have upgraded the Apache Zookeeper used by the Corda Enterprise [Firewall component](node/corda-firewall-component.md#prerequisites-4) from 3.5.4-Beta to 3.61. See [Apache ZooKeeper setup](operations/deployment/corda-firewall-configuration-file.md#apache-zookeeper-setup) for more information.
