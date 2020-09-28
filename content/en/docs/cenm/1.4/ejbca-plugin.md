@@ -34,111 +34,117 @@ The implementation should not be used in production deployment.
 
 ## EJBCA Web Service Setup
 
-The web service setup follows the same steps as [the official documentation](https://doc.primekey.com/ejbca6152/tutorials-and-guides/quick-start-guide).
+1. Follow [the official documentation](https://doc.primekey.com/ejbca6152/tutorials-and-guides/quick-start-guide) for the initial web service setup.
 This section shows a setup of a local environment as specified in the Quick Start Guide. After this step you will be able to access EJBCA
 Administration UI on the specified address.
 
-The next step is to import Corda’s CA. To do so, access the *Certification Authorities* tab and use the
+2. Import Corda’s CA. To do so, access the *Certification Authorities* tab and use the
 *Import CA keystore…* option. The keystore you will need to import for successful CA material signing is
 `corda-identity-manager-keys.jks`, which is contained in the Signing Service’s `certificates` directory. The keystore’s
-password is `password`, and the *Alias of signature key* is `cordaidentitymanagerca`. Leave  *Alias of encryption key*
+password is `password`, and the *Alias of signature key* is `cordaidentitymanagerca`. Leave the  *Alias of encryption key*
 field empty.
 
 {{< note >}}
 Provided keystore must be in PKCS12 format.
 {{< /note >}}
 
-Corda’s certificates contain a custom extension named Certificate Role. We must enable its override during certificate
-generation. This is done by accessing *System Configuration* tab followed by *Custom Certificate Extensions* tab. Here
-we add new custom extension with following properties:
+3. Corda’s certificates contain a custom extension named Certificate Role. You must enable override during certificate generation. This is done by accessing the *System Configuration* tab followed by *Custom Certificate Extensions* tab. Here
+we add a new custom extension with following properties:
 
->
->
-> * **OID** -> *1.3.6.1.4.1.50530.1.1*
-> * **Label** -> *X509_EXTENSION_CORDA_ROLE*
-> * **Critical** -> *No*
-> * **Required** -> *Yes*
-> * **Encoding** -> *DERINTEGER*
-> * **Dynamic** -> *True*
-> * **Value** -> *4*
+    >
+    >
+    > * **OID** -> *1.3.6.1.4.1.50530.1.1*
+    > * **Label** -> *X509_EXTENSION_CORDA_ROLE*
+    > * **Critical** -> *No*
+    > * **Required** -> *Yes*
+    > * **Encoding** -> *DERINTEGER*
+    > * **Dynamic** -> *True*
+    > * **Value** -> *4*
 
-The EJBCA plugin contains certain hardcoded values. The configuration set up in the EJBCA web service should match those values, as listed below:
+4. The EJBCA plugin contains certain hardcoded values. The configuration set up in the EJBCA web service should match those values, as listed below:
 
->
->
-> * `CA_NAME = "CordaCA";`
-> * `END_ENTITY_PROFILE_NAME = "CENM";`
-> * `CERTIFICATE_PROFILE_NAME = "CENM";`
-
+    >
+    >
+    > * `CA_NAME = "CordaCA";`
+    > * `END_ENTITY_PROFILE_NAME = "CENM";`
+    > * `CERTIFICATE_PROFILE_NAME = "CENM";`
 
 
-The next step is to set up new certificate profile in order to support a Corda-compatible certificate issuance. To do so, access the *Certificate Profiles* tab and add a new profile. After that, edit the profile to have the following properties set up:
 
->
->
-> * **Type** -> *Sub CA*
-> * **Allow Extension Override** -> *True*
-> * **Allow certificate serial number override** -> *True*
-> * **Allow Key Usage Override** -> *True*
-> * **Key Usage** -> *Use..*, *Critical*, *Digital Signature*, *Non-repudiation*, *Key encipherement*, *Key certificate sign*, *CRL sign*
-> * **CRL Distribution Points** -> *Use..*
-> * **Use CA defined CRL Distribution Point** -> *Use..*
-> * **Used Custom Certificate Extensions** -> certificate role you’ve specified before
-> * **Available CAs** -> Corda’s CA
+5. Set up a new certificate profile in order to support a Corda-compatible certificate issuance. Access the *Certificate Profiles* tab and add a new profile.
+
+6. Edit the profile to have the following properties set up:
+
+    >
+    >
+    > * **Type** -> *Sub CA*
+    > * **Allow Extension Override** -> *True*
+    > * **Allow certificate serial number override** -> *True*
+    > * **Allow Key Usage Override** -> *True*
+    > * **Key Usage** -> *Use..*, *Critical*, *Digital Signature*, *Non-repudiation*, *Key encipherement*, *Key certificate sign*, *CRL sign*
+    > * **CRL Distribution Points** -> *Use..*
+    > * **Use CA defined CRL Distribution Point** -> *Use..*
+    > * **Used Custom Certificate Extensions** -> certificate role you’ve specified before
+    > * **Available CAs** -> Corda’s CA
 
 
-The last step is to set up a new end entity profile. To do so, access *End Entity Profiles* and add a new profile.
-After that, edit the profile to have the following properties set up:
+7. Set up a new end entity profile. Access *End Entity Profiles* and add a new profile.
 
->
->
-> * **Subject DN Attributes** -> Add *OU*, *O*, *L*, *C*, *ST*, *DC*
-> * **Default Certificate Profile** -> The one you’ve set up
-> * **Available Certificate Profiles** -> The one you’ve set up
-> * **Default CA** -> The one you’ve set up
-> * **Available CAs** -> The one you’ve set up
-> * **Custom certificate serial number** -> *Use*
-> * **Custom certificate extension data** -> *Use*
+8. Edit the profile to have the following properties set up:
 
-You can also assign Administrator role permissions for the end entity created above. To do so, access *Administrator Roles* -> *Super Administrator Role* -> *Members* and edit the following fields:
+    >
+    >
+    > * **Subject DN Attributes** -> Add *OU*, *O*, *L*, *C*, *ST*, *DC*
+    > * **Default Certificate Profile** -> The one you’ve set up
+    > * **Available Certificate Profiles** -> The one you’ve set up
+    > * **Default CA** -> The one you’ve set up
+    > * **Available CAs** -> The one you’ve set up
+    > * **Custom certificate serial number** -> *Use*
+    > * **Custom certificate extension data** -> *Use*
 
->
->
-> * **Match with** -> X509: CN, Common Name
-> * **CA** -> ManagementCA
-> * **Match Value** ->...
+9. You can also assign Administrator role permissions for the end entity created above. Access *Administrator Roles* -> *Super Administrator Role* -> *Members* and edit the following fields:
+
+    >
+    >
+    > * **Match with** -> X509: CN, Common Name
+    > * **CA** -> ManagementCA
+    > * **Match Value** ->...
 
 ## EJBCA Client Setup
 
-You will also need to generate certificates used for establishing a secure connection between the plug-in and the web service. To do so, access *Add End Identity* and edit the profile as shown:
+You will also need to generate certificates used for establishing a secure connection between the plug-in and the web service.
 
->
->
-> * **User** -> ...
-> * **Password** -> *password*
-> * **Common Name** ->...
-> * **End Entity Profile** -> *EMPTY*
-> * **Certificate Profile** -> *ENDUSER*
-> * **CA** -> *ManagementCA*
-> * **Token** -> *JKS file*
+1. Access *Add End Identity* and edit the profile as shown below:
 
-Validate the existence of the new identity by accessing *Search End Entities* and searching for entities with the status *ALL*.
+    >
+    >
+    > * **User** -> ...
+    > * **Password** -> *password*
+    > * **Common Name** ->...
+    > * **End Entity Profile** -> *EMPTY*
+    > * **Certificate Profile** -> *ENDUSER*
+    > * **CA** -> *ManagementCA*
+    > * **Token** -> *JKS file*
 
-Once confirmed, follow the same steps described above to assign Administrator role permissions to the new end entity.
+2. Validate the existence of the new identity by accessing *Search End Entities* and searching for entities with the status *ALL*.
 
-The next step is to generate and download a JKS keystore for the end entity. Access *Public Web* then *Create Keystore*. Enter the following information:
+3. Once confirmed, follow the same steps described above to assign Administrator role permissions to the new end entity.
 
->
->
-> * **User** -> ...
-> * **Password** -> *password*
-> * **Common Name** ->...
-> * **Key specification** -> *RSA 2048 bits*
-> * **Certificate Profile** -> *ENDUSER*
+4. Generate and download a JKS keystore for the end entity.
 
-Now create a directory with the name *`p12`* in the Signable Material Retriever (SMR) folder and add the downloaded keystore.
+5. Access *Public Web* then *Create Keystore*. Enter the following information:
 
-Finally, rename the keystore to *`keystore.jks`*. The keystore's password is `password`.
+    >
+    >
+    > * **User** -> ...
+    > * **Password** -> *password*
+    > * **Common Name** ->...
+    > * **Key specification** -> *RSA 2048 bits*
+    > * **Certificate Profile** -> *ENDUSER*
+
+6. Create a directory with the name *`p12`* in the Signable Material Retriever (SMR) folder and add the downloaded keystore.
+
+7. Rename the keystore to *`keystore.jks`*. The keystore's password is `password`.
 
 {{< note >}}
 
