@@ -64,9 +64,31 @@ States and apps valid in Corda 3.0 and above are usable in Corda 4.6.
 {{< warning >}}
 **Important upgrade notes**
 
-............
+As part of the operational improvements around [database schema harmonisation](#database-schema-harmonisation), we have made in Corda 4.6 require a number of manual steps when upgrading to Corda 4.6 from a previous version. These changes are described in detail in the following pages:
+* [Upgrading CorDapps to newer Platform Versions](app-upgrade-notes.md).
+* [Upgrading nodes to a new Corda version](node-upgrade-notes.md).
 
-{{< warning >}}
+A brief checklist of required steps follows below for each upgrade path.
+
+**Upgrading an existing node from Corda 4.5 (or earlier 4.x version) to version 4.6**
+
+1. Remove any entries of `transactionIsolationLevel`, `initialiseSchema`, or `initialiseAppSchema` from the database section of your node configuration file.
+2. Update any missing core schema changes by running the node in `run-migration-scripts` mode: `java -jar corda.jar run-migration-scripts --core-schemas`.
+3. Add liquibase resources to CorDapps. In Corda 4.6, CorDapps that introduce custom schema need liquibase migration scripts allowing them to create the schema upfront. For existing CorDapps that do not have migration scripts in their resources, they can be added as an external migration `.jar` file, as documented in the [Corda Enterprise documentation](../../corda-enterprise/4.6/cordapps/database-management.md#adding-scripts-retrospectively-to-an-existing-cordapp).
+4. Update the changelog for existing schemas. After upgrading the Corda `.jar` file and adding liquibase scripts to the CorDapp(s), any custom schemas from the apps are present
+in the database, but the changelog entries in the liquibase changelog table are missing (as they have been created by liquibase). This will cause issues when starting the node, and also when running `run-migration-scripts` as tables that already exist cannot be recreated. By running the new sub-command `sync-app-schemas`, changelog entries are created for all existing mapped schemas from CorDapps: `java -jar corda.jar sync-app-schemas`.
+
+**IMPORTANT** Do **not** install any new CorDapp, or a version adding schema entities, before running the `sync-app-schemas` sub-command. Any mapped schema found in the CorDapps will be added to the changelog **without** trying to create the matching database entities.
+
+**IMPORTANT** If you are upgrading a node to Corda 4.6 while any CorDapp with mapped schemas is being installed, you **must synchronise the schemas** (and thus run `sync-app-schemas`) **before** the node can start again and/or before any app schema updates can be run. Therefore, you must **not** install or update a CorDapp with new or modified schemas while upgrading
+the node, or after upgrading but before synchronising the app schemas.
+
+**Upgrading from Corda 3.x or Corda Enterprise 3.x**
+
+Corda 4.6 drops the support for retro-fitting the database changelog when migrating from Corda versions older than 4.0. Thus it is required to migrate to a previous 4.x version before
+migrating to Corda 4.6 - for example, 3.3 to 4.5, and then 4.5 to 4.6.
+
+{{< /warning >}}
 
 ### New features and enhancements
 
@@ -118,6 +140,8 @@ Corda’s RPC client now allows each flow to be started with a unique client-pro
 
 * In Corda 4.6 we have introduced a set of improvements to make the flow state machine more resilient.
 * As of Corda 4.6, support for [DemoBench](demobench.md) is deprecated.
+* We have released a new minor version of [Accounts SDK](https://github.com/corda/accounts/blob/master/docs.md) - version 1.0.2. This version includes database improvements that make it compatible with Corda 4.6. If you are planning to use the Accounts SDK with Corda 4.6, you must use Accounts SDK V 1.0.1.
+* We have released a new minor version of [Tokens SDK](token-sdk-introduction.md) - version 1.2.1. This version includes database improvements that make it compatible with Corda 4.6. If you are planning to use the Tokens SDK with Corda 4.6, you must use Tokens SDK V 1.2.1.
 
 ### Platform version change
 
