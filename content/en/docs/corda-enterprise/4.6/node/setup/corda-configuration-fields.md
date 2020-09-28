@@ -620,6 +620,9 @@ specify the `serviceLegalName` and either the `mysql` (deprecated) or `jpa` conf
     * `maxQueueSize`
       * The maximum number of commit requests in flight. Once the capacity is reached the service will block on further commit requests.
       * *Default:* 100 000
+    * `generateNativeSQL`
+      * Boolean enabling the generation of native SQL for CockroachDB databases with multi-row insert statements. Enabling this configuration option results in better notary performance in some implementations.
+      * *Default:* not set
     * `database`
       * `initialiseSchema`
         * Boolean which indicates whether to update the database schema at startup (or create the schema when notary starts for the first time). This property is used only when a notary runs against an H2 database. For information on schema setup for non H2 databases, please see [Configuring a JPA notary backend](../../notary/installing-jpa.md).
