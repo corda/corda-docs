@@ -157,11 +157,22 @@ You can optionally start a node using the following command-line options:
 
 `initial-registration`: Starts an initial node registration with the compatibility zone to obtain a certificate from the Identity Manager Service (formerly Doorman).
 
+{{< warning >}}
+
+**Important note about running the initial node registration command**
+
+In Corda 4.6, database migrations are run on initial node registration **by default**.
+
+To prevent this, use the `--skip-schema-creation` flag alongside the `--initial-registration` command.
+
+{{< /warning >}}
+
 Parameters:
 
 
 * `--network-root-truststore`, `-t` **required**: Network root trust store obtained from the network operator.
 * `--network-root-truststore-password`, `-p`: Network root trust store password obtained from the network operator.
+* `--skip-schema-creation`: Skips the default database migration step.
 
 `generate-node-info`: Performs the node start-up tasks necessary to generate the `node.info` file, saves it to disk, then exits.
 
