@@ -319,7 +319,7 @@ CordaRPCClient(rpcAddress).start(user.userName, user.password).use {
 
 // Suspension
 CordaRPCClient(rpcAddress).start(user.userName, user.password).use {
-    it.proxy.startFlow(::RevokeMembershipFlow, memberToBeSuspended, notary)
+    it.proxy.startFlow(::SuspendMembershipFlow, memberToBeSuspended, notary)
             .returnValue.getOrThrow()
 }
 ```
