@@ -62,6 +62,15 @@ we add new custom extension with following properties:
 > * **Dynamic** -> *True*
 > * **Value** -> *4*
 
+The EJBCA plugin contains certain hardcoded values. The configuration set up in the EJBCA web service should match those values, as listed below:
+
+>
+>
+> * `CA_NAME = "CordaCA";`
+> * `END_ENTITY_PROFILE_NAME = "CENM";`
+> * `CERTIFICATE_PROFILE_NAME = "CENM";`
+
+
 
 The next step is to set up new certificate profile in order to support a Corda-compatible certificate issuance. To do so, access the *Certificate Profiles* tab and add a new profile. After that, edit the profile to have the following properties set up:
 
@@ -91,6 +100,51 @@ After that, edit the profile to have the following properties set up:
 > * **Custom certificate serial number** -> *Use*
 > * **Custom certificate extension data** -> *Use*
 
+You can also assign Administrator role permissions for the end entity created above. To do so, access *Administrator Roles* -> *Super Administrator Role* -> *Members* and edit the following fields:
+
+>
+>
+> * **Match with** -> X509: CN, Common Name
+> * **CA** -> ManagementCA
+> * **Match Value** ->...
+
+## EJBCA Client Setup
+
+You will also need to generate certificates used for establishing a secure connection between the plug-in and the web service. To do so, access *Add End Identity* and edit the profile as shown:
+
+>
+>
+> * **User** -> ...
+> * **Password** -> *password*
+> * **Common Name** ->...
+> * **End Entity Profile** -> *EMPTY*
+> * **Certificate Profile** -> *ENDUSER*
+> * **CA** -> *ManagementCA*
+> * **Token** -> *JKS file*
+
+Validate the existence of the new identity by accessing *Search End Entities* and searching for entities with the status *ALL*.
+
+Once confirmed, follow the same steps described above to assign Administrator role permissions to the new end entity.
+
+The next step is to generate and download a JKS keystore for the end entity. Access *Public Web* then *Create Keystore*. Enter the following information:
+
+>
+>
+> * **User** -> ...
+> * **Password** -> *password*
+> * **Common Name** ->...
+> * **Key specification** -> *RSA 2048 bits*
+> * **Certificate Profile** -> *ENDUSER*
+
+Now create a directory with the name *`p12`* in the Signable Material Retriever (SMR) folder and add the downloaded keystore.
+
+Finally, rename the keystore to *`keystore.jks`*. The keystore's password is `password`.
+
+{{< note >}}
+
+The keystore path must be `p12/keystore.jks` to match the hardcoded file name and location.
+
+{{< /note >}}
 
 
 ## Implementation
