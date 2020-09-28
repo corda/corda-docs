@@ -16,16 +16,17 @@ weight: 1
 
 # Corda Enterprise release notes
 
-
-
-
-## Corda Enterprise 4.6 release executive summary
+## Corda Enterprise 4.6 release overview
 
 This release extends the [Corda Enterprise 4.5 release](../4.5/release-notes-enterprise.md) with further performance, resilience, and operational improvements.
 
 Corda Enterprise 4.6 supports Linux for production deployments, with Windows and macOS support for development and demonstration purposes only. See the Corda Enterprise [platform support matrix](platform-support-matrix.md) for more information.
 
 Corda Enterprise 4.6 is operationally compatible with Corda (open source) 4.x and 3.x, and Corda Enterprise 4.5, 4.4, 4.3, 4.2, 4.1, 4.0, and 3.x. See the [Corda (open source) release notes](../../corda-os/4.6/release-notes.md) for more information.
+
+
+
+
 
 {{< warning >}}
 
@@ -85,6 +86,16 @@ Querying the node using either method enables node operators to:
 * Retrieve status information for one or more suspended flows
 
 See the [Querying flow data](../4.6/node/operating/querying-flow-data.md) documentation section for more information.
+
+
+
+
+
+
+
+
+
+
 
 ### Host to Container SSH port mapping for Dockerform
 
