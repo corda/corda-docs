@@ -17,7 +17,7 @@ title: Release notes
 
 # Corda release notes
 
-## Corda 4.6 release overview
+## Corda 4.6
 
 Welcome to the Corda 4.6 release notes.
 
@@ -27,29 +27,29 @@ Just as prior releases have brought with them commitments to wire and API stabil
 
 States and apps valid in Corda 3.0 and above are usable in Corda 4.6.
 
-## New features in Corda 4.6
+### New features and enhancements
 
-### Host to Container SSH port mapping for Dockerform
+#### Host to Container SSH port mapping for Dockerform
 
 When creating a Docker container, you can now map the SSH port on the host to the same port on the container. For more information, see [Optional configuration](generating-a-node.md#optional-configuration) in [Creating nodes locally](generating-a-node.md).
 
-### Hotloading of notaries list
+#### Hotloading of notaries list
 
 The notaries list can now be hotloaded. For more information see [Hotloading](network-map.md#hotloading) in [The network map](network-map.md).
 
-### Business Network membership extension
+#### Business Network membership extension
 
 The [Business Network Membership](business-network-membership) extension for creating and managing business networks allows a you (a node operator) to define and create a logical network based on a set of common CorDapps as well as a shared business context. Corda nodes outside of your Business Network are not aware of its members.
 
 With this extension, you can use a set of workflows to add members to the network, remove members, and manage their permissions.
 
-## Platform version change
+### Platform version change
 
 The platform version of Corda 4.6 has been bumped up from 7 to 8.
 
 For more information about platform versions, see [Versioning](versioning.md).
 
-## Fixed issues
+### Fixed issues
 
 * We have fixed an issue where the RPC `startFlow` could not reattach to existing client id flows when flow draining mode was enabled.
 * We have fixed an issue where the Classloader failed to find the class when a CorDapp class was used.
@@ -70,7 +70,7 @@ For more information about platform versions, see [Versioning](versioning.md).
 * We have reverted to Jackson 2.9.7 to resolve an issue where R3 Tools could not work properly with the upgraded version.
 * We have fixed an issue where `Paths.get("")` returns `null` instead of the current working directory.
 
-## Known issues
+### Known issues
 
 * The node does not connect to the HSM on the second registration attempt if the first attempt was not successful due to HSM inaccessibility.
 * Using the local network bootstrapper takes longer than in previous versions of Corda.
@@ -87,8 +87,9 @@ For more information about platform versions, see [Versioning](versioning.md).
 * The node rejects the incoming P2P connection from a node with a revoked certificate, with warnings and errors, but does not block any attempts to re-establish it. This leads to a quick accumulation of warnings and errors in the node log.
 * The error text is repeated in the console when trying to register a node with the forbidden characters in the Organisation (`O`) name.
 * The `<install-shell-extensions>` sub-command of Corda node creates log files in the home folder, while all other sub-commands create log files the `logs` subfolder.
+* In Corda 4.6, if a CorDapp's `minimumPlatformVersion` is higher than the platform version of the node, the CorDapp is not loaded and the node fails to start. This is a change in behaviour compared to Corda 4.5 where under these conditions the node would start up and log that the CorDapp could not be loaded. 
 
-## Corda 4.5 release overview
+## Corda 4.5
 
 Welcome to the Corda 4.5 release notes.
 
@@ -98,9 +99,9 @@ Just as prior releases have brought with them commitments to wire and API stabil
 
 States and apps valid in Corda 3.0 and above are usable in Corda 4.5.
 
-## New features and enhancements
+### New features and enhancements
 
-### Improved `killFlow` operations
+#### Improved `killFlow` operations
 
 We have improved the existing [killFlow RPC operation](https://api.corda.net/api/corda-os/4.5/html/api/kotlin/corda/net.corda.core.messaging/-corda-r-p-c-ops/kill-flow.html), which allows node operators to terminate flows manually - in several ways:
 
@@ -110,7 +111,7 @@ We have improved the existing [killFlow RPC operation](https://api.corda.net/api
 
 * A flow can now check programmatically whether its termination has been requested. This allows a looping flow to use this API to ensure it doesn't loop indefinitely when a termination has been requested. Previously, the flow would wait until it reached the next checkpoint to decide whether to terminate, allowing deadlocks to occur (e.g. if the flow was caught in an infinite loop)
 
-### New flow APIs
+#### New flow APIs
 
 We have introduced new flow framework APIs `sendAll` and `sendAllMap`, which can be used to send messages to multiple counterparties with improved performance. Previously, a flow was able to send messages to multiple counterparties by using the [send API](api-flows.md#send) once for each counterparty. These new APIs can now be used to achieve the same with better performance, which comes from a smaller number of suspensions and checkpoints.
 
@@ -120,7 +121,7 @@ For more information about the new APIs, see the [API flows](api-flows.html#comm
 Existing CorDapps will have to be updated to benefit from the new API.
 {{< /note >}}
 
-### Improved Tokens SDK along with new documentation and training
+#### Improved Tokens SDK along with new documentation and training
 
 The Tokens SDK has been extended to provide a consistent API for use in both Java and Kotlin.
 
@@ -128,7 +129,7 @@ The documentation has been relocated to the main Corda and Corda Enterprise docu
 [Read the documentation](token-sdk-introduction.md).
 [Explore the training module](https://training.corda.net/libraries/tokens-sdk/).
 
-### Error code knowledge base
+#### Error code knowledge base
 
 Error reports generated in Corda stack traces will include (starting from Corda 4.5 onwards) a unique code linked to a knowledge base in our documentation.
 
@@ -138,13 +139,13 @@ When a documented error is encountered, users can access the [knowledge base pag
 the knowledge base will be populated over time, as new error conditions are reported and investigated.
 {{< /note >}}
 
-### Excluding `.jar` files from Quasar instrumentation
+#### Excluding `.jar` files from Quasar instrumentation
 
 Corda uses Quasar to instrument flows, which makes it possible to resume a flow from a checkpoint. However, the Quasar instrumentation causes `OutOfMemoryError` exceptions to occur when certain `.jar` files are loaded as dependencies.
 
 To resolve this issue, we have added the new node configuration option `quasarExcludePackages`, which allows you to list packages that are to be excluded from the Quasar instrumentation. See [Node configuration](corda-configuration-fields.md#quasarexcludepackages) for more information.
 
-### `RestrictedEntityManager` and `RestrictedConnection`
+#### `RestrictedEntityManager` and `RestrictedConnection`
 
 To improve reliability and prevent user errors, we have modified the database access provided via JDBC and `EntityManager` to block access to functions that may corrupt flow checkpointing. As a result, it is now impossible to mistakenly call rollback inside the raw vault observer transaction, or to close the database connection prematurely.
 
@@ -153,17 +154,17 @@ The full list of blocked functions can be found below:
 - [Restricted connections](api-persistence.md#restricted-control-of-connections).
 - [Restricted entity managers](api-persistence.md#restricted-control-of-entity-managers).
 
-### Updated Dockerform task
+#### Updated Dockerform task
 
 We have updated our `Dockerform` [local development task](generating-a-node.md) plug-in to use PostgreSQL as the chosen external database.
 
-## Platform version change
+### Platform version change
 
 The platform version of Corda 4.5 has been bumped up from 6 to 7 due to the addition of the new flow framework APIs `sendAll` and `sendAllMap`, which can be used to send messages to multiple counterparties with improved performance.
 
 For more information about platform versions, see [Versioning](versioning.md).
 
-## Fixed issues
+### Fixed issues
 
 * We have fixed an issue where the deserialisation of throwables did not support [evolution](serialization-default-evolution.md), which made it difficult to add constructor parameters in new versions or to rename a property [[CORDA-3316](https://r3-cev.atlassian.net/browse/CORDA-3316)].
 * We have fixed an issue where the implementation of `FieldInfo.notEqual` in `QueryCriteriaUtils` was the same as `FieldInfo.Equal` [[CORDA-3394](https://r3-cev.atlassian.net/browse/CORDA-3394)].
