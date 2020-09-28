@@ -1183,7 +1183,7 @@ class must implement `CASigningPlugin` or `NonCASigningPlugin` interface dependi
 it will handle.
 
 Both interfaces extend common `StartablePlugin` interface containing a single method `start()`. The method is run by
-SMR Service upon the service start-up and it’s intended to contain plugin’s initialization code (e.g. a database
+Signing Service upon the service start-up and it’s intended to contain plugin’s initialization code (e.g. a database
 connection initialization).
 
 ```java
@@ -1208,6 +1208,21 @@ Each signable material submission plugin method must return its’ status:
 public enum SigningStatus {PENDING, COMPLETED}
 ```
 
+### Asynchronous signing
+
+In 1.4 a new asynchronous infrastructure has been added to the plugins.
+If your plugin does not sign requests immediately you can easily return a tracking id (String type) and the Signing Service will keep checking
+whether the plugin has already signed that particular request.
+
+That's why the plugin interfaces contain new methods called `check*SubmissionStatus()`.
+If your plugin simply does not support asynchronous signing you can ignore these tracking functions and just return `null`.
+This way the Signing Service will know that the plugin is not async and will not force tracking the request.
+
+Please note that an optional `requestId` has been added to the plugin response objects (for example `CSRResponse`).
+These values are also nullable so when your plugin assembles these please use `null` if your plugin is not async.
+
+However if your plugin is asynchronous then the returned `SigningStatus` must be `PENDING` and the `requestId` must be present.
+This is the only way the Signing Service will be able to track the request.
 
 ### CA Signing Plugin
 
@@ -1217,28 +1232,53 @@ class must implement following methods with predefined input and output paramete
 ```java
 
 /**
- * This is the interface which each CA SMR plugin must implement. This is basically the entry point of external Signing
+ * This is the interface which each CA Signing Service plugin must implement. This is basically the entry point of external Signing
  * Service communication. Each submission request method retrieves signable material and retrieves response containing
  * a signing status (PENDING, COMPLETED) and supporting data to be stored in CENM services.
  */
 public interface CASigningPlugin extends StartablePlugin {
 
     /**
-     * Handle retrieved Certificate Signing Requests (CSR) retrieved from SMR.
+     * Handle retrieved Certificate Signing Requests (CSR) retrieved from Signing Service.
      *
      * @param csr the signing request to route.
      * @return a response describing the status of the request.
+     * The response might return a pending status and a request
+     * UUID that can be used to check the request status later.
      */
     CSRResponse submitCSR(CertificateSigningRequest csr);
 
     /**
-     * Handle retrieved CRL and CRRs retrieved from SMR.
+     * Handle retrieved CRL and CRRs retrieved from Signing Service.
      *
      * @param crl     the signing request to route.
      * @param newCRRs the set of new revocation requests in this batch.
      * @return a response describing the status of the request.
+     * The response might return a pending status and a request
+     * UUID that can be used to check the request status later.
      */
-    CRLResponse submitCRL(@Nullable X509CRL crl, Set<CertificateRevocationRequest> newCRRs);
+    CRLResponse submitCRL(@Nullable X509CRL crl, @Nonnull Set<CertificateRevocationRequest> newCRRs);
+
+    /**
+     * Retrieves the status of an ongoing CSR signing request.
+     *
+     * @param requestId The ID of the request
+     * @return a response describing the status of the request.
+     * This function should only be called after the
+     * {@link #submitCSR(CertificateSigningRequest)}
+     * returned a {@link SigningStatus#PENDING} status and an ID.
+     */
+    @Nullable CSRResponse checkCSRSubmissionStatus(@Nonnull String requestId);
+
+    /**
+     * Retrieves the status of an ongoing CRL signing request.
+     *
+     * @param requestId The ID of the request
+     * @return a response describing the status of the request.
+     * This function should only be called after the {@link #submitCRL(X509CRL, Set)}
+     * returned a {@link SigningStatus#PENDING} status and an ID.
+     */
+    @Nullable CRLResponse checkCRLSubmissionStatus(@Nonnull String requestId);
 }
 
 ```
@@ -1264,12 +1304,28 @@ public final class CSRResponse {
     public final CSRSigningData getCsrSigningData();
 
     /**
+     * Returns the ID of the request. Might be null if the request is completed immediately and no ID is provided
+     * for later use.
+     */
+    @Nullable
+    public String getRequestId() {
+        return requestId;
+    }
+    
+    /**
      * Constructs a response with CRL request status. with the specified data.
      *
      * @param status         Signing status, should be non null otherwise a {@link IllegalArgumentException} is thrown.
      * @param csrSigningData Signed Certificate Request.
+     * @param requestId The id of the request for tracking, if the request can be tracked
      */
-    public CSRResponse(@Nonnull SigningStatus status, @Nullable CSRSigningData csrSigningData);
+    @ConstructorForDeserialization
+    public CSRResponse(@Nonnull SigningStatus status, @Nullable CSRSigningData csrSigningData, @Nullable String requestId) {
+        checkParameterIsNotNull(status, "status", "constructor");
+        this.status = status;
+        this.csrSigningData = csrSigningData;
+        this.requestId = requestId;
+    }
 }
 
 /**
@@ -1310,24 +1366,33 @@ CRL submission method output:
 public final class CRLResponse {
 
     /**
-     * Returns material's signing status.
-     */
+    * Returns material's signing status.
+    */
     @Nonnull
     public final SigningStatus getStatus();
-
+    
     /**
-     * Returns signed certificate revocation list (CRL).
-     */
+    * Returns signed certificate revocation list (CRL).
+    */
     @Nullable
     public final CRLSigningData getCrlSigningData();
-
+    
     /**
-     * Constructs a response with the specified status and signed CRL.
-     *
-     * @param status         Signing status, should be non null otherwise a {@link IllegalArgumentException} is thrown.
-     * @param crlSigningData Signed Certificate Revocation List (CRL).
-     */
-    public CRLResponse(@Nonnull SigningStatus status, @Nullable CRLSigningData crlSigningData);
+    * Returns the ID of the request. Might be null if the request is completed immediately and no ID is provided
+    * for later use.
+    */
+    @Nullable
+    public String getRequestId();
+    
+    /**
+    * Constructs a response with the specified status and signed CRL.
+    *
+    * @param status         Signing status, should be non null otherwise a {@link IllegalArgumentException} is thrown.
+    * @param crlSigningData Signed Certificate Revocation List (CRL).
+    * @param requestId The id of the request for tracking, if the request can be tracked
+    */
+    @ConstructorForDeserialization
+    public CRLResponse(@Nonnull SigningStatus status, @Nullable CRLSigningData crlSigningData, @Nullable String requestId);
 }
 
 /**
@@ -1386,7 +1451,7 @@ with predefined input and output parameters:
 ```java
 
 /**
- * This is the interface which each non-CA SMR plugin must implement. This is basically the entry point of external Signing
+ * This is the interface which each non-CA Signing Service plugin must implement. This is basically the entry point of external Signing
  * Service communication. Each submission request method retrieves signable material and retrieves response containing a
  * singing status (PENDING, COMPLETED) and supporting data to be stored in CENM services.
  */
@@ -1399,7 +1464,8 @@ public interface NonCASigningPlugin extends StartablePlugin {
      *                   the subzone the network map is associated with.
      * @return a response describing the status of the request.
      */
-    NetworkMapResponse submitNetworkMap(NetworkMap networkMap, String signerName);
+    NetworkMapResponse submitNetworkMap(@Nonnull NetworkMap networkMap,
+                                        @Nonnull String signerName);
 
     /**
      * Handle routing network parameters to a signing backend.
@@ -1408,8 +1474,29 @@ public interface NonCASigningPlugin extends StartablePlugin {
      *                   the subzone the network parameters are associated with.
      * @return a response describing the status of the request.
      */
-    NetworkParametersResponse submitNetworkParameters(UnsignedNetworkParametersData networkParametersData,
-                                                      String signerName);
+    NetworkParametersResponse submitNetworkParameters(@Nonnull UnsignedNetworkParametersData networkParametersData,
+                                                      @Nonnull String signerName);
+
+    /**
+     * Retrieves the status of an ongoing Network Map signing request.
+     *
+     * @param requestId The ID of the request
+     * @return a response describing the status of the request.
+     * This function should only be called after the {@link #submitNetworkMap(NetworkMap, String)}
+     * returned a {@link SigningStatus#PENDING} status and an ID.
+     */
+    @Nullable NetworkMapResponse checkNetworkMapSubmissionStatus(String requestId);
+
+    /**
+     * Retrieves the status of an ongoing Network Parameters signing request.
+     *
+     * @param requestId The ID of the request
+     * @return a response describing the status of the request.
+     * This function should only be called after the
+     * {@link #submitNetworkParameters(UnsignedNetworkParametersData, String)}
+     * returned a {@link SigningStatus#PENDING} status and an ID.
+     */
+    @Nullable NetworkParametersResponse checkNetworkParametersSubmissionStatus(String requestId);
 }
 
 ```
@@ -1418,8 +1505,9 @@ Network Map submission method output:
 
 ```java
 /**
- * Signable Material Retriever (SMR) service response containing the status of a Network Map signing request.
+ * Signing Service plugin response containing the status of a Network Map signing request.
  */
+@CordaSerializable
 public final class NetworkMapResponse {
 
     /**
@@ -1427,6 +1515,13 @@ public final class NetworkMapResponse {
      */
     @Nonnull
     public final SigningStatus getStatus();
+
+    /**
+     * Returns the ID of the request. Might be null if the request is completed immediately and no ID is provided
+     * for later use.
+     */
+    @Nullable
+    public String getRequestId();
 
     /**
      * Returns signed Network Map
@@ -1438,9 +1533,11 @@ public final class NetworkMapResponse {
      * Constructs a response object.
      *
      * @param status        Signing status, should be non null otherwise a {@link IllegalArgumentException} is thrown.
-     * @param nmSigningData
+     * @param nmSigningData Signed Network Map data
+     * @param requestId The id of the request for tracking, if the request can be tracked
      */
-    public NetworkMapResponse(@Nonnull SigningStatus status, @Nullable NMSigningData nmSigningData);
+    @ConstructorForDeserialization
+    public NetworkMapResponse(@Nonnull SigningStatus status, @Nullable NMSigningData nmSigningData, @Nullable String requestId);
 }
 ```
 
@@ -1448,8 +1545,9 @@ Network Parameters submission method output:
 
 ```java
 /**
- * Signable Material Retriever (SMR) service response containing the status of a Network Parameters signing request.
+ * Signing Service plugin response containing the status of a Network Parameters signing request.
  */
+@CordaSerializable
 public final class NetworkParametersResponse {
 
     /**
@@ -1458,6 +1556,13 @@ public final class NetworkParametersResponse {
     @Nonnull
     public final SigningStatus getStatus();
 
+    /**
+     * Returns the ID of the request. Might be null if the request is completed immediately and no ID is provided
+     * for later use.
+     */
+    @Nullable
+    public String getRequestId();
+    
     /**
      * Returns signed Network Parameters
      */
