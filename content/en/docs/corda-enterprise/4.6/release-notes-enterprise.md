@@ -154,10 +154,6 @@ For more information about platform versions, see [Versioning](cordapps/versioni
 * We have fixed an issue where the Classloader failed to find the class when a CorDapp class was used.
 * The path for network parameters is now configurable and the network parameters file is stored in the location specified by the node configuration.
 
-
-###  Changelog/other fixed issues
-
-
 ## Known issues
 * The HA Utilities tool and the Health Survey Tool do not process configuration `include` commands correctly if the configuration is located in the tool's root directory.
 * It is currently not possible to build a Kotlin CorDapp template against Corda Enterprise 4.6.
@@ -180,4 +176,4 @@ For more information about platform versions, see [Versioning](cordapps/versioni
 * The node rejects the incoming P2P connection from a node with a revoked certificate, with warnings and errors, but does not block any attempts to re-establish it. This leads to a quick accumulation of warnings and errors in the node log.
 * The error text is repeated in the console when trying to register a node with forbidden characters in the Organisation (`O`) name.
 * The ``<install-shell-extensions>`` sub-command of Corda node creates log files in the home folder, while all other sub-commands create log files the `logs` subfolder.
-* In Corda Enterprise 4.6, if a CorDapp's `minimumPlatformVersion` is higher than the platform version of the node, the CorDapp is not loaded and the node fails to start. This is a change in behaviour compared to Corda Enterprise 4.5 where under these conditions the node would start up and log that the CorDapp could not be loaded.
+* In Corda Enterprise 4.6, if a CorDapp's `minimumPlatformVersion` is higher than the platform version of the node, the CorDapp is not loaded and the node fails to start. This is a change in behaviour compared to Corda Enterprise 4.5 where under these conditions the node would start up and log that the CorDapp could not be loaded. See the [debugging section in API: Contract Constraints](api-contract-constraints.md#debugging) for more information.
