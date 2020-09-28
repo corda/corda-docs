@@ -158,7 +158,7 @@ While **LedgerSync** can be used on its own (for example, as a diagnostic utilit
 
 **LedgerRecover** (Automatic) has been designed to recover small amounts of ledger data that would have little to no impact
 on the responding node's performance. **LedgerRecover** (Automatic) is built on top of Corda's `SendTransactionFlow` and `ReceiveTransactionFlow`.
-These flows handle resolution of attachments, network parameters and transaction backchains out-of-the-box. Before entering recovery,
+These flows handle resolution of attachments, network parameters, and transaction backchains out-of-the-box. Before entering recovery,
 the responder verifies the eligibility of the requester seeing the requested transactions.
 
 Only transactions and backchains where both counterparties are participants will be allowed for recovery. **LedgerRecover** (Automatic)
