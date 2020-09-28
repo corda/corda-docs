@@ -826,7 +826,7 @@ If this property is present both sub-properties must be present as well.
 If a plugin is used the `signingKeyAlias` field must not be present.
 
   * **pluginJar**:
-  A path where the plugin JAR is located. It can be either absolute or relative.
+  A path where the plugin `.jar` file is located. It can be either absolute or relative.
 
   * **pluginClass**: A package path where the plugin class is located.
   The plugin class must implement either the `NonCASigningPlugin` or the `CASigningPlugin` interface.
