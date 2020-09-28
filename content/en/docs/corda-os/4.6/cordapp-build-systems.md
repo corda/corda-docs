@@ -74,6 +74,7 @@ Corda you’re developing against:
 * `ext.corda_release_version` defines the version of Corda itself.
 * `ext.corda_gradle_plugins_version` defines the version of the Corda Gradle Plugins.
 * `ext.quasar_version` defines the version of Quasar, a library that we use to implement the flow framework.
+* `ext.quasar_classifier` is used with `quasar_version` to set the version and classifier of the Quasar agent that the `quasar-utils` plugin will use; if `quasar_classifier` is not set as shown below, Gradle may not be able to resolve Quasar-related dependencies correctly.
 * `ext.kotlin_version` defines the version of Kotlin (if using Kotlin to write your CorDapp).
 
 The current versions used are as follows:
@@ -81,7 +82,8 @@ The current versions used are as follows:
 ```groovy
 ext.corda_release_version = '4.6'
 ext.corda_gradle_plugins_version = '5.0.12'
-ext.quasar_version = '0.7.12_r3'
+ext.quasar_version = '0.7.13_r3'
+ext.quasar_classifier=''
 ext.kotlin_version = '1.2.71'
 ```
 
