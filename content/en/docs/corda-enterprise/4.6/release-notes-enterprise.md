@@ -115,6 +115,7 @@ For more information about platform versions, see [Versioning](cordapps/versioni
 
 * To reduce the risk of vulnerabilities, we have upgraded the Apache Zookeeper used by the Corda Enterprise [Firewall component](node/corda-firewall-component.md#prerequisites-4) from 3.5.4-Beta to 3.61. See [Apache ZooKeeper setup](operations/deployment/corda-firewall-configuration-file.md#apache-zookeeper-setup) for more information.
 * We have upgraded `commons-beanutils` to version 1.9.4 for improved security.
+* As of Corda Enterprise 4.6, support for [DemoBench](demobench.md) is deprecated.
 
 ## Fixed issues
 
