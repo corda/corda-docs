@@ -75,9 +75,9 @@ A brief checklist of required steps follows below for each upgrade path.
 
 1. Remove any entries of `transactionIsolationLevel`, `initialiseSchema`, or `initialiseAppSchema` from the database section of your node configuration file.
 2. Update any missing core schema changes by running the node in `run-migration-scripts` mode: `java -jar corda.jar run-migration-scripts --core-schemas`.
-3. Add liquibase resources to CorDapps. In Corda 4.6, CorDapps that introduce custom schema need liquibase migration scripts allowing them to create the schema upfront. For existing CorDapps that do not have migration scripts in their resources, they can be added as an external migration `.jar` file, as documented in the [Corda Enterprise documentation](../../corda-enterprise/4.6/cordapps/database-management.md#adding-scripts-retrospectively-to-an-existing-cordapp).
-4. Update the changelog for existing schemas. After upgrading the Corda `.jar` file and adding liquibase scripts to the CorDapp(s), any custom schemas from the apps are present
-in the database, but the changelog entries in the liquibase changelog table are missing (as they have been created by liquibase). This will cause issues when starting the node, and also when running `run-migration-scripts` as tables that already exist cannot be recreated. By running the new sub-command `sync-app-schemas`, changelog entries are created for all existing mapped schemas from CorDapps: `java -jar corda.jar sync-app-schemas`.
+3. Add Liquibase resources to CorDapps. In Corda 4.6, CorDapps that introduce custom schema need Liquibase migration scripts allowing them to create the schema upfront. For existing CorDapps that do not have migration scripts in their resources, they can be added as an external migration `.jar` file, as documented in the [Corda Enterprise documentation](../../corda-enterprise/4.6/cordapps/database-management.md#adding-scripts-retrospectively-to-an-existing-cordapp).
+4. Update the changelog for existing schemas. After upgrading the Corda `.jar` file and adding Liquibase scripts to the CorDapp(s), any custom schemas from the apps are present
+in the database, but the changelog entries in the Liquibase changelog table are missing (as they have been created by Liquibase). This will cause issues when starting the node, and also when running `run-migration-scripts` as tables that already exist cannot be recreated. By running the new sub-command `sync-app-schemas`, changelog entries are created for all existing mapped schemas from CorDapps: `java -jar corda.jar sync-app-schemas`.
 
 **IMPORTANT** Do **not** install any new CorDapp, or a version adding schema entities, before running the `sync-app-schemas` sub-command. Any mapped schema found in the CorDapps will be added to the changelog **without** trying to create the matching database entities.
 
@@ -469,7 +469,7 @@ Changes introduced in Corda 4.4 to increase ledger integrity have highlighted li
 * Add an exception for Unrecoverable RPC errors [[CORDA-3192](https://r3-cev.atlassian.net/browse/CORDA-3192)]
 * Fix the misleading Flow has been waiting message [[CORDA-3197](https://r3-cev.atlassian.net/browse/CORDA-3197)]
 * Update Quasar agent so that we can exclude entire ClassLoaders from being instrumented [[CORDA-3228](https://r3-cev.atlassian.net/browse/CORDA-3228)]
-* Don’t fail on liquibase errors when using H2 [[CORDA-3302](https://r3-cev.atlassian.net/browse/CORDA-3302)]
+* Don’t fail on Liquibase errors when using H2 [[CORDA-3302](https://r3-cev.atlassian.net/browse/CORDA-3302)]
 * Exceptions thrown in raw vault observers can cause critical issues [[CORDA-3329](https://r3-cev.atlassian.net/browse/CORDA-3329)]
 * Migration from Corda 3.x to 4.x for PostgreSQL require a manual workaround [[CORDA-3348](https://r3-cev.atlassian.net/browse/CORDA-3348)]
 * Prepare DJVM library for 1.0 release [[CORDA-3377](https://r3-cev.atlassian.net/browse/CORDA-3377)]
@@ -722,7 +722,7 @@ Any confidential identities registered using the old API will not be reflected i
 * Allow AbstractParty to initiate flow [[CORDA-3000](https://r3-cev.atlassian.net/browse/CORDA-3000)]
 * Reverting jersey and mockito as it currently causes issues with ENT [[CORDA-2333](https://r3-cev.atlassian.net/browse/CORDA-2333)]
 * Fixing x500Prinicipal matching [[CORDA-2974](https://r3-cev.atlassian.net/browse/CORDA-2974)]
-* Fix for liquibase changelog warnings [[CORDA-2774](https://r3-cev.atlassian.net/browse/CORDA-2774)]
+* Fix for Liquibase changelog warnings [[CORDA-2774](https://r3-cev.atlassian.net/browse/CORDA-2774)]
 * Add documentation on the options for deploying nodes [[CORDA-1912](https://r3-cev.atlassian.net/browse/CORDA-1912)]
 * Disable slow consumers for RPC since it doesn’t work [[CORDA-2981](https://r3-cev.atlassian.net/browse/CORDA-2981)]
 * Revert usage of Gradle JUnit 5 Platform Runner [[CORDA-2970](https://r3-cev.atlassian.net/browse/CORDA-2970)]
