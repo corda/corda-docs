@@ -216,24 +216,8 @@ Please check the schema management documentation to see what adjustments are nee
 
 **Schema migration from Corda versions prior to V4.0**
 
-This version drops the automatic migration of database tables from Corda 3 and earlier - i.e. creating the changelog for
-tables that predate the introduction of liquibase for core tables in Open Source.
-
-To migrate from Corda 3.x to 4.6 and keep the contents of the database, you need to migrate to a previous version of Corda 4
-before, e.g. 3.3 -> 4.5 -> 4.6.
-
-
-
-
-
-
-
-
-
-
-
-
-
+Corda 4.6 drops the support for retro-fitting the database changelog when migrating from Corda versions older than 4.0. Thus it is required to migrate to a previous 4.x version before
+migrating to Corda 4.6 - for example, 3.3 to 4.5, and then 4.5 to 4.6.
 
 #### Other changes and improvements
 
