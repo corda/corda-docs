@@ -136,7 +136,7 @@ CordaRPCClient(rpcAddress).start(user.userName, user.password).use {
 
 ## Amend a membership
 
-There are attributes of a member's information that can be updated, not including network operations such as membership suspension or revocation. TO perform these amendments, you must be an authorised network party.
+There are attributes of a member's information that can be updated, not including network operations such as membership suspension or revocation. To perform these amendments, you must be an authorised network party.
 
 The attributes which can be amended are:
 
