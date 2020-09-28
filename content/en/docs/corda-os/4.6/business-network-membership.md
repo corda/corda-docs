@@ -341,7 +341,7 @@ RPC exposed flows can be divided into 2 groups:
     - Usage: `flow start AssignBICFlow membershipId: <UNIQUE_IDENTIFIER>, bic: <STRING>, notary: <OPTIONAL_NOTARY_IDENTITY>`.
 - `AssignLoanIssuerRoleFlow` grants loan issuance permission to a calling party.
     - Usage: `flow start AssignLoanIssuerRoleFlow networkId: <STRING>, notary: <OPTIONAL_NOTARY_IDENTITY>`.
-- `IssueLoanFlow` issues new loan ledger between caller as lender and borrower specified as flow argument. It also
+- `IssueLoanFlow` issues new loan state on ledger between caller as lender and borrower specified as flow argument. It also
   performs verification of both parties to ensure they are active members of Business Network with ID specified as
   flow argument. Existence of BIC as business identity is checked and whether flow caller has permission to issue loan.
     - Usage: `flow start IssueLoanFlow networkId: <STRING>, borrower: <PARTY>, amount: <INT>`.
