@@ -38,14 +38,14 @@ LedgerGraph is a dependency for the set of Collaborative Recovery CorDapps V1.1 
 
 ### Database requirements
 
-LedgerGraph CorDapps are tested against Corda Enterprise and will work according to the support matrix defined in the documentation found [here](https://docs.corda.net/docs/corda-enterprise/4.5/platform-support-matrix.html#platform-support-matrix).
+LedgerGraph CorDapps are tested against Corda Enterprise and will work according to the [support matrix.] (../../platform-support-matrix.html#platform-support-matrix).
 
 ## Install LedgerGraph
 
 
 ### File Check
 
-The first step in installation of the LedgerGraph CorDapps is to obtain the Jar files (distributable binaries that the Corda node will run). These should be provided by your Corda Representative. Once you have obtained the software in a distributable format, you are ready to install them into your operating Corda node.
+The first step in installation of the LedgerGraph CorDapps is to obtain the Jar files (distributable binaries that the Corda node will run). These should be provided by your Corda representative. Once you have obtained the software in a distributable format, you are ready to install them into your operating Corda node.
 
 You should have access to _two_ individual jar files - one for **LedgerGraph** itself, and, optionally, another for the **LedgerGraph Confidential Identities** CorDapp. You should be able to access these files readily on the machine from which you will be performing the installation.
 
@@ -153,13 +153,13 @@ transactionReaderPoolSize = 32
 
 ## Support for Confidential Identities
 
-If you are using Corda [Confidential Identities](./../../cordapps/api-confidential-identity.md), you need to add further configuration to **LedgerGraph**  in order to properly support your environment. This is due to a limitation in the current implementation of the Confidential Identities CorDapp.
+If you are using Corda [Confidential Identities](./../../cordapps/api-confidential-identity.md), you need to add further configuration to LedgerGraph  in order to properly support your environment. This is due to a limitation in the current implementation of the Confidential Identities CorDapp.
 
 This additional configuration step helps to ensure that confidential identities on your node are properly mapped to known identities (where they have been shared with your node) when new transactions are processed and added to the graph.
 
-In order for **LedgerGraph** to properly identify transactions belonging to specific confidential identities, the **confidential owning keys** for those identities must be shared between the involved Corda nodes before to being loaded by **LedgerGraph** to retrieve data concerning those transactions.
+In order for LedgerGraph to properly identify transactions belonging to specific confidential identities, the **confidential owning keys** for those identities must be shared between the involved Corda nodes before to being loaded by LedgerGraph to retrieve data concerning those transactions.
 
-TO configure **LedgerGraph** for use with Confidential Identities:
+To configure LedgerGraph for use with Confidential Identities:
 
 1. Deploy the <code>ledger-<b>graph</b>-confidential-identities</code> JAR file to `<corda_node_dir>/cordapps`.
 
