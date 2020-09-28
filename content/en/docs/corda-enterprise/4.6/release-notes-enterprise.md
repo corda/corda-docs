@@ -27,6 +27,19 @@ Corda Enterprise 4.6 supports Linux for production deployments, with Windows and
 
 Corda Enterprise 4.6 is operationally compatible with Corda (open source) 4.x and 3.x, and Corda Enterprise 4.5, 4.4, 4.3, 4.2, 4.1, 4.0, and 3.x. See the [Corda (open source) release notes](../../corda-os/4.6/release-notes.md) for more information.
 
+{{< warning >}}
+
+**Important note about running the initial node registration command**
+
+In Corda Enterprise 4.6, database migrations are run on initial node registration **by default**.
+
+To prevent this, use the `--skip-schema-creation` flag alongside the `--initial-registration` command.
+
+The `initial-registration` command is described in [Node command-line options](node/node-commandline.md#sub-commands) and [Joining a compatibility zone](joining-a-compatibility-zone.md#joining-an-existing-compatibility-zone).
+
+{{< /warning >}}
+
+
 ## New features and enhancements
 
 ### Ability to access new, remote RPC interfaces via Multi RPC Client
