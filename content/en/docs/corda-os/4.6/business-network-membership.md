@@ -191,7 +191,7 @@ To update a member's roles and permissions in the business network:
 *Example*:
 
 ```kotlin
-val roles = setOf(BNORole()) // assign full permissions to member
+val roles = setOf(BNORole()) // assign all administrative permissions to member
 val bnService = serviceHub.cordaService(BNService::class.java)
 val networkId = "MyBusinessNetwork"
 val partyToBeUpdated = ... // get the [Party] object of the member being updated
