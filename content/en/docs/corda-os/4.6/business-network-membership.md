@@ -173,7 +173,7 @@ CordaRPCClient(rpcAddress).start(user.userName, user.password).use {
 }
 ```
 
-### Update a members business identity attribute
+### Update a members business network roles
 
 You can update a member's business identity attributes - by modifying their roles. Depending on your proposed changes, the updated member may become an **authorised member**. In this case, your enhancement must be preceded by an execution of the [`ModifyGroupsFlow`](#modify-a-group) to add the member to all membership lists that it will have administrative powers over.
 
