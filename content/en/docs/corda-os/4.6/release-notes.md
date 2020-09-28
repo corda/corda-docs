@@ -21,11 +21,52 @@ title: Release notes
 
 Welcome to the Corda 4.6 release notes.
 
-Please read these carefully to understand what’s new in this release and how the new features and enhancements can help you.
+This release introduces a number of new features and some major functional and operational improvements, and fixes a range of issues in the following major areas:
 
+**Flow management features and improvements**.
+
+Corda 4.6 provides the ability to use a unique ID to prevent duplicate flow starts. This is an additional way to start flows by passing in a unique identifier when starting a flow. This allows you to:
+  * Check that a flow started correctly (for example, if there was a disconnect event).
+  * Prevent duplicate flow starts - if you try and start a flow twice with the same unique identifier, it will only fire once.
+  * Recover the progress tracker for in-flight flows.
+  * Recover the result of finished flows.
+
+Watch the short video overview of this feature:
+
+{{< youtube nn0sP5HDiG0 >}}
+
+**Membership and network improvements**.
+
+Corda 4.6 adds support for membership representation. In the short video overview below we are introducing a new core concept in Corda and tooling to model membership lists in Corda and represent natively business networks:
+
+{{< youtube WTh3IXlwncU >}}
+
+**Developer experience features and improvements.**
+
+We are focused on improving the overall developer experience to ensure Corda maintains its status as an easy to use platform for developers. In this release we have a number of improvements that will help developers build more resilient applications.
+
+* Detection of un-restorable checkpoints. During development, flows are now automatically serialized then deserialized whenever they reach a checkpoint. This enables automatic detection of flow code that creates checkpoints that cannot be deserialized. This feature can, and should, be disabled in the node configuration when in production.
+* Register custom pluggable serializers for CorDapp checkpoints. Custom serializers can now be used when serializing types as part of a flow framework checkpoint. Most classes will not need a custom serializer. This exists for classes that throw exceptions during checkpoint serialization. Implement the new CheckpointCustomSerializer interface to create a custom checkpoint serializer.
+
+**Operational improvements**
+
+* Corda 4.6 introduces a set of improvements to make the flow state machine more resilient.
+* We have
+
+Plus a lot more - please read these release notes carefully to understand what’s new in this release and how the new features and enhancements can help you.
+
+{{< note >}}
 Just as prior releases have brought with them commitments to wire and API stability, Corda 4.6 comes with those same guarantees.
 
 States and apps valid in Corda 3.0 and above are usable in Corda 4.6.
+{{< /note >}}
+
+{{< warning >}}
+**Important upgrade notes**
+
+............
+
+{{< warning >}}
 
 ### New features and enhancements
 
@@ -43,11 +84,44 @@ The [Business Network Membership](business-network-membership) extension for cre
 
 With this extension, you can use a set of workflows to add members to the network, remove members, and manage their permissions.
 
+#### Ability to register custom pluggable serializers for CorDapp checkpoints
+
+CorDapp developers now have the ability to create a custom serializer for a given type, which is then used when serializing the type in question as part of a flow framework checkpoint.
+
+Note that this is an advanced feature, designed specifically for certain types that throw exceptions during checkpoint serialization. The vast majority of classes will not need a custom serializer.
+
+Custom checkpoint serializers are created by implementing the new `CheckpointCustomSerializer` interface.
+
+#### Automatic detection of un-restorable checkpoints
+
+Flows are now automatically serialized then deserialized whenever they reach a checkpoint. This allows better detection of flow code that creates checkpoints that cannot be deserialized.
+
+{{< note >}}
+This feature can and should be disabled in the node configuration when in production.
+{{< /note >}}
+
+#### Ability to prevent duplicate flow starts and retrieve the status of started flows
+
+Corda’s RPC client now allows each flow to be started with a unique client-provided ID. Flows started in this manner have the following benefits:
+
+* If a flow is invoked multiple times with the same client ID, they will be considered duplicates. All subsequent invocations after the first will simply return the result of the first invocation.
+* A running flow can be reattached to using the client ID. This allows its flow handle to be recovered.
+* The result of a completed flow can still be viewed after the flow has completed, using the client ID.
+
+#### Database schema harmonisation
+
+...............
+
 ### Platform version change
 
 The platform version of Corda 4.6 has been bumped up from 7 to 8.
 
 For more information about platform versions, see [Versioning](versioning.md).
+
+### Other changes
+
+* In Corda 4.6 we have introduced a set of improvements to make the flow state machine more resilient.
+
 
 ### Fixed issues
 
@@ -87,7 +161,7 @@ For more information about platform versions, see [Versioning](versioning.md).
 * The node rejects the incoming P2P connection from a node with a revoked certificate, with warnings and errors, but does not block any attempts to re-establish it. This leads to a quick accumulation of warnings and errors in the node log.
 * The error text is repeated in the console when trying to register a node with the forbidden characters in the Organisation (`O`) name.
 * The `<install-shell-extensions>` sub-command of Corda node creates log files in the home folder, while all other sub-commands create log files the `logs` subfolder.
-* In Corda 4.6, if a CorDapp's `minimumPlatformVersion` is higher than the platform version of the node, the CorDapp is not loaded and the node fails to start. This is a change in behaviour compared to Corda 4.5 where under these conditions the node would start up and log that the CorDapp could not be loaded. 
+* In Corda 4.6, if a CorDapp's `minimumPlatformVersion` is higher than the platform version of the node, the CorDapp is not loaded and the node fails to start. This is a change in behaviour compared to Corda 4.5 where under these conditions the node would start up and log that the CorDapp could not be loaded. See the [debugging section in API: Contract Constraints](api-contract-constraints.md#debugging) for more information.
 
 ## Corda 4.5
 
@@ -166,16 +240,16 @@ For more information about platform versions, see [Versioning](versioning.md).
 
 ### Fixed issues
 
-* We have fixed an issue where the deserialisation of throwables did not support [evolution](serialization-default-evolution.md), which made it difficult to add constructor parameters in new versions or to rename a property [[CORDA-3316](https://r3-cev.atlassian.net/browse/CORDA-3316)].
+* We have fixed an issue where the deserialization of throwables did not support [evolution](serialization-default-evolution.md), which made it difficult to add constructor parameters in new versions or to rename a property [[CORDA-3316](https://r3-cev.atlassian.net/browse/CORDA-3316)].
 * We have fixed an issue where the implementation of `FieldInfo.notEqual` in `QueryCriteriaUtils` was the same as `FieldInfo.Equal` [[CORDA-3394](https://r3-cev.atlassian.net/browse/CORDA-3394)].
-* We have optimised Corda's DJVM deserialiser so that `loadForSandbox()` now returns a `Class` instead of a `LoadedClass` [[CORDA-3590](https://r3-cev.atlassian.net/browse/CORDA-3590)].
+* We have optimised Corda's DJVM deserializer so that `loadForSandbox()` now returns a `Class` instead of a `LoadedClass` [[CORDA-3590](https://r3-cev.atlassian.net/browse/CORDA-3590)].
 * We have modified `CordaFuture` so that any throwable can complete it, even if exceptions that do not subclass `java.lang.Exception` are re-thrown immediately [[CORDA-3638](https://r3-cev.atlassian.net/browse/CORDA-3638)].
-* We have fixed an issue where CorDapp custom serialisers were not supported in `MockNetwork`, causing unit tests of flows to fail without using `Driver` [[CORDA-3643](https://r3-cev.atlassian.net/browse/CORDA-3643)].
-* We have fixed an issue where serialising a `FlowExternalOperation`, which had maintained a reference to a `FlowLogic`, could throw an `IndexOutOfBoundsException` error when constructing a `FlowAsyncOperation` from a `FlowExternalOperation` [[CORDA-3677](https://r3-cev.atlassian.net/browse/CORDA-3677)].
+* We have fixed an issue where CorDapp custom serializers were not supported in `MockNetwork`, causing unit tests of flows to fail without using `Driver` [[CORDA-3643](https://r3-cev.atlassian.net/browse/CORDA-3643)].
+* We have fixed an issue where serializing a `FlowExternalOperation`, which had maintained a reference to a `FlowLogic`, could throw an `IndexOutOfBoundsException` error when constructing a `FlowAsyncOperation` from a `FlowExternalOperation` [[CORDA-3677](https://r3-cev.atlassian.net/browse/CORDA-3677)].
 * We have fixed an issue where `ServiceHub.signInitialTransaction()` threw undeclared checked exceptions (`TransactionDeserialisationException` and `MissingAttachmentsException` [[CORDA-3685](https://r3-cev.atlassian.net/browse/CORDA-3685)].
 * We have standardised all node database timestamps to use the UTC time zone [[CORDA-3697](https://r3-cev.atlassian.net/browse/CORDA-3697)].
-* We have fixed issues with the existing checkpoint iterator serialisers related to null handling and the use of `equals` when restoring the iterator position [[CORDA-3701](https://r3-cev.atlassian.net/browse/CORDA-3701)].
-* We have fixed an issue where Corda failed to deserialise Enums with custom `toString()` methods into the DJVM sandbox [[CORDA-3716](https://r3-cev.atlassian.net/browse/CORDA-3716)].
+* We have fixed issues with the existing checkpoint iterator serializers related to null handling and the use of `equals` when restoring the iterator position [[CORDA-3701](https://r3-cev.atlassian.net/browse/CORDA-3701)].
+* We have fixed an issue where Corda failed to deserialize Enums with custom `toString()` methods into the DJVM sandbox [[CORDA-3716](https://r3-cev.atlassian.net/browse/CORDA-3716)].
 * We have fixed an issue where Corda's internal `providerMap` field in `core`, which is supposed to be private, was both public and mutable [[CORDA-3758](https://r3-cev.atlassian.net/browse/CORDA-3758)].
 * We have fixed an issue with failing session init messages when the state machine replayed them from the Artemis queue in order to retry flows that had not yet persisted their first checkpoint, due to problems with database connectivity [[CORDA-3841](https://r3-cev.atlassian.net/browse/CORDA-3841)].
 * We have fixed an issue where the `com.r3.corda.enterprise.settlementperftestcordapp.flows.SwapStockForCashFlowTest` failed for Oracle 11 due to failed migration.
@@ -184,7 +258,7 @@ For more information about platform versions, see [Versioning](versioning.md).
 * We have fixed an issue where no CRL check was done when using embedded Artemis, which could cause nodes to continue to be involved in transactions after they had been blacklisted.
 * We have fixed an issue with inconsistent error messages on starting components if HSM was not available.
 * We have fixed an issue where a Vault Query using `LinearStateQueryCriteria(linearId = emptyList())` would translate into an illegal SQL statement on PostgreSQL and would throw an exception.
-* We have added a custom serialiser (`IteratorSerializer`) that can fix broken iterators in order to resolve an issue with a `ConcurrentModificationException` in `FetchDataFlow`.
+* We have added a custom serializer (`IteratorSerializer`) that can fix broken iterators in order to resolve an issue with a `ConcurrentModificationException` in `FetchDataFlow`.
 * We have fixed an issue with failing `VaultObserverExceptionTest` tests on Oracle.
 
 ## Corda 4.4
