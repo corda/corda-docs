@@ -378,7 +378,7 @@ Next steps are same for every OS (Windows/Mac/Linux).
 3. Request membership from *Bank B* and *Bank C* nodes by running:
    `flow start RequestMembershipFlow authorisedParty: Bank A, networkId: <OBTAINED_NETWORK_ID>, businessIdentity: null, notary: null`
 
-4. Obtain requested membership IDs for *BanK B* and *Bank C* by running:
+4. Obtain requested membership IDs for *Bank B* and *Bank C* by running:
    `run vaultQuery contractStateType: net.corda.core.contracts.ContractState` on *Bank A* node and looking
    into `linearId` of newly issued `MembershipState`s.
 
