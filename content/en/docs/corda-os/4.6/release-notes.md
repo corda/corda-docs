@@ -132,6 +132,88 @@ Corda’s RPC client now allows each flow to be started with a unique client-pro
 
 #### Database schema harmonisation
 
+As part of this release, we have rationalised the way in which database schema management is performed across Corda open source and Corda Enterprise.
+
+* We have moved all schema management options from node configuration files to start-up sub-commands (in order to reduce misconfigurations and make changing options a less onerous process).
+  * We have removed the ability to create/upgrade the database schema as part of running a node, by introducing a schema creation/migration sub-command that needs to be run as part of a node installation/upgrade.
+  * We have harmonised the configuration, set-up, and behaviour of databases between Corda and Corda Enterprise.
+  * We have removed automatic schema migration for updating from Corda versions prior to 4.0.
+* Added support in Corda open source for packaging custom CorDapp schemas into Liquibase migrations through introducing Liquibase schema migration/description scripts for CorDapps.
+
+{{< warning >}}
+Schema migration/creation has been decoupled from the normal node run mode and needs to be done using a separate
+sub-command. **All configuration keys relating to schema migration have been removed and will cause errors if used in Corda 4.6.**
+{{< /warning >}}
+
+Some of the more significant changes are listed below.
+
+**Schema management for CorDapps**
+
+Corda 4.6 now supports CorDapp schema migration via Liquibase in the same way as Corda Enterprise, where:
+
+* Each CorDapp needs to provide a migration resource with Liquibase scripts to create/migrate any required schemas.
+* Old Corda open source CorDapps that do not have migration scripts need to be migrated in the same way as described in the Corda Enterprise [Enterprise migration](../../corda-enterprise/4.6/cordapps/database-management.md#adding-scripts-retrospectively-to-an-existing-cordapp) documentation.
+* A node can manage app schemas automatically using hibernate with H2 in dev mode. This must be enabled with the `--allow-hibernate-to-manage-app-schema` command-line flag.
+
+**Schema creation**
+
+In Corda 4.6, a Corda node can no longer modify/create schema on the fly in normal run mode. Instead, you should apply schema setup or changes deliberately using a new sub-command called `run-migration-scripts`. This subcommand will create/modify the schema and then exit.
+
+**A split into core and app schema**
+
+Corda nodes have a set of core schema that is required for the node itself to work. In addition, CorDapps can define additional mapped schemas to store their custom states in the vault.
+
+Up to Corda 4.6, the node/schema migration would use the combination of both and run all the required schema creation/migration using hardcoded lists and heuristics to figure out which is which (as, for example, core and app schema have different requirements whether they can be run while checkpoints are present in the database).
+
+This has now changed - the `run-migration-scripts` sub-command takes two new parameters - `--core-schemas` and `--app-schemas`. At least one of these parameters must be present and will run the migration scripts for the respective requested schema set.
+
+{{< note >}}
+Core schemas cannot be migrated while there are checkpoints.
+
+App schemas can be forced to migrate with checkpoints present using the `--update-app-schema-with-checkpoints` flag.
+{{< /note >}}
+
+**Tests**
+
+Automated tests (as in `MockNetwork`, `NodeBasedTest` and Node Driver tests) are able to set up the required schema
+automatically.
+
+* Mock Network. The `MockNode` overrides a field in `AbstractNode` that allows the node to run schema migration on the fly (which is **not** available via the command-line). It takes extra constructor parameters to control whether Liquibase will be run and whether hibernate can be used to create the app schema. Both default to `true` for compatibility with existing tests.
+* Node Driver. In-process nodes use a similar mechanism to Mock Nodes. Out-of-process nodes using a persistent database need the database to be set up before they start (as does a real node). Therefore, `DriverDSL` will run a schema migration step before running the node in this case. Out-of-process nodes using an in-memory database are a particularly tricky case, as there is no persistent database that could be set up before the node starts. Therefore, the node itself can check for H2 in-memory JDBC URLs and will run any required migration if that is detected.
+* Node-based Tests use the same in-process node as does NodeDriver.
+
+**Bootstrapping**
+
+The network bootstrapper runs core schema migrations as part of the bootstrapping process.
+
+Cordformation has an extra parameter that can be added to the node section in the `build.gradle`, as follows:
+
+```
+runSchemaMigration = true
+```
+
+This will run the full schema migration as the last step of the cordformation setup, leaving the nodes ready to run.
+
+**Configuration changes**
+
+The following fields have been removed from the database section in the node configuration file. These need to be removed from the node configuration as the node will throw an
+exception on startup if it finds any them:
+
+* `transactionIsolationLevel`: this is now hard-coded in the node.
+- `initialiseSchema`: as above - schema initialisation cannot be run as part of node startup.
+- `initialiseAppSchema`: as above.
+
+Please check the schema management documentation to see what adjustments are needed to your CorDapp packaging process.
+
+
+## Schema migration from Corda version pre v-4
+
+This version drops the automatic migration of database tables from Corda 3 and earlier - i.e. creating the changelog for
+tables that predate the introduction of liquibase for core tables in Open Source.
+
+To migrate from Corda 3.x to 4.6 and keep the contents of the database, you need to migrate to a previous version of Corda 4
+before, e.g. 3.3 -> 4.5 -> 4.6.
+
 ...............
 
 
