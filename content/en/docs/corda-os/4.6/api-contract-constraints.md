@@ -484,4 +484,4 @@ The following error message will be received before the node shuts down:
 file:/corda-open-source/samples/bank-of-corda-demo/build/nodes/BankOfCorda/cordapps/corda-finance-workflows-4.6-SNAPSHOT.jar]
 ```
 
-To address this, see the [CorDapp JAR signing](cordapp-build-systems.md#cordapp-build-system-signing-cordapp-jar-ref) section.
+To address this, see the [CorDapp JAR signing](cordapp-build-systems.md#cordapp-build-system-signing-cordapp-jar-ref) page.
