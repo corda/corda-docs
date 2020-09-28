@@ -781,7 +781,7 @@ serviceLocation = [
 ```
 
 Only the host and port are mandatory, the rest of the properties are optional.
-When using a CSR or CRL task please make sure that no subZoneId is provided since that is only valid when using a Network Map.
+When using a CSR or CRL task please make sure that no `subZoneId` is provided since that is only valid when using a Network Map.
 
 * **crlDistributionPoint**:
 Relevant only if type is `CRL` or `CSR` (optional for `CSR`). The endpoint that the CRL is
