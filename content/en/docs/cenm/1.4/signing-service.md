@@ -476,33 +476,8 @@ defined. Should contain all certificates to build the entire certificate chain f
 * **signingKeys**:
 Map of human-readable aliases (string) to signing key configurations. Should contain all signing keys that
 are used within the signing processes defined in the signers map. See the [signing key map entry example](#signing-key-map-entry-example)
-below for the expected format.
-
-
-* **serviceLocations**:
-Map of human-readable aliases (string) to CENM service location configurations. Should contain all
-services that are used within the signing processes defined in the signers map. See the
-[service location map entry example](#service-location-map-entry-example) below for the expected format.
-
-
-
-
-
-
-
-
-
-
-
-
-* **caSmrLocation**:
-*(Optional, use instead of CA related serviceLocations)* CA part of Signable Material Retriever CENM
-service location configuration.
-
-
-* **nonCaSmrLocation**:
-*(Optional, use instead of non CA related serviceLocations)* Non CA part of Signable Material
-Retriever CENM service location configuration.
+below for the expected format. Please note that if a plugin is used for all the signing tasks in the config then this property must not be present since
+it will not be used at all.
 
 
 
@@ -767,7 +742,7 @@ The data type for the signing task. Should be one of `CSR`, `CRL`, `NETWORK_MAP`
 
 * **signingKeyAlias**:
 The alias for the signing key used by the signing task. Should refer to one of the aliases in the
-`signingKeys` map defined above.
+`signingKeys` map defined above. Please note that if a plugin is used this property must not be present since it is not going to be used.
 
 
 
@@ -778,24 +753,35 @@ The alias for the signing key used by the signing task. Should refer to one of t
 
 
 
-* **serviceLocationAlias**:
-*(Use when serviceLocations are specified)* The alias for the service location used by the signing task. Should refer to one of the aliases
-in the `serviceLocations` map defined above.
+* **serviceLocation**:
+An array containing one or more service locations. For non-CA (Network Map) signing tasks this can be multiple (with subzones).
+Expected format:
+```docker
+serviceLocation = [
+    {
+        host = localhost
+        port = 5050
+        verbose = true
+        reconnect = true
+        ssl = {
+            keyStore = {
+                location = "./corda-ssl-signer-keys.jks"
+                password = password
+            }
+            trustStore = {
+                location = "./corda-ssl-trust-store.jks"
+                password = trust-store-password
+            }
+            validate = true
+        }
+        timeout = 10000
+        subZoneId = 12
+    }
+]
+```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Only the host and port are mandatory, the rest of the properties are optional.
+When using a CSR or CRL task please make sure that no subZoneId is provided since that is only valid when using a Network Map.
 
 * **crlDistributionPoint**:
 Relevant only if type is `CRL` or `CSR` (optional for `CSR`). The endpoint that the CRL is
@@ -834,9 +820,17 @@ signing key using `PASSWORD` or `KEY_FILE` authentication with the password prec
   The duration interval between signing executions. Either a number representing the millisecond duration
   or a string duration with unit suffix. See the [scheduling signing tasks](#scheduling-signing-tasks) section above for information about the accepted format.
 
+* **plugin**:
+*(Optional)* Defines which plugin to use for the given signing tawsk.
+If this property is present both sub-properties must be present as well.
+If a plugin is used the `signingKeyAlias` field must not be present.
 
+  * **pluginJar**:
+  A path where the plugin JAR is located. It can be either absolute or relative.
 
-
+  * **pluginClass**: A package path where the plugin class is located.
+  The plugin class must implement either the `NonCASigningPlugin` or the `CASigningPlugin` interface.
+  If it does not, an error will be thrown.
 
 
 ## Example Signing Service Configuration
@@ -878,27 +872,6 @@ signingKeys = {
     }
 }
 
-##########################################################
-# All CENM service endpoints for fetching/persisting data #
-##########################################################
-serviceLocations = {
-    "identity-manager" = {
-        host = localhost
-        port = 5050
-        verbose = true
-    },
-    "network-map-1" = {
-        host = localhost
-        port = 5053
-        verbose = true
-    },
-    "revocation" = {
-        host = localhost
-        port = 5051
-        verbose = true
-    }
-}
-
 ###################################################
 # Signing tasks to be run (manually or scheduled) #
 ###################################################
@@ -912,6 +885,13 @@ signers = {
         schedule {
             interval = 1minute
         }
+        serviceLocation = [
+            {
+                host = localhost
+                port = 5050
+                verbose = true
+            }
+        ]
     },
     "Example CRL Signer" = {
         type = CRL
@@ -922,6 +902,13 @@ signers = {
         schedule {
             interval = 60minute
         }
+        serviceLocation = [
+            {
+                host = localhost
+                port = 5051
+                verbose = true
+            }
+        ]
     },
     "Example Network Map Signer" = {
         type = NETWORK_MAP
@@ -930,6 +917,14 @@ signers = {
         schedule {
             interval = 1minute
         }
+        serviceLocation = [
+            {
+                host = localhost
+                port = 5051
+                verbose = true
+                subZoneId = 1
+            }
+        ]
     },
     "Example Network Parameters Signer" = {
         type = NETWORK_PARAMETERS
@@ -938,12 +933,20 @@ signers = {
         schedule {
             interval = 10minute
         }
+        serviceLocation = [
+            {
+                host = localhost
+                port = 5051
+                verbose = true
+                subZoneId = 1
+            }
+        ]
     }
 }
 
 ```
 
-### Signing Keys From HSM
+### Signing Keys From HSM (no plugin)
 
 ```docker
 shell = {
@@ -1103,43 +1106,6 @@ signingKeys = {
     }
 }
 
-##########################################################
-# All CENM service endpoints for fetching/persisting data #
-##########################################################
-caSmrLocation = {
-    host = localhost
-    port = 5010
-    verbose = true
-    # note that this SSL configuration could use different keys to the other locations if desired
-    ssl {
-        keyStore {
-            location = exampleSslKeyStore.jks
-            password = "password"
-        }
-        trustStore {
-            location = exampleSslTrustStore.jks
-            password = "trustpass"
-        }
-    }
-}
-
-nonCaSmrLocation = {
-    host = localhost
-    port = 5011
-    verbose = true
-    # note that this SSL configuration could use different keys to the other locations if desired
-    ssl {
-        keyStore {
-            location = exampleSslKeyStore.jks
-            password = "password"
-        }
-        trustStore {
-            location = exampleSslTrustStore.jks
-            password = "trustpass"
-        }
-    }
-}
-
 ###################################################
 # Signing tasks to be run (manually or scheduled) #
 ###################################################
@@ -1149,12 +1115,26 @@ signers = {
         signingKeyAlias = "CSRUtimacoHsmSigningKey"
         crlDistributionPoint = "http://localhost:10000/certificate-revocation-list/doorman"
         validDays = 7300 # 20 year certificate expiry
+        serviceLocation = [
+            {
+                host = localhost
+                port = 5050
+                verbose = true
+            }
+        ]
     },
     "Example CRL Signer" = {
         type = CRL
         signingKeyAlias = "CRLUtimacoHsmSigningKey"
         crlDistributionPoint = "http://localhost:10000/certificate-revocation-list/doorman"
         updatePeriod = 5184000000 # 60 day CRL expiry
+        serviceLocation = [
+            {
+                host = localhost
+                port = 5051
+                verbose = true
+            }
+        ]
     },
     "Example Network Map Signer" = {
         type = NETWORK_MAP
@@ -1162,10 +1142,26 @@ signers = {
         schedule {
             interval = 1minute
         }
+        serviceLocation = [
+            {
+                host = localhost
+                port = 5052
+                verbose = true
+                subZoneId = 1
+            }
+        ]
     },
     "Example Network Parameter Signer" = {
         type = NETWORK_PARAMETERS
         signingKeyAlias = "NetworkParametersUtimacoHsmSigningKey"
+        serviceLocation = [
+            {
+                host = localhost
+                port = 5052
+                verbose = true
+                subZoneId = 1
+            }
+        ]
     }
 }
 
@@ -1176,6 +1172,196 @@ signers = {
 
 
 
+### CA plugin and non-CA default mechanism
+
+```docker
+# In this config a plugin is handling the CA signing and the default CENM signing handles the non-CA signing
+
+shell = {
+  sshdPort = 20003
+  user = "testuser"
+  password = "example-password"
+}
+
+#############################################
+# All individual keys used in signing tasks #
+#############################################
+signingKeys = {
+    "NetworkMapLocal" = {
+        alias = "example-key-alias"
+        type = LOCAL
+        password = "example-key-password"
+        keyStore {
+            file = "exampleKeyStore.jks"
+            password = "example-password"
+        }
+    }
+}
+
+###################################################
+# Signing tasks to be run (manually or scheduled) #
+###################################################
+signers = {
+    "Example CSR Signer" = {
+        type = CSR
+        crlDistributionPoint = "http://localhost:10000/certificate-revocation-list/doorman"
+        validDays = 7300 # 20 year certificate expiry
+        serviceLocation = [
+            {
+                host = localhost
+                port = 5053
+                verbose = true
+            }
+        ]
+        schedule {
+            interval = 1minute
+        }
+        plugin {
+            pluginJar = "./MySigningPlugin.jar"
+            pluginClass = "com.package.MySigningPlugin"
+        }
+    },
+    "Example CRL Signer" = {
+        type = CRL
+        crlDistributionPoint = "http://localhost:10000/certificate-revocation-list/doorman"
+        updatePeriod = 86400000 # 1 day CRL expiry
+        schedule {
+            interval = 60minute
+        }
+        serviceLocation = [
+            {
+                host = localhost
+                port = 5054
+                verbose = true
+            }
+        ]
+        plugin {
+            pluginJar = "./MySigningPlugin.jar"
+            pluginClass = "com.package.MySigningPlugin"
+        }
+    },
+    "Example Network Map Signer" = {
+        type = NETWORK_MAP
+        signingKeyAlias = "NetworkMapLocal"
+        schedule {
+            interval = 1minute
+        }
+        serviceLocation = [
+            {
+                host = localhost
+                port = 5050
+                verbose = true
+                subZoneId = 12
+            }
+        ]
+    },
+    "Example Network Parameters Signer" = {
+        type = NETWORK_PARAMETERS
+        signingKeyAlias = "NetworkMapLocal"
+        schedule {
+            interval = 10minute
+        }
+        serviceLocation = [
+            {
+                host = localhost
+                port = 5050
+                verbose = true
+                subZoneId = 12
+            }
+        ]
+    }
+}
+
+authServiceConfig = {
+    disableAuthentication = true
+}
+```
+
+### Plugin for CA and non-CA tasks
+
+```docker
+shell = {
+  sshdPort = 20003
+  user = "testuser"
+  password = "example-password"
+}
+
+###################################################
+# Signing tasks to be run (manually or scheduled) #
+###################################################
+signers = {
+    "Example CSR Signer" = {
+        type = CSR
+        crlDistributionPoint = "http://localhost:10000/certificate-revocation-list/doorman"
+        validDays = 7300 # 20 year certificate expiry
+        serviceLocation = [
+            {
+                host = localhost
+                port = 5050
+                verbose = true
+            }
+        ]
+        plugin {
+            pluginJar = "./MySigningPlugin.jar"
+            pluginClass = "com.package.MySigningPlugin"
+        }
+    },
+    "Example CRL Signer" = {
+        type = CRL
+        crlDistributionPoint = "http://localhost:10000/certificate-revocation-list/doorman"
+        updatePeriod = 5184000000 # 60 day CRL expiry
+        serviceLocation = [
+            {
+                host = localhost
+                port = 5051
+                verbose = true
+            }
+        ]
+        plugin {
+            pluginJar = "./MySigningPlugin.jar"
+            pluginClass = "com.package.MySigningPlugin"
+        }
+    },
+    "Example Network Map Signer" = {
+        type = NETWORK_MAP
+        schedule {
+            interval = 1minute
+        }
+        serviceLocation = [
+            {
+                host = localhost
+                port = 5052
+                verbose = true
+                subZoneId = 1
+            }
+        ]
+        plugin {
+            pluginJar = "./MySigningPlugin.jar"
+            pluginClass = "com.package.MySigningPlugin"
+        }
+    },
+    "Example Network Parameter Signer" = {
+        type = NETWORK_PARAMETERS
+        serviceLocation = [
+            {
+                host = localhost
+                port = 5052
+                verbose = true
+                subZoneId = 1
+            }
+        ]
+        plugin {
+            pluginJar = "./MySigningPlugin.jar"
+            pluginClass = "com.package.MySigningPlugin"
+        }
+    }
+}
+
+authServiceConfig = {
+    disableAuthentication = true
+}
+
+```
 ## Developing Signing Plugins
 
 As mentioned before, we enable possibility of writing custom plugin to support external Signing infrastructures. A plugin
@@ -1211,15 +1397,15 @@ public enum SigningStatus {PENDING, COMPLETED}
 ### Asynchronous signing
 
 In 1.4 a new asynchronous infrastructure has been added to the plugins.
-If your plugin does not sign requests immediately you can easily return a tracking id (String type) and the Signing Service will keep checking
+If your plugin does not sign requests immediately, you can easily return a tracking id (`String` type) and the Signing Service will keep checking
 whether the plugin has already signed that particular request.
 
 That's why the plugin interfaces contain new methods called `check*SubmissionStatus()`.
 If your plugin simply does not support asynchronous signing you can ignore these tracking functions and just return `null`.
-This way the Signing Service will know that the plugin is not async and will not force tracking the request.
+This way the Signing Service will know that the plugin is not asynchronous and will not force tracking the request.
 
 Please note that an optional `requestId` has been added to the plugin response objects (for example `CSRResponse`).
-These values are also nullable so when your plugin assembles these please use `null` if your plugin is not async.
+These values are also nullable so when your plugin assembles these please use `null` if your plugin is not asynchronous.
 
 However if your plugin is asynchronous then the returned `SigningStatus` must be `PENDING` and the `requestId` must be present.
 This is the only way the Signing Service will be able to track the request.
