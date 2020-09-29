@@ -85,7 +85,9 @@ For more information, see [Starting a flow with a client-provided unique ID](flo
 
 #### Hotloading of notaries list
 
-The notaries list can now be hotloaded. For more information see [Hotloading](network-map.md#hotloading) in [The network map](network-map.md).
+The notaries list can now be hotloaded. Updates to the `notaries` network parameter do not require the node to be shut down and restarted.
+
+For more information, see [Hotloading](network-map.md#hotloading) in [The network map](network-map.md).
 
 #### Ability to register custom pluggable serializers for CorDapp checkpoints
 
