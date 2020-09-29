@@ -63,6 +63,17 @@ $ export CONFIG_OBFUSCATION_SEED=my-seed; export CONFIG_OBFUSCATION_PASSPHRASE=m
 ```
 {{< /note >}}
 
+{{< note >}}
+All flows can be paused when the node starts up - you can enable this in one of the following ways:
+
+* Use the command-line option `--pause-all-flows`.
+* Add the `smmStartMode="Safe"` option to the [node configuration file](node/setup/corda-configuration-file.md).
+
+These flows can then be individually retried via RPC or the node shell.
+
+See [Pause and resume flows](../../flow-pause-and-resume.md#starting-the-node-and-pausing-all-flows) for more information.
+{{< /note >}}
+
 
 ## Starting the Bridge
 
