@@ -285,7 +285,6 @@ The `initial-registration` command is described in [Node command-line options](n
 
 ### Known issues
 
-* The node does not connect to the HSM on the second registration attempt if the first attempt was not successful due to HSM inaccessibility.
 * Using the local network bootstrapper takes longer than in previous versions of Corda.
 * The new operation on the `FlowRPCOps` RPC interface takes a `StateMachineID` as an argument parameter, leading to repetitive invocations of the form.
 * An SSL connection cannot be established between two nodes when one of the nodes does not have access to the Identity Manager Service and, as a result, to CRL distribution points.
