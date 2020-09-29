@@ -146,21 +146,3 @@ The timeout for a local signer can be configured via the service’s configurati
 Each execution of the signing process is run with a timeout equal to the specified value in the configuration file (see
 above linked docs for defaults). If this timeout limit is reached then an error will be logged and the process will be
 retried using an exponential backoff strategy, doubling the wait period after each failure.
-
-
-## SMR Service throws `java.lang.NoClassDefFoundError` on start-up
-
-
-### Issue
-
-When starting up SMR Service it throws `java.lang.NoClassDefFoundError`.
-
-
-### Solution
-
-Make sure that the given `.jar` file path in the SMR configuration under `pluginJar` property is correct.
-Similarly check class names correctly (i.e. copy & paste rather than manually typing), as they must match exactly.
-Also make sure that the given `.jar` file does not attempt to use invalid or non-existent dependencies.
-
-If a class in the `.jar` file tries to import a class that does not exist the SMR will not be able to load the `.jar`
-and throw this error.

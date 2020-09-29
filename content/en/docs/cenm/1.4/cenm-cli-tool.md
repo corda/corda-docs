@@ -965,35 +965,6 @@ Sets the context of the command - overrides the current context set.
 `-o, <outputType>`
 Specifies output format. Valid values are: json, pretty. Default value is `pretty`.
 
-## SMR service commands
-
-You can use the CLI to perform the following tasks for the SMR service:
-
-* Update CA SMR service plugin address
-* Update non-CA SMR service plugin address
-
-### Update non-CA SMR service plugin address
-
-**Sample command structure**
-
-`cenm smr config set-non-ca-address [-a=<address>]`
-
-**Options**
-
-`a, --address=<address>`
-Updates non-CA SMR service plugin address.
-
-### Update CA SMR service plugin address
-
-**Sample command structure**
-
-`cenm smr config set-ca-address [-a=<address>]`
-
-**Options**
-
-`a, --address=<address>`
-Updates CA SMR service plugin address.
-
 ## Network Map service commands
 
 You can use the CLI to perform the following tasks on Network Map services:

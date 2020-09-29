@@ -20,10 +20,10 @@ title: EJBCA Sample Plugin
 
 ## Overview
 
-Signable Material Retriever servce (SMR) ships with default CA and Non CA plugin for the CENM provided Signing Service.
-These plugins demonstrate the connectivity to the CENM Signing Service which doesn’t persist the signable materials
-requests, and the data needs to be stored on the plugin’s side (SMR Service). To illustrate the reverse setup, where a
-signing infrastructure (the replacement of CENM Signing Service) stores internally signable material requests, we
+In CENM 1.4, the Signing Service ships with default CA and non-CA plug-ins.
+These plug-ins demonstrate the connectivity to the CENM Signing Service which doesn’t persist the signable materials
+requests, and the data needs to be stored on the plug-in’s side. To illustrate the reverse setup, where a
+signing infrastructure (the replacement of the CENM Signing Service) stores internally signable material requests, we
 provide instruction how to setup EJBCA - the Open Source Certificate Authority, and sample plugin implementation.
 
 {{< note >}}
@@ -34,20 +34,20 @@ The implementation should not be used in production deployment.
 
 ## EJBCA Web Service Setup
 
-Web service setup follows the same steps as [the official documentation](https://doc.primekey.com/ejbca6152/tutorials-and-guides/quick-start-guide).
-We will setup a local environment as specified in Quick Start Guide. After this step you will be able to access EJBCA
-Administration UI on specified address.
+The web service setup follows the same steps as [the official documentation](https://doc.primekey.com/ejbca6152/tutorials-and-guides/quick-start-guide).
+This section shows a setup of a local environment as specified in the Quick Start Guide. After this step you will be able to access EJBCA
+Administration UI on the specified address.
 
-Next step is to import Corda’s CA. This is done by accessing *Certification Authorities* tab and using
+The next step is to import Corda’s CA. To do so, access the *Certification Authorities* tab and use the
 *Import CA keystore…* option. The keystore you will need to import for successful CA material signing is
-`corda-identity-manager-keys.jks` which is contained in Signing Service’s `certificates` directory. Keystore’s
-password is `password` and *Alias of signature key* is `cordaidentitymanagerca`. Leave  *Alias of encryption key*
+`corda-identity-manager-keys.jks`, which is contained in the Signing Service’s `certificates` directory. The keystore’s
+password is `password`, and the *Alias of signature key* is `cordaidentitymanagerca`. Leave  *Alias of encryption key*
 field empty.
 
 {{< note >}}
 Provided keystore must be in PKCS12 format.
-
 {{< /note >}}
+
 Corda’s certificates contain a custom extension named Certificate Role. We must enable its override during certificate
 generation. This is done by accessing *System Configuration* tab followed by *Custom Certificate Extensions* tab. Here
 we add new custom extension with following properties:
@@ -63,8 +63,7 @@ we add new custom extension with following properties:
 > * **Value** -> *4*
 
 
-Now we must set up new certificate profile in order to support Corda compatible certificate issuance. This is done by
-accessing *Certificate Profiles* tab and adding new profile. After that edit profile to have following properties set up:
+The next step is to set up new certificate profile in order to support a Corda-compatible certificate issuance. To do so, access the *Certificate Profiles* tab and add a new profile. After that, edit the profile to have the following properties set up:
 
 >
 >
@@ -79,8 +78,8 @@ accessing *Certificate Profiles* tab and adding new profile. After that edit pro
 > * **Available CAs** -> Corda’s CA
 
 
-At the end we must set up new end entity profile. This is done by accessing *End Entity Profiles* and adding new profile.
-After that edit profile to have following properties set up:
+The last step is to set up a new end entity profile. To do so, access *End Entity Profiles* and add a new profile.
+After that, edit the profile to have the following properties set up:
 
 >
 >
@@ -96,24 +95,22 @@ After that edit profile to have following properties set up:
 
 ## Implementation
 
-EJBCA is oriented on CA related type of signable material. This is why the sample plugin implements `CASigningPlugin`
-interface. It also implements `ENMLoggable` interface which is our internal logging interface. However this is optional
-and it’s added for convenience.
+EJBCA is oriented on CA-related type of signable material. This is why the sample plug-in implements the `CASigningPlugin`
+interface. It also implements the `ENMLoggable` interface, which is the CENM internal logging interface. However this is optional
+and it is added for convenience only.
 
 The sample implementation follows the same steps as [the official documentation](https://doc.primekey.com/ejbca6152/ejbca-operations/ejbca-concept-guide/protocols/web-service-interface).
-The suggested approach would be to follow the given link and this document at the same time to fill in the gaps.
+The suggested approach would be to follow the given link and this document at the same time in order to fill in the gaps.
 
-`start()` method initialises communication with EJBCA Web Service set up prior and `EjbcaWS` typed member
-`ejbcaraws` is used for client methods invocation. Keep in mind you have to export keystore for the user which has
-permissions to invoke Web Service API methods. Creation of that user and the keystore export is done via EJBCA
-administration UI.
+The `start()` method initialises the communication with the previously set up EJBCA Web Service, and the `EjbcaWS` typed member
+`ejbcaraws` is used for client methods invocation. Please note that you have to export the keystore for the user that has
+permissions to invoke Web Service API methods. Use the EJBCA administration UI to create that user and to export the keystore.
 
-`submitCSR()` method takes `CertificateSigningRequest` typed argument `csr` and based on its contents creates user
-for which certificate will be created. Certificate request is done and after that we collect generated certifciate’s
-chain since node will only accept chains which root certificate matches the one provided in network root truststore.
+The `submitCSR()` method takes the `CertificateSigningRequest` typed argument `csr`, and based on its contents it creates a user
+for which a certificate will be created. The certificate request is done and after that the generated certificate’s
+chain is collected since the node will only accept chains whose root certificate matches the one provided in network root truststore.
 
-`submitCRL()` method takes current CRL in form of `crl` argument and a Certificate Revocation List to be updated. First of all, revocation of all new revocation requests is performed. After that CRL is updated and
-fetched. At the end we form response as specified in interface.
+The `submitCRL()` method takes the current CRL in the form of a `crl` argument, and a Certificate Revocation List to be updated. First of all, a revocation of all new revocation requests is performed. After that the CRL is updated and fetched. The last step is to form a response as specified in the interface.
 
 ```java
 package com.r3.enm.smrplugins.ejbcaplugin;
@@ -124,13 +121,13 @@ import com.r3.enm.logging.LoggingContext;
 import com.r3.enm.logging.LoggingContextWrapperFactory;
 import com.r3.enm.model.CertificateRevocationRequest;
 import com.r3.enm.model.CertificateSigningRequest;
-import com.r3.enm.smrpluginapi.ca.CASigningPlugin;
-import com.r3.enm.smrpluginapi.ca.CRLResponse;
-import com.r3.enm.smrpluginapi.ca.CRLSigningData;
-import com.r3.enm.smrpluginapi.ca.CSRResponse;
-import com.r3.enm.smrpluginapi.ca.CSRSigningData;
-import com.r3.enm.smrpluginapi.common.SMRPluginTerminalException;
-import com.r3.enm.smrpluginapi.common.SigningStatus;
+import com.r3.enm.signingpluginapi.ca.CASigningPlugin;
+import com.r3.enm.signingpluginapi.ca.CRLResponse;
+import com.r3.enm.signingpluginapi.ca.CRLSigningData;
+import com.r3.enm.signingpluginapi.ca.CSRResponse;
+import com.r3.enm.signingpluginapi.ca.CSRSigningData;
+import com.r3.enm.signingpluginapi.common.SigningServicePluginTerminalException;
+import com.r3.enm.signingpluginapi.common.SigningStatus;
 import org.cesecore.util.Base64;
 import org.cesecore.util.CryptoProviderTools;
 import org.ejbca.core.protocol.ws.client.gen.Certificate;
@@ -141,6 +138,7 @@ import org.ejbca.core.protocol.ws.common.CertificateHelper;
 import org.jetbrains.annotations.NotNull;
 import net.corda.core.crypto.CryptoUtils;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.xml.namespace.QName;
 import java.io.ByteArrayInputStream;
@@ -197,10 +195,10 @@ public class EJBCASigningPlugin implements CASigningPlugin, ENMLoggable {
             EjbcaWSService service = new EjbcaWSService(new URL(EJBCA_URL), qname);
             ejbcaraws = service.getEjbcaWSPort();
         } catch (MalformedURLException e) {
-            getOpsLogger().error(() -> "Malformed URL provided, shutting down SMR");
-            throw new SMRPluginTerminalException(e);
+            getOpsLogger().error(() -> "Malformed URL provided, shutting down Signing Service");
+            throw new SigningServicePluginTerminalException(e);
         } catch (Exception e) {
-            throw new SMRPluginTerminalException(e);
+            throw new SigningServicePluginTerminalException(e);
         }
 
         getCtx().withLoggers(getConsoleLogger(), getOpsLogger()).forEach(logger -> logger.info(() -> "EJBCA plugin started"));
@@ -228,7 +226,7 @@ public class EJBCASigningPlugin implements CASigningPlugin, ENMLoggable {
             );
         } catch (Exception e) {
             getOpsLogger().error(() -> "Failed to create certificate for " + csr.getLegalName().toString());
-            throw new RuntimeException(e);
+            return new CSRResponse(SigningStatus.FAILED, null, null);
         }
         getConsoleLogger().debug(() -> "Received certificate for " + csr.getLegalName().toString());
         getOpsLogger().info(() -> "Received certificate for " + csr.getLegalName().toString());
@@ -240,12 +238,12 @@ public class EJBCASigningPlugin implements CASigningPlugin, ENMLoggable {
         } catch (Exception e) {
             getOpsLogger().error(() -> "Failed to retrieve certificate chain for certificate under name " +
                     csr.getLegalName().toString());
-            throw new RuntimeException(e);
+            return new CSRResponse(SigningStatus.FAILED, null, null);
         }
         getConsoleLogger().debug(() -> "Received certificate chain for certificate under name " + csr.getLegalName().toString());
         getOpsLogger().info(() -> "Received certificate chain for certificate under name " + csr.getLegalName().toString());
 
-        // form proper response to be passed to SMR
+        // form a proper response to be passed to the Signing Service
         try {
             return new CSRResponse(SigningStatus.COMPLETED, new CSRSigningData(
                     certificateFactory.generateCertPath(certChain.stream().map(cert -> {
@@ -259,14 +257,14 @@ public class EJBCASigningPlugin implements CASigningPlugin, ENMLoggable {
                     ).collect(Collectors.toList())),
                     SIGNER_NAMES
             ));
-        } catch (CertificateException e) {
+        } catch (Exception e) {
             getOpsLogger().error(() -> "Failed to generate certificate path from raw data");
-            throw new RuntimeException(e);
+            return new CSRResponse(SigningStatus.FAILED, null, null);
         }
     }
 
     @Override
-    public CRLResponse submitCRL(@Nullable X509CRL crl, Set<CertificateRevocationRequest> newCRRs) {
+    public CRLResponse submitCRL(@Nullable X509CRL crl, @Nonnull Set<CertificateRevocationRequest> newCRRs) {
         // revoke certificates
         Set<CertificateRevocationRequest> revokedRequests = new HashSet<>();
         newCRRs.forEach(crr -> {
@@ -291,7 +289,7 @@ public class EJBCASigningPlugin implements CASigningPlugin, ENMLoggable {
             ejbcaraws.createCRL(CA_NAME);
         } catch (Exception e) {
             getOpsLogger().error(() -> "Failed to generate new CRL");
-            throw new RuntimeException(e);
+            return new CRLResponse(SigningStatus.FAILED, null, null);
         }
         getConsoleLogger().debug(() -> "CRL generated");
         getOpsLogger().info(() -> "CRL generated");
@@ -302,12 +300,12 @@ public class EJBCASigningPlugin implements CASigningPlugin, ENMLoggable {
             newCrl = ejbcaraws.getLatestCRL(CA_NAME, false);
         } catch (Exception e) {
             getOpsLogger().error(() -> "Failed to fetch CRL");
-            throw new RuntimeException(e);
+            return new CRLResponse(SigningStatus.FAILED, null, null);
         }
         getConsoleLogger().debug(() -> "CRL fetched");
         getOpsLogger().info(() -> "CRL fetched");
 
-        // form proper response to be passed to SMR
+        // form a proper response to be passed to the Signing Service
         try {
             return new CRLResponse(SigningStatus.COMPLETED, new CRLSigningData(
                     (X509CRL) certificateFactory.generateCRL(new ByteArrayInputStream(newCrl)),
@@ -317,8 +315,18 @@ public class EJBCASigningPlugin implements CASigningPlugin, ENMLoggable {
             ));
         } catch (CRLException e) {
             getOpsLogger().error(() -> "Failed to generate CRL from raw data");
-            throw new RuntimeException(e);
+            return new CRLResponse(SigningStatus.FAILED, null, null);
         }
+    }
+
+    @Override
+    public CSRResponse checkCSRSubmissionStatus(@Nonnull String requestId) {
+        return null;
+    }
+
+    @Override
+    public CRLResponse checkCRLSubmissionStatus(@Nonnull String requestId) {
+        return null;
     }
 
     @NotNull
@@ -351,24 +359,25 @@ public class EJBCASigningPlugin implements CASigningPlugin, ENMLoggable {
         return getCtx().getConsole();
     }
 }
-
 ```
 
 
-## Running EJBCA plugin
+## Running the EJBCA plug-in
 
-To run the plugin you simply need to specify its `.jar` path for CSR and CRL material management tasks in SMR’s
-configuration. The class name to configure is `com.r3.enm.smrplugins.ejbcaplugin.EJBCASigningPlugin`.
+From CENM 1.4, each signing task has a new property called `plugin`, which consists of `pluginJar` and `pluginClass`. If the `plugin` property is defined, it means that the plug-in will be used to sign data instead of the default signing mechanism used by the Signing Service.
 
-You run SMR as per usual with following command:
+To run the EJBCA plug-in, you need to:
+
+1. Specify its `.jar` path for CSR and CRL signing tasks in the Signing Service configuration (see [Signing Service](signing-service.md) for details).
+2. Run the Signing Service in the standard way:
 
 ```bash
-java -jar smr-<VERSION>.jar --config-file <CONFIG_FILE>
+java -jar signer-<VERSION>.jar --config-file <CONFIG_FILE>
 ```
 
 On success you should see a message similar to:
 
 ```kotlin
 EJBCA plugin started
-SMR Service started
+Signing Service started
 ```
