@@ -17,7 +17,288 @@ title: Release notes
 
 # Corda release notes
 
-## Corda 4.5 release overview
+## Corda 4.6
+
+Welcome to the Corda 4.6 release notes.
+
+This release introduces a number of new features and some major functional and operational improvements, and fixes a range of issues in the following major areas:
+
+**Business Network Membership improvements**.
+
+Corda 4.6 adds support for Business Network membership representation. In the short video overview below we are introducing a new core concept in Corda and tooling to model membership lists in Corda and represent natively business networks:
+
+{{< youtube WTh3IXlwncU >}}
+
+**Database harmonisation**
+
+We have rationalised the way in which database schema management is performed across Corda open source and Corda Enterprise.
+
+* We have moved all schema management options from node configuration files to start-up sub-commands (in order to reduce misconfigurations and make changing options a less onerous process).
+* We have removed the ability to create/upgrade the database schema as part of running a node, by introducing a schema creation/migration sub-command that needs to be run as part of a node installation/upgrade.
+* We have harmonised the configuration, set-up, and behaviour of databases between Corda and Corda Enterprise.
+* We have removed automatic schema migration for updating from Corda versions prior to 4.0.
+* We have added support in Corda open source for packaging custom CorDapp schemas into Liquibase migrations through introducing Liquibase schema migration/description scripts for CorDapps.
+
+**Flow management features and improvements**.
+
+Corda 4.6 provides the ability to use a unique ID to [prevent duplicate flow starts](#ability-to-prevent-duplicate-flow-starts-and-retrieve-the-status-of-started-flows). This can be done using an RPC client and is an additional way to start flows by passing in a unique identifier when starting a flow. This allows you to:
+  * Check that a flow started correctly (for example, if there was a disconnect event).
+  * Prevent duplicate flow starts - if you try and start a flow twice with the same unique identifier, it will only fire once.
+  * Recover the progress tracker for in-flight flows.
+  * Recover the result of finished flows.
+
+Watch the short video overview of this feature:
+
+{{< youtube nn0sP5HDiG0 >}}
+
+**Developer experience features and improvements.**
+
+We are focused on improving the overall developer experience to ensure Corda maintains its status as an easy-to-use platform for developers. In this release we have a number of improvements that will help developers build more resilient applications.
+
+* [Automatic detection of unrestorable checkpoints](#automatic-detection-of-unrestorable-checkpoints). During development, flows are now automatically serialized then deserialized whenever they reach a checkpoint. This enables automatic detection of flow code that creates checkpoints that cannot be deserialized.
+* Register [custom pluggable serializers](#ability-to-register-custom-pluggable-serializers-for-cordapp-checkpoints) for CorDapp checkpoints. Custom serializers can now be used when serializing types as part of a flow framework checkpoint. Most classes will not need a custom serializer. This exists for classes that throw exceptions during checkpoint serialization. Implement the new `CheckpointCustomSerializer` interface to create a custom checkpoint serializer.
+
+**Operational improvements**
+
+* Corda 4.6 introduces a set of improvements to make the flow state machine more resilient.
+* New flow session close API adds [support](#new-flow-session-close-api) for eager termination of flow sessions and release of their resources.
+
+Plus a lot more - please read these release notes carefully to understand what’s new in this release and how the new features and enhancements can help you.
+
+{{< note >}}
+Just as prior releases have brought with them commitments to wire and API stability, Corda 4.6 comes with those same guarantees.
+
+States and apps valid in Corda 3.0 and above are usable in Corda 4.6.
+{{< /note >}}
+
+### New features and enhancements
+
+#### Business Network membership extension
+
+The [Business Network Membership](business-network-membership.md) extension for creating and managing business networks allows you (a node operator) to define and create a logical network based on a set of common CorDapps as well as a shared business context. Corda nodes outside of your Business Network are not aware of its members.
+
+With this extension, you can use a set of workflows to add members to the network, remove members, and manage their permissions.
+
+#### Database schema harmonisation
+
+As part of this release, we have rationalised the way in which database schema management is performed across Corda open source and Corda Enterprise.
+
+* We have moved all schema management options from node configuration files to start-up sub-commands (in order to reduce misconfigurations and make changing options a less onerous process).
+* We have removed the ability to create/upgrade the database schema as part of running a node, by introducing a schema creation/migration sub-command that needs to be run as part of a node installation/upgrade.
+* We have harmonised the configuration, set-up, and behaviour of databases between Corda and Corda Enterprise.
+* We have removed automatic schema migration for updating from Corda versions prior to 4.0.
+* We have added support in Corda open source for packaging custom CorDapp schemas into Liquibase migrations through introducing Liquibase schema migration/description scripts for CorDapps.
+
+{{< warning >}}
+Schema migration/creation has been decoupled from the normal node run mode and needs to be done using a separate
+sub-command. **All configuration keys relating to schema migration have been removed and will cause errors if used in Corda 4.6.**
+{{< /warning >}}
+
+Some of the more significant changes are listed below.
+
+**Schema management for CorDapps**
+
+Corda 4.6 now supports CorDapp schema migration via Liquibase in the same way as Corda Enterprise, where:
+
+* Each CorDapp needs to provide a migration resource with Liquibase scripts to create/migrate any required schemas.
+* Old Corda open source CorDapps that do not have migration scripts need to be migrated in the same way as described in the Corda Enterprise [Enterprise migration](../../corda-enterprise/4.6/cordapps/database-management.md#adding-scripts-retrospectively-to-an-existing-cordapp) documentation.
+* A node can manage app schemas automatically using Hibernate with H2 in dev mode. This must be enabled with the `--allow-hibernate-to-manage-app-schema` command-line flag.
+
+**Schema creation**
+
+In Corda 4.6, a Corda node can no longer modify/create schema on the fly in normal run mode. Instead, you should apply schema setup or changes deliberately using a new sub-command called `run-migration-scripts`. This subcommand will create/modify the schema and then exit.
+
+**A split into core and app schema**
+
+Corda nodes have a set of core schema that is required for the node itself to work. In addition, CorDapps can define additional mapped schemas to store their custom states in the vault.
+
+Up to Corda 4.6, the node/schema migration would use the combination of both and run all the required schema creation/migration using hardcoded lists and heuristics to figure out which is which (as, for example, core and app schema have different requirements whether they can be run while checkpoints are present in the database).
+
+This has now changed - the `run-migration-scripts` sub-command takes two new parameters: `--core-schemas` and `--app-schemas`. At least one of these parameters must be present and will run the migration scripts for the respective requested schema set.
+
+{{< note >}}
+Core schemas cannot be migrated while there are checkpoints.
+
+App schemas can be forced to migrate with checkpoints present using the `--update-app-schema-with-checkpoints` flag.
+{{< /note >}}
+
+**Tests**
+
+Automated tests (as in `MockNetwork`, `NodeBasedTest` and Node Driver tests) are able to set up the required schema
+automatically.
+
+* Mock Network. The `MockNode` overrides a field in `AbstractNode` that allows the node to run schema migration on the fly (which is **not** available via the command-line). It takes extra constructor parameters to control whether Liquibase will be run and whether Hibernate can be used to create the app schema. Both default to `true` for compatibility with existing tests.
+* Node Driver. In-process nodes use a similar mechanism to Mock Nodes. Out-of-process nodes using a persistent database need the database to be set up before they start (as does a real node). Therefore, `DriverDSL` will run a schema migration step before running the node in this case. Out-of-process nodes using an in-memory database are a particularly tricky case, as there is no persistent database that could be set up before the node starts. Therefore, the node itself can check for H2 in-memory JDBC URLs and will run any required migration if that is detected.
+* Node-based Tests use the same in-process node as does NodeDriver.
+
+**Bootstrapping**
+
+The Network Bootstrapper runs core schema migrations as part of the bootstrapping process.
+
+Cordformation has an extra parameter that can be added to the node section in the `build.gradle`, as follows:
+
+```
+runSchemaMigration = true
+```
+
+This will run the full schema migration as the last step of the cordformation setup, leaving the nodes ready to run.
+
+**Configuration changes**
+
+The following fields have been removed from the database section in the node configuration file. These need to be removed from the node configuration as the node will throw an
+exception on startup if it finds any of them:
+
+* `transactionIsolationLevel`: this is now hard-coded in the node.
+- `initialiseSchema`: as above - schema initialisation cannot be run as part of node startup.
+- `initialiseAppSchema`: as above.
+
+Please check the schema management documentation to see what adjustments are needed to your CorDapp packaging process.
+
+**Schema migration from Corda versions prior to V4.0**
+
+Corda 4.6 drops the support for retro-fitting the database changelog when migrating from Corda versions older than 4.0. Thus it is required to migrate to a previous 4.x version before
+migrating to Corda 4.6 - for example, 3.3 to 4.5, and then 4.5 to 4.6.
+
+#### Ability to prevent duplicate flow starts and retrieve the status of started flows
+
+Corda’s RPC client now allows each flow to be started with a unique client-provided ID. Flows started in this manner have the following benefits:
+
+* If a flow is invoked multiple times with the same client ID, they will be considered duplicates. All subsequent invocations after the first will simply return the result of the first invocation.
+* A running flow can be reattached using the client ID. This allows its flow handle to be recovered.
+* The result of a completed flow can still be viewed after the flow has completed, using the client ID.
+
+For more information, see [Starting a flow with a client-provided unique ID](flow-start-with-client-id.md).
+
+#### New flow session close API
+
+Corda 4.6 introduces a new flow session close API, which provides support for eager termination of flow sessions and release of their resources.
+
+For more information, see [API: Flows](api-flows.md).
+
+#### Hotloading of notaries list
+
+The notaries list can now be hotloaded. Updates to the `notaries` network parameter do not require the node to be shut down and restarted.
+
+For more information, see [Hotloading](network-map.md#hotloading) in [The network map](network-map.md).
+
+#### Host to Container SSH port mapping for Dockerform
+
+When creating a Docker container, you can now map the SSH port on the host to the same port on the container. For more information, see [Optional configuration](generating-a-node.md#optional-configuration) in [Creating nodes locally](generating-a-node.md).
+
+#### Ability to register custom pluggable serializers for CorDapp checkpoints
+
+CorDapp developers now have the ability to create a custom serializer for a given type, which is then used when serializing the type in question as part of a flow framework checkpoint.
+
+Note that this is an advanced feature, designed specifically for certain types that throw exceptions during checkpoint serialization. The vast majority of classes will not need a custom serializer.
+
+Custom checkpoint serializers are created by implementing the new `CheckpointCustomSerializer` interface.
+
+#### Automatic detection of unrestorable checkpoints
+
+Flows are now automatically serialized then deserialized whenever they reach a checkpoint. This allows better detection of flow code that creates checkpoints that cannot be deserialized, and enables developers and network operators to detect unrestorable checkpoints when developing CorDapps and thus reduces the risk of writing flows that cannot be retried gracefully.
+
+This feature addresses the following common problems faced by developers:
+
+* Creating objects or leveraging data structures that cannot be serialized/deserialized correctly by Kryo (the checkpoint serialization library Corda uses).
+* Writing flows that are not idempotent or do not deduplicate behaviour (such as calls to an external system).
+
+The feature provides a way for flows to reload from checkpoints, even if no errors occur. As a result, developers can be more confident that their flows would work correctly, without needing a way to inject recoverable errors throughout the flows.
+
+{{< note >}}
+This feature should not be used in production. It is disabled by default in the [node configuration file](corda-configuration-fields.md) - `reloadCheckpointAfterSuspend = false`.
+{{< /note >}}
+
+For more information, see [Automatic detection of unrestorable checkpoints](checkpoint-tooling.md#automatic-detection-of-unrestorable-checkpoints).
+
+#### Other changes and improvements
+
+* In Corda 4.6 we have introduced a set of improvements to make the flow state machine more resilient.
+* As of Corda 4.6, support for [DemoBench](demobench.md) is deprecated.
+* We have released a new minor version of [Accounts SDK](https://github.com/corda/accounts/blob/master/docs.md) - version 1.0.2. This version includes database improvements that make it compatible with Corda 4.6. If you are planning to use the Accounts SDK with Corda 4.6, you must use Accounts SDK V 1.0.2.
+* We have released a new minor version of [Tokens SDK](token-sdk-introduction.md) - version 1.2.1. This version includes database improvements that make it compatible with Corda 4.6. If you are planning to use the Tokens SDK with Corda 4.6, you must use Tokens SDK V 1.2.1.
+* When starting a new driver using the driver DSL, the notary node will start by default as a thread in the same JVM process that runs the driver regardless to the `startNodesInProcess` driver properties (and not as a new process if the `startNodesInProcess` is `false`). This setting can be overridden. Please note that if the test interacts with the notary and expects the notary to run as a new process, you must set `startInProcess` to `false`.
+* In Corda 4.6, if a CorDapp's `minimumPlatformVersion` is higher than the platform version of the node, the CorDapp is not loaded and the node fails to start. This is a change in behaviour compared to Corda 4.5 where under these conditions the node would start up and log that the CorDapp could not be loaded. See [Versioning](versioning.md) for more information.
+
+### Platform version change
+
+The platform version of Corda 4.6 has been bumped up from 7 to 8.
+
+For more information about platform versions, see [Versioning](versioning.md).
+
+### Important upgrade notes
+
+{{< warning >}}
+
+As part of the operational improvements around [database schema harmonisation](#database-schema-harmonisation), we have made in Corda 4.6 require a number of manual steps when upgrading to Corda 4.6 from a previous version. These changes are described in detail in the following pages:
+* [Upgrading CorDapps to newer Platform Versions](app-upgrade-notes.md).
+* [Upgrading nodes to a new Corda version](node-upgrade-notes.md).
+
+A brief checklist of required steps follows below for each upgrade path.
+
+**Upgrading an existing node from Corda 4.5 (or earlier 4.x version) to version 4.6**
+
+1. Remove any entries of `transactionIsolationLevel`, `initialiseSchema`, or `initialiseAppSchema` from the database section of your node configuration file.
+2. Update any missing core schema changes by running the node in `run-migration-scripts` mode: `java -jar corda.jar run-migration-scripts --core-schemas`.
+3. Add Liquibase resources to CorDapps. In Corda 4.6, CorDapps that introduce custom schema need Liquibase migration scripts allowing them to create the schema upfront. For existing CorDapps that do not have migration scripts in their resources, they can be added as an external migration `.jar` file, as documented in the [Corda Enterprise documentation](../../corda-enterprise/4.6/cordapps/database-management.md#adding-scripts-retrospectively-to-an-existing-cordapp).
+4. Update the changelog for existing schemas. After upgrading the Corda `.jar` file and adding Liquibase scripts to the CorDapp(s), any custom schemas from the apps are present
+in the database, but the changelog entries in the Liquibase changelog table are missing (as they have been created by Liquibase). This will cause issues when starting the node, and also when running `run-migration-scripts` as tables that already exist cannot be recreated. By running the new sub-command `sync-app-schemas`, changelog entries are created for all existing mapped schemas from CorDapps: `java -jar corda.jar sync-app-schemas`.
+
+**IMPORTANT** Do **not** install any new CorDapp, or a version adding schema entities, before running the `sync-app-schemas` sub-command. Any mapped schema found in the CorDapps will be added to the changelog **without** trying to create the matching database entities.
+
+**IMPORTANT** If you are upgrading a node to Corda 4.6 while any CorDapp with mapped schemas is being installed, you **must synchronise the schemas** (and thus run `sync-app-schemas`) **before** the node can start again and/or before any app schema updates can be run. Therefore, you must **not** install or update a CorDapp with new or modified schemas while upgrading
+the node, or after upgrading but before synchronising the app schemas.
+
+**Upgrading from Corda 3.x or Corda Enterprise 3.x**
+
+Corda 4.6 drops the support for retro-fitting the database changelog when migrating from Corda versions older than 4.0. Thus it is required to migrate to a previous 4.x version before
+migrating to Corda 4.6 - for example, 3.3 to 4.5, and then 4.5 to 4.6.
+
+**Important note about running the initial node registration command**
+
+In Corda 4.6, database migrations are run on initial node registration **by default**.
+
+To prevent this, use the `--skip-schema-creation` flag alongside the `--initial-registration` command.
+
+The `initial-registration` command is described in [Node command-line options](node-commandline.md#sub-commands) and [Joining a compatibility zone](joining-a-compatibility-zone.md#joining-an-existing-compatibility-zone).
+
+{{< /warning >}}
+
+### Fixed issues
+
+* We have fixed an issue where the RPC `startFlow` could not reattach to existing client id flows when flow draining mode was enabled.
+* We have fixed an issue where the Classloader failed to find the class when a CorDapp class was used.
+* We have fixed an issue where the `FlowSessionCloseTest.flow` could not access a closed session unless it was a duplicate close that was handled gracefully [[CORDA-3986](https://r3-cev.atlassian.net/browse/CORDA-3986)].
+* We have fixed an issue where the `RetryFlowMockTest` failed due to restart not setting `senderUUID` and the early end session message not hanging the receiving flow [[CORDA-3946](https://r3-cev.atlassian.net/browse/CORDA-3946)].
+* We have fixed an issue where the `ExceptionsErrorCodeFunctionsTest` failed due to timeout [[CORDA-3944](https://r3-cev.atlassian.net/browse/CORDA-3944)].
+* We have fixed an issue where the expected `error_code="5"` error was missing in logs run with custom CorDapps without the Liquibase schema.
+* We have fixed an issue with inconsistent behaviour between killed client ID flows and flows with other statuses.
+* The path for network parameters is now configurable and the network parameters file is stored in the location specified by the node configuration.
+* We have fixed an issue where logging was detecting but not printing an issue with certificates [[CORDA-4036](https://r3-cev.atlassian.net/browse/CORDA-4036)].
+* We have fixed an issue where the end session message did not hang when a flow flakey test was received [[CORDA-4026](https://r3-cev.atlassian.net/browse/CORDA-4026)].
+* We have fixed an issue where the `MembershipAuthorisationException` message contained `StateAndRef<MembershipState>` instead of the flow name [[CORDA-4017](https://r3-cev.atlassian.net/browse/CORDA-4017)].
+* We have fixed an issue in the Demo CorDapp where the mandatory `notary` parameter was missing in the `ModifyGroupFlow` description [[CORDA-4013](https://r3-cev.atlassian.net/browse/CORDA-4013)].
+* We have fixed an issue in the Demo CorDapp where the nodes failed to start due to an incompatible database schema error [[CORDA-4010](https://r3-cev.atlassian.net/browse/CORDA-4010)].
+* We have fixed an issue where the optional `file:prefix` was stripped from the classpath element passed to the `ClassGraph()` filter function, resulting in the filter function not recognising the element [[CORDA-4003](https://r3-cev.atlassian.net/browse/CORDA-4003)].
+* We have fixed an issue where flows would start executing when the `StateMachineManager.start` database transaction had not started yet [[CORDA-3998](https://r3-cev.atlassian.net/browse/CORDA-3998)].
+* We have reverted to Jackson 2.9.7 to resolve an issue where R3 Tools could not work properly with the upgraded version [[CORDA-3982](https://r3-cev.atlassian.net/browse/CORDA-3982)].
+* We have fixed an issue where `Paths.get("")` returns `null` instead of the current working directory [[CORDA-3831](https://r3-cev.atlassian.net/browse/CORDA-3831)].
+
+### Known issues
+
+* Using the local network bootstrapper takes longer than in previous versions of Corda.
+* The new operation on the `FlowRPCOps` RPC interface takes a `StateMachineID` as an argument parameter, leading to repetitive invocations of the form.
+* An SSL connection cannot be established between two nodes when one of the nodes does not have access to the Identity Manager Service and, as a result, to CRL distribution points.
+* A node cannot be run with the `--dev-mode` option unless `devModeOptions.allowCompatibilityZone=true` is added to the node configuration.
+* When a valid command is run in the wrong location, an exception occurs rather than a clear error message.
+* In the Attachment Demo, the `runSender` task uses `myLegalName` instead of `serviceLegalName` for notarisation.
+* Some samples cannot be run on Windows due to an issue with long file names.
+* Business Network roles are not displayed when membership state is queried via CLI.
+* The SSH Client returns inconsistent exit codes after `gracefulShutdown` is run, indicating that an error has occurred.
+* The node rejects the incoming P2P connection from a node with a revoked certificate, with warnings and errors, but does not block any attempts to re-establish it. This leads to a quick accumulation of warnings and errors in the node log.
+* The error text is repeated in the console when trying to register a node with the forbidden characters in the Organisation (`O`) name.
+* The `<install-shell-extensions>` sub-command of Corda node creates log files in the home folder, while all other sub-commands create log files the `logs` subfolder.
+
+## Corda 4.5
 
 Welcome to the Corda 4.5 release notes.
 
@@ -27,9 +308,9 @@ Just as prior releases have brought with them commitments to wire and API stabil
 
 States and apps valid in Corda 3.0 and above are usable in Corda 4.5.
 
-## New features and enhancements
+### New features and enhancements
 
-### Improved `killFlow` operations
+#### Improved `killFlow` operations
 
 We have improved the existing [killFlow RPC operation](https://api.corda.net/api/corda-os/4.5/html/api/kotlin/corda/net.corda.core.messaging/-corda-r-p-c-ops/kill-flow.html), which allows node operators to terminate flows manually - in several ways:
 
@@ -39,7 +320,7 @@ We have improved the existing [killFlow RPC operation](https://api.corda.net/api
 
 * A flow can now check programmatically whether its termination has been requested. This allows a looping flow to use this API to ensure it doesn't loop indefinitely when a termination has been requested. Previously, the flow would wait until it reached the next checkpoint to decide whether to terminate, allowing deadlocks to occur (e.g. if the flow was caught in an infinite loop)
 
-### New flow APIs
+#### New flow APIs
 
 We have introduced new flow framework APIs `sendAll` and `sendAllMap`, which can be used to send messages to multiple counterparties with improved performance. Previously, a flow was able to send messages to multiple counterparties by using the [send API](api-flows.md#send) once for each counterparty. These new APIs can now be used to achieve the same with better performance, which comes from a smaller number of suspensions and checkpoints.
 
@@ -49,7 +330,7 @@ For more information about the new APIs, see the [API flows](api-flows.html#comm
 Existing CorDapps will have to be updated to benefit from the new API.
 {{< /note >}}
 
-### Improved Tokens SDK along with new documentation and training
+#### Improved Tokens SDK along with new documentation and training
 
 The Tokens SDK has been extended to provide a consistent API for use in both Java and Kotlin.
 
@@ -57,7 +338,7 @@ The documentation has been relocated to the main Corda and Corda Enterprise docu
 [Read the documentation](token-sdk-introduction.md).
 [Explore the training module](https://training.corda.net/libraries/tokens-sdk/).
 
-### Error code knowledge base
+#### Error code knowledge base
 
 Error reports generated in Corda stack traces will include (starting from Corda 4.5 onwards) a unique code linked to a knowledge base in our documentation.
 
@@ -67,13 +348,13 @@ When a documented error is encountered, users can access the [knowledge base pag
 the knowledge base will be populated over time, as new error conditions are reported and investigated.
 {{< /note >}}
 
-### Excluding `.jar` files from Quasar instrumentation
+#### Excluding `.jar` files from Quasar instrumentation
 
 Corda uses Quasar to instrument flows, which makes it possible to resume a flow from a checkpoint. However, the Quasar instrumentation causes `OutOfMemoryError` exceptions to occur when certain `.jar` files are loaded as dependencies.
 
 To resolve this issue, we have added the new node configuration option `quasarExcludePackages`, which allows you to list packages that are to be excluded from the Quasar instrumentation. See [Node configuration](corda-configuration-fields.md#quasarexcludepackages) for more information.
 
-### `RestrictedEntityManager` and `RestrictedConnection`
+#### `RestrictedEntityManager` and `RestrictedConnection`
 
 To improve reliability and prevent user errors, we have modified the database access provided via JDBC and `EntityManager` to block access to functions that may corrupt flow checkpointing. As a result, it is now impossible to mistakenly call rollback inside the raw vault observer transaction, or to close the database connection prematurely.
 
@@ -82,28 +363,28 @@ The full list of blocked functions can be found below:
 - [Restricted connections](api-persistence.md#restricted-control-of-connections).
 - [Restricted entity managers](api-persistence.md#restricted-control-of-entity-managers).
 
-### Updated Dockerform task
+#### Updated Dockerform task
 
 We have updated our `Dockerform` [local development task](generating-a-node.md) plug-in to use PostgreSQL as the chosen external database.
 
-## Platform version change
+### Platform version change
 
 The platform version of Corda 4.5 has been bumped up from 6 to 7 due to the addition of the new flow framework APIs `sendAll` and `sendAllMap`, which can be used to send messages to multiple counterparties with improved performance.
 
 For more information about platform versions, see [Versioning](versioning.md).
 
-## Fixed issues
+### Fixed issues
 
-* We have fixed an issue where the deserialisation of throwables did not support [evolution](serialization-default-evolution.md), which made it difficult to add constructor parameters in new versions or to rename a property [[CORDA-3316](https://r3-cev.atlassian.net/browse/CORDA-3316)].
+* We have fixed an issue where the deserialization of throwables did not support [evolution](serialization-default-evolution.md), which made it difficult to add constructor parameters in new versions or to rename a property [[CORDA-3316](https://r3-cev.atlassian.net/browse/CORDA-3316)].
 * We have fixed an issue where the implementation of `FieldInfo.notEqual` in `QueryCriteriaUtils` was the same as `FieldInfo.Equal` [[CORDA-3394](https://r3-cev.atlassian.net/browse/CORDA-3394)].
-* We have optimised Corda's DJVM deserialiser so that `loadForSandbox()` now returns a `Class` instead of a `LoadedClass` [[CORDA-3590](https://r3-cev.atlassian.net/browse/CORDA-3590)].
+* We have optimised Corda's DJVM deserializer so that `loadForSandbox()` now returns a `Class` instead of a `LoadedClass` [[CORDA-3590](https://r3-cev.atlassian.net/browse/CORDA-3590)].
 * We have modified `CordaFuture` so that any throwable can complete it, even if exceptions that do not subclass `java.lang.Exception` are re-thrown immediately [[CORDA-3638](https://r3-cev.atlassian.net/browse/CORDA-3638)].
-* We have fixed an issue where CorDapp custom serialisers were not supported in `MockNetwork`, causing unit tests of flows to fail without using `Driver` [[CORDA-3643](https://r3-cev.atlassian.net/browse/CORDA-3643)].
-* We have fixed an issue where serialising a `FlowExternalOperation`, which had maintained a reference to a `FlowLogic`, could throw an `IndexOutOfBoundsException` error when constructing a `FlowAsyncOperation` from a `FlowExternalOperation` [[CORDA-3677](https://r3-cev.atlassian.net/browse/CORDA-3677)].
+* We have fixed an issue where CorDapp custom serializers were not supported in `MockNetwork`, causing unit tests of flows to fail without using `Driver` [[CORDA-3643](https://r3-cev.atlassian.net/browse/CORDA-3643)].
+* We have fixed an issue where serializing a `FlowExternalOperation`, which had maintained a reference to a `FlowLogic`, could throw an `IndexOutOfBoundsException` error when constructing a `FlowAsyncOperation` from a `FlowExternalOperation` [[CORDA-3677](https://r3-cev.atlassian.net/browse/CORDA-3677)].
 * We have fixed an issue where `ServiceHub.signInitialTransaction()` threw undeclared checked exceptions (`TransactionDeserialisationException` and `MissingAttachmentsException` [[CORDA-3685](https://r3-cev.atlassian.net/browse/CORDA-3685)].
 * We have standardised all node database timestamps to use the UTC time zone [[CORDA-3697](https://r3-cev.atlassian.net/browse/CORDA-3697)].
-* We have fixed issues with the existing checkpoint iterator serialisers related to null handling and the use of `equals` when restoring the iterator position [[CORDA-3701](https://r3-cev.atlassian.net/browse/CORDA-3701)].
-* We have fixed an issue where Corda failed to deserialise Enums with custom `toString()` methods into the DJVM sandbox [[CORDA-3716](https://r3-cev.atlassian.net/browse/CORDA-3716)].
+* We have fixed issues with the existing checkpoint iterator serializers related to null handling and the use of `equals` when restoring the iterator position [[CORDA-3701](https://r3-cev.atlassian.net/browse/CORDA-3701)].
+* We have fixed an issue where Corda failed to deserialize Enums with custom `toString()` methods into the DJVM sandbox [[CORDA-3716](https://r3-cev.atlassian.net/browse/CORDA-3716)].
 * We have fixed an issue where Corda's internal `providerMap` field in `core`, which is supposed to be private, was both public and mutable [[CORDA-3758](https://r3-cev.atlassian.net/browse/CORDA-3758)].
 * We have fixed an issue with failing session init messages when the state machine replayed them from the Artemis queue in order to retry flows that had not yet persisted their first checkpoint, due to problems with database connectivity [[CORDA-3841](https://r3-cev.atlassian.net/browse/CORDA-3841)].
 * We have fixed an issue where the `com.r3.corda.enterprise.settlementperftestcordapp.flows.SwapStockForCashFlowTest` failed for Oracle 11 due to failed migration.
@@ -112,7 +393,7 @@ For more information about platform versions, see [Versioning](versioning.md).
 * We have fixed an issue where no CRL check was done when using embedded Artemis, which could cause nodes to continue to be involved in transactions after they had been blacklisted.
 * We have fixed an issue with inconsistent error messages on starting components if HSM was not available.
 * We have fixed an issue where a Vault Query using `LinearStateQueryCriteria(linearId = emptyList())` would translate into an illegal SQL statement on PostgreSQL and would throw an exception.
-* We have added a custom serialiser (`IteratorSerializer`) that can fix broken iterators in order to resolve an issue with a `ConcurrentModificationException` in `FetchDataFlow`.
+* We have added a custom serializer (`IteratorSerializer`) that can fix broken iterators in order to resolve an issue with a `ConcurrentModificationException` in `FetchDataFlow`.
 * We have fixed an issue with failing `VaultObserverExceptionTest` tests on Oracle.
 
 ## Corda 4.4
@@ -214,7 +495,7 @@ Changes introduced in Corda 4.4 to increase ledger integrity have highlighted li
 * Add an exception for Unrecoverable RPC errors [[CORDA-3192](https://r3-cev.atlassian.net/browse/CORDA-3192)]
 * Fix the misleading Flow has been waiting message [[CORDA-3197](https://r3-cev.atlassian.net/browse/CORDA-3197)]
 * Update Quasar agent so that we can exclude entire ClassLoaders from being instrumented [[CORDA-3228](https://r3-cev.atlassian.net/browse/CORDA-3228)]
-* Don’t fail on liquibase errors when using H2 [[CORDA-3302](https://r3-cev.atlassian.net/browse/CORDA-3302)]
+* Don’t fail on Liquibase errors when using H2 [[CORDA-3302](https://r3-cev.atlassian.net/browse/CORDA-3302)]
 * Exceptions thrown in raw vault observers can cause critical issues [[CORDA-3329](https://r3-cev.atlassian.net/browse/CORDA-3329)]
 * Migration from Corda 3.x to 4.x for PostgreSQL require a manual workaround [[CORDA-3348](https://r3-cev.atlassian.net/browse/CORDA-3348)]
 * Prepare DJVM library for 1.0 release [[CORDA-3377](https://r3-cev.atlassian.net/browse/CORDA-3377)]
@@ -467,7 +748,7 @@ Any confidential identities registered using the old API will not be reflected i
 * Allow AbstractParty to initiate flow [[CORDA-3000](https://r3-cev.atlassian.net/browse/CORDA-3000)]
 * Reverting jersey and mockito as it currently causes issues with ENT [[CORDA-2333](https://r3-cev.atlassian.net/browse/CORDA-2333)]
 * Fixing x500Prinicipal matching [[CORDA-2974](https://r3-cev.atlassian.net/browse/CORDA-2974)]
-* Fix for liquibase changelog warnings [[CORDA-2774](https://r3-cev.atlassian.net/browse/CORDA-2774)]
+* Fix for Liquibase changelog warnings [[CORDA-2774](https://r3-cev.atlassian.net/browse/CORDA-2774)]
 * Add documentation on the options for deploying nodes [[CORDA-1912](https://r3-cev.atlassian.net/browse/CORDA-1912)]
 * Disable slow consumers for RPC since it doesn’t work [[CORDA-2981](https://r3-cev.atlassian.net/browse/CORDA-2981)]
 * Revert usage of Gradle JUnit 5 Platform Runner [[CORDA-2970](https://r3-cev.atlassian.net/browse/CORDA-2970)]
