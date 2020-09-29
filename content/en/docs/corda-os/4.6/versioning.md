@@ -139,3 +139,17 @@ The `versionId` specified for the JAR manifest is currently used for informative
 
 
 {{< /important >}}
+
+### CorDapp(s) `minimumPlatformVersion` is less than the required `minimumPlatformVersion`
+
+The required minimum platform version that the nodes must be running on is defined. If any of the CorDapps is below this value, the node will shut down
+and an `InvalidCordappException` will be thrown.
+The following error message will be received before the node shuts down:
+
+```
+[ERROR] 17:10:11+0100 [main] internal.NodeStartupLogging. - Invalid Cordapps found, that couldn't be loaded:
+[Problem: CorDapp requires minimumPlatformVersion: 7, but was: 2 in Cordapp
+file:/corda-open-source/samples/bank-of-corda-demo/build/nodes/BankOfCorda/cordapps/bank-of-corda-demo-4.6-SNAPSHOT.jar
+```
+
+For more information on how to address this, see the [Release new CorDapp versions](upgrading-cordapps.md) page.

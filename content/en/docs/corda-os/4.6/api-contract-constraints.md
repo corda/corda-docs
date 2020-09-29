@@ -472,3 +472,16 @@ See [Creating nodes locally](generating-a-node.md) for detailed instructions.
 You are specifying the fully-qualified name of the contract incorrectly. For example, you’ve defined `MyContract` in
 the package `com.mycompany.myapp.contracts`, but the fully-qualified contract name you pass to the
 `TransactionBuilder` is `com.mycompany.myapp.MyContract` (instead of `com.mycompany.myapp.contracts.MyContract`).
+
+### Contract `.jar` files are only signed by blacklisted keys
+
+If a contract is signed by blacklisted keys (probably development keys), the node will shut down and an `InvalidCordappException` will be thrown.
+The following error message will be received before the node shuts down:
+
+```
+[ERROR] 10:59:11+0100 [main] internal.NodeStartupLogging. - Invalid Cordapps found, that couldn't be loaded:
+[Problem: Corresponding contracts are signed by blacklisted key(s) only (probably development key), in Cordapp
+file:/corda-open-source/samples/bank-of-corda-demo/build/nodes/BankOfCorda/cordapps/corda-finance-workflows-4.6-SNAPSHOT.jar]
+```
+
+To address this, see the [CorDapp JAR signing](cordapp-build-systems.md#cordapp-build-system-signing-cordapp-jar-ref) page.
