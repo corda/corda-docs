@@ -24,22 +24,56 @@ Corda Enterprise 4.6 supports Linux for production deployments, with Windows and
 
 Corda Enterprise 4.6 is operationally compatible with Corda (open source) 4.x and 3.x, and Corda Enterprise 4.5, 4.4, 4.3, 4.2, 4.1, 4.0, and 3.x. See the [Corda (open source) release notes](../../corda-os/4.6/release-notes.md) for more information.
 
+This release introduces a number of new features and some major functional and operational improvements, and fixes a range of issues in the following major areas:
+
+**Flow management features and improvements**.
+
+Flow management
+Intro: https://youtu.be/E-8oceG5zI4
+
+Demo: https://youtu.be/bhybmX9TICQ
+
+These videos provide an introduction to the new flow management features in Corda Enterprise 4.6. These include:
+
+Flow querying
+
+Pausing flows
+
+Retrying flows via RPC
 
 
 
+Corda Enterprise 4.6 provides the ability to use a unique ID to [prevent duplicate flow starts](#ability-to-prevent-duplicate-flow-starts-and-retrieve-the-status-of-started-flows). This can be done using an RPC client and is an additional way to start flows by passing in a unique identifier when starting a flow. This allows you to:
+  * Check that a flow started correctly (for example, if there was a disconnect event).
+  * Prevent duplicate flow starts - if you try and start a flow twice with the same unique identifier, it will only fire once.
+  * Recover the progress tracker for in-flight flows.
+  * Recover the result of finished flows.
 
-{{< warning >}}
+Watch the short video overview of this feature:
 
-**Important note about running the initial node registration command**
+{{< youtube nn0sP5HDiG0 >}}
 
-In Corda Enterprise 4.6, database migrations are run on initial node registration **by default**.
 
-To prevent this, use the `--skip-schema-creation` flag alongside the `--initial-registration` command.
 
-The `initial-registration` command is described in [Node command-line options](node/node-commandline.md#sub-commands) and [Joining a compatibility zone](joining-a-compatibility-zone.md#joining-an-existing-compatibility-zone).
+**Developer experience features and improvements.**
 
-{{< /warning >}}
+We are focused on improving the overall developer experience to ensure Corda maintains its status as an easy to use platform for developers. In this release we have a number of improvements that will help developers build more resilient applications.
 
+* [Automatic detection of unrestorable checkpoints](#automatic-detection-of-unrestorable-checkpoints). During development, flows are now automatically serialized then deserialized whenever they reach a checkpoint. This enables automatic detection of flow code that creates checkpoints that cannot be deserialized.
+
+
+**Operational improvements**
+
+* We have rationalised the way in which [database schema management](#database-management-tool-improvements) is performed across Corda open source and Corda Enterprise.
+* Corda 4.6 introduces a set of improvements to make the flow state machine more resilient.
+
+Plus a lot more - please read these release notes carefully to understand what’s new in this release and how the new features and enhancements can help you.
+
+{{< note >}}
+Just as prior releases have brought with them commitments to wire and API stability, Corda 4.6 comes with those same guarantees.
+
+States and apps valid in Corda 3.0 and above are usable in Corda 4.6.
+{{< /note >}}
 
 ## New features and enhancements
 
@@ -99,7 +133,7 @@ This feature addresses the following common problems faced by developers:
 The feature provides a way for flows to reload from checkpoints, even if no errors occur. As a result, developers can be more confident that their flows would work correctly, without needing a way to inject recoverable errors throughout the flows.
 
 {{< note >}}
-This feature can and should be disabled in the node configuration when in production.
+This feature should not be used in production. It is disabled by default in the [node configuration file](node/setup/corda-configuration-fields.md) - `reloadCheckpointAfterSuspend = false`.
 {{< /note >}}
 
 For more information, see [Automatic detection of unrestorable checkpoints](checkpoint-tooling.md#automatic-detection-of-unrestorable-checkpoints).
@@ -128,7 +162,7 @@ The notaries list can now be hotloaded. For more information see [Hotloading](ne
 
 ### LedgerGraph available as a stand-alone CorDapp
 
-LedgerGraph enables other CorDapps, such as the set of [Collaborative Recover CorDapps](node/collaborative-recovery/introduction-cr.md), to have near real-time access to data concerning all of a node’s transactions and their relationships. This is achieved by exposing transaction statistics via JMX/RPC. 
+LedgerGraph enables other CorDapps, such as the set of [Collaborative Recover CorDapps](node/collaborative-recovery/introduction-cr.md), to have near real-time access to data concerning all of a node’s transactions and their relationships. This is achieved by exposing transaction statistics via JMX/RPC.
 LedgerGraph has been in use in some solutions already, but is now available as a CorDapp in its own right, so you can make use of these transaction statistics.
 
 ### Collaborative Recovery upgraded to V1.1
@@ -199,12 +233,28 @@ Our Docker Hub organisation (https://hub.docker.com/u/corda) now contains all th
 * We have released a new minor version of [Accounts SDK](https://github.com/corda/accounts/blob/master/docs.md) - version 1.0.2. This version includes database improvements that make it compatible with Corda Enterprise 4.6. If you are planning to use the Accounts SDK with Corda Enterprise 4.6, you must use Accounts SDK V 1.0.1.
 * We have released a new minor version of [Tokens SDK](token-sdk-introduction.md) - version 1.2.1. This version includes database improvements that make it compatible with Corda Enterprise 4.6. If you are planning to use the Tokens SDK with Corda Enterprise 4.6, you must use Tokens SDK V 1.2.1.
 * When starting a new driver using the driver DSL, the notary node will start by default as a thread in the same JVM process that runs the driver regardless to the `startNodesInProcess` driver properties (and not as a new process if the `startNodesInProcess` is `false`). This setting can be overridden. Please note that if the test interacts with the notary and expects the notary to run as a new process, you must set `startInProcess` to `false`.
+* In Corda Enterprise 4.6, if a CorDapp's `minimumPlatformVersion` is higher than the platform version of the node, the CorDapp is not loaded and the node fails to start. This is a change in behaviour compared to Corda Enterprise 4.5 where under these conditions the node would start up and log that the CorDapp could not be loaded. See [Versioning](cordapps/versioning.md) for more information.
 
 ## Platform version change
 
 The platform version of Corda 4.6 has been bumped up from 7 to 8.
 
 For more information about platform versions, see [Versioning](cordapps/versioning.md).
+
+## Important upgrade and migration notes
+
+{{< warning >}}
+
+**Important note about running the initial node registration command**
+
+In Corda Enterprise 4.6, database migrations are run on initial node registration **by default**.
+
+To prevent this, use the `--skip-schema-creation` flag alongside the `--initial-registration` command.
+
+The `initial-registration` command is described in [Node command-line options](node/node-commandline.md#sub-commands) and [Joining a compatibility zone](joining-a-compatibility-zone.md#joining-an-existing-compatibility-zone).
+
+{{< /warning >}}
+
 
 ## Fixed issues
 
@@ -266,5 +316,4 @@ For more information about platform versions, see [Versioning](cordapps/versioni
 * The node rejects the incoming P2P connection from a node with a revoked certificate, with warnings and errors, but does not block any attempts to re-establish it. This leads to a quick accumulation of warnings and errors in the node log.
 * The error text is repeated in the console when trying to register a node with forbidden characters in the Organisation (`O`) name.
 * The ``<install-shell-extensions>`` sub-command of Corda node creates log files in the home folder, while all other sub-commands create log files the `logs` subfolder.
-* In Corda Enterprise 4.6, if a CorDapp's `minimumPlatformVersion` is higher than the platform version of the node, the CorDapp is not loaded and the node fails to start. This is a change in behaviour compared to Corda Enterprise 4.5 where under these conditions the node would start up and log that the CorDapp could not be loaded. See [Versioning](cordapps/versioning.md) for more information.
 * If a notary registration fails when using HA Utilities, a dummy notary keystore file is created. If users are unaware that this keystore file has been created, it causes issues when they attempt to register the notary again.
