@@ -607,3 +607,130 @@ The checkpoint dump gives good diagnostics on the reason a flow may be suspended
   }
 }
 ```
+
+## Automatic detection of unrestorable checkpoints
+
+This is a new functionality introduced in Corda 4.6, which enables you to detect unrestorable checkpoints when developing CorDapps and thus reduces the risk of writing flows that cannot be retried gracefully.
+
+It allows you to address the following common problems:
+
+* Create objects or leveraging data structures that cannot be serialized/deserialized correctly by Kryo (the checkpoint serialization library Corda uses).
+* Write flows that are not idempotent or do not deduplicate behaviour (such as calls to an external system).
+
+The feature provides a way for flows to reload from checkpoints, even if no errors occur. As a result, as a developer you can be more confident your flows will work correctly, without needing a way to inject recoverable errors throughout the flows.
+
+### How to use this feature
+
+Add the `reloadCheckpointAfterSuspend` [node configuration option](corda-configuration-fields.md#reloadCheckpointAfterSuspend) and set it to `true`, as shown below:
+
+```
+reloadCheckpointAfterSuspend = true
+```
+
+{{< note >}}
+This option is disabled by default and is independent from `devMode`.
+{{< /note >}}
+
+There are no further steps that you need to take either as a node operator or as a developer testing your application.
+
+#### How to use from a driver test
+
+To use this feature from a driver test:
+
+```kotlin
+driver {
+    startNode(
+        providedName = ALICE_NAME,
+        customOverrides = mapOf(NodeConfiguration::reloadCheckpointAfterSuspend.name to true)
+    ).getOrThrow()
+}
+```
+
+The feature can also be enabled by setting the system property `reloadCheckpointAfterSuspend` to `true`, which enables it for all driver tests as long as the property value remains as `true`.
+
+### How it works
+
+Enabling the configuration option will cause all flows to reload their current checkpoint whenever they suspend.
+
+More precisely, any calls to a suspending function execute the following steps:
+
+1. Save a new checkpoint.
+2. Reload the checkpoint from the database and recreate the flow from it.
+3. Continue executing the called suspending function.
+
+An example (with comments to highlight where the reloads occur) follows below:
+
+```kotlin
+@StartableByRPC
+@InitiatingFlow
+class MyFlow(private val party: Party) : FlowLogic<Unit>() {
+
+    @Suspendable
+    override fun call() {
+        val session = initiateFlow(party)
+        // checkpoints when calling [send], reloads and continues with the [send]
+        session.send("an important message")
+        // checkpoints when calling [receive], reloads and continues with the [receive]
+        session.receive(String::class.java).unwrap { it }
+        // checkpoints when calling [sleep], reloads and continues with the [sleep]
+        sleep(10.seconds)
+    }
+}
+```
+
+If no errors occur from reloading the flow from the newly created checkpoint, then the flow will continue as normal.
+
+#### Deserialization errors
+
+If an error does occur when deserializing the flow's checkpoint, a `ReloadFlowFromCheckpointException` is thrown, which causes the flow to be kept in for overnight observation (`HOSPITALIZED` status in the database). This only occurs when the configuration option is turned on as this is not standard behaviour. The exception that caused the failure is logged, which will hopefully provides enough information to figure out what object could not be deserialized correctly. From this point, you can either change your flow or apply custom serialization for objects that failed deserialization.
+
+When a failure occurs in this way, an error similar to the following would be seen in the nodes logs:
+
+```javastacktrace
+Caused by: java.lang.IllegalStateException: Broken on purpose
+	at net.corda.node.flows.BrokenMap.put(FlowRetryTest.kt:449) ~[integrationTest/:?]
+	at com.esotericsoftware.kryo.serializers.MapSerializer.read(MapSerializer.java:162) ~[kryo-4.0.2.jar:?]
+	at com.esotericsoftware.kryo.serializers.MapSerializer.read(MapSerializer.java:39) ~[kryo-4.0.2.jar:?]
+	at com.esotericsoftware.kryo.Kryo.readObject(Kryo.java:731) ~[kryo-4.0.2.jar:?]
+	at co.paralleluniverse.io.serialization.kryo.ReplaceableObjectKryo.readObject(ReplaceableObjectKryo.java:92) ~[quasar-core-0.7.12_r3-jdk8.jar:0.7.12_r3]
+	at com.esotericsoftware.kryo.serializers.DefaultArraySerializers$ObjectArraySerializer.read(DefaultArraySerializers.java:391) ~[kryo-4.0.2.jar:?]
+	at com.esotericsoftware.kryo.serializers.DefaultArraySerializers$ObjectArraySerializer.read(DefaultArraySerializers.java:302) ~[kryo-4.0.2.jar:?]
+	at com.esotericsoftware.kryo.Kryo.readObject(Kryo.java:731) ~[kryo-4.0.2.jar:?]
+	at co.paralleluniverse.io.serialization.kryo.ReplaceableObjectKryo.readObject(ReplaceableObjectKryo.java:92) ~[quasar-core-0.7.12_r3-jdk8.jar:0.7.12_r3]
+	at com.esotericsoftware.kryo.serializers.ObjectField.read(ObjectField.java:125) ~[kryo-4.0.2.jar:?]
+	at com.esotericsoftware.kryo.serializers.CompatibleFieldSerializer.read(CompatibleFieldSerializer.java:145) ~[kryo-4.0.2.jar:?]
+	at com.esotericsoftware.kryo.Kryo.readObjectOrNull(Kryo.java:782) ~[kryo-4.0.2.jar:?]
+	at co.paralleluniverse.io.serialization.kryo.ReplaceableObjectKryo.readObjectOrNull(ReplaceableObjectKryo.java:107) ~[quasar-core-0.7.12_r3-jdk8.jar:0.7.12_r3]
+	at com.esotericsoftware.kryo.serializers.ObjectField.read(ObjectField.java:132) ~[kryo-4.0.2.jar:?]
+	at com.esotericsoftware.kryo.serializers.FieldSerializer.read(FieldSerializer.java:543) ~[kryo-4.0.2.jar:?]
+	at co.paralleluniverse.fibers.Fiber$FiberSerializer.read(Fiber.java:2156) ~[quasar-core-0.7.12_r3-jdk8.jar:0.7.12_r3]
+	at co.paralleluniverse.fibers.Fiber$FiberSerializer.read(Fiber.java:2086) ~[quasar-core-0.7.12_r3-jdk8.jar:0.7.12_r3]
+	at com.esotericsoftware.kryo.Kryo.readClassAndObject(Kryo.java:813) ~[kryo-4.0.2.jar:?]
+	at co.paralleluniverse.io.serialization.kryo.ReplaceableObjectKryo.readClassAndObject(ReplaceableObjectKryo.java:112) ~[quasar-core-0.7.12_r3-jdk8.jar:0.7.12_r3]
+	at net.corda.nodeapi.internal.serialization.kryo.KryoCheckpointSerializer$deserialize$1$1.invoke(KryoCheckpointSerializer.kt:142) ~[corda-node-api-4.6-SNAPSHOT.jar:?]
+	at net.corda.nodeapi.internal.serialization.kryo.KryoCheckpointSerializer$deserialize$1$1.invoke(KryoCheckpointSerializer.kt:44) ~[corda-node-api-4.6-SNAPSHOT.jar:?]
+	at net.corda.nodeapi.internal.serialization.kryo.KryoStreams.kryoInput(KryoStreams.kt:20) ~[corda-node-api-4.6-SNAPSHOT.jar:?]
+	at net.corda.nodeapi.internal.serialization.kryo.KryoCheckpointSerializer$deserialize$1.invoke(KryoCheckpointSerializer.kt:131) ~[corda-node-api-4.6-SNAPSHOT.jar:?]
+	at net.corda.nodeapi.internal.serialization.kryo.KryoCheckpointSerializer$deserialize$1.invoke(KryoCheckpointSerializer.kt:44) ~[corda-node-api-4.6-SNAPSHOT.jar:?]
+	at net.corda.nodeapi.internal.serialization.kryo.KryoCheckpointSerializer$kryo$1.execute(KryoCheckpointSerializer.kt:120) ~[corda-node-api-4.6-SNAPSHOT.jar:?]
+	at com.esotericsoftware.kryo.pool.KryoPoolQueueImpl.run(KryoPoolQueueImpl.java:58) ~[kryo-4.0.2.jar:?]
+	at net.corda.nodeapi.internal.serialization.kryo.KryoCheckpointSerializer.kryo(KryoCheckpointSerializer.kt:116) ~[corda-node-api-4.6-SNAPSHOT.jar:?]
+	at net.corda.nodeapi.internal.serialization.kryo.KryoCheckpointSerializer.deserialize(KryoCheckpointSerializer.kt:130) ~[corda-node-api-4.6-SNAPSHOT.jar:?]
+	at net.corda.node.services.statemachine.FlowCreator.getFiberFromCheckpoint(FlowCreator.kt:243) ~[corda-node-4.6-SNAPSHOT.jar:?]
+	at net.corda.node.services.statemachine.FlowCreator.createFlowFromCheckpoint(FlowCreator.kt:80) ~[corda-node-4.6-SNAPSHOT.jar:?]
+	at net.corda.node.services.statemachine.SingleThreadedStateMachineManager.retryFlowFromSafePoint(MultiThreadedStateMachineManager.kt:464) ~[corda-node-4.6-SNAPSHOT.jar:?]
+	at net.corda.node.services.statemachine.ActionExecutorImpl.executeRetryFlowFromSafePoint(ActionExecutorImpl.kt:245) ~[corda-node-4.6-SNAPSHOT.jar:?]
+	at net.corda.node.services.statemachine.ActionExecutorImpl.executeAction(ActionExecutorImpl.kt:70) ~[corda-node-4.6-SNAPSHOT.jar:?]
+	at net.corda.node.services.statemachine.interceptors.MetricActionInterceptor.executeAction(MetricInterceptor.kt:33) ~[corda-node-4.6-SNAPSHOT.jar:?]
+	at net.corda.node.services.statemachine.TransitionExecutorImpl.executeTransition(TransitionExecutorImpl.kt:47) ~[corda-node-4.6-SNAPSHOT.jar:?]
+```
+
+Most of this stack trace is not useful to you as a developer, but it does indicate what object it was trying to serialize at the time. In this scenario, it was trying to serialize a `Map` (as denoted by the `MapSerializer`). This information should allow you to determine what is going wrong.
+
+#### Skipping checkpoints
+
+A flow can decide to skip persisting a checkpoint when calling a suspending function. Even if this is done, the flow will still be reloaded. However, in this scenario the checkpoint that the flow loads from is an earlier checkpoint instead of the current checkpoint (since it was not saved). This is not useful for detecting deserialization errors but it checks that the flow generally handles retries correctly.
+
+#### Idempotent/timed flows
+
+Idempotent/timed flows always retry from their initial checkpoint when a retry is needed. Therefore, when one of these flows is reloaded when reaching a suspending function, it will load the initial checkpoint and st
