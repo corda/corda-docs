@@ -416,7 +416,7 @@ The `initial-registration` command is described in [Node command-line options](n
 * We have fixed an issue where the RPC `startFlow` could not reattach to existing client id flows when flow draining mode was enabled.
 * We have fixed an issue where the Health Survey Tool could not verify the connection to the node's Artemis broker.
 * We have fixed an issue where the `FlowSessionCloseTest.flow` could not access a closed session unless it was a duplicate close that was handled gracefully.
-* We have fixed an issue where the `RetryFlowMockTest - flakey test` returned flakey due to restart not setting `senderUUID` and the early end session message not hanging the receiving flow.
+* We have fixed an issue where the `RetryFlowMockTest` failed due to restart not setting `senderUUID` and the early end session message not hanging the receiving flow.
 * We have fixed an issue where `--allow-hibernate-to-manage-app-schema` could not manage app schemas when running a node.
 * We have fixed an issue where Corda did not write the error message for a start-up error into the log file.
 * We have fixed an issue where the expected `error_code="5"` error was missing in logs run with custom CorDapps without the Liquibase schema.
@@ -428,7 +428,7 @@ The `initial-registration` command is described in [Node command-line options](n
 * We have fixed an issue where months and years were not supported values in `rpcAuditDataRetentionPeriod`.
 * We have fixed an issue where a node failed to shut down when the `senderRetentionPeriodInDays` was set to a negative integer.
 * We have fixed an issue where CorDapps that were working on Corda 4.3 were not registered when Corda was upgraded to version 4.5.
-* We have fixed an issue where the configuration file path for TLS crypto was resolved incorrectly, leading to an error when registering the node.
+* We have fixed an issue where the `tlsCryptoServiceConfig.cryptoServiceConf` file path was resolved incorrectly, leading to an error when registering the node.
 * The Corda Health Survey Tool now displays a warning message when network information is resolved and an HTTP redirect occurs.
 * We have fixed an issue where an error occurred on node shutdown with the message: `The configuration values provided for message cleanup are invalid`.
 * We have fixed an issue where the Corda Health Survey Tool was hanging after performing all checks when Artemis was shut down during the Health Survey Tool test.
@@ -447,7 +447,7 @@ The `initial-registration` command is described in [Node command-line options](n
 
 ## Known issues
 * The HA Utilities tool and the Health Survey Tool do not process configuration `include` commands correctly if the configuration is located in the tool's root directory.
-* It is currently not possible to build a Kotlin CorDapp template against Corda Enterprise 4.6.
+* It is currently not possible to build the Kotlin CorDapp template against Corda Enterprise 4.6.
 * There are inconsistencies in code stubs and actual code between the Kotlin and Java CorDapp templates.
 * The Database Management Tool and Corda Enterprise do not run with the same configuration in the Command-line Interface options and configuration files.
 * The node does not connect to the HSM on the second registration attempt if the first attempt was not successful due to HSM inaccessibility.
