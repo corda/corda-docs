@@ -76,7 +76,11 @@ Corda 4 requires Java 8u171 or any higher Java 8 patchlevel. Java 9+ is not curr
 
 {{< /important >}}
 
-## Step 5. Start the node with `run-migration-scripts` sub-command
+## Step 5. Update configuration
+
+Remove any `transactionIsolationLevel`, `initialiseSchema`, or `initialiseAppSchema` entries from the database section of your configuration
+
+## Step 6. Start the node with `run-migration-scripts` sub-command
 
 {{< note >}} This step is only required when upgrading to Corda Enterpise 4.6. {{< /note >}}
 
@@ -89,11 +93,11 @@ java -jar corda.jar run-migration-scripts --core-schemas --app-schemas
 The node will perform any automatic data migrations required, which may take some
 time. If the migration process is interrupted it can be continued simply by starting the node again, without harm. The node will stop automatically when migration is complete.
 
-## Step 6. Start the node in the normal way.
+## Step 7. Start the node in the normal way
 
 Start the node in the normal way.
 
-## Step 7. Undrain the node
+## Step 8. Undrain the node
 
 You may now do any checks that you wish to perform, read the logs, and so on. When you are ready, use this command at the shell:
 
