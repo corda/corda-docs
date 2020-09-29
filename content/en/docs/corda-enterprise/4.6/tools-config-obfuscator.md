@@ -225,7 +225,7 @@ $ Enter value for --config-obfuscation-seed (The seed used in the key derivation
 $ Enter value for --config-obfuscation-passphrase (The passphrase used in the key derivation function when creating an AES key):
 ```
 
-### How to pass the seed and passphrase to a node, Firewall component, or service, using environment variables
+### Pass the seed and passphrase to a node, Firewall component, or service, using environment variables
 
 ```bash
 $ export CONFIG_OBFUSCATION_SEED=my-seed; export CONFIG_OBFUSCATION_PASSPHRASE=my-passphrase; java -jar corda.jar
@@ -270,9 +270,10 @@ To indicate parts of the configuration that should be obfuscated, you can place 
 ```
 
 {{< note >}}
-If your configuration file uses `include` directives, as shown below, then the referenced file is automatically imported and obfuscated with the main file. The result will contain both the main file and the `include` file in the output.
+If your configuration file uses `include` directives, as shown below, then the referenced file is automatically imported and obfuscated with the main file. The result will contain both the main file and the `include` file in the output:
 
-`include required(file("dataSource.conf"))`
+`include "path/to/file.conf"`
+`include required("path/to/file.conf")`
 {{< /note >}}
 
 The example below shows how this area of the configuration file will look like after it is run through the obfuscation tool:
