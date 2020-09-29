@@ -821,7 +821,7 @@ signing key using `PASSWORD` or `KEY_FILE` authentication with the password prec
   or a string duration with unit suffix. See the [scheduling signing tasks](#scheduling-signing-tasks) section above for information about the accepted format.
 
 * **plugin**:
-*(Optional)* Defines which plugin to use for the given signing tawsk.
+*(Optional)* Defines which plugin to use for the given signing task.
 If this property is present both sub-properties must be present as well.
 If a plugin is used the `signingKeyAlias` field must not be present.
 
@@ -1400,7 +1400,7 @@ In 1.4 a new asynchronous infrastructure has been added to the plugins.
 If your plugin does not sign requests immediately, you can easily return a tracking id (`String` type) and the Signing Service will keep checking
 whether the plugin has already signed that particular request.
 
-That's why the plugin interfaces contain new methods called `check*SubmissionStatus()`.
+That is why the plugin interfaces contain new methods called `check*SubmissionStatus()`.
 If your plugin simply does not support asynchronous signing you can ignore these tracking functions and just return `null`.
 This way the Signing Service will know that the plugin is not asynchronous and will not force tracking the request.
 
