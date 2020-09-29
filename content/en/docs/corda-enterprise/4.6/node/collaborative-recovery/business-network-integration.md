@@ -10,7 +10,7 @@ tags:
 - node operator
 
 
-title: Implementing Corda Collaborative Recovery across your network
+title: Implementing Collaborative Recovery
 weight: 200
 ---
 

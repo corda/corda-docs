@@ -9,11 +9,11 @@ tags:
 - install
 - node operator
 
-title: Install Collaborative Recovery
-weight: 700
+title: Install Collaborative Recovery V1.1
+weight: 150
 ---
 
-# Install the Collaborative Recovery CorDapps
+# Install the Collaborative Recovery CorDapps V1.1
 
 **Who this documentation is for:**
 * Node operators
@@ -41,13 +41,16 @@ Outline of steps for installation:
 
 ## Requirements
 
+* [**LedgerGraph** CorDapp](./../operating/ledger-graph). The collaborative recovery CorDapps depend on the LedgerGraph CorDapp.
+
 * **Corda Enterprise** Corda nodes must be running Corda Enterprise in order to initiate or participate in Collaborative Recovery. This feature is not available for Corda Open Source nodes.
 
 * **Node Minimum Platform Version (MPV) > 6** Collaborative Recovery requires operative Corda nodes to have a Corda Platform Version (CPV) of 6 or greater. This version number is related to the version of Corda a node is running.
 
 * **Network MPV > 6** In addition to a CPV of greater than 6, the network itself must have a sufficient MPV.
 
-* **Database requirements** Collaborative Recovery CorDapps are tested against Corda Enterprise and will work according to the [platform support matrix](../../platform-support-matrix.html).
+* **Database requirements** Collaborative Recovery CorDapps are tested against Corda Enterprise and will work according to the [platform support matrix](../../platform-support-matrix).
+
 
 ## Install the CorDapps
 
@@ -64,9 +67,7 @@ You should have access to two individual `.jar` files - representing LedgerSync 
 
 ### Step 1: Initiate flow draining mode
 
-In order to safely install the Collaborative Recovery CorDapps, all pending Corda Flows must finish executing. This can be accomplished by enabling `flowDrainingMode`, which is a configuration
-setting that causes the node to no longer accept any incoming instructions to initiate new flows or accept newly initiated incoming flows. Instead, only currently checkpointed flows will continue
-to execute until the node is `drained` of any pending activity. This can be done in one of two ways:
+In order to safely install the Collaborative Recovery CorDapps, all pending Corda Flows must finish executing. This can be accomplished by enabling `flowDrainingMode`, which is a configuration setting that causes the node to no longer accept any incoming instructions to initiate new flows or accept newly initiated incoming flows. Instead, only currently checkpointed flows will continue to execute until the node is `drained` of any pending activity. This can be done in one of two ways:
 
 1. Via RPC - By using the `setFlowsDrainingModeEnabled` method with the parameter `true`.
 2. Via the CRaSH Shell - By issuing the following command:
@@ -75,13 +76,22 @@ to execute until the node is `drained` of any pending activity. This can be done
 ### Step 2: Shut down the node
 
 Once the node has been successfully drained of any pending activity, you will be able to shut it down safely. Use the following command to output a JSON representation of remaining checkpoints:
-`checkpoints dump`
+
+```ssh
+checkpoints dump
+```
 
 If the resultant list is empty, the node has been successfully drained. If the list contains representations of in-flight flows, and continues to do so for an unreasonable amount of time, the flows may have become stuck. At this point, you may wish to kill the flows explicitly using the [`killFlow` API](../cordapps/api-flows#killing-flows).
 
 ### Step 3: Install the CorDapps
 
-Using the file transfer protocol of your choice, transfer the `.jar` files representing LedgerSync and LedgerRecovery to the CorDJapps directory of the Corda node.
+There are three CorDapps to install:
+
+* **LedgerSync**
+* **LedgerRecovery**
+* **LedgerGraph** if you have not already installed this separately.
+
+Using the file transfer protocol of your choice, transfer the `.jar` files representing the required CorDapps to the `cordapps` directory of the Corda node.
 
 Before proceeding, verify that the transfer was completed successfully by checking that the files are present in the CorDapps directory *and* the file sizes are the same as the sizes of the source `.jar` files you received.
 
@@ -112,5 +122,4 @@ initiating flows, described in detail in this documentation. Verify that the lis
 
 ## Next steps
 
-Now that you have successfully installed and verified your Collaborative Recovery CorDapps, you should familiarise yourself with their use and configuration by reviewing the documentation for [LedgerSync](ledger-sync), [automatic LedgerRecover](ledger-recovery-automatic) and
-[manual LedgerRecover](ledger-recovery-manual).
+Now that you have successfully installed and verified your Collaborative Recovery CorDapps, you can familiarise yourself with their use and configuration.

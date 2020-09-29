@@ -32,26 +32,11 @@ This means the node that requested the reconciliation will be notified if the re
 
 ## System requirements
 
-System requirements for LedgerSync are mainly dependent on the size of your vault. Internally, LedgerSync uses an in-memory graph of all transactions in the vault, though not all transaction information is kept in memory.
-
-Overall memory usage will be dependent on the number of transactions in the vault, and the number of participants (parties) involved in each transaction.
-
-Use the table below for a guide to how much memory may be required for the scenarios described in this section. This is a guideline only. There are many variables in any given network using Corda that can affect the amount of heap space used, but this should give you a general sense of the requirements:
-
-{{< table >}}
-
-|No of Transactions|Total Party Count|Participants Per Transaction &dagger;|Output States|Est. Heap Usage (MB)|
-|-:|:-:|:-:|:-:|:-:|
-|1,000,000  |100,000|2 + 3 + 3|3|1,791.11|
-|100,000    |100,000|2 + 3 + 3|3|400.46  |
-|10,000     |100,000|2 + 3 + 3|3|78.94   |
-|1,000      |100,000|2 + 3 + 3|3|8.75    |
-|100        |100,000|2 + 3 + 3|3|0.89    |
-
-{{< /table >}}
-
-**&dagger;** Participants (parties) per transaction are represented in terms number of participants per output state: `A + B + C`, where **A** is the number of participants on output state `0`, **B** is the number of participants on output state `1`, and **C** is the number of participants on output state `2`.
-
+The **LedgerSync** CorDapp requires participating Corda nodes to
+ - be using Corda Enterprise, not Corda Open Source (OS); and
+ - be using Corda Minimum Platform Version (MPV) >= 6; and
+ - have the matching version of the LedgerGraph CorDapp installed; and
+ - running on top of a supported [database technology](../../platform-support-matrix).
 
 ## Configuration parameters
 
@@ -90,30 +75,7 @@ maxAllowedReconciliationRequestsPerTimeWindow = 1000
 
 **&dagger;** Duration value. Supported values are the same as the *time portion* of a duration represented by ISO_8601. For example: `1H`, `3S`, `5H3M2S`, and so on. Spaces between or around time elements are tolerated, e.g. `1H 30M`, but other characters are not. The units can be represented in uppercase, or lowercase (that is, `H` or `h`, `M` or `m`, `S` or `s`).
 
-## Support for Confidential Identities in LedgerSync
 
-If you are using [Corda Confidential Identities](../../cordapps/api-confidential-identity), LedgerSync requires additional configuration in order to support your environment.
-
-Use this additional configuration step to ensure that confidential identities on your node are properly mapped to known identities where they have been shared with your node when new transactions are processed. This is important when reconciling with another party as only transactions with known identities can be reconciled.
-
-In order for reconciliations involving confidential identities to work, the confidential owning key for those identities must have already been shared between the involved Corda nodes prior to the data loss.
-
-To add the configuration:
-
-1. Deploy the ledger-sync-confidential-identities `.jar` file to `<corda_node_dir>/cordapps/config/`.
-
-2. Edit the node configuration file `<corda_node_dir>/node.conf`, adding the following flow override:
-
-```
-flowOverrides {
-    overrides=[
-        {
-            initiator="com.r3.corda.lib.ci.workflows.SyncKeyMappingInitiator"
-            responder="com.r3.dr.ledgergraph.ci.flows.CustomSyncKeyMappingResponder"
-        }
-    ]
-}
-```
 ## Flows
 
 All reconciliation tasks are carried out using flows. You can see the list flows exposed by LedgerSync, and their parameters, below:
