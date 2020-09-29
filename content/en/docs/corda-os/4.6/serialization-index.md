@@ -20,12 +20,10 @@ title: Serialization
 
 
 * [Object serialization](serialization.md)
-* [Pluggable Serializers for CorDapps](cordapp-custom-serializers.md)
+* [Pluggable serializers for CorDapps](cordapp-custom-serializers.md)
+* [Pluggable serializers for CorDapp checkpoints](cordapp-custom-serializers-checkpoints.md)
 * [Default Class Evolution](serialization-default-evolution.md)
 * [Enum Evolution](serialization-enum-evolution.md)
 * [JSON](json.md)
 * [Blob Inspector](blob-inspector.md)
 * [Wire format](wire-format.md)
-
-
-
