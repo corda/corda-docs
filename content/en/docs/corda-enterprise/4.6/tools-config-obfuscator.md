@@ -274,6 +274,9 @@ If your configuration file uses `include` directives, as shown below, then the r
 
 `include "path/to/file.conf"`
 `include required("path/to/file.conf")`
+
+Each `include` statement must be on a single line and follow the format shown above.
+
 {{< /note >}}
 
 The example below shows how this area of the configuration file will look like after it is run through the obfuscation tool:
