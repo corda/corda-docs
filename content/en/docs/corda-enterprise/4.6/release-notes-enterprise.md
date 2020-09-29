@@ -262,7 +262,7 @@ When creating a Docker container, you can now map the SSH port on the host to th
 
 ### Metering client for the Metering Collection Tool
 
-You can now collect metering data from Corda Enterprise Nodes remotely. For information, see [Metering client for the Metering Collection Tool](metering-rpc.md).
+You can now collect metering data from Corda Enterprise Nodes without having to build a custom client or accessing the Shell. For more information, see [Metering client for the Metering Collection Tool](metering-rpc.md).
 
 ### Hotloading of notaries list
 
@@ -270,9 +270,9 @@ The notaries list can now be hotloaded. Updates to the `notaries` network parame
 
 For more information, see [Hotloading](network/network-map.md#hotloading) in [Network map](network/network-map.md).
 
-### Support for storing node TLS keys in HSM
+### Support for storing node TLS keys in HSM without Firewall
 
-The node now supports storing its TLS keys in HSM. A new optional `tlsCryptoServiceConfig` section was introduced inside `enterpriseConfiguration` in `node.conf`.
+The node now supports storing its TLS keys in HSM even without running the Corda Enterprise Firewall. To this end, a new optional `tlsCryptoServiceConfig` section has been added to the `enterpriseConfiguration` configuration section in the [node configuration file](node/setup/corda-configuration-fields.md).
 
 To migrate from file-based node's TLS keystore to HSM, you need to add `tlsCryptoServiceConfig` section into `node.conf` and renew TLS certificate and keys, as described in the [Renewing TLS certificates](ha-utilities.md#renewing-tls-certificates) section in [HA utilities](ha-utilities.md).
 
