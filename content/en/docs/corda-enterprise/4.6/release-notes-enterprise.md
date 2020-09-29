@@ -87,8 +87,22 @@ Querying the node using either method enables node operators to:
 
 See the [Querying flow data](../4.6/node/operating/querying-flow-data.md) documentation section for more information.
 
+### Automatic detection of un-restorable checkpoints
 
+Flows are now automatically serialized then deserialized whenever they reach a checkpoint. This allows better detection of flow code that creates checkpoints that cannot be deserialized, and enables developers and network operators to detect unrestorable checkpoints when developing CorDapps and thus reduces the risk of writing flows that cannot be retried gracefully.
 
+This feature addresses the following common problems faced by developers:
+
+* Creating objects or leveraging data structures that cannot be serialized/deserialized correctly by Kryo (the checkpoint serialization library Corda uses).
+* Writing flows that are not idempotent or do not deduplicate behaviour (such as calls to an external system).
+
+The feature provides a way for flows to reload from checkpoints, even if no errors occur. As a result, developers can be more confident that their flows would work correctly, without needing a way to inject recoverable errors throughout the flows.
+
+{{< note >}}
+This feature can and should be disabled in the node configuration when in production.
+{{< /note >}}
+
+For more information, see [Automatic detection of unrestorable checkpoints](checkpoint-tooling.md#automatic-detection-of-unrestorable-checkpoints).
 
 
 
