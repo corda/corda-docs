@@ -288,8 +288,8 @@ Allows fine-grained controls of various features only available in the enterpris
       * Absolute path to HSM provider specific configuration which will contain everything necessary to establish connection with HSM.
       * *Default:* Not present so local file system is used.
 * `attachmentClassLoaderCacheSize`
-  * This field can be used to configure the attachments class loader cache size. This cache caches the class loaders used to store the transaction attachments.
-  * *Default:* The default value is `256` if no value is specified.
+  * This field can be used to configure the attachments class loader cache size - this is the number of attachments per cache. This cache caches the class loaders used to store the transaction attachments.
+  * *Default:* The default value is `256` attachments per cache.
   * **IMPORTANT: The default value must not be changed unless explicitly advised by R3 support!**
 * `auditService`
   * Allows for configuration of audit services within the node
