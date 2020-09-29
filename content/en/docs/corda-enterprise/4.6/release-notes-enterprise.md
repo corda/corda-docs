@@ -167,6 +167,12 @@ The default value is `256`.
 The default value must **not** be changed unless explicitly advised by R3 support.
 {{< warning >}}
 
+### Deployment: Docker images for Corda Enterprise Firewall and all Corda Enterprise setup tools
+
+We now release Docker images for the Corda Enterprise Firewall (https://hub.docker.com/r/corda/enterprise-firewall), as well as for the required tools for Corda Enterprise setup (https://hub.docker.com/r/corda/enterprise-setup.
+
+Our Docker Hub organisation (https://hub.docker.com/u/corda) now contains all the Docker images required for a full production deployment of Corda Enterprise.
+
 ### Other changes
 
 * To reduce the risk of vulnerabilities, we have upgraded the Apache Zookeeper used by the Corda Enterprise [Firewall component](node/corda-firewall-component.md#prerequisites-4) from 3.5.4-Beta to 3.61. See [Apache ZooKeeper setup](operations/deployment/corda-firewall-configuration-file.md#apache-zookeeper-setup) for more information.
