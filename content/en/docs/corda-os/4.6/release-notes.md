@@ -53,7 +53,7 @@ Watch the short video overview of this feature:
 
 **Developer experience features and improvements.**
 
-We are focused on improving the overall developer experience to ensure Corda maintains its status as an easy to use platform for developers. In this release we have a number of improvements that will help developers build more resilient applications.
+We are focused on improving the overall developer experience to ensure Corda maintains its status as an easy-to-use platform for developers. In this release we have a number of improvements that will help developers build more resilient applications.
 
 * [Automatic detection of unrestorable checkpoints](#automatic-detection-of-unrestorable-checkpoints). During development, flows are now automatically serialized then deserialized whenever they reach a checkpoint. This enables automatic detection of flow code that creates checkpoints that cannot be deserialized.
 * Register [custom pluggable serializers](#ability-to-register-custom-pluggable-serializers-for-cordapp-checkpoints) for CorDapp checkpoints. Custom serializers can now be used when serializing types as part of a flow framework checkpoint. Most classes will not need a custom serializer. This exists for classes that throw exceptions during checkpoint serialization. Implement the new `CheckpointCustomSerializer` interface to create a custom checkpoint serializer.
@@ -75,7 +75,7 @@ States and apps valid in Corda 3.0 and above are usable in Corda 4.6.
 
 #### Business Network membership extension
 
-The [Business Network Membership](business-network-membership.md) extension for creating and managing business networks allows a you (a node operator) to define and create a logical network based on a set of common CorDapps as well as a shared business context. Corda nodes outside of your Business Network are not aware of its members.
+The [Business Network Membership](business-network-membership.md) extension for creating and managing business networks allows you (a node operator) to define and create a logical network based on a set of common CorDapps as well as a shared business context. Corda nodes outside of your Business Network are not aware of its members.
 
 With this extension, you can use a set of workflows to add members to the network, remove members, and manage their permissions.
 
@@ -102,7 +102,7 @@ Corda 4.6 now supports CorDapp schema migration via Liquibase in the same way as
 
 * Each CorDapp needs to provide a migration resource with Liquibase scripts to create/migrate any required schemas.
 * Old Corda open source CorDapps that do not have migration scripts need to be migrated in the same way as described in the Corda Enterprise [Enterprise migration](../../corda-enterprise/4.6/cordapps/database-management.md#adding-scripts-retrospectively-to-an-existing-cordapp) documentation.
-* A node can manage app schemas automatically using hibernate with H2 in dev mode. This must be enabled with the `--allow-hibernate-to-manage-app-schema` command-line flag.
+* A node can manage app schemas automatically using Hibernate with H2 in dev mode. This must be enabled with the `--allow-hibernate-to-manage-app-schema` command-line flag.
 
 **Schema creation**
 
@@ -114,7 +114,7 @@ Corda nodes have a set of core schema that is required for the node itself to wo
 
 Up to Corda 4.6, the node/schema migration would use the combination of both and run all the required schema creation/migration using hardcoded lists and heuristics to figure out which is which (as, for example, core and app schema have different requirements whether they can be run while checkpoints are present in the database).
 
-This has now changed - the `run-migration-scripts` sub-command takes two new parameters - `--core-schemas` and `--app-schemas`. At least one of these parameters must be present and will run the migration scripts for the respective requested schema set.
+This has now changed - the `run-migration-scripts` sub-command takes two new parameters: `--core-schemas` and `--app-schemas`. At least one of these parameters must be present and will run the migration scripts for the respective requested schema set.
 
 {{< note >}}
 Core schemas cannot be migrated while there are checkpoints.
@@ -127,13 +127,13 @@ App schemas can be forced to migrate with checkpoints present using the `--updat
 Automated tests (as in `MockNetwork`, `NodeBasedTest` and Node Driver tests) are able to set up the required schema
 automatically.
 
-* Mock Network. The `MockNode` overrides a field in `AbstractNode` that allows the node to run schema migration on the fly (which is **not** available via the command-line). It takes extra constructor parameters to control whether Liquibase will be run and whether hibernate can be used to create the app schema. Both default to `true` for compatibility with existing tests.
+* Mock Network. The `MockNode` overrides a field in `AbstractNode` that allows the node to run schema migration on the fly (which is **not** available via the command-line). It takes extra constructor parameters to control whether Liquibase will be run and whether Hibernate can be used to create the app schema. Both default to `true` for compatibility with existing tests.
 * Node Driver. In-process nodes use a similar mechanism to Mock Nodes. Out-of-process nodes using a persistent database need the database to be set up before they start (as does a real node). Therefore, `DriverDSL` will run a schema migration step before running the node in this case. Out-of-process nodes using an in-memory database are a particularly tricky case, as there is no persistent database that could be set up before the node starts. Therefore, the node itself can check for H2 in-memory JDBC URLs and will run any required migration if that is detected.
 * Node-based Tests use the same in-process node as does NodeDriver.
 
 **Bootstrapping**
 
-The network bootstrapper runs core schema migrations as part of the bootstrapping process.
+The Network Bootstrapper runs core schema migrations as part of the bootstrapping process.
 
 Cordformation has an extra parameter that can be added to the node section in the `build.gradle`, as follows:
 
@@ -146,7 +146,7 @@ This will run the full schema migration as the last step of the cordformation se
 **Configuration changes**
 
 The following fields have been removed from the database section in the node configuration file. These need to be removed from the node configuration as the node will throw an
-exception on startup if it finds any them:
+exception on startup if it finds any of them:
 
 * `transactionIsolationLevel`: this is now hard-coded in the node.
 - `initialiseSchema`: as above - schema initialisation cannot be run as part of node startup.
@@ -164,7 +164,7 @@ migrating to Corda 4.6 - for example, 3.3 to 4.5, and then 4.5 to 4.6.
 Corda’s RPC client now allows each flow to be started with a unique client-provided ID. Flows started in this manner have the following benefits:
 
 * If a flow is invoked multiple times with the same client ID, they will be considered duplicates. All subsequent invocations after the first will simply return the result of the first invocation.
-* A running flow can be reattached to using the client ID. This allows its flow handle to be recovered.
+* A running flow can be reattached using the client ID. This allows its flow handle to be recovered.
 * The result of a completed flow can still be viewed after the flow has completed, using the client ID.
 
 For more information, see [Starting a flow with a client-provided unique ID](flow-start-with-client-id.md).
@@ -214,7 +214,7 @@ For more information, see [Automatic detection of unrestorable checkpoints](chec
 
 * In Corda 4.6 we have introduced a set of improvements to make the flow state machine more resilient.
 * As of Corda 4.6, support for [DemoBench](demobench.md) is deprecated.
-* We have released a new minor version of [Accounts SDK](https://github.com/corda/accounts/blob/master/docs.md) - version 1.0.2. This version includes database improvements that make it compatible with Corda 4.6. If you are planning to use the Accounts SDK with Corda 4.6, you must use Accounts SDK V 1.0.1.
+* We have released a new minor version of [Accounts SDK](https://github.com/corda/accounts/blob/master/docs.md) - version 1.0.2. This version includes database improvements that make it compatible with Corda 4.6. If you are planning to use the Accounts SDK with Corda 4.6, you must use Accounts SDK V 1.0.2.
 * We have released a new minor version of [Tokens SDK](token-sdk-introduction.md) - version 1.2.1. This version includes database improvements that make it compatible with Corda 4.6. If you are planning to use the Tokens SDK with Corda 4.6, you must use Tokens SDK V 1.2.1.
 * When starting a new driver using the driver DSL, the notary node will start by default as a thread in the same JVM process that runs the driver regardless to the `startNodesInProcess` driver properties (and not as a new process if the `startNodesInProcess` is `false`). This setting can be overridden. Please note that if the test interacts with the notary and expects the notary to run as a new process, you must set `startInProcess` to `false`.
 * In Corda 4.6, if a CorDapp's `minimumPlatformVersion` is higher than the platform version of the node, the CorDapp is not loaded and the node fails to start. This is a change in behaviour compared to Corda 4.5 where under these conditions the node would start up and log that the CorDapp could not be loaded. See [Versioning](versioning.md) for more information.
@@ -268,7 +268,7 @@ The `initial-registration` command is described in [Node command-line options](n
 * We have fixed an issue where the RPC `startFlow` could not reattach to existing client id flows when flow draining mode was enabled.
 * We have fixed an issue where the Classloader failed to find the class when a CorDapp class was used.
 * We have fixed an issue where the `FlowSessionCloseTest.flow` could not access a closed session unless it was a duplicate close that was handled gracefully [[CORDA-3986](https://r3-cev.atlassian.net/browse/CORDA-3986)].
-* We have fixed an issue where the `RetryFlowMockTest - flakey test` returned flakey due to restart not setting `senderUUID` and the early end session message not hanging the receiving flow [[CORDA-3946](https://r3-cev.atlassian.net/browse/CORDA-3946)].
+* We have fixed an issue where the `RetryFlowMockTest` failed due to restart not setting `senderUUID` and the early end session message not hanging the receiving flow.[[CORDA-3946](https://r3-cev.atlassian.net/browse/CORDA-3946)].
 * We have fixed an issue where the `ExceptionsErrorCodeFunctionsTest` failed due to timeout [[CORDA-3944](https://r3-cev.atlassian.net/browse/CORDA-3944)].
 * We have fixed an issue where the expected `error_code="5"` error was missing in logs run with custom CorDapps without the Liquibase schema.
 * We have fixed an issue with inconsistent behaviour between killed client ID flows and flows with other statuses.
