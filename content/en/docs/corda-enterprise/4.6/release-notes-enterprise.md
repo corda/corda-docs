@@ -28,44 +28,41 @@ This release introduces a number of new features and some major functional and o
 
 **Flow management features and improvements**.
 
-Flow management
-Intro: https://youtu.be/E-8oceG5zI4
+The new flow management features and improvements introduced in Corda Enterprise 4.6 include:
 
-Demo: https://youtu.be/bhybmX9TICQ
+* Ability to [query flow data](#ability-to-query-flow-data-via-rpc-and-via-the-node-shell) via RPC and via the node shell.
 
-These videos provide an introduction to the new flow management features in Corda Enterprise 4.6. These include:
+  Corda Enterprise 4.6 introduces the ability to query flow checkpoint data. This helps node operators manage the set of flows currently in execution on their node, by giving operators the ability to a) identify one or more flows that did not complete as expected and b) retrieve status information relating to one or more flows.
 
-Flow querying
+* Ability to [pause and retry flows](#ability-to-pause-and-resume-flows) via RPC.
 
-Pausing flows
+  This release introduces a new set of RPC calls and node shell commands that allow node operators to set flow checkpoints to a “paused” state, effectively marking problematic flows as "do not restart" and preventing them from being retried automatically when the node is restarted. Node operators can retry all paused flows, or retry all paused flows that were previously hospitalised.
 
-Retrying flows via RPC
+* Ability to use a unique ID to [prevent duplicate flow starts](#ability-to-prevent-duplicate-flow-starts-and-retrieve-the-status-of-started-flows).
 
+  This can be done using an RPC client and is an additional way to start flows by passing in a unique identifier when starting a flow. This allows you to:
+    * Check that a flow started correctly (for example, if there was a disconnect event).
+    * Prevent duplicate flow starts - if you try and start a flow twice with the same unique identifier, it will only fire once.
+    * Recover the progress tracker for in-flight flows.
+    * Recover the result of finished flows.
 
+Watch this short video overview of flow querying, flow pausing, and flow retrying via RPC:
 
-Corda Enterprise 4.6 provides the ability to use a unique ID to [prevent duplicate flow starts](#ability-to-prevent-duplicate-flow-starts-and-retrieve-the-status-of-started-flows). This can be done using an RPC client and is an additional way to start flows by passing in a unique identifier when starting a flow. This allows you to:
-  * Check that a flow started correctly (for example, if there was a disconnect event).
-  * Prevent duplicate flow starts - if you try and start a flow twice with the same unique identifier, it will only fire once.
-  * Recover the progress tracker for in-flight flows.
-  * Recover the result of finished flows.
+{{< youtube E-8oceG5zI4 >}}
 
-Watch the short video overview of this feature:
+Watch this short video demo of flow querying, flow pausing, and flow retrying via RPC:
+
+{{< youtube bhybmX9TICQ >}}
+
+Watch this short video overview of the ability to prevent duplicate flow starts via a unique ID:
 
 {{< youtube nn0sP5HDiG0 >}}
 
-
-
-**Developer experience features and improvements.**
-
-We are focused on improving the overall developer experience to ensure Corda maintains its status as an easy to use platform for developers. In this release we have a number of improvements that will help developers build more resilient applications.
-
-* [Automatic detection of unrestorable checkpoints](#automatic-detection-of-unrestorable-checkpoints). During development, flows are now automatically serialized then deserialized whenever they reach a checkpoint. This enables automatic detection of flow code that creates checkpoints that cannot be deserialized.
-
-
 **Operational improvements**
 
-* We have rationalised the way in which [database schema management](#database-management-tool-improvements) is performed across Corda open source and Corda Enterprise.
-* Corda 4.6 introduces a set of improvements to make the flow state machine more resilient.
+* We have rationalised the way in which [database schema management](#database-schema-harmonisation) is performed across Corda open source and Corda Enterprise. This includes improvements to the [Database Management Tool](#database-management-tool-improvements).
+* [Docker images](#deployment-docker-images-for-corda-enterprise-firewall-and-all-corda-enterprise-setup-tools) for Corda Enterprise Firewall and all Corda Enterprise setup tools.
+* This release introduces a set of improvements to make the flow state machine more resilient.
 
 Plus a lot more - please read these release notes carefully to understand what’s new in this release and how the new features and enhancements can help you.
 
@@ -95,7 +92,7 @@ All of these interfaces are located in the `:client:extensions-rpc` module. Cord
 `COMPLETED`, `FAILED` and `KILLED` flows can only be queried when started by the `startFlowWithClientId` or `startFlowDynamicWithClientId` APIs.
 {{< /note >}}
 
-For more information, see the [Interacting with a node](../4.6/node/operating/clientrpc.md) documentation section or see [MultiRPCClient](https://api.corda.net/api/corda-enterprise/4.6/html/api/javadoc/net/corda/client/rpc/ext/MultiRPCClient.html) in the API documentation.
+For more information, see the [Interacting with a node](node/operating/clientrpc.md) documentation section or see [MultiRPCClient](https://api.corda.net/api/corda-enterprise/4.6/html/api/javadoc/net/corda/client/rpc/ext/MultiRPCClient.html) in the API documentation.
 
 ### Ability to query flow data via RPC and via the node shell
 
@@ -119,9 +116,9 @@ Querying the node using either method enables node operators to:
 	* The flow remained stuck at a checkpoint for a particular length of time.
 * Retrieve status information for one or more suspended flows
 
-See the [Querying flow data](../4.6/node/operating/querying-flow-data.md) documentation section for more information.
+See the [Querying flow data](node/operating/querying-flow-data.md) documentation section for more information.
 
-### Automatic detection of un-restorable checkpoints
+### Automatic detection of unrestorable checkpoints
 
 Flows are now automatically serialized then deserialized whenever they reach a checkpoint. This allows better detection of flow code that creates checkpoints that cannot be deserialized, and enables developers and network operators to detect unrestorable checkpoints when developing CorDapps and thus reduces the risk of writing flows that cannot be retried gracefully.
 
@@ -148,38 +145,90 @@ Node operators can retry all paused flows, or retry all paused flows that were p
 
 For more information, see [Pause and resume flows](flow-pause-and-resume.md).
 
-### Host to Container SSH port mapping for Dockerform
+#### Database schema harmonisation
 
-When creating a Docker container, you can now map the SSH port on the host to the same port on the container. For more information, see [Optional configuration](node/deploy/generating-a-node.md#optional-configuration) in [Creating nodes locally](node/deploy/generating-a-node.md).
+As part of this release, we have rationalised the way in which database schema management is performed across Corda open source and Corda Enterprise.
 
-### Metering client for the Metering Collection Tool
+* We have moved all schema management options from node configuration files to start-up sub-commands (in order to reduce misconfigurations and make changing options a less onerous process).
+  * We have removed the ability to create/upgrade the database schema as part of running a node, by introducing a schema creation/migration sub-command that needs to be run as part of a node installation/upgrade.
+  * We have harmonised the configuration, set-up, and behaviour of databases between Corda and Corda Enterprise.
+  * We have removed automatic schema migration for updating from Corda versions prior to 4.0.
+* Added support in Corda open source for packaging custom CorDapp schemas into Liquibase migrations through introducing Liquibase schema migration/description scripts for CorDapps.
 
-You can now collect metering data from Corda Enterprise Nodes remotely. For information, see [Metering client for the Metering Collection Tool](metering-rpc.md).
+{{< warning >}}
+Schema migration/creation has been decoupled from the normal node run mode and needs to be done using a separate
+sub-command. **All configuration keys relating to schema migration have been removed and will cause errors if used in Corda 4.6.**
+{{< /warning >}}
 
-### Hotloading of notaries list
+Some of the more significant changes are listed below.
 
-The notaries list can now be hotloaded. For more information see [Hotloading](network/network-map.md#hotloading) in [Network map](network/network-map.md).
+**Schema management for CorDapps**
 
-### LedgerGraph available as a stand-alone CorDapp
+Corda 4.6 now supports CorDapp schema migration via Liquibase in the same way as Corda Enterprise, where:
 
-LedgerGraph enables other CorDapps, such as the set of [Collaborative Recover CorDapps](node/collaborative-recovery/introduction-cr.md), to have near real-time access to data concerning all of a node’s transactions and their relationships. This is achieved by exposing transaction statistics via JMX/RPC.
-LedgerGraph has been in use in some solutions already, but is now available as a CorDapp in its own right, so you can make use of these transaction statistics.
+* Each CorDapp needs to provide a migration resource with Liquibase scripts to create/migrate any required schemas.
+* Old Corda open source CorDapps that do not have migration scripts need to be migrated in the same way as described in the [Enterprise migration](cordapps/database-management.md#adding-scripts-retrospectively-to-an-existing-cordapp) documentation.
+* A node can manage app schemas automatically using hibernate with H2 in dev mode. This must be enabled with the `--allow-hibernate-to-manage-app-schema` command-line flag.
 
-### Collaborative Recovery upgraded to V1.1
+**Schema creation**
 
-As LedgerGraph is now available as a stand alone CorDapp, the Collaborative Recovery CorDapps have been upgraded to reflect this change. In order [to use Collaborative Recovery V1.1](node/collaborative-recovery/introduction-cr.md) you must have a corresponding LedgerGraph CorDapp installed. If you use Confidential Identities with Collaborative Recovery, in V1.1 you must configure LedgerGraph to handle this. In V1.0, Confidential Identities configuration needed to be added to the **LedgerSync** CorDapp.
+In Corda 4.6, a Corda node can no longer modify/create schema on the fly in normal run mode. Instead, you should apply schema setup or changes deliberately using a new sub-command called `run-migration-scripts`. This subcommand will create/modify the schema and then exit.
 
-### Migrating Notary data to CockroachDB
+**A split into core and app schema**
 
-Notary data stored in a Percona database can now be migrated to Cockroach DB. For more information, see [Upgrading a notary](notary/upgrading-a-notary.md).
+Corda nodes have a set of core schema that is required for the node itself to work. In addition, CorDapps can define additional mapped schemas to store their custom states in the vault.
 
-### Notary identity configuration
+Up to Corda 4.6, the node/schema migration would use the combination of both and run all the required schema creation/migration using hardcoded lists and heuristics to figure out which is which (as, for example, core and app schema have different requirements whether they can be run while checkpoints are present in the database).
 
-When registering a notary, the new field `notary.serviceLegalName` must be defined, this allows single-node notaries to be upgraded to HA notaries. For more information, see [Running a notary](notary/running-a-notary.md).
+This has now changed - the `run-migration-scripts` sub-command takes two new parameters - `--core-schemas` and `--app-schemas`. At least one of these parameters must be present and will run the migration scripts for the respective requested schema set.
 
-### Improved CockroachDB performance
+{{< note >}}
+Core schemas cannot be migrated while there are checkpoints.
 
-A new configuration flag has been introduced, enabling native SQL for CockroachDB with multi-row insert statements. See [Node configuration reference](node/setup/corda-configuration-fields.md)
+App schemas can be forced to migrate with checkpoints present using the `--update-app-schema-with-checkpoints` flag.
+{{< /note >}}
+
+**Tests**
+
+Automated tests (as in `MockNetwork`, `NodeBasedTest` and Node Driver tests) are able to set up the required schema
+automatically.
+
+* Mock Network. The `MockNode` overrides a field in `AbstractNode` that allows the node to run schema migration on the fly (which is **not** available via the command-line). It takes extra constructor parameters to control whether Liquibase will be run and whether hibernate can be used to create the app schema. Both default to `true` for compatibility with existing tests.
+* Node Driver. In-process nodes use a similar mechanism to Mock Nodes. Out-of-process nodes using a persistent database need the database to be set up before they start (as does a real node). Therefore, `DriverDSL` will run a schema migration step before running the node in this case. Out-of-process nodes using an in-memory database are a particularly tricky case, as there is no persistent database that could be set up before the node starts. Therefore, the node itself can check for H2 in-memory JDBC URLs and will run any required migration if that is detected.
+* Node-based Tests use the same in-process node as does NodeDriver.
+
+**Bootstrapping**
+
+The network bootstrapper runs core schema migrations as part of the bootstrapping process.
+
+Cordformation has an extra parameter that can be added to the node section in the `build.gradle`, as follows:
+
+```
+runSchemaMigration = true
+```
+
+This will run the full schema migration as the last step of the cordformation setup, leaving the nodes ready to run.
+
+**Configuration changes**
+
+The following fields have been removed from the database section in the node configuration file. These need to be removed from the node configuration as the node will throw an
+exception on startup if it finds any them:
+
+* `transactionIsolationLevel`: this is now hard-coded in the node.
+* `initialiseSchema`: as above - schema initialisation cannot be run as part of node startup.
+* `initialiseAppSchema`: as above.
+* `runMigration`: this is deprecated. Schema migration can only be run via the [Database Management Tool](#database-management-tool-improvements) or the new `run-migration-script` sub-command.
+
+In addition, it is now possible to run a CorDapp without a schema migration resource in `devMode` - Corda Enterprise 4.6 accepts the same `--allow-hibernate-to-manage-app-schemas` command-line flag as Corda open source 4.6, and has relaxed the check for the presence of app schemas when running in `devMode`.
+
+{{< note >}}
+Please check the schema management documentation to see what adjustments are needed to your CorDapp packaging process.
+{{< /note >}}
+
+**Schema migration from Corda versions prior to V4.0**
+
+Corda 4.6 drops the support for retro-fitting the database changelog when migrating from Corda versions older than 4.0. Thus it is required to migrate to a previous 4.x version before
+migrating to Corda 4.6 - for example, 3.3 to 4.5, and then 4.5 to 4.6.
 
 ### Database Management Tool improvements
 
@@ -194,7 +243,48 @@ The changes are briefly described below.
 * Base directory, which defaults to the current working directory if not set.
 * Location of output file when `dry-run` is used. The output file will now be created relative to the current working directory rather than the base directory.
 
-For full details, see [Database Management Tool](database-management-tool.md).
+For more information, see [Database Management Tool](database-management-tool.md).
+
+### Host to Container SSH port mapping for Dockerform
+
+When creating a Docker container, you can now map the SSH port on the host to the same port on the container. For more information, see [Optional configuration](node/deploy/generating-a-node.md#optional-configuration) in [Creating nodes locally](node/deploy/generating-a-node.md).
+
+### Metering client for the Metering Collection Tool
+
+You can now collect metering data from Corda Enterprise Nodes remotely. For information, see [Metering client for the Metering Collection Tool](metering-rpc.md).
+
+### Hotloading of notaries list
+
+The notaries list can now be hotloaded. Updates to the `notaries` network parameter do not require the node to be shut down and restarted.
+
+For more information, see [Hotloading](network/network-map.md#hotloading) in [Network map](network/network-map.md).
+
+### LedgerGraph available as a stand-alone CorDapp
+
+LedgerGraph enables other CorDapps, such as the set of [Collaborative Recover CorDapps](node/collaborative-recovery/introduction-cr.md), to have near real-time access to data concerning all of a node’s transactions and their relationships. This is achieved by exposing transaction statistics via JMX/RPC.
+LedgerGraph has been in use in some solutions already, but is now available as a CorDapp in its own right, so you can make use of these transaction statistics.
+
+### Collaborative Recovery upgraded to V1.1
+
+As LedgerGraph is now available as a stand alone CorDapp, the Collaborative Recovery CorDapps have been upgraded to reflect this change. In order [to use Collaborative Recovery V1.1](node/collaborative-recovery/introduction-cr.md) you must have a corresponding LedgerGraph CorDapp installed. If you use Confidential Identities with Collaborative Recovery, in V1.1 you must configure LedgerGraph to handle this. In V1.0, Confidential Identities configuration needed to be added to the **LedgerSync** CorDapp.
+
+### Migrating Notary data to CockroachDB
+
+Notary data stored in a Percona database can now be migrated to Cockroach DB.
+
+For more information, see [Upgrading a notary](notary/upgrading-a-notary.md).
+
+### Notary identity configuration
+
+When registering a notary, the new field `notary.serviceLegalName` must be defined. This allows single-node notaries to be upgraded to HA notaries.
+
+For more information, see [Running a notary](notary/running-a-notary.md).
+
+### Improved CockroachDB performance
+
+A new configuration flag has been introduced, enabling native SQL for CockroachDB with multi-row insert statements.
+
+For more information, see [Node configuration reference](node/setup/corda-configuration-fields.md)
 
 ### Node Maintenance Mode
 
@@ -211,13 +301,13 @@ For more information, see [Node Maintenance Mode](node/operating/maintenance-mod
 
 ### Configuration option for the attachments class loader cache size
 
-The attachments class loader cache size is now configurable through the new `EnterpriseConfiguration` configuration field `attachmentClassLoaderCacheSize` in the [node configuration file](https://docs.corda.net/docs/corda-enterprise/node/setup/corda-configuration-fields.html#enterpriseconfiguration). This cache caches the class loaders used to store the transaction attachments.
+The attachments class loader cache size is now configurable through the new `EnterpriseConfiguration` configuration field `attachmentClassLoaderCacheSize` in the [node configuration file](node/setup/corda-configuration-fields.md#enterpriseconfiguration). This cache caches the class loaders used to store the transaction attachments.
 
 The default value is `256`.
 
 {{< warning >}}
 The default value must **not** be changed unless explicitly advised by R3 support.
-{{< warning >}}
+{{< /warning >}}
 
 ### Deployment: Docker images for Corda Enterprise Firewall and all Corda Enterprise setup tools
 
@@ -244,6 +334,31 @@ For more information about platform versions, see [Versioning](cordapps/versioni
 ## Important upgrade and migration notes
 
 {{< warning >}}
+
+The operational improvements around [database schema harmonisation](#database-schema-harmonisation) we have made in Corda 4.6 require a number of manual steps when upgrading to Corda 4.6 and Corda Enterprise 4.6 from a previous version or from Corda open source to Corda Enterprise. These changes are described in detail in the following pages:
+* [Upgrading CorDapps to newer Platform Versions](app-upgrade-notes.md).
+* [Upgrading CorDapps to Corda Enterprise 4.6](app-upgrade-notes-enterprise.md)
+* [Upgrading nodes to a new Corda version](node-upgrade-notes.md).
+
+A brief checklist of required steps follows below for each upgrade path.
+
+**Upgrading an existing node from Corda 4.5 (or earlier 4.x version) to version 4.6**
+
+1. Remove any entries of `transactionIsolationLevel`, `initialiseSchema`, `initialiseAppSchema`, and `runMigration` from the database section of your [node configuration file](node/setup/corda-configuration-file.md).
+2. Update any missing core schema changes by running the node in `run-migration-scripts` mode: `java -jar corda.jar run-migration-scripts --core-schemas`.
+3. Add Liquibase resources to CorDapps. In Corda 4.6, CorDapps that introduce custom schema need Liquibase migration scripts allowing them to create the schema upfront. For existing CorDapps that do not have migration scripts in their resources, they can be added as an external migration `.jar` file, as documented in [Database management scripts](cordapps/database-management.md#adding-scripts-retrospectively-to-an-existing-cordapp).
+4. Update the changelog for existing schemas. After upgrading the Corda `.jar` file and adding Liquibase scripts to the CorDapp(s), any custom schemas from the apps are present
+in the database, but the changelog entries in the Liquibase changelog table are missing (as they have been created by Liquibase). This will cause issues when starting the node, and also when running `run-migration-scripts` as tables that already exist cannot be recreated. By running the new sub-command `sync-app-schemas`, changelog entries are created for all existing mapped schemas from CorDapps: `java -jar corda.jar sync-app-schemas`.
+
+**IMPORTANT** Do **not** install any new CorDapp, or a version adding schema entities, before running the `sync-app-schemas` sub-command. Any mapped schema found in the CorDapps will be added to the changelog **without** trying to create the matching database entities.
+
+**IMPORTANT** If you are upgrading a node to Corda 4.6 while any CorDapp with mapped schemas is being installed, you **must synchronise the schemas** (and thus run `sync-app-schemas`) **before** the node can start again and/or before any app schema updates can be run. Therefore, you must **not** install or update a CorDapp with new or modified schemas while upgrading
+the node, or after upgrading but before synchronising the app schemas.
+
+**Upgrading from Corda 3.x or Corda Enterprise 3.x**
+
+Corda 4.6 drops the support for retro-fitting the database changelog when migrating from Corda versions older than 4.0. Thus it is required to migrate to a previous 4.x version before
+migrating to Corda 4.6 - for example, 3.3 to 4.5, and then 4.5 to 4.6.
 
 **Important note about running the initial node registration command**
 
