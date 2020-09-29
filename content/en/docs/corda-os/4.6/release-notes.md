@@ -135,7 +135,7 @@ This feature addresses the following common problems faced by developers:
 The feature provides a way for flows to reload from checkpoints, even if no errors occur. As a result, developers can be more confident that their flows would work correctly, without needing a way to inject recoverable errors throughout the flows.
 
 {{< note >}}
-This feature can and should be disabled in the node configuration when in production.
+This feature should not be used in production. It is disabled by default in the [node configuration file](corda-configuration-fields.md) - `reloadCheckpointAfterSuspend = false`.
 {{< /note >}}
 
 For more information, see [Automatic detection of unrestorable checkpoints](checkpoint-tooling.md#automatic-detection-of-unrestorable-checkpoints).
