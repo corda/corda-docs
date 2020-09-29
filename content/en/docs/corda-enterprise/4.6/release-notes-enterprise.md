@@ -157,6 +157,15 @@ A descriptive log entry is emitted whenever a node triggers or completes a maint
 
 For more information, see [Node Maintenance Mode](node/operating/maintenance-mode.md).
 
+### Configuration option for the attachments class loader cache size
+
+The attachments class loader cache size is now configurable through the new `EnterpriseConfiguration` configuration field `attachmentClassLoaderCacheSize` in the [node configuration file](https://docs.corda.net/docs/corda-enterprise/node/setup/corda-configuration-fields.html#enterpriseconfiguration). This cache caches the class loaders used to store the transaction attachments.
+
+The default value is `256`.
+
+{{< warning >}}
+The default value must **not** be changed unless explicitly advised by R3 support.
+{{< warning >}}
 
 ### Other changes
 
