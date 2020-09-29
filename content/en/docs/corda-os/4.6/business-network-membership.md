@@ -187,6 +187,10 @@ To update a member's roles and permissions in the business network:
 - `roles` Set of roles to be assigned to membership
 - `notary` Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used
 
+There are two additional flows that can be used to quickly assign roles to a membership: `AssignBNORoleFlow` and `AssignMemberRoleFlow`. They both share the same arguments:
+
+- `membershipId` ID of the membership to assign the role.
+- `notary` Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used.
 *Example*:
 
 ```kotlin
@@ -204,6 +208,9 @@ subFlow(ModifyRolesFlow(membershipId, roles, notary))
 
 To manage the membership lists or groups, one of the authorised members of the network can use `CreateGroupFlow`, `DeleteGroupFlow` and `ModifyGroupFlow`.
 
+{{< note >}}
+When modifying a group, you must ensure that any member who is removed from the group is still part of at least one Business Network Group, otherwise they will no longer be discoverable.
+{{< /note >}}
 ### Create a group
 
 To create a new group:
@@ -217,11 +224,6 @@ To create a new group:
 - `groupId` Custom ID to be given to the issued Business Network Group. If not specified, a randomly generated ID will be used.
 - `groupName` Optional name to be given to the issued Business Network Group.
 - `additionalParticipants` Set of participants to be added to issued Business Network Group alongside initiator's identity.
-- `notary` Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used.
-
-There are two additional flows that can be used to quickly assign roles to a membership: ```AssignBNORoleFlow``` and ```AssignMemberRoleFlow```. They both share the same arguments:
-
-- `membershipId` ID of the membership to assign the role.
 - `notary` Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used.
 
 **Example**:
@@ -281,6 +283,8 @@ subFlow(ModifyGroupFlow(bnGroupId, bnGroupName, newParticipantsList, notary))
 
 You can temporarily suspend a member or completely remove them from the business network. Suspending a member will result in a membership status change to `SUSPENDED` and still allow said member to be in the business network. Revocation means that the membership is marked as historic/spent and and a new one will have to be requested and activated in order for the member to re-join the network.
 
+When a membership is revoked, the member is also removed from all Business Network Groups. 
+
 To suspend a member of the network:
 
 1. Run `SuspendMembershipFlow`.
@@ -324,7 +328,7 @@ RPC exposed flows can be divided into 2 groups:
 
 - `AssignBICFlow` assigns **BIC** (Swift Business Identifier Code) as a business identity of a bank node.
     - Usage: `flow start AssignBICFlow membershipId: <UNIQUE_IDENTIFIER>, bic: <STRING>, notary: <OPTIONAL_NOTARY_IDENTITY>`.
-- `AssignLoanIssuerRoleFlow` grants loan issuance permission to a calling party. This is self-granting. 
+- `AssignLoanIssuerRoleFlow` grants loan issuance permission to a calling party. This is self-granting.
     - Usage: `flow start AssignLoanIssuerRoleFlow networkId: <STRING>, notary: <OPTIONAL_NOTARY_IDENTITY>`.
 - `IssueLoanFlow` issues new loan state on ledger between caller as lender and borrower specified as flow argument. It also
   performs verification of both parties to ensure they are active members of Business Network with ID specified as
