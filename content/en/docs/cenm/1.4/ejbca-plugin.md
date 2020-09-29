@@ -142,7 +142,7 @@ You will also need to generate certificates used for establishing a secure conne
     > * **Key specification** -> *RSA 2048 bits*
     > * **Certificate Profile** -> *ENDUSER*
 
-6. Create a directory with the name *`p12`* in the Signable Material Retriever (SMR) folder and add the downloaded keystore.
+6. Create a directory with the name *`p12`* in the Signing Service folder and add the downloaded keystore.
 
 7. Rename the keystore to *`keystore.jks`*. The keystore's password is `password`.
 
