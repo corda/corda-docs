@@ -26,10 +26,10 @@ The database management tool is for production databases only. H2 databases cann
 
 * `-v, --verbose, --log-to-console`: If set, prints logging to the console as well as to a file.
 * `--logging-level=<loggingLevel>`: Enable logging at this level and higher.
-    * Possible values: ERROR, WARN, INFO, DEBUG, TRACE
-    * Default: INFO
+    * Possible values: `ERROR`, `WARN`, `INFO`, `DEBUG`, `TRACE`.
+    * Default: `INFO`.
 * `--config-obfuscation-passphrase[=<cliPassphrase>]`: The passphrase used in the key derivation function when generating an AES key.
-* `--config-obfuscation-seed[=<cliSeed>]`: The seed used in the key derivation function to create a salt
+* `--config-obfuscation-seed[=<cliSeed>]`: The seed used in the key derivation function to create a salt.
 * `-h, --help`: Show this help message and exit.
 * `-V, --version`: Print version information and exit.
 
@@ -71,11 +71,11 @@ Additional options:
 * `--base-directory`, `-b`: (Required) The node working directory where all the files are kept. This defaults to the current working directory if not set.  
 * `--config-file`, `-f`: The path to the config file. Defaults to `node.conf`.
 * `--mode`: The operating mode. Possible values: NODE, DOORMAN, JPA_NOTARY. Default: NODE.
-* `--doorman-jar-path=<doormanJarPath>`: The path to the doorman (Identity Manager) JAR.
+* `--doorman-jar-path=<doormanJarPath>`: The path to the doorman (Identity Manager) `.jar` file.
 * `--verbose`, `--log-to-console`, `-v`: If set, prints logging to the console as well as to a file.
 * `--logging-level=<loggingLevel>`: Enable logging at this level and higher. Possible values: ERROR, WARN, INFO, DEBUG, TRACE. Default: INFO.
 * `--core-schemas`: Output DB-specific DDL to apply the core node schema migrations.
-* `--app-schemas`: the tool will output DB-specific DDL to apply the migrations for custom CorDapp schemas.
+* `--app-schemas`: Output DB-specific DDL to apply the migrations for custom CorDapp schemas.
 * `--help`, `-h`: Show this help message and exit.
 * `--version`, `-V`: Print version information and exit.
 
@@ -97,12 +97,12 @@ database-manager execute-migration [-hvV] [--doorman-jar-path=<doormanJarPath>]
 * `--base-directory`, `-b`: (Required) The node working directory where all the files are kept. This defaults to the current working directory if not set.
 * `--config-file`, `-f`: The path to the config file. Defaults to `node.conf`.
 * `--mode`: The operating mode. Possible values: NODE, DOORMAN, JPA_NOTARY. Default: NODE.
-* `--doorman-jar-path=<doormanJarPath>`: The path to the doorman (Identity Manager) JAR.
+* `--doorman-jar-path=<doormanJarPath>`: The path to the doorman (Identity Manager) `.jar` file.
 * `--verbose`, `--log-to-console`, `-v`: If set, prints logging to the console as well as to a file.
 * `--logging-level=<loggingLevel>`: Enable logging at this level and higher. Possible values: ERROR, WARN, INFO, DEBUG, TRACE. Default: INFO.
-* `--core-schemas`: Run the node Liquibase core schema migrations.
+* `--core-schemas`: Run Liquibase migrations for the node core schema.
 * `--app-schemas`: Run Liquibase migrations for custom CorDapp schemas.
-* `--db-admin-config <path/to/adminconfigfile>`: Specify the location on disk of a config file holding elevated access credentials for the DB. The DB Management tool will use the credentials listed in the config file to connect to the node database an apply the changes. The config file supports the following fields:
+* `--db-admin-config <path/to/adminconfigfile>`: Specify the location on disk of a configuration file holding elevated access credentials for the DB. The DB Management tool will use the credentials listed in the configuration file to connect to the node database and apply the changes. The configuration file supports the following fields:
   * `dbAdminUser`.
   * `dbAdminPassword`.
 * `--help`, `-h`: Show this help message and exit.
