@@ -19,9 +19,24 @@ when the node connects to the network for the first time, or when the certificat
 band, for instance via email or a web form, but there’s also a simple request/response utility built into the node.
 
 Before using this utility, you must first have received the trust store file containing the root certificate from the
-zone operator. For high security zones, this might be delivered physically. Then run the following command:
+zone operator. For high security zones, this might be delivered physically.
+
+Then run the following command:
 
 `java -jar corda.jar --initial-registration --network-root-truststore-password <trust store password>`
+
+{{< warning >}}
+
+**Important note about running the initial node registration command**
+
+In Corda 4.6, database schemas are no longer initialised/migrated automatically by running any command at the first run of the node - typically at the initial node registration. This is now done explicitly by running `run-migration-scripts`, so no other commands during the first node run would initialise/migrate the database schema. 
+
+The exception to that is the `--initial-registration` command, which embeds `run-migration-scripts` and therefore runs the database migration scripts by default. 
+
+So if you are using deployment automation you may need to adjust your scripts accordingly and exclude the database initialisation/migration task from the initial node registration command. To do so, use the `--skip-schema-creation` flag alongside the `--initial-registration` command.
+
+
+{{< /warning >}}
 
 By default, the utility expects the trust store file to be in the location `certificates/network-root-truststore.jks`.
 This can be overridden using the additional `--network-root-truststore` flag.

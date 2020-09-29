@@ -161,11 +161,25 @@ The node can optionally be started with the following command-line options:
 
 `initial-registration`: Starts initial node registration with the compatibility zone to obtain a certificate from the Doorman.
 
+{{< warning >}}
+
+**Important note about running the initial node registration command**
+
+In Corda 4.6, database schemas are no longer initialised/migrated automatically by running any command at the first run of the node - typically at the initial node registration. This is now done explicitly by running `run-migration-scripts`, so no other commands during the first node run would initialise/migrate the database schema. 
+
+The exception to that is the `--initial-registration` command, which embeds `run-migration-scripts` and therefore runs the database migration scripts by default. 
+
+So if you are using deployment automation you may need to adjust your scripts accordingly and exclude the database initialisation/migration task from the initial node registration command. To do so, use the `--skip-schema-creation` flag alongside the `--initial-registration` command.
+
+
+{{< /warning >}}
+
 Parameters:
 
 
 * `--network-root-truststore`, `-t` **required**: Network root trust store obtained from network operator.
 * `--network-root-truststore-password`, `-p`: Network root trust store password obtained from network operator.
+* * `--skip-schema-creation`: Skips the default database migration step.
 
 `generate-node-info`: Performs the node start-up tasks necessary to generate the nodeInfo file, saves it to disk, then exits.
 
