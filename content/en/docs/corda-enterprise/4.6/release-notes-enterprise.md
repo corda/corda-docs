@@ -301,7 +301,11 @@ For more information, see [Running a notary](notary/running-a-notary.md).
 
 A new configuration flag has been introduced, enabling native SQL for CockroachDB with multi-row insert statements.
 
-For more information, see [Node configuration reference](node/setup/corda-configuration-fields.md)
+For more information, see [Node configuration reference](node/setup/corda-configuration-fields.md).
+
+### Standalone JPA notary optimisation
+
+We have added a new configuration flag - `notary.jpa.generateNativeSQL`. Setting this option to `notary.jpa.generateNativeSQL = true` enables the generation of native SQL for Cockroach DB with multi-row `insert` statements. This results in better notary performance in some cases through a reduction of the number of `insert` SQL queries and the service latency.
 
 ### Node Maintenance Mode
 
