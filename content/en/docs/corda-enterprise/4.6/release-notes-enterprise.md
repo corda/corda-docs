@@ -162,7 +162,7 @@ Corda 4.6 now supports CorDapp schema migration via Liquibase in the same way as
 
 * Each CorDapp needs to provide a migration resource with Liquibase scripts to create/migrate any required schemas.
 * Old Corda open source CorDapps that do not have migration scripts need to be migrated in the same way as described in the [Enterprise migration](cordapps/database-management.md#adding-scripts-retrospectively-to-an-existing-cordapp) documentation.
-* A node can manage app schemas automatically using hibernate with H2 in dev mode. This must be enabled with the `--allow-hibernate-to-manage-app-schema` command-line flag.
+* A node can manage app schemas automatically using Hibernate with H2 in dev mode. This must be enabled with the `--allow-hibernate-to-manage-app-schema` command-line flag.
 
 **Schema creation**
 
