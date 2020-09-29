@@ -54,26 +54,7 @@ database = {
 }
 ```
 
-### Manual update of all existing Signing Service configurations
-
-The SMR (Signable Material Retriever) Service, which prior to CENM 1.4 was used to handle plug-ins for signing data, has been replaced by a plug-in loading logic inside the Signing Service. As a result, **all users must update their existing Signing Service configuration** when upgrading to CENM 1.4.
-
-To update your Signing Service configuration:
-
-1. Remove the `serviceLocationAlias` property from the signing task.
-2. Remove the `serviceLocations` property and move the locations defined there to `serviceLocation` properties inside each signing task. Note that as a result Network Parameters signing tasks and Network Map signing tasks will have the same `serviceLocation` property.
-3. Remove the `caSmrLocation` property.
-4. Remove the `nonCaSmrLocation` property.
-5. Configure the `pluginClass` and `pluginJar` properties inside each signing task to use the following structure:
-
-```
-plugin {
-pluginClass =
-pluginJar
-}
-```
-
-### Change in setting `subZoneID` in Signing Service configurations
+### Signing Service configuration changes
 
 In CENM 1.3 (and older versions), `subZoneID` was defined in Signing Service configurations as part of the service location alias (`serviceLocationAlias`), as shown below:
 
@@ -93,6 +74,25 @@ In CENM 1.4, you must define `subZoneID` as new property value, as follows:
 ```
 signers.NetworkMap.subZoneId = <subzone ID>
 signers.NetworkParameters.subZoneId = <subzone ID>
+```
+
+### Manual update of all existing Signing Service configurations
+
+The SMR (Signable Material Retriever) Service, which prior to CENM 1.4 was used to handle plug-ins for signing data, has been replaced by a plug-in loading logic inside the Signing Service. As a result, **all users must update their existing Signing Service configuration** when upgrading to CENM 1.4.
+
+To update your Signing Service configuration:
+
+1. Remove the `serviceLocationAlias` property from the signing task.
+2. Remove the `serviceLocations` property and move the locations defined there to `serviceLocation` properties inside each signing task. Note that as a result Network Parameters signing tasks and Network Map signing tasks will have the same `serviceLocation` property.
+3. Remove the `caSmrLocation` property.
+4. Remove the `nonCaSmrLocation` property.
+5. Configure the `pluginClass` and `pluginJar` properties inside each signing task to use the following structure:
+
+```
+plugin {
+pluginClass =
+pluginJar
+}
 ```
 
 ## 1.2.x to 1.3
