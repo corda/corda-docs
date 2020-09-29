@@ -201,6 +201,7 @@ For more information, see [Automatic detection of unrestorable checkpoints](chec
 * We have released a new minor version of [Accounts SDK](https://github.com/corda/accounts/blob/master/docs.md) - version 1.0.2. This version includes database improvements that make it compatible with Corda 4.6. If you are planning to use the Accounts SDK with Corda 4.6, you must use Accounts SDK V 1.0.1.
 * We have released a new minor version of [Tokens SDK](token-sdk-introduction.md) - version 1.2.1. This version includes database improvements that make it compatible with Corda 4.6. If you are planning to use the Tokens SDK with Corda 4.6, you must use Tokens SDK V 1.2.1.
 * When starting a new driver using the driver DSL, the notary node will start by default as a thread in the same JVM process that runs the driver regardless to the `startNodesInProcess` driver properties (and not as a new process if the `startNodesInProcess` is `false`). This setting can be overridden. Please note that if the test interacts with the notary and expects the notary to run as a new process, you must set `startInProcess` to `false`.
+* In Corda 4.6, if a CorDapp's `minimumPlatformVersion` is higher than the platform version of the node, the CorDapp is not loaded and the node fails to start. This is a change in behaviour compared to Corda 4.5 where under these conditions the node would start up and log that the CorDapp could not be loaded. See [Versioning](versioning.md) for more information.
 
 ### Platform version change
 
@@ -273,17 +274,14 @@ The `initial-registration` command is described in [Node command-line options](n
 * The new operation on the `FlowRPCOps` RPC interface takes a `StateMachineID` as an argument parameter, leading to repetitive invocations of the form.
 * An SSL connection cannot be established between two nodes when one of the nodes does not have access to the Identity Manager Service and, as a result, to CRL distribution points.
 * A node cannot be run with the `--dev-mode` option unless `devModeOptions.allowCompatibilityZone=true` is added to the node configuration.
-* When a valid command is run in the wrong location, a large exception occurs rather than a clear error message.
-* In HA Utilities, the `notary-registration` option does not write CSR details to the log file.
+* When a valid command is run in the wrong location, an exception occurs rather than a clear error message.
 * In the Attachment Demo, the `runSender` task uses `myLegalName` instead of `serviceLegalName` for notarisation.
 * Some samples cannot be run on Windows due to an issue with long file names.
-* The Database Management Tool does not work with Corda 4.6 when `dataSourceProperties` is in a separate file.
 * Business Network roles are not displayed when membership state is queried via CLI.
 * The SSH Client returns inconsistent exit codes after `gracefulShutdown` is run, indicating that an error has occurred.
 * The node rejects the incoming P2P connection from a node with a revoked certificate, with warnings and errors, but does not block any attempts to re-establish it. This leads to a quick accumulation of warnings and errors in the node log.
 * The error text is repeated in the console when trying to register a node with the forbidden characters in the Organisation (`O`) name.
 * The `<install-shell-extensions>` sub-command of Corda node creates log files in the home folder, while all other sub-commands create log files the `logs` subfolder.
-* In Corda 4.6, if a CorDapp's `minimumPlatformVersion` is higher than the platform version of the node, the CorDapp is not loaded and the node fails to start. This is a change in behaviour compared to Corda 4.5 where under these conditions the node would start up and log that the CorDapp could not be loaded. See [Versioning](versioning.md) for more information.
 
 ## Corda 4.5
 
