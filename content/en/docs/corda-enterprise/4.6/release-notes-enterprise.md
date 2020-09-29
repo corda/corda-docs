@@ -417,7 +417,6 @@ The `initial-registration` command is described in [Node command-line options](n
 * We have fixed an issue where the Health Survey Tool could not verify the connection to the node's Artemis broker.
 * We have fixed an issue where the `FlowSessionCloseTest.flow` could not access a closed session unless it was a duplicate close that was handled gracefully.
 * We have fixed an issue where the `RetryFlowMockTest` failed due to restart not setting `senderUUID` and the early end session message not hanging the receiving flow.
-* We have fixed an issue where `--allow-hibernate-to-manage-app-schema` could not manage app schemas when running a node.
 * We have fixed an issue where Corda did not write the error message for a start-up error into the log file.
 * We have fixed an issue where the expected `error_code="5"` error was missing in logs run with custom CorDapps without the Liquibase schema.
 * We have fixed an issue where a flow could fail with a null error and stack trace if the counterparty was busy.
