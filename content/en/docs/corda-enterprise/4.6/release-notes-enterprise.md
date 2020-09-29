@@ -280,8 +280,9 @@ For more information, see [Storing node TLS keys in HSM](tls-keys-in-hsm.md).
 
 ### LedgerGraph available as a stand-alone CorDapp
 
-LedgerGraph enables other CorDapps, such as the set of [Collaborative Recover CorDapps](node/collaborative-recovery/introduction-cr.md), to have near real-time access to data concerning all of a node’s transactions and their relationships. This is achieved by exposing in-memory transaction statistics related to the Corda ledger via flows and JMX/RPC.
-LedgerGraph has been in use in some solutions already, but is now available as a CorDapp in its own right, so you can make use of these transaction statistics.
+LedgerGraph enables other CorDapps, such as the set of [Collaborative Recover CorDapps](node/collaborative-recovery/introduction-cr.md), to have near real-time access to data concerning all of a node’s transactions and their relationships.
+
+LedgerGraph has been in use in some solutions already, but is now available as a CorDapp in its own right. Therefore, as an operator, you can now use LedgerGraph as a standalone application on your node in order to expose in-memory transaction statistics related to the Corda ledger via flows and JMX/RPC.
 
 The metrics exposed by LedgerGraph include:
 
