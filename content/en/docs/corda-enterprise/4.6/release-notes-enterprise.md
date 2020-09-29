@@ -92,7 +92,7 @@ Node operators can now use the Multi RPC client to interact with a Corda Enterpr
 All of these interfaces are located in the `:client:extensions-rpc` module. Corda Enterprise customers can extend these interfaces to add custom, user-defined functionality to help manage their Corda Enterprise nodes.
 
 {{< note >}}
-`COMPLETED`, `FAILED` and `KILLED` flows can only be queried when started by the `startFlowWithClientId` or `startFlowDynamicWithClientId` APIs.
+`COMPLETED`, `FAILED` and `KILLED` flows can only be queried when started by the `startFlowWithClientId` or `startFlowDynamicWithClientId` APIs using [a unique client-provided ID](#ability-to-prevent-duplicate-flow-starts-and-retrieve-the-status-of-started-flows).
 {{< /note >}}
 
 For more information, see the [Interacting with a node](node/operating/clientrpc.md) documentation section or see [MultiRPCClient](https://api.corda.net/api/corda-enterprise/4.6/html/api/javadoc/net/corda/client/rpc/ext/MultiRPCClient.html) in the API documentation.
@@ -121,23 +121,6 @@ Querying the node using either method enables node operators to:
 
 See the [Querying flow data](node/operating/querying-flow-data.md) documentation section for more information.
 
-### Automatic detection of unrestorable checkpoints
-
-Flows are now automatically serialized then deserialized whenever they reach a checkpoint. This allows better detection of flow code that creates checkpoints that cannot be deserialized, and enables developers and network operators to detect unrestorable checkpoints when developing CorDapps and thus reduces the risk of writing flows that cannot be retried gracefully.
-
-This feature addresses the following common problems faced by developers:
-
-* Creating objects or leveraging data structures that cannot be serialized/deserialized correctly by Kryo (the checkpoint serialization library Corda uses).
-* Writing flows that are not idempotent or do not deduplicate behaviour (such as calls to an external system).
-
-The feature provides a way for flows to reload from checkpoints, even if no errors occur. As a result, developers can be more confident that their flows would work correctly, without needing a way to inject recoverable errors throughout the flows.
-
-{{< note >}}
-This feature should not be used in production. It is disabled by default in the [node configuration file](node/setup/corda-configuration-fields.md) - `reloadCheckpointAfterSuspend = false`.
-{{< /note >}}
-
-For more information, see [Automatic detection of unrestorable checkpoints](checkpoint-tooling.md#automatic-detection-of-unrestorable-checkpoints).
-
 ### Ability to pause and resume flows
 
 We have added a new set of RPC calls and node shell commands that allow node operators to set flow checkpoints to a “paused” state, effectively marking problematic flows as "do not restart" and preventing them from being retried automatically when the node is restarted.
@@ -147,6 +130,16 @@ Paused checkpoints will not be loaded in memory on node restart. This helps node
 Node operators can retry all paused flows, or retry all paused flows that were previously hospitalised. Hospitalised flows can be retried via RPC, thus eliminating the need to restart the node to trigger retries.
 
 For more information, see [Pause and resume flows](flow-pause-and-resume.md).
+
+#### Ability to prevent duplicate flow starts and retrieve the status of started flows
+
+Corda’s RPC client now allows each flow to be started with a unique client-provided ID. Flows started in this manner have the following benefits:
+
+* If a flow is invoked multiple times with the same client ID, they will be considered duplicates. All subsequent invocations after the first will simply return the result of the first invocation.
+* A running flow can be reattached to using the client ID. This allows its flow handle to be recovered.
+* The result of a completed flow can still be viewed after the flow has completed, using the client ID.
+
+For more information, see [Starting a flow with a client-provided unique ID](flow-start-with-client-id.md).
 
 #### Database schema harmonisation
 
@@ -247,6 +240,23 @@ The changes are briefly described below.
 * Location of output file when `dry-run` is used. The output file will now be created relative to the current working directory rather than the base directory.
 
 For more information, see [Database Management Tool](database-management-tool.md).
+
+### Automatic detection of unrestorable checkpoints
+
+Flows are now automatically serialized then deserialized whenever they reach a checkpoint. This allows better detection of flow code that creates checkpoints that cannot be deserialized, and enables developers and network operators to detect unrestorable checkpoints when developing CorDapps and thus reduces the risk of writing flows that cannot be retried gracefully.
+
+This feature addresses the following common problems faced by developers:
+
+* Creating objects or leveraging data structures that cannot be serialized/deserialized correctly by Kryo (the checkpoint serialization library Corda uses).
+* Writing flows that are not idempotent or do not deduplicate behaviour (such as calls to an external system).
+
+The feature provides a way for flows to reload from checkpoints, even if no errors occur. As a result, developers can be more confident that their flows would work correctly, without needing a way to inject recoverable errors throughout the flows.
+
+{{< note >}}
+This feature should not be used in production. It is disabled by default in the [node configuration file](node/setup/corda-configuration-fields.md) - `reloadCheckpointAfterSuspend = false`.
+{{< /note >}}
+
+For more information, see [Automatic detection of unrestorable checkpoints](checkpoint-tooling.md#automatic-detection-of-unrestorable-checkpoints).
 
 ### Host to Container SSH port mapping for Dockerform
 
