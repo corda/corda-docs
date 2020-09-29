@@ -63,13 +63,15 @@ States and apps valid in Corda 3.0 and above are usable in Corda 4.6.
 
 ### New features and enhancements
 
+#### Business Network membership extension
+
+The [Business Network Membership](business-network-membership.md) extension for creating and managing business networks allows a you (a node operator) to define and create a logical network based on a set of common CorDapps as well as a shared business context. Corda nodes outside of your Business Network are not aware of its members.
+
+With this extension, you can use a set of workflows to add members to the network, remove members, and manage their permissions.
+
 #### Host to Container SSH port mapping for Dockerform
 
 When creating a Docker container, you can now map the SSH port on the host to the same port on the container. For more information, see [Optional configuration](generating-a-node.md#optional-configuration) in [Creating nodes locally](generating-a-node.md).
-
-#### Hotloading of notaries list
-
-The notaries list can now be hotloaded. For more information see [Hotloading](network-map.md#hotloading) in [The network map](network-map.md).
 
 #### Ability to prevent duplicate flow starts and retrieve the status of started flows
 
@@ -81,11 +83,9 @@ Corda’s RPC client now allows each flow to be started with a unique client-pro
 
 For more information, see [Starting a flow with a client-provided unique ID](flow-start-with-client-id.md).
 
-#### Business Network membership extension
+#### Hotloading of notaries list
 
-The [Business Network Membership](business-network-membership.md) extension for creating and managing business networks allows a you (a node operator) to define and create a logical network based on a set of common CorDapps as well as a shared business context. Corda nodes outside of your Business Network are not aware of its members.
-
-With this extension, you can use a set of workflows to add members to the network, remove members, and manage their permissions.
+The notaries list can now be hotloaded. For more information see [Hotloading](network-map.md#hotloading) in [The network map](network-map.md).
 
 #### Ability to register custom pluggable serializers for CorDapp checkpoints
 
