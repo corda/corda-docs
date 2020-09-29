@@ -19,6 +19,10 @@ weight: 9
 
 No additional steps are needed to upgrade from version 4.5 to 4.6.
 
+{{% note %}}
+In 4.6, when starting a new driver using the driver DSL, the notary node will start by default as a thread in the same JVM process that runs the driver regardless to the `startNodesInProcess` driver properties (and not as a new process if the `startNodesInProcess` is `false`). This setting can be overridden. Please note that if the test interacts with the notary and expects the notary to run as a new process, you must set `startInProcess` to `false`.
+{{% /note %}}
+
 ## Version 4.5
 
 We've introduced the `notary_double_spends` table and added an index to the `notary_request_log` table. The `notary_double_spend` table contains information about attempted double-spend transactions.
