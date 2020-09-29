@@ -30,7 +30,7 @@ CENM 1.4 includes a few changes and improvements that require some additional up
 The general procedure for upgrading from CENM 1.3 to CENM 1.4 is as follows:
 
 1. Stop all CENM 1.3 services.
-2. To prevent picking up old configurations for the new services by the Angel Service, remove or rename all configuration files that have to be updated (see the sections below).
+2. To prevent picking up old Signing Service configurations by the Angel Service, remove or rename all configuration files that have to be updated (see the sections below).
 3. Update Signing Service configuration files, as [described below](#manual-update-of-all-existing-signing-service-configurations). Note that there is a change in the way `subZoneID` is set in Signing Service configurations, as [described below](#change-in-setting-subzoneid-in-signing-service-configurations).
 4. Replace the `.jar` files for all services with the latest CENM 1.4 `.jar` files. **ImportantL** In CENM 1.4, the FARM Service has been renamed to "Gateway Service", so the FARM Service `.jar` file used in CENM 1.3 should be replaced with the Gateway Service `.jar` file used in CENM 1.4.
 5. Start the Auth Service, the Zone Service, and the Gateway Service. **Important:** The Zone Service requires the `--run-migration` option to be set to `true`, as [described below](#zone-service-database-migration).
