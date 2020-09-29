@@ -339,7 +339,7 @@ You can also adjust some parameters that control the frequency of this cleanup m
 
 The attachments class loader cache size is now configurable through the new `EnterpriseConfiguration` configuration field `attachmentClassLoaderCacheSize` in the [node configuration file](node/setup/corda-configuration-fields.md#enterpriseconfiguration). This cache caches the class loaders used to store the transaction attachments.
 
-The default value is `256`.
+The default value is `256` attachments per cache.
 
 {{< warning >}}
 The default value must **not** be changed unless explicitly advised by R3 support.
