@@ -13,13 +13,12 @@ weight: 20
 
 # Pause and resume flows
 
-## Overview
-
-In previous versions of Corda Enterprise, the only way to temporarily stop a problematic flow was to shut down the node. This new state machine feature enables you to pause `RUNNING` flows and flows `UNDER OBSERVATION` (by the [Flow Hospital](node/node-flow-hospital.md)) without the need to restart the node.
+This state machine feature enables you to pause `RUNNING` flows and flows `UNDER OBSERVATION` (by the [Flow Hospital](node/node-flow-hospital.md)) without needing to restart the node.
 
 It also allows you to resume (retry) a `PAUSED` flow or a flow `UNDER OBSERVATION`.
 
 This gives you more control of the flows running on a node - you can:
+
 * `RETRY` a `HOSPITALIZED` flow.
 * `PAUSE` an individual problematic flow, causing the flow to stop until you retry that flow.
 * Stops any other running flows causing downtime.
@@ -72,7 +71,7 @@ To retry all hospitalized flows that are paused:
 flow retryAllPausedHospitalized
 ```
 
-In all cases the shell prints a message stating if the operation succeeded or not.
+In all cases, the shell prints a message stating if the operation succeeded or not.
 
 ### Pausing and retrying flows from RPC
 
@@ -134,6 +133,7 @@ To prevent server-side resource leakage, use `flowClient.close()` to close `flow
 ### Starting the node and pausing all flows
 
 All flows can be paused when the node starts up - you can enable this in one of the following ways:
+
 * Use the command-line option `--pause-all-flows`.
 * Add the `smmStartMode="Safe"` option to the [node configuration file](node/setup/corda-configuration-file.md).
 
