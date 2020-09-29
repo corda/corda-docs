@@ -69,51 +69,6 @@ The [Business Network Membership](business-network-membership.md) extension for 
 
 With this extension, you can use a set of workflows to add members to the network, remove members, and manage their permissions.
 
-#### Host to Container SSH port mapping for Dockerform
-
-When creating a Docker container, you can now map the SSH port on the host to the same port on the container. For more information, see [Optional configuration](generating-a-node.md#optional-configuration) in [Creating nodes locally](generating-a-node.md).
-
-#### Ability to prevent duplicate flow starts and retrieve the status of started flows
-
-Corda’s RPC client now allows each flow to be started with a unique client-provided ID. Flows started in this manner have the following benefits:
-
-* If a flow is invoked multiple times with the same client ID, they will be considered duplicates. All subsequent invocations after the first will simply return the result of the first invocation.
-* A running flow can be reattached to using the client ID. This allows its flow handle to be recovered.
-* The result of a completed flow can still be viewed after the flow has completed, using the client ID.
-
-For more information, see [Starting a flow with a client-provided unique ID](flow-start-with-client-id.md).
-
-#### Hotloading of notaries list
-
-The notaries list can now be hotloaded. Updates to the `notaries` network parameter do not require the node to be shut down and restarted.
-
-For more information, see [Hotloading](network-map.md#hotloading) in [The network map](network-map.md).
-
-#### Ability to register custom pluggable serializers for CorDapp checkpoints
-
-CorDapp developers now have the ability to create a custom serializer for a given type, which is then used when serializing the type in question as part of a flow framework checkpoint.
-
-Note that this is an advanced feature, designed specifically for certain types that throw exceptions during checkpoint serialization. The vast majority of classes will not need a custom serializer.
-
-Custom checkpoint serializers are created by implementing the new `CheckpointCustomSerializer` interface.
-
-#### Automatic detection of unrestorable checkpoints
-
-Flows are now automatically serialized then deserialized whenever they reach a checkpoint. This allows better detection of flow code that creates checkpoints that cannot be deserialized, and enables developers and network operators to detect unrestorable checkpoints when developing CorDapps and thus reduces the risk of writing flows that cannot be retried gracefully.
-
-This feature addresses the following common problems faced by developers:
-
-* Creating objects or leveraging data structures that cannot be serialized/deserialized correctly by Kryo (the checkpoint serialization library Corda uses).
-* Writing flows that are not idempotent or do not deduplicate behaviour (such as calls to an external system).
-
-The feature provides a way for flows to reload from checkpoints, even if no errors occur. As a result, developers can be more confident that their flows would work correctly, without needing a way to inject recoverable errors throughout the flows.
-
-{{< note >}}
-This feature should not be used in production. It is disabled by default in the [node configuration file](corda-configuration-fields.md) - `reloadCheckpointAfterSuspend = false`.
-{{< /note >}}
-
-For more information, see [Automatic detection of unrestorable checkpoints](checkpoint-tooling.md#automatic-detection-of-unrestorable-checkpoints).
-
 #### Database schema harmonisation
 
 As part of this release, we have rationalised the way in which database schema management is performed across Corda open source and Corda Enterprise.
@@ -193,6 +148,51 @@ Please check the schema management documentation to see what adjustments are nee
 
 Corda 4.6 drops the support for retro-fitting the database changelog when migrating from Corda versions older than 4.0. Thus it is required to migrate to a previous 4.x version before
 migrating to Corda 4.6 - for example, 3.3 to 4.5, and then 4.5 to 4.6.
+
+#### Ability to prevent duplicate flow starts and retrieve the status of started flows
+
+Corda’s RPC client now allows each flow to be started with a unique client-provided ID. Flows started in this manner have the following benefits:
+
+* If a flow is invoked multiple times with the same client ID, they will be considered duplicates. All subsequent invocations after the first will simply return the result of the first invocation.
+* A running flow can be reattached to using the client ID. This allows its flow handle to be recovered.
+* The result of a completed flow can still be viewed after the flow has completed, using the client ID.
+
+For more information, see [Starting a flow with a client-provided unique ID](flow-start-with-client-id.md).
+
+#### Hotloading of notaries list
+
+The notaries list can now be hotloaded. Updates to the `notaries` network parameter do not require the node to be shut down and restarted.
+
+For more information, see [Hotloading](network-map.md#hotloading) in [The network map](network-map.md).
+
+#### Host to Container SSH port mapping for Dockerform
+
+When creating a Docker container, you can now map the SSH port on the host to the same port on the container. For more information, see [Optional configuration](generating-a-node.md#optional-configuration) in [Creating nodes locally](generating-a-node.md).
+
+#### Ability to register custom pluggable serializers for CorDapp checkpoints
+
+CorDapp developers now have the ability to create a custom serializer for a given type, which is then used when serializing the type in question as part of a flow framework checkpoint.
+
+Note that this is an advanced feature, designed specifically for certain types that throw exceptions during checkpoint serialization. The vast majority of classes will not need a custom serializer.
+
+Custom checkpoint serializers are created by implementing the new `CheckpointCustomSerializer` interface.
+
+#### Automatic detection of unrestorable checkpoints
+
+Flows are now automatically serialized then deserialized whenever they reach a checkpoint. This allows better detection of flow code that creates checkpoints that cannot be deserialized, and enables developers and network operators to detect unrestorable checkpoints when developing CorDapps and thus reduces the risk of writing flows that cannot be retried gracefully.
+
+This feature addresses the following common problems faced by developers:
+
+* Creating objects or leveraging data structures that cannot be serialized/deserialized correctly by Kryo (the checkpoint serialization library Corda uses).
+* Writing flows that are not idempotent or do not deduplicate behaviour (such as calls to an external system).
+
+The feature provides a way for flows to reload from checkpoints, even if no errors occur. As a result, developers can be more confident that their flows would work correctly, without needing a way to inject recoverable errors throughout the flows.
+
+{{< note >}}
+This feature should not be used in production. It is disabled by default in the [node configuration file](corda-configuration-fields.md) - `reloadCheckpointAfterSuspend = false`.
+{{< /note >}}
+
+For more information, see [Automatic detection of unrestorable checkpoints](checkpoint-tooling.md#automatic-detection-of-unrestorable-checkpoints).
 
 #### Other changes and improvements
 
