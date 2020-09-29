@@ -73,7 +73,7 @@ The notaries list can now be hotloaded. For more information see [Hotloading](ne
 
 #### Business Network membership extension
 
-The [Business Network Membership](business-network-membership) extension for creating and managing business networks allows a you (a node operator) to define and create a logical network based on a set of common CorDapps as well as a shared business context. Corda nodes outside of your Business Network are not aware of its members.
+The [Business Network Membership](business-network-membership.md) extension for creating and managing business networks allows a you (a node operator) to define and create a logical network based on a set of common CorDapps as well as a shared business context. Corda nodes outside of your Business Network are not aware of its members.
 
 With this extension, you can use a set of workflows to add members to the network, remove members, and manage their permissions.
 
@@ -109,6 +109,8 @@ Corda’s RPC client now allows each flow to be started with a unique client-pro
 * If a flow is invoked multiple times with the same client ID, they will be considered duplicates. All subsequent invocations after the first will simply return the result of the first invocation.
 * A running flow can be reattached to using the client ID. This allows its flow handle to be recovered.
 * The result of a completed flow can still be viewed after the flow has completed, using the client ID.
+
+For more information, see [Starting a flow with a client-provided unique ID](flow-start-with-client-id.md).
 
 #### Database schema harmonisation
 
