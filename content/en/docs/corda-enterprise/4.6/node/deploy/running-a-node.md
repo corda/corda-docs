@@ -152,7 +152,7 @@ You can optionally start a node using the following command-line options:
 * `--logging-level=<loggingLevel>`: Enable logging at this level and higher. Possible values: `ERROR`, `WARN`, `INFO` (default), `DEBUG`, `TRACE`.
 * `--help`, `-h`: Show this help message and exit.
 * `--version`, `-V`: Print version information and exit.
-
+* `--pause-all-flows`: Paused all flows when the node starts up. Starting a node with the `--pause-all-flows` command-line option automatically enables flow draining mode but does not modify the node's configuration file. See [Pause and resume flows](../../flow-pause-and-resume.md#starting-the-node-and-pausing-all-flows) for more information.
 
 #### Sub-commands
 
