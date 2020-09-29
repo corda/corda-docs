@@ -409,6 +409,8 @@ database = {
 
 `runMigration` is set to `false` because the restricted CENM service instance database user does not have permissions to alter a database schema. See [CENM Database Configuration](config-database.md) for a complete list of database-specific properties.
 
+
+
 {{< note >}}
 The CENM distribution does not include any JDBC drivers with the exception of the H2 driver.
 It is the responsibility of the CENM service administrator or a developer to install the appropriate JDBC driver.
@@ -925,3 +927,20 @@ To migrate as service:
    configuration to connect to the database as a user *without*
    schema migration permissions, and to set `runMigration = false` in the
    database configuration.
+
+### 5.1. Zone Service database migration in CENM 1.4
+
+If you are upgrading to CENM 1.4 from CENM 1.3, you **must** set `runMigration = true` in the database configuration. This is required due to a change in the Zone Service database schema - a new column in the database tables `socket_config` and `signer_config` called `timeout` is used to record the new optional `timeout` parameter values used in `serviceLocations` configuration blocks (Signing Services) and `identityManager` and `revocation` configuration blocks (Network Map Service). This value can remain `null`,
+in which case the default 10 seconds timeout will be used wherever applicable.
+
+An example follows below:
+
+```
+database = {
+  driverClassName = "org.h2.Driver"
+  user = "testuser"
+	password = "password"
+	url = "jdbc:h2:file:/etc/corda/db;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=10000;WRITE_DELAY=0;AUTO_SERVER_PORT=0"
+  runMigration = true
+}
+```

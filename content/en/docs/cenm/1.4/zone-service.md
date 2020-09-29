@@ -54,7 +54,7 @@ The full list of configuration options follows below:
 - `--tls-keystore-password`: The password for the TLS keystore. Required if `--tls` is set to `true`.
 - `--tls-truststore`: The path for the TLS truststore. Required if `--tls` is set to `true`.
 - `--tls-truststore-password`: The password for the TLS truststore. Required if `--tls` is set to `true`.
-- `--run-migration`:  Defines whether schema migration is enabled on the database. Defaults to `false` if no value is provided.
+- `--run-migration`:  Defines whether schema migration is enabled on the database. Defaults to `false` if no value is provided. **Important:** if you are upgrading to CENM 1.4 from CENM 1.3, you **must** set this option to `true` due to a change in the Zone Service database schema - see the [CENM upgrade guide](upgrade-notes.md) for more information.
 - `--jdbc-driver`:  The path for the `.jar` file containing the JDBC driver for the database.
 - `--driver-class-name`: The name of the JDBC driver class within the `.jar` file specified by `--jdbc-driver`.
 - `--url`: The URL for the Zone Service's database.
@@ -165,8 +165,13 @@ serviceLocations = {
         }
         verbose = false
     }
+    timeout = 12000
 }
 ```
+
+{{< note >}}
+The `timeout` parameter used in the example above is optional. It allows to set a Signing Service timeout for communication to each of the services used within the signing processes defined in the [signers map](signing-service.md#signers-map-entry-example), in a way that allows high node count network maps to get signed and to operate at reliable performance levels. The `timeout` value is set in milliseconds and the default value is 10000 milliseconds. The `timeout` parameter's value is stored in a column in the [Zone Service](zone-service.md)'s database tables `socket_config` and `signer_config` called `timeout`. This value can remain `null` (for example, if `timeout` is not defined in `serviceLocations`), in which case the default 10000 milliseconds value (`timeout = 10000`) will be used wherever applicable. Please note that currently, due to a known issue with `serviceLocations`, when the `timeout` parameter is passed to the Zone Service via the Signing Service's `serviceLocations` configuration block, only the `timeout` value of the first `serviceLocations` location will be taken into account and used for all other service locations.
+{{< /note >}}
 
 ## Interaction with Angel Services
 

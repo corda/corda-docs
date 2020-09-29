@@ -497,6 +497,31 @@ Map of human-readable aliases (string) to CENM service location configurations. 
 services that are used within the signing processes defined in the signers map. See the
 [service location map entry example](#service-location-map-entry-example) below for the expected format.
 
+  * **timeout**
+  An optional parameter that enables you to set a Signing Service timeout for communication to each of the services used within the signing processes defined in the signers map, in a way that allows high node count network maps to get signed and to operate at reliable performance levels. The `timeout` value is set in milliseconds and the default value is 10000 milliseconds. The example below shows a `serviceLocations` configuration block for the Network Map Service using the `timeout` parameter:
+
+  ```yaml
+  serviceLocations = {
+      "network-map" = {
+               host = http://example.com
+               port = 10000
+               ssl = {
+                   keyStore = {
+                       location = "./corda-ssl-signer-keys.jks"
+                       password = password
+                   }
+                   trustStore = {
+                       location = "./corda-ssl-trust-store.jks"
+                       password = trust-store-password
+                   }
+                   validate = true
+               }
+               timeout = 10000
+           }
+  }
+  ```
+
+  {{< note >}}The `timeout` parameter's value is stored in a new column in the [Zone Service](zone-service.md)'s database tables `socket_config` and `signer_config` called `timeout`. This value can remain `null` (for example, if `timeout` is not defined in `serviceLocations`), in which case the default 10000 milliseconds value (`timeout = 10000`) will be used wherever applicable. Please note that currently, due to a known issue with `serviceLocations`, when the `timeout` parameter is passed to the Zone Service via the Signing Service's `serviceLocations` configuration block, only the `timeout` value of the first `serviceLocations` location will be taken into account and used for all other service locations.{{< /note >}}
 
 * **caSmrLocation**:
 *(Optional, use instead of CA related serviceLocations)* CA part of Signable Material Retriever CENM

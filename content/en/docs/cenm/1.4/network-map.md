@@ -429,6 +429,23 @@ The `host` should correspond to the host part of the `address` value in the Iden
 `port` parameter for each service should correspond with the `port` value within the `enmListener` configuration block in
 the service’s configuration. See [Network Map Configuration Parameters](config-network-map-parameters.md) for more information.
 
+You can also use the optional `timeout` parameter that enables you to set specific Network Map Service timeouts for communication to the Identity Manager and Revocation services. This allows for high node count network maps to operate at reliable performance levels. The `timeout` value is set in milliseconds and the default value is 10000 milliseconds. For example:
+
+```guess
+...
+identityManager {
+    host = <IDENTITY_MANAGER_HOST> # e.g. identity-manager-url.com
+    port = <IDENTITY_MANAGER_LISTENER_PORT>
+    timeout = 12000
+}
+revocation {
+    host = <REVOCATION_HOST> # e.g. identity-manager-url.com
+    port = <REVOCATION_LISTENER_PORT>
+    timeout = 10000
+}
+...
+```
+
 {{< note >}}
 All inter-service communication can be configured with SSL support. See [Configuring the CENM services to use SSL](enm-with-ssl.md)
 
