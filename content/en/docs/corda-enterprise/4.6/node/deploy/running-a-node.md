@@ -26,6 +26,9 @@ There are several ways to run a Corda node locally for testing purposes.
 
 See the instructions in [Demobench](../../demobench.md).
 
+{{< warning >}}
+**DemoBench** is deprecated in Corda 4.6 and Corda Enterprise 4.6.
+{{< /warning >}}
 
 ## Starting a Corda node from the command prompt
 

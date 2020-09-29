@@ -53,6 +53,10 @@ as follows:
 * **Explorer** - changes to the `tools/explorer` project.
 * **Demobench** - changes to the `tools/demobench` project.
 
+{{< warning >}}
+**DemoBench** is deprecated in Corda 4.6 and Corda Enterprise 4.6.
+{{< /warning >}}
+
 How to manually test each of these areas differs and is currently not fully specified. For now the best thing to do is to ensure the
 program starts, that you can interact with it, and that no exceptions are generated in normal operation.
 
@@ -100,4 +104,3 @@ task installQuasar(type: Copy) {
 ```
 
 and then you can run `gradlew installQuasar`.
-

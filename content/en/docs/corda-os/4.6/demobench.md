@@ -15,9 +15,13 @@ title: DemoBench
 ---
 
 
-# DemoBench
+# DemoBench - Deprecated in Corda 4.6
 
 DemoBench is a standalone desktop application that makes it easy to configure and launch local Corda nodes. It is useful for training sessions, demos or just experimentation.
+
+{{< warning >}}
+**DemoBench** is deprecated in Corda 4.6 and Corda Enterprise 4.6.
+{{< /warning >}}
 
 
 ## Downloading
@@ -141,4 +145,3 @@ explorer/
 cordapps/
     bank-of-corda.jar
 ```
-

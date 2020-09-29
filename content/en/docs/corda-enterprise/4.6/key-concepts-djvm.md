@@ -63,14 +63,14 @@ validation, namely `run()` and `validate()`. These methods both return a summary
 
 
 
-* 
+*
     * Whether or not the runnable was successfully executed.
     * If successful, the return value of `Function.apply()`.
     * If failed, the exception that was raised.
     * And in both cases, a summary of all accrued costs during execution.
 
 
-* 
+*
     * A type hierarchy of classes and interfaces loaded and touched by the sandbox’s class loader during analysis, each
 of which contain information about the respective transformations applied as well as meta-data about the types
 themselves and all references made from said classes.
@@ -338,6 +338,9 @@ transaction verification will fail.
 Alternatively, you can enable the DJVM when creating nodes via DemoBench by ticking the `Deterministic Contract Verification` checkbox
 when creating the initial notary node.
 
+{{< warning >}}
+**DemoBench** is deprecated in Corda 4.6 and Corda Enterprise 4.6.
+{{< /warning >}}
 
 ### Using the Command-line Tool
 
@@ -406,5 +409,3 @@ that the DJVM also transforms some non-deterministic operations into `RuleViolat
 `check` therefore does *not* guarantee that the code will behave correctly at runtime.
 * `djvm inspect` which allows you to inspect what byte code modifications will be applied to a class.
 * `djvm show` which displays the transformed byte code of a class, *i.e.*, the end result and not the difference.
-
-
