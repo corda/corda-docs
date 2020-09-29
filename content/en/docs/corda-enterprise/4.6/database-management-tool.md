@@ -31,13 +31,13 @@ The database management tool is for production databases only. H2 databases cann
 * `--config-obfuscation-passphrase[=<cliPassphrase>]`: The passphrase used in the key derivation function when generating an AES key.
 * `--config-obfuscation-seed[=<cliSeed>]`: The seed used in the key derivation function to create a salt.
 * `-h, --help`: See a list of available commands and descriptions.
-* `-V, --version`: Print version information and exit.
+* `-V, --version`: Print version information.
 
 ## Commands:
 
 * `dry-run` Output the database migration to the specified output file.
 * `execute-migration` Run the database migration on the configured database.
-* `sync-app-schemas` Update the migration change log for all available CorDapps. When the tool runs with this sub-command against a node, the node will add entries to the Liquibase changelog for any CorDapp custom schema migrations that are available in the cordapps node folder and are not already 
+* `sync-app-schemas` Update the migration change log for all available CorDapps. When the tool runs with this sub-command against a node, the node will add entries to the Liquibase changelog for any CorDapp custom schema migrations that are available in the cordapps node folder and are not already
 present in the change log.
 * `create-migration-sql-for-cordapp` Create migration files for a CorDapp.
 * `release-lock` Releases whatever locks are on the database change log table, in case shutdown failed.
@@ -77,7 +77,7 @@ Additional options:
 * `--core-schemas`: Output DB-specific DDL to apply the core node schema migrations.
 * `--app-schemas`: Output DB-specific DDL to apply the migrations for custom CorDapp schemas.
 * `--help`, `-h`: See a list of available commands and descriptions.
-* `--version`, `-V`: Print version information and exit.
+* `--version`, `-V`: Print version information.
 
 
 ## Executing SQL migration scripts
@@ -106,7 +106,7 @@ database-manager execute-migration [-hvV] [--doorman-jar-path=<doormanJarPath>]
   * `dbAdminUser`.
   * `dbAdminPassword`.
 * `--help`, `-h`: See a list of available commands and descriptions.
-* `--version`, `-V`: Print version information and exit.
+* `--version`, `-V`: Print version information.
 
 
 ## Releasing database locks
@@ -132,8 +132,8 @@ Additional options:
 * `--doorman-jar-path=<doormanJarPath>`: The path to the doorman JAR.
 * `--verbose`, `--log-to-console`, `-v`: If set, prints logging to the console as well as to a file.
 * `--logging-level=<loggingLevel>`: Enable logging at this level and higher. Possible values: ERROR, WARN, INFO, DEBUG, TRACE. Default: INFO.
-* `--help`, `-h`: Show this help message and exit.
-* `--version`, `-V`: Print version information and exit.
+* `--help`, `-h`: See a list of available commands and descriptions.
+* `--version`, `-V`: Print version information.
 
 
 ## Database Manager shell extensions
