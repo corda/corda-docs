@@ -30,6 +30,4 @@ title: Networks
 * [Using the Node Explorer to test a Corda node on Corda Testnet](testnet-explorer-corda.md)
 * [Setting up a dynamic compatibility zone](setting-up-a-dynamic-compatibility-zone.md)
 * [Setting up a notary service](running-a-notary.md)
-
-
-
+* [Managing membership of a business network](business-network-membership.md)
