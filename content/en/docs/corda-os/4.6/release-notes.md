@@ -255,7 +255,6 @@ The `initial-registration` command is described in [Node command-line options](n
 * We have fixed an issue where the `ExceptionsErrorCodeFunctionsTest` failed due to timeout [[CORDA-3944](https://r3-cev.atlassian.net/browse/CORDA-3944)].
 * We have fixed an issue where the expected `error_code="5"` error was missing in logs run with custom CorDapps without the Liquibase schema.
 * We have fixed an issue with inconsistent behaviour between killed client ID flows and flows with other statuses.
-* We have fixed an issue where IVNO CorDapps that were working on Corda 4.3 were not registered when Corda was upgraded to version 4.5.
 * The path for network parameters is now configurable and the network parameters file is stored in the location specified by the node configuration.
 * We have fixed an issue where logging was detecting but not printing an issue with certificates [[CORDA-4036](https://r3-cev.atlassian.net/browse/CORDA-4036)].
 * We have fixed an issue where the end session message did not hang when a flow flakey test was received [[CORDA-4026](https://r3-cev.atlassian.net/browse/CORDA-4026)].
