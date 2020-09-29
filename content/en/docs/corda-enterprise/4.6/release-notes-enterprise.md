@@ -128,7 +128,8 @@ The notaries list can now be hotloaded. For more information see [Hotloading](ne
 
 ### LedgerGraph available as a stand-alone CorDapp
 
-LedgerGraph enables other CorDapps, such as the set of [Collaborative Recover CorDapps](node/collaborative-recovery/introduction-cr.md), to have near real-time access to data concerning all of a node’s transactions and their relationships. LedgerGraph has been in use in some solutions already, but is now available as a CorDapp in its own right.
+LedgerGraph enables other CorDapps, such as the set of [Collaborative Recover CorDapps](node/collaborative-recovery/introduction-cr.md), to have near real-time access to data concerning all of a node’s transactions and their relationships. This is achieved by exposing transaction statistics via JMX/RPC. 
+LedgerGraph has been in use in some solutions already, but is now available as a CorDapp in its own right, so you can make use of these transaction statistics.
 
 ### Collaborative Recovery upgraded to V1.1
 
