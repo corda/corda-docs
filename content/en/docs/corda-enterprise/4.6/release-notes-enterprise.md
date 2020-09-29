@@ -26,9 +26,9 @@ The new flow management features and improvements introduced in Corda Enterprise
 
 * Ability to [query flow data](#ability-to-query-flow-data-via-rpc-and-via-the-node-shell) via RPC and via the node shell.
 
-  Corda Enterprise 4.6 introduces the ability to query flow checkpoint data. This helps node operators manage the set of flows currently in execution on their node, by giving operators the ability to a) identify one or more flows that did not complete as expected and b) retrieve status information relating to one or more flows.
+  This helps node operators manage the set of flows currently in execution on their node, by giving operators the ability to a) identify one or more flows that did not complete as expected and b) retrieve status information relating to one or more flows.
 
-* Ability to [pause and retry flows](#ability-to-pause-and-resume-flows) via RPC.
+* Ability to [pause and retry flows](#ability-to-pause-and-resume-flows) via RPC and the Shell.
 
   This release introduces a new set of RPC calls and node shell commands that allow node operators to set flow checkpoints to a “paused” state, effectively marking problematic flows as "do not restart" and preventing them from being retried automatically when the node is restarted. Node operators can retry all paused flows, or retry all paused flows that were previously hospitalised.
 
@@ -55,11 +55,11 @@ Watch this short video overview of the ability to prevent duplicate flow starts 
 **Operational improvements**
 
 * We have rationalised the way in which [database schema management](#database-schema-harmonisation) is performed across Corda open source and Corda Enterprise. This includes improvements to the [Database Management Tool](#database-management-tool-improvements).
-* [Docker images](#deployment-docker-images-for-corda-enterprise-firewall-and-all-corda-enterprise-setup-tools) for Corda Enterprise Firewall and all Corda Enterprise setup tools.
+* We now release [Docker images](#deployment-docker-images-for-corda-enterprise-firewall-and-all-corda-enterprise-setup-tools) for Corda Enterprise Firewall and all Corda Enterprise setup tools.
 * This release introduces a set of improvements to make the flow state machine more resilient.
-* Support for [storing node TLS keys in HSM](l#support-for-storing-node-tls-keys-in-hsm). A new optional `tlsCryptoServiceConfig` section was introduced inside `enterpriseConfiguration` in `node.conf`.
-* Node Maintenance Mode. This new feature enables you to [schedule maintenance windows](#node-maintenance-mode) for your nodes via the `maintenanceMode` configuration field within the `enterpriseConfiguration` [node configuration file](node/setup/corda-configuration-fields.html#enterpriseconfiguration) section.  
-* Ability to perform message ID cleanup less aggressively. Corda Enterprise now performs a [less aggressive and safer cleanup](#ability-to-perform-message-id-cleanup-less-aggressively) of the table that contains identifiers of previously processed messages.
+* We have added support for [storing node TLS keys in HSM](l#support-for-storing-node-tls-keys-in-hsm) even without running the Corda Firewall. A new optional `tlsCryptoServiceConfig` section was introduced inside `enterpriseConfiguration` in `node.conf`.
+* We have introduced Node Maintenance Mode, which enables you to [schedule maintenance windows](#node-maintenance-mode) for your nodes via the `maintenanceMode` configuration field within the `enterpriseConfiguration` [node configuration file](node/setup/corda-configuration-fields.html#enterpriseconfiguration) section.  
+* We have added the ability to perform message ID cleanup less aggressively. Corda Enterprise now performs a [less aggressive and safer cleanup](#ability-to-perform-message-id-cleanup-less-aggressively) of the table that contains identifiers of previously processed messages.
 
 Plus a lot more - please read these release notes carefully to understand what’s new in this release and how the new features and enhancements can help you.
 
