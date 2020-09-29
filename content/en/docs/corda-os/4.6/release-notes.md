@@ -25,7 +25,7 @@ This release introduces a number of new features and some major functional and o
 
 **Flow management features and improvements**.
 
-Corda 4.6 provides the ability to use a unique ID to prevent duplicate flow starts. This can be done using an RPC client and is an additional way to start flows by passing in a unique identifier when starting a flow. This allows you to:
+Corda 4.6 provides the ability to use a unique ID to [prevent duplicate flow starts](#ability-to-prevent-duplicate-flow-starts-and-retrieve-the-status-of-started-flows). This can be done using an RPC client and is an additional way to start flows by passing in a unique identifier when starting a flow. This allows you to:
   * Check that a flow started correctly (for example, if there was a disconnect event).
   * Prevent duplicate flow starts - if you try and start a flow twice with the same unique identifier, it will only fire once.
   * Recover the progress tracker for in-flight flows.
