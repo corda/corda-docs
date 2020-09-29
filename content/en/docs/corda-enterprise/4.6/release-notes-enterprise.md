@@ -115,7 +115,7 @@ Querying the node using either method enables node operators to:
 	* The flow is in a particular state.
 	* The flow did not proceed beyond a specific progress step.
 	* The flow remained stuck at a checkpoint for a particular length of time.
-* Retrieve status information for one or more suspended flows
+* Retrieve status information for one or more suspended flows.
 
 See the [Querying flow data](node/operating/querying-flow-data.md) documentation section for more information.
 
@@ -134,7 +134,7 @@ For more information, see [Pause and resume flows](flow-pause-and-resume.md).
 Corda’s RPC client now allows each flow to be started with a unique client-provided ID. Flows started in this manner have the following benefits:
 
 * If a flow is invoked multiple times with the same client ID, they will be considered duplicates. All subsequent invocations after the first will simply return the result of the first invocation.
-* A running flow can be reattached to using the client ID. This allows its flow handle to be recovered.
+* A running flow can be reattached using the client ID. This allows its flow handle to be recovered.
 * The result of a completed flow can still be viewed after the flow has completed, using the client ID.
 
 For more information, see [Starting a flow with a client-provided unique ID](flow-start-with-client-id.md).
@@ -174,7 +174,7 @@ Corda nodes have a set of core schema that is required for the node itself to wo
 
 Up to Corda 4.6, the node/schema migration would use the combination of both and run all the required schema creation/migration using hardcoded lists and heuristics to figure out which is which (as, for example, core and app schema have different requirements whether they can be run while checkpoints are present in the database).
 
-This has now changed - the `run-migration-scripts` sub-command takes two new parameters - `--core-schemas` and `--app-schemas`. At least one of these parameters must be present and will run the migration scripts for the respective requested schema set.
+This has now changed - the `run-migration-scripts` sub-command takes two new parameters: `--core-schemas` and `--app-schemas`. At least one of these parameters must be present and will run the migration scripts for the respective requested schema set.
 
 {{< note >}}
 Core schemas cannot be migrated while there are checkpoints.
@@ -187,13 +187,13 @@ App schemas can be forced to migrate with checkpoints present using the `--updat
 Automated tests (as in `MockNetwork`, `NodeBasedTest` and Node Driver tests) are able to set up the required schema
 automatically.
 
-* Mock Network. The `MockNode` overrides a field in `AbstractNode` that allows the node to run schema migration on the fly (which is **not** available via the command-line). It takes extra constructor parameters to control whether Liquibase will be run and whether hibernate can be used to create the app schema. Both default to `true` for compatibility with existing tests.
+* Mock Network. The `MockNode` overrides a field in `AbstractNode` that allows the node to run schema migration on the fly (which is **not** available via the command-line). It takes extra constructor parameters to control whether Liquibase will be run and whether Hibernate can be used to create the app schema. Both default to `true` for compatibility with existing tests.
 * Node Driver. In-process nodes use a similar mechanism to Mock Nodes. Out-of-process nodes using a persistent database need the database to be set up before they start (as does a real node). Therefore, `DriverDSL` will run a schema migration step before running the node in this case. Out-of-process nodes using an in-memory database are a particularly tricky case, as there is no persistent database that could be set up before the node starts. Therefore, the node itself can check for H2 in-memory JDBC URLs and will run any required migration if that is detected.
 * Node-based Tests use the same in-process node as does NodeDriver.
 
 **Bootstrapping**
 
-The network bootstrapper runs core schema migrations as part of the bootstrapping process.
+The Network Bootstrapper runs core schema migrations as part of the bootstrapping process.
 
 Cordformation has an extra parameter that can be added to the node section in the `build.gradle`, as follows:
 
@@ -206,7 +206,7 @@ This will run the full schema migration as the last step of the cordformation se
 **Configuration changes**
 
 The following fields have been removed from the database section in the node configuration file. These need to be removed from the node configuration as the node will throw an
-exception on startup if it finds any them:
+exception on startup if it finds any of them:
 
 * `transactionIsolationLevel`: this is now hard-coded in the node.
 * `initialiseSchema`: as above - schema initialisation cannot be run as part of node startup.
@@ -232,7 +232,7 @@ The changes are briefly described below.
 
 * A new `sync-app-schemas` command has been added. It updates the migration changelog for all available CorDapps.
 * The `dry-run` command has two new parameters: `--core-schemas` (the tool outputs DB-specific DDL to apply the core node schema migrations) and `--app-schemas` (the tool outputs DB-specific DDL to apply the migrations for custom CorDapp schemas).
-* The `execute-migration command` has three new parameters: `--core-schemas` (the tool will attempt to run the node Liquibase core schema migrations), `--app-schemas` (the tool will attempt to run Liquibase migrations for custom CorDapp schemas), and `--db-admin-config <path/to/adminconfigfile>` (this parameter specifies the location on disk of a config file holding elevated access credentials for the DB - the tool will use the credentials listed in the config file to connect to the node database an apply the changes).
+* The `execute-migration command` has three new parameters: `--core-schemas` (the tool will attempt to run the node Liquibase core schema migrations), `--app-schemas` (the tool will attempt to run Liquibase migrations for custom CorDapp schemas), and `--db-admin-config <path/to/adminconfigfile>` (this parameter specifies the location on disk of a config file holding elevated access credentials for the DB - the tool will use the credentials listed in the config file to connect to the node database and apply the changes).
 * Obfuscated passwords are now allowed. To enable the tool to de-obfuscate the obfuscated fields, the following command-line options are provided for setting the passphrase and seed if necessary: `--config-obfuscation-passphrase` and `--config-obfuscation-seed`.
 * Base directory, which defaults to the current working directory if not set.
 * Location of output file when `dry-run` is used. The output file will now be created relative to the current working directory rather than the base directory.
@@ -274,7 +274,7 @@ For more information, see [Hotloading](network/network-map.md#hotloading) in [Ne
 
 The node now supports storing its TLS keys in HSM even without running the Corda Enterprise Firewall. To this end, a new optional `tlsCryptoServiceConfig` section has been added to the `enterpriseConfiguration` configuration section in the [node configuration file](node/setup/corda-configuration-fields.md).
 
-To migrate from file-based node's TLS keystore to HSM, you need to add `tlsCryptoServiceConfig` section into `node.conf` and renew TLS certificate and keys, as described in the [Renewing TLS certificates](ha-utilities.md#renewing-tls-certificates) section in [HA utilities](ha-utilities.md).
+To migrate from file-based node's TLS keystore to HSM, you need to add `tlsCryptoServiceConfig` section into `node.conf` and renew TLS certificate and keys, as described in the [Renewing TLS certificates](ha-utilities.md#renewing-tls-certificates) section in [HA Utilities](ha-utilities.md).
 
 For more information, see [Storing node TLS keys in HSM](tls-keys-in-hsm.md).
 
@@ -347,18 +347,18 @@ The default value must **not** be changed unless explicitly advised by R3 suppor
 
 ### Deployment: Docker images for Corda Enterprise Firewall and all Corda Enterprise setup tools
 
-We now release Docker images for the Corda Enterprise Firewall (https://hub.docker.com/r/corda/enterprise-firewall), as well as for the required tools for Corda Enterprise setup (https://hub.docker.com/r/corda/enterprise-setup.
+We now release Docker images for the Corda Enterprise Firewall [https://hub.docker.com/r/corda/enterprise-firewall](https://hub.docker.com/r/corda/enterprise-firewall), as well as for the required tools for Corda Enterprise setup [https://hub.docker.com/r/corda/enterprise-setup](https://hub.docker.com/r/corda/enterprise-setup).
 
 Our Docker Hub organisation (https://hub.docker.com/u/corda) now contains all the Docker images required for a full production deployment of Corda Enterprise.
 
 ### Other changes
 
-* To reduce the risk of vulnerabilities, we have upgraded the Apache Zookeeper used by the Corda Enterprise [Firewall component](node/corda-firewall-component.md#prerequisites-4) from 3.5.4-Beta to 3.61. See [Apache ZooKeeper setup](operations/deployment/corda-firewall-configuration-file.md#apache-zookeeper-setup) for more information.
+* To reduce the risk of vulnerabilities, we have upgraded the Apache Zookeeper version used by the Corda Enterprise [Firewall component](node/corda-firewall-component.md#prerequisites-4) from 3.5.4-Beta to 3.61. See [Apache ZooKeeper setup](operations/deployment/corda-firewall-configuration-file.md#apache-zookeeper-setup) for more information.
 * We have upgraded `commons-beanutils` to version 1.9.4 for improved security.
 * As of Corda Enterprise 4.6, support for [DemoBench](demobench.md) is deprecated.
-* We have released a new minor version of [Accounts SDK](https://github.com/corda/accounts/blob/master/docs.md) - version 1.0.2. This version includes database improvements that make it compatible with Corda Enterprise 4.6. If you are planning to use the Accounts SDK with Corda Enterprise 4.6, you must use Accounts SDK V 1.0.1.
+* We have released a new minor version of [Accounts SDK](https://github.com/corda/accounts/blob/master/docs.md) - version 1.0.2. This version includes database improvements that make it compatible with Corda Enterprise 4.6. If you are planning to use the Accounts SDK with Corda Enterprise 4.6, you must use Accounts SDK V 1.0.2.
 * We have released a new minor version of [Tokens SDK](token-sdk-introduction.md) - version 1.2.1. This version includes database improvements that make it compatible with Corda Enterprise 4.6. If you are planning to use the Tokens SDK with Corda Enterprise 4.6, you must use Tokens SDK V 1.2.1.
-* When starting a new driver using the driver DSL, the notary node will start by default as a thread in the same JVM process that runs the driver regardless to the `startNodesInProcess` driver properties (and not as a new process if the `startNodesInProcess` is `false`). This setting can be overridden. Please note that if the test interacts with the notary and expects the notary to run as a new process, you must set `startInProcess` to `false`.
+* When starting a new driver using the driver DSL, the notary node will start by default as a thread in the same JVM process that runs the driver regardless of the `startNodesInProcess` driver properties (and not as a new process if the `startNodesInProcess` is `false`). This setting can be overridden. Please note that if the test interacts with the notary and expects the notary to run as a new process, you must set `startInProcess` to `false`.
 * In Corda Enterprise 4.6, if a CorDapp's `minimumPlatformVersion` is higher than the platform version of the node, the CorDapp is not loaded and the node fails to start. This is a change in behaviour compared to Corda Enterprise 4.5 where under these conditions the node would start up and log that the CorDapp could not be loaded. See [Versioning](cordapps/versioning.md) for more information.
 
 ## Platform version change
@@ -427,7 +427,7 @@ The `initial-registration` command is described in [Node command-line options](n
 * We have fixed an issue where the HA Utilities did not log information about the used `tlsCryptoServiceConfig` configuration.
 * We have fixed an issue where months and years were not supported values in `rpcAuditDataRetentionPeriod`.
 * We have fixed an issue where a node failed to shut down when the `senderRetentionPeriodInDays` was set to a negative integer.
-* We have fixed an issue where IVNO CorDapps that were working on Corda 4.3 were not registered when Corda was upgraded to version 4.5.
+* We have fixed an issue where CorDapps that were working on Corda 4.3 were not registered when Corda was upgraded to version 4.5.
 * We have fixed an issue where the configuration file path for TLS crypto was resolved incorrectly, leading to an error when registering the node.
 * The Corda Health Survey Tool now displays a warning message when network information is resolved and an HTTP redirect occurs.
 * We have fixed an issue where an error occurred on node shutdown with the message: `The configuration values provided for message cleanup are invalid`.
@@ -464,7 +464,7 @@ The `initial-registration` command is described in [Node command-line options](n
 * Filtering flows by `FlowStart` using the constants `Instant.MAX` and `Instant.MIN` returns an exception.
 * The SSH Client returns inconsistent exit codes after `gracefulShutdown` is run, indicating that an error has occurred.
 * The Docker node does not generate configuration and certificates against Testnet.
-* The node rejects the incoming P2P connection from a node with a revoked certificate, with warnings and errors, but does not block any attempts to re-establish it. This leads to a quick accumulation of warnings and errors in the node log.
+* The node rejects the incoming P2P connection from a node with a revoked certificate, with warnings and errors, but does not block any attempts to re-establish it. This leads to a quick accumulation of warnings and errors in the node log files.
 * The error text is repeated in the console when trying to register a node with forbidden characters in the Organisation (`O`) name.
 * The ``<install-shell-extensions>`` sub-command of Corda node creates log files in the home folder, while all other sub-commands create log files the `logs` subfolder.
 * If a notary registration fails when using HA Utilities, a dummy notary keystore file is created. If users are unaware that this keystore file has been created, it causes issues when they attempt to register the notary again.
