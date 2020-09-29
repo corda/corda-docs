@@ -23,6 +23,22 @@ Welcome to the Corda 4.6 release notes.
 
 This release introduces a number of new features and some major functional and operational improvements, and fixes a range of issues in the following major areas:
 
+**Business Network Membership improvements**.
+
+Corda 4.6 adds support for Business Network membership representation. In the short video overview below we are introducing a new core concept in Corda and tooling to model membership lists in Corda and represent natively business networks:
+
+{{< youtube WTh3IXlwncU >}}
+
+**Database harmonisation**
+
+We have rationalised the way in which database schema management is performed across Corda open source and Corda Enterprise.
+
+* We have moved all schema management options from node configuration files to start-up sub-commands (in order to reduce misconfigurations and make changing options a less onerous process).
+* We have removed the ability to create/upgrade the database schema as part of running a node, by introducing a schema creation/migration sub-command that needs to be run as part of a node installation/upgrade.
+* We have harmonised the configuration, set-up, and behaviour of databases between Corda and Corda Enterprise.
+* We have removed automatic schema migration for updating from Corda versions prior to 4.0.
+* We have added support in Corda open source for packaging custom CorDapp schemas into Liquibase migrations through introducing Liquibase schema migration/description scripts for CorDapps.
+
 **Flow management features and improvements**.
 
 Corda 4.6 provides the ability to use a unique ID to [prevent duplicate flow starts](#ability-to-prevent-duplicate-flow-starts-and-retrieve-the-status-of-started-flows). This can be done using an RPC client and is an additional way to start flows by passing in a unique identifier when starting a flow. This allows you to:
@@ -35,12 +51,6 @@ Watch the short video overview of this feature:
 
 {{< youtube nn0sP5HDiG0 >}}
 
-**Business Network Membership improvements**.
-
-Corda 4.6 adds support for Business Network membership representation. In the short video overview below we are introducing a new core concept in Corda and tooling to model membership lists in Corda and represent natively business networks:
-
-{{< youtube WTh3IXlwncU >}}
-
 **Developer experience features and improvements.**
 
 We are focused on improving the overall developer experience to ensure Corda maintains its status as an easy to use platform for developers. In this release we have a number of improvements that will help developers build more resilient applications.
@@ -51,7 +61,6 @@ We are focused on improving the overall developer experience to ensure Corda mai
 **Operational improvements**
 
 * Corda 4.6 introduces a set of improvements to make the flow state machine more resilient.
-* We have rationalised the way in which database schema management is performed across Corda open source and Corda Enterprise.
 * New flow session close API adds [support](#new-flow-session-close-api) for eager termination of flow sessions and release of their resources.
 
 Plus a lot more - please read these release notes carefully to understand what’s new in this release and how the new features and enhancements can help you.
@@ -75,10 +84,10 @@ With this extension, you can use a set of workflows to add members to the networ
 As part of this release, we have rationalised the way in which database schema management is performed across Corda open source and Corda Enterprise.
 
 * We have moved all schema management options from node configuration files to start-up sub-commands (in order to reduce misconfigurations and make changing options a less onerous process).
-  * We have removed the ability to create/upgrade the database schema as part of running a node, by introducing a schema creation/migration sub-command that needs to be run as part of a node installation/upgrade.
-  * We have harmonised the configuration, set-up, and behaviour of databases between Corda and Corda Enterprise.
-  * We have removed automatic schema migration for updating from Corda versions prior to 4.0.
-* Added support in Corda open source for packaging custom CorDapp schemas into Liquibase migrations through introducing Liquibase schema migration/description scripts for CorDapps.
+* We have removed the ability to create/upgrade the database schema as part of running a node, by introducing a schema creation/migration sub-command that needs to be run as part of a node installation/upgrade.
+* We have harmonised the configuration, set-up, and behaviour of databases between Corda and Corda Enterprise.
+* We have removed automatic schema migration for updating from Corda versions prior to 4.0.
+* We have added support in Corda open source for packaging custom CorDapp schemas into Liquibase migrations through introducing Liquibase schema migration/description scripts for CorDapps.
 
 {{< warning >}}
 Schema migration/creation has been decoupled from the normal node run mode and needs to be done using a separate
