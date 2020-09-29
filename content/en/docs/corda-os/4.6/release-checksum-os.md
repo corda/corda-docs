@@ -1,11 +1,11 @@
 ---
 title: Release files and checksums
-date: '2020-09-29T16:59:11Z'
+date: '2020-09-28T16:59:11Z'
 menu:
   corda-os-4-6:
     identifier: corda-os-4-6-release-checksum-os
     parent: corda-os-4-6-release-notes
-    weight: 460
+    weight: 440
 ---
 
 # Corda Open Source (OS) 4.6 release files and checksums
