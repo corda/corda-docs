@@ -46,7 +46,7 @@ Corda 4.6 adds support for Business Network membership representation. In the sh
 We are focused on improving the overall developer experience to ensure Corda maintains its status as an easy to use platform for developers. In this release we have a number of improvements that will help developers build more resilient applications.
 
 * [Automatic detection of unrestorable checkpoints](#automatic-detection-of-unrestorable-checkpoints). During development, flows are now automatically serialized then deserialized whenever they reach a checkpoint. This enables automatic detection of flow code that creates checkpoints that cannot be deserialized.
-* Register custom pluggable serializers for CorDapp checkpoints. Custom serializers can now be used when serializing types as part of a flow framework checkpoint. Most classes will not need a custom serializer. This exists for classes that throw exceptions during checkpoint serialization. Implement the new CheckpointCustomSerializer interface to create a custom checkpoint serializer.
+* Register [custom pluggable serializers](#ability-to-register-custom-pluggable-serializers-for-cordapp-checkpoints) for CorDapp checkpoints. Custom serializers can now be used when serializing types as part of a flow framework checkpoint. Most classes will not need a custom serializer. This exists for classes that throw exceptions during checkpoint serialization. Implement the new CheckpointCustomSerializer interface to create a custom checkpoint serializer.
 
 **Operational improvements**
 
