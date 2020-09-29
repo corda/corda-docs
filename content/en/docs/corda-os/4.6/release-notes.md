@@ -35,7 +35,7 @@ Watch the short video overview of this feature:
 
 {{< youtube nn0sP5HDiG0 >}}
 
-**Membership and network improvements**.
+**Business Network Membership improvements**.
 
 Corda 4.6 adds support for Business Network membership representation. In the short video overview below we are introducing a new core concept in Corda and tooling to model membership lists in Corda and represent natively business networks:
 
