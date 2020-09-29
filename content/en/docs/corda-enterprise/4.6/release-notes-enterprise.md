@@ -18,13 +18,7 @@ weight: 1
 
 ## Corda Enterprise 4.6 release overview
 
-This release extends the [Corda Enterprise 4.5 release](../4.5/release-notes-enterprise.md) with further performance, resilience, and operational improvements.
-
-Corda Enterprise 4.6 supports Linux for production deployments, with Windows and macOS support for development and demonstration purposes only. See the Corda Enterprise [platform support matrix](platform-support-matrix.md) for more information.
-
-Corda Enterprise 4.6 is operationally compatible with Corda (open source) 4.x and 3.x, and Corda Enterprise 4.5, 4.4, 4.3, 4.2, 4.1, 4.0, and 3.x. See the [Corda (open source) release notes](../../corda-os/4.6/release-notes.md) for more information.
-
-This release introduces a number of new features and some major functional and operational improvements, and fixes a range of issues in the following major areas:
+This release introduces a number of new features, major functional and operational improvements, and fixes for a range of known issues in the following major areas:
 
 **Flow management features and improvements**.
 
@@ -68,6 +62,10 @@ Watch this short video overview of the ability to prevent duplicate flow starts 
 * Ability to perform message ID cleanup less aggressively. Corda Enterprise now performs a [less aggressive and safer cleanup](#ability-to-perform-message-id-cleanup-less-aggressively) of the table that contains identifiers of previously processed messages.
 
 Plus a lot more - please read these release notes carefully to understand what’s new in this release and how the new features and enhancements can help you.
+
+Corda Enterprise 4.6 supports Linux for production deployments, with Windows and macOS support for development and demonstration purposes only. See the Corda Enterprise [platform support matrix](platform-support-matrix.md) for more information.
+
+Corda Enterprise 4.6 extends the [Corda Enterprise 4.5 release](../4.5/release-notes-enterprise.md) and is operationally compatible with Corda (open source) 4.x and 3.x, and Corda Enterprise 4.5, 4.4, 4.3, 4.2, 4.1, 4.0, and 3.x. See the [Corda (open source) release notes](../../corda-os/4.6/release-notes.md) for more information.
 
 {{< note >}}
 Just as prior releases have brought with them commitments to wire and API stability, Corda 4.6 comes with those same guarantees.
