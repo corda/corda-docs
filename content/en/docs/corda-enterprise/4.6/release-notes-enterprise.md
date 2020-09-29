@@ -64,6 +64,8 @@ Watch this short video overview of the ability to prevent duplicate flow starts 
 * [Docker images](#deployment-docker-images-for-corda-enterprise-firewall-and-all-corda-enterprise-setup-tools) for Corda Enterprise Firewall and all Corda Enterprise setup tools.
 * This release introduces a set of improvements to make the flow state machine more resilient.
 * Support for [storing node TLS keys in HSM](l#support-for-storing-node-tls-keys-in-hsm). A new optional `tlsCryptoServiceConfig` section was introduced inside `enterpriseConfiguration` in `node.conf`.
+* Node Maintenance Mode. This new feature enables you to [schedule maintenance windows](#node-maintenance-mode) for your nodes via the `maintenanceMode` configuration field within the `enterpriseConfiguration` [node configuration file](node/setup/corda-configuration-fields.html#enterpriseconfiguration) section.  
+* Ability to perform message ID cleanup less aggressively. Corda Enterprise now performs a [less aggressive and safer cleanup](#ability-to-perform-message-id-cleanup-less-aggressively) of the table that contains identifiers of previously processed messages.
 
 Plus a lot more - please read these release notes carefully to understand what’s new in this release and how the new features and enhancements can help you.
 
@@ -313,6 +315,12 @@ Maintenance windows can be scheduled through a node’s [configuration file](nod
 A descriptive log entry is emitted whenever a node triggers or completes a maintenance window.
 
 For more information, see [Node Maintenance Mode](node/operating/maintenance-mode.md).
+
+### Ability to perform message ID cleanup less aggressively
+
+Corda Enterprise now performs a less aggressive and safer cleanup of the table that contains identifiers of previously processed messages.
+
+You can also adjust some parameters that control the frequency of this cleanup mechanism. To do so, use the `processedMessageCleanup` field in the `enterpriseConfiguration` section of the [node configuration file](node/setup/corda-configuration-fields.html#enterpriseconfiguration).
 
 ### Configuration option for the attachments class loader cache size
 
