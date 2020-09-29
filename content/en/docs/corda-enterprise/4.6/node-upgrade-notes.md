@@ -9,11 +9,11 @@ tags:
 - node
 - upgrade
 - notes
-title: Upgrading your node to Corda 4
+title: Upgrading your node to Corda 4.6
 ---
 
 
-# Upgrading your node to Corda 4
+# Upgrading your node to Corda 4.6
 
 Corda releases strive to be backwards compatible, so upgrading a node is fairly straightforward and should not require changes to
 applications. It consists of the following steps:
@@ -26,8 +26,13 @@ applications. It consists of the following steps:
 * Start up the node. (This step may incur a delay while any necessary database migrations are applied.)
 * Undrain the node. (This step re-enables processing of new inbound flows.)
 
-Note: The protocol is designed to tolerate node outages. During the upgrade process, peers on the network will wait for your node to come back.
+{{< note >}}
+The protocol is designed to tolerate node outages. During the upgrade process, peers on the network will wait for your node to come back.
+{{< /note >}}
 
+{{< note >}}
+To update from Corda 3.x to 4.6, you must first upgrade to 4.x, and then upgrade to 4.6. We recommend you upgrade to 4.5 and then to 4.6.
+{{< /note >}}
 
 ## Step 1. Drain the node
 
@@ -65,9 +70,6 @@ For a detailed explanation of Corda backup and recovery guarantees, see [Backup 
 
 This step should be performed for production systems.
 
-If you are updating a Corda node that is currently using the default H2 database (which should be used for development purposes),
-then skip this step. In this situation, a Corda node will auto-update its database on startup.
-
 You can also skip the manual database update and allow a Corda node to auto-update its database on startup when:
 
 
@@ -76,15 +78,13 @@ You can also skip the manual database update and allow a Corda node to auto-upda
 * you are upgrading a production system, however your policy allows a Corda node to auto-update its database
 and a Corda node connects with *administrative permissions*
 
-In both cases ensure that a node configuration `node.conf` file contains:
+In both cases, start the node with the `run-migration-scripts` sub-command with `--core-schemas` and --app-schemas`.
 
-```groovy
-database = {
-    runMigration = true
-    #other properties
-}
+```bash
+java -jar corda.jar run-migration-scripts --core-schemas --app-schemas
 ```
 
+The node will perform any automatic data migrations required, which may take some time. If the migration process is interrupted it can be continued simply by starting the node again, without harm. The node will stop automatically when migration is complete.
 
 ### 3.1. Configure the Database Management Tool
 
@@ -113,7 +113,6 @@ dataSourceProperties = {
     dataSource.password = <password>
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = <schema>
 }
 myLegalName = <node_legal_name>
@@ -144,7 +143,6 @@ dataSourceProperties = {
     dataSource.password = <password>
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = <schema>
 }
 myLegalName = <node_legal_name>
@@ -173,7 +171,6 @@ dataSourceProperties = {
     dataSource.password = <password>
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = <schema>
 }
 myLegalName = <node_legal_name>
@@ -200,7 +197,6 @@ dataSourceProperties = {
     dataSource.password = <password>
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = <schema>
 }
 myLegalName = <node_legal_name>
@@ -221,14 +217,16 @@ Copy the PostgreSQL JDBC Driver *42.2.8* version *JDBC 4.2* into the `drivers` d
 To run the tool, use the following command:
 
 ```shell
-java -jar tools-database-manager-|release|.jar dry-run -b path_to_configuration_directory
+java -jar tools-database-manager-|release|.jar dry-run -b path_to_configuration_directory --core-schemas --app-schemas
 ```
 
 The option `-b` points to the base directory (which contains a `node.conf` file, and *drivers* and *cordapps* subdirectories).
 
-A script named *migration/*.sql* will be generated in the base directory.
+`--core-schemas` is required to adopt the changes made in the new version of Corda, and `--app-schemas` is related to the CorDapps changes.
+
+A script named `migrationYYYYMMDDHHMMSS.sql` will be generated in the current directory.
 This script will contain all the statements required to modify and create data structures (e.g. tables/indexes),
-and inserts the Liquibase management table *DATABASECHANGELOG*.
+and updates the Liquibase management table *DATABASECHANGELOG*.
 The command doesn’t alter any tables itself.
 For descriptions of the options, refer to the [Corda Database Management Tool](node/operating/node-database.md#database-management-tool-ref) manual.
 
@@ -288,16 +286,16 @@ The value of `myLegalName` must exactly match the node name that is used in the 
 * change the database user to one with *restricted permissions*. This ensures no database alteration is performed by this step.To run the remaining data migration, run:
 
 ```shell
-java -jar tools-database-manager-4.0-RC03.jar execute-migration -b .
+java -jar tools-database-manager-4.0-RC03.jar execute-migration -b . --core-schemas --app-schemas
 ```
 
 
 
 
->
+
 The option `-b` points to the base directory (with a `node.conf` file, and *drivers* and *cordapps* subdirectories).
 
-
+`--core-schemas` is required to adopt the changes made in the new version of Corda, and `--app-schemas` is related to the CorDapps changes.
 
 
 ## Step 4. Replace `corda.jar` with the new version
@@ -316,10 +314,9 @@ Corda 4 requires Java 8u171 or any higher Java 8 patchlevel. Java 9+ is not curr
 {{< /important >}}
 
 
-## Step 5. Start up the node
+## Step 5. Start the node in the normal way
 
-Start the node in the usual manner you have selected. The node will perform any automatic data migrations required, which may take some
-time. If the migration process is interrupted, it can be continued without harm simply by starting the node again.
+Start the node in the normal way.
 
 
 ## Step 6. Undrain the node

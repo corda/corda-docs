@@ -15,6 +15,10 @@ weight: 9
 
 # Upgrading the notary to a new version of Corda Enterprise
 
+## Version 4.6
+
+No additional steps are needed to upgrade from version 4.5 to 4.6.
+
 ## Version 4.5
 
 We've introduced the `notary_double_spends` table and added an index to the `notary_request_log` table. The `notary_double_spend` table contains information about attempted double-spend transactions.
