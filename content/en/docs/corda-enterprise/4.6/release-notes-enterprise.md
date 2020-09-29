@@ -151,7 +151,7 @@ We have added a way for Corda Enterprise node operators to schedule maintenance 
 * Clear the RPC audit table.
 * Clean up the message ID table.
 
-Maintenance windows can be scheduled through a node’s [configuration file](node/setup/corda-configuration-file.md).
+Maintenance windows can be scheduled through a node’s [configuration file](node/setup/corda-configuration-file.md) using the new, optional `maintenanceMode` configuration field within the `enterpriseConfiguration` top-level [configuration section](../node/setup/corda-configuration-fields.md#enterpriseconfiguration).
 
 A descriptive log entry is emitted whenever a node triggers or completes a maintenance window.
 
