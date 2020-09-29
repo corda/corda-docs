@@ -104,12 +104,15 @@ This feature can and should be disabled in the node configuration when in produc
 
 For more information, see [Automatic detection of unrestorable checkpoints](checkpoint-tooling.md#automatic-detection-of-unrestorable-checkpoints).
 
+### Ability to pause and resume flows
 
+We have added a new set of RPC calls and node shell commands that allow node operators to set flow checkpoints to a “paused” state, effectively marking problematic flows as "do not restart" and preventing them from being retried automatically when the node is restarted.
 
+Paused checkpoints will not be loaded in memory on node restart. This helps node operators to manage memory usage - if too many checkpoints are loaded at the same time, the node might crash and it might be impossible to perform a successful restart.
 
+Node operators can retry all paused flows, or retry all paused flows that were previously hospitalised. Hospitalised flows can be retried via RPC, thus eliminating the need to restart the node to trigger retries.
 
-
-
+For more information, see [Pause and resume flows](flow-pause-and-resume.md).
 
 ### Host to Container SSH port mapping for Dockerform
 
