@@ -209,7 +209,7 @@ subFlow(ModifyRolesFlow(membershipId, roles, notary))
 To manage the membership lists or groups, one of the authorised members of the network can use `CreateGroupFlow`, `DeleteGroupFlow` and `ModifyGroupFlow`.
 
 {{< note >}}
-when modifying a group, you must ensure that any member who is removed from the group is still part of at least one Business Network Group, otherwise they will no longer be discoverable.
+When modifying a group, you must ensure that any member who is removed from the group is still part of at least one Business Network Group, otherwise they will no longer be discoverable.
 {{< /note >}}
 ### Create a group
 
