@@ -52,6 +52,7 @@ We are focused on improving the overall developer experience to ensure Corda mai
 
 * Corda 4.6 introduces a set of improvements to make the flow state machine more resilient.
 * We have rationalised the way in which database schema management is performed across Corda open source and Corda Enterprise.
+* New flow session close API adds [support](#new-flow-session-close-api) for eager termination of flow sessions and release of their resources.
 
 Plus a lot more - please read these release notes carefully to understand what’s new in this release and how the new features and enhancements can help you.
 
@@ -158,6 +159,12 @@ Corda’s RPC client now allows each flow to be started with a unique client-pro
 * The result of a completed flow can still be viewed after the flow has completed, using the client ID.
 
 For more information, see [Starting a flow with a client-provided unique ID](flow-start-with-client-id.md).
+
+#### New flow session close API
+
+Corda 4.6 introduces a new flow session close API, which provides support for eager termination of flow sessions and release of their resources.
+
+For more information, see [API: Flows](api-flows.md).
 
 #### Hotloading of notaries list
 
