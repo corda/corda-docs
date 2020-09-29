@@ -30,7 +30,7 @@ The database management tool is for production databases only. H2 databases cann
     * Default: `INFO`.
 * `--config-obfuscation-passphrase[=<cliPassphrase>]`: The passphrase used in the key derivation function when generating an AES key.
 * `--config-obfuscation-seed[=<cliSeed>]`: The seed used in the key derivation function to create a salt.
-* `-h, --help`: Show this help message and exit.
+* `-h, --help`: See a list of available commands and descriptions.
 * `-V, --version`: Print version information and exit.
 
 ## Commands:
@@ -76,7 +76,7 @@ Additional options:
 * `--logging-level=<loggingLevel>`: Enable logging at this level and higher. Possible values: ERROR, WARN, INFO, DEBUG, TRACE. Default: INFO.
 * `--core-schemas`: Output DB-specific DDL to apply the core node schema migrations.
 * `--app-schemas`: Output DB-specific DDL to apply the migrations for custom CorDapp schemas.
-* `--help`, `-h`: Show this help message and exit.
+* `--help`, `-h`: See a list of available commands and descriptions.
 * `--version`, `-V`: Print version information and exit.
 
 
@@ -105,7 +105,7 @@ database-manager execute-migration [-hvV] [--doorman-jar-path=<doormanJarPath>]
 * `--db-admin-config <path/to/adminconfigfile>`: Specify the location on disk of a configuration file holding elevated access credentials for the DB. The DB Management tool will use the credentials listed in the configuration file to connect to the node database and apply the changes. The configuration file supports the following fields:
   * `dbAdminUser`.
   * `dbAdminPassword`.
-* `--help`, `-h`: Show this help message and exit.
+* `--help`, `-h`: See a list of available commands and descriptions.
 * `--version`, `-V`: Print version information and exit.
 
 
