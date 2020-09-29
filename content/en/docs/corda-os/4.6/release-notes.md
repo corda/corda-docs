@@ -45,7 +45,7 @@ Corda 4.6 adds support for membership representation. In the short video overvie
 
 We are focused on improving the overall developer experience to ensure Corda maintains its status as an easy to use platform for developers. In this release we have a number of improvements that will help developers build more resilient applications.
 
-* Detection of un-restorable checkpoints. During development, flows are now automatically serialized then deserialized whenever they reach a checkpoint. This enables automatic detection of flow code that creates checkpoints that cannot be deserialized. This feature can, and should, be disabled in the node configuration when in production.
+* [Automatic detection of unrestorable checkpoints](#automatic-detection-of-unrestorable-checkpoints). During development, flows are now automatically serialized then deserialized whenever they reach a checkpoint. This enables automatic detection of flow code that creates checkpoints that cannot be deserialized.
 * Register custom pluggable serializers for CorDapp checkpoints. Custom serializers can now be used when serializing types as part of a flow framework checkpoint. Most classes will not need a custom serializer. This exists for classes that throw exceptions during checkpoint serialization. Implement the new CheckpointCustomSerializer interface to create a custom checkpoint serializer.
 
 **Operational improvements**
@@ -123,13 +123,22 @@ Note that this is an advanced feature, designed specifically for certain types t
 
 Custom checkpoint serializers are created by implementing the new `CheckpointCustomSerializer` interface.
 
-#### Automatic detection of un-restorable checkpoints
+#### Automatic detection of unrestorable checkpoints
 
-Flows are now automatically serialized then deserialized whenever they reach a checkpoint. This allows better detection of flow code that creates checkpoints that cannot be deserialized.
+Flows are now automatically serialized then deserialized whenever they reach a checkpoint. This allows better detection of flow code that creates checkpoints that cannot be deserialized, and enables developers and network operators to detect unrestorable checkpoints when developing CorDapps and thus reduces the risk of writing flows that cannot be retried gracefully.
+
+This feature addresses the following common problems faced by developers:
+
+* Creating objects or leveraging data structures that cannot be serialized/deserialized correctly by Kryo (the checkpoint serialization library Corda uses).
+* Writing flows that are not idempotent or do not deduplicate behaviour (such as calls to an external system).
+
+The feature provides a way for flows to reload from checkpoints, even if no errors occur. As a result, developers can be more confident that their flows would work correctly, without needing a way to inject recoverable errors throughout the flows.
 
 {{< note >}}
 This feature can and should be disabled in the node configuration when in production.
 {{< /note >}}
+
+For more information, see [Automatic detection of unrestorable checkpoints](checkpoint-tooling.md#automatic-detection-of-unrestorable-checkpoints).
 
 #### Ability to prevent duplicate flow starts and retrieve the status of started flows
 
