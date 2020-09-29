@@ -12,12 +12,6 @@ weight: 160
 
 # Node Explorer
 
-{{< note >}}
-
-This version of Node Explorer replaces and improves upon the retired **Corda Finance Node Explorer**.
-
-{{< /note >}}
-
 Node Explorer is a visual user interface (UI) that allows you to see your node on the network and perform regular tasks. You can view the contents of your node's vault and transaction history. This includes transactions performed both inside and outside of Node Explorer UI.
 
 Use Node Explorer to:
