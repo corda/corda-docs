@@ -71,6 +71,16 @@ When creating a Docker container, you can now map the SSH port on the host to th
 
 The notaries list can now be hotloaded. For more information see [Hotloading](network-map.md#hotloading) in [The network map](network-map.md).
 
+#### Ability to prevent duplicate flow starts and retrieve the status of started flows
+
+Corda’s RPC client now allows each flow to be started with a unique client-provided ID. Flows started in this manner have the following benefits:
+
+* If a flow is invoked multiple times with the same client ID, they will be considered duplicates. All subsequent invocations after the first will simply return the result of the first invocation.
+* A running flow can be reattached to using the client ID. This allows its flow handle to be recovered.
+* The result of a completed flow can still be viewed after the flow has completed, using the client ID.
+
+For more information, see [Starting a flow with a client-provided unique ID](flow-start-with-client-id.md).
+
 #### Business Network membership extension
 
 The [Business Network Membership](business-network-membership.md) extension for creating and managing business networks allows a you (a node operator) to define and create a logical network based on a set of common CorDapps as well as a shared business context. Corda nodes outside of your Business Network are not aware of its members.
@@ -101,16 +111,6 @@ This feature should not be used in production. It is disabled by default in the 
 {{< /note >}}
 
 For more information, see [Automatic detection of unrestorable checkpoints](checkpoint-tooling.md#automatic-detection-of-unrestorable-checkpoints).
-
-#### Ability to prevent duplicate flow starts and retrieve the status of started flows
-
-Corda’s RPC client now allows each flow to be started with a unique client-provided ID. Flows started in this manner have the following benefits:
-
-* If a flow is invoked multiple times with the same client ID, they will be considered duplicates. All subsequent invocations after the first will simply return the result of the first invocation.
-* A running flow can be reattached to using the client ID. This allows its flow handle to be recovered.
-* The result of a completed flow can still be viewed after the flow has completed, using the client ID.
-
-For more information, see [Starting a flow with a client-provided unique ID](flow-start-with-client-id.md).
 
 #### Database schema harmonisation
 
