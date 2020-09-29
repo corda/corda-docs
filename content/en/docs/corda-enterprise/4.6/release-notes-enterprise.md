@@ -144,6 +144,20 @@ The changes are briefly described below.
 
 For full details, see [Database Management Tool](database-management-tool.md).
 
+### Node Maintenance Mode
+
+We have added a way for Corda Enterprise node operators to schedule maintenance windows for their nodes. During a maintenance window, the node can be configured to:
+
+* Clear the RPC audit table.
+* Clean up the message ID table.
+
+Maintenance windows can be scheduled through a node’s [configuration file](node/setup/corda-configuration-file.md).
+
+A descriptive log entry is emitted whenever a node triggers or completes a maintenance window.
+
+For more information, see [Node Maintenance Mode](node/operating/maintenance-mode.md).
+
+
 ### Other changes
 
 * To reduce the risk of vulnerabilities, we have upgraded the Apache Zookeeper used by the Corda Enterprise [Firewall component](node/corda-firewall-component.md#prerequisites-4) from 3.5.4-Beta to 3.61. See [Apache ZooKeeper setup](operations/deployment/corda-firewall-configuration-file.md#apache-zookeeper-setup) for more information.
