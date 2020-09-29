@@ -285,6 +285,12 @@ The metrics exposed by LedgerGraph include:
 
 As LedgerGraph is now available as a stand alone CorDapp, the Collaborative Recovery CorDapps have been upgraded to reflect this change. In order [to use Collaborative Recovery V1.1](node/collaborative-recovery/introduction-cr.md) you must have a corresponding LedgerGraph CorDapp installed. If you use Confidential Identities with Collaborative Recovery, in V1.1 you must configure LedgerGraph to handle this. In V1.0, Confidential Identities configuration needed to be added to the **LedgerSync** CorDapp.
 
+### Improved CockroachDB performance
+
+A new configuration flag has been introduced, enabling native SQL for CockroachDB with multi-row insert statements.
+
+For more information, see [Node configuration reference](node/setup/corda-configuration-fields.md).
+
 ### Migrating Notary data to CockroachDB
 
 Notary data stored in a Percona database can now be migrated to Cockroach DB.
@@ -296,12 +302,6 @@ For more information, see [Upgrading a notary](notary/upgrading-a-notary.md).
 When registering a notary, the new field `notary.serviceLegalName` must be defined. This allows single-node notaries to be upgraded to HA notaries.
 
 For more information, see [Running a notary](notary/running-a-notary.md).
-
-### Improved CockroachDB performance
-
-A new configuration flag has been introduced, enabling native SQL for CockroachDB with multi-row insert statements.
-
-For more information, see [Node configuration reference](node/setup/corda-configuration-fields.md).
 
 ### Standalone JPA notary optimisation
 
