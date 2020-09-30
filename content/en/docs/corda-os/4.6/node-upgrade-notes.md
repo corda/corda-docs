@@ -78,7 +78,7 @@ Corda 4 requires Java 8u171 or any higher Java 8 patchlevel. Java 9+ is not curr
 
 ## Step 5. Update configuration
 
-Remove any `transactionIsolationLevel`, `initialiseSchema`, or `initialiseAppSchema` entries from the database section of your configuration
+Remove any `transactionIsolationLevel`, `initialiseSchema`, or `initialiseAppSchema` entries from the database section of your configuration.
 
 ## Step 6. Start the node with `run-migration-scripts` sub-command
 
