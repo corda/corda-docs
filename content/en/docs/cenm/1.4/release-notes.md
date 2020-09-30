@@ -160,7 +160,7 @@ with multiple accounts for each task The Signing Service now prompts a specific 
 * There are currently two different logs that services write error codes to (`DUMP` and `OPS`), with some services writing to both.
 * The `config-parsing-and-validation-error` code cannot be triggered and appears as `config-parse-error`.
 * On execution of `submitCertificateRevocationRequestWithLegalName` when the Identity Manager Service configuration does not have a `REVOCATION` workflow, the Admin RPC client does not throw exceptions as expected and returns empty responses instead. It should throw two `RpcServerException` exceptions with `IDENTITY_MANAGER_INVALID_REVOCATION_REASON` and `IDENTITY_MANAGER_CERTIFICATE_NOT_FOUND` codes or an exception noting that the `REVOCATION` workflow is not set up.
-*  The `config-file-doesnt-exist` error code does not appear when the Signing Service is started with a non-existing configuration file. No error code or link to relevant documentation appears in the console or logs.
+*  Error codes are not yet thrown consistently in logs or console across all services.
 * When multiple CRR requests are submitted, the certificates are not updated correctly from `VALID` to `REVOKED`. This issue does not affect the CRL.
 * Information about the running version of CENM components is missing from the logs.
 * When a Signing Service is started with an incomplete or incorrect configuration, a stack trace occurs. This should be handled as an exception.
