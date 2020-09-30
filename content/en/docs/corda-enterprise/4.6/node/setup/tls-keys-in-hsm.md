@@ -47,16 +47,7 @@ The HA Utilities tool produces the following files:
 
 ### Storing TLS certificates in HSM
 
-A file-based keystore is still required to store TLS certificates, even if corresponding TLS keys are stored in CryptoService.
-
-{{< table >}}
-
-| CryptoService config       | Certificate store|
-|:---------------------------|:----------------|
-| tlsCryptoServiceConfig     | sslkeystore.jks|
-| artemisCryptoServiceConfig | as configured by `messagingServerSslConfiguration.sslKeystore`|
-
-{{< /table >}}
+A file-based `sslkeystore.jks` is still required to store TLS certificates, even if corresponding TLS keys are stored in CryptoService.
 
 ## Configuration example
 
