@@ -321,6 +321,15 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['jar']) {
     includeWhitelist = [ "net.corda.finance.contracts.asset.Cash", "net.corda.finance.contracts.asset.CommercialPaper" ]
     //...
 ```
+#### Optional migration step
+
+If you are migrating your database schema from an older Corda version to Corda 4.6, you must add the following parameter to the node section in the `build.gradle` and set it to `true`, as follows:
+
+```
+        runSchemaMigration = true
+```
+
+This step runs the full schema migration process as the last step of the Cordform task, and leave the nodes ready to run.
 
 #### Run the Cordform task
 

@@ -321,6 +321,16 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['jar']) {
     //...
 ```
 
+#### Optional migration step
+
+If you are migrating your database schema from an older Corda version to Corda 4.6, you must add the following parameter to the node section in the `build.gradle` and set it to `true`, as follows:
+
+```
+        runSchemaMigration = true
+```
+
+This step runs the full schema migration process as the last step of the Cordform task, and leave the nodes ready to run.
+
 #### Run the Cordform task
 
 To create the nodes defined in the `deployNodes` task example above, run the following command in a command prompt or a terminal window, from the root of the project where the `deployNodes` task is defined:
