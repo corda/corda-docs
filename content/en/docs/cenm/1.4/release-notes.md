@@ -162,7 +162,6 @@ with multiple accounts for each task The Signing Service now prompts a specific 
 * On execution of `submitCertificateRevocationRequestWithLegalName` when the Identity Manager Service configuration does not have a `REVOCATION` workflow, the Admin RPC client does not throw exceptions as expected and returns empty responses instead. It should throw two `RpcServerException` exceptions with `IDENTITY_MANAGER_INVALID_REVOCATION_REASON` and `IDENTITY_MANAGER_CERTIFICATE_NOT_FOUND` codes or an exception noting that the `REVOCATION` workflow is not set up.
 *  Error codes are not yet thrown consistently in logs or console across all services.
 * When multiple CRR requests are submitted, the certificates are not updated correctly from `VALID` to `REVOKED`. This issue does not affect the CRL.
-* When a Signing Service is started with an incomplete or incorrect configuration, a stack trace occurs. This should be handled as an exception.
 * When creating an AWS Postgres database, users are unable to connect to the database when they have selected the Virtual Private Cloud (VPC) of their Elastic Kubernetes Service (EKS) Cluster. However, they are able to connect when they have selected the default VPC.
 
 
