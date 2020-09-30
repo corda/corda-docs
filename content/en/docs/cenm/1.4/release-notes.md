@@ -157,7 +157,7 @@ with multiple accounts for each task The Signing Service now prompts a specific 
 * There are currently two inconsistencies in service console error codes:
   * `config-parse-error` does not display help while `config-file-not-readable` does.
   * `config-parse-error` does not colour the error code red while `config-file-not-readable` does.
-* Some services are use logs inconsistently:
+* Some services use logs inconsistently:
   * Different services write error codes to different logs - either `DUMP` only, or both `OPS` and `DUMP`.
   * The `config-substitution-error code` is not triggered when it should be.
   * The Command-line Interface (CLI) Tool throws a Java DUMP exception instead of producing an error code for certain issues.
