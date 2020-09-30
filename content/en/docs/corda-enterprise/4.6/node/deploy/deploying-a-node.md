@@ -362,7 +362,7 @@ java -jar corda.jar nitial-registration
 
 {{<< note >}}
 You could also use the `--allow-hibernate-to-manage-app-schema` flag if you want to make the node manage app schemas automatically using Hibernate with H2 in dev mode.
-{{< /node >}}
+{{< /note >}}
 
 #### Use `run-migration-scripts`
 
