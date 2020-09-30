@@ -264,7 +264,6 @@ Allows fine-grained controls of various features only available in the enterpris
 * `artemisCryptoServiceConfig`
   * This is an optional crypto service configuration which will be used for HSM TLS signing when interacting with the Artemis message server.
   * This option only makes sense when `messagingServerSslConfiguration` is specified: either to connect to a standalone Artemis messaging server, or when external Bridge is configured. If this option is missing, the local file system will be used to store private keys inside JKS key stores, as defined by `messagingServerSslConfiguration`.
-  * If this option is missing, the local file system will be used to store private keys inside `JKS` key stores.
   * `cryptoServiceName`
     * The name of HSM provider to be used. E.g.: `UTIMACO`, `GEMALTO_LUNA`, etc.
   * `cryptoServiceConf`
