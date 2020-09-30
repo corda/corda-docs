@@ -173,7 +173,7 @@ For more information, see [Starting a flow with a client-provided unique ID](flo
 
 Corda 4.6 introduces a new flow session close API, which provides support for eager termination of flow sessions and release of their resources.
 
-For more information, see [API: Flows](api-flows.md).
+For more information, see [API: Flows](api-flows.md#flow-session-close-api).
 
 #### Hotloading of notaries list
 
