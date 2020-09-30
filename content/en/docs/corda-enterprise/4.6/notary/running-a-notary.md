@@ -18,14 +18,7 @@ Corda Enterprise comes with two notary implementations built-in:
 
 * **Single-node**: a simple notary service that persists notarisation requests in the node’s database. It is easy to configure
 and can be used for testing, or networks that do not have strict availability requirements.
-* **Highly available**: a clustered notary service operated by a single party, able to tolerate crash faults.
-
-
-{{< warning >}}
-Upgrading an existing single-node notary to be highly available is currently unsupported.
-
-{{< /warning >}}
-
+* **Highly-available**: a clustered notary service operated by a single party, able to tolerate crash faults.
 
 
 ## Single-node notary
@@ -43,11 +36,6 @@ For a validating notary service specify:
 notary : { validating : true }
 ```
 
-See key_concepts_notaries_validation for more details about validating versus non-validating notaries.
-
 For clients to be able to use the notary service, its identity must be added to the network parameters. This will be
 done automatically when creating the network, if using network-bootstrapper. See corda-networks-index
 for more details.
-
-
-
