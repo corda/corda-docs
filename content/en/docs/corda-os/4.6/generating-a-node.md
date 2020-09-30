@@ -403,7 +403,6 @@ ext {
                     ]
             ],
             database: [
-                    transactionIsolationLevel: 'READ_COMMITTED',
                     runMigration             : true,
                     schema                   : dbSchema
             ],

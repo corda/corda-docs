@@ -100,21 +100,9 @@ Deprecated. Use `networkServices` instead.
 ## `database`
   Database configuration
 
-* `transactionIsolationLevel`
-  * Transaction isolation level as defined by the `TRANSACTION_` constants in `java.sql.Connection`, but without the `TRANSACTION_` prefix.
-  * Default `REPEATABLE_READ`
 * `exportHibernateJMXStatistics`
   * Whether to export Hibernate JMX statistics. **Caution: enabling this option causes expensive run-time overhead**
   * Default false
-* `initialiseSchema`
-  * Boolean which indicates whether to update the database schema at startup (or create the schema when node starts for the first time).
-    If set to `false` on startup, the node will validate if it's running against a compatible database schema.
-  * Default:* true
-* `initialiseAppSchema`
-  * The property allows to override `database.initialiseSchema` for the Hibernate DDL generation for CorDapp schemas.
-    `UPDATE` performs an update of CorDapp schemas, while `VALID` only verifies their integrity and `NONE` performs no check.
-    When `initialiseSchema` is set to `false`, then `initialiseAppSchema` may be set as `VALID` or `NONE` only.
-  * Default:* CorDapp schema creation is controlled with `initialiseSchema`.
 
 ## `dataSourceProperties`
 

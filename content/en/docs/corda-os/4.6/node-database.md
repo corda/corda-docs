@@ -42,7 +42,6 @@ dataSourceProperties = {
     dataSource.password = [PASSWORD]
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
 }
 ```
 
@@ -130,4 +129,3 @@ dataSourceProperties = {
     connectionTimeout = 50000
 }
 ```
-
