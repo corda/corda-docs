@@ -205,13 +205,12 @@ dataSourceProperties = {
 }
 database = {
    schema = <Database schema name>
-   runMigration = true
 }
 ```
 
 
 See [Node configuration](../setup/corda-configuration-file.md#database-properties-ref) for a complete list of database specific properties, it contains more options useful in case of testing Corda with unsupported databases.
-* Set `runMigration` to `true` to allow a Corda node to create database tables upon startup.
+* Run the `run-migration-script` sub-command to allow a Corda node to create database tables upon startup.
 * The Corda distribution does not include any JDBC drivers with the exception of the H2 driver.
 It is the responsibility of the node administrator or a developer to download the appropriate JDBC driver.
 Corda will search for valid JDBC drivers under the `./drivers` subdirectory of the node base directory.
@@ -265,7 +264,6 @@ dataSourceProperties = {
 }
 database = {
     schema = my_schema
-    runMigration = true
 }
 ```
 
@@ -275,7 +273,7 @@ Replace the placeholders *<database_server>* and *<my_database>* with appropriat
 Do not change the default isolation for this database (*READ_COMMITTED*) as the Corda platform has been validated
 for functional correctness and performance using this level.
 The `database.schema` is the database schema name assigned to the user.
-`runMigration` value should be set to *true* when using *administrative* permissions only, otherwise set the value to *false*.
+You need  *administrative* permissions in order to run the `run-migration-script` sub-command to initialise or migrate the database schema.
 
 The Microsoft SQL JDBC driver can be downloaded from [Microsoft Download Center](https://www.microsoft.com/en-us/download/details.aspx?id=56615),
 extract the archive and copy the single file *mssql-jdbc-6.4.0.jre8.jar* as the archive comes with two JARs.
@@ -297,7 +295,6 @@ dataSourceProperties = {
 }
 database = {
     schema = my_schema
-    runMigration = true
 }
 ```
 
@@ -309,7 +306,7 @@ By default the connection to the database is not SSL, for securing JDBC connecti
 
 Do not change the default isolation for the database (*READ_COMMITTED*) as the Corda platform has been validated
 for functional correctness and performance using this level.
-The `runMigration` value should be set to *true* when using *administrative* permissions only, otherwise set the value to *false*.
+You can only run the  `run-migration-script` sub-command to initialise or migrate the database schema when using *administrative* permissions.
 The `database.schema` is the database schema name assigned to the user.
 
 Microsoft JDBC 6.2 driver can be downloaded from [Microsoft Download Center](https://www.microsoft.com/en-us/download/details.aspx?id=56615),
@@ -335,7 +332,6 @@ dataSourceProperties = {
 }
 database = {
     schema = my_user
-    runMigration = true
 }
 ```
 
@@ -345,7 +341,7 @@ Replace the placeholders *<host>*, *<port>* and *<sid>* with appropriate values,
 If the user was created with *administrative* permissions the schema name `database.schema` will be the same as the user name (*my_user*).
 
 Do not change the default isolation for this database (*READ_COMMITTED*) as the Corda platform has been validated for functional correctness and performance using this level.
-The `runMigration` value must be set to *true* when the database user has *administrative* permissions and set to *false* when using *restricted* permissions.
+When the database user has *administrative* permissions they can run the `run-migration-script` sub-command to initialise or migrate the database schema - this is not possible when using *restricted* permissions.
 
 Copy the Oracle JDBC driver *ojdbc6.jar* for 11g RC2 or *ojdbc8.jar* for Oracle 12c to the node directory `drivers`.
 
@@ -365,7 +361,6 @@ dataSourceProperties = {
 }
 database = {
     schema = my_schema
-    runMigration = true
 }
 ```
 
@@ -378,15 +373,16 @@ The value of `database.schema` is automatically wrapped in double quotes to pres
 this behaviour differs from Corda Open Source where the value is not wrapped in double quotes.
 
 Do not change the default isolation for this database (*READ_COMMITTED*) as the Corda platform has been validated for functional correctness and performance using this level.
-The `runMigration` value should be set to *true* when using *administrative* permissions only, otherwise set the value to *false*.
+You can only run the `run-migration-script` sub-command when using *administrative* permissions.
 
 Copy the PostgreSQL JDBC Driver *42.2.8* version *JDBC 4.2* to the node directory `drivers`.
 
 
 
-### 3. Start the node to auto-create schema objects
+### 3. Run the `run-migration-script` sub-command to create all database schema objects
 
-The node will create all database schema objects upon startup, as `runMigration` is set to `true`.
+For the node to create all database schema objects, you should run the `run-migration-script` sub-command.
+
 Additionally, the node will create any tables for CorDapps containing Liquibase database migration scripts.
 
 
@@ -411,13 +407,7 @@ ensure that:
 
 
 * the node can connect to the  database with **administrative permissions** or runs with the default embedded H2 database.
-* the node configuration `node.conf` file contains the *runMigration* option set to *true*:
-```groovy
-database = {
-    runMigration = true
-    # other properties
-}
-```
+* you have administrative permissions and you run the `run-migration-script` sub-command with at least one of the following parameters: `--core-schemas` and `--app-schemas`. 
 
 
 

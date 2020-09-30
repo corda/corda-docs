@@ -75,7 +75,6 @@ In both cases ensure that a node configuration `node.conf` file contains:
 
 ```groovy
 database = {
-    runMigration = true
     #other properties
 }
 ```

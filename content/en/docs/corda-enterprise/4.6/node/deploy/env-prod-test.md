@@ -177,7 +177,6 @@ This is a sample `node.conf` which details a configuration connecting to the Cor
         },
         },
     "database" : {
-        "runMigration" : "true",
         "schema" : "dbo",
     },
     "rpcSettings" : {

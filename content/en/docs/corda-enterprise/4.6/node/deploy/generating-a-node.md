@@ -428,7 +428,6 @@ ext {
                     ]
             ],
             database: [
-                    runMigration             : true,
                     schema                   : dbSchema
             ],
             dockerConfig: [

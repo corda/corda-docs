@@ -211,7 +211,6 @@ Here are the contents of the ``reference.conf`` file:
         },
         },
     "database" : {
-        "runMigration" : "true",
         "schema" : "dbo",
     },
 

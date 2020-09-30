@@ -140,10 +140,6 @@ Database configuration
 * `exportHibernateJMXStatistics`:
   * Whether to export Hibernate JMX statistics.  **Caution: enabling this option causes expensive run-time overhead**
   * *Default:* false
-* `runMigration`
-  * Boolean on whether to run the database migration scripts at startup. In production please keep it false. For more information please check [Database management scripts](../../cordapps/database-management.md). If migration is not run, on startup, the node will check if it's running on the correct database version.
-    The property is used only when a node runs against a database other than H2.
-  * *Default:* false
 * `schema`
   * Some database providers require a schema name when generating DDL and SQL statements. The value is passed to the Hibernate    property 'hibernate.default_schema'. This is optional.
 * `hibernateDialect`

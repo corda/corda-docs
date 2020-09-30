@@ -663,7 +663,6 @@ dataSourceProperties { // Point at clustered Azure SQL Server
     dataSource.password = password
 }
 database {
-    runMigration = false
     schema = dbo
 }
 security {
@@ -732,7 +731,6 @@ dataSourceProperties { // Point at clustered Azure SQL Server
     dataSource.password = password
 }
 database {
-    runMigration = false
     schema = dbo
 }
 security {
