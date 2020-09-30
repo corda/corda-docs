@@ -31,9 +31,7 @@ A file-based `sslkeystore.jks` is still required to store TLS certificates, even
 
 `node.conf`:
 
-{{< tabs name="tabs-1" >}}
-{{% tab name="kotlin" %}}
-```kotlin
+```
 enterpriseConfiguration = {
     tlsCryptoServiceConfig = {
        cryptoServiceName="AWS_CLOUD"
@@ -41,8 +39,6 @@ enterpriseConfiguration = {
     }
 }
 ```
-{{% /tab %}}
-{{< /tabs >}}
 
 ## Migration notes
 
