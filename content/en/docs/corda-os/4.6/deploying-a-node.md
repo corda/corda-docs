@@ -308,7 +308,7 @@ Start the node using the `initial-registration` sub-command:
 java -jar corda.jar nitial-registration
 ```
 
-{{<< note >}}
+{{< note >}}
 You could also use the `--allow-hibernate-to-manage-app-schema` flag if you want to make the node manage app schemas automatically using Hibernate with H2 in dev mode.
 {{< /note >}}
 
