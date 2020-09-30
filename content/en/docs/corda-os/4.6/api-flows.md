@@ -886,6 +886,89 @@ session.send(new Object());
 
 {{< /tabs >}}
 
+## Flow session close API
+
+The flow session close API can be used by applications in order to eagerly terminate sessions that are not needed anymore and release any resources associated with them.
+
+### Overview
+
+This API is available in two places:
+* In `FlowSession`, there is now a new method `close()`.
+* In `FlowLogic`, there is now a new method `close(sessions: NonEmptySet<FlowSession>)`.
+
+When a session is closed via one of these two APIs, the following happens:
+
+* The session is terminated and cannot be used anymore by the flow. This means that:
+  * Subsequent calls on a closed session (for example, `send`, `receive`, `getCounterpartyFlowInfo`) will fail with an `UnexpectedFlowEndException`.
+  * As an exception to this rule, additional `close` operations on an already closed session will be handled gracefully.
+* The resources held by the session in the flow's checkpoint and in the state machine are released.
+* The node sends messages to the counterparty of this session to inform them that the session has now ended. When that message is processed, the session is closed on the other side too.
+
+The flow session close API addresses the fact that every session that is used by a flow in Corda reserves some space in the checkpoint of the associated flow. This means the more sessions a flow initialises, the bigger a checkpoint is expected to be. This can cause issues for flows that iterate over a large number of sessions and use them only for a small amount of time relative to the whole duration of the flow.
+
+As an example, one way these issues can manifest is by a node crashing with out-of-memory errors, because of a very large checkpoint. When a top-level flow terminates, it closes all its sessions and releases the associated resources, which means the lifetime of sessions are tied to that of the top-level flow. In this example, if an application wants to iterate over a very large number of sessions and exchange a message with them, it can do so by sending the message and then closing the session before proceeding with the next one. This will keep the size of the checkpoint small enough regardless of how many sessions are being initiated.
+
+### Code examples
+
+The following example shows a flow that eagerly terminates sessions:
+
+{{< tabs name="tabs-16" >}}
+
+{{% tab name="kotlin" %}}
+
+```kotlin
+@InitiatingFlow
+@StartableByRPC
+class InitiatorLoopingFlow(private val parties: List<Party>): FlowLogic<Unit>() {
+    @Suspendable
+    override fun call() {
+        for (party in parties) {
+            val session = initiateFlow(party)
+            val response = session.sendAndReceive<String>("hey").unwrap{ it }
+            session.close()
+        }
+    }
+}
+```
+
+{{% /tab %}}
+
+{{< /tabs >}}
+
+{{< note >}}
+In case of a failure in a flow, the state machine takes care of properly releasing all the resources associated with sessions. Therefore, you do not have (and should not attempt) to close sessions in `finally` blocks, as shown in the examples below.
+{{< /note >}}
+
+
+{{< tabs name="tabs-17" >}}
+
+{{% tab name="kotlin" %}}
+
+```kotlin
+val session = initiateFlow(party)
+try {
+    ...
+} finally {
+    session.close()
+}
+val session = initiateFlow(party)
+session.use {
+    ...
+}
+```
+
+{{% /tab %}}
+
+{{< /tabs >}}
+
+Doing so can cause subtle changes in the behaviour of the application. For example, the code in the `finally` block can execute before the error of the flow is processed by the state machine, which means the counterparties might be notified that a session was closed normally, instead of being notified for the error.
+
+### Upgrade note
+
+For most applications, there is no strong need to make use of the new API.
+
+Applications, which iterate over a very large number of sessions and want to reduce their memory and storage footprint, can make use of the new API while making sure that sessions are only closed at the point where they are not going to be used anymore.
+
 ## Subflows
 
 Subflows are pieces of reusable flows that may be run by calling `FlowLogic.subFlow`. There are two broad categories
@@ -970,7 +1053,7 @@ Let’s look at some of these flows in more detail.
 `FinalityFlow` allows us to notarise the transaction and get it recorded in the vault of the participants of all
 the transaction’s states:
 
-{{< tabs name="tabs-16" >}}
+{{< tabs name="tabs-18" >}}
 {{% tab name="kotlin" %}}
 
 ```kotlin
@@ -993,7 +1076,7 @@ SignedTransaction notarisedTx1 = subFlow(new FinalityFlow(fullySignedTx, singlet
 
 We can also choose to send the transaction to additional parties who aren’t one of the state’s participants:
 
-{{< tabs name="tabs-17" >}}
+{{< tabs name="tabs-19" >}}
 {{% tab name="kotlin" %}}
 
 ```kotlin
@@ -1020,7 +1103,7 @@ Only one party has to call `FinalityFlow` for a given transaction to be recorded
 be called by every participant. Instead, every other particpant **must** call `ReceiveFinalityFlow` in their responder
 flow to receive the transaction:
 
-{{< tabs name="tabs-18" >}}
+{{< tabs name="tabs-20" >}}
 {{% tab name="kotlin" %}}
 
 ```kotlin
@@ -1077,7 +1160,7 @@ The list of parties who need to sign a transaction is dictated by the transactio
 transaction ourselves, we can automatically gather the signatures of the other required signers using
 `CollectSignaturesFlow`:
 
-{{< tabs name="tabs-19" >}}
+{{< tabs name="tabs-21" >}}
 {{% tab name="kotlin" %}}
 
 ```kotlin
@@ -1101,7 +1184,7 @@ SignedTransaction fullySignedTx = subFlow(new CollectSignaturesFlow(twiceSignedT
 Each required signer will need to respond by invoking its own `SignTransactionFlow` subclass to check the
 transaction (by implementing the `checkTransaction` method) and provide their signature if they are satisfied:
 
-{{< tabs name="tabs-20" >}}
+{{< tabs name="tabs-22" >}}
 {{% tab name="kotlin" %}}
 
 ```kotlin
@@ -1161,7 +1244,7 @@ dependency chain. This means the receiving party needs to be able to ask the sen
 The sender will use `SendTransactionFlow` for sending the transaction and then for processing all subsequent
 transaction data vending requests as the receiver walks the dependency chain using `ReceiveTransactionFlow`:
 
-{{< tabs name="tabs-21" >}}
+{{< tabs name="tabs-23" >}}
 {{% tab name="kotlin" %}}
 
 ```kotlin
@@ -1200,7 +1283,7 @@ subFlow(new SendTransactionFlow(counterpartySession, twiceSignedTx) {
 We can receive the transaction using `ReceiveTransactionFlow`, which will automatically download all the
 dependencies and verify the transaction:
 
-{{< tabs name="tabs-22" >}}
+{{< tabs name="tabs-24" >}}
 {{% tab name="kotlin" %}}
 
 ```kotlin
@@ -1223,7 +1306,7 @@ SignedTransaction verifiedTransaction = subFlow(new ReceiveTransactionFlow(count
 
 We can also send and receive a `StateAndRef` dependency chain and automatically resolve its dependencies:
 
-{{< tabs name="tabs-23" >}}
+{{< tabs name="tabs-25" >}}
 {{% tab name="kotlin" %}}
 
 ```kotlin
@@ -1272,7 +1355,7 @@ ended and will themselves end. However, the exception thrown will not be propaga
 If you wish to notify any waiting counterparties of the cause of the exception, you can do so by throwing a
 `FlowException`:
 
-{{< tabs name="tabs-24" >}}
+{{< tabs name="tabs-26" >}}
 {{% tab name="kotlin" %}}
 
 ```kotlin
@@ -1325,7 +1408,7 @@ There are many scenarios in which throwing a `FlowException` would be appropriat
 
 Below is an example using `FlowException`:
 
-{{< tabs name="tabs-25" >}}
+{{< tabs name="tabs-27" >}}
 {{% tab name="kotlin" %}}
 
 ```kotlin
@@ -1370,7 +1453,7 @@ execution in such situations. By throwing a `HospitalizeFlowException` a flow wi
 
 A `HospitalizeFlowException` can be defined in various ways:
 
-{{< tabs name="tabs-26" >}}
+{{< tabs name="tabs-28" >}}
 {{% tab name="kotlin" %}}
 
 ```kotlin
@@ -1405,7 +1488,7 @@ could instantly retry or terminate if a critical error occurred.
 {{< /note >}}
 Below is an example of a flow that should retry again in the future if an error occurs:
 
-{{< tabs name="tabs-27" >}}
+{{< tabs name="tabs-29" >}}
 {{% tab name="kotlin" %}}
 
 ```kotlin
@@ -1431,7 +1514,7 @@ We can give our flow a progress tracker. This allows us to see the flow’s prog
 
 To provide a progress tracker, we have to override `FlowLogic.progressTracker` in our flow:
 
-{{< tabs name="tabs-28" >}}
+{{< tabs name="tabs-30" >}}
 {{% tab name="kotlin" %}}
 
 ```kotlin
@@ -1518,7 +1601,7 @@ private final ProgressTracker progressTracker = new ProgressTracker(
 
 We then update the progress tracker’s current step as we progress through the flow as follows:
 
-{{< tabs name="tabs-29" >}}
+{{< tabs name="tabs-31" >}}
 {{% tab name="kotlin" %}}
 
 ```kotlin
@@ -1572,7 +1655,7 @@ The size of the external operation thread pool can be configured, see [the node 
 {{< /note >}}
 Below is an example of how `FlowExternalOperation` can be called from a flow to run an operation on a new thread, allowing the flow to suspend:
 
-{{< tabs name="tabs-30" >}}
+{{< tabs name="tabs-32" >}}
 {{% tab name="kotlin" %}}
 
 ```kotlin
@@ -1757,7 +1840,7 @@ The future can be chained to execute further operations that continue using the 
 {{< /note >}}
 Below is an example of how `FlowExternalAsyncOperation` can be called from a flow:
 
-{{< tabs name="tabs-31" >}}
+{{< tabs name="tabs-33" >}}
 {{% tab name="kotlin" %}}
 
 ```kotlin
@@ -1996,7 +2079,7 @@ In-memory data structures should not be used for handling deduplication as their
 The code below demonstrates how to convert a `ListenableFuture` into a `CompletableFuture`, allowing the result to be executed using a
 `FlowExternalAsyncOperation`.
 
-{{< tabs name="tabs-32" >}}
+{{< tabs name="tabs-34" >}}
 {{% tab name="kotlin" %}}
 
 ```kotlin
@@ -2166,7 +2249,7 @@ complicated).
 For example, the `finance` package currently uses `FlowLogic.sleep` to make several attempts at coin selection when
 many states are soft locked, to wait for states to become unlocked:
 
-{{< tabs name="tabs-33" >}}
+{{< tabs name="tabs-35" >}}
 {{% tab name="kotlin" %}}
 ```kotlin
 for (retryCount in 1..maxRetries) {
@@ -2227,7 +2310,7 @@ All suspendable functions (functions annotated with `@Suspendable`) already take
 
 An example of this is shown below:
 
-{{< tabs name="tabs-34" >}}
+{{< tabs name="tabs-36" >}}
 {{% tab name="kotlin" %}}
 ```kotlin
 @Suspendable
@@ -2261,7 +2344,7 @@ If your flow has functions that are not marked as `@suspendable`, you may need t
 
 To do so, add a check on the `isKilled` flag of the flow. Use the example below to see how this is done:
 
-{{< tabs name="tabs-35" >}}
+{{< tabs name="tabs-37" >}}
 {{% tab name="kotlin" %}}
 ```kotlin
 @Suspendable
@@ -2295,7 +2378,7 @@ The function in the example above exits the loop by checking the `isKilled` flag
 
 There are also two overloads of `checkFlowIsNotKilled` that simplify the code above:
 
-{{< tabs name="tabs-36" >}}
+{{< tabs name="tabs-38" >}}
 {{% tab name="kotlin" %}}
 ```kotlin
 @Suspendable
