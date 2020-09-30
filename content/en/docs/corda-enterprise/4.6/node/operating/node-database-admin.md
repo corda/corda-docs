@@ -373,7 +373,6 @@ dataSourceProperties = {
     dataSource.password = "my_password"
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = my_schema
 }
 ```
@@ -401,7 +400,6 @@ dataSourceProperties = {
     dataSource.password = "my_password"
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = my_schema
 }
 ```
@@ -428,7 +426,6 @@ dataSourceProperties = {
     dataSource.password = "my_password"
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = my_admin_user
 }
 ```
@@ -455,7 +452,6 @@ dataSourceProperties = {
     dataSource.password = "my_password"
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = my_schema
 }
 ```
@@ -649,9 +645,7 @@ dataSourceProperties = {
    dataSource.password = <Database password>
 }
 database = {
-   transactionIsolationLevel = <Transaction isolation level>
    schema = <Database schema name>
-   runMigration = false
 }
 ```
 
@@ -659,7 +653,7 @@ database = {
 {{< note >}}
 *Node configuration <database_properties_ref>* contains a complete list of database specific properties.{{< /note >}}
 
-* The restricted node database user has no permissions to alter a database schema, so `runMigration` is set to `false`.
+* The restricted node database user has no permissions to alter a database schema, so the `run-migration-script` sub-command cannot be run.
 * The Corda distribution does not include any JDBC drivers with the exception of the H2 driver.
 It is the responsibility of the node administrator or a developer to install the appropriate JDBC driver.
 Corda will search for valid JDBC drivers under the `./drivers` subdirectory of the node base directory.
@@ -705,9 +699,7 @@ dataSourceProperties = {
     dataSource.password = "my_password"
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = my_schema
-    runMigration = false
 }
 ```
 
@@ -737,9 +729,7 @@ dataSourceProperties = {
     dataSource.password = "my_password"
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = my_schema
-    runMigration = false
 }
 ```
 
@@ -776,9 +766,7 @@ dataSourceProperties = {
     connectionInitSql="alter session set current_schema=my_admin_user"
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = my_admin_user
-    runMigration = false
 }
 ```
 
@@ -859,9 +847,7 @@ dataSourceProperties = {
     dataSource.password = null
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = my_schema
-    runMigration = true
 }
 ```
 
@@ -891,9 +877,7 @@ dataSourceProperties = {
     dataSource.password = "my_password"
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = my_schema
-    runMigration = false
 }
 ```
 

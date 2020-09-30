@@ -95,7 +95,6 @@ dataSourceProperties = {
     dataSource.password = "my_password"
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = my_schema
 }
 ```
@@ -123,7 +122,6 @@ dataSourceProperties = {
     dataSource.password = "my_password"
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = my_schema
 }
 ```
@@ -150,7 +148,6 @@ dataSourceProperties = {
     dataSource.password = "my_password"
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = my_admin_user
 }
 ```
@@ -178,7 +175,6 @@ dataSourceProperties = {
     dataSource.password = "my_password"
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = my_schema
 }
 ```

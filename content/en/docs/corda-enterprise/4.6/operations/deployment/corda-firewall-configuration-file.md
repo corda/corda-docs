@@ -661,8 +661,6 @@ dataSourceProperties { // Point at clustered Azure SQL Server
     dataSource.password = password
 }
 database {
-    transactionIsolationLevel = READ_COMMITTED
-    runMigration = false
     schema = dbo
 }
 security {
@@ -731,8 +729,6 @@ dataSourceProperties { // Point at clustered Azure SQL Server
     dataSource.password = password
 }
 database {
-    transactionIsolationLevel = READ_COMMITTED
-    runMigration = false
     schema = dbo
 }
 security {

@@ -35,6 +35,21 @@ To create a local node manually, make a new directory and add the following file
 
 The remaining node files and directories will be generated at runtime. These are described in the [Node folder structure](corda-configuration-file.md) section.
 
+### Run the database migration script if upgrading
+
+{{< note >}} This step is only required when upgrading to Corda Enterpise 4.6. {{< /note >}}
+
+1. Remove any `transactionIsolationLevel`, `initialiseSchema`, or `initialiseAppSchema` entries from the database section of your configuration.
+2. Start the node with `run-migration-scripts` sub-command with `--core-schemas` and `--app-schemas`:
+
+```bash
+java -jar corda.jar run-migration-scripts --core-schemas --app-schemas
+```
+
+The node will perform any automatic data migrations required, which may take some time. If the migration process is interrupted, it can be continued simply by starting the node again, without harm. The node will stop automatically when migration is complete.
+
+See [Upgrading your node to Corda 4.6](node-upgrade-notes.md) for more information.
+
 ## Use Cordform and Dockerform to create a set of local nodes automatically
 
 Corda provides two `gradle` plug-ins called `Cordform` and `Dockerform`. They both allow you to run tasks that automatically generate and configure a local set of nodes for testing and demonstration purposes.
@@ -306,6 +321,16 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['jar']) {
     //...
 ```
 
+#### Optional migration step
+
+If you are migrating your database schema from an older Corda version to Corda 4.6, you must add the following parameter to the node section in the `build.gradle` and set it to `true`, as follows:
+
+```
+        runSchemaMigration = true
+```
+
+This step runs the full schema migration process as the last step of the Cordform task, and leave the nodes ready to run.
+
 #### Run the Cordform task
 
 To create the nodes defined in the `deployNodes` task example above, run the following command in a command prompt or a terminal window, from the root of the project where the `deployNodes` task is defined:
@@ -403,7 +428,6 @@ ext {
                     ]
             ],
             database: [
-                    transactionIsolationLevel: 'READ_COMMITTED',
                     runMigration             : true,
                     schema                   : dbSchema
             ],

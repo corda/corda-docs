@@ -177,9 +177,7 @@ This is a sample `node.conf` which details a configuration connecting to the Cor
         },
         },
     "database" : {
-        "runMigration" : "true",
         "schema" : "dbo",
-        "transactionIsolationLevel" : "READ_COMMITTED"
     },
     "rpcSettings" : {
         "address" : "0.0.0.0:10003",

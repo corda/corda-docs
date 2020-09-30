@@ -11,39 +11,36 @@ title: Upgrading Corda versions on a node
 weight: 1
 ---
 
-# Upgrading Corda versions on a node
+# Upgrading your node to Corda 4.6
 
 Corda releases strive to be backwards compatible, so upgrading a node is fairly straightforward and should not require changes to
 applications. It consists of the following steps:
 
-
 * Drain the node.
-* Make a backup of your node directories and database.
-* Update the database.
+* Make a backup of your node directories and/or database.
 * Replace the `corda.jar` file with the new version.
-* Start up the node. (This step may incur a delay while any necessary database migrations are applied.)
-* Undrain the node. (This step re-enables processing of new inbound flows.)
+* Start up the node. This step may incur a delay whilst any needed database migrations are applied.
+* Undrain it to re-enable processing of new inbound flows.
 
-Note: The protocol is designed to tolerate node outages. During the upgrade process, peers on the network will wait for your node to come back.
+The protocol is designed to tolerate node outages, so during the upgrade process peers on the network will wait for your node to come back.
 
 
 ## Step 1. Drain the node
 
-Before a node, or an application on a node, can be upgraded, the node must be put in draining-mode. This brings the currently running
-flows to a smooth halt (existing work is finished, and new work is queued rather than being processed).
+Before a node or application on it can be upgraded, the node must be put in Draining mode. This brings the currently running
+[Flows](key-concepts-flows.md) to a smooth halt such that existing work is finished and new work is queuing up rather than being processed.
 
 Draining flows is a key task for node administrators to perform. It exists to simplify applications by ensuring apps don’t have to be
-able to migrate workflows from any arbitrary point to other arbitrary points, a task that would rapidly become unfeasible as workflow
+able to migrate workflows from any arbitrary point to other arbitrary points, a task that would rapidly become infeasible as workflow
 and protocol complexity increases.
 
-To drain the node, run the `gracefulShutdown` command. This will wait for the node to drain and then shut it down once the drain
+To drain the node, run the `gracefulShutdown` command. This will wait for the node to drain and then shut down the node when the drain
 is complete.
 
-
 {{< warning >}}
-The length of time a node takes to drain depends both on how your applications are designed, and whether any apps are currently
-talking to network peers that are offline or slow to respond. It is, therefore, difficult to give guidance on how long a drain should take. In
-an environment with well written apps and in which your counterparties are online, it is possible that drains may only need a few seconds.
+The length of time a node takes to drain depends on both how your applications are designed, and whether any apps are currently
+talking to network peers that are offline or slow to respond. It is thus hard to give guidance on how long a drain should take, but in
+an environment with well written apps and in which your counterparties are online, drains may need only a few seconds.
 
 {{< /warning >}}
 
@@ -78,7 +75,6 @@ In both cases ensure that a node configuration `node.conf` file contains:
 
 ```groovy
 database = {
-    runMigration = true
     #other properties
 }
 ```
@@ -111,7 +107,6 @@ dataSourceProperties = {
     dataSource.password = <password>
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = <schema>
 }
 myLegalName = <node_legal_name>
@@ -142,7 +137,6 @@ dataSourceProperties = {
     dataSource.password = <password>
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = <schema>
 }
 myLegalName = <node_legal_name>
@@ -171,7 +165,6 @@ dataSourceProperties = {
     dataSource.password = <password>
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = <schema>
 }
 myLegalName = <node_legal_name>
@@ -198,7 +191,6 @@ dataSourceProperties = {
     dataSource.password = <password>
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = <schema>
 }
 myLegalName = <node_legal_name>
@@ -312,13 +304,28 @@ Corda 4 requires Java 8u171 or any higher Java 8 patch level. Java 9+ is not cur
 {{< /important >}}
 
 
-## Step 5. Start up the node
+## Step 5. Update configuration
 
-Start the node in the usual manner you have selected. The node will perform any automatic data migrations required, which may take some
-time. If the migration process is interrupted, it can be continued without harm simply by starting the node again.
+Remove any `transactionIsolationLevel`, `initialiseSchema`, or `initialiseAppSchema` entries from the database section of your configuration
 
+## Step 6. Start the node with `run-migration-scripts` sub-command
 
-## Step 6. Undrain the node
+{{< note >}} This step is only required when upgrading to Corda Enterpise 4.6. {{< /note >}}
+
+Start the node with the `run-migration-scripts` sub-command with `--core-schemas` and `--app-schemas`.
+
+```bash
+java -jar corda.jar run-migration-scripts --core-schemas --app-schemas
+```
+
+The node will perform any automatic data migrations required, which may take some
+time. If the migration process is interrupted it can be continued simply by starting the node again, without harm. The node will stop automatically when migration is complete.
+
+## Step 7. Start the node in the normal way
+
+Start the node in the normal way.
+
+## Step 8. Undrain the node
 
 You may now do any checks that you wish to perform, read the logs, and so on. When you are ready, use this command at the shell:
 
@@ -326,12 +333,9 @@ You may now do any checks that you wish to perform, read the logs, and so on. Wh
 
 Your upgrade is complete.
 
-
 {{< warning >}}
 if upgrading from Corda Enterprise 3.x, please ensure your node has been upgraded to the latest point release of that
 distribution. See [Upgrade a Corda 3.X Enterprise Node](../../../3.3/node-operations-upgrading.html#upgrading-a-corda-enterprise-node)
 for information on upgrading Corda 3.x versions.
 
 {{< /warning >}}
-
-

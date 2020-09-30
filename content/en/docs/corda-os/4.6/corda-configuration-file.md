@@ -173,7 +173,6 @@ Here are the contents of the `reference.conf` file:
 additionalP2PAddresses = []
 crlCheckSoftFail = true
 database = {
-    transactionIsolationLevel = "REPEATABLE_READ"
     exportHibernateJMXStatistics = "false"
 }
 dataSourceProperties = {

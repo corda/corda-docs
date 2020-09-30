@@ -345,3 +345,52 @@ You can verify Corda is running by connecting to your RPC port from another host
 
 If you receive the message “Escape character is ^]”, Corda is running and accessible. Press Ctrl-] and Ctrl-D to exit
 telnet.
+
+## Database schema initialisation and migration
+
+### Database schema initialisation
+
+From Corda 4.6, the database schema objects are not automatically initialised during the first run of the node. There are two ways to initialise the database schema sets:
+
+#### Use `initial-registration`
+
+Start the node using the `initial-registration` sub-command:
+
+```bash
+java -jar corda.jar nitial-registration
+```
+
+{{< note >}}
+You could also use the `--allow-hibernate-to-manage-app-schema` flag if you want to make the node manage app schemas automatically using Hibernate with H2 in dev mode.
+{{< /note >}}
+
+#### Use `run-migration-scripts`
+
+Start the node with the `run-migration-scripts` sub-command with `--core-schemas` and `--app-schemas`:
+
+```bash
+java -jar corda.jar run-migration-scripts --core-schemas --app-schemas
+```
+
+See [Node command-line options](../../node-commandline.md) for more details.
+
+### Database schema migration
+
+From Corda 4.6, the database schema migration process requires you to explicitly perform the following actions. This step is only required when upgrading to Corda 4.6 from a previous version.
+
+#### Update configuration
+
+Remove any `transactionIsolationLevel`, `initialiseSchema`, or `initialiseAppSchema` entries from the database section of your configuration.
+
+#### Start the node with the `run-migration-scripts` sub-command
+
+Start the node with the `run-migration-scripts` sub-command with `--core-schemas` and `--app-schemas`.
+
+```bash
+java -jar corda.jar run-migration-scripts --core-schemas --app-schemas
+```
+
+The node will perform any automatic data migrations required, which may take some
+time. If the migration process is interrupted it can be continued simply by starting the node again, without harm. The node will stop automatically when migration is complete.
+
+See [Node command-line options](../../node-commandline.md) for more details.

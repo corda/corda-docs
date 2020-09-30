@@ -136,26 +136,8 @@ Set custom command line attributes (e.g. Java system properties) on the node pro
 
 Database configuration
 
-* `transactionIsolationLevel`:
-  * Transaction isolation level as defined by the `TRANSACTION_` constants in `java.sql.Connection`, but without the `TRANSACTION_` prefix.
-  * *Default:* `REPEATABLE_READ`
 * `exportHibernateJMXStatistics`:
   * Whether to export Hibernate JMX statistics.  **Caution: enabling this option causes expensive run-time overhead**
-  * *Default:* false
-* `initialiseSchema`
-  * The property is used only when a node runs against a H2 database, and it's replaced by the `runMigration` property for other databases.
-  * Boolean which indicates whether to update the database schema at startup (or create the schema when node starts for the first time).
-  * If set to `false` on startup, the node will validate if it's running against a compatible database schema.
-  * *Default:* true
-* `initialiseAppSchema`
-  * The property is used only when a node runs against a H2 database.
-  * The property allows to override `database.initialiseSchema` for the Hibernate DDL generation for CorDapp schemas.
-  * `UPDATE` performs an update of CorDapp schemas, while `VALID` only verifies their integrity and `NONE` performs no check.
-  * When `initialiseSchema` is set to `false`, then `initialiseAppSchema` may be set as `VALID` or `NONE` only.
-  * *Default:* CorDapp schema creation is controlled with `initialiseSchema`.
-* `runMigration`
-  * Boolean on whether to run the database migration scripts at startup. In production please keep it false. For more information please check [Database management scripts](../../cordapps/database-management.md). If migration is not run, on startup, the node will check if it's running on the correct database version.
-    The property is used only when a node runs against a database other than H2, and it's replaced by the ``initialiseSchema`` property for other databases.
   * *Default:* false
 * `schema`
   * Some database providers require a schema name when generating DDL and SQL statements. The value is passed to the Hibernate    property 'hibernate.default_schema'. This is optional.
@@ -668,9 +650,6 @@ specify the `serviceLegalName` and either the `mysql` (deprecated) or `jpa` conf
       * Boolean enabling the generation of native SQL for CockroachDB databases with multi-row insert statements. Enabling this configuration option results in better notary performance in some implementations.
       * *Default:* false
     * `database`
-      * `initialiseSchema`
-        * Boolean which indicates whether to update the database schema at startup (or create the schema when notary starts for the first time). This property is used only when a notary runs against an H2 database. For information on schema setup for non H2 databases, please see [Configuring a JPA notary backend](../../notary/installing-jpa.md).
-        * *Default:* true
       * `validateSchema`
         * Sets whether to validate the database schema before allowing the notary to start. Will prevent the notary from starting if validation fails with log messages indicating the reason(s)           for the failure. The validation will ensure that the database tables match that of the entities configured in the notary. This will not check whether any migrations have been run.
         * *Default:* false

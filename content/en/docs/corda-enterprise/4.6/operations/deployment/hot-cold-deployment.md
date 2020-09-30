@@ -313,7 +313,6 @@ rpcUsers=[
         ]
     }
 ]
-database.runMigration = true
 dataSourceProperties = {
     dataSourceClassName = "com.microsoft.sqlserver.jdbc.SQLServerDataSource"
     dataSource.url = "${DB_JDBC_URL}"

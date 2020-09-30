@@ -112,7 +112,6 @@ custom = {
     jvmArgs = [ "-Xmx8g", "-Xms8g", "-XX:+UseG1GC" ]
 }
 database {
-    transactionIsolationLevel = "READ_COMMITTED"
 }
 
 enterpriseConfiguration = {

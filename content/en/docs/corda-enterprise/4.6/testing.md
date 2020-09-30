@@ -115,8 +115,6 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['jar']) {
     ext.extraConfig = [
              'dataSourceProperties.dataSource.url' : 'jdbc:sqlserver://[DATABASE].database.windows.net:1433;databaseName=[DATABASE];encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30',
              'dataSourceProperties.dataSourceClassName' : 'com.microsoft.sqlserver.jdbc.SQLServerDataSource',
-             'database.transactionIsolationLevel' : 'READ_COMMITTED',
-             'database.runMigration' : 'true'
     ]
     ...
     node {
