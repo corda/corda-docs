@@ -19,7 +19,7 @@ The initial network parameters can be subsequently changed through an update pro
 be advertised to the entire network to allow nodes time to agree to the changes.
 
 {{< note >}}
-This process has changed extensively in CENM 1.3. The legacy process is still
+This process changed extensively in CENM 1.3. The legacy process is still
 supported for services which use the shell interface instead of the admin RPC
 interface - for example, in the CENM Command-Line Interface (CLI) tool. However, this document presumes  that you
 use admin RPC. For information about the legacy process, see the [CENM 1.2 documentation](../1.2/updating-network-parameters.md).
@@ -87,7 +87,7 @@ the latest Network Map, they will be notified of the proposed parameter update.
 
 You must execute the commands listed below on the Signing Service - this means that
 you must run the commands from within the same secure network as the service.
-The recommended deployment includes a FARM Service dedicated to these high
+The recommended deployment includes a Gateway Service dedicated to these high
 security actions:
 
 * Fetch the unsigned network parameters - command: `cenm signer netmap netparams unsigned`.

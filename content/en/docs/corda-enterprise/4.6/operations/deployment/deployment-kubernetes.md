@@ -44,7 +44,7 @@ In addition, the CENM Command-Line Interface (CLI) tool is required so you can c
 
 ### Compatibility
 
-The deployment scripts are compatible with Corda Enterprise Network Manager version 1.3 only.
+The deployment scripts are compatible with Corda Enterprise Network Manager version 1.3 and 1.4 only.
 The deployed network runs on Kubernetes minimum version 1.16.9 and Helm minimum version 3.1.1.
 
 ## Deployment
@@ -52,7 +52,7 @@ The deployed network runs on Kubernetes minimum version 1.16.9 and Helm minimum 
 ### Deployment overview
 
 The provided deployment runs all CENM services run inside a single, dedicated Kubernetes namespace (default name:`cenm`).
-Each service runs in its own dedicated Kubernetes pod, with the exception of the [Angel Service](../../../../cenm/1.3/angel-service.md), which runs in the same pod as its managed service.
+Each service runs in its own dedicated Kubernetes pod, with the exception of the [Angel Service](../../../../cenm/1.4/angel-service.md), which runs in the same pod as its managed service.
 
 {{< note >}}
 Naturally, the following command will not show a dedicated Angel Service pod:
@@ -94,15 +94,16 @@ The deployment steps are given below:
 
 - Install [helm](https://helm.sh/docs/intro/install/)
 
-    Ensure that the value in the `version` field for `helm version` is equal to or greater than 3.1.1,
+    Ensure that the value in the `version` field for `helm version` is equal to or greater than 3.2,
     as shown in the example below:
 
     ```bash
-    version.BuildInfo{Version:"v3.1.2", GitCommit:"afe70585407b420d0097d07b21c47dc511525ac8", GitTreeState:"clean", GoVersion:"go1.13.8"}
+    version.BuildInfo{Version:"v3.2.4", GitCommit:"0ad800ef43d3b826f31a5ad8dfbb4fe05d143688", GitTreeState:"clean", GoVersion:"go1.13.12"}
     ```
+
 - Install [Docker](https://www.docker.com/get-started). Docker is required to run the CENM CLI tool.
 
-- Download the Docker image with CENM [Command-Line Interface (CLI) tool](../../../../cenm/1.3/cenm-cli-tool.md) so you can manage CENM services:
+- Download the Docker image with CENM [Command-Line Interface (CLI) tool](../../../../cenm/1.4/cenm-cli-tool.md) so you can manage CENM services:
 
     ```bash
     docker pull cenm-cli:1.3-zulu-openjdk8u242
@@ -147,6 +148,7 @@ For instructions on how to do that, refer to the "CENM configuration for externa
 and an explanation of CENM database configuration options.
 
 #### 6. Bootstrap CENM
+
 **Option 1.** Bootstrap by allocating new external IP addresses
 
 To bootstrap your network, run the `bootstrap.cenm` script from the `/k8s/helm` directory.
@@ -196,7 +198,7 @@ cd network-services/deployment/k8s/helm
 
 ## Network operations
 
-Use the CENM [Command Line Interface (CLI) Tool](../../../../cenm/1.3/cenm-cli-tool.md) to access the [FARM Service](../../../../cenm/1.3/gateway-service.md) from your local machine.
+Use the CENM [Command Line Interface (CLI) Tool](../../../../cenm/1.4/cenm-cli-tool.md) to access the [Gateway Service](../../../../cenm/1.4/gateway-service.md) from your local machine.
 To star CENM CLI Tool run Docker command starting Docker container with the tool:
 
   ```bash
@@ -216,10 +218,10 @@ The welcome message will appear:
 You can now use `cemn` commands from within the running Docker container:
 
   ```bash
-  ./cenm context login -s -u <USER> -p <PASSWORD> http://<FARM-SERVICE-IP>:8080
+  ./cenm context login -s -u <USER> -p <PASSWORD> http://<GATEWAY-SERVICE-IP>:8080
   ```
 
-The [FARM Service](../../../../cenm/1.3/gateway-service.md) is a gateway between the [Auth Service](../../../../cenm/1.3/auth-service.md) and front end services in CENM. It allows you to perform all network operations on the [Identity Manager Service](../../../../cenm/1.3/identity-manager.md), the [Network Map Service](../../../../cenm/1.3/network-map.md), and the [Signing Service](../../../../cenm/1.3/signing-service.md).
+The [Gateway Service](../../../../cenm/1.4/gateway-service.md) is a gateway between the [Auth Service](../../../../cenm/1.4/auth-service.md) and front end services in CENM. It allows you to perform all network operations on the [Identity Manager Service](../../../../cenm/1.4/identity-manager.md), the [Network Map Service](../../../../cenm/1.4/network-map.md), and the [Signing Service](../../../../cenm/1.4/signing-service.md).
 The IP address is dynamically allocated for each deployment and can be found with `kubectl get svc`.
 Use the following command to ensure that you are pointing at the correct namespace:
 
@@ -241,7 +243,7 @@ If the Docker container was not running, you need to restart it by reconnecting:
 
 ## Assigning permissions to users
 
-Login to web application ``http://<FARM-SERVICE-IP>:8080/admin`` using admin user and credentials.
+Login to web application ``http://<GATEWAY-SERVICE-IP>:8080/admin`` using admin user and credentials.
 The CENM network has no permissions assigned to Main Zone by default, you need to assign them manually.
 
 ### Join your network
@@ -329,7 +331,7 @@ database {
 
 ### Update network parameters
 
-Use the CENM [Command-Line (CLI) tool](../../../../cenm/1.3/cenm-cli-tool.md) to run commands to update the network parameters.
+Use the CENM [Command-Line (CLI) tool](../../../../cenm/1.4/cenm-cli-tool.md) to run commands to update the network parameters.
 
 See the official CENM documentation for more information about the list of available [network parameters](./config-network-parameters.html)
 and instructions on [updating network parameters](./updating-network-parameters.html).
@@ -344,7 +346,7 @@ This operation is scheduled to take place at regular intervals (by default, once
 
 ### Signing Service configuration
 
-The Signing Service is not managed by the [Angel Service](../../../../cenm/1.3/angel-service.md) in this deployment, therefore any CENM Command-Line Interface (CLI) tool commands trying to change the Signing Service configuration will take no effect.
+The Signing Service is not managed by the [Angel Service](../../../../cenm/1.4/angel-service.md) in this deployment, therefore any CENM Command-Line Interface (CLI) tool commands trying to change the Signing Service configuration will take no effect.
 To change the Singing Service configuration, you must log in to a Kubernetes pod, update the configuration file, and restart the service.
 
 ## Delete Network
@@ -360,7 +362,7 @@ The environment can be deleted via Helm, by deleting each deployed chart individ
 
 ```bash
 export CENM_PREFIX=cenm
-helm delete ${CENM_PREFIX}-auth ${CENM_PREFIX}-farm ${CENM_PREFIX}-idman ${CENM_PREFIX}-nmap ${CENM_PREFIX}-notary ${CENM_PREFIX}-pki ${CENM_PREFIX}-hsm ${CENM_PREFIX}-signer ${CENM_PREFIX}-zone ${CENM_PREFIX}-idman-ip ${CENM_PREFIX}-notary-ip
+helm delete ${CENM_PREFIX}-auth ${CENM_PREFIX}-gateway ${CENM_PREFIX}-idman ${CENM_PREFIX}-nmap ${CENM_PREFIX}-notary ${CENM_PREFIX}-pki ${CENM_PREFIX}-hsm ${CENM_PREFIX}-signer ${CENM_PREFIX}-zone ${CENM_PREFIX}-idman-ip ${CENM_PREFIX}-notary-ip
 ```
 
 ### Delete the whole environment without deleting IPs
@@ -369,7 +371,7 @@ If you run several ephemeral test networks in your development cycle, you might 
 
 ```bash
 export CENM_PREFIX=cenm
-helm delete ${CENM_PREFIX}-auth ${CENM_PREFIX}-farm ${CENM_PREFIX}-idman ${CENM_PREFIX}-nmap ${CENM_PREFIX}-notary ${CENM_PREFIX}-pki ${CENM_PREFIX}-hsm ${CENM_PREFIX}-signer ${CENM_PREFIX}-zone
+helm delete ${CENM_PREFIX}-auth ${CENM_PREFIX}-gateway ${CENM_PREFIX}-idman ${CENM_PREFIX}-nmap ${CENM_PREFIX}-notary ${CENM_PREFIX}-pki ${CENM_PREFIX}-hsm ${CENM_PREFIX}-signer ${CENM_PREFIX}-zone
 ```
 
 ## Deployment Customisation
@@ -425,7 +427,7 @@ There are a number of settings provided on each Helm chart, which allow easy cus
 common options. Each CENM service has its own dedicated page with more detailed documentation:
 
 * [Auth Service](deployment-kubernetes-auth.md)
-* [FARM Service](deployment-kubernetes-gateway.md)
+* [Gateway Service](deployment-kubernetes-gateway.md)
 * [Identity Manager Service](deployment-kubernetes-idman.md)
 * [Network Map Service](deployment-kubernetes-nmap.md)
 * [Corda Notary](deployment-kubernetes-notary.md)
@@ -460,7 +462,7 @@ helm install cenm-database bitnami/postgresql
 
 Follow the instructions displayed by the script output to connect to the database server via `psql`.
 You can create a separate database server for each CENM service by running the Helm script multiple times with different names
-and then setting up the database user/schema, following the instructions in the [CENM database setup](../../../../cenm/1.3/database-set-up.md) section.
+and then setting up the database user/schema, following the instructions in the [CENM database setup](../../../../cenm/1.4/database-set-up.md) section.
 Alternatively, you can create several databases inside the single PostgresSQL server you have just deployed, by running
 the following DDL commands:
 
@@ -523,7 +525,7 @@ where each command creates a CENM service consisting of the following:
 * Identity Manager Service
 * Network Map Service
 * Auth Service
-* FARM Service
+* Gateway Service
 * Corda Notary
 
 They need to be run in the correct order, as shown below:
@@ -534,12 +536,12 @@ cd network-services/deployment/k8s/helm
 # These Helm charts trigger public IP allocation
 helm install idman-ip idman-ip
 helm install notary-ip notary-ip
-helm install farm-ip farm-ip
+helm install gateway-ip gateway-ip
 
 # Run these commands to display allocated public IP addresses:
 kubectl get svc --namespace cenm idman-ip --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"   # step 1
 kubectl get svc --namespace cenm notary-ip --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"  # step 2
-kubectl get svc --namespace cenm farm-ip --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"  # step 3
+kubectl get svc --namespace cenm gateway-ip --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"  # step 3
 
 # These Helm charts bootstrap CENM
 helm install cenm-auth auth --set prefix=cenm --set acceptLicense=YES
@@ -549,7 +551,7 @@ helm install cenm-signer signer --set prefix=cenm --set acceptLicense=YES
 helm install cenm-idman idman --set prefix=cenm --set acceptLicense=Y --set idmanPublicIP=[use IP from step 1]
 helm install notary notary --set prefix=cenm --set acceptLicense=YES --set notaryPublicIP=[use IP from step 2]
 helm install cenm-nmap nmap --set prefix=cenm --set acceptLicense=YES
-helm install cenm-farm farm --set prefix=cenm --set acceptLicense=YES --set idmanPublicIP=[use IP from step 3]
+helm install cenm-gateway gateway --set prefix=cenm --set acceptLicense=YES --set idmanPublicIP=[use IP from step 3]
 
 # Run these commands to display allocated public IP for Network Map Service:
 kubectl get svc --namespace cenm nmap --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"
@@ -561,15 +563,15 @@ The Docker images used for the Kubernetes deployment are listed below for refere
 
 {{< table >}}
 
-| Service           | Image Name                         | Tag |
-|-------------------|------------------------------------|-----|
-| Identity Manager  | acrcenm.azurecr.io/nmap/nmap       | 1.3 |
-| Network Map       | acrcenm.azurecr.io/nmap/nmap       | 1.3 |
-| Signing           | acrcenm.azurecr.io/signer/signer   | 1.3 |
-| Zone              | acrcenm.azurecr.io/zone/zone       | 1.3 |
-| Auth              | acrcenm.azurecr.io/auth/auth       | 1.3 |
-| Farm              | acrcenm.azurecr.io/farm/farm       | 1.3 |
-| PKI Tool          | acrcenm.azurecr.io/pkitool/pkitool | 1.3 |
-| Notary            | acrcenm.azurecr.io/notary/notary   | 1.3 |
+| Service           | Image Name                           | Tag |
+|-------------------|--------------------------------------|-----|
+| Identity Manager  | acrcenm.azurecr.io/nmap/nmap         | 1.4 |
+| Network Map       | acrcenm.azurecr.io/nmap/nmap         | 1.4 |
+| Signing           | acrcenm.azurecr.io/signer/signer     | 1.4 |
+| Zone              | acrcenm.azurecr.io/zone/zone         | 1.4 |
+| Auth              | acrcenm.azurecr.io/auth/auth         | 1.4 |
+| Gateway           | acrcenm.azurecr.io/gateway/gateway   | 1.4 |
+| PKI Tool          | acrcenm.azurecr.io/pkitool/pkitool   | 1.4 |
+| Notary            | acrcenm.azurecr.io/notary/notary     | 1.4 |
 
 {{< /table >}}

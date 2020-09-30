@@ -13,7 +13,7 @@ weight: 70
 
 # CENM Zone Service Helm Chart
 
-This Helm chart is to configure, deploy, and run the [CENM Zone Service](../../../../cenm/1.3/zone-service.md) on Kubernetes.
+This Helm chart is to configure, deploy, and run the [CENM Zone Service](../../../../cenm/1.4/zone-service.md) on Kubernetes.
 
 ## Example usage
 
@@ -36,7 +36,7 @@ helm install cenm-zone auth --set idmanPublicIP=X.X.X.X --set prefix=cenm --set 
 | ----------------------------- | -------------------------------------------------------- | --------------------- |
 | `bashDebug`                   | Display additional information while running bash scripts (useful while investigating issues) | `false` |
 | `image.repository`            | URL to Zone Service Docker image repository              | `acrcenm.azurecr.io/zone/zone` |
-| `image.tag`                   | Docker image Tag | `1.3` |
+| `image.tag`                   | Docker image Tag | `1.4` |
 | `image.pullPolicy`            | Image pull policy. Ref.: https://kubernetes.io/docs/concepts/containers/images/#updating-images | `Always` |
 | `database.driverClassName`    | Zone Service database connection details | `org.h2.Driver` |
 | `database.jdbcDriver`         | Zone Service database connection details | `""`
@@ -55,4 +55,4 @@ helm install cenm-zone auth --set idmanPublicIP=X.X.X.X --set prefix=cenm --set 
 | `logsContainersEnabled`       | Enable container displaying live logs | `true`
 {{< /table >}}
 
-For additional information on database connection details, refer to the official documentation: [database documentation](../../../../cenm/1.3/config-database.md).
+For additional information on database connection details, refer to the official documentation: [database documentation](../../../../cenm/1.4/config-database.md).
