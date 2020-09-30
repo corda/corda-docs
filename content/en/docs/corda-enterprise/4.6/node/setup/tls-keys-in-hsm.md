@@ -25,28 +25,6 @@ You can store node TLS keys in HSM by using the optional `tlsCryptoServiceConfig
 
 * `tlsKeyAlias` is the alias of the TLS key. It can consist of up to 100 lowercase alphanumeric characters and the hyphen (-). Default value: `cordaclienttls`.
 
-
-### Related configuration options
-
-You should also consider the following related configuration options in the node configuration file, as follows:
-
-* `messagingServerSslConfiguration`: TLS configuration used to connect to external P2P Artemis message server. Required when `messagingServerExternal` = `true`. Also, it can be optionally used with embedded Artemis when external Bridge is configured.
-
-* `artemisCryptoServiceConfig`: an optional crypto service configuration which will be used for HSM TLS signing when interacting with the Artemis message server. This option only makes sense when `messagingServerSslConfiguration` is specified: either to connect to a standalone Artemis messaging server, or when external Bridge is configured. If this option is missing, the local file system will be used to store private keys inside JKS key stores, as defined by `messagingServerSslConfiguration`.
-
-* `messagingServerConnectionConfiguration`, `messagingServerBackupAddresses`, and `artemisCryptoServiceConfig` must be inside the `enterpriseConfiguration` section, but not inside `messagingServerSslConfiguration`.
-
-### HA Utilities and self-signed internal Artemis SSL keystore
-
-The HA Utilities tool produces the following files:
-
-* `artemisbridge.jks`: used by the standalone bridge. The path to this file should be specified in the `artemisSSLConfiguration` section in `firewall.conf`.
-* `artemisnode.jks`: optionally used by the node. When used, the path to this file should be specified in the `messagingServerSslConfiguration` section in `node.conf`.
-* `artemis.jks`: used by the standalone P2P Artemis broker.
-* `artemis-truststore.jks`: must be placed together with any of the above keystore files.
-
-### Storing TLS certificates in HSM
-
 A file-based `sslkeystore.jks` is still required to store TLS certificates, even if corresponding TLS keys are stored in CryptoService.
 
 ## Configuration example
