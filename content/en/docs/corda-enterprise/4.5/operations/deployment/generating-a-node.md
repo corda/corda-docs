@@ -461,8 +461,16 @@ To run the Dockerform task, follow these steps:
 
 * Run `./gradlew deployNodes` to generate the node files and folder structure.
 * Open the `build.gradle` file and add a new `dockerform` task after the existing `deployNodes` task:
+
+{{% warning %}}
+The docker image name must be specified by using the `dockerImage` property.
+{{% /warning %}}
+
 ```groovy
 task prepareDockerNodes(type: net.corda.plugins.Dockerform, dependsOn: ['jar']) {
+    // set docker image for each node
+    dockerImage = "corda/corda-zulu-java1.8-4.4"
+
     nodeDefaults {
         cordapp project(":contracts-java")
         }
