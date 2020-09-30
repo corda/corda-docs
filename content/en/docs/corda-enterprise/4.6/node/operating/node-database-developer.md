@@ -204,7 +204,6 @@ dataSourceProperties = {
    dataSource.password = <Database password>
 }
 database = {
-   transactionIsolationLevel = <Transaction isolation level>
    schema = <Database schema name>
    runMigration = true
 }
@@ -265,7 +264,6 @@ dataSourceProperties = {
     dataSource.password = "my_password"
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = my_schema
     runMigration = true
 }
@@ -298,7 +296,6 @@ dataSourceProperties = {
     dataSource.password = "my_password"
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = my_schema
     runMigration = true
 }
@@ -337,7 +334,6 @@ dataSourceProperties = {
     dataSource.password = "my_password"
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = my_user
     runMigration = true
 }
@@ -368,7 +364,6 @@ dataSourceProperties = {
     dataSource.password = "my_password"
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = my_schema
     runMigration = true
 }

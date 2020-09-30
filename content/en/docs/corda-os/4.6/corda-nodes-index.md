@@ -26,7 +26,6 @@ title: Nodes
 * [Node command-line options](node-commandline.md)
 * [Node administration](node-administration.md)
 * [Deploying a node to a server](deploying-a-node.md)
-* [Node database](node-database.md)
 * [Database access when running H2](node-database-access-h2.md)
 * [Database tables](node-database-tables.md)
 * [Upgrading CorDapps on a node](node-operations-upgrade-cordapps.md)

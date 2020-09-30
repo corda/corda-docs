@@ -46,7 +46,6 @@ notary {
           password={{ DB password }}
       }
       database {
-          initialiseSchema = false
           validateSchema = true
       }
   }
@@ -79,7 +78,6 @@ dataSourceProperties = {
     dataSource.password = [PASSWORD]
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = [SCHEMA]
 }
 jarDirs = [PATH_TO_JDBC_DRIVER_DIR]
@@ -181,4 +179,3 @@ dataSourceProperties = {
 
 The notary service is registered with the CENM identity service using the registration tool as documented in [notary registration](../ha-utilities.md#notary-reg-tool).
 Once the service is registered, each worker node is registered using the `initial-registration` process. See ../joining-a-compatibility-zone.
-

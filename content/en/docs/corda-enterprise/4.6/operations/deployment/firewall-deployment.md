@@ -663,7 +663,6 @@ dataSourceProperties { // Point at clustered Azure SQL Server
     dataSource.password = password
 }
 database {
-    transactionIsolationLevel = READ_COMMITTED
     runMigration = false
     schema = dbo
 }
@@ -733,7 +732,6 @@ dataSourceProperties { // Point at clustered Azure SQL Server
     dataSource.password = password
 }
 database {
-    transactionIsolationLevel = READ_COMMITTED
     runMigration = false
     schema = dbo
 }
@@ -1368,4 +1366,3 @@ The ultimate test is of course running some flows.
 it would make sense to check that `EntityA` can successfully talk to `Entity B`, as well as have some external node sending flows to `EntityA` and `Entity B`.
 
 Desired effect is dependent on the CorDapps installed, however the Bridge and the Float will log some stats every minute detailing the number of messages relayed in every direction.
-

@@ -373,7 +373,6 @@ dataSourceProperties = {
     dataSource.password = "my_password"
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = my_schema
 }
 ```
@@ -401,7 +400,6 @@ dataSourceProperties = {
     dataSource.password = "my_password"
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = my_schema
 }
 ```
@@ -428,7 +426,6 @@ dataSourceProperties = {
     dataSource.password = "my_password"
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = my_admin_user
 }
 ```
@@ -455,7 +452,6 @@ dataSourceProperties = {
     dataSource.password = "my_password"
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = my_schema
 }
 ```
@@ -649,7 +645,6 @@ dataSourceProperties = {
    dataSource.password = <Database password>
 }
 database = {
-   transactionIsolationLevel = <Transaction isolation level>
    schema = <Database schema name>
    runMigration = false
 }
@@ -705,7 +700,6 @@ dataSourceProperties = {
     dataSource.password = "my_password"
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = my_schema
     runMigration = false
 }
@@ -737,7 +731,6 @@ dataSourceProperties = {
     dataSource.password = "my_password"
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = my_schema
     runMigration = false
 }
@@ -776,7 +769,6 @@ dataSourceProperties = {
     connectionInitSql="alter session set current_schema=my_admin_user"
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = my_admin_user
     runMigration = false
 }
@@ -859,7 +851,6 @@ dataSourceProperties = {
     dataSource.password = null
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = my_schema
     runMigration = true
 }
@@ -891,7 +882,6 @@ dataSourceProperties = {
     dataSource.password = "my_password"
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = my_schema
     runMigration = false
 }

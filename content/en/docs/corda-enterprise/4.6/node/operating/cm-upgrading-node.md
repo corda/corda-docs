@@ -108,7 +108,6 @@ dataSourceProperties = {
     dataSource.password = <password>
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = <schema>
 }
 myLegalName = <node_legal_name>
@@ -139,7 +138,6 @@ dataSourceProperties = {
     dataSource.password = <password>
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = <schema>
 }
 myLegalName = <node_legal_name>
@@ -168,7 +166,6 @@ dataSourceProperties = {
     dataSource.password = <password>
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = <schema>
 }
 myLegalName = <node_legal_name>
@@ -195,7 +192,6 @@ dataSourceProperties = {
     dataSource.password = <password>
 }
 database = {
-    transactionIsolationLevel = READ_COMMITTED
     schema = <schema>
 }
 myLegalName = <node_legal_name>
