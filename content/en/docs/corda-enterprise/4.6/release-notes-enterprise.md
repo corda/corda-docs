@@ -57,7 +57,7 @@ Watch this short video overview of the ability to prevent duplicate flow starts 
 * We have rationalised the way in which [database schema management](#database-schema-harmonisation) is performed across Corda open source and Corda Enterprise. This includes improvements to the [Database Management Tool](#database-management-tool-improvements).
 * We now release [Docker images](#deployment-docker-images-for-corda-enterprise-firewall-and-all-corda-enterprise-setup-tools) for Corda Enterprise Firewall and all Corda Enterprise setup tools.
 * This release introduces a set of improvements to make the flow state machine more resilient.
-* We have added support for [storing node TLS keys in HSM](l#support-for-storing-node-tls-keys-in-hsm) even without running the Corda Firewall. A new optional `tlsCryptoServiceConfig` section was introduced inside `enterpriseConfiguration` in `node.conf`.
+* We have added support for [storing node TLS keys in HSM](#support-for-storing-node-tls-keys-in-hsm-without-firewall) even without running the Corda Firewall. A new optional `tlsCryptoServiceConfig` section was introduced inside `enterpriseConfiguration` in `node.conf`.
 * We have introduced Node Maintenance Mode, which enables you to [schedule maintenance windows](#node-maintenance-mode) for your nodes via the `maintenanceMode` configuration field within the `enterpriseConfiguration` [node configuration file](node/setup/corda-configuration-fields.html#enterpriseconfiguration) section.  
 * We have added the ability to perform message ID cleanup less aggressively. Corda Enterprise now performs a [less aggressive and safer cleanup](#ability-to-perform-message-id-cleanup-less-aggressively) of the table that contains identifiers of previously processed messages.
 
@@ -298,7 +298,7 @@ The node now supports storing its TLS keys in HSM even without running the Corda
 
 To migrate from file-based node's TLS keystore to HSM, you need to add `tlsCryptoServiceConfig` section into `node.conf` and renew TLS certificate and keys, as described in the [Renewing TLS certificates](ha-utilities.md#renewing-tls-certificates) section in [HA Utilities](ha-utilities.md).
 
-For more information, see [Storing node TLS keys in HSM](tls-keys-in-hsm.md).
+For more information, see [Storing node TLS keys in HSM](node/setup/tls-keys-in-hsm.md).
 
 ### LedgerGraph available as a stand-alone CorDapp
 
