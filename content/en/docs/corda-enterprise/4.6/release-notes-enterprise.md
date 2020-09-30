@@ -144,6 +144,11 @@ Corda’s RPC client now allows each flow to be started with a unique client-pro
 * A running flow can be reattached using the client ID. This allows its flow handle to be recovered.
 * The result of a completed flow can still be viewed after the flow has completed, using the client ID.
 
+This enables you to:
+
+* Reconnect reliably to previously started flows.  
+* Reclaim a flow's result or exception at any time in the future.
+
 For more information, see [Starting a flow with a client-provided unique ID](flow-start-with-client-id.md).
 
 #### Database schema harmonisation
