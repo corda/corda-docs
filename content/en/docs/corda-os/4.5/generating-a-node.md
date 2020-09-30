@@ -573,15 +573,9 @@ The node configuration described here is just an example. `Dockerform` allows yo
 {{< note >}}
 Make sure to use Corda gradle plugin version 5.0.10 or above.
 {{< /note >}}
-{{% warning %}}
-The docker image name must be specified by using the `dockerImage` property.
-{{% /warning %}}
 
 ```groovy
 task prepareDockerNodes(type: net.corda.plugins.Dockerform, dependsOn: ['jar']) {
-    // set docker image for each node
-    dockerImage = "corda/corda-zulu-java1.8-4.4"
-
     nodeDefaults {
         cordapp project(":contracts-java")
     }
