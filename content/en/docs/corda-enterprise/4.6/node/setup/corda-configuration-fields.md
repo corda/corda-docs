@@ -305,11 +305,23 @@ Allows fine-grained controls of various features only available in the enterpris
     * `rpcAuditDataRetentionPeriod` is a parameter to the RPC table maintenance task and specifies how long records should be kept for within the table for. The parameter is in HOCON *period* format - for example, `‘365d’, ‘1w’`. In general, the following suffixes should be sufficient: `‘d’ (days), ‘w’ (weeks), ‘m’ (months), ‘y’ (years)`. For more information on the HOCON period format see [HOCON-period-format](https://github.com/lightbend/config/blob/master/HOCON.md#period-format). The end of the retention period will be the current time (in UTC) minus the duration.
   * [Node Maintenance Mode](../operating/maintenance-mode.md#configuration-of-node-maintenance-mode) uses the `processedMessageCleanup` parameters (see below).
 * `processedMessageCleanup`
-  * An optional field that allows you to run the message ID cleanup task at shutdown. The same rules will apply for calculation of default values as when the activity runs at shutdown
-  * Parameters:
-    * `generalRetentionPeriodInDays` defines the number of days for the general retention period before cleanup occurs.
-    * `senderRetentionPeriodInDays` defines the number of days for the sender retention period before cleanup occurs.
+  * An optional field that allows you to run the message ID cleanup task at shutdown. The same rules will apply for calculation of default values as when the activity runs at shutdown.
   * This field and its parameters are also used by the [Node Maintenance Mode](../operating/maintenance-mode.md#configuration-of-node-maintenance-mode) (`maintenanceMode` just above) functionality.
+  * Parameters:
+    * `generalRetentionPeriodInDays` indicates the number of days a message (sent during recovery) will be retained. If not specified, it will default to the specified `senderRetentionPeriodInDays` value plus the event horizon duration (or 365 days, if the event horizon is larger than 365 days).
+    * `senderRetentionPeriodInDays` indicates the number of days a message (sent during normal operation) will be retained. If not specified, it will default to 7 days.
+    * In both of these cases, these are sensible defaults and **you should only update them after serious consideration and when advised to do so by R3 support**. Reducing the value of these periods means the node will clean up records more eagerly, so storage from the table will be reclaimed more quickly. However, this also means there is a higher risk of processing some messages more than once.
+  * Example:
+  ```
+  {
+      enterpriseConfiguration {
+          processedMessageCleanup {
+              generalRetentionPeriodInDays = 365
+              senderRetentionPeriodInDays = 7
+          }
+      }
+  }
+  ```
 
 ## Tuning
 
