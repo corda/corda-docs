@@ -169,7 +169,7 @@ a.button {
     <body>
       <!-- https://www.w3schools.com/howto/howto_js_tabs.asp -->
           <script type="text/javascript">
-            function openSection(evt, section) {
+            function openSection(section) {
   // Declare all variables
   var i, tabcontent, tablinks;
 
@@ -187,7 +187,24 @@ a.button {
 
   // Show the current tab, and add an "active" class to the button that opened the tab
   document.getElementById(section).style.display = "block";
-  evt.currentTarget.className += " active";
+  document.getElementById(section + "Button").className += " active";
+  // set a cookie to record the selected tab
+  document.cookie = "selectedTab = " + section;
+}
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i <ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
 }
           </script>
       <!-- Most of this content should probably be in content/en/_index.md -->
@@ -211,15 +228,15 @@ a.button {
 
                     </div>
 <div class="tab">
-  <button class="tablinks active" onclick="openSection(event, 'home')">Home</button>
-  <button class="tablinks" onclick="openSection(event, 'os')">Corda</button>
-  <button class="tablinks" onclick="openSection(event, 'enterprise')">Corda Enterprise</button>
-  <button class="tablinks" onclick="openSection(event, 'cenm')">CENM</button>
-  <button class="tablinks" onclick="openSection(event, 'tutorials')">Tutorials</button>
-  <button class="tablinks" onclick="openSection(event, 'training')">Training</button>
-  <!-- <button class="tablinks" onclick="openSection(event, 'refapps')">Reference Applications</button>-->
-  <button class="tablinks" onclick="openSection(event, 'featured')">Featured apps</button>
-  <!-- <button class="tablinks" onclick="openSection(event, 'security')">Security Advisories</button> -->
+  <button class="tablinks active" onclick="openSection('home')" id="homeButton">Home</button>
+  <button class="tablinks" onclick="openSection('os')" id="osButton">Corda</button>
+  <button class="tablinks" onclick="openSection('enterprise')" id="enterpriseButton">Corda Enterprise</button>
+  <button class="tablinks" onclick="openSection('cenm')" id="cenmButton">CENM</button>
+  <button class="tablinks" onclick="openSection('tutorials')" id="tutorialsButton">Tutorials</button>
+  <button class="tablinks" onclick="openSection('training')" id="trainingButton">Training</button>
+  <!-- <button class="tablinks" onclick="openSection('refapps')" id="refappsButton">Reference Applications</button>-->
+  <button class="tablinks" onclick="openSection('featured')" id="featuredButton">Featured apps</button>
+  <!-- <button class="tablinks" onclick="openSection(event, 'security')" id="securityButton">Security Advisories</button> -->
 </div>
 
 
@@ -835,6 +852,13 @@ a.button {
 <!--<div id="security" class="tabcontent">
     <h2>Security Advisories</h2>
   </div>-->
+  <script type="text/javascript">
+  if (document.cookie) {
+    var selectedTab;
+    selectedTab = getCookie('selectedTab');
+    openSection(selectedTab)
+  }
+</script>
         </main>
         <footer>
             <div>
