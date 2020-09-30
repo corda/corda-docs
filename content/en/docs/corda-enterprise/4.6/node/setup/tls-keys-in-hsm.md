@@ -58,35 +58,32 @@ A file-based keystore is still required to store TLS certificates, even if corre
 
 {{< /table >}}
 
-## Usage considerations
+## Changes in Corda Enterprise 4.6
 
 ### Using external bridge and embedded Artemis
 
-TLS keystore used by the node for P2P connections has been changed for configuration with external bridge and embedded Artemis.
+The TLS keystore used by the node for P2P connections in Corda Enterprise 4.6 has been changed for configuration with external bridge and embedded Artemis. Prior to Corda Enterprise 4.6, `sslkeystore.jks` was used at all times; from Corda Enterprise 4.6, `messagingServerSslConfiguration.sslKeystore` is used if configured, otherwise `sslkeystore.jks` is used as before.
 
-_Before_: sslkeystore.jks was always used
+This change allows for configuring different Artemis TLS keys for the node and the bridge when using HSM. The table below shows what options are supported in HSM:
 
-_After_: `messagingServerSslConfiguration.sslKeystore` is used if configured, otherwise sslkeystore.jks
+{{< table >}}
+| Artemis | Bridge | HSM support | Keystore|
+|:--------|:-------|:------------|:----------|
+| in      | in     | yes | `sslkeystore.jks`|
+| out     | out    | yes | as configured by `messagingServerSslConfiguration`|
+| in      | out    | no | `sslkeystore.jks` - if `messagingServerSslConfiguration` is not specified|
+| in      | out    | yes | as configured by `messagingServerSslConfiguration` (if present)|
+| out     | in     | - | not supported|
 
-The reason of this change is to allow configuring different Artemis TLS keys for node and bridge when using HSM. Previously, the only option was to use the same node's TLS key on both sides (by copying sslkeystore.jks), which is not supported with HSM.
+{{< /table >}}
 
-| Artemis | Bridge | HSM support | Keystore
-|---------|--------|-------------|----------
-| in      | in     | yes | sslkeystore.jks
-| out     | out    | yes | as configured by `messagingServerSslConfiguration`
-| in      | out    | no | sslkeystore.jks - if `messagingServerSslConfiguration` is not specified
-| in      | out    | yes | as configured by `messagingServerSslConfiguration` (if present)
-| out     | in     | - | not supported
+### Strict check for `messagingServerSslConfiguration`
 
-### Strict check for messagingServerSslConfiguration
-_Before_: `messagingServerSslConfiguration` was required `if (messagingServerExternal && messagingServerAddress != null)`.
-
-_After_: `messagingServerSslConfiguration` is unconditionally required for external Artemis (`messagingServerExternal` != `null`).
+Prior to Corda Enterprise 4.6, `messagingServerSslConfiguration` was required `if (messagingServerExternal && messagingServerAddress != null)`; from Corda Enterprise 4.6, `messagingServerSslConfiguration` is unconditionally required for external Artemis (`messagingServerExternal` != `null`).
 
 ### sslkeystore.jks is not always required
-_Before_: Node was unable to start without sslkeystore.jks, even if this keystore was not used, e.g. with external bridge and external Artemis.
 
-_After_: If `messagingServerSslConfiguration` is used for Artemis authentication, the node can be started without sslkeystore.jks. In this case, node's TLS key and certificate are only used by the bridge.
+Prior to Corda Enterprise 4.6, the node was unable to start without `sslkeystore.jks`, even if this keystore was not used - for example, with external bridge and external Artemis; from Corda Enterprise 4.6, if `messagingServerSslConfiguration` is used for Artemis authentication, the node can be started without sslkeystore.jks. In this case, node's TLS key and certificate are only used by the bridge.
 
 ## Configuration examples
 
