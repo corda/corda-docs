@@ -259,6 +259,7 @@ Allows fine-grained controls of various features only available in the enterpris
   * The alias of the distributed notary signing key alias (used if this node is a notary). Allowed are up to 100 lower case alphanumeric    characters and the hyphen (-).
   * *Default:* distributed-notary-private-key
 * `messagingServerSslConfiguration`
+  * TLS configuration used to connect to external P2P Artemis message server. Required when `messagingServerExternal` = `true`. Also, it can be used optionally with embedded Artemis when external Bridge is configured.
   * `sslKeystore`
     * The path to the KeyStore file to use in Artemis connections.
     * *Default:* not defined
@@ -322,6 +323,14 @@ Allows fine-grained controls of various features only available in the enterpris
       }
   }
   ```
+* `tlsCryptoServiceConfig`
+  * Optional crypto service configuration to store node's TLS private key in HSM. If this option is missing, the TLS private key will be stored in the file-based `sslkeystore.jks`.
+  * Parameters:
+    * `cryptoServiceName`: the name of the CryptoService provider to be used.
+    * `cryptoServiceConf`: the path to the configuration file for the CryptoService provider.
+* `tlsKeyAlias`
+  * The alias of the TLS key. It can consist of up to 100 lowercase alphanumeric characters and the hyphen (-).
+  * *Default:* `cordaclienttls`
 
 ## Tuning
 
@@ -512,6 +521,10 @@ Setting this to `false` overrides this behaviour and runs the artemis internally
 This allows the address and port advertised in `p2pAddress` to differ from the local binding, especially if there is external remapping by firewalls, load balancers , or routing rules. Note that `detectPublicIp` should be set to `false` to ensure that no translation of the `p2pAddress` occurs before it is sent to the network map.
 
 0.0.0.0 is not a valid host setting since p2pAddress must be an external client address.
+
+{{< note >}}
+When `messagingServerExternal` = `true`, `messagingServerSslConfiguration` is required for TLS configuration used to connect to external P2P Artemis message server.
+{{< /note >}}
 
 *Default:* not defined
 
