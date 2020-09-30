@@ -47,6 +47,8 @@ By default, the node will look for a configuration file called `node.conf` and a
 in the current working directory. You can override the configuration file and workspace paths on the command line (e.g.
 `./corda.jar --config-file=test.conf --base-directory=/opt/corda/nodes/test`).
 
+If you need to initialise or migrate the node's database schema objects, you need to run the `run-migration-scripts` sub-command. See [Node command-line options](node-commandline.md) for details.
+
 ### Setting JVM arguments
 
 There are several ways to set JVM arguments for the node process (particularly the garbage collector and the memory settings).
@@ -246,6 +248,8 @@ The steps described above enable you to create the same test deployment as a `de
 
 Depending on the versions of Corda and of the CorDapps used, database migration scripts might need to run before a node is able to start.
 For more information, see [Database management](node-database.md).
+
+From Corda 4.6, if you need to initialise or migrate the node's database schema objects, you need to run the `run-migration-scripts` sub-command. See [Node command-line options](node-commandline.md) for details.
 
 
 ## Stability of the Corda Node

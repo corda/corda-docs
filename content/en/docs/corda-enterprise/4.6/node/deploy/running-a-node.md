@@ -42,6 +42,8 @@ By default, the node will look for a configuration file called `node.conf` and a
 in the current working directory. You can override the configuration file and workspace paths on the command line (e.g.
 `./corda.jar --config-file=test.conf --base-directory=/opt/corda/nodes/test`).
 
+If you need to initialise or migrate the node's database schema objects, you need to run the `run-migration-scripts` sub-command. See [Node command-line options](../../node-commandline.md) for details.
+
 {{< note >}}
 If your node configuration file is obfuscated and you want to deobfuscate it when running the node, you need to pass the
 obfuscation seed and passphrase to the node in the node run command.
@@ -153,6 +155,8 @@ You can optionally start a node using the following command-line options:
 * `--help`, `-h`: Show this help message and exit.
 * `--version`, `-V`: Print version information and exit.
 * `--pause-all-flows`: Paused all flows when the node starts up. Starting a node with the `--pause-all-flows` command-line option automatically enables flow draining mode but does not modify the node's configuration file. See [Pause and resume flows](../../flow-pause-and-resume.md#starting-the-node-and-pausing-all-flows) for more information.
+* `--allow-hibernate-to-manage-app-schema`: enable this option to make the node manage app schemas automatically using Hibernate
+with H2 in dev mode.
 
 #### Sub-commands
 
@@ -164,9 +168,9 @@ You can optionally start a node using the following command-line options:
 
 **Important note about running the initial node registration command**
 
-In Corda 4.6, database schemas are no longer initialised/migrated automatically by running any command at the first run of the node - typically at the initial node registration. This is now done explicitly by running `run-migration-scripts`, so no other commands during the first node run would initialise/migrate the database schema. 
+In Corda 4.6, database schemas are no longer initialised/migrated automatically by running any command at the first run of the node - typically at the initial node registration. This is now done explicitly by running `run-migration-scripts`, so no other commands during the first node run would initialise/migrate the database schema.
 
-The exception to that is the `--initial-registration` command, which embeds `run-migration-scripts` and therefore runs the database migration scripts by default. 
+The exception to that is the `--initial-registration` command, which embeds `run-migration-scripts` and therefore runs the database migration scripts by default.
 
 So if you are using deployment automation you may need to adjust your scripts accordingly and exclude the database initialisation/migration task from the initial node registration command. To do so, use the `--skip-schema-creation` flag alongside the `--initial-registration` command.
 
@@ -175,10 +179,17 @@ So if you are using deployment automation you may need to adjust your scripts ac
 
 Parameters:
 
-
 * `--network-root-truststore`, `-t` **required**: Network root trust store obtained from the network operator.
 * `--network-root-truststore-password`, `-p`: Network root trust store password obtained from the network operator.
 * `--skip-schema-creation`: Skips the default database migration step.
+
+`run-migration-scripts`: from version 4.6, a Corda node can no longer modify/create schema on the fly in normal run mode - schema setup or changes must be
+applied deliberately using this sub-command. It runs the database migration script for the requested schema set defined in the following parameters. Once it creates or modifies the schema(s), the sub-command will exit.
+
+Parameters:
+
+* `--core-schemas`: use to run the core database migration script for the node database. Core schemas cannot be migrated while there are checkpoints.
+* `--app-schemas`: use to run the app database migration script for CorDapps. To force an app schema to migrate with checkpoints present, use the `--update-app-schema-with-checkpoints` flag alongside the `run-migration-scripts` sub-command.
 
 `generate-node-info`: Performs the node start-up tasks necessary to generate the `node.info` file, saves it to disk, then exits.
 
@@ -278,6 +289,8 @@ The steps described above enable you to create the same test deployment as a `de
 
 Depending on the versions of Corda and of the CorDapps used, database migration scripts might need to run before a node is able to start.
 For more information, see [Database management](../../node-database-intro.md).
+
+If you need to initialise or migrate the node's database schema objects, you need to run the `run-migration-scripts` sub-command. See [Node command-line options](../../node-commandline.md) for details.
 
 
 ## Stability of the Corda Node
