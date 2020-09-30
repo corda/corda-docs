@@ -157,9 +157,7 @@ with multiple accounts for each task The Signing Service now prompts a specific 
 * There are currently two inconsistencies in service console error codes:
   * `config-parse-error` does not display help while `config-file-not-readable` does.
   * `config-parse-error` does not colour the error code red while `config-file-not-readable` does.
-* Some services use logs inconsistently:
-  * Different services write error codes to different logs - either `DUMP` only, or both `OPS` and `DUMP`.
-  * The Command-line Interface (CLI) Tool throws a Java DUMP exception instead of producing an error code for certain issues.
+* There are currently two different logs that services write error codes to (`DUMP` and `OPS`), with some services writing to both.
 * The `config-parsing-and-validation-error` code cannot be triggered and appears as `config-parse-error`.
 * On execution of `submitCertificateRevocationRequestWithLegalName` when the Identity Manager Service configuration does not have a `REVOCATION` workflow, the Admin RPC client does not throw exceptions as expected and returns empty responses instead. It should throw two `RpcServerException` exceptions with `IDENTITY_MANAGER_INVALID_REVOCATION_REASON` and `IDENTITY_MANAGER_CERTIFICATE_NOT_FOUND` codes or an exception noting that the `REVOCATION` workflow is not set up.
 *  The `config-file-doesnt-exist` error code does not appear when the Signing Service is started with a non-existing configuration file. No error code or link to relevant documentation appears in the console or logs.
