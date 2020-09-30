@@ -29,4 +29,5 @@ title: CorDapps
 * [Debugging a CorDapp](debugging-a-cordapp.md)
 * [Secure coding guidelines](secure-coding-guidelines.md)
 * [Configuring Responder Flows](flow-overriding.md)
+* [Starting a flow with a client-provided unique ID](flow-start-with-client-id.md)
 * [Flow cookbook](flow-cookbook.md)
