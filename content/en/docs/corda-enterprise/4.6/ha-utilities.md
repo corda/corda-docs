@@ -261,6 +261,13 @@ Before re-running the tool, previously created keystore files must be removed fr
 
 {{< /note >}}
 
+The HA Utilities tool produces the following files:
+
+* `artemisbridge.jks`: used by the standalone bridge. The path to this file should be specified in the `artemisSSLConfiguration` section in `firewall.conf`.
+* `artemisnode.jks`: optionally used by the node. When used, the path to this file should be specified in the `messagingServerSslConfiguration` section in `node.conf`.
+* `artemis.jks`: used by the standalone P2P Artemis broker.
+* `artemis-truststore.jks`: must be placed together with any of the above keystore files.
+
 #### Command-line options
 
 ```shell
