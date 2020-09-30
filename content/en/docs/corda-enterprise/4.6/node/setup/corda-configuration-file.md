@@ -239,7 +239,7 @@ Here are the contents of the `reference.conf` file:
 ### Simple notary configuration file
 
 ```
-    myLegalName = "O=Notary Service,OU=corda,L=London,C=GB"
+    myLegalName = "O=Notary Node, L=London, C=GB"
     keyStorePassword = "cordacadevpass"
     trustStorePassword = "trustpass"
     p2pAddress = "localhost:12345"
@@ -250,6 +250,7 @@ Here are the contents of the `reference.conf` file:
         adminAddress = "my-corda-node:10004"
     }
     notary {
+        serviceLegalName = "O=Notary Service, L=London, C=GB"
         validating = false
     }
     compatibilityZoneURL : "https://cz.corda.net"

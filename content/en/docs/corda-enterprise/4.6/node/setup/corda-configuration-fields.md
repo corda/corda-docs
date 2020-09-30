@@ -534,7 +534,7 @@ specify the `serviceLegalName` and either the `mysql` (deprecated) or `jpa` conf
   * Boolean to determine whether the notary is a validating or non-validating one.
   * *Default:* false
 * `serviceLegalName`
-  * If the node is part of a distributed cluster, specify the legal name of the cluster. At runtime, Corda checks whether this name matches the name of the certificate of the notary cluster.
+  * Specify the legal name of the notary service. At runtime, Corda checks whether this name matches the name of the certificate of the notary.
   * *Default:* not defined
 * `extraConfig`
   * Configuration for the single-node notary only. For HA notaries use either the `mysql` (deprecated) or `jpa` configuration.
