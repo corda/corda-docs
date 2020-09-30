@@ -231,7 +231,7 @@ For more information about platform versions, see [Versioning](versioning.md).
 
 {{< warning >}}
 
-As part of the operational improvements around [database schema harmonisation](#database-schema-harmonisation), we have made in Corda 4.6 require a number of manual steps when upgrading to Corda 4.6 from a previous version. These changes are described in detail in the following pages:
+The operational improvements around [database schema harmonisation](#database-schema-harmonisation) that we have made in Corda 4.6 require a number of manual steps when upgrading to Corda 4.6 from a previous version. These changes are described in detail in the following pages:
 * [Upgrading CorDapps to newer Platform Versions](app-upgrade-notes.md).
 * [Upgrading nodes to a new Corda version](node-upgrade-notes.md).
 
