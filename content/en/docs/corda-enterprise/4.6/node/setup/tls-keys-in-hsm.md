@@ -58,6 +58,22 @@ A file-based keystore is still required to store TLS certificates, even if corre
 
 {{< /table >}}
 
+## Configuration example
+
+`node.conf`:
+
+{{< tabs name="tabs-1" >}}
+{{% tab name="kotlin" %}}
+```kotlin
+enterpriseConfiguration = {
+    tlsCryptoServiceConfig = {
+       cryptoServiceName="AWS_CLOUD"
+       cryptoServiceConf="aws_cloud.conf"
+    }
+}
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 ## Migration notes
 

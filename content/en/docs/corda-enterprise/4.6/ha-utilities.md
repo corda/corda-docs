@@ -249,19 +249,17 @@ ha-utilities import-ssl-key [-hvV] [--logging-level=<loggingLevel>] [-b=FOLDER] 
 TLS is used to ensure communications between HA components and standalone Artemis are secured. This tool can be used to generate the required keystores if TLS cert signing infrastructure is not available within your organisation.
 Please note that for Artemis to work correctly, the password for the store and the password for the private key will need to be set to the same value.
 This tool can generate the private key used by the Bridge or the Node in an HSM.
-This will happen if the HSM name and HSM config file option is specified. Otherwise the file based keystore is used.
+This will happen if the `--bridge-hsm-name` and `--bridge-hsm-config-file` options are specified. Otherwise the file-based keystore is used.
 Regardless where the private keys are stored the public certificates are stored in the file based keystores.
 
-The tool does not include any third party supplied client side jar files needed when connecting to an HSM. These jar files are supplied by the HSM vendor. The tool does however assume that it can load
-these jar files from the drivers sub directory of the configured base-directory option. Before running the tool you need to make sure the required HSM client side jar files are in the drivers directory.
+The tool does not include any third-party supplied client side `.jar` files needed when connecting to an HSM. These `.jar` files are supplied by the HSM vendor. The tool does however assume that it can load these `.jar` files from the `drivers` sub-directory of the configured base directory option. Before running the tool you need to make sure the required HSM client side `.jar` files are in the `drivers` directory.
 This is only necessary when connecting to an HSM.
 
 {{< note >}}
-Before re-running the tool, previously created keystore files must be removed from the output directory.
-
+Before re-running the tool, you must remove any previously created keystore files from the output directory.
 {{< /note >}}
 
-The HA Utilities tool produces the following files:
+The following files are produced when you run the tool:
 
 * `artemisbridge.jks`: used by the standalone bridge. The path to this file should be specified in the `artemisSSLConfiguration` section in `firewall.conf`.
 * `artemisnode.jks`: optionally used by the node. When used, the path to this file should be specified in the `messagingServerSslConfiguration` section in `node.conf`.
