@@ -150,16 +150,10 @@ with multiple accounts for each task The Signing Service now prompts a specific 
 ### Known issues
 
 * Cloud deployment of CENM 1.4 on Azure or AWS will not work on the same cluster if CENM 1.2 or 1.3 is already running on that cluster (and vice versa). This is due to a conflict in the naming of some Kubernetes components used in both deployments, which currently prevents versions 1.2/1.3 and 1.4 from running on the same cluster.
-* Due to a known issue with `serviceLocations`, when the new optional `timeout` [parameter](signing-service.md#signing-service-configuration-parameters) is passed to the Zone Service via the Signing Service's `serviceLocations` configuration block, only the `timeout` value of the first `serviceLocations` location will be taken into account and used for all other service locations.
 * The Command-line Interface Tool `request status` command does not work for completed requests.
 * When there are incorrect `signer-ca` settings or a `ca-plugin` has stopped, an exception appears instead of a description of the issue.
-* The Gateway Service error `Invalid character found in method name. HTTP method names must be tokens` may occur after successfully deploying CENM on Kubernetes, registering new nodes, and performing flows. However, there is no side effect to this error and the user is able to connect to the Command-line Interface Tool and execute Command-line Interface commands.
-* There are currently two inconsistencies in service console error codes:
-  * `config-parse-error` does not display help while `config-file-not-readable` does.
-  * `config-parse-error` does not colour the error code red while `config-file-not-readable` does.
 * There are currently two different logs that services write error codes to (`DUMP` and `OPS`), with some services writing to both.
-* The `config-parsing-and-validation-error` code cannot be triggered and appears as `config-parse-error`.
-*  Error codes are not yet thrown consistently in logs or console across all services.
+* Error codes are not yet thrown consistently in logs or console across all services.
 * When multiple CRR requests are submitted, the certificates are not updated correctly from `VALID` to `REVOKED`. This issue does not affect the CRL.
 * When creating an AWS Postgres database, users are unable to connect to the database when they have selected the Virtual Private Cloud (VPC) of their Elastic Kubernetes Service (EKS) Cluster. However, they are able to connect when they have selected the default VPC.
 
