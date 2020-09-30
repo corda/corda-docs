@@ -157,23 +157,16 @@ with multiple accounts for each task The Signing Service now prompts a specific 
 * There are currently two inconsistencies in service console error codes:
   * `config-parse-error` does not display help while `config-file-not-readable` does.
   * `config-parse-error` does not colour the error code red while `config-file-not-readable` does.
-* Various CENM services handle and write new error codes to the logs inconsistently. The Signing Service, Identity Manager Service, and Network Map Service write error codes to the `DUMP` log. The Auth Service and Gateway Service write error codes to both the `OPS` and `DUMP` logs.
-* The `config-substitution-error` code is not triggered when it should be. The Angel Service for the Signing Service displays the `config-file-doesnt-exist` error code in the `DUMP` log, while the Zone Service throws an exception in the `OPS` and `DUMP` logs.
+* Some services are use logs inconsistently:
+  * Different services write error codes to different logs - either `DUMP` only, or both `OPS` and `DUMP`.
+  * The `config-substitution-error code` is not triggered when it should be.
+  * The Command-line Interface (CLI) Tool throws a Java DUMP exception instead of producing an error code for certain issues.
 * The `config-parsing-and-validation-error` code cannot be triggered and appears as `config-parse-error`.
-* The Auth and Gateway Services display two different error messages when their configurations do not exist. The correct error for the Auth Service is: `ERROR: Config file does not exist.` The correct error for the Gateway Service is: `ERROR: The file does not exist.`
-* Network Map Service updates get stuck after the registration of about 2,500 nodes.
-* The `smr` command in the Command-line Interface (CLI) Tool is only used in CENM version 1.3. Its usage in later versions is deprecated due to the removal of the SMR (Signable Material Retriever) Service in CENM 1.4 - see the [New features and enhancements](#new-features-and-enhancements) section above for more details.
-* The Admin RPC client incorrectly throws an `RpcServerException` with a `GENERAL_ERROR` code and a null message. It should throw an `RpcServerException` with a `SIGNER_SIGNABLE_MATERIAL_SOURCE_UNREACHABLE` error code.
 * On execution of `submitCertificateRevocationRequestWithLegalName` when the Identity Manager Service configuration does not have a `REVOCATION` workflow, the Admin RPC client does not throw exceptions as expected and returns empty responses instead. It should throw two `RpcServerException` exceptions with `IDENTITY_MANAGER_INVALID_REVOCATION_REASON` and `IDENTITY_MANAGER_CERTIFICATE_NOT_FOUND` codes or an exception noting that the `REVOCATION` workflow is not set up.
 *  The `config-file-doesnt-exist` error code does not appear when the Signing Service is started with a non-existing configuration file. No error code or link to relevant documentation appears in the console or logs.
-* When creating a user in the [CENM User Admin Tool](user-admin.md), there is a typo in the "Role Name" notification. The notification should read: "Role name field should not contain empty spaces!"
-* When several CRR requests are submitted and the `plugin-ca`/`signer-ca` is used, the CRL with CRR should be signed, records in the `workflow_crr` table should be updated, and the certificate statuses should be updated from `VALID` to `REVOKED`. However, currently the `signer-ca` shows revoked node details, the records in the `workflow_crr` table are `Pending`, and certificates are `VALID` instead of `REVOKED`.
-* There is an inconsistency in how configuration validation handles an incorrect `trustStore` location. For some parameters, a service will not start. For others, a service will try to start and will then fail.
-* The Command-line Interface (CLI) Tool should produce an error code instead of throwing Java `DUMP` exceptions (such as `java.io.FileNotFoundException`) for issues like adding the wrong file name or having a space in the path of a file.
+* When multiple CRR requests are submitted, the certificates are not updated correctly from `VALID` to `REVOKED`. This issue does not affect the CRL.
 * Information about the running version of CENM components is missing from the logs.
-* The app version is not displayed when running Helm Charts.
 * When a Signing Service is started with an incomplete or incorrect configuration, a stack trace occurs. This should be handled as an exception.
-* The CENM Command-line Interface Tool supports the following additional certificate revocation reasons, which are not supported by the Identity Manager Service: `CERTIFICATE_HOLD`, `UNUSED`, `REMOVE_FROM_CRL`, `AA_COMPROMISE`, and `UNSPECIFIED`.
 * When creating an AWS Postgres database, users are unable to connect to the database when they have selected the Virtual Private Cloud (VPC) of their Elastic Kubernetes Service (EKS) Cluster. However, they are able to connect when they have selected the default VPC.
 
 
