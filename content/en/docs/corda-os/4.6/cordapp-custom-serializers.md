@@ -255,4 +255,3 @@ into the serialized byte stream.
 
 By writing a custom serializer for a class it has the effect of adding that class to the whitelist, meaning such
 classes don’t need explicitly adding to the CorDapp’s whitelist.
-

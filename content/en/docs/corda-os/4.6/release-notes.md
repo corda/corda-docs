@@ -193,6 +193,8 @@ Note that this is an advanced feature, designed specifically for certain types t
 
 Custom checkpoint serializers are created by implementing the new `CheckpointCustomSerializer` interface.
 
+For more information, see [Pluggable serializers for CorDapp checkpoints](cordapp-custom-serializers-checkpoints.md).
+
 #### Automatic detection of unrestorable checkpoints
 
 Flows are now automatically serialized then deserialized whenever they reach a checkpoint. This allows better detection of flow code that creates checkpoints that cannot be deserialized, and enables developers and network operators to detect unrestorable checkpoints when developing CorDapps and thus reduces the risk of writing flows that cannot be retried gracefully.

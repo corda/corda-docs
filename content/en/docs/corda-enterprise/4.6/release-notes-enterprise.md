@@ -61,6 +61,13 @@ Watch this short video overview of the ability to prevent duplicate flow starts 
 * We have introduced Node Maintenance Mode, which enables you to [schedule maintenance windows](#node-maintenance-mode) for your nodes via the `maintenanceMode` configuration field within the `enterpriseConfiguration` [node configuration file](node/setup/corda-configuration-fields.html#enterpriseconfiguration) section.  
 * We have added the ability to perform message ID cleanup less aggressively. Corda Enterprise now performs a [less aggressive and safer cleanup](#ability-to-perform-message-id-cleanup-less-aggressively) of the table that contains identifiers of previously processed messages.
 
+**Developer experience features and improvements.**
+
+We are focused on improving the overall developer experience to ensure Corda maintains its status as an easy-to-use platform for developers. In this release we have a number of improvements that will help developers build more resilient applications.
+
+* [Automatic detection of unrestorable checkpoints](#automatic-detection-of-unrestorable-checkpoints). During development, flows are now automatically serialized then deserialized whenever they reach a checkpoint. This enables automatic detection of flow code that creates checkpoints that cannot be deserialized.
+* Register [custom pluggable serializers](#ability-to-register-custom-pluggable-serializers-for-cordapp-checkpoints) for CorDapp checkpoints. Custom serializers can now be used when serializing types as part of a flow framework checkpoint. Most classes will not need a custom serializer. This exists for classes that throw exceptions during checkpoint serialization. Implement the new `CheckpointCustomSerializer` interface to create a custom checkpoint serializer.
+
 Plus a lot more - please read these release notes carefully to understand what’s new in this release and how the new features and enhancements can help you.
 
 Corda Enterprise 4.6 supports Linux for production deployments, with Windows and macOS support for development and demonstration purposes only. See the Corda Enterprise [platform support matrix](platform-support-matrix.md) for more information.
@@ -238,6 +245,16 @@ The changes are briefly described below.
 * Location of output file when `dry-run` is used. The output file will now be created relative to the current working directory rather than the base directory.
 
 For more information, see [Database Management Tool](database-management-tool.md).
+
+#### Ability to register custom pluggable serializers for CorDapp checkpoints
+
+CorDapp developers now have the ability to create a custom serializer for a given type, which is then used when serializing the type in question as part of a flow framework checkpoint.
+
+Note that this is an advanced feature, designed specifically for certain types that throw exceptions during checkpoint serialization. The vast majority of classes will not need a custom serializer.
+
+Custom checkpoint serializers are created by implementing the new `CheckpointCustomSerializer` interface.
+
+For more information, see [Pluggable serializers for CorDapp checkpoints](cordapp-custom-serializers-checkpoints.md).
 
 ### Automatic detection of unrestorable checkpoints
 
