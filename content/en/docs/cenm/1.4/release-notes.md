@@ -159,7 +159,6 @@ with multiple accounts for each task The Signing Service now prompts a specific 
   * `config-parse-error` does not colour the error code red while `config-file-not-readable` does.
 * There are currently two different logs that services write error codes to (`DUMP` and `OPS`), with some services writing to both.
 * The `config-parsing-and-validation-error` code cannot be triggered and appears as `config-parse-error`.
-* On execution of `submitCertificateRevocationRequestWithLegalName` when the Identity Manager Service configuration does not have a `REVOCATION` workflow, the Admin RPC client does not throw exceptions as expected and returns empty responses instead. It should throw two `RpcServerException` exceptions with `IDENTITY_MANAGER_INVALID_REVOCATION_REASON` and `IDENTITY_MANAGER_CERTIFICATE_NOT_FOUND` codes or an exception noting that the `REVOCATION` workflow is not set up.
 *  Error codes are not yet thrown consistently in logs or console across all services.
 * When multiple CRR requests are submitted, the certificates are not updated correctly from `VALID` to `REVOKED`. This issue does not affect the CRL.
 * When creating an AWS Postgres database, users are unable to connect to the database when they have selected the Virtual Private Cloud (VPC) of their Elastic Kubernetes Service (EKS) Cluster. However, they are able to connect when they have selected the default VPC.
