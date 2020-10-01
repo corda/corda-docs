@@ -241,7 +241,7 @@ Allows fine-grained controls of various features only available in the enterpris
   * The alias of the distributed notary signing key alias (used if this node is a notary). Allowed are up to 100 lower case alphanumeric    characters and the hyphen (-).
   * *Default:* distributed-notary-private-key
 * `messagingServerSslConfiguration`
-  * TLS configuration used to connect to external P2P Artemis message server. Required when `messagingServerExternal` = `true`. Also, it can be used optionally with embedded Artemis when external Bridge is configured. For more information, see [Storing node TLS keys in HSM](../../tls-keys-in-hsm.md).
+  * TLS configuration used to connect to external P2P Artemis message server. Required when `messagingServerExternal` = `true`. Also, it can be used optionally with embedded Artemis when external Bridge is configured. For more information, see [Storing node TLS keys in HSM](tls-keys-in-hsm.md).
   * `sslKeystore`
     * The path to the KeyStore file to use in Artemis connections.
     * *Default:* not defined
@@ -254,22 +254,21 @@ Allows fine-grained controls of various features only available in the enterpris
   * `trustStorePassword`
     * The password for TLS TrustStore.
     * *Default:* not defined
-  * `messagingServerConnectionConfiguration`
-    * Mode used when setting up the Artemis client. Supported modes are: DEFAULT (5 initial connect attempts, 5 reconnect attempts in case of failure, starting retry interval of 5 seconds with an exponential back-off multiplier of 1.5 for up to 3 minutes retry interval),
-    * FAIL_FAST (no initial attempts, no reconnect attempts), CONTINUOUS_RETRY (infinite initial and reconnect attempts, starting retry interval of 5 seconds with an exponential back-of multiplier of 1.5 up for up to 5 minutes retry interval).
-    * *Default:* DEFAULT
-  * `messagingServerBackupAddresses`
-    * List of Artemis Server back-up addresses. If any back-ups are specified, the client will be configured to automatically failover to the first server it can connect to.
-    * *Default:* empty list
-  * `artemisCryptoServiceConfig`
-    * This is an optional crypto service configuration which will be used for HSM TLS signing when interacting with the Artemis message server.
-    * This option only makes sense when running a standalone Artemis messaging server to connect to the Bridge.
-    * If this option is missing, the local file system will be used to store private keys inside `JKS` key stores.
-    * `cryptoServiceName`
-      * The name of HSM provider to be used. E.g.: `UTIMACO`, `GEMALTO_LUNA`, etc.
-    * `cryptoServiceConf`
-      * Absolute path to HSM provider specific configuration which will contain everything necessary to establish connection with HSM.
-      * *Default:* Not present so local file system is used.
+* `messagingServerConnectionConfiguration`
+  * Mode used when setting up the Artemis client. Supported modes are: DEFAULT (5 initial connect attempts, 5 reconnect attempts in case of failure, starting retry interval of 5 seconds with an exponential back-off multiplier of 1.5 for up to 3 minutes retry interval),
+  * FAIL_FAST (no initial attempts, no reconnect attempts), CONTINUOUS_RETRY (infinite initial and reconnect attempts, starting retry interval of 5 seconds with an exponential back-of multiplier of 1.5 up for up to 5 minutes retry interval).
+  * *Default:* DEFAULT
+* `messagingServerBackupAddresses`
+  * List of Artemis Server back-up addresses. If any back-ups are specified, the client will be configured to automatically failover to the first server it can connect to.
+  * *Default:* empty list
+* `artemisCryptoServiceConfig`
+  * This is an optional crypto service configuration which will be used for HSM TLS signing when interacting with the Artemis message server.
+  * This option only makes sense when `messagingServerSslConfiguration` is specified: either to connect to a standalone Artemis messaging server, or when external Bridge is configured. If this option is missing, the local file system will be used to store private keys inside JKS key stores, as defined by `messagingServerSslConfiguration`.
+  * `cryptoServiceName`
+    * The name of HSM provider to be used. E.g.: `UTIMACO`, `GEMALTO_LUNA`, etc.
+  * `cryptoServiceConf`
+    * Absolute path to HSM provider specific configuration which will contain everything necessary to establish connection with HSM.
+    * *Default:* Not present so local file system is used.
 * `attachmentClassLoaderCacheSize`
   * This field can be used to configure the attachments class loader cache size - this is the number of attachments per cache. This cache caches the class loaders used to store the transaction attachments.
   * *Default:* The default value is `256` attachments per cache.
@@ -505,7 +504,7 @@ This allows the address and port advertised in `p2pAddress` to differ from the l
 0.0.0.0 is not a valid host setting since p2pAddress must be an external client address.
 
 {{< note >}}
-When `messagingServerExternal` = `true`, `messagingServerSslConfiguration` is required for TLS configuration used to connect to external P2P Artemis message server. For more information, see [Storing node TLS keys in HSM](../../tls-keys-in-hsm.md).
+When `messagingServerExternal` = `true`, `messagingServerSslConfiguration` is required for TLS configuration used to connect to external P2P Artemis message server. For more information, see [Storing node TLS keys in HSM](tls-keys-in-hsm.md).
 {{< /note >}}
 
 *Default:* not defined
@@ -522,8 +521,13 @@ The name must be a valid X.500 distinguished name, as per the [node naming const
 
 ## `notary`
 
-Optional configuration object which if present configures the node to run as a notary. If running as part of a HA notary cluster, please
-specify the `serviceLegalName` and either the `mysql` (deprecated) or `jpa` configuration as described below. For a single-node notary only the `validating` property is required.
+Include this optional configuration object in the node configuration file if you want to configure the node to run as a notary.
+
+{{< warning >}}
+If running as part of a HA notary cluster, you must specify the `serviceLegalName` and either the `mysql` (deprecated) or `jpa` configuration as described below.
+
+For a single-node notary, you must specify the `validating` and `serviceLegalName` configuration fields.
+{{< /warning >}}
 
 * `validating`
   * Boolean to determine whether the notary is a validating or non-validating one.
