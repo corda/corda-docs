@@ -265,8 +265,8 @@ You must configure a service location for each signing task. The tasks retrieve
 unsigned material from these defined locations, and then push the signed material back to the
 same location once signed.
 
-Service locations directly connect to the service which manages the material
-(i.e. CSRs, Network Map).
+Service locations directly connect to the service, which manages the material
+(CSRs, Network Map).
 
 #### Signing Tasks
 
@@ -274,7 +274,7 @@ This configuration section defines each signing task that can be run via the ser
 entry to the `signers` configuration map, keyed by the human-readable alias for the task (used when interacting with
 the service via shell). The value for the entry consists of the configuration options specific to that task such as the
 signing key and data source that is uses (using the previously defined aliases in the `signingKeys` and
-`serviceLocation` configuration parameters and an optional `plugin` parameter if the task requires a plugin for signing),
+`serviceLocation` configuration parameters and an optional `plugin` parameter if the task requires a plug-in for signing),
 data type specific options such as the CSR validity period as well as schedule if applicable.
 
 Each signing task maps to exactly one of four possibly data types:
@@ -287,12 +287,12 @@ Each signing task maps to exactly one of four possibly data types:
 
 #### Using a Signing plugin
 
-Each entry in the `signers` map can use a plugin for signing. If the `plugin` configuration property is defined
+Each entry in the `signers` map can use a plug-in for signing. If the `plugin` configuration property is defined
 the material will be retrieved from the matching service (Identity Manager or Network Map) and it will be sent
-to the plugin for signing.
+to the plug-in for signing.
 
-The rest depends on the plugin's architecture. The only contract between the Signing Service and its plugins
-that the returned signing data must be a pre-defined type. For these types please refer to the
+The rest depends on the plug-in's architecture. The only contract between the Signing Service and its plug-ins
+that the returned signing data must be a pre-defined type. For more information about these types, see the
 [Developing Signing Plugins](#developing-signing-plugins) section.
 
 #### Scheduling Signing tasks
@@ -775,8 +775,8 @@ serviceLocation = [
 Only the host and port are mandatory, the rest of the properties are optional.
 When using a CSR or CRL task please make sure that no `subZoneId` is provided since that is only valid when using a Network Map.
 {{< note >}}
-Please note that this configuration might lead to duplication. For example for Network Parameters
-and Network Map signing tasks the `serviceLocation` property will probably be the same.
+Please note that this configuration might lead to duplication. For example, for Network Parameters
+and Network Map signing tasks, the `serviceLocation` property will probably be the same.
 {{< /note >}}
 
 * **crlDistributionPoint**:
@@ -1805,55 +1805,55 @@ public final class NMSigningData {
 
 ### Example Signing Plugins
 
-The Signing Service ships with example plugins.
+The Signing Service ships with example plug-ins.
 
 {{< note >}}
-Please note that these plugins should only be used as a base
-when developing plugins and they should never be used in a production environment.
+Please note that these plug-ins should only be used as a base
+when developing plug-ins and they should never be used in a production environment.
 {{< note >}}
 
-Please refer to the `README` docs inside the source folders for each plugin as it contains all the
-necessary information about the architecture and usage of those plugins.
+Please refer to the `README` docs inside the source directories for each plug-in as they contain all the
+necessary information about the architecture and usage of those plug-ins.
 
 #### Example CA Signing Plugin
 
 The CA plugin class name to configure is always `com.r3.enm.signingserviceplugins.exampleplugin.ca.ExampleCaSigningPlugin`.
 
-The diagram shows how the plugin works on a high level.  
-The plugin acts as a bridge between the Signing Service and a possible third party signer architecture.  
-The plugin will launch its own RPC server for the third party to connect to.
-This RPC API consists of fetching (getting the signable data) and submitting (pushing the signed data back).
+The diagram below shows how the plug-in works on a high level.  
+The plug-in acts as a bridge between the Signing Service and a possible third-party signer architecture.  
+The plug-in will launch its own RPC server for the third party to connect to.
+This RPC API involves fetching (getting the signable data) and submitting (pushing the signed data back).
 
-The plugin has an in-memory storage that acts as a database and stores two things:
-1. The requests that are signed by the 3rd party
-2. The requests that are ready to sign by the third party
+The plug-in has an in-memory storage that acts as a database and stores two things:
+1. The requests that are signed by the third party.
+2. The requests that are ready to sign by the third party.
 
-When the user submits a request for signing to the Signing Service, it will send the signable
-data to the plugin and returns a `PENDING` status immediately.
-The signing request will not be persisted to the CENM services yet (i.e. We don't consider the request done).
+When the user submits a request for signing to the Signing Service, it sends the signable
+data to the plug-in and returns a `PENDING` status immediately.
+The signing request is NOT persisted to the CENM services at this stage (the request is not yet considered done).
 
 
-The user will be informed that the signing has not finished yet and gets an id for tracking,
-something like this for a CSR request:
+The user is informed that the signing has not finished yet, and is sent an ID for tracking.
+For a CSR request, this looks as follows:
 
 ```
 The following requests didn't sign immediately, please follow up with the provided tracking it to check the request status:
  O=NodeA, L=London, C=GB - Tracking id: 00354917-5795-4969-96ee-ae2c4406fde3
 ```
 
-In the background the Signing Service will periodically query the plugin whether the given request(s) has been completed.
+In the background, the Signing Service periodically queries the plug-in to check whether the given request(s) has/have been completed.
 
-If any of the pending requests has been signed by the plugin (i.e. returns a `COMPLETED` status) the Signing Service
-will persist it to the CENM services, and the request will be done. This means that for example in case of a CSR request
+If any of the pending requests has been signed by the plug-in (so a `COMPLETED` status is returned for it), the Signing Service
+persists it to the CENM services, and the request is considered as done. As a result, in case of a CSR request for example,
 the Corda node will join the network.
 
-If any of the pending requests fail, the request will not be persisted and will be removed from the pending requests.
+If any of the pending requests fails, it is not persisted and is removed from the pending requests.
 
 
 ![image](./resources/example-ca-plugin-diagram.png)
 
-An example third party signer is also attached which will use a Signing Service configuration to sign the
-data stored inside the example CA plugin.
+An example third-party signer is also attached. It uses a Signing Service configuration to sign the
+data stored inside the example CA plug-in.
 
 {{< note >}}
 CA Plugin’s configuration file must be in the same directory as the service’s `.jar` file and must be named
@@ -1861,11 +1861,11 @@ CA Plugin’s configuration file must be in the same directory as the service’
 
 {{< /note >}}
 
-There is an example configuration attached to the source for both the CA Plugin and the third party Signer.
+There is an example configuration attached to the source for both the CA plug-in and the third-party Signer.
 
 #### Non CA Example Signing Plugin
 
-The non CA plugin class name to configure is always `com.r3.enm.signingserviceplugins.example.nonca.ExampleNonCaSigningPlugin`.
+The non-CA plug-in's class name to configure is always `com.r3.enm.signingserviceplugins.example.nonca.ExampleNonCaSigningPlugin`.
 
 The plug-in has an in-memory storage that contains two maps - one for the Network Parameters requests and another one
 for the Network Map requests. In a real-world scenario, this would be a database where the status of
@@ -1880,7 +1880,7 @@ Non CA Plugin’s configuration file must be in the same directory as the servic
 
 There is an example configuration in the `resources` directory.
 
-This configuration contains the signing key that should be used for NetMap/NetParams signing. The configuration
+This configuration contains the signing key that should be used for Network Map / Network Parameters signing. The configuration
 is parsed as a Signing Service configuration for the sake of simplicity, so it contains some placeholder data.
 
 The plug-in can use HSM signing too, not just local signing -
@@ -1891,9 +1891,9 @@ and create the configuration accordingly.
 The Network Map signing key must be aliased as `NetworkMapLocal` in the configuration.
 {{< /note >}}
 
-Once the signing is done, the plug-in will return a COMPLETED status immediately.
+Once the signing is done, the plug-in will return a `COMPLETED` status immediately.
 
-This means that this example does not utilise the async signing completely - so, there will be no `PENDING` status.
+This means that this example does not utilise the asynchronous signing completely - so, there will be no `PENDING` status.
 However, the tracking ID will still be returned and the request can be tracked via the tracking functions.
 
 ### Other Sample Plugins
