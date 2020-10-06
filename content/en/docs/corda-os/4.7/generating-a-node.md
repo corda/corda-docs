@@ -5,9 +5,9 @@ aliases:
 - /generating-a-node.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-6:
-    identifier: corda-os-4-6-generating-a-node
-    parent: corda-os-4-6-corda-nodes-index
+  corda-os-4-7:
+    identifier: corda-os-4-7-generating-a-node
+    parent: corda-os-4-7-corda-nodes-index
     weight: 1130
 tags:
 - generating

@@ -5,9 +5,9 @@ aliases:
 - /tutorial-custom-notary.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-6:
-    identifier: corda-os-4-6-tutorial-custom-notary
-    parent: corda-os-4-6-supplementary-tutorials-index
+  corda-os-4-7:
+    identifier: corda-os-4-7-tutorial-custom-notary
+    parent: corda-os-4-7-supplementary-tutorials-index
     weight: 1170
 tags:
 - tutorial

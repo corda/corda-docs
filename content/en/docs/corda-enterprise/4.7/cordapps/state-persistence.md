@@ -1,10 +1,10 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-6:
-    identifier: corda-enterprise-4-6-cordapps-states-persistence
+  corda-enterprise-4-7:
+    identifier: corda-enterprise-4-7-cordapps-states-persistence
     name: "State persistence"
-    parent: corda-enterprise-4-6-cordapps-states
+    parent: corda-enterprise-4-7-cordapps-states
 tags:
 - state
 - persistence

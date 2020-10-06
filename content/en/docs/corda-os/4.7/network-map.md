@@ -5,9 +5,9 @@ aliases:
 - /network-map.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-6:
-    identifier: corda-os-4-6-network-map
-    parent: corda-os-4-6-corda-networks-index
+  corda-os-4-7:
+    identifier: corda-os-4-7-network-map
+    parent: corda-os-4-7-corda-networks-index
     weight: 1030
 tags:
 - network

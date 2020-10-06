@@ -3,9 +3,9 @@ aliases:
 - /pki-guide.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-4:
-    identifier: cenm-1-4-pki-guide
-    parent: cenm-1-4-public-key-infrastructure
+  cenm-1-5:
+    identifier: cenm-1-5-pki-guide
+    parent: cenm-1-5-public-key-infrastructure
     weight: 310
 tags:
 - pki

@@ -5,9 +5,9 @@ aliases:
 - /key-concepts-notaries.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-6:
-    identifier: corda-os-4-6-key-concepts-notaries
-    parent: corda-os-4-6-key-concepts
+  corda-os-4-7:
+    identifier: corda-os-4-7-key-concepts-notaries
+    parent: corda-os-4-7-key-concepts
     weight: 1080
 tags:
 - concepts

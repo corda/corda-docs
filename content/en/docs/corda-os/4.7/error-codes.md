@@ -5,9 +5,9 @@ aliases:
 - /error-codes.html
 date: '2020-05-05T12:00:00Z'
 menu:
-  corda-os-4-6:
-    identifier: corda-os-4-6-error-codes
-    parent: corda-os-4-6-clientrpc
+  corda-os-4-7:
+    identifier: corda-os-4-7-error-codes
+    parent: corda-os-4-7-clientrpc
     weight: 4000
 tags:
 - error

@@ -5,9 +5,9 @@ aliases:
 - /setting-up-a-dynamic-compatibility-zone.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-6:
-    identifier: corda-os-4-6-setting-up-a-dynamic-compatibility-zone
-    parent: corda-os-4-6-corda-networks-index
+  corda-os-4-7:
+    identifier: corda-os-4-7-setting-up-a-dynamic-compatibility-zone
+    parent: corda-os-4-7-corda-networks-index
     weight: 1090
 tags:
 - setting

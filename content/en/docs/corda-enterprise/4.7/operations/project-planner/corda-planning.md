@@ -1,10 +1,10 @@
 ---
 date: '2020-06-18T12:00:00Z'
 menu:
-  corda-enterprise-4-6:
-    identifier: corda-enterprise-4-6-ops-project-planning
+  corda-enterprise-4-7:
+    identifier: corda-enterprise-4-7-ops-project-planning
     name: "Corda for project planners"
-    parent: corda-enterprise-4-6-operations-guide
+    parent: corda-enterprise-4-7-operations-guide
 tags:
 - operations
 - deployment

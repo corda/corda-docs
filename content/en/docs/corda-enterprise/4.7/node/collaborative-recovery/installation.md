@@ -1,8 +1,8 @@
 ---
 date: '2020-04-24T12:00:00Z'
 menu:
-  corda-enterprise-4-6:
-    parent: corda-enterprise-4-6-corda-nodes-collaborative-recovery
+  corda-enterprise-4-7:
+    parent: corda-enterprise-4-7-corda-nodes-collaborative-recovery
 tags:
 - disaster recovery
 - collaborative recovery

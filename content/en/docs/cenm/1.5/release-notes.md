@@ -3,9 +3,9 @@ aliases:
 - /release-notes.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-4:
-    identifier: cenm-1-4-release-notes
-    parent: cenm-1-4-cenm-releases
+  cenm-1-5:
+    identifier: cenm-1-5-release-notes
+    parent: cenm-1-5-cenm-releases
     weight: 80
 tags:
 - release

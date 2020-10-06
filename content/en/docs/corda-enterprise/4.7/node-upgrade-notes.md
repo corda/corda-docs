@@ -1,10 +1,10 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-6:
-    identifier: "corda-enterprise-4-6-node-upgrade"
+  corda-enterprise-4-7:
+    identifier: "corda-enterprise-4-7-node-upgrade"
     name: "Upgrading Nodes to Corda Enterprise 4.6"
-    parent: corda-enterprise-4-6-upgrading-menu
+    parent: corda-enterprise-4-7-upgrading-menu
 tags:
 - node
 - upgrade

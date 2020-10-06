@@ -1,8 +1,8 @@
 ---
 menu:
-  cenm-1-4:
-    identifier: cenm-1-4-aws-deployment-guide
-    parent: cenm-1-4-operations
+  cenm-1-5:
+    identifier: cenm-1-5-aws-deployment-guide
+    parent: cenm-1-5-operations
 tags:
 - config
 - kubernetes

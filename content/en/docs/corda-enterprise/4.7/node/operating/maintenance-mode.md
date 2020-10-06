@@ -1,10 +1,10 @@
 ---
 date: '2020-05-05T12:00:00Z'
 menu:
-  corda-enterprise-4-6:
-    identifier: corda-enterprise-4-6-node-maintenance-mode
+  corda-enterprise-4-7:
+    identifier: corda-enterprise-4-7-node-maintenance-mode
     name: "Node Maintenance Mode"
-    parent: corda-enterprise-4-6-corda-nodes-operating
+    parent: corda-enterprise-4-7-corda-nodes-operating
     weight: 7
 tags:
 - maintenance
@@ -64,7 +64,7 @@ This is the *“cron-like”* expression which is used to control at what time(s
 │ │ │ ┌───────── day of the month (1 - 31)
 │ │ │ │ ┌─────── month (1 - 12)
 │ │ │ │ │ ┌───── day of the week (0 - 6) (Sunday to Saturday)
-│ │ │ │ │ │                                  
+│ │ │ │ │ │
 │ │ │ │ │ │
 │ │ │ │ │ │
 * * * * * *

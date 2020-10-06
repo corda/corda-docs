@@ -3,9 +3,9 @@ aliases:
 - /ejbca-plugin.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-4:
-    identifier: cenm-1-4-ejbca-plugin
-    parent: cenm-1-4-signing-plugin-samples
+  cenm-1-5:
+    identifier: cenm-1-5-ejbca-plugin
+    parent: cenm-1-5-signing-plugin-samples
     weight: 340
 tags:
 - ejbca

@@ -1,8 +1,8 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-6:
-    parent: corda-enterprise-4-6-corda-nodes-operating-db
+  corda-enterprise-4-7:
+    parent: corda-enterprise-4-7-corda-nodes-operating-db
 tags:
 - node
 - database
@@ -407,7 +407,7 @@ ensure that:
 
 
 * the node can connect to the  database with **administrative permissions** or runs with the default embedded H2 database.
-* you have administrative permissions and you run the `run-migration-script` sub-command with at least one of the following parameters: `--core-schemas` and `--app-schemas`. 
+* you have administrative permissions and you run the `run-migration-script` sub-command with at least one of the following parameters: `--core-schemas` and `--app-schemas`.
 
 
 

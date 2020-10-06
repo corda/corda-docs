@@ -4,9 +4,9 @@ aliases:
 - /releases/release-1.4/cenm-cli-tool.html
 date: '2020-05-28T17:40:25Z'
 menu:
-  cenm-1-4:
-    identifier: cenm-1-4-cli-tool
-    parent: cenm-1-4-tools-index
+  cenm-1-5:
+    identifier: cenm-1-5-cli-tool
+    parent: cenm-1-5-tools-index
     weight: 1013
 tags:
 - CLI

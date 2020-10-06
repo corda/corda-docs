@@ -5,9 +5,9 @@ aliases:
 - /cordapp-advanced-concepts.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-6:
-    identifier: corda-os-4-6-cordapp-advanced-concepts
-    parent: corda-os-4-6-development
+  corda-os-4-7:
+    identifier: corda-os-4-7-cordapp-advanced-concepts
+    parent: corda-os-4-7-development
     weight: 160
 tags:
 - cordapp

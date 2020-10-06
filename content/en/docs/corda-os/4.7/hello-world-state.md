@@ -5,9 +5,9 @@ aliases:
 - /hello-world-state.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-6:
-    identifier: corda-os-4-6-hello-world-state
-    parent: corda-os-4-6-hello-world-introduction
+  corda-os-4-7:
+    identifier: corda-os-4-7-hello-world-state
+    parent: corda-os-4-7-hello-world-introduction
     weight: 1020
 tags:
 - state

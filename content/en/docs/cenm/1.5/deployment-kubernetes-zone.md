@@ -1,8 +1,8 @@
 ---
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-4:
-    parent: cenm-1-4-deployment-kubernetes
+  cenm-1-5:
+    parent: cenm-1-5-deployment-kubernetes
 tags:
 - config
 - kubernetes

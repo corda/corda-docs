@@ -5,9 +5,9 @@ aliases:
 - /building-the-docs.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-6:
-    identifier: corda-os-4-6-building-the-docs
-    parent: corda-os-4-6-contributing-index
+  corda-os-4-7:
+    identifier: corda-os-4-7-building-the-docs
+    parent: corda-os-4-7-contributing-index
     weight: 1060
 tags:
 - building

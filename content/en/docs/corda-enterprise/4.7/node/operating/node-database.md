@@ -1,10 +1,10 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-6:
-    identifier: corda-enterprise-4-6-corda-nodes-operating-db
+  corda-enterprise-4-7:
+    identifier: corda-enterprise-4-7-corda-nodes-operating-db
     name: "Understanding the node database"
-    parent: corda-enterprise-4-6-corda-nodes-operating
+    parent: corda-enterprise-4-7-corda-nodes-operating
 tags:
 - node
 - database
@@ -101,7 +101,7 @@ The database management tool is for production databases only. H2 databases cann
 
 {{< /note >}}
 
-You can review all available commands and options in the [Database Management Tool documentation](../../database-management-tool). 
+You can review all available commands and options in the [Database Management Tool documentation](../../database-management-tool).
 
 ## Node database tables
 

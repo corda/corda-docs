@@ -1,8 +1,8 @@
 ---
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-4:
-    parent: cenm-1-4-aws-deployment-guide
+  cenm-1-5:
+    parent: cenm-1-5-aws-deployment-guide
 tags:
 - config
 - AWS
@@ -182,8 +182,8 @@ E2E enabled on server 0(10.0.140.211)
 
 ## Code configuration
 
-The `AmazonCloudHsmCryptoService` class implements the communication with the CloudHSM cluster.  
-The configuration must include your credentials for the given cluster: a **CU** type user name, a password, and the partition name.  
+The `AmazonCloudHsmCryptoService` class implements the communication with the CloudHSM cluster.
+The configuration must include your credentials for the given cluster: a **CU** type user name, a password, and the partition name.
 In addition, a local certificate store must be present since CloudHSM does **not** store certificates due to safety precautions.
 
 The relevant parts of an example PKI Tool configuration is shown below for reference:

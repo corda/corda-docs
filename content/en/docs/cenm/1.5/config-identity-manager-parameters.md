@@ -3,9 +3,9 @@ aliases:
 - /config-identity-manager-parameters.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-4:
-    identifier: cenm-1-4-config-identity-manager-parameters
-    parent: cenm-1-4-configuration
+  cenm-1-5:
+    identifier: cenm-1-5-config-identity-manager-parameters
+    parent: cenm-1-5-configuration
     weight: 220
 tags:
 - config

@@ -3,9 +3,9 @@ aliases:
 - /upgrade-notes.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-4:
-    identifier: cenm-1-4-upgrade-notes
-    parent: cenm-1-4-operations
+  cenm-1.5:
+    identifier: cenm-1.5-upgrade-notes
+    parent: cenm-1.5-operations
     weight: 170
 tags:
 - upgrade

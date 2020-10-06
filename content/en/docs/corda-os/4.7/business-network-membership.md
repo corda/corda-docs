@@ -1,9 +1,9 @@
 ---
 date: '2020-09-25T12:00:00Z'
 menu:
-  corda-os-4-6:
-    identifier: corda-os-4-6-business-network-management
-    parent: corda-os-4-6-corda-networks-index
+  corda-os-4-7:
+    identifier: corda-os-4-7-business-network-management
+    parent: corda-os-4-7-corda-networks-index
     weight: 1200
 tags:
 - BNO
@@ -32,7 +32,7 @@ With this extension, you can use a set of flows to:
 * Assign members to membership lists or groups.
 * Update information about a member - such as their Business Network identity.
 * Modify a member's roles in the network.
-* Suspend or revoke membership.  
+* Suspend or revoke membership.
 
 {{< note >}}
 The code samples in this documentation show you how to run management operations using the provided primitives from the context of a tool or Cordapp. It is also possible to do these operations from an RPC client or node shell by simply invoking the supplied administrative flows using data resulted from executing vault queries.
@@ -283,7 +283,7 @@ subFlow(ModifyGroupFlow(bnGroupId, bnGroupName, newParticipantsList, notary))
 
 You can temporarily suspend a member or completely remove them from the business network. Suspending a member will result in a membership status change to `SUSPENDED` and still allow said member to be in the business network. Revocation means that the membership is marked as historic/spent and and a new one will have to be requested and activated in order for the member to re-join the network.
 
-When a membership is revoked, the member is also removed from all Business Network Groups. 
+When a membership is revoked, the member is also removed from all Business Network Groups.
 
 To suspend a member of the network:
 

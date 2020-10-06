@@ -1,8 +1,8 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-6:
-    parent: corda-enterprise-4-6-cordapps
+  corda-enterprise-4-7:
+    parent: corda-enterprise-4-7-cordapps
 tags:
 - oracles
 title: Writing oracle services
