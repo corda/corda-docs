@@ -88,12 +88,12 @@ jarDirs = [PATH_TO_JDBC_DRIVER_DIR]
 
 
 
-[node.conf](https://github.com/corda/corda-docs/tree/master/content/en/docs/corda-enterprise/4.7/resources/node.conf) | ![github](/images/svg/github.svg "github")
+[node.conf](../resources/node.conf) | ![github](/images/svg/github.svg "github")
 
 
 {{< /tabs >}}
 
-See ../corda-configuration-file for a complete reference.
+See [Node configuration](../../node/setup/corda-configuration-file.md) for a complete reference.
 
 
 ## MySQL notary (deprecated)
@@ -127,7 +127,7 @@ notary {
 
 
 
-[percona.conf](https://github.com/corda/corda-docs/tree/master/content/en/docs/corda-enterprise/4.7/resources/percona.conf) | ![github](/images/svg/github.svg "github")
+[percona.conf](../resources/percona.conf) | ![github](/images/svg/github.svg "github")
 
 
 
@@ -174,7 +174,7 @@ dataSourceProperties = {
 }
 ```
 
-[config_obfuscator](https://github.com/corda/corda-docs/tree/master/content/en/docs/corda-enterprise/4.7/config_obfuscator)
+[config_obfuscator](../resources/config_obfuscator)
 
 
 
