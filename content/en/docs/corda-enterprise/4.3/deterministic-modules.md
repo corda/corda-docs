@@ -112,7 +112,7 @@ task checkDeterminism(type: ProGuardTask, dependsOn: jdkTask) {
 
 ```
 
-{{/* github src='core-deterministic/build.gradle' url='https://github.com/corda/enterprise/blob/release/ent/4.3/core-deterministic/build.gradle#L174-L190' raw='https://raw.githubusercontent.com/corda/enterprise/release/ent/4.3/core-deterministic/build.gradle' start='DOCSTART 01' end='DOCEND 01' */}}[build.gradle](https://github.com/corda/enterprise/blob/release/ent/4.3/core-deterministic/build.gradle)
+[build.gradle](https://github.com/corda/enterprise/blob/release/ent/4.3/core-deterministic/build.gradle)
 
 This step will fail if ProGuard spots any Java API references that still cannot be satisfied by the deterministic
 `rt.jar`, and hence it will break the build.
