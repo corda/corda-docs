@@ -131,7 +131,7 @@ class DummyContractV2 : UpgradedContractWithLegacyConstraint<DummyContract.State
     }
 
 ```
-{{/* github src='kotlin/net/corda/testing/contracts/DummyContractV2.kt' url='https://github.com/corda/enterprise/blob/3.0/kotlin/net/corda/testing/contracts/DummyContractV2.kt' raw='https://raw.githubusercontent.com/corda/enterprise/3.0/kotlin/net/corda/testing/contracts/DummyContractV2.kt' start='DOCSTART 1' end='DOCEND 1' */}}[DummyContractV2.kt](https://github.com/corda/enterprise/blob/release/ent/3.0/testing/test-utils/src/main/kotlin/net/corda/testing/contracts/DummyContractV2.kt)
+{{/* github src='kotlin/net/corda/testing/contracts/DummyContractV2.kt' url='https://github.com/corda/enterprise/blob/3.0/kotlin/net/corda/testing/contracts/DummyContractV2.kt' raw='https://raw.githubusercontent.com/corda/enterprise/3.0/kotlin/net/corda/testing/contracts/DummyContractV2.kt' start='DOCSTART 1' end='DOCEND 1' */}}[DummyContractV2.kt](https://github.com/corda/corda/blob/release/os/3.0/testing/test-utils/src/main/kotlin/net/corda/testing/contracts/DummyContractV2.kt)
 
 * Bank A instructs its node to accept the contract upgrade to `DummyContractV2` for the contract state.
 
