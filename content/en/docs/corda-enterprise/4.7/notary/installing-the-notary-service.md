@@ -88,7 +88,8 @@ jarDirs = [PATH_TO_JDBC_DRIVER_DIR]
 
 
 
-[node.conf](https://github.com/corda/enterprise/blob/release/ent/4.6/docs/source/notary/resources/node.conf) | ![github](/images/svg/github.svg "github")
+[node.conf](https://github.com/corda/corda-docs/tree/master/content/en/docs/corda-enterprise/4.7/resources/node.conf) | ![github](/images/svg/github.svg "github")
+
 
 {{< /tabs >}}
 
@@ -126,7 +127,9 @@ notary {
 
 
 
-[percona.conf](https://github.com/corda/enterprise/blob/release/ent/4.6/docs/source/notary/resources/percona.conf) | ![github](/images/svg/github.svg "github")
+[percona.conf](https://github.com/corda/corda-docs/tree/master/content/en/docs/corda-enterprise/4.7/resources/percona.conf) | ![github](/images/svg/github.svg "github")
+
+
 
 {{< /tabs >}}
 
@@ -171,7 +174,7 @@ dataSourceProperties = {
 }
 ```
 
-[config_obfuscator](https://github.com/corda/enterprise/blob/release/ent/4.6/docs/source/notary/resources/config_obfuscator)
+[config_obfuscator](https://github.com/corda/corda-docs/tree/master/content/en/docs/corda-enterprise/4.7/config_obfuscator)
 
 
 
