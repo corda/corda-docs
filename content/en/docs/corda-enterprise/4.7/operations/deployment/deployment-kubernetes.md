@@ -331,10 +331,10 @@ database {
 
 ### Update network parameters
 
-Use the CENM [Command-Line (CLI) tool](../../../../cenm/1.4/cenm-cli-tool.md) to run commands to update the network parameters.
+Use the CENM [Command-Line (CLI) tool](../../../../cenm/1.4/cenm-cli-tool.md/) to run commands to update the network parameters.
 
-See the official CENM documentation for more information about the list of available [network parameters](./config-network-parameters.html)
-and instructions on [updating network parameters](./updating-network-parameters.html).
+See the official CENM documentation for more information about the list of available [network parameters](../../../../cenm/1.5/config-network-parameters.md/)
+and instructions on [updating network parameters](./updating-network-parameters.md/).
 
 ### Run Flag Day
 
