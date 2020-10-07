@@ -80,7 +80,7 @@ silencedIPs = []
 useProxyForCrls = true
 ```
 
-[firewalldefault_latest.conf](https://github.com/corda/corda-docs/tree/master/content/en/docs/corda-enterprise/4.7/resources/bridge/firewalldefault_latest.conf)
+[firewalldefault_latest.conf](../../resources/bridge/firewalldefault_latest.conf)
 
 
 ## Firewall operating modes
