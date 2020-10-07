@@ -192,7 +192,7 @@ wsrep_sst_auth={{ sst_user }}:{{ sst_pass }}
 
 
 
-[wsrep.cnf](https://github.com/corda/corda-docs/tree/master/content/en/docs/corda-enterprise/4.7/resources/wsrep.cnf) | ![github](/images/svg/github.svg "github")
+[wsrep.cnf](../resources/wsrep.cnf) | ![github](/images/svg/github.svg "github")
 
 
 {{< /tabs >}}
