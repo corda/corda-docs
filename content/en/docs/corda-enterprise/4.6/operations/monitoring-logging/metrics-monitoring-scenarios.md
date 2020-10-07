@@ -15,14 +15,14 @@ weight: 20
 You can monitor the metrics data from your node for a variety of reasons, and in different ways. Some suggested scenarios for monitoring are:
 
 * **Risk of out of memory error** - Monitor the used memory in your node's `HeapMemoryUsage` attribute.
-* **High memory usage** - Monitor the `SystemCpuLoad` property of your node, to check for high CPU measurements.
+* **High CPU usage** - Monitor the `SystemCpuLoad` property of your node, to check for high CPU measurements.
 * **High flow error rate** - Check for repeated errors in the flows being used on your node. Flows are the way CorDapps perform their functions, if there is a high level of errors, there may be either an issue with your node, or a bug in the CorDapp or flow itself.
 * **Network parameter update proposal not accepted** - Check to see whether network parameters that you or another party has proposed to the Network Map have yet been accepted. The updates could still be awaiting approval.
 * **Processing messages takes too long** - Measure the time taken for Peer to Peer (P2P) messaging to be processed. If there is a high latency, you can choose to flag this as an error.
 * **Committing transactions time** - Measure how long it takes to commit an executed action on the network.
 * **Signing transactions time** - Where a signature is required for a transaction, you can measure the time being taken for this to be completed.
 
-You can see a complete list, and guidance on monitoring specific scenarios in the [Monitoring scenarios docs](../../node/operating/monitoring-scenarios).
+You can see a complete list, and guidance on monitoring specific scenarios in the [Monitoring scenarios docs](../../node/operating/monitoring-scenarios.md/).
 
 ## Metrics data
 
@@ -37,4 +37,4 @@ You can get metrics for your node from these key sources:
 * **P2P** - Messaging between parties can be measured in a number of ways, including metrics for latency between messages being sent and received between nodes, the size of sent messages, the interval between received P2P messages.
 * **Other metrics** - Measure the tine taken to sign a transaction or check whether proposed network parameter updates have been accepted yet.
 
-Take a look at the [Node metrics documentation](../../node/operating/node-metrics) for a complete range of the metrics data available from your node.
+Take a look at the [Node metrics documentation](../../node-metrics.md/) for a complete range of the metrics data available from your node.
