@@ -70,7 +70,6 @@ class Authorise(
 
 ```
 
-[ContractUpgradeFlow.kt](https://github.com/corda/enterprise/blob/release/ent/3.3/core/src/main/kotlin/net/corda/core/flows/ContractUpgradeFlow.kt)
 
 ```kotlin
 @StartableByRPC
@@ -80,7 +79,6 @@ class Deauthorise(val stateRef: StateRef) : FlowLogic<Void?>() {
 
 ```
 
-[ContractUpgradeFlow.kt](https://github.com/corda/enterprise/blob/release/ent/3.3/core/src/main/kotlin/net/corda/core/flows/ContractUpgradeFlow.kt)
 
 
 ## Proposing an upgrade
