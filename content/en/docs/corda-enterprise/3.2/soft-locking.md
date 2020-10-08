@@ -62,7 +62,7 @@ query soft locks associated with states as required by their CorDapp application
     fun softLockRelease(lockId: UUID, stateRefs: NonEmptySet<StateRef>? = null)
 
 ```
-[VaultService.kt](https://github.com/corda/enterprise/blob/release/ent/3.2/core/src/main/kotlin/net/corda/core/node/services/VaultService.kt)
+
 
 ## Query
 
@@ -82,7 +82,7 @@ Custom filterable criteria can be specified using the `SoftLockingCondition` att
     }
 
 ```
-[QueryCriteria.kt](https://github.com/corda/enterprise/blob/release/ent/3.2/core/src/main/kotlin/net/corda/core/node/services/vault/QueryCriteria.kt)
+
 
 ## Explicit Usage
 

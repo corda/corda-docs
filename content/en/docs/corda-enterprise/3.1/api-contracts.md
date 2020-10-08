@@ -59,7 +59,6 @@ interface Contract {
 {{% /tab %}}
 
 
-[Structures.kt](https://github.com/corda/enterprise/blob/release/ent/3.1/core/src/main/kotlin/net/corda/core/contracts/Structures.kt) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -160,7 +159,7 @@ data class LedgerTransaction @JvmOverloads constructor(
 {{% /tab %}}
 
 
-[LedgerTransaction.kt](https://github.com/corda/enterprise/blob/release/ent/3.1/core/src/main/kotlin/net/corda/core/transactions/LedgerTransaction.kt) | ![github](/images/svg/github.svg "github")
+
 
 {{< /tabs >}}
 
@@ -276,8 +275,6 @@ data class CommandWithParties<out T : CommandData>(
 ```
 {{% /tab %}}
 
-
-[Structures.kt](https://github.com/corda/enterprise/blob/release/ent/3.1/core/src/main/kotlin/net/corda/core/contracts/Structures.kt) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 

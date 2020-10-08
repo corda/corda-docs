@@ -137,8 +137,6 @@ public class IOUState implements ContractState {
 ```
 {{% /tab %}}
 
-[state.kt](https://github.com/corda/enterprise/blob/release/ent/3.2/docs/source/example-code/src/main/kotlin/net/corda/docs/tutorial/helloworld/state.kt) | [IOUState.java](https://github.com/corda/enterprise/blob/release/ent/3.2/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/helloworld/IOUState.java) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
 
 If you’re following along in Java, you’ll also need to rename `TemplateState.java` to `IOUState.java`.

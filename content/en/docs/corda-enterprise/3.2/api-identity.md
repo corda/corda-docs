@@ -106,7 +106,6 @@ override fun call(): SignedTransaction {
 ```
 {{% /tab %}}
 
-[TwoPartyDealFlow.kt](https://github.com/corda/enterprise/blob/release/ent/3.2/finance/src/main/kotlin/net/corda/finance/flows/TwoPartyDealFlow.kt) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -158,8 +157,6 @@ val twiceSignedTx = partSignedTx + sellerSignature
 ```
 {{% /tab %}}
 
-[TwoPartyTradeFlow.kt](https://github.com/corda/enterprise/blob/release/ent/3.2/finance/src/main/kotlin/net/corda/finance/flows/TwoPartyTradeFlow.kt) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
 
 The identity synchronization flow goes through the following key steps:
@@ -195,7 +192,6 @@ subFlow(IdentitySyncFlow.Receive(otherSideSession))
 ```
 {{% /tab %}}
 
-[TwoPartyTradeFlow.kt](https://github.com/corda/enterprise/blob/release/ent/3.2/finance/src/main/kotlin/net/corda/finance/flows/TwoPartyTradeFlow.kt) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 

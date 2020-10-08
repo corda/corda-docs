@@ -84,7 +84,7 @@ fun <T : ContractState> _trackBy(criteria: QueryCriteria,
                                  contractStateType: Class<out T>): DataFeed<Vault.Page<T>, Vault.Update<T>>
 
 ```
-[VaultService.kt](https://github.com/corda/enterprise/blob/release/ent/3.1/core/src/main/kotlin/net/corda/core/node/services/VaultService.kt)
+
 And via `CordaRPCOps` for use by RPC client applications:
 
 ```kotlin
@@ -95,7 +95,7 @@ fun <T : ContractState> vaultQueryBy(criteria: QueryCriteria,
                                      contractStateType: Class<out T>): Vault.Page<T>
 
 ```
-[CordaRPCOps.kt](https://github.com/corda/enterprise/blob/release/ent/3.1/core/src/main/kotlin/net/corda/core/messaging/CordaRPCOps.kt)
+
 ```kotlin
 @RPCReturnsObservables
 fun <T : ContractState> vaultTrackBy(criteria: QueryCriteria,
@@ -104,7 +104,7 @@ fun <T : ContractState> vaultTrackBy(criteria: QueryCriteria,
                                      contractStateType: Class<out T>): DataFeed<Vault.Page<T>, Vault.Update<T>>
 
 ```
-[CordaRPCOps.kt](https://github.com/corda/enterprise/blob/release/ent/3.1/core/src/main/kotlin/net/corda/core/messaging/CordaRPCOps.kt)
+
 Helper methods are also provided with default values for arguments:
 
 ```kotlin
@@ -117,7 +117,7 @@ fun <T : ContractState> vaultQueryByWithPagingSpec(contractStateType: Class<out 
 fun <T : ContractState> vaultQueryByWithSorting(contractStateType: Class<out T>, criteria: QueryCriteria, sorting: Sort): Vault.Page<T>
 
 ```
-[CordaRPCOps.kt](https://github.com/corda/enterprise/blob/release/ent/3.1/core/src/main/kotlin/net/corda/core/messaging/CordaRPCOps.kt)
+
 ```kotlin
 fun <T : ContractState> vaultTrack(contractStateType: Class<out T>): DataFeed<Vault.Page<T>, Vault.Update<T>>
 
@@ -128,7 +128,7 @@ fun <T : ContractState> vaultTrackByWithPagingSpec(contractStateType: Class<out 
 fun <T : ContractState> vaultTrackByWithSorting(contractStateType: Class<out T>, criteria: QueryCriteria, sorting: Sort): DataFeed<Vault.Page<T>, Vault.Update<T>>
 
 ```
-[CordaRPCOps.kt](https://github.com/corda/enterprise/blob/release/ent/3.1/core/src/main/kotlin/net/corda/core/messaging/CordaRPCOps.kt)
+
 The API provides both static (snapshot) and dynamic (snapshot with streaming updates) methods for a defined set of
 filter criteria:
 

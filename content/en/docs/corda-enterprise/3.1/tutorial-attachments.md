@@ -106,7 +106,7 @@ val complexCondition =
 ```
 {{% /tab %}}
 
-[NodeAttachmentStorageTest.kt](https://github.com/corda/enterprise/blob/release/ent/3.1/node/src/test/kotlin/net/corda/node/services/persistence/NodeAttachmentStorageTest.kt) | ![github](/images/svg/github.svg "github")
+
 
 {{< /tabs >}}
 

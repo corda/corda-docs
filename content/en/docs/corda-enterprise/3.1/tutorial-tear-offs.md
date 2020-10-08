@@ -44,7 +44,7 @@ val filtering = Predicate<Any> {
 {{% /tab %}}
 
 
-[TutorialTearOffs.kt](https://github.com/corda/enterprise/blob/release/ent/3.1/docs/source/example-code/src/main/kotlin/net/corda/docs/tutorial/tearoffs/TutorialTearOffs.kt) | ![github](/images/svg/github.svg "github")
+
 
 {{< /tabs >}}
 
@@ -59,7 +59,7 @@ val ftx: FilteredTransaction = stx.buildFilteredTransaction(filtering)
 {{% /tab %}}
 
 
-[TutorialTearOffs.kt](https://github.com/corda/enterprise/blob/release/ent/3.1/docs/source/example-code/src/main/kotlin/net/corda/docs/tutorial/tearoffs/TutorialTearOffs.kt) | ![github](/images/svg/github.svg "github")
+
 
 {{< /tabs >}}
 
@@ -83,7 +83,6 @@ val timeWindow: TimeWindow? = ftx.timeWindow
 {{% /tab %}}
 
 
-[TutorialTearOffs.kt](https://github.com/corda/enterprise/blob/release/ent/3.1/docs/source/example-code/src/main/kotlin/net/corda/docs/tutorial/tearoffs/TutorialTearOffs.kt) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 

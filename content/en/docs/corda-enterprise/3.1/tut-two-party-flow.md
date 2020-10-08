@@ -75,7 +75,6 @@ import java.util.List;
 {{% /tab %}}
 
 
-[flow.kt](https://github.com/corda/enterprise/blob/release/ent/3.1/docs/source/example-code/src/main/kotlin/net/corda/docs/tutorial/twoparty/flow.kt) | [IOUFlow.java](https://github.com/corda/enterprise/blob/release/ent/3.1/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/twoparty/IOUFlow.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -151,7 +150,6 @@ return null;
 {{% /tab %}}
 
 
-[flow.kt](https://github.com/corda/enterprise/blob/release/ent/3.1/docs/source/example-code/src/main/kotlin/net/corda/docs/tutorial/twoparty/flow.kt) | [IOUFlow.java](https://github.com/corda/enterprise/blob/release/ent/3.1/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/twoparty/IOUFlow.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -274,7 +272,6 @@ public class IOUFlowResponder extends FlowLogic<Void> {
 {{% /tab %}}
 
 
-[flowResponder.kt](https://github.com/corda/enterprise/blob/release/ent/3.1/docs/source/example-code/src/main/kotlin/net/corda/docs/tutorial/twoparty/flowResponder.kt) | [IOUFlowResponder.java](https://github.com/corda/enterprise/blob/release/ent/3.1/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/twoparty/IOUFlowResponder.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 

@@ -73,7 +73,7 @@ class Authorise(
 ) : FlowLogic<Void?>() {
 
 ```
-[ContractUpgradeFlow.kt](https://github.com/corda/enterprise/blob/release/ent/3.2/core/src/main/kotlin/net/corda/core/flows/ContractUpgradeFlow.kt)
+
 ```kotlin
 @StartableByRPC
 class Deauthorise(val stateRef: StateRef) : FlowLogic<Void?>() {
@@ -81,7 +81,7 @@ class Deauthorise(val stateRef: StateRef) : FlowLogic<Void?>() {
     override fun call(): Void? {
 
 ```
-[ContractUpgradeFlow.kt](https://github.com/corda/enterprise/blob/release/ent/3.2/core/src/main/kotlin/net/corda/core/flows/ContractUpgradeFlow.kt)
+
 
 ## Proposing an upgrade
 

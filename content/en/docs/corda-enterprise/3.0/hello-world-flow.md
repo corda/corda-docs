@@ -175,7 +175,6 @@ public class IOUFlow extends FlowLogic<Void> {
 {{% /tab %}}
 
 
-[flow.kt](https://github.com/corda/enterprise/blob/release/ent/3.0/docs/source/example-code/src/main/kotlin/net/corda/docs/tutorial/helloworld/flow.kt) | [IOUFlow.java](https://github.com/corda/enterprise/blob/release/ent/3.0/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/helloworld/IOUFlow.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 

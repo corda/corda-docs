@@ -193,7 +193,7 @@ public class State implements OwnableState {
 ```
 {{% /tab %}}
 
-[TutorialContract.kt](https://github.com/corda/enterprise/blob/release/ent/3.0/docs/source/example-code/src/main/kotlin/net/corda/docs/tutorial/contract/TutorialContract.kt) | [State.java](https://github.com/corda/enterprise/blob/release/ent/3.0/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/contract/State.java) | ![github](/images/svg/github.svg "github")
+
 
 {{< /tabs >}}
 
@@ -278,7 +278,6 @@ public static class Commands implements CommandData {
 {{% /tab %}}
 
 
-[TutorialContract.kt](https://github.com/corda/enterprise/blob/release/ent/3.0/docs/source/example-code/src/main/kotlin/net/corda/docs/tutorial/contract/TutorialContract.kt) | [CommercialPaper.java](https://github.com/corda/enterprise/blob/release/ent/3.0/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/contract/CommercialPaper.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -324,7 +323,6 @@ public void verify(LedgerTransaction tx) {
 {{% /tab %}}
 
 
-[TutorialContract.kt](https://github.com/corda/enterprise/blob/release/ent/3.0/docs/source/example-code/src/main/kotlin/net/corda/docs/tutorial/contract/TutorialContract.kt) | [CommercialPaper.java](https://github.com/corda/enterprise/blob/release/ent/3.0/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/contract/CommercialPaper.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -553,7 +551,6 @@ for (InOutGroup group : groups) {
 {{% /tab %}}
 
 
-[TutorialContract.kt](https://github.com/corda/enterprise/blob/release/ent/3.0/docs/source/example-code/src/main/kotlin/net/corda/docs/tutorial/contract/TutorialContract.kt) | [CommercialPaper.java](https://github.com/corda/enterprise/blob/release/ent/3.0/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/contract/CommercialPaper.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -682,7 +679,6 @@ fun generateIssue(issuance: PartyAndReference, faceValue: Amount<Issued<Currency
 {{% /tab %}}
 
 
-[TutorialContract.kt](https://github.com/corda/enterprise/blob/release/ent/3.0/docs/source/example-code/src/main/kotlin/net/corda/docs/tutorial/contract/TutorialContract.kt) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -724,7 +720,6 @@ public static final String IOU_CONTRACT_ID = "com.example.contract.IOUContract";
 {{% /tab %}}
 
 
-[TutorialContract.kt](https://github.com/corda/enterprise/blob/release/ent/3.0/docs/source/example-code/src/main/kotlin/net/corda/docs/tutorial/contract/TutorialContract.kt) | [CommercialPaper.java](https://github.com/corda/enterprise/blob/release/ent/3.0/docs/source/example-code/src/main/java/net/corda/docs/java/tutorial/contract/CommercialPaper.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -764,7 +759,6 @@ fun generateMove(tx: TransactionBuilder, paper: StateAndRef<State>, newOwner: Ab
 {{% /tab %}}
 
 
-[TutorialContract.kt](https://github.com/corda/enterprise/blob/release/ent/3.0/docs/source/example-code/src/main/kotlin/net/corda/docs/tutorial/contract/TutorialContract.kt) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -803,8 +797,6 @@ fun generateRedeem(tx: TransactionBuilder, paper: StateAndRef<State>, services: 
 ```
 {{% /tab %}}
 
-
-[TutorialContract.kt](https://github.com/corda/enterprise/blob/release/ent/3.0/docs/source/example-code/src/main/kotlin/net/corda/docs/tutorial/contract/TutorialContract.kt) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 

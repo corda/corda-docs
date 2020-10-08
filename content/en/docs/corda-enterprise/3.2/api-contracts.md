@@ -58,8 +58,6 @@ interface Contract {
 ```
 {{% /tab %}}
 
-[Structures.kt](https://github.com/corda/enterprise/blob/release/ent/3.2/core/src/main/kotlin/net/corda/core/contracts/Structures.kt) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
 
 `Contract` has a single method, `verify`, which takes a `LedgerTransaction` as input and returns
@@ -158,7 +156,6 @@ data class LedgerTransaction @JvmOverloads constructor(
 ```
 {{% /tab %}}
 
-[LedgerTransaction.kt](https://github.com/corda/enterprise/blob/release/ent/3.2/core/src/main/kotlin/net/corda/core/transactions/LedgerTransaction.kt) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -273,8 +270,6 @@ data class CommandWithParties<out T : CommandData>(
 
 ```
 {{% /tab %}}
-
-[Structures.kt](https://github.com/corda/enterprise/blob/release/ent/3.2/core/src/main/kotlin/net/corda/core/contracts/Structures.kt) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 

@@ -218,7 +218,6 @@ data class ParametersUpdateInfo(
 {{% /tab %}}
 
 
-[CordaRPCOps.kt](https://github.com/corda/enterprise/blob/release/ent/3.0/core/src/main/kotlin/net/corda/core/messaging/CordaRPCOps.kt) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 

@@ -376,7 +376,6 @@ private static final TestIdentity bigCorp = new TestIdentity(new CordaX500Name("
 {{% /tab %}}
 
 
-[TutorialTestDSL.kt](https://github.com/corda/enterprise/blob/release/ent/3.1/docs/source/example-code/src/test/kotlin/net/corda/docs/tutorial/testdsl/TutorialTestDSL.kt) | [CommercialPaperTest.java](https://github.com/corda/enterprise/blob/release/ent/3.1/docs/source/example-code/src/test/java/net/corda/docs/java/tutorial/testdsl/CommercialPaperTest.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -467,7 +466,6 @@ private val ledgerServices = MockServices(
 {{% /tab %}}
 
 
-[TutorialTestDSL.kt](https://github.com/corda/enterprise/blob/release/ent/3.1/docs/source/example-code/src/test/kotlin/net/corda/docs/tutorial/testdsl/TutorialTestDSL.kt) | [CommercialPaperTest.java](https://github.com/corda/enterprise/blob/release/ent/3.1/docs/source/example-code/src/test/java/net/corda/docs/java/tutorial/testdsl/CommercialPaperTest.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -504,8 +502,6 @@ private final MockServices simpleLedgerServices = new MockServices(
 ```
 {{% /tab %}}
 
-
-[TutorialTestDSL.kt](https://github.com/corda/enterprise/blob/release/ent/3.1/docs/source/example-code/src/test/kotlin/net/corda/docs/tutorial/testdsl/TutorialTestDSL.kt) | [CommercialPaperTest.java](https://github.com/corda/enterprise/blob/release/ent/3.1/docs/source/example-code/src/test/java/net/corda/docs/java/tutorial/testdsl/CommercialPaperTest.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -560,7 +556,6 @@ public void simpleCPMoveSuccess() {
 {{% /tab %}}
 
 
-[TutorialTestDSL.kt](https://github.com/corda/enterprise/blob/release/ent/3.1/docs/source/example-code/src/test/kotlin/net/corda/docs/tutorial/testdsl/TutorialTestDSL.kt) | [CommercialPaperTest.java](https://github.com/corda/enterprise/blob/release/ent/3.1/docs/source/example-code/src/test/java/net/corda/docs/java/tutorial/testdsl/CommercialPaperTest.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -611,8 +606,6 @@ public void simpleCPMoveFails() {
 ```
 {{% /tab %}}
 
-
-[TutorialTestDSL.kt](https://github.com/corda/enterprise/blob/release/ent/3.1/docs/source/example-code/src/test/kotlin/net/corda/docs/tutorial/testdsl/TutorialTestDSL.kt) | [CommercialPaperTest.java](https://github.com/corda/enterprise/blob/release/ent/3.1/docs/source/example-code/src/test/java/net/corda/docs/java/tutorial/testdsl/CommercialPaperTest.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -670,7 +663,6 @@ public void simpleCPMoveSuccessAndFailure() {
 {{% /tab %}}
 
 
-[TutorialTestDSL.kt](https://github.com/corda/enterprise/blob/release/ent/3.1/docs/source/example-code/src/test/kotlin/net/corda/docs/tutorial/testdsl/TutorialTestDSL.kt) | [CommercialPaperTest.java](https://github.com/corda/enterprise/blob/release/ent/3.1/docs/source/example-code/src/test/java/net/corda/docs/java/tutorial/testdsl/CommercialPaperTest.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -722,7 +714,6 @@ public void simpleIssuanceWithTweakTopLevelTx() {
 {{% /tab %}}
 
 
-[TutorialTestDSL.kt](https://github.com/corda/enterprise/blob/release/ent/3.1/docs/source/example-code/src/test/kotlin/net/corda/docs/tutorial/testdsl/TutorialTestDSL.kt) | [CommercialPaperTest.java](https://github.com/corda/enterprise/blob/release/ent/3.1/docs/source/example-code/src/test/java/net/corda/docs/java/tutorial/testdsl/CommercialPaperTest.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -829,9 +820,6 @@ public void chainCommercialPaperDoubleSpend() {
 
 ```
 {{% /tab %}}
-
-
-[TutorialTestDSL.kt](https://github.com/corda/enterprise/blob/release/ent/3.1/docs/source/example-code/src/test/kotlin/net/corda/docs/tutorial/testdsl/TutorialTestDSL.kt) | [CommercialPaperTest.java](https://github.com/corda/enterprise/blob/release/ent/3.1/docs/source/example-code/src/test/java/net/corda/docs/java/tutorial/testdsl/CommercialPaperTest.java) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 

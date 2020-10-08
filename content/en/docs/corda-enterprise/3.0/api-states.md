@@ -59,8 +59,6 @@ interface ContractState {
 ```
 {{% /tab %}}
 
-[ContractState.kt](https://github.com/corda/enterprise/blob/release/ent/3.0/core/src/main/kotlin/net/corda/core/contracts/ContractState.kt) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
 
 `ContractState` has a single field, `participants`. `participants` is a `List` of the `AbstractParty` that
@@ -116,8 +114,6 @@ interface LinearState : ContractState {
 {{% /tab %}}
 
 
-[Structures.kt](https://github.com/corda/enterprise/blob/release/ent/3.0/core/src/main/kotlin/net/corda/core/contracts/Structures.kt) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
 
 Remember that in Corda, states are immutable and can’t be updated directly. Instead, we represent an evolving fact as a
@@ -171,8 +167,6 @@ interface OwnableState : ContractState {
 ```
 {{% /tab %}}
 
-
-[Structures.kt](https://github.com/corda/enterprise/blob/release/ent/3.0/core/src/main/kotlin/net/corda/core/contracts/Structures.kt) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -254,8 +248,6 @@ and methods. For example, here is the relatively complex definition for a state 
 {{% /tab %}}
 
 
-[Cash.kt](https://github.com/corda/enterprise/blob/release/ent/3.0/finance/src/main/kotlin/net/corda/finance/contracts/asset/Cash.kt) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
 
 
@@ -330,8 +322,6 @@ data class TransactionState<out T : ContractState> @JvmOverloads constructor(
 ```
 {{% /tab %}}
 
-
-[TransactionState.kt](https://github.com/corda/enterprise/blob/release/ent/3.0/core/src/main/kotlin/net/corda/core/contracts/TransactionState.kt) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 

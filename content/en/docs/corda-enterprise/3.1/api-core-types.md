@@ -41,8 +41,6 @@ interface NamedByHash {
 ```
 {{% /tab %}}
 
-[Structures.kt](https://github.com/corda/enterprise/blob/release/ent/3.1/core/src/main/kotlin/net/corda/core/contracts/Structures.kt) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
 
 `SecureHash` is a sealed class that only defines a single subclass, `SecureHash.SHA256`. There are utility methods

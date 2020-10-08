@@ -217,8 +217,6 @@ data class ParametersUpdateInfo(
 ```
 {{% /tab %}}
 
-[CordaRPCOps.kt](https://github.com/corda/enterprise/blob/release/ent/3.2/core/src/main/kotlin/net/corda/core/messaging/CordaRPCOps.kt) | ![github](/images/svg/github.svg "github")
-
 {{< /tabs >}}
 
 The node administrator can review the change and decide if they are going to accept it. The approval should be do
