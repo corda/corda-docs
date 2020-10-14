@@ -14,7 +14,7 @@ title: Release notes
 ---
 
 
-# Release notes
+# Corda Enterprise Network Manager release notes
 
 ## Corda Enterprise Network Manager 1.4
 
@@ -125,7 +125,7 @@ Supported deployment scenarios in CENM 1.4:
 Not supported in CENM 1.4:
 * AWS with PostgreSQL deployed in cluster.
 
-See the [CENM deployment](deployment-index.md) section for more information.
+See the [CENM deployment](aws-deployment-guide.md/) section for more information.
 
 #### Other changes
 * We have added support for PostgreSQL 10.10 and 11.5 (JDBC 42.2.8), as noted in [CENM Databases](database-set-up.md#supported-databases) and [CENM support matrix](cenm-support-matrix.md#cenm-databases).
@@ -368,7 +368,7 @@ as well as for Gemalto and Securosys HSMs in both the PKI Tool and Signing Servi
 
 * CENM now supports encryption of passwords in configuration files, using encryption keys derived from
 hardware attributes. An obfuscation tool ships with CENM, to process configuration files and encrypt
-marked fields. For more details on usage see [Config Obfuscation Tool](config-obfuscation-tool.md).
+marked fields. For more details on usage see [Config Obfuscation Tool](../../corda-enterprise/4.6/tools-config-obfuscator.md/).
 * Fixed an internal error which occurred when using H2 versions below 1.4.198 due to use of unsupported
 lock types.
 * Added `run purgeAllStagedNodeInfos` and `run purgeStagedNodeInfo nodeInfoHash: <node_info_hash>` commands
@@ -526,6 +526,6 @@ there is no dedicated utility that would address that issue. As for now, the net
 assess in what state the service is.
 
 
-* Identity Manager: [http:/](http:/)/<<IDENTITY_MANAGER_ADDRESS>>/status
-* Network Map: [http:/](http:/)/<<NETWORK_MAP_SERVICE_ADDRESS>>/network-map/my-hostname
-* Revocation Service (currently part of the Identity Manager): [http:/](http:/)/<<REVOCATION_SERVICE_ADDRESS>>/status
+* Identity Manager: `http://<<IDENTITY_MANAGER_ADDRESS>>/status`
+* Network Map: `http://<<NETWORK_MAP_SERVICE_ADDRESS>>/network-map/my-hostname`
+* Revocation Service (currently part of the Identity Manager): `http://<<REVOCATION_SERVICE_ADDRESS>>/status`
