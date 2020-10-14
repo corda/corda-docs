@@ -201,7 +201,8 @@ cd network-services/deployment/k8s/helm
 ## Network operations
 
 Use the CENM [Command Line Interface (CLI) Tool](cenm-cli-tool.md) to access the [FARM Service](gateway-service.md) from your local machine.
-To star CENM CLI Tool run Docker command starting Docker container with the tool:
+
+To start CENM CLI Tool, run Docker command starting Docker container with the tool:
 
   ```bash
   docker run  -it --env ACCEPT_LICENSE=Y --name=cenm-cli corda/enterprise-cenm-cli:1.3-zulu-openjdk8u242
