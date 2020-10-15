@@ -151,7 +151,7 @@ and an explanation of CENM database configuration options.
 
 #### 6. Bootstrap CENM
 
-**Option 1.** Bootstrap by allocating new external IP addresses
+**Option 1:** Bootstrap by allocating new external IP addresses
 
 To bootstrap your network, run the `bootstrap.cenm` script from the `/k8s/helm` directory.
 The script includes the `--ACCEPT_LICENSE Y` argument, which is mandatory and confirms that you have read and accepted the license agreement.
@@ -189,7 +189,7 @@ The process will continue to run on the cluster after the script has exited. You
 kubectl get pods -o wide
 ```
 
- **Option 2.**  Bootstrap by reusing already allocated external IP addresses
+ **Option 2:**  Bootstrap by reusing already allocated external IP addresses
 
 If your external IPs have been already allocated you can reuse them by specifying their services names:
 
