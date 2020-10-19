@@ -128,17 +128,17 @@ import net.corda.core.identity.Party;
 
 // Replace TemplateState's definition with:
 public class IOUState implements ContractState {
-    private final String value;
+    private final int value;
     private final Party lender;
     private final Party borrower;
 
-    public IOUState(String value, Party lender, Party borrower) {
+    public IOUState(int value, Party lender, Party borrower) {
         this.value = value;
         this.lender = lender;
         this.borrower = borrower;
     }
 
-    public String getValue() {
+    public int getValue() {
         return value;
     }
 
@@ -175,13 +175,13 @@ on the blockchain, while only sharing information on a need-to-know basis.
 
 If you’ve read the white paper or Key Concepts section, you’ll know that each state has an associated contract that
 imposes invariants on how the state evolves over time. Including a contract isn’t crucial for our first CorDapp, so
-we’ll just use the empty `TemplateContract` and `TemplateContract.Commands.Action` command defined by the template
+you’ll just use the empty `TemplateContract` and `TemplateContract.Commands.Action` command defined by the template
 for now.
 
 {{% note %}}
 While you don't need to rewrite the contract, you will need to make a few small changes if you are following the tutorial in Java.
 * Change three instances of `TemplateState` to `IOUState`.
-* Change `getMsg` to `getValue`. 
+* Change `getMsg` to `getValue`.
 {{% /note %}}
 
-In the next tutorial, we’ll implement our own contract and command.
+In the next tutorial, you’ll implement our own contract and command.
