@@ -17,7 +17,7 @@ tags:
 
 # Corda Smart Contracts
 
-'Smart Contract' is a term that is often used in the distributed ledger/ blockchain space but not often used in the context of discussing Corda. Corda has the building blocks of other blockchains' Smart Contracts, but they are chopped up and split into different parts:
+*Smart contract* is a term that is often used in the distributed ledger/ blockchain space but not often used in the context of discussing Corda. Corda has the building blocks of other blockchains' smart contracts, but they are chopped up and split into different parts:
 
 * The data of a Smart Contract is stored in the ContractStates on ledger.
 * The functions or things you can do to that data are defined in the Contract.

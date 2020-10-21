@@ -17,7 +17,7 @@ tags:
 
 
 
-# The Corda Paradigm -
+# The Corda Paradigm
 
 Corda Smart Contracts define what you can't do, not what you can.
 
