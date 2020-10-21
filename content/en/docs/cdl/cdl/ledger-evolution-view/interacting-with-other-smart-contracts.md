@@ -2,7 +2,7 @@
 title: Interacting with other Smart Contracts
 date: 2020-10-15T00:00:00+01:00
 menu:
-  cordapp-design-language:
+  cdl:
     parent: "cdl-ledger-evolution-view"
     identifier: "cdl-ledger-evolution-view-interacting-with-other-smart-contracts"
     weight: 50

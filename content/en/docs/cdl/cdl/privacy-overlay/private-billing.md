@@ -2,7 +2,7 @@
 title: Private billing
 date: 2020-10-15T00:00:00+01:00
 menu:
-  cordapp-design-language:
+  cdl:
     parent: "cdl-privacy-overlay"
     identifier: "cdl-privacy-overlay-adding-the-private-billing"
     weight: 40

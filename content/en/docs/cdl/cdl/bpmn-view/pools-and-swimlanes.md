@@ -2,7 +2,7 @@
 title: Pools and swimlanes
 date: 2020-10-15T00:00:00+01:00
 menu:
-  cordapp-design-language:
+  cdl:
     parent: "cdl-bpmn-view"
     identifier: "cdl-bpmn-view-pools-and-swimlanes"
     weight: 10
