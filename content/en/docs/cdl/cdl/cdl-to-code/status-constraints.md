@@ -17,7 +17,7 @@ tags:
 
 # Status Constraints
 
-To verify the Status constraints, all the Primary states (i.e. the `AgreementStates`) must be added to into the contract. You can then apply a different set of tests based on the `status` of the AgreementState in question:
+To verify the Status constraints, you must obtain all of the all the Primary states (i.e. the `AgreementStates`). You can then apply a different set of tests based on the `status` of the AgreementState in question:
 
 
 AgreementContract.kt:

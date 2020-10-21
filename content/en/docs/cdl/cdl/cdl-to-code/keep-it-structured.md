@@ -16,13 +16,13 @@ tags:
 
 # Keep It Structured
 
-The CDL Smart Contract view deliberately separates the design into a set of concerns either to do with data structures or constraints over those data structures. You can show this diagrammatically:
+The CDL Smart Contract view deliberately separates the design into a set of considerations either to do with data structures or constraints over those data structures. You can show this diagrammatically:
 
 {{< figure zoom="../resources/cdl-to-code-smart-contract-to-concerns.png" width="1000" title="Click to zoom image in new tab/window" >}}
 
-To minimise the risks of making mistakes when implementing the Smart Contract, you should consider each of the concerns separately. Narrowing the focus can give you greater confidence that each concern is implemented correctly.
+To minimise the risks of making mistakes when implementing the smart contract, you should consider each of the considerations separately. Narrowing the focus can give you greater confidence that each consideration is implemented correctly.
 
-In the Agreement example, as implemented in the cdl-example CorDapp, the CDL concerns map to the following code structures:
+In the Agreement example, as implemented in the cdl-example CorDapp, the CDL considerations map to the following code structures:
 
 {{< figure zoom="../resources/cdl-to-code-concerns-to-structures.png" width="650" title="Click to zoom image in new tab/window" >}}
 
@@ -34,7 +34,7 @@ You can see in this diagram that:
 * As the `verify()` function is too complicated to manage in one function, it is broken up in to a series of sub-verify functions each one dealing with a different CDL constraint.
 * The verification of Path constraints is more complicated than the other constraints, hence some of this has been moved out of the `verifyPathConstraints()` function and into `ContractUtils.kt`.
 
-For each of the sub-verify functions we will aim for a standard structure to implement that type of constraint. The closer we can get to a standard template with the specific details of the Smart Contract being akin to configuration, the more reliable the implementation will become.
+For each of the sub-verify functions we will aim for a standard structure to implement that type of constraint. The closer we can get to a standard template with the specific details of the smart contract being akin to configuration, the more reliable the implementation will become.
 
 For example, the code for verifying Status constraints is as follows:
 
@@ -96,4 +96,4 @@ fun verifyStatusConstraints(tx: LedgerTransaction){
 {{% /tab %}}
 {{< /tabs >}}
 
-The remaining sections will go through the implementation of each CDL concern.
+The remaining sections will go through the implementation of each CDL consideration.

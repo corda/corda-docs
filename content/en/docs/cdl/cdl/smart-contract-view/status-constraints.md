@@ -24,7 +24,7 @@ They are shown as a rounded box under the status state box to which the constrai
 {{< figure zoom="../resources/cdl-agreement-smart-contract-status-constraints.png" width="1000" title="Click to zoom image in new tab/window" >}}
 
 
-In the Agreement example use case, Status constraints are used to show which state properties must be populated for a particular status. In particular, the aim is to:
+In the Agreement example use case, status constraints are used to show which state properties must be populated for a particular status. In particular, the aim is to:
 
 * Mandate that rejectionReason and rejectedBy are set to null when in the PROPOSED status.
 * Mandate that rejectionReason and rejectedBy are filled in when in the REJECTED status.

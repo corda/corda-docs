@@ -25,6 +25,6 @@ The final type of constraint to add to the Smart Contract view is the Command co
 You can use Command constraints to indicate, amongst other things:
 
 * The changes allowed between an input primary state and a corresponding output primary state.
-* The require presence of a state from another smart contract, and the properties it must have.
-* A required change in a state from another Smart contract, eg in our example the incrementing of a BillingState.
+* The required presence of a state from another smart contract, and the properties it must have.
+* A required change in a state from another smart contract, eg in our example the incrementing of a BillingState.
 * That properties across different states must match, eg the reference in state A must match the reference in state B.

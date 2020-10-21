@@ -17,7 +17,7 @@ tags:
 
 # Signing Constraints
 
-An important aspect of any CorDapp is the permissioning model, in other words who needs to sign which transactions. In Corda, the required signers are attached to the Transaction's Command. This can be mirrored in the CDL Smart Contract view by including the require signer in brackets underneath the Command on the Path constraint.
+An important aspect of any CorDapp is the permissioning model, in other words who needs to sign which transactions. In Corda, the required signers are attached to the transaction's Command. This can be mirrored in the CDL Smart Contract view by including the require signer in brackets underneath the Command on the Path constraint.
 
 {{< figure zoom="../resources/cdl-agreement-smart-contract-signing.png" width="1000" title="Click to zoom image in new tab/window" >}}
 

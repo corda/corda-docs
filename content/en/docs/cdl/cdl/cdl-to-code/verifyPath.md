@@ -19,7 +19,7 @@ tags:
 
 # verifyPaths()
 
-In the previous section we described how the `verifyPathConstraints()` function calls the `verifyPath()` function from `ContractUtils`. In this section you can see how `verifyPath()` works. You can also see the implementation of `VerifyPaths` in the cdl-example code repo.
+In the previous section we described how the `verifyPathConstraints()` function calls the `verifyPath()` function from `ContractUtils`. In this section you can see how `verifyPath()` works. You can also see the implementation of `VerifyPaths` in the [cdl-example](https://github.com/corda/cdl-example) code repo.
 
 This diagram shows an example of an implementation of `VerifyPaths`:
 

@@ -23,11 +23,12 @@ The path for a transaction consist of:
 
 * The primary input states' status.
 * The primary output states' status.
+* The transaction command.
 * The number of primary input states.
 * The number of primary output states.
-* Any additional states other than the Primary state types, including how many of them there are as inputs, references and outputs.
+* Any additional states present other than the Primary state types, including how many of them there are as inputs, references and outputs.
 
-Correspondingly a Path constraint define for a given primary input state status a permitted combination of:
+Correspondingly a Path constraint defines for a given primary input state status a permitted combination of:
 
 * The primary output state status.
 * The transaction command.
@@ -35,7 +36,7 @@ Correspondingly a Path constraint define for a given primary input state status 
 * The multiplicity of the output states for the primary state type.
 * Additional States, where we specify additional state types which must be present in the transaction and their multiplicities (we won't cover those here).
 
-Path contraints are shown on the diagram as arrows between state statuses, the status at the beginning of the arrow represents an input state in a transaction, the status at the end of the arrow represents an output state in a transaction. The diagram below shows the Paths constraints for this Smart Contract and highlights how when the input status is PROPOSED there are two transitions that can be made:
+Path constraints are shown on the diagram as arrows between state statuses, the status at the beginning of the arrow represents an input state in a transaction, the status at the end of the arrow represents an output state in a transaction. The diagram below shows the Path constraints for this smart contract and highlights how when the input status is PROPOSED there are two transitions that can be made:
 
 * Path 1: 'PROPOSED -- Agree --> AGREED'
 * Path 2: 'PROPOSED -- Reject --> REJECTED'

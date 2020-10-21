@@ -23,13 +23,13 @@ Once you have defined the state, you need to show the different statuses that th
 
 The properties shown in each status box may differ. This allows you to highlight the properties which are salient for that status even though they are actually a view of the same underlying class which must implement the union of all properties on the diagram.
 
-In this example the participants remain consistent in all statues but this will not always be the case.
+In this example the participants remain consistent in all statuses but this will not always be the case.
 
 To prevent an explosion of complexity, CDL mandates the following rules:
 
-* the Primary state type is defined as the state type in the Smart Contract which has a status field.
-* There can only be one Primary state type per Smart Contract, although there can be multiple Smart Contracts operating and interacting in a single transaction each of which have their own Primary state type.
-* Other state types in this Smart Contract cannot have a status field.
+* The Primary state type is defined as the state type in the Smart Contract which has a status field.
+* There can only be one Primary state type per smart contract, although there can be multiple smart contracts operating and interacting in a single transaction each of which have their own Primary state type.
+* Other state types in this smart contract cannot have a status field.
 * A transaction's inputs can only contain primary states with a single status.
 * A transaction's outputs can only contain primary states with a single status, although this can be different from the input status.
 

@@ -16,7 +16,7 @@ tags:
 
 # Input States
 
-Transaction Input states are shown at the beginning of an arrow going into transaction boxes. You must ensure that an individual instance of a state is only ever shown once on the diagram, with input and output arrows linking it respectively to the transaction that created it, and the transaction that consumes it.
+Transaction input states are shown at the beginning of an arrow going into transaction boxes. You must ensure that an individual instance of a state is only ever shown once on the diagram, with input and output arrows linking it respectively to the transaction that created it, and the transaction that consumes it.
 
 {{< figure zoom="../resources/cdl-agreement-ledger-evolution-tx2.png" width="900" title="Click to zoom image in new tab/window" >}}
 

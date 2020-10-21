@@ -16,7 +16,7 @@ tags:
 
 # Output States
 
-Transaction Output states take a similar form to the Smart Contract view and are shown at the end of an arrow coming out of the transaction:
+Transaction output states take a similar form to the Smart Contract view and are shown at the end of an arrow coming out of the transaction:
 
 {{< figure zoom="../resources/cdl-agreement-ledger-evolution-tx1.png" width="500" title="Click to zoom image in new tab/window" >}}
 

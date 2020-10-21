@@ -29,7 +29,7 @@ Output multiplicities are shown at the end of the Path constraint arrows, and ca
 
 * 0 : There must be no output states of the primary type in the transaction.
 * 1 : There must be exactly one output state of the primary type in the transaction.
-* 1: Matched : There must be exactly one output state of the primary type in the transaction and the output state’s linearId must match the input State’s LinearId.
+* 1: Matched : There must be exactly one output state of the primary type in the transaction and the output state’s linearId must match the input state’s LinearId.
 * m : There are m output States of this type in the Transaction.
 
 The options above can be combined to form ranges, eg

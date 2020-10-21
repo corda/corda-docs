@@ -26,7 +26,7 @@ The requirements for the Billing mechanism are:
 * AgreeCorp must receive that notice before the (off ledger) invoicing date, not necessarily at the time of finalisation of the Agree transaction.
 * Agree Corp should have the ability to vary the billing rate per Agree transaction at any time.
 * AgreeCorp must not receive a copy of any agreements made on its Network.
-* Parties who are not participants on a agreement must not receive copies of an Agreement.
+* Parties who are not participants on an agreement must not receive copies of an Agreement, including in future transaction resolutions.
 
 The intuitive approach to meeting these requirements is to create a BillingState which that must be included in each Agree transaction, with a cumulativeUse tracker that increments by a per transaction rate each time it is used. The Smart Contract for this BillingState might look like this:
 

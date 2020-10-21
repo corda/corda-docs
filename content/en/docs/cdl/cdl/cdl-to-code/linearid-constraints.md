@@ -5,7 +5,7 @@ menu:
   cdl:
     parent: "cdl-to-code"
     identifier: "cdl-to-code-linearId-constraints"
-    weight: 700
+    weight: 70
 
 tags:
 - cdl

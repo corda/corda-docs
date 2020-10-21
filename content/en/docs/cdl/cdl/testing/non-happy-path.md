@@ -17,7 +17,7 @@ tags:
 
 Once we have the happy path, we can start testing each of the constraints in turn to check they fail when they are meant to fail.
 
-At the end of the testing we want to have confidence we have covered all of the failure conditions specified in the Smart contract. There's going to be a lot of tests covering a lot of failure scenarios so we need to keep this very structured.
+At the end of the testing we want to have confidence we have covered all of the failure conditions specified in the smart contract. There's going to be a lot of tests covering a lot of failure scenarios so we need to keep this very structured.
 
 The approach used in the cdl-example builds up a layered tree structure:
 

@@ -19,7 +19,7 @@ tags:
 
 In order to move to a billing mechanism which preserves privacy and meets the requirements, you can employ the 'Receipts' design pattern.
 
-In the receipts pattern, there is a dependent state which has a rule that mandates that it cannot perform some action unless it see proof that an `EnablerState` has under gone a specified action. If you put the dependant action and the enabling action in the same Corda transaction you  will require the backchain of both state to be resolved for all future uses of those states. This is the what causes the privacy leaks in the naive Billing mechanism.
+In the receipts pattern, there is a dependent state which has a rule that mandates that it cannot perform some action unless it sees proof that an `EnablerState` has undergone a specified action. If you put the dependant action and the enabling action in the same Corda transaction you will require the backchain of both state to be resolved for all future uses of those states. This is the what causes the privacy leaks in the naive Billing mechanism.
 
 To avoid this we separate the enabler action out into its own transaction and generate a receipt proving that the action has taken place. It is this receipt which is used in the dependent transaction to proove that the enabling action took place.
 

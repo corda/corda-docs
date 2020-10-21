@@ -17,7 +17,7 @@ tags:
 
 # Pools and Swimlanes
 
-Pools and swimlanes are standard features of BPMN. Usually a pool represents all the participants with in an organisation taking part in a process. For CorDapps the Participants in the procoess are likely to be spread across multiple organisation, but you can still use the pool to represent the overall box which you draw the process in.
+Pools and swimlanes are standard features of BPMN. Usually a pool represents all the participants with in an organisation taking part in a process. For CorDapps the Participants in the process are likely to be spread across multiple organisation, but you can still use the pool to represent the overall box which you draw the process in.
 
 Within the pool there is a swimlane for each participant that will contain their actions.
 

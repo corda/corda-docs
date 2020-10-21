@@ -17,8 +17,8 @@ tags:
 
 # Exiting the ledger
 
-The example is nearly complete, we need the final transaction created and signed by Bob to remove the Agreed state from the Ledger using a Complete command.
+The example is nearly complete, we need the final transaction created and signed by Bob to remove the **AGREED** state from the Ledger using a Complete command.
 
 {{< figure zoom="../resources/cdl-agreement-ledger-evolution-tx5.png" width="1000" title="Click to zoom image in new tab/window" >}}
 
-Hopefully this worked example has shown how the Ledger Evolution diagrams are a great way of bringing a Smart Contract to life by telling the 'story' of how if gets used in action.
+Hopefully this worked example has shown how the Ledger Evolution diagrams are a great way of bringing a smart contract to life by telling the 'story' of how it gets used in action.

@@ -27,5 +27,5 @@ The full diagram looks as follows:
 You can trace a number of different scenarios depending on the decisions that each of the participants takes.
 
 {{< note >}}
-To aid understanding of the BPMN View, this diagram is slightly simplified as it does not show the option for the proposer to reject their own proposal if they change their mind, which is something they can do in the Smart Contract.
+To aid understanding of the BPMN View, this diagram is slightly simplified as it does not show the option for the proposer to reject their own proposal if they change their mind, which is something they can do in the smart contract.
 {{< /note >}}

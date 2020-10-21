@@ -21,7 +21,7 @@ After the Buyer has decided what they would like to buy, they need to initiate a
 
 The actions are joined with a two way dashed line. In BPMN dashed lines denote messages and are normally unidirectional. However, in the CorDapp BPMN a two way arrow is used to reflect that there is a series of back and forth messages which result in a finalised transaction on the ledger.
 
-The party that initiated the transaction is marked, and the message line is annotated on the Initiator end with a blue box giving more details about how the transaction was formed. This is typically what flow is invoked and what the command in the transaction should be.
+The party that initiated the transaction is marked, and the message line is annotated on the Initiator end with a blue box giving more details about how the transaction was formed. This is typically what Flow is invoked and what the Command in the transaction should be.
 
 
 {{< figure zoom="../resources/cdl-bpmn-agreement-process-corda-transactions.png" width="1000" title="Click to zoom image in new tab/window" >}}

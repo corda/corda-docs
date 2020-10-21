@@ -17,7 +17,7 @@ tags:
 
 # Path Constraints
 
-You can use `PathConstraints` to restrict the `Path` that is allowed in a transaction. The Smart Contract defines a set of `PathConstraints` for each Primary State status, for example when in status X you can follow `PathConstraint` A or B, but when you are in state Y you can only follow PathConstraint C.
+You can use `PathConstraints` to restrict the `Path` that is allowed in a transaction. The smart contract defines a set of `PathConstraints` for each Primary state status, for example when in status X you can follow `PathConstraint` A or B, but when you are in state Y you can only follow `PathConstraint` C.
 
 In order to pass verification, the Path in the transaction must comply with at least one of the allowed `PathConstraints` for the `status` of the Primary input state.
 
@@ -49,7 +49,7 @@ class PathConstraint<T: StatusState>(val command: CommandData,
 Where:
 
 * `command` is the class of the command required.
-* `outputStatus` is the outputStatus of the Primary State that is required.
+* `outputStatus` is the outputStatus of the Primary state that is required.
 * `inputMultiplicityConstraint` defines the range of number of inputs of Primary type that is required.
 * `outputMultiplicityConstraint` defines the range of number of outputs of Primary type that is required.
 * `additionalStatesConstraint` defines which additional states must be present in the transaction.
