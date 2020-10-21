@@ -96,11 +96,11 @@ Here both states and transactions are represented as "nodes" in the graph. There
 
 The Ledger Evolution view also has an additional Privacy overlay represented as the purple and orange lines in the above diagram. Each overlay is from the perspective of a Party on the ledger. It starts with a state which the Party is a participant on and then traces back through the DAG to show all the previous transactions the Party's node will receive a copy of through the transaction resolution mechanism. The green circles indicate that privacy has been preserved, where as the red circles indicate a privacy leak.
 
-With this view, you have insight on privacy from the design phase. An unintended privacy leak can be a show stopper for a CorDapp. It's best to consider this early on, not at the point where your customer's Infosec team won't sign off the deployment.
+With this view, you have insight on privacy from the design phase. An unintended privacy leak can be a show stopper for a CorDapp. It's best to consider this early on, not at the point where your customer's information security team won't sign off the deployment.
 
 A detailed explanation of the elements which make up the Ledger Evolution view can be found [here](ledger-evolution-view/cdl-ledger-evolution-view.md).
 
-A Lucidchart template with the CDL Ledger Evolution view standard shapes can be found [can be found here](https://app.lucidchart.com/invitations/accept/6adacd29-482f-45ca-9bdd-57252d64c8fc).
+A Lucidchart template with the CDL Ledger Evolution view standard shapes [can be found here](https://app.lucidchart.com/invitations/accept/6adacd29-482f-45ca-9bdd-57252d64c8fc).
 
 
 ### The Business Process Modelling Notation (BPMN) view
@@ -120,4 +120,3 @@ The notation follows BPMN v2 standards, with a few small additions:
 Lucidchart has a standard Shapes library for BPMN 2.0 diagrams, in addition a Lucidchart template with the CDL Ledger Evolution view standard shapes can be found [here](https://app.lucidchart.com/invitations/accept/6adacd29-482f-45ca-9bdd-57252d64c8fc).
 
 A detailed explanation of the elements which make up the BPM view can be found [here](bpmn-view/cdl-bpmn-view.md).
-

@@ -26,7 +26,7 @@ The path for a transaction consist of:
 * The transaction command.
 * The number of primary input states.
 * The number of primary output states.
-* Any additional states present other than the Primary state types, including how many of them there are as inputs, references and outputs.
+* Any additional states present other than the Primary state types, including how many of them there are as inputs, references, and outputs.
 
 Correspondingly a Path constraint defines for a given primary input state status a permitted combination of:
 

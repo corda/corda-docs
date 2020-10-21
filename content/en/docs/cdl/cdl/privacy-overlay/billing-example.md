@@ -32,7 +32,7 @@ The intuitive approach to meeting these requirements is to create a BillingState
 
 {{< figure zoom="../resources/cdl-naive-billing-smart-contract.png" width="700" title="Click to zoom image in new tab/window" >}}
 
-With a corresponding RateCard smart Contract:
+With a corresponding RateCard smart contract:
 
 {{< figure zoom="../resources/cdl-ratecard-smart-contract.png" width="700" title="Click to zoom image in new tab/window" >}}
 

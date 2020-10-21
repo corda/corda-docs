@@ -17,7 +17,7 @@ tags:
 
 # Flow Constraints
 
-Each of the transitions shown in a Smart Contract view diagram are enacted through a Corda transaction. These transactions are built, signed and finalised using Corda flows. In order to aid understanding of the wider CorDapp design it can be useful to indicate what the Flows should be doing when they are building the transaction that implements a particular transition. You do this using a **flow constraint**.
+Each of the transitions shown in a Smart Contract view diagram are enacted through a Corda transaction. These transactions are built, signed, and finalised using Corda flows. In order to aid understanding of the wider CorDapp design it can be useful to indicate what the Flows should be doing when they are building the transaction that implements a particular transition. You do this using a **flow constraint**.
 
 Flow constraints are denoted by a blue box attached to the relevant Path:
 
@@ -31,5 +31,5 @@ Flow constraints are ***not*** implemented in the smart contract, they are reall
 You can use flow constraints to illustrate:
 
 * Which party is intended to initiate the flow which builds and initially signs the transaction. This is important because it is normally only the initiator who gets to make an informed and conscious decision to partake in the transaction, responders nodes will accept and possibly sign valid transactions but there is usually not a human 'do you want to do this?' decision step.
-* Checks that a Party should do before they initiate a transaction, eg has the initiator got enough funds or stock for this Agreement.
-* Events which will trigger a Flow, e.g. trigger this flow when the goods have been dispatched.
+* Checks that a Party should do before they initiate a transaction - for example, has the initiator got enough funds or stock for this Agreement.
+* Events which will trigger a Flow - for example, trigger this flow when the goods have been dispatched.

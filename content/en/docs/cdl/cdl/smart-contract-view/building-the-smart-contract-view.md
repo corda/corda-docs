@@ -16,7 +16,7 @@ tags:
 
 # Building up the Smart Contract view
 
-Over the following sections you will discover the elements of the Smart Contract View.
+Over the following sections you will discover the elements of the Smart Contract view.
 
 You will follow a simple negotiation use case, where a buyer is negotiating to buy some goods from a seller for an agreed price. The requirements can be summarised as follows:
 
