@@ -35,7 +35,7 @@ working together to build and maintain this open source enterprise-grade blockch
 The Corda maintainers, developers and extended community make active use of the following channels:
 
 
-* The [Corda Slack team](http://cordaledger.corda.net/) for general community discussion, and in particular:>
+* The [Corda Slack team](http://cordaledger.slack.com/) for general community discussion, and in particular:>
 
     * The `#contributing` channel for discussions around contributing
     * The `#design` channel for discussions around the platform’s design
