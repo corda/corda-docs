@@ -120,7 +120,6 @@ the `TLS` socket server key and certificates into the `FloatOuter`. The process 
 The configuration fields are listed in [Corda Enterprise Firewall configuration fields](corda-firewall-configuration-fields.md).
 
 
-
 ## Complete example
 
 As an example to show all features, the following is a walk-through of the configuration steps to set-up a pair of HA hot-cold nodes for two separate legal identities,
@@ -157,7 +156,6 @@ To facilitate High Availability requirement deployment is split onto two data ce
 This document does not describe how to perform SOCKS5 setup. It is assumed that this type of proxy is correctly configured as part
 of organisation’s IT infrastructure according to best practices/policies for outbound Internet connectivity. Other types of proxies are also supported
 as well as no proxy at all. For more information please see [proxyConfig](corda-firewall-configuration-fields.md#proxyconfig).
-
 {{< /note >}}
 
 
