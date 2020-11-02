@@ -11,8 +11,6 @@ tags:
 - file
 title: Configuration fields
 weight: 1
-aliases: 
-- corda-firewall-configuration-file.html
 ---
 # Corda Enterprise Firewall configuration fields
 
