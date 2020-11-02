@@ -1,4 +1,6 @@
 ---
+aliases:
+- corda-firewall-configuration-file.html
 date: '2020-04-07T12:00:00Z'
 menu:
   corda-enterprise-4-6:
@@ -11,8 +13,6 @@ tags:
 - file
 title: Configuration fields
 weight: 1
-aliases: 
-- corda-firewall-configuration-file.html
 ---
 # Corda Enterprise Firewall configuration fields
 
