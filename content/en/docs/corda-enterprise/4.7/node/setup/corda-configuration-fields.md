@@ -72,7 +72,7 @@ This property requires retrieving the hashes of public keys that need to be blac
 
 Set this configuration field to `true` to enable CRL checking of TLS certificates for inbound P2P connections into the embedded Artemis messaging server. The CRL checking mode is defined by `crlCheckSoftFail` option.
 
-This setting is only relevant for node configurations with no Corda firewall enabled. If enabled ensure that you have good links to the CRL distribution endpoints - if those links are unreliable / firewalled then connections can be dropped.
+This setting is only relevant for node configurations with no Corda Firewall enabled. If you set this field to `true`, ensure that the connection links to the CRL distribution endpoints are reliable and operational (for example, not behind a firewall), otherwise these connections may be dropped.
 
 *Default:* `false`
 
