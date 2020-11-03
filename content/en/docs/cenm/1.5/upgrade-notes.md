@@ -23,6 +23,27 @@ Doorman), Network Map Service, Signing Service, Zone Service, Auth Service, Ange
 Before you start the upgrade, you must consult the [CENM Release Notes](release-notes.md) to confirm all changes between releases.
 {{< /warning >}}
 
+## 1.3.x / 1.4.x to 1.5
+
+### Database migrations
+
+Identity Manager, Network Map and Zone Service requires database migration.
+Set `runMigration = true` in the database configuration. If a service is connecting to a database with restricted user,
+you need to change temporarily service settings to connect with privileged user (a user able to modify a database schema).
+
+### Auth Service
+
+Configuration entry `baseline` is obsolete and should be removed.
+Ensure you have your CENM baseline JAR file `accounts-baseline-cenm-1.5.jar` that contains the set
+of permissions and predefined roles. Copy this into a folder inside the working directory called `plugins`.
+
+If existing passwords are not complex, add the configuration option to allow weaker passwords:
+
+    passwordPolicy {
+        ...
+        mustMeetComplexityRequirements = false
+    }
+
 ## 1.3.x to 1.4
 
 CENM 1.4 includes a few changes and improvements that require some additional upgrade steps, as described below.
@@ -54,7 +75,7 @@ database = {
 }
 ```
 
-### Signing Service configuration changes
+### Signing Service configuration changes
 
 In CENM 1.3 (and older versions), `subZoneID` was defined in Signing Service configurations as part of the service location alias (`serviceLocationAlias`), as shown below:
 
