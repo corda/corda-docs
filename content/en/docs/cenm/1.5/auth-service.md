@@ -75,7 +75,7 @@ To do this:
 2. Generate a `jwt` signing key (RSA keypair) in a jks file with the following command line command:
 `keytool -genkeypair -alias mytest -keyalg RSA -keypass mypass -keystore mytest.jks -storepass mypass`.
 
-3. Ensure you have the CENM baseline JAR file `accounts-baseline-cenm-<VERSION>.jar` that contains the set
+3. Ensure you have the CENM baseline `.jar` file `accounts-baseline-cenm-<VERSION>.jar` that contains the set
 of permissions available and predefined roles. Copy this into a folder inside the working directory called `plugins`.
 
 ## Configure the auth service
