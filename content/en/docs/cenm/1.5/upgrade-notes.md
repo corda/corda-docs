@@ -34,7 +34,7 @@ you need to change temporarily service settings to connect with privileged user 
 ### Auth Service
 
 Configuration entry `baseline` is obsolete and should be removed.
-Ensure you have your CENM baseline JAR file `accounts-baseline-cenm-1.5.jar` that contains the set
+Ensure you have the CENM baseline `.jar` file `accounts-baseline-cenm-1.5.jar` that contains the set
 of available permissions and predefined roles. Copy this file to a directory called `plugins`, located inside the working directory.
 
 If existing passwords are not complex, add the configuration option to allow weaker passwords:
