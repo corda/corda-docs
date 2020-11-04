@@ -76,7 +76,7 @@ To do this:
 `keytool -genkeypair -alias mytest -keyalg RSA -keypass mypass -keystore mytest.jks -storepass mypass`.
 
 3. Ensure you have the CENM baseline `.jar` file `accounts-baseline-cenm-<VERSION>.jar` that contains the set
-of permissions available and predefined roles. Copy this into a folder inside the working directory called `plugins`.
+of available permissions and predefined roles. Copy this file to a directory called `plugins`, located inside the working directory.
 
 ## Configure the auth service
 
