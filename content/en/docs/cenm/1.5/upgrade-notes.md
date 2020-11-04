@@ -33,7 +33,7 @@ you must temporarily change the service settings to connect with a privileged us
 
 ### Auth Service
 
-Configuration entry `baseline` is obsolete and should be removed.
+The `baseline` configuration entry is obsolete and should be removed.
 Ensure you have the CENM baseline `.jar` file `accounts-baseline-cenm-1.5.jar` that contains the set
 of available permissions and predefined roles. Copy this file to a directory called `plugins`, located inside the working directory.
 
