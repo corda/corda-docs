@@ -103,10 +103,6 @@ main.home a.button {
   text-decoration: none;
 }
 
-<<<<<<< HEAD
-=======
-        /* Style the tab */
->>>>>>> master
 .tab {
   overflow: hidden;
   border: 1px solid rgb(30,36,65);
@@ -114,10 +110,6 @@ main.home a.button {
   background-color: #f1f1f1;
 }
 
-<<<<<<< HEAD
-=======
-/* Style the buttons that are used to open the tab content */
->>>>>>> master
 .tab button {
   background-color: inherit;
   float: left;
@@ -128,27 +120,15 @@ main.home a.button {
   transition: 0.3s;
 }
 
-<<<<<<< HEAD
-=======
-/* Change background color of buttons on hover */
->>>>>>> master
 .tab button:hover {
   background-color: #ddd;
 }
 
-<<<<<<< HEAD
-=======
-/* Create an active/current tablink class */
->>>>>>> master
 .tab button.active {
   background-color: rgb(86,91,113);
   color: white;
 }
 
-<<<<<<< HEAD
-=======
-/* Style the tab content */
->>>>>>> master
 .tabcontent {
   display: none;
   padding: 6px 12px;
@@ -188,7 +168,6 @@ main.home a.button {
 
 </style>
 
-<<<<<<< HEAD
     <script type="text/javascript">
       function openSection(section) {
         var i, tabcontent, tablinks;
@@ -220,28 +199,3 @@ main.home a.button {
         return "";
       }
     </script>
-=======
-      <!-- https://www.w3schools.com/howto/howto_js_tabs.asp -->
-          <script type="text/javascript">
-            function openSection(evt, section) {
-  // Declare all variables
-  var i, tabcontent, tablinks;
-
-  // Get all elements with class="tabcontent" and hide them
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-
-  // Get all elements with class="tablinks" and remove the class "active"
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
-
-  // Show the current tab, and add an "active" class to the button that opened the tab
-  document.getElementById(section).style.display = "block";
-  evt.currentTarget.className += " active";
-}
-          </script>
->>>>>>> master
