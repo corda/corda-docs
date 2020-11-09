@@ -1,11 +1,9 @@
 ---
-aliases:
-- /docs/corda-enterprise/4.6/operations/deployment/corda-firewall-configuration-file.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-6:
-    parent: corda-enterprise-4-6-corda-nodes-firewall-config
-    identifier: corda-enterprise-4-6-corda-nodes-firewall-config-file
+  corda-enterprise-4-3:
+    parent: corda-enterprise-4-3-corda-firewall-configuration-file
+    identifier: corda-enterprise-4-3-corda-nodes-firewall-config-file
 tags:
 - corda
 - firewall
@@ -19,7 +17,7 @@ weight: 1
 The available configuration fields are listed below. `baseDirectory` is available as a substitution value and contains the absolute path to the firewall’s base directory.
 
 ## healthCheck 
-An optional configuration field that specifies whether the firewall can process requests sent by the [Health Survey Tool](../health-survey.md). The default is `true`.
+An optional configuration field that specifies whether the firewall can process requests sent by the [Health Survey Tool](health-survey.md). The default is `true`.
 
 ## certificatesDirectory
 An optional configuration field that specifies directory from which SSL keys and truststore keys will be loaded. The default is `baseDirectory/certificates`.
@@ -222,11 +220,9 @@ The implementation uses a prioritise leader election algorithm, so that a prefer
 At the same level of priority, it is random which instance wins the leader election. If a `bridge` instance dies another will have the opportunity to become master in instead.
 
 ### haTopic
-Sets the zookeeper topic that the nodes used in resolving the election and must be the same for all `bridge` instances competing for master status. This is available to allow a single zookeeper cluster to be reused with multiple sets of `bridges` (e.g. in test environments).
+Sets the zookeeper/artemis topic that the nodes used in resolving the election and must be the same for all `bridge` instances competing for master status. This is available to allow a single zookeeper/artemis cluster to be reused with multiple sets of `bridges` (e.g. in test environments).
 
 The default value is `bridge/ha` and would not normally need to be changed if the cluster is not shared. 
-
-{{% note %}}This is a zookeeper specific configuration that is not appropriate when using the `Bully Algorithm`.  It should therefore not be set when using the algorithm over artemis.{{% /note %}}
 
 ## auditServiceConfiguration
 Both `FloatOuter` and `BridgeInner` components have an audit service which is currently outputting into the process log some traffic statistics. It contains the `loggingIntervalSec` field.
@@ -267,7 +263,7 @@ For instance `custom.jvmArgs = ["-Xmx2G"]` in the configuration file will set 2G
 
 This is equivalent to specifying `-Dcapsule.jvm.args="-Xmx2G"` on the command line, but is easier to track with other configuration and does not risk accidentally setting the properties onto the capsule parent process (e.g. wasting 2Gbyte of memory).
 
-See [Setting JVM arguments](deploy/running-a-node.md#setting-jvm-arguments) for examples and details on the precedence of the different approaches to settings arguments.
+See [Setting JVM arguments](running-a-node.md#setting-jvm-arguments) for examples and details on the precedence of the different approaches to settings arguments.
 
 ## revocationConfig
 An optional field that controls the way Certificate Revocation Lists (CRL) are handled for TLS connections. It contains the `mode` field.
@@ -301,7 +297,7 @@ It contains the following fields:
 * [conf](#conf).
 
 ### name
-The name of HSM provider to be used. E.g.: `UTIMACO`, `GEMALTO_LUNA`, etc. See [Using an HSM with Corda Enterprise](operating/cryptoservice-configuration.md).
+The name of HSM provider to be used. E.g.: `UTIMACO`, `GEMALTO_LUNA`, etc. See [Using an HSM with Corda Enterprise](cryptoservice-configuration.md).
 
 ### conf
 Absolute path to HSM provider specific configuration that will contain everything necessary to establish connection with HSM.
