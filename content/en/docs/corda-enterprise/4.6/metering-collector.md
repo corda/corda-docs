@@ -21,6 +21,8 @@ On this page you can learn how the node records metering data and how to run the
 Corda Enterprise nodes record metering data regardless of whether the Metering Collection Tool is installed on the node.
 {{< /note >}}
 
+In addition to the Metering Collection Tool, the [Metering client](metering-rpc.md) can be used to collect metering data _remotely_ for one or more nodes.
+
 ## Overview
 
 The Metering Collection Tool provides a mechanism for collecting metering data from both normal nodes and notaries running Corda Enterprise.
