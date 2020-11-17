@@ -249,7 +249,7 @@ You can use the shell to:
 
 The shell interacts with the node by issuing RPCs (remote procedure calls). You make an RPC from the shell by typing `run`, followed by the name of the desired RPC method.
 
-You can find a list of the available RPC methods and their corresponding parameters
+You can find a list of the available RPC methods
 [here](https://docs.corda.net/api/kotlin/corda/net.corda.core.messaging/-corda-r-p-c-ops/index.html).
 
 Some RPCs return a stream of events that will be shown on screen until you press Ctrl-C.
@@ -490,7 +490,13 @@ You can find the following useful fields in the output:
 
 ### Work with flows
 
-Use the different flow commands available to make changes on the ledger. You can `start`, `kill`, `watch`, or `list` flows.
+Use the different flow commands available to make changes on the ledger. You can `start`, `kill`, `watch`, or `list` flows. You can also perform several commands that help to manage flows that have encountered an error. These are: `retry`, `pause`, `pauseAll`, `retryAllPaused`, `pauseAllHospitalized`, and `retryAllPausedHospitalized`.  You may also find it useful to query flow data.
+
+
+#### Query flow data
+
+The shell can be used to query flow data. For more information on the types of data that can be queried and instructions for doing so, see the documentation on [Querying flow data](querying-flow-data.html#querying-flow-data-via-the-node-shell).
+
 
 #### Start a flow
 
@@ -611,6 +617,105 @@ net.corda.finance.internal.CashConfigDataFlow
 ```
 
 
+#### Retry a flow
+
+Use this command to retry a specific flow that is running on the node, identified by its UUID.
+
+##### Example command
+
+`flow retry f6e08ab5-7a79-4225-a62d-1da910ce269e`
+
+##### Example output
+
+`Retrying flow [f6e08ab5-7a79-4225-a62d-1da910ce269e] succeeded`
+
+
+#### Pause a flow
+
+Use this command to pause a specific flow that is running on the node, identified by its UUID.
+
+##### Example command
+
+`flow pause dbf76170-a3bf-4704-85a1-274b1b442430`
+
+##### Example output
+
+If the flow is paused successfully, you will see an output similar to the output below:
+
+`Paused flow [dbf76170-a3bf-4704-85a1-274b1b442430]`
+
+If the flow is not paused successfully, you will receive an error message.
+
+
+#### Pause all flows
+
+Use this command to pause all flows that are running on the node.
+
+##### Command
+
+`flow pauseAll`
+
+##### Output
+
+If all flows are paused successfully, you will see the following output:
+
+`Pausing all flows succeeded.`
+
+If this action is not successful, you will receive an error message.
+
+
+#### Retry all paused flows
+
+Use this command to retry all paused flows on the node.
+
+##### Command
+
+`flow retryAllPaused`
+
+##### Output
+
+If all flows are retried successfully, you will see the following output:
+
+`Retrying all paused flows succeeded.`
+
+If this action is not successful, you will receive an error message.
+
+
+#### Pause all hospitalized flows
+
+Use this command to pause all [hospitalized flows](../node-flow-hospital.md).
+
+##### Command
+
+`flow pauseAllHospitalized`
+
+##### Output
+
+If all hospitalized flows are paused successfully, you will see the following output:
+
+`Pausing all Hospitalized flows succeeded.`
+
+If this action is not successful, you will receive an error message.
+
+
+#### Retry all paused, hospitalized flows
+
+Use this command to retry all paused flows that were hospitalized before they were paused.
+
+##### Command
+
+`flow retryAllPausedHospitalized`
+
+##### Output
+
+If all flows are retried successfully, you will see the following output:
+
+`Retrying all paused hospitalized flows succeeded.`
+
+If not, you will receive an error message.
+
+
+
 ### Check if a transaction is recorded on the node
 
 Use the `hashLookup` command to check if a transaction matching a specified Id hash value is recorded on the node. If you do not have the needed transaction Id at hand, run `vaultQuery` to find the Id.
@@ -644,7 +749,7 @@ Use the `healthcheck` shell command to extract healthcheck information about the
 
 The output will be similar to the output shown below:
 
-{{< codesample file="/content/en/docs/corda-os/codesamples/healthcheck-runtimeInfo.txt" >}}
+{{< codesample file="/content/en/docs/corda-enterprise/codesamples/healthcheck-runtimeInfo.txt" >}}
 
 
 ### View and update the `run` command output format
