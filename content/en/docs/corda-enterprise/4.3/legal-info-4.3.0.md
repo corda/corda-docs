@@ -4,7 +4,7 @@ aliases:
 date: '2020-01-08T09:59:25Z'
 menu:
   corda-enterprise-4-3:
-    identifier: corda-enterprise-4-3-legal-info
+    identifier: corda-enterprise-4-3-0-legal-info
     parent: corda-enterprise-4-3-miscellaneous
     weight: 550
 tags:
