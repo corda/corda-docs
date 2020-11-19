@@ -38,7 +38,7 @@ To install using Docker:
 2. Use the command line to download the Docker image with CENM CLI:
 
      ```bash
-     docker pull cenm-cli:1.4-zulu-openjdk8u242
+     docker pull corda/enterprise-cenm-cli:1.4-zulu-openjdk8u242
      ```
 
 You have installed the Docker image with CENM CLI tool.
@@ -49,7 +49,7 @@ To get the tool ready to use from within the Docker container, check the [Kubern
 
 In order to use the CLI, you must have permission to access the CENM services you plan to use.
 
-You should have an account that has been set up by a user administrator using the [User Admin application](user-admin-tool.html). This account gives you the credentials, roles, and permissions you need to access CENM services via the CLI.
+You should have an account that has been set up by a user administrator using the [User Admin application](user-admin.md/). This account gives you the credentials, roles, and permissions you need to access CENM services via the CLI.
 
 For the below example, the credentials of a sample CENM user are shown:
 
