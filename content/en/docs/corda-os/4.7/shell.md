@@ -73,7 +73,7 @@ Description of RPC operations can be found in the [RPC operations](../../api-rpc
 ## The shell via the local terminal
 
 {{< note >}}
-Local terminal shell works only in development mode!
+Local terminal shell works only in dev mode!
 {{< /note >}}
 
 The shell will display in the node’s terminal window. It connects to the node as `shell` user with password `shell` (which is only available in dev mode). It may be disabled by passing the `--no-local-shell` flag when running the node.
@@ -104,7 +104,7 @@ sshd {
 Users log in to shell via SSH using the same credentials as they would use for RPC. No RPC permissions are required to allow the connection and log in.
 
 The host key is loaded from the `<node root directory>/sshkey/hostkey.pem` file. If this file does not exist, it is
-generated automatically. In development mode, the seed may be specified to give the same results on the same computer in order to avoid host-checking errors.
+generated automatically. In dev mode, the seed may be specified to give the same results on the same computer in order to avoid host-checking errors.
 
 Only RSA key is currently supported as a host key. If `hostkey.pem` is not RSA, it will be replaced by the newly generated RSA key.
 
@@ -128,7 +128,7 @@ Where:
 The RPC password will be requested after a connection is established.
 
 {{< note >}}
-In development mode, restarting a node frequently may cause the host key to be regenerated. SSH usually saves
+In dev mode, restarting a node frequently may cause the host key to be regenerated. SSH usually saves
 trusted hosts and will refuse to connect in case of a change. This check can be disabled using the
 `-o StrictHostKeyChecking=no` flag. This option should never be used in a production environment!
 
@@ -141,7 +141,7 @@ Windows does not provide a built-in SSH tool. An alternative such as [PuTTY](htt
 
 ## The standalone shell
 
-The standalone shell is a standalone application interacting with a Corda node via RPC calls. RPC node permissions are necessary for authentication and authorisation. Certain operations, such as starting flows, require access to the CorDapp jars.
+The standalone shell is a standalone application interacting with a Corda node via RPC calls. RPC node permissions are necessary for authentication and authorisation. Certain operations, such as starting flows, require access to the CorDapp `.jar` files.
 
 
 ### Starting the standalone shell
@@ -386,7 +386,7 @@ Use the `checkpoints` command to output information about the flows running on a
 
 The command will create a zip and generate a JSON file for each flow. Each file follows the naming format `<flow name>-<flow id>.json` - for example, `CashIssueAndPaymentFlow-90613d6f-be78-41bd-98e1-33a756c28808.json`.
 
-The zip is placed into the `logs` directory of the node and is named `checkpoints_dump-<date and time>.zip` - for example, `checkpoints_dump-20190812-153847`.
+The `.zip` file is placed into the `logs` directory of the node and is named `checkpoints_dump-<date and time>.zip` - for example, `checkpoints_dump-20190812-153847`.
 
 You can find the following useful fields in the output:
 
@@ -584,7 +584,7 @@ Use this command to display all flows currently running on the node with result 
 
 #### Example Output
 
-The output will show results listed with flow Id, Flow name, Initiator, and Status.
+The output will show results listed with flow `Id`, `Flow name`, `Initiator`, and `Status`.
 
 ```
 Id                                Flow name                                                          Initiator                        Status                                                             
@@ -716,6 +716,7 @@ If not, you will receive an error message.
 
 
 
+
 ### Check if a transaction is recorded on the node
 
 Use the `hashLookup` command to check if a transaction matching a specified Id hash value is recorded on the node. If you do not have the needed transaction Id at hand, run `vaultQuery` to find the Id.
@@ -768,7 +769,7 @@ To update the format run:
 
 * `output-format set json` to set the output format to JSON.
 
-* `output-format set yaml` to set the output format to Yaml.
+* `output-format set yaml` to set the output format to YAML.
 
 {{<warning>}}
 This setting only affects the output of `run ...` commands - for example, `run nodeInfo`.
@@ -885,7 +886,7 @@ A parameter of `Instant` and `Date` can be written as an ISO-8601 string: `"2017
 ## Extending the shell
 
 {{< note >}}
-This functionality is now only available when running the shell in unsafe mode (see Safe Shell section above). This is because of possible security vulnerabilities caused by the CRaSH shell embedded commands. When shell commands are executed via SSH, a remote user has the ability to effect the node internal state (including running scripts, gc and even shutting down the node). Prior to Enterprise 4.3 this was possible regardless of the user’s permissions. A user must now have ‘ALL’ as one of their RPC Permissions to be able to use the embedded commands via the unsafe shell. You are advised, where possible to design out dependencies on the CRaSH shell embedded commands (non-Corda commands) and, as a minimum, not to introduce any new dependencies on the unsafe shell environment.
+This functionality is now only available when running the shell in unsafe mode (see the "Safe Shell" section above). This is because of possible security vulnerabilities caused by the CRaSH shell embedded commands. When shell commands are executed via SSH, a remote user has the ability to effect the node internal state (including running scripts, garbage collection, and even shutting down the node). Prior to Enterprise 4.3 this was possible regardless of the user’s permissions. A user must now have ‘ALL’ as one of their RPC Permissions to be able to use the embedded commands via the unsafe shell. You are advised, where possible to design out dependencies on the CRaSH shell embedded commands (non-Corda commands) and, as a minimum, not to introduce any new dependencies on the unsafe shell environment.
 {{< /note >}}
 
 The shell can be extended using commands written in either Java or [Groovy](http://groovy-lang.org/) (a Java-compatible scripting language).
@@ -895,7 +896,7 @@ A full tutorial on how to write such commands is out of scope for this documenta
 
 
 {{< warning >}}
-Commands written in Groovy ignore Java security checks, so have unrestricted access to node and JVM internals regardless of any sandboxing that may be in place. Don’t allow untrusted users to edit files in the shell-commands directory!
+Commands written in Groovy ignore Java security checks, so have unrestricted access to node and JVM internals regardless of any sandboxing that may be in place. Don’t allow untrusted users to edit files in the `shell-commands` directory!
 
 {{< /warning >}}
 
@@ -911,4 +912,4 @@ The shell will be enhanced over time. The currently known limitations include:
 * Command history is not preserved across restarts.
 * The `jdbc` command requires you to explicitly log into the database first.
 * Commands placed in the `shell-commands` directory are only noticed after the node is restarted.
-* The `jul` command advertises access to logs, but it doesn’t work with the logging framework we’re using.
+* The `jul` command advertises access to logs, but it doesn’t work with the logging framework used in Corda.
