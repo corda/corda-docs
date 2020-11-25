@@ -28,5 +28,5 @@ The tool is distributed as a standalone JAR file named `tools-database-manager-$
 It is intended to be used by Corda Enterprise node administrators during database schema creation.
 
 It can be also used by CorDapp developers as a helper to create Liquibase database migration scripts.
-Any CorDapp deployed onto a Corda Enteprise node, which stores data in a custom table,
+Any CorDapp deployed onto a Corda Enterprise node, which stores data in a custom table,
 requires embedded DDL scripts written in a cross database manner database-management.
