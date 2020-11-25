@@ -23,7 +23,7 @@ Database schema updates may be also required when [deploying CorDapps on a node]
 
 For development/testing purposes, the [simplified database schema setup for development](node/operating/node-database-developer.md) documentation covers database setup with simplified user permissions. Documentation on [understanding the node database](node/operating/node-database.md) explains the differences between both setups.
 
-Corda Enterpise is released with the [Database Management Tool](node/operating/node-database.md#database-management-tool-ref).
+Corda Enterprise is released with the [Database Management Tool](node/operating/node-database.md#database-management-tool-ref).
 The tool is distributed as a standalone JAR file named `tools-database-manager-${corda_version}.jar`.
 It is intended to be used by Corda Enterprise node administrators during database schema creation.
 
