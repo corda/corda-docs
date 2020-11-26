@@ -16,12 +16,14 @@ weight: 1
 Corda releases strive to be backwards compatible, so upgrading a node is fairly straightforward and should not require changes to
 applications. It consists of the following steps:
 
-* Drain the node.
-* Make a backup of your node directories and/or database.
-* Update the database.
-* Replace the `corda.jar` file with the new version.
-* Start up the node. (This step may incur a delay while any necessary database migrations are applied.)
-* Undrain the node. (This step re-enables processing of new inbound flows.)
+1. Drain the node.
+1. Make a backup of your node directories and database.
+1. Update the database (manual).
+1. Replace the `corda.jar` file with the new version.
+1. Update configuration.
+1. Update the database (automatic) 
+1. Start the node in the normal way.
+1. Undrain the node.
 
 {{< note >}}
 The protocol is designed to tolerate node outages. During the upgrade process, peers on the network will wait for your node to come back.
@@ -63,7 +65,7 @@ For a detailed explanation of Corda backup and recovery guarantees, see [Backup 
 
 
 
-## Step 3. Update database
+## Step 3. Update the database (manual)
 
 The database update can be performed automatically or manually.
 
@@ -74,28 +76,9 @@ You can perform an automatic database update when:
 
 If you cannot perform an automatic update, you must perform a manual update.
 
-* To perform an automatic update, follow the instructions in [Automatic update](#automatic-update) (below). Then go on to [Step 4](#step-4-replace-cordajar-with-the-new-version). 
 * To perform a manual update, follow the instructions in [3.1](#31-configure-the-database-management-tool), [3.2](#32-extract-ddl-script-using-database-management-tool), [3.3](#33-apply-ddl-scripts-on-a-database), and [3.4](#34-apply-data-updates-on-a-database) (below). Then go on to [Step 4](#step-4-replace-cordajar-with-the-new-version).
+* To perform an automatic update, skip steps 3.1 to 3.4 and go directly to [Step 4](#step-4-replace-cordajar-with-the-new-version). The automatic update will be performed later in the update process ([Step 6](#step-6-update-database-automatic)).
 
-### Automatic update
-
-1. Before running an automatic update, ensure that the node configuration file `node.conf` contains:
-   
-   ```groovy
-   database = {
-      # other properties
-   }
-   ```
-
-1. To run the automatic update, start the node with the `run-migration-scripts` sub-command with `--core-schemas` and `--app-schemas`.
-
-   ```bash
-   java -jar corda.jar run-migration-scripts --core-schemas --app-schemas
-   ```
-
-   The node will perform any automatic data migrations required, which may take some time. If the migration process is interrupted it can be continued simply by starting the node again, without harm. The node will stop automatically when migration is complete.
-   
-3. Now go to [Step 4](#step-4-replace-cordajar-with-the-new-version).
 
 ### 3.1. Configure the Database Management Tool
 
@@ -324,9 +307,9 @@ Corda 4 requires Java 8u171 or any higher Java 8 patch level. Java 9+ is not cur
 
 Remove any `transactionIsolationLevel`, `initialiseSchema`, or `initialiseAppSchema` entries from the database section of your configuration
 
-## Step 6. Start the node with `run-migration-scripts` sub-command
+## Step 6. Update the database (automatic) 
 
-{{< note >}} This step is only required when upgrading to Corda Enterpise 4.6. {{< /note >}}
+{{< note >}}Do not perform this step if you have already updated the database manually ([Step 3](#step-3-update-the-database-manual)).{{< /note >}}
 
 Start the node with the `run-migration-scripts` sub-command with `--core-schemas` and `--app-schemas`.
 
