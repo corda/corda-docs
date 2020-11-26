@@ -19,11 +19,6 @@ retries with backoff and dead-letter routing, security, large message streaming 
 Artemis is hidden behind a thin interface that also has an in-memory only implementation suitable for use in
 unit tests and visualisation tools.
 
-{{< note >}}
-A future version of Corda will allow the MQ broker to be split out of the main node and run as a
-separate server.
-
-{{< /note >}}
 There are multiple ways of interacting with the network. When writing an application you typically won’t use the
 messaging subsystem directly. Instead you will build on top of the [flow framework](flow-state-machines.md),
 which adds a layer on top of raw messaging to manage multi-step flows and let you think in terms of identities
@@ -41,6 +36,7 @@ fetches a copy of the full network map (from the server or from filesystem for d
 regular time interval for network map and applies any related changes locally.
 Nodes do not automatically deregister themselves, so (for example) nodes going offline briefly for maintenance are retained
 in the network map, and messages for them will be queued, minimising disruption.
+If a node is registered but not started and the service goes down before the first start of the node, the node will fail to restart.
 
 Additionally, on every restart and on daily basis nodes submit signed `NodeInfo` s to the map service. When network map gets
 signed, these changes are distributed as new network data. `NodeInfo` republishing is treated as a heartbeat from the node,
