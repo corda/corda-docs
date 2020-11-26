@@ -18,27 +18,36 @@ applications. It consists of the following steps:
 
 * Drain the node.
 * Make a backup of your node directories and/or database.
+* Update the database.
 * Replace the `corda.jar` file with the new version.
-* Start up the node. This step may incur a delay whilst any needed database migrations are applied.
-* Undrain it to re-enable processing of new inbound flows.
+* Start up the node. (This step may incur a delay while any necessary database migrations are applied.)
+* Undrain the node. (This step re-enables processing of new inbound flows.)
 
-The protocol is designed to tolerate node outages, so during the upgrade process peers on the network will wait for your node to come back.
+{{< note >}}
+The protocol is designed to tolerate node outages. During the upgrade process, peers on the network will wait for your node to come back.
+{{< /note >}}
 
+{{< note >}}
+To update from Corda 3.x to 4.6, you must first upgrade to 4.x, and then upgrade to 4.6. We recommend you upgrade to 4.5 and then to 4.6.
+{{< /note >}}
 
 ## Step 1. Drain the node
 
-Before a node or application on it can be upgraded, the node must be put in Draining mode. This brings the currently running
-[Flows](../../cordapps/api-flows.md/) to a smooth halt such that existing work is finished and new work is queuing up rather than being processed.
+Before a node, or an application on a node, can be upgraded, the node must be put in draining-mode. This brings the currently running
+[Flows](../../cordapps/api-flows.md) to a smooth halt (existing work is finished, and new work is queued rather than being processed).
 
 Draining flows is a key task for node administrators to perform. It exists to simplify applications by ensuring apps don’t have to be
-able to migrate workflows from any arbitrary point to other arbitrary points, a task that would rapidly become infeasible as workflow and protocol complexity increases.
+able to migrate workflows from any arbitrary point to other arbitrary points, a task that would rapidly become unfeasible as workflow
+and protocol complexity increases.
 
-To drain the node, run the `gracefulShutdown` command. This will wait for the node to drain and then shut down the node when the drain is complete.
+To drain the node, run the `gracefulShutdown` command. This will wait for the node to drain and then shut it down once the drain
+is complete.
+
 
 {{< warning >}}
-The length of time a node takes to drain depends on both how your applications are designed, and whether any apps are currently
-talking to network peers that are offline or slow to respond. It is thus hard to give guidance on how long a drain should take, but in
-an environment with well written apps and in which your counterparties are online, drains may need only a few seconds.
+The length of time a node takes to drain depends both on how your applications are designed, and whether any apps are currently
+talking to network peers that are offline or slow to respond. It is, therefore, difficult to give guidance on how long a drain should take. In
+an environment with well written apps and in which your counterparties are online, it is possible that drains may only need a few seconds.
 
 {{< /warning >}}
 
@@ -77,6 +86,13 @@ database = {
 }
 ```
 
+In both cases, start the node with the `run-migration-scripts` sub-command with `--core-schemas` and `--app-schemas`.
+
+```bash
+java -jar corda.jar run-migration-scripts --core-schemas --app-schemas
+```
+
+The node will perform any automatic data migrations required, which may take some time. If the migration process is interrupted it can be continued simply by starting the node again, without harm. The node will stop automatically when migration is complete.
 
 ### 3.1. Configure the Database Management Tool
 
@@ -112,20 +128,20 @@ myLegalName = <node_legal_name>
 
 
 
-Replace placeholders <server>, `<login>`, `<password>`, and `<database>` with appropriate values.
+Replace placeholders `<server>`, `<login>`, `<password>`, and `<database>` with appropriate values.
 `<database>` should be a user database and `<schema>` a schema namespace.
 Ensure `<login>` and `<password>` are for a database user with visibility of the `<schema>`.
 The `myLegalName` field is obligatory, however, it is used in Step 3.4 only
 (the tool doesn’t understand the context of the run and always requires the field to be present).
-For this step you can use any valid dummy name -  for example, `O=Dummy,L=London,C=GB` for `<node_legal_name>`.
+For this step you can use any valid dummy name - for example, `O=Dummy,L=London,C=GB` for `<node_legal_name>`.
 
-The Microsoft SQL JDBC driver can be downloaded from [Microsoft Download Center](https://www.microsoft.com/en-us/download/details.aspx?id=55539).
-Extract the archive, and copy the single file `mssql-jdbc-6.2.2.jre8.jar` into the `drivers` directory.
+The Microsoft SQL JDBC driver can be downloaded from [Microsoft Download Center](https://www.microsoft.com/en-us/download/details.aspx?id=56615).
+Extract the archive, and copy the single file `mssql-jdbc-6.4.0.jre8.jar` into the `drivers` directory.
 
 
 #### SQL Server
 
-The required `node.conf` settings for the Database Management Tool using Azure SQL:
+The required `node.conf` settings for the Database Management Tool using SQL Server:
 
 ```groovy
 dataSourceProperties = {
@@ -147,8 +163,8 @@ The `myLegalName` field is obligatory however it is used in Step 3.4 only
 (the tool doesn’t understand the context of the run and always requires the field to be present).
 For this step you can use any valid dummy name - for example, `O=Dummy,L=London,C=GB` for `<node_legal_name>`.
 
-The Microsoft JDBC 6.2 driver can be downloaded from [Microsoft Download Center](https://www.microsoft.com/en-us/download/details.aspx?id=55539).
-Extract the archive, and copy the single file `mssql-jdbc-6.2.2.jre8.jar` into the `drivers` directory.
+The Microsoft JDBC 6.4 driver can be downloaded from [Microsoft Download Center](https://www.microsoft.com/en-us/download/details.aspx?id=56615).
+Extract the archive, and copy the single file `mssql-jdbc-6.4.0.jre8.jar` into the `drivers` directory.
 
 
 #### Oracle
@@ -201,7 +217,7 @@ The `myLegalName` field is obligatory however it is used in Step 3.4 only
 (the tool doesn’t understand the context of the run and always requires the field to be present).
 For this step you can use any valid dummy name - for example, `O=Dummy,L=London,C=GB` for `<node_legal_name>`.
 
-Copy the PostgreSQL JDBC Driver *42.1.4* version *JDBC 4.2* into the `drivers` directory.
+Copy the PostgreSQL JDBC Driver *42.2.8* version *JDBC 4.2* into the `drivers` directory.
 
 
 ### 3.2. Extract DDL script using Database Management Tool
@@ -209,16 +225,18 @@ Copy the PostgreSQL JDBC Driver *42.1.4* version *JDBC 4.2* into the `drivers` d
 To run the tool, use the following command:
 
 ```shell
-java -jar tools-database-manager-|release|.jar dry-run -b path_to_configuration_directory
+java -jar tools-database-manager-|release|.jar dry-run -b path_to_configuration_directory --core-schemas --app-schemas
 ```
 
 The option `-b` points to the base directory (which contains a `node.conf` file, and `drivers` and `cordapps` subdirectories).
 
-A script named `migration/.sql` will be generated in the base directory.
+`--core-schemas` is required to adopt the changes made in the new version of Corda, and `--app-schemas` is related to the CorDapps changes.
+
+A script named `migrationYYYYMMDDHHMMSS.sql` will be generated in the current directory.
 This script will contain all the statements required to modify and create data structures (for example, tables/indexes),
-and inserts the Liquibase management table *DATABASECHANGELOG*.
+and updates the Liquibase management table *DATABASECHANGELOG*.
 The command doesn’t alter any tables itself.
-For descriptions of the options, refer to the [Corda Database Management Tool](node-database.md#database-management-tool-ref) manual.
+For descriptions of the options, refer to the [Corda Database Management Tool](../../database-management-tool.md) manual.
 
 
 ### 3.3. Apply DDL scripts on a database
@@ -250,7 +268,8 @@ An accidental re-run of the scripts will fail (as the tables are already there),
 The schema structure changes in Corda 4.0 require data to be propagated to new tables and columns based on the existing rows and specific node configuration (for example, node legal name). Such migrations cannot be expressed by the DDL script, so they need to be performed by the Database Management Tool (or a Corda node). These updates are required any time you are upgrading either from an earlier version to 4.0 or from 4.x to 4.x - for example, upgrading from 4.5 to 4.6.
 
 The Database Management Tool can execute the remaining data upgrade.
-As the schema structure is already created in the 3rd step, the tool can connect with *restricted* database permissions. The only activities in this step are inserts/upgrades data rows, and no alterations to the schema are applied.
+As the schema structure is already created in the 3rd step, the tool can connect with *restricted* database permissions.
+The only activities in this step are inserts/upgrades data rows, and no alterations to the schema are applied.
 
 You can reuse the tool configuration directory (with modifications) created in Step 3.1, or you can run the tool
 accessing the base directory of a Corda node (for which the data update is being performed).
@@ -270,22 +289,24 @@ The value of `myLegalName` must exactly match the node name that is used in the 
 3. Change the database user to one with *restricted permissions*. This ensures no database alteration is performed by this step.To run the remaining data migration, run:
 
 ```shell
-java -jar tools-database-manager-4.0-RC03.jar execute-migration -b .
+java -jar tools-database-manager-4.0-RC03.jar execute-migration -b . --core-schemas --app-schemas
 ```
 
 
 
 
->
+
 The option `-b` points to the base directory (with a `node.conf` file, and *drivers* and *cordapps* subdirectories).
 
-
+`--core-schemas` is required to adopt the changes made in the new version of Corda, and `--app-schemas` is related to the CorDapps changes.
 
 
 ## Step 4. Replace `corda.jar` with the new version
 
 Replace the `corda.jar` with the latest version of Corda.
-Make sure it’s available on your path, and that you’ve read the [release notes](../../release-notes-enterprise.html). Pay particular attention to which version of Java this
+
+Download the latest version of Corda from [our Artifactory site](https://software.r3.com/artifactory/webapp/#/artifacts/browse/simple/General/corda/net/corda/corda-node).
+Make sure it’s available on your path, and that you’ve read the [Corda release notes](../../release-notes-enterprise.md). Pay particular attention to which version of Java this
 node requires.
 
 
