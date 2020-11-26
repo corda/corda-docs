@@ -65,34 +65,37 @@ For a detailed explanation of Corda backup and recovery guarantees, see [Backup 
 
 ## Step 3. Update database
 
-This step is mandatory for production systems.
+The database update can be performed automatically or manually.
 
-If you are updating a Corda node that is currently using the default H2 database (which should be used for development purposes),
-then skip this step. In this situation, a Corda node will auto-update its database on startup.
+You can perform an automatic database update when:
 
-You can also skip the manual database update and allow a Corda node to auto-update its database on startup when:
+* A database setup is for testing/development purposes and a Corda node connects with *administrative permissions* (it can modify database schema).
+* You are upgrading a production system and your policy allows a Corda node to auto-update its database and a Corda node connects with *administrative permissions*.
 
+If you cannot perform an automatic update, you must perform a manual update.
 
-* A database setup is for testing/development purposes and a Corda node connects with *administrative permissions*
-(it can modify database schema).
-* You are upgrading a production system, however your policy allows a Corda node to auto-update its database
-and a Corda node connects with *administrative permissions*.
+* To perform an automatic update, follow the instructions in [Automatic update](#automatic-update) (below). Then go on to [Step 4](#step-4-replace-cordajar-with-the-new-version). 
+* To perform a manual update, follow the instructions in [3.1](#31-configure-the-database-management-tool), [3.2](#32-extract-ddl-script-using-database-management-tool), [3.3](#33-apply-ddl-scripts-on-a-database), and [3.4](#34-apply-data-updates-on-a-database) (below). Then go on to [Step 4](#step-4-replace-cordajar-with-the-new-version).
 
-In both cases ensure that a node configuration `node.conf` file contains:
+### Automatic update
 
-```groovy
-database = {
-    #other properties
-}
-```
+1. Before running an automatic update, ensure that the node configuration file `node.conf` contains:
+   
+   ```groovy
+   database = {
+      # other properties
+   }
+   ```
 
-In both cases, start the node with the `run-migration-scripts` sub-command with `--core-schemas` and `--app-schemas`.
+1. To run the automatic update, start the node with the `run-migration-scripts` sub-command with `--core-schemas` and `--app-schemas`.
 
-```bash
-java -jar corda.jar run-migration-scripts --core-schemas --app-schemas
-```
+   ```bash
+   java -jar corda.jar run-migration-scripts --core-schemas --app-schemas
+   ```
 
-The node will perform any automatic data migrations required, which may take some time. If the migration process is interrupted it can be continued simply by starting the node again, without harm. The node will stop automatically when migration is complete.
+   The node will perform any automatic data migrations required, which may take some time. If the migration process is interrupted it can be continued simply by starting the node again, without harm. The node will stop automatically when migration is complete.
+   
+3. Now go to [Step 4](#step-4-replace-cordajar-with-the-new-version).
 
 ### 3.1. Configure the Database Management Tool
 
