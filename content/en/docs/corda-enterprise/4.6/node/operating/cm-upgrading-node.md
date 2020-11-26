@@ -61,7 +61,7 @@ It’s always a good idea to back up your data before upgrading any server. This
 You can simply make a copy of the node’s data directory to enable this. If you use an external non-H2 database, consult your database
 user guide to learn how to make backups.
 
-For a detailed explanation of Corda backup and recovery guarantees, see [Backup recommendations](node-administration.md#backup-recommendations) .
+For a detailed explanation of Corda backup and recovery guarantees, see [Backup recommendations](node-administration.md#backup-recommendations).
 
 
 
