@@ -21,7 +21,7 @@ applications. It consists of the following steps:
 1. Update the database (manual).
 1. Replace the `corda.jar` file with the new version.
 1. Update configuration.
-1. Update the database (automatic) 
+1. Update the database (automatic) .
 1. Start the node in the normal way.
 1. Undrain the node.
 
