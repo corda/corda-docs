@@ -13,8 +13,7 @@ weight: 1
 
 # Upgrading your node to Corda 4.6
 
-Corda releases strive to be backwards compatible, so upgrading a node is fairly straightforward and should not require changes to
-applications. It consists of the following steps:
+Corda releases strive to be backwards compatible, so upgrading a node is fairly straightforward and should not require changes to applications. Upgrading from 4.x  consists of the following steps:
 
 1. Drain the node.
 1. Make a backup of your node directories and database.
@@ -29,9 +28,12 @@ applications. It consists of the following steps:
 The protocol is designed to tolerate node outages. During the upgrade process, peers on the network will wait for your node to come back.
 {{< /note >}}
 
-{{< note >}}
-To update from Corda 3.x to 4.6, you must first upgrade to 4.x, and then upgrade to 4.6. We recommend you upgrade to 4.5 and then to 4.6.
-{{< /note >}}
+{{< warning >}}
+If upgrading from Corda Enterprise 3.x:
+* First ensure your node has been upgraded to the latest point release of that distribution. See [Upgrade a Corda 3.X Enterprise Node](../3.3/node-operations-upgrading.html#upgrading-a-corda-enterprise-node) for information on upgrading Corda 3.x versions.
+* Then, upgrade to 4.5.
+* Finally, upgrade to 4.6.
+{{< /warning >}}
 
 ## Step 1. Drain the node
 
@@ -331,10 +333,3 @@ You may now do any checks that you wish to perform, read the logs, and so on. Wh
 `run setFlowsDrainingModeEnabled enabled: false`
 
 Your upgrade is complete.
-
-{{< warning >}}
-If upgrading from Corda Enterprise 3.x, please ensure your node has been upgraded to the latest point release of that
-distribution. See [Upgrade a Corda 3.X Enterprise Node](../../../3.3/node-operations-upgrading.html#upgrading-a-corda-enterprise-node)
-for information on upgrading Corda 3.x versions.
-
-{{< /warning >}}
