@@ -11,7 +11,7 @@ tags:
 title: Managing Business Network membership
 ---
 
-# Business Network management
+# Business Network membership management
 
 This Corda platform extension allows you to create and manage business networks - as a node operator, this means you can define and create a logical network based on a set of common CorDapps as well as a shared business context.
 
@@ -48,7 +48,37 @@ In a Business Network, you can assign different roles to members of the network.
 
 ## Installation
 
-This is an extension of Corda OS 4.6. If you have this version of Corda, and want to set up and run a Business Network, you can make use of the extension flows.
+This is an extension for Corda 4.6. If you have this version of Corda, you can access the required `.jar` files here:
+
+* BNE contracts: [https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-contracts/1.0/business-networks-contracts-1.0.jar](https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-contracts/1.0/business-networks-contracts-1.0.jar).
+* BNE workflows: [https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-workflows/1.0/business-networks-workflows-1.0.jar](https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-workflows/1.0/business-networks-workflows-1.0.jar).
+* Sample CorDapp contracts: [https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-demo-contracts/1.0/business-networks-demo-contracts-1.0.jar](https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-demo-contracts/1.0/business-networks-demo-contracts-1.0.jar).
+* Sample CorDapp workflows: [https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-demo-workflows/1.0/business-networks-demo-workflows-1.0.jar](https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-demo-workflows/1.0/business-networks-demo-workflows-1.0.jar).
+
+To install the extension:
+
+1. Add the `business-networks-contracts` dependency in your **contracts** (and states) CorDapp module:
+
+```
+dependencies {
+    //...
+    cordapp("net.corda.bn:business-networks-contracts:$corda_bn_extension_version")
+    //...
+}
+```
+2. Add the `business-networks-workflows` dependency in your **workflows** CorDapp module:
+
+```
+dependencies {
+    //...
+	cordapp("net.corda.bn:business-networks-workflows:$corda_bn_extension_version")
+    //...
+}
+```
+
+3. Add both dependencies in your **Cordform** - `deployNodes` - task.
+
+You have installed the Business Network membership extension.
 
 ## Create a business network
 
@@ -283,7 +313,7 @@ subFlow(ModifyGroupFlow(bnGroupId, bnGroupName, newParticipantsList, notary))
 
 You can temporarily suspend a member or completely remove them from the business network. Suspending a member will result in a membership status change to `SUSPENDED` and still allow said member to be in the business network. Revocation means that the membership is marked as historic/spent and and a new one will have to be requested and activated in order for the member to re-join the network.
 
-When a membership is revoked, the member is also removed from all Business Network Groups. 
+When a membership is revoked, the member is also removed from all Business Network Groups.
 
 To suspend a member of the network:
 

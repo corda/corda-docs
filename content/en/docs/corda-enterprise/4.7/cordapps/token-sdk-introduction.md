@@ -1,10 +1,10 @@
 ---
 date: '2020-05-10T12:00:00Z'
 menu:
-  corda-enterprise-4-6:
-    identifier: corda-enterprise-4-6-token-sdk
+  corda-enterprise-4-7:
+    identifier: corda-enterprise-4-7-token-sdk
     name: "Tokens SDK"
-    parent: corda-enterprise-4-6-cordapps
+    parent: corda-enterprise-4-7-cordapps
 tags:
 - building
 - against
@@ -257,7 +257,7 @@ Fungible tokens can be split using a flow initiated by the **Move** command. Thi
 
 In the below example, Alice instantiates a token representing a BitCoin. This token is generated using the Tokens SDK's built-in `money` library.
 
-{{< tabs name="tabs-1234" >}}
+{{< tabs name="tabs-2" >}}
 {{% tab name="kotlin" %}}
 ```kotlin
 val fungibleToken = 1 of DigitalCurrency.getInstance("BTC") issuedBy aliceParty heldBy aliceParty
@@ -1338,8 +1338,8 @@ list of repositories for your project:
 
 ```
     repositories {
-        maven { url 'https://ci-artifactory.corda.r3cev.com/artifactory/corda-lib' }
-        maven { url 'https://ci-artifactory.corda.r3cev.com/artifactory/corda-lib-dev' }
+        maven { url 'https://software.r3.com/artifactory/corda-lib' }
+        maven { url 'https://software.r3.com/artifactory/corda-lib-dev' }
     }
 ```
 

@@ -1,8 +1,8 @@
 ---
 date: '2020-01-08T09:59:25Z'
 menu:
-  corda-enterprise-4-6:
-    parent: corda-enterprise-4-6-corda-network
+  corda-enterprise-4-7:
+    parent: corda-enterprise-4-7-corda-network
 tags:
 - UAT
 title: Setting up a notary in a segregated network
@@ -48,4 +48,4 @@ Please note that you must register the notary service identity **before** the in
 
 3. Add the notary service identity to the network parameters by sending the `nodeInfo-xxx` file using the [Corda Network support portal](https://r3-cev.atlassian.net/servicedesk/customer/portal/7) using either a segregated network request form, or by creating a new task.
 
-4. After the network parameters have been updated, [start the notary worker nodes](./operations/deployment/starting-components.md#starting-a-corda-node).
+4. After the network parameters have been updated, [start the notary worker nodes](../node/deploy/starting-components.md#starting-a-corda-node).

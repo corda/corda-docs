@@ -5,9 +5,9 @@ aliases:
 - /api-persistence.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-6:
-    identifier: corda-os-4-6-api-persistence
-    parent: corda-os-4-6-corda-api
+  corda-os-4-7:
+    identifier: corda-os-4-7-api-persistence
+    parent: corda-os-4-7-corda-api
     weight: 240
 tags:
 - api
@@ -33,7 +33,7 @@ automatically every time a state is recorded in the node’s local vault as part
 {{< note >}}
 By default, nodes use an H2 database which is accessed using *Java Database Connectivity* JDBC. Any database
 with a JDBC driver is a candidate and several integrations have been contributed to by the community.
-Please see the info in “[Node database](node-database.md)” for details.
+Please see the info in “[Node database](node-database-access-h2.md)” for details.
 
 {{< /note >}}
 

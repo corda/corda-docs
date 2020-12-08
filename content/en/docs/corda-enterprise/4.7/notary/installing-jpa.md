@@ -1,10 +1,10 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-6:
-    identifier: corda-enterprise-4-6-corda-nodes-notary-config
+  corda-enterprise-4-7:
+    identifier: corda-enterprise-4-7-corda-nodes-notary-config
     name: "Configuring a notary"
-    parent: corda-enterprise-4-6-notaries
+    parent: corda-enterprise-4-7-notaries
 tags:
 - installing
 - jpa
@@ -94,7 +94,8 @@ notary {
 
 
 
-[dbm.conf](https://github.com/corda/enterprise/blob/release/ent/4.6/docs/source/notary/resources/dbm.conf) | ![github](/images/svg/github.svg "github")
+[dbm.conf](../resources/dbm.conf) | ![github](/images/svg/github.svg "github")
+
 
 {{< /tabs >}}
 

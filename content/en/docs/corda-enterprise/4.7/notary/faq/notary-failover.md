@@ -1,8 +1,8 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-    corda-enterprise-4-6:
-        parent: corda-enterprise-4-6-running-a-notary-cluster-faq-toctree
+    corda-enterprise-4-7:
+        parent: corda-enterprise-4-7-running-a-notary-cluster-faq-toctree
 tags:
 - notary
 - failover
@@ -24,7 +24,7 @@ to the [ETA mechanism](eta-mechanism.md).
 ## How does the timeout work?
 
 It is based on the `flowTimeout` section of the node configuration. Flows to HA notaries will be retried after the configured
-time. Information can be found in corda-configuration-file.
+time. Information can be found in the [Corda configuration file](../../node/setup/corda-configuration-file.md/).
 
 
 ## What is the back off mechanism?

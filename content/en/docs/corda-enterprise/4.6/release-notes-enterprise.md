@@ -16,11 +16,26 @@ weight: 1
 
 # Corda Enterprise release notes
 
+## Corda Enterprise 4.6.1
+
+Corda Enterprise 4.6.1 is a patch release of Corda Enterprise that introduces fixes to known issues in Corda Enterprise 4.6.
+
+### Upgrade recommendation
+
+As a developer, you should upgrade to the [latest released version of Corda](https://docs.corda.net/docs/corda-enterprise/index.html) as soon as possible. Check the latest Corda Enterprise release notes and upgrade guide [here](https://docs.corda.net/docs/corda-enterprise/release-notes-index.html).
+
+As a node operator, you should upgrade to the [latest released version of Corda](https://docs.corda.net/docs/corda-enterprise/index.html) if the fixed issues listed below are relevant to your work.
+
+### Fixed issues
+
+* We have fixed an issue where the maximum length of a certificate's serial number allowed by Corda Enterprise Network Manager (CENM) was 28 digits (`NUMBER(28)` format in the database) - roughly about 93 bits of data. To extend the support (introduced in [CENM 1.2](https://docs.corda.net/docs/cenm/1.2.html)) for third-party CAs such as [SwissPKI](https://www.swisspki.com/), the Identity Manager Service can now handle certificate serial numbers with sizes up to 20 octets/bytes (160 bits) to comply with [RFC 5280](https://tools.ietf.org/html/rfc5280). In addition, the [CENM PKI Tool](https://docs.corda.net/docs/cenm/pki-tool.html) now generates certificates with serial number sizes of up to 16 octets/bytes. This fix provides better support for Node and HA tools.
+* We have fixed an issue where the [HA Utilities](ha-utilities.md) tool failed to start when using the `node-registration` [sub-command](ha-utilities.md#sub-commands).
+
 ## Corda Enterprise 4.6 release overview
 
 This release introduces a number of new features, major functional and operational improvements, and fixes for a range of known issues in the following major areas:
 
-**Flow management features and improvements**.
+**Flow management features and improvements**
 
 The new flow management features and improvements introduced in Corda Enterprise 4.6 include:
 
@@ -58,10 +73,10 @@ Watch this short video overview of the ability to prevent duplicate flow starts 
 * We now release [Docker images](#deployment-docker-images-for-corda-enterprise-firewall-and-all-corda-enterprise-setup-tools) for Corda Enterprise Firewall and all Corda Enterprise setup tools.
 * This release introduces a set of improvements to make the flow state machine more resilient.
 * We have added support for [storing node TLS keys in HSM](#support-for-storing-node-tls-keys-in-hsm-without-firewall) even without running the Corda Firewall. A new optional `tlsCryptoServiceConfig` section was introduced inside `enterpriseConfiguration` in `node.conf`.
-* We have introduced Node Maintenance Mode, which enables you to [schedule maintenance windows](#node-maintenance-mode) for your nodes via the `maintenanceMode` configuration field within the `enterpriseConfiguration` [node configuration file](node/setup/corda-configuration-fields.html#enterpriseconfiguration) section.  
+* We have introduced Node Maintenance Mode, which enables you to [schedule maintenance windows](#node-maintenance-mode) for your nodes via the `maintenanceMode` configuration field within the `enterpriseConfiguration` [node configuration file](node/setup/corda-configuration-fields.html#enterpriseconfiguration) section.
 * We have added the ability to perform message ID cleanup less aggressively. Corda Enterprise now performs a [less aggressive and safer cleanup](#ability-to-perform-message-id-cleanup-less-aggressively) of the table that contains identifiers of previously processed messages.
 
-**Developer experience features and improvements.**
+**Developer experience features and improvements**
 
 We are focused on improving the overall developer experience to ensure Corda maintains its status as an easy-to-use platform for developers. In this release we have a number of improvements that will help developers build more resilient applications.
 
@@ -146,7 +161,7 @@ Corda’s RPC client now allows each flow to be started with a unique client-pro
 
 This enables you to:
 
-* Reconnect reliably to previously started flows.  
+* Reconnect reliably to previously started flows.
 * Reclaim a flow's result or exception at any time in the future.
 
 For more information, see [Starting a flow with a client-provided unique ID](flow-start-with-client-id.md).
@@ -376,7 +391,7 @@ Our Docker Hub organisation (https://hub.docker.com/u/corda) now contains all th
 ### Other changes and improvements
 
 * To avoid a third-party dependency issue, we have reverted the supported H2 Database Engine version to **1.4.197** in Corda Enterprise versions 4.4.3, 4.5.1, and 4.6.
-* To reduce the risk of vulnerabilities, we have upgraded the Apache Zookeeper version used by the Corda Enterprise [Firewall component](node/corda-firewall-component.md#prerequisites-4) from 3.5.4-Beta to 3.61. See [Apache ZooKeeper setup](operations/deployment/corda-firewall-configuration-file.md#apache-zookeeper-setup) for more information.
+* To reduce the risk of vulnerabilities, we have upgraded the Apache Zookeeper version used by the Corda Enterprise [Firewall component](node/corda-firewall-component.md#prerequisites-4) from 3.5.4-Beta to 3.61. See [Apache ZooKeeper setup](node/corda-firewall-configuration-file.md#apache-zookeeper-setup) for more information.
 * We have upgraded `commons-beanutils` to version 1.9.4 for improved security.
 * As of Corda Enterprise 4.6, support for [DemoBench](demobench.md) is deprecated.
 * We have released a new minor version of [Accounts SDK](https://github.com/corda/accounts/blob/master/docs.md) - version 1.0.2. This version includes database improvements that make it compatible with Corda Enterprise 4.6. If you are planning to use the Accounts SDK with Corda Enterprise 4.6, you must use Accounts SDK V 1.0.2.

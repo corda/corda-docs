@@ -1,9 +1,9 @@
 ---
 date: '2020-01-08T09:59:25Z'
 menu:
-  corda-enterprise-4-6:
-    parent: corda-enterprise-4-6-operations-guide-deployment-cenm-kubernetes
-    identifier: corda-enterprise-4-6-operations-guide-deployment-cenm-kubernetes-gateway
+  corda-enterprise-4-7:
+    parent: corda-enterprise-4-7-operations-guide-deployment-cenm-kubernetes
+    identifier: corda-enterprise-4-7-operations-guide-deployment-cenm-kubernetes-gateway
 tags:
 - config
 - kubernetes
@@ -13,7 +13,7 @@ weight: 20
 
 # CENM Gateway Service Helm Chart
 
-This Helm chart is to configure, deploy, and run the [CENM Gateway Service](gateway-service.md) on Kubernetes.
+This Helm chart is to configure, deploy, and run the [CENM Gateway Service](../../../../cenm/1.5/gateway-service.md/) on Kubernetes.
 
 ## Example usage
 
@@ -45,4 +45,4 @@ helm install cenm-gateway gateway --set prefix=cenm --set acceptLicense=Y --set 
 | `zonePort`                    | Zone Service port | `12345` |
 | `logsContainersEnabled`       | Enable container displaying live logs | `true`
 {{< /table >}}
-For additional information on database connection details refer to the official documentation: [database documentation](config-database.md).
+For additional information on database connection details refer to the official documentation: [database documentation](../../../../cenm/1.5/config-database.md/).

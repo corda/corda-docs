@@ -5,9 +5,9 @@ aliases:
 - /cipher-suites.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-6:
-    identifier: corda-os-4-6-cipher-suites
-    parent: corda-os-4-6-corda-networks-index
+  corda-os-4-7:
+    identifier: corda-os-4-7-cipher-suites
+    parent: corda-os-4-7-corda-networks-index
     weight: 1040
 tags:
 - cipher

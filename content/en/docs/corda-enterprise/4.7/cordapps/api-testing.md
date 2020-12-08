@@ -1,8 +1,8 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-6:
-    parent: corda-enterprise-4-6-cordapps-debugging
+  corda-enterprise-4-7:
+    parent: corda-enterprise-4-7-cordapps-debugging
 tags:
 - api
 - testing
@@ -165,8 +165,8 @@ attributes.
 ### Further examples
 
 
-* See the flow testing tutorial here
-* See the oracle tutorial here for information on testing `@CordaService` classes
+* See the flow testing tutorial [here](../flow-testing.md).
+* See the oracle tutorial [here](../oracles.md) for information on testing `@CordaService` classes.
 * Further examples are available in the Example CorDapp in
 [Java](https://github.com/corda/samples/blob/release-V4/cordapp-example/workflows-java/src/test/java/com/example/test/flow/IOUFlowTests.java) and
 [Kotlin](https://github.com/corda/samples/blob/release-V4/cordapp-example/workflows-kotlin/src/test/kotlin/com/example/test/flow/IOUFlowTests.kt)

@@ -1,8 +1,8 @@
 ---
 date: '2020-04-24T12:00:00Z'
 menu:
-  corda-enterprise-4-6:
-    parent: corda-enterprise-4-6-corda-nodes-collaborative-recovery
+  corda-enterprise-4-7:
+    parent: corda-enterprise-4-7-corda-nodes-collaborative-recovery
 tags:
 - disaster recovery
 - collaborative recovery
@@ -564,7 +564,7 @@ In all cases, it may be necessary to *kill* the flow. See below for the details 
 
 ### Step 3. Transaction recovery
 
-If differences were found during the reconciliation, the next step will be to perform an [Automatic Recovery](ledger-recover-automatic.html) or a [ManualRecovery](ledger-recover-manual.html).
+If differences were found during the reconciliation, the next step will be to perform an [Automatic Recovery](ledger-recovery-automatic.md/) or a [ManualRecovery](ledger-recovery-manual.md/).
 
 #### Killing Reconciliation Flows
 

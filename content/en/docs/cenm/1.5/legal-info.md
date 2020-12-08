@@ -5,9 +5,9 @@ aliases:
 - /docs/cenm/legal-info.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-4:
-    identifier: cenm-1-4-legal-info
-    parent: cenm-1-4-cenm-releases
+  cenm-1-5:
+    identifier: cenm-1-5-legal-info
+    parent: cenm-1-5-cenm-releases
     weight: 120
 tags:
 - legal

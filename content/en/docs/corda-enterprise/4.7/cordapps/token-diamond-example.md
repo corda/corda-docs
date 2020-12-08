@@ -1,8 +1,8 @@
 ---
 date: '2020-05-10T12:00:00Z'
 menu:
-  corda-enterprise-4-6:
-    parent: corda-enterprise-4-6-token-sdk
+  corda-enterprise-4-7:
+    parent: corda-enterprise-4-7-token-sdk
 weight: 200
 tags:
 title: Tokens SDK evolvable token example
@@ -148,7 +148,8 @@ Alice has an outdated (and unconsumed) evolvable token. GIC, Denise, Bob and Cha
 
 ```val oldDiamond = publishDiamondTx.singleOutput<DiamondGradingReport>()
 assertHasStateAndRef(oldDiamond, alice)
-assertNotHasStateAndRef(oldDiamond, gic, denise, bob, charlie)```
+assertNotHasStateAndRef(oldDiamond, gic, denise, bob, charlie)
+```
 
 No party has nonfungible (discrete) tokens:
 

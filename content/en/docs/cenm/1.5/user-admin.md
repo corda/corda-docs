@@ -4,9 +4,9 @@ aliases:
 - /releases/release-1.2/pki-tool.html
 date: '2020-05-22T05:59:25Z'
 menu:
-  cenm-1-4:
-    identifier: cenm-1-4-user-admin-tool
-    parent: cenm-1-4-tools-index
+  cenm-1-5:
+    identifier: cenm-1-5-user-admin-tool
+    parent: cenm-1-5-tools-index
     weight: 1015
 tags:
 - users

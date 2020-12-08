@@ -5,9 +5,9 @@ aliases:
 - /tools-index.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-6:
-    identifier: corda-os-4-6-tools-index
-    parent: corda-os-4-6-development
+  corda-os-4-7:
+    identifier: corda-os-4-7-tools-index
+    parent: corda-os-4-7-development
     weight: 110
 tags:
 - tools

@@ -1,8 +1,8 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-6:
-    parent: corda-enterprise-4-6-corda-nodes-operating
+  corda-enterprise-4-7:
+    parent: corda-enterprise-4-7-corda-nodes-operating
 tags:
 - checkpoint
 - tooling
@@ -621,7 +621,7 @@ The feature provides a way for flows to reload from checkpoints, even if no erro
 
 ### How to use this feature
 
-Add the `reloadCheckpointAfterSuspend` [node configuration option](corda-configuration-fields.md#reloadCheckpointAfterSuspend) and set it to `true`, as shown below:
+Add the `reloadCheckpointAfterSuspend` [node configuration option](node/setup/corda-configuration-fields.md#reloadCheckpointAfterSuspend) and set it to `true`, as shown below:
 
 ```
 reloadCheckpointAfterSuspend = true

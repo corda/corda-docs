@@ -1,9 +1,9 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-6:
-    identifier: corda-enterprise-4-6-operations-guide-deployment-node-running
-    parent: corda-enterprise-4-6-operations-guide-deployment-node
+  corda-enterprise-4-7:
+    identifier: corda-enterprise-4-7-operations-guide-deployment-node-running
+    parent: corda-enterprise-4-7-operations-guide-deployment-node
 tags:
 - running
 - node
@@ -28,7 +28,7 @@ There are several ways to run a Corda node locally for testing purposes.
 See the instructions in demobench.
 
 {{< warning >}}
-**DemoBench** is deprecated in Corda 4.6 and Corda Enterprise 4.6.
+**DemoBench** is deprecated.
 {{< /warning >}}
 
 
@@ -165,9 +165,9 @@ The node can optionally be started with the following command-line options:
 
 **Important note about running the initial node registration command**
 
-In Corda 4.6, database schemas are no longer initialised/migrated automatically by running any command at the first run of the node - typically at the initial node registration. This is now done explicitly by running `run-migration-scripts`, so no other commands during the first node run would initialise/migrate the database schema. 
+In Corda 4.6, database schemas are no longer initialised/migrated automatically by running any command at the first run of the node - typically at the initial node registration. This is now done explicitly by running `run-migration-scripts`, so no other commands during the first node run would initialise/migrate the database schema.
 
-The exception to that is the `--initial-registration` command, which embeds `run-migration-scripts` and therefore runs the database migration scripts by default. 
+The exception to that is the `--initial-registration` command, which embeds `run-migration-scripts` and therefore runs the database migration scripts by default.
 
 So if you are using deployment automation you may need to adjust your scripts accordingly and exclude the database initialisation/migration task from the initial node registration command. To do so, use the `--skip-schema-creation` flag alongside the `--initial-registration` command.
 
@@ -208,7 +208,7 @@ To enable export of JMX metrics over HTTP via [Jolokia](https://jolokia.org/), r
 
 This command line will start the node with JMX metrics accessible via HTTP on port 7005.
 
-See [Monitoring via Jolokia](../operating/node-administration.md#monitoring-jolokia) for further details.
+See [Monitoring via Jolokia](../../node/operating/node-administration.md#monitoring-jolokia) for further details.
 
 
 ## Starting all nodes at once on a local machine from the command line

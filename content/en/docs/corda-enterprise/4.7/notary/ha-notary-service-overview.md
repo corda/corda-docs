@@ -1,10 +1,10 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-6:
-    identifier: corda-enterprise-4-6-corda-nodes-notaries
+  corda-enterprise-4-7:
+    identifier: corda-enterprise-4-7-corda-nodes-notaries
     name: "Notary options in Corda Enterprise"
-    parent: corda-enterprise-4-6-notaries
+    parent: corda-enterprise-4-7-notaries
 tags:
 - ha
 - notary

@@ -1,8 +1,8 @@
 ---
 date: '2020-04-24T12:00:00Z'
 menu:
-  corda-enterprise-4-6:
-    parent: corda-enterprise-4-6-corda-nodes-collaborative-recovery
+  corda-enterprise-4-7:
+    parent: corda-enterprise-4-7-corda-nodes-collaborative-recovery
 tags:
 - disaster recovery
 - collaborative recovery
@@ -81,7 +81,7 @@ Once the node has been successfully drained of any pending activity, you will be
 checkpoints dump
 ```
 
-If the resultant list is empty, the node has been successfully drained. If the list contains representations of in-flight flows, and continues to do so for an unreasonable amount of time, the flows may have become stuck. At this point, you may wish to kill the flows explicitly using the [`killFlow` API](../cordapps/api-flows#killing-flows).
+If the resultant list is empty, the node has been successfully drained. If the list contains representations of in-flight flows, and continues to do so for an unreasonable amount of time, the flows may have become stuck. At this point, you may wish to kill the flows explicitly using the [`killFlow` API](../../cordapps/api-flows#killing-flows).
 
 ### Step 3: Install the CorDapps
 

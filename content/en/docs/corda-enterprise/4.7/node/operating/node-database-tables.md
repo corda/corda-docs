@@ -1,8 +1,8 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-6:
-    parent: corda-enterprise-4-6-corda-nodes-operating-db
+  corda-enterprise-4-7:
+    parent: corda-enterprise-4-7-corda-nodes-operating-db
 tags:
 - node
 - database
@@ -41,7 +41,7 @@ These are tables that store the node info of other network participants.
 They are just a local cache that is kept in sync with the network map server.
 By calling `rpc.clearNetworkMapCache()` all these tables will be cleared and recreated from the network map server.
 
-Read more here: network-map
+Read more in [Network map](../../network/network-map.md).
 
 {{< figure alt="node info tables" zoom="/en/images/node_info_tables.png" >}}
 

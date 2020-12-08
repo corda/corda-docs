@@ -1,8 +1,8 @@
 ---
 date: '2020-06-18T12:00:00Z'
 menu:
-  corda-enterprise-4-6:
-    parent: corda-enterprise-4-6-ops-monitoring-logging
+  corda-enterprise-4-7:
+    parent: corda-enterprise-4-7-ops-monitoring-logging
 tags:
 - operations
 - deployment
@@ -37,4 +37,4 @@ You can get metrics for your node from these key sources:
 * **P2P** - Messaging between parties can be measured in a number of ways, including metrics for latency between messages being sent and received between nodes, the size of sent messages, the interval between received P2P messages.
 * **Other metrics** - Measure the tine taken to sign a transaction or check whether proposed network parameter updates have been accepted yet.
 
-Take a look at the [Node metrics documentation](../../node/operating/node-metrics) for a complete range of the metrics data available from your node.
+Take a look at the [Node metrics documentation](../../node-metrics.md/) for a complete range of the metrics data available from your node.

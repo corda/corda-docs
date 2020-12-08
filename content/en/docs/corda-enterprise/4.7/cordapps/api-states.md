@@ -1,10 +1,10 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-6:
-    identifier: corda-enterprise-4-6-cordapps-states
+  corda-enterprise-4-7:
+    identifier: corda-enterprise-4-7-cordapps-states
     name: "Writing CorDapp states"
-    parent: corda-enterprise-4-6-cordapps
+    parent: corda-enterprise-4-7-cordapps
 tags:
 - api
 - states

@@ -1,9 +1,9 @@
 ---
 date: '2020-06-06T18:19:00Z'
 menu:
-  cenm-1-4:
-    identifier: cenm-1-4-auth
-    parent: cenm-1-4-operations
+  cenm-1-5:
+    identifier: cenm-1-5-auth
+    parent: cenm-1-5-operations
     weight: 26
 tags:
 - authentication
@@ -75,7 +75,8 @@ To do this:
 2. Generate a `jwt` signing key (RSA keypair) in a jks file with the following command line command:
 `keytool -genkeypair -alias mytest -keyalg RSA -keypass mypass -keystore mytest.jks -storepass mypass`.
 
-3. Ensure you have your A baseline `.jar` file that contains the set of permissions available in the deployment and optionally predefined roles. This is shipped as part of CENM via Artifcatory. For example, the file for CENM 1.4 is called `accounts-baseline-cenm-1.4.0.jar`. You can also copy this into a folder inside the working directory called `plugins` to avoid having to specify it in the config file.
+3. Ensure you have the CENM baseline `.jar` file `accounts-baseline-cenm-<VERSION>.jar` that contains the set
+of available permissions and predefined roles. Copy this file to a directory called `plugins`, located inside the working directory.
 
 ## Configure the auth service
 
@@ -98,7 +99,6 @@ In the sample below, you can see the initial configuration process:
 
 5. Set optional password policy settings.
 
-6. Set optional permission baselines for roles.
 
 ```
 # database configuration
@@ -191,20 +191,8 @@ passwordPolicy = {
         enabled = true
         loginAttempts = 1
     }
-}
-# Configuration of the permissions and role baselines
-# This is not mandatory if the plugin is placed into the /plugins folder in the application
-# working directory it will be picked up automatically
-baseline {
-    permission = {
-        baselineClass = "com.r3.appeng.accounts.cenm.PermissionBaselineImpl"
-        baselinePackage = "/usr/auth/accounts-baseline-cenm.jar"
-    }
-
-    role = {
-        baselineClass = "com.r3.appeng.accounts.cenm.RoleBaselineImpl"
-        baselinePackage = "/usr/auth/accounts-baseline-cenm.jar"
-    }
+    # Enabled by default
+    mustMeetComplexityRequirements = false
 }
 ```
 

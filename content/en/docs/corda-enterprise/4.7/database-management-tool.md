@@ -1,8 +1,8 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-6:
-    parent: corda-enterprise-4-6-corda-nodes-operating-db
+  corda-enterprise-4-7:
+    parent: corda-enterprise-4-7-corda-nodes-operating-db
 tags:
 - tool
 - database
@@ -68,7 +68,7 @@ The `outputFile` parameter can be optionally specified determine what file to ou
 
 Additional options:
 
-* `--base-directory`, `-b`: (Required) The node working directory where all the files are kept. This defaults to the current working directory if not set.  
+* `--base-directory`, `-b`: (Required) The node working directory where all the files are kept. This defaults to the current working directory if not set.
 * `--config-file`, `-f`: The path to the config file. Defaults to `node.conf`.
 * `--mode`: The operating mode. Possible values: NODE, DOORMAN, JPA_NOTARY. Default: NODE.
 * `--doorman-jar-path=<doormanJarPath>`: The path to the doorman (Identity Manager) `.jar` file.

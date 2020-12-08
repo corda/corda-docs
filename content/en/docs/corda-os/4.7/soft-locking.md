@@ -5,9 +5,9 @@ aliases:
 - /soft-locking.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-6:
-    identifier: corda-os-4-6-soft-locking
-    parent: corda-os-4-6-key-concepts-vault
+  corda-os-4-7:
+    identifier: corda-os-4-7-soft-locking
+    parent: corda-os-4-7-key-concepts-vault
     weight: 1010
 tags:
 - locking

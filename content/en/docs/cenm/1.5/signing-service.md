@@ -3,9 +3,9 @@ aliases:
 - /signing-service.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-4:
-    identifier: cenm-1-4-signing-service
-    parent: cenm-1-4-operations
+  cenm-1.5:
+    identifier: cenm-1.5-signing-service
+    parent: cenm-1.5-operations
     weight: 150
 tags:
 - signing
@@ -1817,8 +1817,8 @@ necessary information about the architecture and usage of those plug-ins.
 
 The CA plugin class name to configure is always `com.r3.enm.signingserviceplugins.exampleplugin.ca.ExampleCaSigningPlugin`.
 
-The diagram below shows how the plug-in works on a high level.  
-The plug-in acts as a bridge between the Signing Service and a possible third-party signer architecture.  
+The diagram below shows how the plug-in works on a high level.
+The plug-in acts as a bridge between the Signing Service and a possible third-party signer architecture.
 The plug-in will launch its own RPC server for the third party to connect to.
 This RPC API involves fetching (getting the signable data) and submitting (pushing the signed data back).
 

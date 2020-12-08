@@ -1,8 +1,8 @@
 ---
 date: '2020-07-15T12:00:00Z'
 menu:
-  corda-enterprise-4-6:
-    parent: corda-enterprise-4-6-corda-nodes-operating
+  corda-enterprise-4-7:
+    parent: corda-enterprise-4-7-corda-nodes-operating
 tags:
 - node
 - administration
@@ -244,7 +244,7 @@ end = "yyyy-MM-dd"
 
 #### `period`
 
-You can define the collection period using the `period` option with `start`. This option specifies the amount of time _after_ `start` that metering data should be collected for.  
+You can define the collection period using the `period` option with `start`. This option specifies the amount of time _after_ `start` that metering data should be collected for.
 
 This can be specified in nanoseconds, microseconds, milliseconds, seconds, minutes, hours, days, weeks, months, and years. If the metering client cannot interpret this parameter, it returns an exception.
 
@@ -365,7 +365,7 @@ To re-run a collection, use the `--previous-report` argument, as shown in the fo
 ```bash
 java -jar corda-tools-metering-rpc-client.jar  \
   --config "path/to/config.conf" \
-  --previous-report="path/to/previous/output.json"  
+  --previous-report="path/to/previous/output.json"
 ```
 
 This command will attempt to update the previous collection results by contacting _only_ the nodes in `unresponsiveNodeList`. The data retrieved during this new collection will be merged with the previous report to form a new report.

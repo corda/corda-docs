@@ -5,9 +5,9 @@ aliases:
 - /tutorial-cordapp.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-6:
-    identifier: corda-os-4-6-tutorial-cordapp
-    parent: corda-os-4-6-building-a-cordapp-index
+  corda-os-4-7:
+    identifier: corda-os-4-7-tutorial-cordapp
+    parent: corda-os-4-7-building-a-cordapp-index
     weight: 1030
 tags:
 - tutorial
@@ -480,7 +480,7 @@ As before, the interactive shell of PartyC will not display any IOUs.
 ### Via the h2 web console
 
 You can connect directly to your node’s database to see its stored states, transactions and attachments. To do so,
-please follow the instructions in [Node database](node-database.md).
+please follow the instructions in [Node database](node-database-access-h2.md/).
 
 
 ## Running nodes across machines

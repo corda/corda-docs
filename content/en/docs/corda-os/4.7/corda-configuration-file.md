@@ -5,9 +5,9 @@ aliases:
 - /corda-configuration-file.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-6:
-    identifier: corda-os-4-6-corda-configuration-file
-    parent: corda-os-4-6-corda-nodes-index
+  corda-os-4-7:
+    identifier: corda-os-4-7-corda-configuration-file
+    parent: corda-os-4-7-corda-nodes-index
     weight: 1030
 tags:
 - corda
@@ -129,8 +129,8 @@ SET corda_jarDirs_1=./morelibs
 * If the same key is overridden by both an environment variable and system property, the system property takes precedence.
 * Variables and properties are case sensitive. Corda will warn you if a variable
 prefixed with `CORDA` cannot be mapped to a valid property. Shadowing occurs when two properties
-of the same type with the same key are defined. For example having `corda.p2Aaddress=host:port` and `corda_p2Aaddress=host1:port1`
-will raise an exception on startup. This is to prevent hard to spot mistakes.
+of the same type with the same key are defined. For example having `corda_p2Aaddress=host:port` and `corda_p2Aaddress=host1:port1`
+will raise an exception on startup. This is to prevent mistakes that are hard to spot.
 * If an item in a list is overridden via an environment variable/system property, the whole list will be overridden. E.g., with a `node.conf`
 containing:
 

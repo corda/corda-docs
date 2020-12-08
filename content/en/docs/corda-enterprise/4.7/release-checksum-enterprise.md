@@ -2,8 +2,8 @@
 title: Release files and checksums
 date: '2020-08-29T12:19:11Z'
 menu:
-  corda-enterprise-4-6:
-    parent: corda-enterprise-4-6-release-notes
+  corda-enterprise-4-7:
+    parent: corda-enterprise-4-7-release-notes
     weight: 200
 tags:
 - release
@@ -592,11 +592,11 @@ Before installing any downloaded file, we recommend that you verify the integrit
 * firewall-loadtest-4.6.jar (48.27 Mb / 48270000 bytes)
   * `983a8ae0f880cb48c037e1fa8e71f97df9875c24` (sha1)
   * `522669dd0f5800f34eeb65b3feaf35c8` (md5)
-  * `ae2cc734e442ad8e7ddb7af7262b88daefb7d1be01eb491051f4479f46d2a5a5` (sha256)  
+  * `ae2cc734e442ad8e7ddb7af7262b88daefb7d1be01eb491051f4479f46d2a5a5` (sha256)
 * firewall-loadtest-4.6.pom (1004 bytes / 1004 bytes)
   * `7f423a41051ffbefd8dd2f579d442aca029c972f` (sha1)
   * `adc44ab6cbaa66c956a1dddc7436736f` (md5)
-  * `468d5148f33fbfb3e33f5fda37b302bc2171a9dca592851a7465f82d6d65f580` (sha256)  
+  * `468d5148f33fbfb3e33f5fda37b302bc2171a9dca592851a7465f82d6d65f580` (sha256)
 * jmeter-corda-4.6-javadoc.jar (435 bytes / 435 bytes)
   * `b96a3dc6993ced494edcb3b4d7e5fac57cf09619` (sha1)
   * `568b8e1231ff488a57e6cd472092d072` (md5)
@@ -680,7 +680,7 @@ Before installing any downloaded file, we recommend that you verify the integrit
 * pinger-4.6.pom (978 bytes / 978 bytes)
   * `ca7a87b492ab6e5a70342b24d3ff00aecf7a2b04` (sha1)
   * `db3a5fe8c0700869c7308ea7c4c924e2` (md5)
-  * `7aa46e46d5a632342ea4376cdd677ea56ad4743c03464d636bb6e942679903c1` (sha256)   
+  * `7aa46e46d5a632342ea4376cdd677ea56ad4743c03464d636bb6e942679903c1` (sha256)
 * settlement-perftest-cordapp-4.6-javadoc.jar (445 bytes / 445 bytes)
   * `6836eae9a8046e8b5c6c60d6f08161881429e806` (sha1)
   * `39017de92a4f461e9a3cdd860a1b8291` (md5)

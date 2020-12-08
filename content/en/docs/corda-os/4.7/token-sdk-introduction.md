@@ -1,10 +1,10 @@
 ---
 date: '2020-05-10T12:00:00Z'
 menu:
-  corda-os-4-6:
-    identifier: corda-os-4-6-token-sdk
+  corda-os-4-7:
+    identifier: corda-os-4-7-token-sdk
     name: "Tokens SDK"
-    parent: corda-os-4-6-development
+    parent: corda-os-4-7-development
 tags:
 - building
 - against
@@ -1337,8 +1337,8 @@ list of repositories for your project:
 
 ```
     repositories {
-        maven { url 'https://ci-artifactory.corda.r3cev.com/artifactory/corda-lib' }
-        maven { url 'https://ci-artifactory.corda.r3cev.com/artifactory/corda-lib-dev' }
+        maven { url 'https://software.r3.com/artifactory/corda-lib' }
+        maven { url 'https://software.r3.com/artifactory/corda-lib-dev' }
     }
 ```
 

@@ -1,8 +1,8 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-6:
-    parent: corda-enterprise-4-6-cordapps-debugging
+  corda-enterprise-4-7:
+    parent: corda-enterprise-4-7-cordapps-debugging
 tags:
 - demobench
 title: DemoBench
@@ -15,7 +15,7 @@ weight: 30
 DemoBench is a standalone desktop application that makes it easy to configure and launch local Corda nodes. It is useful for training sessions, demos or just experimentation.
 
 {{< warning >}}
-**DemoBench** is deprecated in Corda Enterprise 4.6. 
+**DemoBench** is deprecated in Corda Enterprise 4.6.
 {{< /warning >}}
 
 ## Downloading

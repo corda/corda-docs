@@ -3,9 +3,9 @@ aliases:
 - /updating-network-parameters.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-4:
-    identifier: cenm-1-4-updating-network-parameters
-    parent: cenm-1-4-operations
+  cenm-1-5:
+    identifier: cenm-1-5-updating-network-parameters
+    parent: cenm-1-5-operations
     weight: 160
 tags:
 - updating
@@ -100,7 +100,7 @@ security actions:
 Before the `updateDeadline` time, nodes will have to run the `acceptNewNetworkParameters()` RPC command to accept
 new parameters. This will not
 activate the new network parameters on the nodes - it will only inform the Network Map Service that the node has agreed to the
-update. See [the Corda node RPC API](../../corda/4.5/tutorial-clientrpc-api.md) for further details.
+update. See [the Corda node RPC API](../../corda-os/4.7/tutorial-clientrpc-api.md/) for further details.
 
 To list network participants that have or have not accepted the new network parameters,
 run the following command:

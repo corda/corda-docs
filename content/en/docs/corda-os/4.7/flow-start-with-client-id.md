@@ -1,9 +1,9 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-6:
-    identifier: corda-os-4-6-flow-start-with-client-id
-    parent: corda-os-4-6-building-a-cordapp-index
+  corda-os-4-7:
+    identifier: corda-os-4-7-flow-start-with-client-id
+    parent: corda-os-4-7-building-a-cordapp-index
     weight: 1095
 tags:
 - flow
@@ -20,7 +20,7 @@ This feature enables you to make flow starts more reliable by relating a flow to
 
 You can use this feature to enable an RPC client to reconnect to an existing flow after a disconnect between the client and the node. This eliminates the need to write custom logic that allows you to check if a flow has already been invoked. Corda can then reliably handle this logic without custom code, so that node restarts or flow retries can be handled in a reliable manner.
 
-You can also enable an RPC client to signal to Corda to retain the flow's result or exception, so that it could be reclaimed at any time in the future.  
+You can also enable an RPC client to signal to Corda to retain the flow's result or exception, so that it could be reclaimed at any time in the future.
 
 ## Steps and examples
 

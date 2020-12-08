@@ -1,8 +1,8 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-6:
-    parent: corda-enterprise-4-6-corda-nodes-notary-config
+  corda-enterprise-4-7:
+    parent: corda-enterprise-4-7-corda-nodes-notary-config
 tags:
 - installing
 - percona
@@ -192,7 +192,8 @@ wsrep_sst_auth={{ sst_user }}:{{ sst_pass }}
 
 
 
-[wsrep.cnf](https://github.com/corda/enterprise/blob/release/ent/4.6/docs/source/notary/resources/wsrep.cnf) | ![github](/images/svg/github.svg "github")
+[wsrep.cnf](../resources/wsrep.cnf) | ![github](/images/svg/github.svg "github")
+
 
 {{< /tabs >}}
 
@@ -307,4 +308,3 @@ mysql> use corda;
 ```
 
 In the next section, we’re [Configuring the notary worker nodes](installing-the-notary-service.md).
-

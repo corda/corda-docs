@@ -5,9 +5,9 @@ aliases:
 - /key-concepts-states.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-6:
-    identifier: corda-os-4-6-key-concepts-states
-    parent: corda-os-4-6-key-concepts
+  corda-os-4-7:
+    identifier: corda-os-4-7-key-concepts-states
+    parent: corda-os-4-7-key-concepts
     weight: 1030
 tags:
 - concepts

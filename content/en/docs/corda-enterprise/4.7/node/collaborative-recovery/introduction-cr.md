@@ -1,10 +1,10 @@
 ---
 date: '2020-04-24T12:00:00Z'
 menu:
-  corda-enterprise-4-6:
-    identifier: corda-enterprise-4-6-corda-nodes-collaborative-recovery
+  corda-enterprise-4-7:
+    identifier: corda-enterprise-4-7-corda-nodes-collaborative-recovery
     name: "Collaborative Recovery"
-    parent: corda-enterprise-4-6-corda-nodes
+    parent: corda-enterprise-4-7-corda-nodes
 tags:
 - disaster recovery
 - collaborative recovery
@@ -201,7 +201,7 @@ If you are using other R3 Corda Enterprise libraries, you may need to take extra
 
 ### Tokens SDK - fully compatible
 
-Collaborative Recovery is fully compatible with the [Tokens](../../cordapps/token-sdk)
+Collaborative Recovery is fully compatible with the [Tokens](../../cordapps/token-sdk-introduction.md/)
 SDK.
 
 ### Accounts SDK - compatible with limitations
@@ -218,4 +218,4 @@ It is currently not possible to recover the issuance transaction containing an `
 
 Collaborative Recovery is *not* compatible with the legacy Corda Finance module. This is due to the way Confidential Identities are used as a part of the `CashPaymentFlow`.
 
-In general, it is recommended that you avoid the legacy Corda Finance module in favour of [Tokens](../../cordapps/token-skd) and Accounts SDKs.
+In general, it is recommended that you avoid the legacy Corda Finance module in favour of [Tokens](../../cordapps/token-sdk-introduction.md/) and Accounts SDKs.

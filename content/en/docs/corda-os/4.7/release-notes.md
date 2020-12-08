@@ -5,8 +5,8 @@ aliases:
 - /release-notes.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-6:
-    identifier: corda-os-4-6-release-notes
+  corda-os-4-7:
+    identifier: corda-os-4-7-release-notes
     weight: 1
 tags:
 - release
@@ -169,7 +169,7 @@ Corda’s RPC client now allows each flow to be started with a unique client-pro
 
 This enables you to:
 
-* Reconnect reliably to previously started flows.  
+* Reconnect reliably to previously started flows.
 * Reclaim a flow's result or exception at any time in the future.
 
 For more information, see [Starting a flow with a client-provided unique ID](flow-start-with-client-id.md).

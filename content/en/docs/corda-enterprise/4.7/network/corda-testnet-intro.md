@@ -1,10 +1,10 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-6:
-    identifier: corda-enterprise-4-6-corda-networks-testnet
+  corda-enterprise-4-7:
+    identifier: corda-enterprise-4-7-corda-networks-testnet
     name: "Corda Testnet"
-    parent: corda-enterprise-4-6-corda-networks
+    parent: corda-enterprise-4-7-corda-networks
 tags:
 - corda
 - testnet
@@ -34,7 +34,7 @@ Users looking for long-lasting supported networks should consider the [Corda Net
 
 The Corda Testnet is accessible via [https://marketplace.r3.com/](https://marketplace.r3.com/).
 
-[{{< figure alt="testnet landing" zoom="../resources/testnet-landing.png" >}}
+{{< figure alt="testnet landing" zoom="../resources/testnet-landing.png" >}}
 Click on “Join the Corda Testnet” to begin joining the network.
 
 This will create an account with the Testnet on-boarding application which will enable you to provision and manage multiple Corda nodes on Testnet. You will log in to this account to view and manage you Corda Testnet identity certificates.

@@ -5,9 +5,9 @@ aliases:
 - /running-a-node.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-6:
-    identifier: corda-os-4-6-running-a-node
-    parent: corda-os-4-6-corda-nodes-index
+  corda-os-4-7:
+    identifier: corda-os-4-7-running-a-node
+    parent: corda-os-4-7-corda-nodes-index
     weight: 1140
 tags:
 - running
@@ -247,7 +247,7 @@ The steps described above enable you to create the same test deployment as a `de
 ## Database migrations
 
 Depending on the versions of Corda and of the CorDapps used, database migration scripts might need to run before a node is able to start.
-For more information, see [Database management](node-database.md).
+For more information, see [Database management](node-database-access-h2.md/).
 
 From Corda 4.6, if you need to initialise or migrate the node's database schema objects, you need to run the `run-migration-scripts` sub-command. See [Node command-line options](node-commandline.md) for details.
 

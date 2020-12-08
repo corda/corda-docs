@@ -1,10 +1,10 @@
 ---
 date: '2020-06-18T12:00:00Z'
 menu:
-  corda-enterprise-4-6:
-    identifier: corda-enterprise-4-6-ops-project-planning
+  corda-enterprise-4-7:
+    identifier: corda-enterprise-4-7-ops-project-planning
     name: "Corda for project planners"
-    parent: corda-enterprise-4-6-operations-guide
+    parent: corda-enterprise-4-7-operations-guide
 tags:
 - operations
 - deployment
@@ -28,8 +28,8 @@ Whether you are planning to build CorDapps for other organisations to use, or yo
 In a Corda network, the same CorDapp must be deployed to all nodes that wish to transact with one another. CorDapps may be
 developed by a member of the business network, by the Business Network Operator, or by an entirely external organisation.
 
-When developing CorDapps, an organisation should bear in mind the [platform support matrix](platform-support-matrix.md/)
-and the guidance on [developing CorDapps](../cordapps/cordapp-overview.md/).
+When developing CorDapps, an organisation should bear in mind the [platform support matrix](../../platform-support-matrix.md/)
+and the guidance on [developing CorDapps](../../cordapps/cordapp-overview.md/).
 
 To test CorDapps, use the network bootstrapper tool to quickly create Corda networks to test that the CorDapp performs as expected.
 

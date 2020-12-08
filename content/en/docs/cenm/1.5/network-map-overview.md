@@ -3,9 +3,9 @@ aliases:
 - /network-map-overview.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-4:
-    identifier: cenm-1-4-network-map-overview
-    parent: cenm-1-4-concepts-and-overview
+  cenm-1.5:
+    identifier: cenm-1.5-network-map-overview
+    parent: cenm-1.5-concepts-and-overview
     weight: 50
 tags:
 - network

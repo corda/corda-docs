@@ -3,9 +3,9 @@ aliases:
 - /config-network-parameters.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-4:
-    identifier: cenm-1-4-config-network-parameters
-    parent: cenm-1-4-configuration
+  cenm-1-5:
+    identifier: cenm-1-5-config-network-parameters
+    parent: cenm-1-5-configuration
     weight: 240
 tags:
 - config
@@ -30,7 +30,7 @@ network.
 
 {{< note >}}
 Once a network has started, the only supported changes to notaries are to add new notaries at the end of the list or to remove existing ones as part of a decommissioning process.
-{{< /note >}}  
+{{< /note >}}
 Notaries can be removed from the list, in which case no new states can be created and reference it. The existing states which reference
 the removed Notary have to be moved to a new Notary before the pointed one is decommissioned. Notaries must be added
 to the end as Flows often use the ordering of notaries during selection (i.e. pick the first),

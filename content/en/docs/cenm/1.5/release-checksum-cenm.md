@@ -2,9 +2,9 @@
 title: Release files and checksums
 date: '2020-08-28T15:23:33Z'
 menu:
-  cenm-1-4:
-    identifier: cenm-1-4-release-checksum-cenm
-    parent: cenm-1-4-cenm-releases
+  cenm-1-5:
+    identifier: cenm-1-5-release-checksum-cenm
+    parent: cenm-1-5-cenm-releases
     weight: 85
 
 ---

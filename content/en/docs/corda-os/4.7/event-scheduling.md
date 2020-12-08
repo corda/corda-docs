@@ -5,9 +5,9 @@ aliases:
 - /event-scheduling.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-6:
-    identifier: corda-os-4-6-event-scheduling
-    parent: corda-os-4-6-supplementary-tutorials-index
+  corda-os-4-7:
+    identifier: corda-os-4-7-event-scheduling
+    parent: corda-os-4-7-supplementary-tutorials-index
     weight: 1060
 tags:
 - event

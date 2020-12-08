@@ -1,9 +1,9 @@
 ---
 date: '2020-06-17T12:00:00Z'
 menu:
-  corda-enterprise-4-6:
-    identifier: corda-enterprise-4-6-operations-guide-deployment-notary
-    parent: corda-enterprise-4-6-operations-guide-deployment
+  corda-enterprise-4-7:
+    identifier: corda-enterprise-4-7-operations-guide-deployment-notary
+    parent: corda-enterprise-4-7-operations-guide-deployment
     name: "Notary deployment"
 tags:
 - operations
@@ -97,7 +97,7 @@ notary {
 
 
 
-[dbm.conf](https://github.com/corda/enterprise/blob/release/ent/4.6/docs/source/notary/resources/dbm.conf) | ![github](/images/svg/github.svg "github")
+[dbm.conf](../../resources/dbm.conf) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -430,6 +430,3 @@ may be specified if desired. It is important to use the correct service name.
 ```javascript
 dataSource.url="jdbc:oracle:thin:@(DESCRIPTION=(LOAD_BALANCE=on)(ADDRESS=(PROTOCOL=TCP)(HOST={host 1 IP address})(PORT=1521))(ADDRESS=(PROTOCOL=TCP)(HOST={host 2 IP address})(PORT=1521))(CONNECT_DATA=(SERVICE_NAME={service name})))"
 ```
-
-
-

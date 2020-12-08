@@ -5,9 +5,9 @@ aliases:
 - /node-commandline.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-6:
-    identifier: corda-os-4-6-node-commandline
-    parent: corda-os-4-6-corda-nodes-index
+  corda-os-4-7:
+    identifier: corda-os-4-7-node-commandline
+    parent: corda-os-4-7-corda-nodes-index
     weight: 1040
 tags:
 - node

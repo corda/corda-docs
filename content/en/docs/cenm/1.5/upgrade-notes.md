@@ -3,9 +3,9 @@ aliases:
 - /upgrade-notes.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1-4:
-    identifier: cenm-1-4-upgrade-notes
-    parent: cenm-1-4-operations
+  cenm-1.5:
+    identifier: cenm-1.5-upgrade-notes
+    parent: cenm-1.5-operations
     weight: 170
 tags:
 - upgrade
@@ -22,6 +22,27 @@ Doorman), Network Map Service, Signing Service, Zone Service, Auth Service, Ange
 {{< warning >}}
 Before you start the upgrade, you must consult the [CENM Release Notes](release-notes.md) to confirm all changes between releases.
 {{< /warning >}}
+
+## 1.3.x / 1.4.x to 1.5
+
+### Database migrations
+
+The Identity Manager Service, the Network Map Service, and the Zone Service all require database migration.
+To enable database migration, set `runMigration = true` in the database configuration. If a service is connecting to a database with restricted user,
+you must temporarily change the service settings to connect with a privileged user (a user able to modify a database schema).
+
+### Auth Service
+
+The `baseline` configuration entry is obsolete and should be removed.
+Ensure you have the CENM baseline `.jar` file `accounts-baseline-cenm-1.5.jar` that contains the set
+of available permissions and predefined roles. Copy this file to a directory called `plugins`, located inside the working directory.
+
+If existing passwords are not complex, add the configuration option to allow weaker passwords:
+
+    passwordPolicy {
+        ...
+        mustMeetComplexityRequirements = false
+    }
 
 ## 1.3.x to 1.4
 
@@ -54,7 +75,7 @@ database = {
 }
 ```
 
-### Signing Service configuration changes
+### Signing Service configuration changes
 
 In CENM 1.3 (and older versions), `subZoneID` was defined in Signing Service configurations as part of the service location alias (`serviceLocationAlias`), as shown below:
 
@@ -120,7 +141,7 @@ The key steps for the upgrade are:
 You must generate SSL key pairs and certificates for the new services before deploying them.
 You can do this using the PKI tool, and it is best to replace the
 SSL certificates and keys for all services during this process. A draft PKI tool configuration
-for generating the full SSL hierarchy is provided under [config-samples/upgrade-pki-tool-1.3.conf](config-samples/upgrade-pki-tool-1.3.conf).
+for generating the full SSL hierarchy is provided under [config-samples/upgrade-pki-tool-1.3.conf](config-samples/upgrade-pki-tool.conf/).
 
 {{% important %}}
 You must replace the `subject` and `crlDistributionUrl` entries in this configuration with values
