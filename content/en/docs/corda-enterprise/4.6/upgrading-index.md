@@ -7,13 +7,17 @@ menu:
     parent: corda-enterprise-4-6-upgrading-and-tools
 tags:
 - upgrading
-title: Updating a CorDapp or Node
+title: Updating a CorDapp or node
 weight: 1
 ---
 
-# Updating to a new version
+# Updating a CorDapp or node
 
-* [Upgrading CorDapps to Corda Enterprise 4.6](app-upgrade-notes-enterprise.md)
-* [Upgrading CorDapps to newer Platform Versions](app-upgrade-notes.md)
-* [Upgrading your node to Corda 4](node-upgrade-notes.md)
-* [Upgrading Corda Enterprise Network Manager](/docs/cenm/1.3/upgrade-notes.md)
+* [Upgrading a CorDapp to Corda Enterprise 4.6](app-upgrade-notes-enterprise.md)
+* [Upgrading a CorDapp to a newer platform version](app-upgrade-notes.md)
+* [Upgrading a node to Corda 4.6](node-upgrade-notes.md)
+* [Updating a running CorDapp](updating-cordapp.md)
+
+## See also
+
+* [Upgrading Corda Enterprise Network Manager](/docs/cenm/1.4/upgrade-notes.md)

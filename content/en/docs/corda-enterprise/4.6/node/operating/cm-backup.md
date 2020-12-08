@@ -3,7 +3,7 @@ date: '2020-04-07T12:00:00Z'
 menu:
   corda-enterprise-4-6:
     identifier: corda-enterprise-4-6-corda-nodes-operating-cm
-    name: "Change management for nodes"
+    name: "Backup and restoration of a Corda node"
     parent: corda-enterprise-4-6-corda-nodes-operating
 tags:
 - cm
