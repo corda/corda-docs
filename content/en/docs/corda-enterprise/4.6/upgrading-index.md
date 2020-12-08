@@ -17,6 +17,7 @@ weight: 1
 * [Upgrading a CorDapp to a newer platform version](app-upgrade-notes.md)
 * [Upgrading a node to Corda 4.6](node-upgrade-notes.md)
 * [Updating a running CorDapp](updating-cordapp.md)
+* [Upgrading a Corda OS Node to Corda Enterprise](node-operations-upgrading-os-to-ent.md)
 
 ## See also
 
