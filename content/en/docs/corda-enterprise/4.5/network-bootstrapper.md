@@ -31,7 +31,7 @@ For these reasons, test deployments can avail themselves of the Network Bootstra
 node configurations from a common directory to generate the network parameters file, which is then copied to all the nodes’
 directories. It also copies each node’s node-info file to every other node so that they can all be visible to each other.
 
-You can find out more about network maps and network parameters from network-map.
+You can find out more about network maps and network parameters from [Network map](network/network-map.md).
 
 
 ## Bootstrapping a test network
@@ -100,7 +100,7 @@ If you only wish to whitelist the CorDapps but not copy them to each node then r
 
 {{< /note >}}
 The CorDapp JARs will be hashed and scanned for `Contract` classes. These contract class implementations will become part
-of the whitelisted contracts in the network parameters (see `NetworkParameters.whitelistedContractImplementations` network-map).
+of the whitelisted contracts in the network parameters (see `NetworkParameters.whitelistedContractImplementations` in [Network parameters](network/network-map.md#network-parameters)).
 
 By default the Bootstrapper will whitelist all the contracts found in the unsigned CorDapp JARs (a JAR file not signed by jarSigner tool).
 Whitelisted contracts are checked by *Zone constraints*, while contract classes from signed JARs will be checked by *Signature constraints*.
@@ -300,7 +300,7 @@ are updating an existing network, the value in the existing network parameters f
 
 {{< note >}}
 All fields can be used with placeholders for environment variables. For example: `${KEY_STORE_PASSWORD}` would be replaced by the contents of environment
-variable `KEY_STORE_PASSWORD`. See: corda-configuration-hiding-sensitive-data .
+variable `KEY_STORE_PASSWORD`. See: [Hiding sensitive data](node/operating/node-administration.md#hiding-sensitive-data).
 
 {{< /note >}}
 The available configuration fields are listed below:
@@ -402,11 +402,11 @@ The alias for the name associated with the certificate to be associated with the
 
 
 
-Using the [Example CorDapp](https://github.com/corda/cordapp-example) as an example, we will initialise a simple network and then register and unregister a package namespace.
-Checkout the Example CorDapp and follow the instructions to build it [here](https://docs.corda.net/tutorial-cordapp.html#building-the-example-cordapp).
+Using the Example CorDapp (found in these repositories in [Java](https://github.com/corda/samples-java/tree/master/Basic/cordapp-example) and [Kotlin](https://github.com/corda/samples-kotlin/tree/master/Basic/cordapp-example)) as an example, we will initialise a simple network and then register and unregister a package namespace.
+Check out the Example CorDapp and follow the instructions to build it [here](../../corda-os/4.5/tutorial-cordapp.html#building-the-example-cordapp).
 
 {{< note >}}
-You can point to any existing bootstrapped corda network (this will have the effect of updating the associated network parameters file).
+You can point to any existing bootstrapped Corda network (this will have the effect of updating the associated network parameters file).
 
 {{< /note >}}
 
@@ -494,4 +494,3 @@ in the given file. See [Overriding network parameters via a file](#overriding-ne
 ### Sub-commands
 
 `install-shell-extensions`: Install `bootstrapper` alias and auto completion for bash and zsh. See cli-application-shell-extensions for more info.
-
