@@ -4,14 +4,13 @@ menu:
   corda-enterprise-4-6:
     identifier: "corda-enterprise-4-6-upgrading-menu"
     name: "Updating a CorDapp or Node"
-    parent: corda-enterprise-4-6-upgrading-and-tools
 tags:
 - upgrading
-title: Updating a CorDapp or node
-weight: 1
+title: Upgrading a CorDapp or node
+weight: 2
 ---
 
-# Updating a CorDapp or node
+# Upgrading a CorDapp or node
 
 * [Upgrading a CorDapp to Corda Enterprise 4.6](app-upgrade-notes-enterprise.md)
 * [Upgrading a CorDapp to a newer platform version](app-upgrade-notes.md)
@@ -19,6 +18,12 @@ weight: 1
 * [Upgrading a running CorDapp](upgrading-cordapp.md)
 * [Upgrading deployed CorDapps](node-operations-upgrade-cordapps.md)
 * [Upgrading a Corda OS Node to Corda Enterprise](node-operations-upgrading-os-to-ent.md)
+
+## Features, versions, and compatibility
+
+* [Corda features and versions](features-versions.md)
+* [Corda and Corda Enterprise compatibility](version-compatibility.md)
+* [Platform support matrix](platform-support-matrix.md)
 
 ## See also
 
