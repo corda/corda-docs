@@ -13,11 +13,11 @@ tags:
 - node
 - upgrade
 - notes
-title: Upgrading your node to Corda 4.6
+title: Upgrading your node to Corda 4.7
 ---
 
 
-# Upgrading your node to Corda 4.6
+# Upgrading your node to Corda 4.7
 
 Corda releases strive to be backwards compatible, so upgrading a node is fairly straightforward and should not require changes to
 applications. It consists of the following steps:

@@ -2,7 +2,7 @@
 date: '2020-04-07T12:00:00Z'
 menu:
   corda-enterprise-4-7:
-    parent: corda-enterprise-4-7-corda-nodes-operating
+    parent: corda-enterprise-4-7-upgrading-menu
 tags:
 - node
 - operations
@@ -10,11 +10,12 @@ tags:
 - os
 - ent
 title: Upgrading a Corda OS node to Corda Enterprise
-weight: 9
+aliases: /docs/corda-enterprise/4.7/node/operating/node-operations-upgrading-os-to-ent.html
+weight: 60
 ---
 
 
-# Upgrading a Corda (open source) Node to Corda Enterprise
+# Upgrading a Corda OS Node to Corda Enterprise
 
 A Corda (open source) node can be upgraded to Corda Enterprise.
 If the same database is to be reused, the most complicated steps are ensuring custom CorDapps contain
@@ -110,7 +111,7 @@ and then proceed with the upgrade following the instructions in [above](#node-op
 ### Reusing an existing database
 
 To reuse an existing database, follow the same database instructions as
-[upgrading withing the same Corda version](#node-operations-upgrading-os-to-ent-1).
+[upgrading within the same Corda version](#node-operations-upgrading-os-to-ent-1).
 
 
 ### Migrating from H2 database to other database vendor

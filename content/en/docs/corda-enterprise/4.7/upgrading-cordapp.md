@@ -2,13 +2,14 @@
 date: '2020-04-07T12:00:00Z'
 menu:
   corda-enterprise-4-7:
-    parent: corda-enterprise-4-7-corda-nodes-operating-cm
+    parent: corda-enterprise-4-7-upgrading-menu
 tags:
 - cm
 - updating
 - cordapp
 title: Updating a running CorDapp
-weight: 2
+weight: 40
+aliases: /docs/corda-enterprise/4.7/node/operating/cm-updating-cordapp.html
 ---
 
 
