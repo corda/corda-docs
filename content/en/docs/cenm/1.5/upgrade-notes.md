@@ -44,6 +44,10 @@ If existing passwords are not complex, add the configuration option to allow wea
         mustMeetComplexityRequirements = false
     }
 
+This new setting can be change to `true` or removed only after all users have changed their passwords to meet complexity requirements:
+minimum 8 characters long, max 50 characters long, contains at least one number, one lower case character and one upper case character,
+does not contain regular number or character sequences like `abcdf` or `1234` longer than three and does not contain the username.
+
 ### Identity Manager Workflow Plugin changes
 
 If you are using a custom Identity Manager Workflow Plugin then
