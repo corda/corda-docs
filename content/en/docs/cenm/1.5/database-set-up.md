@@ -3,9 +3,9 @@ aliases:
 - /database-set-up.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1.5:
-    identifier: cenm-1.5-database-set-up
-    parent: cenm-1.5-operations
+  cenm-1-5:
+    identifier: cenm-1-5-database-set-up
+    parent: cenm-1-5-operations
     weight: 180
 tags:
 - database
