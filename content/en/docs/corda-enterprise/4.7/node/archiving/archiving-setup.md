@@ -23,9 +23,9 @@ You can use Archive service commands to mark archivable items in your vault, arc
 
 The Archive Service consists of the following:
 
-* **Archive Service CorDapp** which contains the necessary flows to mark and archive transactions.
-* **Archive Service Client Library** - which provides programmatic access to the archive service, and exposes relevant APIs.
-* **Archive Service Command Line Tool** - which allows you to perform archiving tasks from the command line.
+* [**Archive Service CorDapp**](#archive-service-cordapp)which contains the necessary flows to mark and archive transactions.
+* [**Archive Service Client Library**](archive-library) - which provides programmatic access to the archive service, and [exposes relevant APIs](archiving-apis).
+* [**Archive Service Command Line Interface**](archiving-cli) - which allows you to perform archiving tasks from the command line.
 
 ## What can be archived
 
