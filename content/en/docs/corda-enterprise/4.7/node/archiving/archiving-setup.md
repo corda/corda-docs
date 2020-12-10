@@ -81,7 +81,7 @@ Archive Service V1.0 does not support **Accounts** or **Confidential Identities*
 The Archive Service CorDapp .jar file should be copied to the node's `cordapps` directory. The Ledger Service CorDapp .jar file
 must also be copied to the same directory.
 
-```text
+```
 corda@CrimsonSolo:/opt/corda/node$ ls -l cordapps/
 drwxr-xr-x 2 corda corda   4096 Aug 26 06:43 config
 -rw-r--r-- 1 corda corda 504538 Aug 26 06:35 archive-service-1.0.jar
@@ -94,7 +94,7 @@ The Archive Service CorDapp is configured using a HOCON configuration file locat
 of node's `cordapps` directory. The configuration file must have the same name and version as the CorDapp but
 with the `jar` suffix changed to `conf`.
 
-```text
+```
 corda@CrimsonSolo:/opt/corda/node$ ls -l cordapps/config
 total 12
 -rw-r--r-- 1 corda corda 469 Aug 26 06:43 archive-service-1.0.conf
@@ -117,7 +117,7 @@ Passwords can be obfuscated using Corda's Config Obfuscator tool.
 
 The following is a sample configuration file:
 
-```text
+```
 generator: PostgresGenerator
 driver: "org.postgresql.Driver"
 
@@ -154,39 +154,63 @@ executed by a database administrator who has the sufficient rights.
 The following sections contain sample SQL statements needed for creating a backup schema user.
 In these examples the backup schema is called `archive` and the vault schema is `corda`.
 
-#### Postgres
+### Postgres
 
 The following DDL statements can be used to create a backup schema user `archive`:
 
-```text
+```
 create user archive password 'archive';
 create schema archive AUTHORIZATION archive;
 grant usage on schema corda to archive;
 grant select on all tables in schema corda to archive;
-alter default privileges in schema corda grant SELECT, INSERT, UPDATE, DELETE, REFERENCES on tables to archive;
+grant insert on all tables in schema corda to archive;
 ```
 
-#### Oracle
+### Oracle
 
 The following DDL statements can be used to create a backup schema user `archive`:
 
-```text
-create user archive identified by archive;
+```
+create user archive identified by archive2 DEFAULT TABLESPACE users QUOTA unlimited ON users;
 grant CONNECT, RESOURCE to archive;
 ```
 
 Oracle does not have a single grant option to provide rights to all the tables in a schema.
 This means that rights have to be current on a per table basis.
 
-```text
+```
 grant select, insert on corda.NODE_TRANSACTIONS to archive;
 ```
+
+### MSSQL
+The following DDL statements can be used to create a backup schema user `archive`:
+
+```
+create login archive with password = 'Archive123';
+create schema archive;
+create user archive for login archive with default_schema = archive;
+grant SELECT, INSERT, UPDATE, DELETE, VIEW DEFINITION, ALTER, REFERENCES on schema::archive TO archive;
+grant CREATE TABLE to archive;
+grant CREATE VIEW to archive;
+grant SELECT on schema ::corda to archive;
+grant INSERT on schema ::corda to archive;
+```
+
+## Restarting the node
+
+It is sometimes necessary to restart the node when carrying out an archiving job.
+
+You need to restart the node:
+
+* Before running import-snapshot, having run 'delete-snapshot' (archive schema has been deleted, and now the vault is to be restored from file archive).
+* After 'delete-vault' has been run using the '--record' option.
+* After 'restore-snapshot' has been run using the '--record' option.
 
 ## Archive Service Command Line Tool
 
 The command line tool is a 'fat-jar' that can be executed directly using the `java -jar` option
 
-```text
+```
 $ java -jar corda-tools-archive-service-1.0.jar --help
 archive-service [--config-obfuscation-passphrase[=<cliPassphrase>]]
                 [--config-obfuscation-seed[=<cliSeed>]]
@@ -231,6 +255,7 @@ Commands:
   restore-snapshot          restore items from backup schema to the vault
 
 ```
+
 {{< note >}}
 A detailed explanation on each sub-command can be found in the [Archive Service CLI documentation](archiving-cli.md).
 {{< /note >}}
@@ -251,7 +276,11 @@ For more details see the Archive Service Library documentation.
 
 The following is a sample HOCON configuration file that can be used to configure the standard TransactionId filter.
 
-```text
+{{< note >}}
+Transactions are filtered *out* of the results set. So, transactions that are filtered using this configuration are excluded from the archiving process.
+{{< /note >}}
+
+```
 filter: {
     // A list of filters to be applied
     filters: [
@@ -267,14 +296,30 @@ filter: {
 }
 ```
 
+The following HOCON example can be used to configure the standard Party filter:
+
+```
+filter: {
+    // A list of filters to be applied
+    filters: [
+        "PartyFilter"
+    ]
+
+    // Configuration for the PartyFilter filter
+    partyFilter.parties: [
+     “O=PartyA,L=London,C=GB”
+    ]
+   }
+```
+
 ## Exporters
 
 Exporters are used to copy the archive snapshot from the vault to a permanent archive.
 The exporters to be applied can be given on the command line to the `export-snapshot` command
 or recorded in the CorDapp configuration file.
 
-```text
-export: {
+```
+exporter: {
     exporters: [
         "ZippedFileExporter",
         "QueryableStateFileExporter"
@@ -295,7 +340,7 @@ For more details see the Archive Service Library documentation.
 Queryable state tables can be exported to CSV format by listing the tables by listing the tables in
 the configuration file under the property `queryableTables`.
 
-```text
+```
 queryableTables: [
     "LOAN_STATES"
 ]
@@ -314,7 +359,7 @@ Archive Service will automatically detect transaction and attachment tables whic
 Additional transaction and attachment tables which use different column names can be registered using the
 properties `additionalTransactionTables` and `additionalAttachmentTables` with the following format.
 
-```text
+```
 additionalTransactionTables: [
     "ACCOUNT_STATE:TX_ID",
 ]

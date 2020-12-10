@@ -41,9 +41,12 @@ sufficient privileges to run the Archive Service flows.
 
 ## Archive Service APIs
 
+The following APIs are provided by the Archive Service Library.
 
 ### List Jobs
-Returns the list of active Archive Service jobs
+
+Returns the list of active Archive Service jobs.
+
 ```kotlin
 /**
  * Invoke the list jobs command to retrieve details on the current archive job.
@@ -65,7 +68,9 @@ class ListJobs(
 ```
 
 ### List Items
-Returns the list of archivable items
+
+Returns the list of archivable items.
+
 ```kotlin
 /**
  * Invoke the list items command to retrieve details on the archivable items.
@@ -97,7 +102,9 @@ class ListItems(
 ```
 
 ### Mark Items
-Marks all archivable items with the snapshot name
+
+Marks all archivable items with the snapshot name.
+
 ```kotlin
 /**
  * Invoke the mark items command to mark all archivable items with the snapshot name.
@@ -129,7 +136,9 @@ class MarkItems(
 ```
 
 ### Create Snapshot
-Copies marked items from the Corda vault to the archive schema
+
+Copies marked items from the Corda vault to the archive schema.
+
 ```kotlin
 /**
  * Invoke the create snapshot flow to copy the marked items to the archive schema.
@@ -157,7 +166,9 @@ class CreateSnapshot(
 ```
 
 ### Export Snapshot
-Exports the marked items in the vault to an external archive
+
+Exports the marked items in the vault to an external archive.
+
 ```kotlin
 /**
  * Invoke the export snapshot flow to export the archived items to permanent storage.
@@ -185,7 +196,9 @@ class ExportSnapshot(
 ```
 
 ### Import Snapshot
-Imports a snapshot from an external archive
+
+Imports a snapshot from an external archive.
+
 ```kotlin
 /**
  * Invoke the import snapshot flow to import transactions and attachments into the vault.
@@ -213,9 +226,10 @@ class ImportSnapshot(
     fun execute(): ImportSnapshotResults
 }
 ```
-
 ### Delete Marked
-Deletes the marked items from the Corda vault
+
+Deletes the marked items from the Corda vault.
+
 ```kotlin
 /**
  * Invoke the delete marked flow to delete the marked items from the vault schema.
@@ -239,7 +253,9 @@ class DeleteMarked(
 ```
 
 ### Delete Snapshot
-Deletes the snapshot from the archive schema
+
+Deletes the snapshot from the archive schema.
+
 ```kotlin
 /**
  * Invoke the delete snapshot flow to delete the marked items from the archive schema.
@@ -261,9 +277,10 @@ class DeleteSnapshot(
     fun execute(): DeleteSnapshotResults
 }
 ```
-
 ### Restore Snapshot
-Restores the snapshot to the Corda vault
+
+Restores the snapshot to the Corda vault.
+
 ```kotlin
 /**
  * Invoke the restore snapshot flow to restore failed jobs.
@@ -287,8 +304,8 @@ class RestoreSnapshot(
 ```
 
 ## Filter Interface
-Custom filters can be implemented by extending the `AbstractDAGFilter`,
-the `AbstractTransactionFilter` or `AbstractContractStateFilter` classes.
+
+Custom filters can be implemented by extending the `AbstractDAGFilter`, the `AbstractTransactionFilter` or `AbstractContractStateFilter` classes.
 
 ```kotlin
 /**

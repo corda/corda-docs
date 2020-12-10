@@ -13,7 +13,7 @@ title: The Ledger Sync CorDapp
 weight: 400
 ---
 
-# LedgerSync
+# LedgerSync V1.2
 
 **Who this documentation is for:**
 * Node operators
@@ -30,6 +30,22 @@ This means the node that requested the reconciliation will be notified if the re
 
 {{< figure alt="Ledger Sync Flow" zoom="../../resources/collaborative-recovery/ledger-sync-flow.png" >}}
 
+### Integration with Archiving
+
+The LedgerSync behaviour introduced in version 1.2 integrates with Archiving  while remaining compatible with flows from previous versions of LedgerSync.
+
+Archived transactions on either node will not show up as false positives while performing the reconciliation, therefore the same performance can be expected from LedgerSync when Archiving is also installed and a portion of the ledger is migrated to archive storage instead and no longer stored on the ledger.
+
+Transactions that have been archived on the responder and are missing on the initiator party will be flagged up as an additional field in `ReconciliationStatus`, called `lastSuccessfulReconciliationArchivedResult`. These are not eligible to be requested to be recovered directly from the responding party's archive and will not be automatically processed during a Recovery request.
+
+If there are any transactions missing, the reconciliation result  will be showing `DIFFERENCES_FOUND`, even when only those transactions have been found missing that have been archived by the responding party.
+
+There is some performance decrease to be expected when using both Archiving and LedgerSync with a counterparty who has a previous version (1.1 or earlier) of the CorDapp.
+
+1. If Initiator is using LedgerSync 1.1, while Responder is using LedgerSync 1.2 and Archiving 1.0, a subset of archived transactions (those that are the backchains of the common transactions, but don’t involve both of the requesting/responding parties) will “fill” some of the available message size, hence reducing the maximum number of transactions that can be discovered as truly missing on the Initiator. A subset of archived transactions will also show up as `difference found` in the results - those archived transactions that involve both the requesting and responding parties as participants.
+2. If the Initiator has LedgerSync 1.2 and Archiving, while the Responder has LedgerSync 1.1, the transactions mentioned in #1 (backchains of archived transactions that themselves don't involve both of the requesting/responding parties) will similarly "pollute" and "fill" some part of the available message size.
+3. No difference in performance or behaviour if none of the parties use Archiving.
+
 ## System requirements
 
 The **LedgerSync** CorDapp requires participating Corda nodes to
@@ -37,6 +53,11 @@ The **LedgerSync** CorDapp requires participating Corda nodes to
  - be using Corda Minimum Platform Version (MPV) >= 6; and
  - have the matching version of the LedgerGraph CorDapp installed; and
  - running on top of a supported [database technology](../../platform-support-matrix).
+
+{{< note >}}
+This version of LedgerSync is compatible with Corda's Archiving functionality. If you or parties on your network use Archiving, you can find out [what to expect when running ledger sync here](#integration-with-archiving).
+{{< /note >}}
+
 
 ## Configuration parameters
 
