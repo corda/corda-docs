@@ -81,7 +81,7 @@ Archive Service V1.0 does not support **Accounts** or **Confidential Identities*
 The Archive Service CorDapp .jar file should be copied to the node's `cordapps` directory. The Ledger Service CorDapp .jar file
 must also be copied to the same directory.
 
-```
+```text
 corda@CrimsonSolo:/opt/corda/node$ ls -l cordapps/
 drwxr-xr-x 2 corda corda   4096 Aug 26 06:43 config
 -rw-r--r-- 1 corda corda 504538 Aug 26 06:35 archive-service-1.0.jar
@@ -94,7 +94,7 @@ The Archive Service CorDapp is configured using a HOCON configuration file locat
 of node's `cordapps` directory. The configuration file must have the same name and version as the CorDapp but
 with the `jar` suffix changed to `conf`.
 
-```
+```text
 corda@CrimsonSolo:/opt/corda/node$ ls -l cordapps/config
 total 12
 -rw-r--r-- 1 corda corda 469 Aug 26 06:43 archive-service-1.0.conf
@@ -117,7 +117,7 @@ Passwords can be obfuscated using Corda's Config Obfuscator tool.
 
 The following is a sample configuration file:
 
-```
+```text
 generator: PostgresGenerator
 driver: "org.postgresql.Driver"
 
@@ -210,7 +210,7 @@ You need to restart the node:
 
 The command line tool is a 'fat-jar' that can be executed directly using the `java -jar` option
 
-```
+```text
 $ java -jar corda-tools-archive-service-1.0.jar --help
 archive-service [--config-obfuscation-passphrase[=<cliPassphrase>]]
                 [--config-obfuscation-seed[=<cliSeed>]]
@@ -280,7 +280,7 @@ The following is a sample HOCON configuration file that can be used to configure
 Transactions are filtered *out* of the results set. So, transactions that are filtered using this configuration are excluded from the archiving process.
 {{< /note >}}
 
-```
+```text
 filter: {
     // A list of filters to be applied
     filters: [
@@ -340,7 +340,7 @@ For more details see the Archive Service Library documentation.
 Queryable state tables can be exported to CSV format by listing the tables by listing the tables in
 the configuration file under the property `queryableTables`.
 
-```
+```text
 queryableTables: [
     "LOAN_STATES"
 ]
@@ -359,7 +359,7 @@ Archive Service will automatically detect transaction and attachment tables whic
 Additional transaction and attachment tables which use different column names can be registered using the
 properties `additionalTransactionTables` and `additionalAttachmentTables` with the following format.
 
-```
+```text
 additionalTransactionTables: [
     "ACCOUNT_STATE:TX_ID",
 ]
