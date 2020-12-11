@@ -129,5 +129,5 @@ For more information about platform versions, see [Versioning](cordapps/versioni
 * In some cases, the node keeps trying to reconnect to the counterparty even when the counterparty is down / the flow is killed.
 
 {{< note >}}
-The list above contains known issues specific to Corda Enterprise 4.7. Consult the release notes for previous Corda Enterprise releases for information about known issues specific to those versions.
+The list above contains known issues specific to Corda Enterprise 4.7. See the release notes for previous Corda Enterprise releases for information about known issues specific to those versions.
 {{ < /note >}}

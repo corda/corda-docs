@@ -37,7 +37,7 @@ For more information about this feature, see [Reissuing a state](reissuing-a-sta
 
 #### Business Network Membership version 1.1
 
-Corda 4.7 introduces enhancements to the [Business Network Membership extension](business-network-membership.md) to allow for better reporting and new membership attribute changes such as the role of a member of a business network.
+Corda 4.7 introduces enhancements to the [Business Network Membership extension](business-network-membership.md) to allow for access control group reporting, batch onboarding, membership group querying, and a way to log and report actions to membership attestations.
 
 #### Ability to interact with a Corda node via the new Multi RPC Client
 
@@ -75,15 +75,11 @@ For more information about platform versions, see [Versioning](versioning.md).
 
 ### Known issues
 
-* ...  [[CORDA-nnnn](https://r3-cev.atlassian.net/browse/CORDA-nnnn)]
+* Flows responders do not perform sufficient validation checks of Business Network permissions. This could be an issue due to the potential for incorrect handling of BNO permissions by Business Network nodes, where potentially any node in the Business Network is able to modify a flow and turn the validations off. [[CORDA-4078](https://r3-cev.atlassian.net/browse/CORDA-4078)].
 
-
-
-
-
-
-
-
+{{< note >}}
+The list above contains known issues specific to Corda 4.7. See the release notes for previous Corda releases further on this page for information about known issues specific to those versions.
+{{ < /note >}}
 
 
 ## Corda 4.6
