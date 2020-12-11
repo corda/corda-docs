@@ -73,10 +73,7 @@ For more information about platform versions, see [Versioning](versioning.md).
 
 ### Fixed issues
 
-* We have fixed an issue where ... [[CORDA-nnnn](https://r3-cev.atlassian.net/browse/CORDA-nnnn)].
-* We have fixed an issue where ... [[CORDA-nnnn](https://r3-cev.atlassian.net/browse/CORDA-nnnn)].
-...
-
+* We have fixed an issue where vault queries using the `OR` combinator and filter condition would incorrectly throw pagination errors even when the result of the queries was below the defined pagination limit (so the the page limit was not exceeded). This fix has also been propagated back to Corda Enterprise 4.5 and 4.6. [[CORDA-3874](https://r3-cev.atlassian.net/browse/CORDA-3874)].
 
 ### Known issues
 
