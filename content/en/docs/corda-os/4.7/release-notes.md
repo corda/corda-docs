@@ -37,9 +37,7 @@ For more information about this feature, see [Reissuing a state](reissuing-a-sta
 
 #### Business Network Membership version 1.1
 
-Corda 4.7 introduces enhancements to the [Business Network Membership extension](business-network-membership.md) to allow for access control group reporting, batch onboarding, membership group querying, and a way to log and report actions to membership attestations. New flows have been added too, and you can now request new membership attribute changes such as the role of a member of a business network.
-
-In this version, it is also no longer possible to accidentally cause undesirable changes to a network by removing permissions from all parties.
+Corda 4.7 introduces enhancements to the [Business Network Membership extension](business-network-membership.md) to allow for better reporting and new membership attribute changes such as the role of a member of a business network.
 
 #### Ability to interact with a Corda node via the new Multi RPC Client
 

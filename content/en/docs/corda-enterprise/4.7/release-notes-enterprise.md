@@ -50,7 +50,7 @@ See the [Corda open source release notes](../../corda-os/4.7/release-notes.md) f
 
 ### Archiving Service
 
-The Archiving Service is a new tool that allows you, as a node operator, to archive ledger data for entirely spent transactions. This saves space and reduces pressure on node databases. Archived material can still be retrieved quickly using [Ledger Graph](node/operating/ledger-graph.md) functionality, in the event of a [disaster recovery scenario](collaborative-recovery/introduction-cr.md).
+The Archiving Service is a new tool that allows you, as a node operator, to archive ledger data for entirely spent transactions. This saves space and reduces pressure on node databases.
 
 Some features of the Archiving Service:
 
