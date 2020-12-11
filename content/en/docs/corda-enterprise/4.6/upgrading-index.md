@@ -12,12 +12,12 @@ weight: 2
 
 # Upgrading a CorDapp or node
 
+* [Upgrading a node to Corda 4.6](node-upgrade-notes.md)
 * [Upgrading a CorDapp to Corda Enterprise 4.6](app-upgrade-notes-enterprise.md)
 * [Upgrading a CorDapp to a newer platform version](app-upgrade-notes.md)
-* [Upgrading a node to Corda 4.6](node-upgrade-notes.md)
-* [Upgrading a running CorDapp](upgrading-cordapp.md)
-* [Upgrading deployed CorDapps](node-operations-upgrade-cordapps.md)
 * [Upgrading a Corda OS Node to Corda Enterprise](node-operations-upgrading-os-to-ent.md)
+* [Upgrading deployed CorDapps](node-operations-upgrade-cordapps.md)
+* [Upgrading a running CorDapp](upgrading-cordapp.md)
 
 ## Features, versions, and compatibility
 
