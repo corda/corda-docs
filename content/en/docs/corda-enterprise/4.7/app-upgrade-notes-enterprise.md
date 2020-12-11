@@ -3,27 +3,27 @@ date: '2020-04-07T12:00:00Z'
 menu:
   corda-enterprise-4-7:
     identifier: "corda-enterprise-4-7-enterprise-cordapp-upgrade"
-    name: "Upgrading a CorDapp to Corda Enterprise 4.6"
     parent: corda-enterprise-4-7-upgrading-menu
 tags:
 - app
 - upgrade
 - notes
 - enterprise
-title: Upgrading CorDapps to Corda Enterprise 4.6
+title: Upgrading a CorDapp to Corda Enterprise 4.7
+weight: 10
 ---
 
 
 
 
-# Upgrading CorDapps to Corda Enterprise 4.6
+# Upgrading a CorDapp to Corda Enterprise 4.7
 
 ## Upgrading from Open Source
 
 
 ### Running on Corda Enterprise 4.6
 
-A prerequisite to upgrade to Corda Enterprise 4.6 is to ensure your CorDapp is upgraded to Corda open source  4.6.
+A prerequisite to upgrade to Corda Enterprise 4.7 is to ensure your CorDapp is upgraded to Corda open source 4.7.
 Please follow the instructions in [Upgrading CorDapps to newer Platform Versions](app-upgrade-notes.md) section to complete this initial step.
 
 There is no requirement to re-compile your CorDapp to Corda Enterprise in order to run it on Corda Enterprise. If you wish your CorDapp to
