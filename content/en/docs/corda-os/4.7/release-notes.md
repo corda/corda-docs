@@ -78,7 +78,7 @@ For more information about platform versions, see [Versioning](versioning.md).
 * Flows responders do not perform sufficient validation checks of Business Network permissions. This could be an issue due to the potential for incorrect handling of BNO permissions by Business Network nodes, where potentially any node in the Business Network is able to modify a flow and turn the validations off. [[CORDA-4078](https://r3-cev.atlassian.net/browse/CORDA-4078)].
 
 {{< note >}}
-The list above contains known issues specific to Corda 4.7. See the release notes for previous Corda releases further on this page for information about known issues specific to those versions.
+The list above contains known issues specific to Corda 4.7. See the release notes for previous Corda releases further down on this page for information about known issues specific to those versions.
 {{ < /note >}}
 
 

@@ -48,19 +48,23 @@ For more information about this feature, contact [R3 support](https://www.r3.com
 
 ### Fixed issues
 
-* We have fixed an issue where ...
-* We have fixed an issue where ...
-...
-
+* We have fixed an issue where Network Map Service updates were stuck after more than approximately 1300 nodes were registered.
+* We have fixed an issue where the Network Map Service was not fully started during CENM deployment on a Kubernetes cluster.
 
 ### Known issues
 
-* ...  
+* When deploying a Network Map using the CENM Command-line Interface (CLI) Tool, the signing process for the Network Map could fail with the following error: "No NETWORK_PARAMETERS type signing process set up". The workaround for this issue is to stop the Angel Service and the Signing Service, and to manually kill the `signer.jar` process.
+* The CENM Command-line Interface (CLI) Tool signing request `status` command fails when used for asynchronous signing.
+* Running the CENM Command-line Interface (CLI) Tool command to cancel network parameters (`./cenm netmap netparams update cancel`) returns no message so it is unclear if it was run successfully or not.
+* Insufficient revocation details are provided about signing a CRL after a revocation submission request is run by the CRR tool.
+* The CENM Command-line Interface (CLI) Tool does not return a message if a token has expired when running `signer` commands.
+* The Identity Manager Service shows an incorrect error when the `workflow.enmListener.port` parameter is missed.
+* When setting up CENM services with Shell support, the Signing Service and the Network Map Service hang after running the `shutdown` command.
+* When a CSR is rejected with a [rejection code](workflow.md#certificate-signing-request-rejection-reasons) between 1 and 11 via the JIRA workflow, the node notification is incorrect - the `Additional remark` field output contains technical data instead of a description of the rejection reason.
 
-
-
-
-
+{{< note >}}
+The list above contains known issues specific to CENM 1.5. See the release notes for previous CENM releases further down on this page for information about known issues specific to those versions.
+{{ < /note >}}
 
 
 ## Corda Enterprise Network Manager 1.4.1
