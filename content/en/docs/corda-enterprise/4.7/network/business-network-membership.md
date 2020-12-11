@@ -1,17 +1,17 @@
 ---
-date: '2020-09-25T12:00:00Z'
+date: '2020-12-11T12:00:00Z'
 menu:
-  corda-os-4-7:
-    identifier: corda-os-4-7-business-network-management
-    parent: corda-os-4-7-corda-networks-index
-    weight: 1200
+  corda-enterprise-4-7:
+    parent: corda-enterprise-4-7-corda-networks
 tags:
-- BNO
-- notary
+- corda
+- networks
 title: Managing Business Network membership
+weight: 500
+
 ---
 
-# Business Network management
+# Business Network membership management
 
 This Corda platform extension allows you to create and manage business networks - as a node operator, this means you can define and create a logical network based on a set of common CorDapps as well as a shared business context.
 
@@ -32,7 +32,7 @@ With this extension, you can use a set of flows to:
 * Assign members to membership lists or groups.
 * Update information about a member - such as their Business Network identity.
 * Modify a member's roles in the network.
-* Suspend or revoke membership.
+* Suspend or revoke membership.  
 
 {{< note >}}
 The code samples in this documentation show you how to run management operations using the provided primitives from the context of a tool or Cordapp. It is also possible to do these operations from an RPC client or node shell by simply invoking the supplied administrative flows using data resulted from executing vault queries.
@@ -48,7 +48,37 @@ In a Business Network, you can assign different roles to members of the network.
 
 ## Installation
 
-This is an extension of Corda OS 4.6. If you have this version of Corda, and want to set up and run a Business Network, you can make use of the extension flows.
+This is an extension for Corda 4.6. If you have this version of Corda, you can access the required `.jar` files here:
+
+* BNE contracts: [https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-contracts/1.0/business-networks-contracts-1.0.jar](https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-contracts/1.0/business-networks-contracts-1.0.jar).
+* BNE workflows: [https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-workflows/1.0/business-networks-workflows-1.0.jar](https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-workflows/1.0/business-networks-workflows-1.0.jar).
+* Sample CorDapp contracts: [https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-demo-contracts/1.0/business-networks-demo-contracts-1.0.jar](https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-demo-contracts/1.0/business-networks-demo-contracts-1.0.jar).
+* Sample CorDapp workflows: [https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-demo-workflows/1.0/business-networks-demo-workflows-1.0.jar](https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-demo-workflows/1.0/business-networks-demo-workflows-1.0.jar).
+
+To install the extension:
+
+1. Add the `business-networks-contracts` dependency in your **contracts** (and states) CorDapp module:
+
+```
+dependencies {
+    //...
+    cordapp("net.corda.bn:business-networks-contracts:$corda_bn_extension_version")
+    //...
+}
+```
+2. Add the `business-networks-workflows` dependency in your **workflows** CorDapp module:
+
+```
+dependencies {
+    //...
+	cordapp("net.corda.bn:business-networks-workflows:$corda_bn_extension_version")
+    //...
+}
+```
+
+3. Add both dependencies in your **Cordform** - `deployNodes` - task.
+
+You have installed the Business Network membership extension.
 
 ## Create a business network
 
@@ -211,7 +241,6 @@ To manage the membership lists or groups, one of the authorised members of the n
 {{< note >}}
 When modifying a group, you must ensure that any member who is removed from the group is still part of at least one Business Network Group, otherwise they will no longer be discoverable.
 {{< /note >}}
-
 ### Create a group
 
 To create a new group:
