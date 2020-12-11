@@ -23,10 +23,8 @@ Corda Enterprise Network Manager (CENM) 1.5 introduces a number of new features 
 While this release is backward-compatible, you should consider upgrading to this release from earlier versions of the Corda Enterprise Network Manager.
 
 {{< warning >}}
-Make sure to check the [Upgrading Corda Enterprise Network Manager](upgrade-notes.md) page.
+Make sure to check out the [Upgrading Corda Enterprise Network Manager](upgrade-notes.md) page.
 {{< /warning >}}
-
-Read more about improvements of this release below.
 
 ### New features and enhancements
 
