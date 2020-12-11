@@ -32,8 +32,8 @@ The main new features and enhancements in Corda Enterprise 4.7 are listed below:
 * [Certificate rotation](#certificate-rotation).
 * [Single sign-on for Azure AD](#other-changes-and-improvements).
 * [HSM integration support](#other-changes-and-improvements).
-* [Storing confidential identity keys in HSMs](#other-changes-and-improvements).
 * [Ability to store confidential identity keys in HSMs](#other-changes-and-improvements).
+* [HSM APIs](#other-changes-and-improvements).
 
 {{< note >}}
 This page only describes functionality specific to Corda Enterprise 4.7. However, as a Corda Enterprise customer, you can also make full use of the entire range of features available as part of Corda open source releases.
@@ -90,9 +90,10 @@ Corda Enterprise 4.7 introduces a capability for reissuing node legal identity k
 * **Single sign-on for Azure AD.** You can now operate a single sign on (SSO) set-up between Corda services and Azure AD, with a simple configuration to both your Azure AD and Corda Auth services.
 * **HSM integration support.** Corda Enterprise now supports users to integrate unsupported HSMs with their Corda Enterprise instance. This release includes a sample Java implementation to be used as an example, and a testing suite that can be used to test an implementation before deployment. For guidance on writing an HSM integration, see the [HSM documentation](operations/deployment/hsm-integration.md/).
 * **Ability to store confidential identity keys in HSMs.** Corda Enterprise now provides support for storing the keys associated with confidential identities in nCipher, Futurex, and Azure Key Vault HSMs. nCipher and Azure Key Vault HSMs support native use of confidential identity keys, and Futurex HSMs support the wrapped key mode. For more information on configuring these HSMs to store confidential identity keys, see the [HSM documentation](operations/deployment/hsm-deployment-confidential.md#using-an-hsm-with-confidential-identities/).
-* We have added documentation clarifying some potential performance gains when adjusting the notary `batchTimeoutMs` [configuration option](node/setup/corda-configuration-fields.md#notary), though the default has not been changed.
+* **HSM APIs.** Corda Enterprise 4.7 introduces an HSM library with its own API that external tooling developers can use to expand Corda Enterprise HSM support.
 * **Cockroach database version bump.** In Corda Enterprise 4.7, we have added support for Cockroach database version 20.1.5.
 * Node `initial-registration` now includes the creation of the `identity-private-key` keystore alias. For more information, see the documentation about [node folder structure](node-structure.md#node-folder-structure). Previously, only `cordaclientca` and `cordaclienttls` aliases were created during `initial-registration`, while `identity-private-key` was generated on demand on the first node run. Therefore in Corda Enterprise 4.7 the content of `nodekeystore.jks` is never altered during a regular node run (except for `devMode = true`, where the certificates directory can be filled with pre-configured keystores).
+* We have added documentation clarifying some potential performance gains when adjusting the notary `batchTimeoutMs` [configuration option](node/setup/corda-configuration-fields.md#notary), though the default has not been changed.
 
 ## Platform version change
 
@@ -110,4 +111,23 @@ For more information about platform versions, see [Versioning](cordapps/versioni
 
 ## Known issues
 
-* ...  
+* In some cases the RPC Client may fail to connect to the node. This error is more likely to occur when using a lower-spec machine.
+* The HA Utilities tool does not log information about the used `freshIdentitiesConfiguration` as it is implemented for Legal Identities and TLS keys.
+* The HA Utilities tool does not log a message stating that the master key is not needed when using `NATIVE` mode. Such a message is only recorded in the node log when the node is registered using the `initial-registration` command.
+* During node registration with confidential identities on HSM in `NATIVE` mode, the HA Utilities tool log contains an inaccurate log entry "Confidential identity wrapping key created" although no keys are generated as the master key is not required for confidential identities in `NATIVE` mode.
+* A transaction without inputs and references can have different notaries for its output states. As a result, the node issuing the transaction could assign an arbitrary notary to its output state without notarising the transaction with this notary.
+* Corda still depends on an outdated Azure Java SDK version (1.2.1) for Azure KeyVault support. This may result in the need for node operators to build a `shadedJar` themselves.
+* In the new Flow Management Console, columns filtering/sorting may be incorrectly reset after page reload instead of showing the same results as when the filter was applied.
+* In the new Flow Management Console and the Node Management Console, the "Change password" / "Log out" drop-down menu may not be fully visible when the user's name is short.
+* In the new Flow Management Console, the "FLOW START FROM / TO" field in the Calendar on the "Query Flows" page must be clicked twice to open.
+* A Collaborative Recovery 1.1 (or 1.0) initiator could fail when attempting to recover transactions archived by a Collaborative Recovery 1.2 responder.
+* When performing certificate rotation (introduced in this release), flows could fail with an error when trying to use a state signed by the old key that is not in the `previousIdentityKeyAliases` list.
+* The Health Survey Tool always tries to save its report in the Corda node directory instead of the current directory. This could be a problem for node operators who do not have write access to the Corda node directory.
+* There are some formatting inconsistencies between the Corda HSM Technology Compatibility Kit (TCK) tests console help and the [Corda shell](node/operating/shell.md) CLI help.
+* When running `samples:attachment-demo:deployNodes`, the `runSender` task fails to send the attachment because it uses `myLegalName` instead of `serviceLegalName` for notarisation.
+* When running `run-migration-scripts --core-schemas --app-schemas` to migrate [the custom IOU CorDapp](https://github.com/corda/production-qa-steps/tree/toropovd/rpc-client/rpc-client/cordapp-example), the migration script fails when running on a MS SQL database. The migration works fine against H2, PostgreSQL, and Oracle databases.
+* In some cases, the node keeps trying to reconnect to the counterparty even when the counterparty is down / the flow is killed.
+
+{{< note >}}
+The list above contains known issues specific to Corda Enterprise 4.7. Consult the release notes for previous Corda Enterprise releases for information about known issues specific to those versions.
+{{ < /note >}}
