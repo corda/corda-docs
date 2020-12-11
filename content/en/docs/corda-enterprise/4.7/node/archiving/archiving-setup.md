@@ -27,6 +27,8 @@ The Archive Service consists of the following:
 * [**Archive Service Client Library**](archive-library) - which provides programmatic access to the archive service, and [exposes relevant APIs](archiving-apis).
 * [**Archive Service Command Line Interface**](archiving-cli) - which allows you to perform archiving tasks from the command line.
 
+It also makes use of the [Application Entity Manager](app-entity-manager) - which allows CorDapps to access off-ledger databases using JPA APIs.
+
 ## What can be archived
 
 The Archive Service has commands you can use to identify which transactions can be archived in your vault. A fully consumed transaction or attachment will be marked as archivable when:
