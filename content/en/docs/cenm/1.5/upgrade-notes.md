@@ -3,9 +3,9 @@ aliases:
 - /upgrade-notes.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1.5:
-    identifier: cenm-1.5-upgrade-notes
-    parent: cenm-1.5-operations
+  cenm-1-5:
+    identifier: cenm-1-5-upgrade-notes
+    parent: cenm-1-5-operations
     weight: 170
 tags:
 - upgrade
@@ -43,6 +43,14 @@ If existing passwords are not complex, add the configuration option to allow wea
         ...
         mustMeetComplexityRequirements = false
     }
+
+This new setting can be change to `true` or removed only after all users have changed their passwords to meet complexity requirements:
+
+* Minimum 8 characters long.
+* Maximum 50 characters long. 
+* Contains at least one number, one lower case character, and one upper case character.
+* Does not contain regular sequences (like `abcdf` or `1234`) that are longer than three characters.
+* Does not contain the username.
 
 ### Identity Manager Workflow Plugin changes
 
