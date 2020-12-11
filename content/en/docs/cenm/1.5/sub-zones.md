@@ -4,8 +4,8 @@ aliases:
 date: '2020-01-08T09:59:25Z'
 menu:
   cenm-1-5:
-    identifier: cenm-1.5-sub-zones
-    parent: cenm-1.5-concepts-and-overview
+    identifier: cenm-1-5-sub-zones
+    parent: cenm-1-5-concepts-and-overview
     weight: 40
 tags:
 - zones

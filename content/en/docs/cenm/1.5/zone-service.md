@@ -3,9 +3,9 @@ aliases:
 - /zone-service.html
 date: '2020-06-04T13:44:00Z'
 menu:
-  cenm-1.5:
-    identifier: cenm-1.5-zone-service
-    parent: cenm-1.5-operations
+  cenm-1-5:
+    identifier: cenm-1-5-zone-service
+    parent: cenm-1-5-operations
     weight: 155
 tags:
 - zone
