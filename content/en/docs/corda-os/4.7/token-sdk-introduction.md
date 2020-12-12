@@ -6,9 +6,10 @@ menu:
     name: "Tokens SDK"
     parent: corda-os-4-7-development
 tags:
-- building
-- against
-- release
+- tokens sdk
+- fungible
+- non-fungible
+- assets
 title: Tokens SDK
 weight: 135
 ---

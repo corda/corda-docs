@@ -6,9 +6,10 @@ menu:
     name: "Tokens SDK"
     parent: corda-enterprise-4-7-cordapps
 tags:
-- building
-- against
-- release
+- tokens sdk
+- fungible
+- non-fungible
+- assets
 title: Tokens SDK
 weight: 15
 ---
