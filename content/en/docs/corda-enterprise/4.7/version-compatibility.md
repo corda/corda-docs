@@ -2,12 +2,12 @@
 date: '2020-04-07T12:00:00Z'
 menu:
   corda-enterprise-4-7:
-    parent: corda-enterprise-4-7-upgrading-and-tools
+    parent: corda-enterprise-4-7-upgrading-menu
 tags:
 - version
 - compatibility
 title: Corda and Corda Enterprise compatibility
-weight: 3
+weight: 80
 ---
 
 
