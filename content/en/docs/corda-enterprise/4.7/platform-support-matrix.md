@@ -2,13 +2,13 @@
 date: '2020-04-07T12:00:00Z'
 menu:
   corda-enterprise-4-7:
-    parent: corda-enterprise-4-7-upgrading-and-tools
+    parent: corda-enterprise-4-7-upgrading-menu
 tags:
 - platform
 - support
 - matrix
 title: Platform support matrix
-weight: 3
+weight: 90
 ---
 
 
