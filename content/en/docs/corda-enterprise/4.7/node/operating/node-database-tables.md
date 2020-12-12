@@ -41,7 +41,7 @@ These are tables that store the node info of other network participants.
 They are just a local cache that is kept in sync with the network map server.
 By calling `rpc.clearNetworkMapCache()` all these tables will be cleared and recreated from the network map server.
 
-Read more here: network-map
+Read more in [Network map](../../network/network-map.md).
 
 {{< figure alt="node info tables" zoom="/en/images/node_info_tables.png" >}}
 
@@ -373,7 +373,7 @@ Read more in node-services
 These tables will see the most intense read-write activity, especially `NODE_CHECKPOINTS` and `NODE_CHECKPOINT_BLOBS`. Depending on the installed flows and the traffic on the node the I/O operations on this
 table will be the main bottleneck of the node performance.
 There will be an entry for every running flow.
-Draining the node means waiting for this table to become emtpy. Read more in: [Upgrading CorDapps on a node](node-operations-upgrade-cordapps.md).
+Draining the node means waiting for this table to become emtpy. Read more in [Upgrading deployed CorDapps](../../node-operations-upgrade-cordapps.md).
 
 
 {{< table >}}

@@ -5,7 +5,7 @@ date: '2020-01-08T09:59:25Z'
 menu:
   cenm-1-5:
     identifier: cenm-1-5-quick-start
-    parent: cenm-1.5-operations
+    parent: cenm-1-5-operations
     weight: 120
 tags:
 - quick
@@ -33,7 +33,7 @@ deployment.
 
 For a full production environment you would need to modify this deployment to add:
 
-* A [Signing Service](signer-service.md) deployment to replace the built-in (local) signing component of the Identity Manager and Network Map Services.
+* A [Signing Service](signing-service.md) deployment to replace the built-in (local) signing component of the Identity Manager and Network Map Services.
 * A [Zone Service](zone-service.md) deployment to manage configuration deployment.
 * [Angel Services](angel-service.md) around the [Identity Manager](identity-manager.md), [Network Map](network-map.md),
   and Signing Services to fetch configurations from the Zone Service.

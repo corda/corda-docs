@@ -28,7 +28,7 @@ There are several ways to run a Corda node locally for testing purposes.
 See the instructions in demobench.
 
 {{< warning >}}
-**DemoBench** is deprecated in Corda 4.6 and Corda Enterprise 4.6.
+**DemoBench** is deprecated.
 {{< /warning >}}
 
 
@@ -208,7 +208,7 @@ To enable export of JMX metrics over HTTP via [Jolokia](https://jolokia.org/), r
 
 This command line will start the node with JMX metrics accessible via HTTP on port 7005.
 
-See [Monitoring via Jolokia](../operating/node-administration.md#monitoring-jolokia) for further details.
+See [Monitoring via Jolokia](../../node/operating/node-administration.md#monitoring-jolokia) for further details.
 
 
 ## Starting all nodes at once on a local machine from the command line

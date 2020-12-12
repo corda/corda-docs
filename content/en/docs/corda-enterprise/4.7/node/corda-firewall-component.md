@@ -45,12 +45,17 @@ component is designed to provide a clear protocol break and thus prevents the no
 directly exposed to peers. For simpler deployments with no DMZ, the float and bridge logic can also be run as a
 single application behind the firewall, but still protecting the node and hosted Artemis. It is also possible to host
 the Artemis server out of process and shared across nodes, but this will be transparent to peers as the interchange
-protocol will continue to be AMQP 1.0 over TLS.
+protocol will continue to be AMQP 1.0 over TLS. An HA notary requires a separate Corda Firewall that cannot be shared with any other Corda nodes.
 
 {{< note >}}
 All deployment modes of the bridge, float, or all-in-one node are transparently interoperable, if correctly configured.
 
 {{< /note >}}
+
+{{< important >}}
+An HA notary must have a separate Corda Firewall that is not shared with any other nodes.
+{{< /important >}}
+
 
 ## Message path between peer nodes
 
@@ -127,7 +132,7 @@ from the local bridge to the original node’s float and then on to the original
 #### Prerequisites
 
 
-* A supported Java distribution (see [Getting set up for CorDapp development](getting-set-up.md))
+* A supported Java distribution (see [Getting set up for CorDapp development](../cordapps/getting-set-up.md/))
 * Corda Enterprise JAR
 
 The simplest development deployment of the node is without firewall and thus just use the embedded bridge and Peer-to-Peer
@@ -143,7 +148,7 @@ where this is the only available option:
 #### Prerequisites
 
 
-* A supported Java distribution (see [Getting set up for CorDapp development](getting-set-up.md))
+* A supported Java distribution (see [Getting set up for CorDapp development](../cordapps/getting-set-up.md/))
 * Corda Enterprise JAR
 * Corda Firewall JAR
 
@@ -190,7 +195,7 @@ rpcSettings = {
 
 ```
 
-[node.conf](https://github.com/corda/enterprise/blob/release/ent/4.6/docs/source/resources/bridge/node_bridge/node.conf)
+[node.conf](../resources/bridge/node_bridge/node.conf)
 
 
 #### bridge.conf
@@ -207,7 +212,7 @@ networkParametersPath = network-parameters
 
 ```
 
-[bridge.conf](https://github.com/corda/enterprise/blob/release/ent/4.6/docs/source/resources/bridge/node_bridge/bridge.conf)
+[bridge.conf](../resources/bridge/node_bridge/bridge.conf)
 
 
 ### DMZ ready (node + bridge + float)
@@ -216,7 +221,7 @@ networkParametersPath = network-parameters
 #### Prerequisites
 
 
-* A supported Java distribution (see [Getting set up for CorDapp development](getting-set-up.md))
+* A supported Java distribution (see [Getting set up for CorDapp development](../cordapps/getting-set-up.md/))
 * Corda Enterprise JAR
 * Corda Firewall JAR
 
@@ -258,7 +263,7 @@ enterpriseConfiguration = {
 
 ```
 
-[node.conf](https://github.com/corda/enterprise/blob/release/ent/4.6/docs/source/resources/bridge/node_bridge_float/node.conf)
+[node.conf](../resources/bridge/node_bridge_float/node.conf)
 
 
 #### bridge.conf
@@ -281,7 +286,7 @@ bridgeInnerConfig {
 networkParametersPath = network-parameters
 ```
 
-[bridge.conf](https://github.com/corda/enterprise/blob/release/ent/4.6/docs/source/resources/bridge/node_bridge_float/bridge.conf)
+[bridge.conf](../resources/bridge/node_bridge_float/bridge.conf)
 
 
 #### float.conf
@@ -303,7 +308,7 @@ floatOuterConfig {
 }
 ```
 
-[float.conf](https://github.com/corda/enterprise/blob/release/ent/4.6/docs/source/resources/bridge/node_bridge_float/float.conf)
+[float.conf](../resources/bridge/node_bridge_float/float.conf)
 
 
 ### DMZ ready with outbound SOCKS
@@ -312,7 +317,7 @@ floatOuterConfig {
 #### Prerequisites
 
 
-* A supported Java distribution (see [Getting set up for CorDapp development](getting-set-up.md))
+* A supported Java distribution (see [Getting set up for CorDapp development](../cordapps/getting-set-up.md/))
 * Corda Enterprise JAR
 * Corda Firewall JAR
 * SOCKS Proxy
@@ -346,7 +351,7 @@ enterpriseConfiguration = {
 
 ```
 
-[node.conf](https://github.com/corda/enterprise/blob/release/ent/4.6/docs/source/resources/bridge/socks_proxy/node.conf)
+[node.conf](../resources/bridge/socks_proxy/node.conf)
 
 
 #### bridge.conf
@@ -376,7 +381,7 @@ networkParametersPath = network-parameters
 
 ```
 
-[bridge.conf](https://github.com/corda/enterprise/blob/release/ent/4.6/docs/source/resources/bridge/socks_proxy/bridge.conf)
+[bridge.conf](../resources/bridge/socks_proxy/bridge.conf)
 
 
 #### float.conf
@@ -398,7 +403,7 @@ floatOuterConfig {
 }
 ```
 
-[float.conf](https://github.com/corda/enterprise/blob/release/ent/4.6/docs/source/resources/bridge/socks_proxy/float.conf)
+[float.conf](../resources/bridge/socks_proxy/float.conf)
 
 
 ### Full production HA DMZ ready mode (hot/cold node, hot/warm bridge)
@@ -407,7 +412,7 @@ floatOuterConfig {
 #### Prerequisites
 
 
-* A supported Java distribution (see [Getting set up for CorDapp development](getting-set-up.md))
+* A supported Java distribution (see [Getting set up for CorDapp development](../cordapps/getting-set-up.md/))
 * Corda Enterprise JAR
 * Corda Firewall JAR
 * Zookeeper v3.6.1
@@ -459,7 +464,7 @@ enterpriseConfiguration = {
 
 ```
 
-[node.conf](https://github.com/corda/enterprise/blob/release/ent/4.6/docs/source/resources/bridge/ha_nodes/node.conf)
+[node.conf](../resources/bridge/ha_nodes/node.conf)
 
 
 #### bridge.conf
@@ -486,7 +491,7 @@ networkParametersPath = network-parameters
 
 ```
 
-[bridge.conf](https://github.com/corda/enterprise/blob/release/ent/4.6/docs/source/resources/bridge/ha_nodes/bridge.conf)
+[bridge.conf](../resources/bridge/ha_nodes/bridge.conf)
 
 
 #### float.conf
@@ -508,7 +513,7 @@ floatOuterConfig {
 }
 ```
 
-[float.conf](https://github.com/corda/enterprise/blob/release/ent/4.6/docs/source/resources/bridge/ha_nodes/float.conf)
+[float.conf](../resources/bridge/ha_nodes/float.conf)
 
 
 #### Notes on physical deployment of services
@@ -542,7 +547,7 @@ More specifically, in order to ensure optimal performance it is required:
 #### Prerequisites
 
 
-* A supported Java distribution (see [Getting set up for CorDapp development](getting-set-up.md))
+* A supported Java distribution (see [Getting set up for CorDapp development](../cordapps/getting-set-up.md/))
 * Corda Enterprise JAR
 * Corda Firewall JAR
 * Apache Artemis v2.6.2 or RedHat amq broker v7.2.2
@@ -585,7 +590,7 @@ rpcSettings = {
 
 ```
 
-[bank-a-node.conf](https://github.com/corda/enterprise/blob/release/ent/4.6/docs/source/resources/bridge/multiple_non_ha_nodes/bank-a-node.conf)
+[bank-a-node.conf](../resources/bridge/multiple_non_ha_nodes/bank-a-node.conf)
 
 
 #### bank-b-node.conf
@@ -619,7 +624,7 @@ rpcSettings = {
 
 ```
 
-[bank-b-node.conf](https://github.com/corda/enterprise/blob/release/ent/4.6/docs/source/resources/bridge/multiple_non_ha_nodes/bank-b-node.conf)
+[bank-b-node.conf](../resources/bridge/multiple_non_ha_nodes/bank-b-node.conf)
 
 
 #### bridge.conf
@@ -650,7 +655,7 @@ trustStorePassword = nodeTrustpass
 trustStoreFile = nodesCertificates/truststore.jks
 ```
 
-[bridge.conf](https://github.com/corda/enterprise/blob/release/ent/4.6/docs/source/resources/bridge/multiple_non_ha_nodes/bridge.conf)
+[bridge.conf](../resources/bridge/multiple_non_ha_nodes/bridge.conf)
 
 
 ### Adding new nodes to existing shared Bridge

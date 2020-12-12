@@ -3,9 +3,9 @@ aliases:
 - /upgrade-notes.html
 date: '2020-01-08T09:59:25Z'
 menu:
-  cenm-1.5:
-    identifier: cenm-1.5-upgrade-notes
-    parent: cenm-1.5-operations
+  cenm-1-5:
+    identifier: cenm-1-5-upgrade-notes
+    parent: cenm-1-5-operations
     weight: 170
 tags:
 - upgrade
@@ -22,6 +22,64 @@ Doorman), Network Map Service, Signing Service, Zone Service, Auth Service, Ange
 {{< warning >}}
 Before you start the upgrade, you must consult the [CENM Release Notes](release-notes.md) to confirm all changes between releases.
 {{< /warning >}}
+
+## 1.3.x / 1.4.x to 1.5
+
+### Database migrations
+
+The Identity Manager Service, the Network Map Service, and the Zone Service all require database migration.
+To enable database migration, set `runMigration = true` in the database configuration. If a service is connecting to a database with restricted user,
+you must temporarily change the service settings to connect with a privileged user (a user able to modify a database schema).
+
+### Auth Service
+
+The `baseline` configuration entry is obsolete and should be removed.
+Ensure you have the CENM baseline `.jar` file `accounts-baseline-cenm-1.5.jar` that contains the set
+of available permissions and predefined roles. Copy this file to a directory called `plugins`, located inside the working directory.
+
+If existing passwords are not complex, add the configuration option to allow weaker passwords:
+
+    passwordPolicy {
+        ...
+        mustMeetComplexityRequirements = false
+    }
+
+This new setting can be change to `true` or removed only after all users have changed their passwords to meet complexity requirements:
+
+* Minimum 8 characters long.
+* Maximum 50 characters long. 
+* Contains at least one number, one lower case character, and one upper case character.
+* Does not contain regular sequences (like `abcdf` or `1234`) that are longer than three characters.
+* Does not contain the username.
+
+### Identity Manager Workflow Plugin changes
+
+If you are using a custom Identity Manager Workflow Plugin then
+a non-backwards compatible change introduced in CENM 1.5 may require to recompile your plugin.
+
+One of the API classes has been modified to contain a new field related to certificate re-issuance.
+If you are running Identity Manager Service with your own custom `com.r3.enm.workflow.api.WorkFlowPlugin` implementation,
+you may require to recompile the plugin code.
+If certificate re-issuance is planned to be performed, then the new field can be used in your plugin.
+
+The class `com.r3.enm.workflow.api.WorkflowPlugin` is parameterised by `com.r3.enm.model.Request` type.
+A plugin code for CSR may use the concrete version of this type com.r3.enm.model.CertificateSigningRequest.
+If you instantiate CertificateSigningRequest class in your plugin then you need to recompile the plugin code.
+The class CertificateSigningRequest contains new member field `type` of `Enum` type `com.r3.enm.model.CsrRequestType`.
+The Enum has 3 possible values `CSR`, `REISSUE_SIGNED`, `REISSUE_UNSIGNED` denoting respectively a normal CSR requests,
+a re-issue request, and a re-issue request additionally singed by the existing certificate
+(see detailed explanation in the certificate re-issuance documentation).
+You may use the new field to perform additional operation, for example a request marked as `REISSUE_SIGNED` can be automatically
+marked by your plugin as approved in your Workflow Management System.
+
+You don't need to change your code if you are not intended to use CENM certificate re-issuance functionalities.
+If your plugin class doesn't use CertificateSigningRequest class and only abstract type Request,
+then there's no need to recompile plugin.
+
+### Gateway Service - new CENM Web UI
+
+In Gateway Service create a new directory called `plugins`, located inside the working directory.
+Copy the `cenm-gateway-plugin-1.5.0.jar`. The plugin contains the new CENM Web UI.
 
 ## 1.3.x to 1.4
 
@@ -40,7 +98,7 @@ The general procedure for upgrading from CENM 1.3 to CENM 1.4 is as follows:
 ### Zone Service database migration
 
 If you are upgrading to CENM 1.4 from CENM 1.3, you **must** set `runMigration = true` in the database configuration. This is required due to a change in the Zone Service database schema - a new column in the database tables `socket_config` and `signer_config` called `timeout` is used to record the new optional `timeout` parameter values used in `serviceLocations` configuration blocks (Signing Services) and `identityManager` and `revocation` configuration blocks (Network Map Service). This value can remain `null`,
-in which case the default 10 seconds timeout will be used wherever applicable.
+in which case the default 30 seconds timeout will be used wherever applicable.
 
 An example follows below:
 
@@ -54,7 +112,7 @@ database = {
 }
 ```
 
-### Signing Service configuration changes
+### Signing Service configuration changes
 
 In CENM 1.3 (and older versions), `subZoneID` was defined in Signing Service configurations as part of the service location alias (`serviceLocationAlias`), as shown below:
 
@@ -120,7 +178,7 @@ The key steps for the upgrade are:
 You must generate SSL key pairs and certificates for the new services before deploying them.
 You can do this using the PKI tool, and it is best to replace the
 SSL certificates and keys for all services during this process. A draft PKI tool configuration
-for generating the full SSL hierarchy is provided under [config-samples/upgrade-pki-tool-1.3.conf](config-samples/upgrade-pki-tool-1.3.conf).
+for generating the full SSL hierarchy is provided under [config-samples/upgrade-pki-tool-1.3.conf](config-samples/upgrade-pki-tool.conf/).
 
 {{% important %}}
 You must replace the `subject` and `crlDistributionUrl` entries in this configuration with values

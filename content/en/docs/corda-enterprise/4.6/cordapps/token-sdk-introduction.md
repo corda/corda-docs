@@ -33,10 +33,9 @@ If you are new to Corda, and want a guided tutorial on using the Tokens SDK for 
 
 {{< /note >}}
 
-## Upgrade from V1.1 to V1.2.1
+## Upgrading
 
-If you have developed a CorDapp that uses the Tokens SDK V1.1, you can upgrade to 1.2.1.
-
+If you have developed a CorDapp that uses the Tokens SDK V1.1 or V1.2.1, you can upgrade to 1.2.2.
 
 ### Compatibility
 
@@ -52,15 +51,21 @@ Overview of changes:
 * The `selection` and `money` `.jar` files have been moved into the `workflows` `.jar` file.
 * Upgraded database interaction for compatibility with Corda 4.6 and Corda Enterprise 4.6.
 
-To upgrade from Tokens SDK V1.1 to V1.2:
+### Changes in V1.2.2
+
+In V1.2.2, a new [Token Selection](token-selection) feature allows a the exception `InsufficientNotLockedBalanceException` to be thrown when  sufficient funds appear to exist for a transaction to take place, but an excess of those funds are soft locked by other in-flight transactions. The warning tells you that there are insufficient funds that have not been soft locked to satisfy the transaction amount.
+
+### Upgrade Tokens SDK
+
+To upgrade the Tokens SDK:
 
 {{< warning >}}
-Before upgrading, make sure the platform database schema is properly migrated and the changelog syncrhonised - consult the [upgrade documentation for Corda Enterprise 4.6](./../app-upgrade-notes.md). If you have not migrated the schema, the Tokens SDK may not upgrsade correctly.
+Before upgrading, make sure the platform database schema is properly migrated and the changelog syncrhonised - consult the [upgrade documentation for Corda Enterprise 4.6](../app-upgrade-notes.md). If you have not migrated the schema, the Tokens SDK may not upgrade correctly.
 {{< /warning >}}
 
-1. Change the V number (version number) in your CorDapp's relevant Gradle file from 1.1 to 1.2.1.
+1. Change the V number (version number) in your CorDapp's relevant Gradle file to the version you are upgrading to - such as 1.2.2
 
-2. Remove all references to `selection` and `money` `.jar` files from your build function (in many cases, Gradle). The functions of these JARS has been moved into `workflows` in V1.2.1.
+2. Remove all references to `selection` and `money` `.jar` files from your build function (in many cases, Gradle). The functions of these `.jar` files have been moved into `workflows` in versions 1.2 onwards.
 
 3. Recompile your CorDapp.
 
@@ -118,7 +123,7 @@ Once you have established what type of token you want to create, you can use the
 
 * **Redeem** and remove the token from the ledger, for example when a party finally takes ownership of their real-life diamond and the token it represents can no longer be used.
 
-### `Tokentype` - the units of a token
+### `TokenType` - the units of a token
 
 A `TokenType` defines the unit of your token.
 
@@ -257,7 +262,7 @@ Fungible tokens can be split using a flow initiated by the **Move** command. Thi
 
 In the below example, Alice instantiates a token representing a BitCoin. This token is generated using the Tokens SDK's built-in `money` library.
 
-{{< tabs name="tabs-1234" >}}
+{{< tabs name="tabs-2" >}}
 {{% tab name="kotlin" %}}
 ```kotlin
 val fungibleToken = 1 of DigitalCurrency.getInstance("BTC") issuedBy aliceParty heldBy aliceParty
@@ -1338,8 +1343,8 @@ list of repositories for your project:
 
 ```
     repositories {
-        maven { url 'https://ci-artifactory.corda.r3cev.com/artifactory/corda-lib' }
-        maven { url 'https://ci-artifactory.corda.r3cev.com/artifactory/corda-lib-dev' }
+        maven { url 'https://software.r3.com/artifactory/corda-lib' }
+        maven { url 'https://software.r3.com/artifactory/corda-lib-dev' }
     }
 ```
 

@@ -357,7 +357,7 @@ From Corda 4.6, the database schema objects are not automatically initialised du
 Start the node using the `initial-registration` sub-command:
 
 ```bash
-java -jar corda.jar nitial-registration
+java -jar corda.jar initial-registration
 ```
 
 {{< note >}}
@@ -372,7 +372,7 @@ Start the node with the `run-migration-scripts` sub-command with `--core-schemas
 java -jar corda.jar run-migration-scripts --core-schemas --app-schemas
 ```
 
-See [Node command-line options](../../node-commandline.md) for more details.
+See [Node command-line options](../node-commandline.md/) for more details.
 
 ### Database schema migration
 
@@ -393,4 +393,4 @@ java -jar corda.jar run-migration-scripts --core-schemas --app-schemas
 The node will perform any automatic data migrations required, which may take some
 time. If the migration process is interrupted it can be continued simply by starting the node again, without harm. The node will stop automatically when migration is complete.
 
-See [Node command-line options](../../node-commandline.md) for more details.
+See [Node command-line options](../node-commandline.md/) for more details.
