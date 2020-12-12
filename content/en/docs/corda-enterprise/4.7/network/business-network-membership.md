@@ -11,7 +11,7 @@ weight: 500
 
 ---
 
-# Business Network membership management
+# Business Network membership management V1.1
 
 This Corda platform extension allows you to create and manage business networks - as a node operator, this means you can define and create a logical network based on a set of common CorDapps as well as a shared business context.
 
@@ -19,9 +19,15 @@ Corda nodes outside of your business network are not aware of its members. The n
 
 In a business network, there is at least one *authorised member*. This member has sufficient permissions to execute management operations over the network and its members.
 
-{{< warning >}}
-In this version, it is possible for an authorised member - such as the Business Network Operator - to remove permissions from itself, potentially leaving the network in a state where no member can perform management operations.  In such a case, permissions can be granted back by other members who are authorised to do so. If there are none left, there is no way of recovering.
-{{< /warning >}}
+### In version 1.1
+
+In this version, you can:
+
+* Create batch membership requests to speed up onboarding and modification processes.
+* Access control group reporting.
+* Query group membership.
+* Log and report actions to membership attestations.
+* Request membership attribute changes.  
 
 ## Creating and managing a business network
 
@@ -48,7 +54,7 @@ In a Business Network, you can assign different roles to members of the network.
 
 ## Installation
 
-This is an extension for Corda 4.6. If you have this version of Corda, you can access the required `.jar` files here:
+This is an extension for Corda 4.7. If you have this version of Corda, you can access the required `.jar` files here:
 
 * BNE contracts: [https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-contracts/1.0/business-networks-contracts-1.0.jar](https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-contracts/1.0/business-networks-contracts-1.0.jar).
 * BNE workflows: [https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-workflows/1.0/business-networks-workflows-1.0.jar](https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-workflows/1.0/business-networks-workflows-1.0.jar).
@@ -102,16 +108,24 @@ val notary = serviceHub.networkMapCache.notaryIdentities.first()
 subFlow(CreateBusinessNetworkFlow(businessNetworkId, myIdentity, groupId, "Group 1", notary))
 ```
 
-## On-board a new member
+## Onboarding a new member to your network
 
-Joining a business network is a 2 step process. First the prospective member must send a request. Then the request is approved and the member is added.
+You can choose one of two ways to onboard a new member to your network:
+
+* With prior request from the prospective member.
+* Without prior request from the prospective member.
+
+## Onboard a new member with prior request
+
+You can make joining a business network a two-step process, in which prospective members must first send a request to join the network. The request can then be approved by the relevant parties, and the member is added.
+
+You can also onboard and activate memberships in batches using [Composite flows](##onboard-and-activate-members-with-composite-flows)
 
 ### Step 1 - prospective member sends a membership request
 
 1. The Corda node wishing to join must run the ```RequestMembershipFlow``` either from the node shell or any other RPC client.
 2. As a result of a successful run, a membership is created with a *PENDING* status and all authorised members will be notified of any future operations involving it.
 3. The prospective member awaits action to activate their membership by an authorised member of the network.
-
 
 Until activated by an authorised party, such as a Business Network Operator (BNO), the newly generated membership can neither be used nor grant the requesting node any permissions in the business network.
 
@@ -155,12 +169,101 @@ val newMemberPartyObject = ... // get the [Party] object of the member whose mem
 val membershipId = bnService.getMembership(networkId, newMemberPartyObject)
 val groupName = ... // name of the group which the member will be assigned to
 val groupId = ... // identifier of the group which the member will be assigned to
-val notary = serviceHub.networkMapCache.notaryIdentities.first())
+val notary = serviceHub.networkMapCache.notaryIdentities.first()
 
 subFlow(ActivateMembershipFlow(membershipId, notary)
 // add newly activated member to a membership list
 val newParticipantsList = bnService.getBusinessNetworkGroup(groupId).state.data.participants.map {
     bnService.getMembership(networkId, it)!!.state.data.linearId
+} + membershipId
+
+subFlow(ModifyGroupFlow(groupId, groupName, newParticipantsList, notary))
+```
+
+### Onboard and activate members with composite flows
+
+To save time and effort, you can use composite flows to perform batch membership onboarding and activation. You can call multiple primitive Business Network management flows (flows under the `net.corda.bn.flows` package) contained within a single flow from the `net.corda.bn.flows.composite` package.
+
+There are two composite flows:
+
+* `BatchOnboardMembershipFlow` - onboards set of new memberships and adds them to specific groups.
+* `BatchActivateMembershipFlow` - activates set of pending membership requests and adds them to specified groups.
+
+**BatchOnboardMembershipFlow arguments**:
+
+* `networkId` ID of the Business Network where members are onboarded.
+* `onboardedParties` Set of parties to be onboarded and group where to be added after onboarding.
+* `defaultGroupId` ID of the group where members are added if the specific group ID is not provided in their `OnboardingInfo`.
+* `notary`  Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used.
+
+*Example*:
+
+```kotlin
+val networkId = "MyBusinessNetwork"
+val (party1, party2) = ... // get parties to be onboarded to the Business Network
+val groupForParty1 = ... // get ID of the group where party1 will be added after onboarding
+val businessIdentity1 = createBusinessNetworkIdentity() // mock method that creates an instance of a class implementing [BNIdentity]
+val onboardedParties = setOf(
+    OnboardingInfo(party = party1, businessIdentity = businessIdentity1, groupId = groupForParty1),
+    OnboardingInfo(party = party2, businessIdentity = null, groupId = null)
+)
+val defaultGroupId = ... // get ID of the group where activated members will be added by default
+val notary = serviceHub.networkMapCache.notaryIdentities.first()
+
+subFlow(BatchOnboardMembershipFlow(networkId, onboardedParties, defaultGroupId, notary))
+```
+**BatchActivateMembershipFlow arguments**:
+
+* `memberships` Set of memberships' `ActivationInfo`s.
+* `defaultGroupId` ID of the group where members are added if the specific group ID is not provided in their `ActivationInfo`.
+* `notary` Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used.
+
+*Example*:
+
+```kotlin
+val (membershipId1, membershipId2) = ... // fetch pending memberships using [BNService]
+val groupForMember1 = ... // get ID of the group where member1 will be added after activation
+val memberships = setOf(
+    ActivationInfo(membershipId = membershipId1, groupId = groupForMember1),
+    ActivationInfo(membershipId = membershipId2, groupId = null)
+)
+val defaultGroupId = ... // get ID of the group where activated members will be added by default
+val notary = serviceHub.networkMapCache.notaryIdentities.first()
+
+subFlow(BatchActivateMembershipFlow(memberships, defaultGroupId, notary))
+```
+
+## Onboard a new member without prior request
+
+As an authorised member of the network, you can onboard a new member without needing a prior membership request. The joining party is immediately added to the network with `ACTIVE` status. You can then add the member directly to the relevant groups.  
+
+1. Run `OnboardMembershipFlow` to directly issue a new membership with `ACTIVE` status.
+2. Run `ModifyGroupFlow` to assign the new member to the correct groups.
+
+**OnboardMembershipFlow arguments**:
+
+- `networkId` ID of the Business Network that member is onboarded to
+- `onboardedParty` Identity of an onboarded member
+- `businessIdentity` Custom business identity to be given to the onboarded membership
+- `notary` Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used
+
+*Example*:
+
+```kotlin
+val bnService = serviceHub.cordaService(BNService::class.java)
+val networkId = "MyBusinessNetwork"
+val onboardedParty = ... // get the [Party] object of the Corda node acting as an onboarded member
+val businessIdentity: BNIdentity = createBusinessNetworkIdentity() // create an instance of a class implementing [BNIdentity]
+val notary = serviceHub.networkMapCache.notaryIdentities.first()
+val groupId = ... // identifier of the group which the member will be assigned to
+val groupName = "Group 1"
+
+subFlow(OnboardMembershipFlow(networkId, onboardedParty, businessIdentity, notary))
+
+// add newly activated member to a membership list
+val membershipId = bnService.getMembership(networkId, onboardedParty)!!.state.data.linearId
+val newParticipantsList = bnService.getBusinessNetworkGroup(groupId).state.data.participants.map {
+    BNService.getMembership(networkId, it)!!.state.data.linearId
 } + membershipId
 
 subFlow(ModifyGroupFlow(groupId, groupName, newParticipantsList, notary))
@@ -204,7 +307,7 @@ subFlow(ModifyBusinessIdentityFlow(membership.state.data.linearId, updatedIdenti
 
 ### Update a members business network roles
 
-You can update a member's business identity attributes - by modifying their roles. Depending on your proposed changes, the updated member may become an **authorised member**. In this case, your enhancement must be preceded by an execution of the [`ModifyGroupsFlow`](#modify-a-group) to add the member to all membership lists that it will have administrative powers over.
+You can also update a member's business identity attributes by modifying their roles. Depending on your proposed changes, the updated member may become an **authorised member**. In this case, your enhancement must be preceded by an execution of the [`ModifyGroupsFlow`](#modify-a-group) to add the member to all membership lists that it will have administrative powers over.
 
 To update a member's roles and permissions in the business network:
 
@@ -241,6 +344,7 @@ To manage the membership lists or groups, one of the authorised members of the n
 {{< note >}}
 When modifying a group, you must ensure that any member who is removed from the group is still part of at least one Business Network Group, otherwise they will no longer be discoverable.
 {{< /note >}}
+
 ### Create a group
 
 To create a new group:
@@ -376,10 +480,7 @@ val updatedRoles: Set<BNRole> = ... // the new roles you want to associate the m
 val notary = serviceHub.networkMapCache.notaryIdentities.first()
 
 // Request creation
-CordaRPCClient(rpcAddress).start(user.userName, user.password).use {
-    it.proxy.startFlow(::RequestMembershipAttributeChangeFlow, authorisedParty, networkId, updatedIdentity, updatedRoles, notary)
-            .returnValue.getOrThrow()
-}
+subFlow(authorisedParty, networkId, updatedIdentity, updatedRoles, notary)
 ```
 
 **ApproveMembershipAttributeChangeFlow arguments**:
@@ -394,10 +495,7 @@ val requestId = ... // get the linear ID of the change request state associated 
 val notary = serviceHub.networkMapCache.notaryIdentities.first()
 
 // Approves request
-CordaRPCClient(rpcAddress).start(user.userName, user.password).use {
-    it.proxy.startFlow(::ApproveMembershipAttributeChangeFlow, requestId, notary)
-            .returnValue.getOrThrow()
-}
+subFlow(ApproveMembershipAttributeChangeFlow(requestId, notary))
 ```
 
 **DeclineMembershipAttributeChangeFlow arguments**:
@@ -412,10 +510,7 @@ val requestId = ... // get the linear ID of the change request state associated 
 val notary = serviceHub.networkMapCache.notaryIdentities.first()
 
 // Declines request
-CordaRPCClient(rpcAddress).start(user.userName, user.password).use {
-    it.proxy.startFlow(::DeclineMembershipAttributeChangeFlow, requestId, notary)
-            .returnValue.getOrThrow()
-}
+subFlow(DeclineMembershipAttributeChangeFlow(requestId, notary))
 ```
 
 **DeleteMembershipAttributeChangeRequestFlow arguments**:
@@ -430,10 +525,7 @@ val requestId = ... // get the linear ID of the change request state associated 
 val notary = serviceHub.networkMapCache.notaryIdentities.first()
 
 // Marks request as CONSUMED
-CordaRPCClient(rpcAddress).start(user.userName, user.password).use {
-    it.proxy.startFlow(::DeleteMembershipAttributeChangeRequestFlow, requestId, notary)
-            .returnValue.getOrThrow()
-}
+subFlow(DeleteMembershipAttributeChangeRequestFlow(requestId, notary))
 ```
 ## Access control report
 
