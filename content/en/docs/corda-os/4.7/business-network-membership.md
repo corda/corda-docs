@@ -23,7 +23,7 @@ In a business network, there is at least one *authorised member*. This member ha
 
 In this version, you can:
 
-* Create batch membership requests to speed up onboarding and modification processes.
+* Create batch membership requests to speed up onboarding and activation processes.
 * Access control group reporting.
 * Query group membership.
 * Log and report actions to membership attestations.
