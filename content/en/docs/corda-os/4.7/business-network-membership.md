@@ -451,7 +451,7 @@ Using the `RequestMembershipAttributeChangeFlow` flow, a member can create reque
 This flow will create a `ChangeRequestState` with `PENDING` status.
 
 {{< note >}}
-When you request new roles the changes will overwrite your existing roles.
+When you request new roles, the changes will overwrite your existing roles.
 {{< /note >}}
 
 As an authorised member you can:
