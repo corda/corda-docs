@@ -232,7 +232,7 @@ val notary = serviceHub.networkMapCache.notaryIdentities.first()
 subFlow(BatchActivateMembershipFlow(memberships, defaultGroupId, notary))
 ```
 
-## Onboard a new member without prior request
+### Onboard a new member without prior request
 
 As an authorised member of the network, you can onboard a new member without needing a prior membership request. The joining party is immediately added to the network with `ACTIVE` status. You can then add the member directly to the relevant groups.  
 
