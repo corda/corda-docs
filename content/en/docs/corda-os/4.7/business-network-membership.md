@@ -11,7 +11,7 @@ tags:
 title: Managing Business Network membership
 ---
 
-# Business Network membership management V1.1
+# Business Network membership management
 
 This Corda platform extension allows you to create and manage business networks - as a node operator, this means you can define and create a logical network based on a set of common CorDapps as well as a shared business context.
 
@@ -44,22 +44,22 @@ With this extension, you can use a set of flows to:
 The code samples in this documentation show you how to run management operations using the provided primitives from the context of a tool or Cordapp. It is also possible to do these operations from an RPC client or node shell by simply invoking the supplied administrative flows using data resulted from executing vault queries.
 {{< /note >}}
 
-### Members, authorised members and Business Network Operators
+### Members, authorised members, and Business Network Operators
 
 In a Business Network, you can assign different roles to members of the network. In this documentation, and throughout your network in general, you may encounter the following type of members:
 
-* Business Network Operator - has all administrative permissions in Business Network.
-* Authorised member - has at least the required administrative permissions to perform a certain task.
-* Member - may not have administrative permissions but is still a member of the group.
+* **Business Network Operator** - has all administrative permissions in the Business Network.
+* **Authorised member** - has at least the required administrative permissions to perform a certain task.
+* **Member** - may not have administrative permissions but is still a member of the group.
 
 ## Installation
 
 This is an extension for Corda 4.7. If you have this version of Corda, you can access the required `.jar` files here:
 
-* BNE contracts: [https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-contracts/1.0/business-networks-contracts-1.0.jar](https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-contracts/1.0/business-networks-contracts-1.0.jar).
-* BNE workflows: [https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-workflows/1.0/business-networks-workflows-1.0.jar](https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-workflows/1.0/business-networks-workflows-1.0.jar).
-* Sample CorDapp contracts: [https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-demo-contracts/1.0/business-networks-demo-contracts-1.0.jar](https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-demo-contracts/1.0/business-networks-demo-contracts-1.0.jar).
-* Sample CorDapp workflows: [https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-demo-workflows/1.0/business-networks-demo-workflows-1.0.jar](https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-demo-workflows/1.0/business-networks-demo-workflows-1.0.jar).
+* BNE contracts: [https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-contracts/1.1/business-networks-contracts-1.1.jar](https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-contracts/1.1/business-networks-contracts-1.1.jar).
+* BNE workflows: [https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-workflows/1.1/business-networks-workflows-1.1.jar](https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-workflows/1.1/business-networks-workflows-1.1.jar).
+* Sample CorDapp contracts: [https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-demo-contracts/1.1/business-networks-demo-contracts-1.1.jar](https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-demo-contracts/1.1/business-networks-demo-contracts-1.1.jar).
+* Sample CorDapp workflows: [https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-demo-workflows/1.1/business-networks-demo-workflows-1.1.jar](https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-releases/net/corda/bn/business-networks-demo-workflows/1.1/business-networks-demo-workflows-1.1.jar).
 
 To install the extension:
 
@@ -82,7 +82,7 @@ dependencies {
 }
 ```
 
-3. Add both dependencies in your **Cordform** - `deployNodes` - task.
+3. Add both dependencies in your **Cordform** - `deployNodes` - [task](generating-a-node.md#tasks-using-the-cordform-plug-in).
 
 You have installed the Business Network membership extension.
 
@@ -92,11 +92,11 @@ From either the node shell or from an RPC client, run `CreateBusinessNetworkFlow
 
 **Flow arguments:**
 
-- ```networkId``` Custom ID to be given to the new Business Network. If not specified, a randomly selected one will be used.
-- ```businessIdentity``` Optional custom business identity to be given to membership.
-- ```groupId``` Custom ID to be given to the initial Business Network group. If not specified, randomly selected one will be used.
-- ```groupName``` Optional name to be given to the Business Network group.
-- ```notary``` Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used.
+- `networkId`: Custom ID to be given to the new Business Network. If not specified, a randomly selected one will be used.
+- `businessIdentity`: Optional custom business identity to be given to the membership.
+- `groupId`: Custom ID to be given to the initial Business Network group. If not specified, randomly selected one will be used.
+- `groupName`: Optional name to be given to the Business Network group.
+- `notary`: Identity of the notary to be used for transactions notarisation. If not specified, the first one from the whitelist will be used.
 
 *Example*:
 ```kotlin
@@ -115,26 +115,26 @@ You can onboard a new member to your network:
 * With prior request from the prospective member.
 * Without prior request from the prospective member.
 
-You can also onboard and activate memberships in batches using [Composite flows](#onboard-and-activate-members-with-composite-flows)
+You can also onboard and activate memberships in batches using [Composite flows](#onboard-and-activate-members-with-composite-flows).
 
 ### Onboard a new member with prior request
 
 You can make joining a business network a two-step process, in which prospective members must first send a request to join the network. The request can then be approved by the relevant parties, and the member is added.
 
-### Step 1 - prospective member sends a membership request
+#### Step 1 - prospective member sends a membership request
 
-1. The Corda node wishing to join must run the ```RequestMembershipFlow``` either from the node shell or any other RPC client.
-2. As a result of a successful run, a membership is created with a *PENDING* status and all authorised members will be notified of any future operations involving it.
+1. The Corda node wishing to join must run the `RequestMembershipFlow` either from the node shell or any other RPC client.
+2. As a result of a successful run, a membership is created with a `PENDING` status and all authorised members will be notified of any future operations involving it.
 3. The prospective member awaits action to activate their membership by an authorised member of the network.
 
 Until activated by an authorised party, such as a Business Network Operator (BNO), the newly generated membership can neither be used nor grant the requesting node any permissions in the business network.
 
 **RequestMembershipFlow arguments**:
 
-- ```authorisedParty``` Identity of authorised member from whom membership activation is requested
-- ```networkId``` ID of the Business Network that potential new member wants to join
-- ```businessIdentity``` Optional custom business identity to be given to membership
-- ```notary``` Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used
+- `authorisedParty`: Identity of authorised member from whom membership activation is requested.
+- `networkId`: ID of the Business Network that potential new member wants to join.
+- `businessIdentity`: Optional custom business identity to be given to the membership.
+- `notary`: Identity of the notary to be used for transactions notarisation. If not specified, the first one from the whitelist will be used.
 
 *Example*:
 
@@ -147,18 +147,18 @@ val notary = serviceHub.networkMapCache.notaryIdentities.first())
 subFlow(RequestMembershipFlow(bno, networkId, myIdentity, notary))
 ```
 
-### Step 2 - an authorised network member activates the new membership
+#### Step 2 - an authorised network member activates the new membership
 
 To finalise the on-boarding process:
 
-1. As an authorised member, such as BNO, run the ```ActivateMembershipFlow``` to update the targeted membership status from *PENDING* to *ACTIVE*.
+1. As an authorised member, such as BNO, run the `ActivateMembershipFlow` to update the targeted membership status from `PENDING` to `ACTIVE`.
 2. Signatures are collected from **all** authorised parties in the network.
-3. Follow-up with a group assignment by running the ```ModifyGroupFlow```.
+3. Follow up with a group assignment by running the `ModifyGroupFlow`.
 
 **ActivateMembershipFlow arguments**:
 
-- ```membershipId``` ID of the membership to be activated
-- ```notary``` Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used
+- `membershipId`: ID of the membership to be activated.
+- `notary`: Identity of the notary to be used for transactions notarisation. If not specified, the first one from the whitelist will be used.
 
 *Example*:
 
@@ -179,62 +179,10 @@ val newParticipantsList = bnService.getBusinessNetworkGroup(groupId).state.data.
 
 subFlow(ModifyGroupFlow(groupId, groupName, newParticipantsList, notary))
 ```
-### Onboard and activate members with composite flows
-
-To save time and effort, you can use composite flows to perform batch membership onboarding and activation. You can call multiple primitive Business Network management flows (flows under the `net.corda.bn.flows` package) contained within a single flow from the `net.corda.bn.flows.composite` package.
-
-There are two composite flows:
-
-* `BatchOnboardMembershipFlow` - onboards set of new memberships and adds them to specific groups.
-* `BatchActivateMembershipFlow` - activates set of pending membership requests and adds them to specified groups.
-
-**BatchOnboardMembershipFlow arguments**:
-
-* `networkId` ID of the Business Network where members are onboarded.
-* `onboardedParties` Set of parties to be onboarded and group where to be added after onboarding.
-* `defaultGroupId` ID of the group where members are added if the specific group ID is not provided in their `OnboardingInfo`.
-* `notary`  Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used.
-
-*Example*:
-
-```kotlin
-val networkId = "MyBusinessNetwork"
-val (party1, party2) = ... // get parties to be onboarded to the Business Network
-val groupForParty1 = ... // get ID of the group where party1 will be added after onboarding
-val businessIdentity1 = createBusinessNetworkIdentity() // mock method that creates an instance of a class implementing [BNIdentity]
-val onboardedParties = setOf(
-    OnboardingInfo(party = party1, businessIdentity = businessIdentity1, groupId = groupForParty1),
-    OnboardingInfo(party = party2, businessIdentity = null, groupId = null)
-)
-val defaultGroupId = ... // get ID of the group where activated members will be added by default
-val notary = serviceHub.networkMapCache.notaryIdentities.first()
-
-subFlow(BatchOnboardMembershipFlow(networkId, onboardedParties, defaultGroupId, notary))
-```
-**BatchActivateMembershipFlow arguments**:
-
-* `memberships` Set of memberships' `ActivationInfo`s.
-* `defaultGroupId` ID of the group where members are added if the specific group ID is not provided in their `ActivationInfo`.
-* `notary` Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used.
-
-*Example*:
-
-```kotlin
-val (membershipId1, membershipId2) = ... // fetch pending memberships using [BNService]
-val groupForMember1 = ... // get ID of the group where member1 will be added after activation
-val memberships = setOf(
-    ActivationInfo(membershipId = membershipId1, groupId = groupForMember1),
-    ActivationInfo(membershipId = membershipId2, groupId = null)
-)
-val defaultGroupId = ... // get ID of the group where activated members will be added by default
-val notary = serviceHub.networkMapCache.notaryIdentities.first()
-
-subFlow(BatchActivateMembershipFlow(memberships, defaultGroupId, notary))
-```
 
 ### Onboard a new member without prior request
 
-As an authorised member of the network, you can onboard a new member without needing a prior membership request. The joining party is immediately added to the network with `ACTIVE` status. You can then add the member directly to the relevant groups.  
+As an authorised member of the network, you can onboard a new member without needing a prior membership request. The joining party is immediately added to the network with an `ACTIVE` status. You can then add the member directly to the relevant groups.  
 
 1. Run `OnboardMembershipFlow` to directly issue a new membership with `ACTIVE` status.
 2. Run `ModifyGroupFlow` to assign the new member to the correct groups.
@@ -267,6 +215,61 @@ val newParticipantsList = bnService.getBusinessNetworkGroup(groupId).state.data.
 
 subFlow(ModifyGroupFlow(groupId, groupName, newParticipantsList, notary))
 ```
+
+### Onboard and activate members with composite flows
+
+To save time and effort, you can use composite flows to perform batch membership onboarding and activation. You can call multiple primitive Business Network management flows (flows under the `net.corda.bn.flows` package) contained within a single flow from the `net.corda.bn.flows.composite` package.
+
+There are two composite flows:
+
+* `BatchOnboardMembershipFlow`: Onboards a set of new memberships and adds them to the specified groups.
+* `BatchActivateMembershipFlow`: Activates a set of pending membership requests and adds them to the specified groups.
+
+**BatchOnboardMembershipFlow arguments**:
+
+* `networkId`: ID of the Business Network where members are onboarded.
+* `onboardedParties`: Set of parties to be onboarded and group where to be added after onboarding.
+* `defaultGroupId`: ID of the group where members are added if the specific group ID is not provided in their `OnboardingInfo`.
+* `notary`: Identity of the notary to be used for transactions notarisation. If not specified, the first one from the whitelist will be used.
+
+*Example*:
+
+```kotlin
+val networkId = "MyBusinessNetwork"
+val (party1, party2) = ... // get parties to be onboarded to the Business Network
+val groupForParty1 = ... // get ID of the group where party1 will be added after onboarding
+val businessIdentity1 = createBusinessNetworkIdentity() // mock method that creates an instance of a class implementing [BNIdentity]
+val onboardedParties = setOf(
+    OnboardingInfo(party = party1, businessIdentity = businessIdentity1, groupId = groupForParty1),
+    OnboardingInfo(party = party2, businessIdentity = null, groupId = null)
+)
+val defaultGroupId = ... // get ID of the group where activated members will be added by default
+val notary = serviceHub.networkMapCache.notaryIdentities.first()
+
+subFlow(BatchOnboardMembershipFlow(networkId, onboardedParties, defaultGroupId, notary))
+```
+
+**BatchActivateMembershipFlow arguments**:
+
+* `memberships`: Set of memberships' `ActivationInfo`s.
+* `defaultGroupId`: ID of the group where members are added if the specific group ID is not provided in their `ActivationInfo`.
+* `notary`: Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used.
+
+*Example*:
+
+```kotlin
+val (membershipId1, membershipId2) = ... // fetch pending memberships using [BNService]
+val groupForMember1 = ... // get ID of the group where member1 will be added after activation
+val memberships = setOf(
+    ActivationInfo(membershipId = membershipId1, groupId = groupForMember1),
+    ActivationInfo(membershipId = membershipId2, groupId = null)
+)
+val defaultGroupId = ... // get ID of the group where activated members will be added by default
+val notary = serviceHub.networkMapCache.notaryIdentities.first()
+
+subFlow(BatchActivateMembershipFlow(memberships, defaultGroupId, notary))
+```
+
 ## Amend a membership
 
 There are attributes of a member's information that can be updated, not including network operations such as membership suspension or revocation. To perform these amendments, you must be an authorised network party.
@@ -281,14 +284,14 @@ The attributes which can be amended are:
 
 To update a member's business identity attribute:
 
-1. Run the ```ModifyBusinessIdentityFlow```.
+1. Run the `ModifyBusinessIdentityFlow`.
 2. All network members with sufficient permissions approve the proposed change.
 
 **ModifyBusinessIdentityFlow arguments**:
 
-- ```membershipId``` ID of the membership to modify business identity
-- ```businessIdentity``` Optional custom business identity to be given to membership
-- ```notary``` Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used
+- `membershipId`: ID of the membership to modify business identity.
+- `businessIdentity`: Optional custom business identity to be given to the membership.
+- `notary`: Identity of the notary to be used for transactions notarisation. If not specified, the first one from the whitelist will be used.
 
 *Example*:
 
@@ -314,14 +317,15 @@ To update a member's roles and permissions in the business network:
 
 **ModifyRolesFlow arguments**:
 
-- `membershipId` ID of the membership to assign roles
-- `roles` Set of roles to be assigned to membership
-- `notary` Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used
+- `membershipId`: ID of the membership to assign roles.
+- `roles`: Set of roles to be assigned to the membership.
+- `notary`: Identity of the notary to be used for transactions notarisation. If not specified, the first one from the whitelist will be used.
 
 There are two additional flows that can be used to quickly assign roles to a membership: `AssignBNORoleFlow` and `AssignMemberRoleFlow`. They both share the same arguments:
 
-- `membershipId` ID of the membership to assign the role.
-- `notary` Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used.
+- `membershipId`: ID of the membership to assign the role.
+- `notary`: Identity of the notary to be used for transactions notarisation. If not specified, the first one from the whitelist will be used.
+
 *Example*:
 
 ```kotlin
@@ -337,7 +341,7 @@ subFlow(ModifyRolesFlow(membershipId, roles, notary))
 
 ## Manage groups
 
-To manage the membership lists or groups, one of the authorised members of the network can use `CreateGroupFlow`, `DeleteGroupFlow` and `ModifyGroupFlow`.
+To manage the membership lists or groups, one of the authorised members of the network can use `CreateGroupFlow`, `DeleteGroupFlow`, and `ModifyGroupFlow`.
 
 {{< note >}}
 When modifying a group, you must ensure that any member who is removed from the group is still part of at least one Business Network Group, otherwise they will no longer be discoverable.
@@ -352,11 +356,11 @@ To create a new group:
 
 **CreateGroupFlow arguments**:
 
-- `networkId` ID of the Business Network that the target Business Network Group will relate to.
-- `groupId` Custom ID to be given to the issued Business Network Group. If not specified, a randomly generated ID will be used.
-- `groupName` Optional name to be given to the issued Business Network Group.
-- `additionalParticipants` Set of participants to be added to issued Business Network Group alongside initiator's identity.
-- `notary` Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used.
+- `networkId`: ID of the Business Network that the target Business Network Group will relate to.
+- `groupId`: Custom ID to be given to the issued Business Network Group. If not specified, a randomly generated ID will be used.
+- `groupName`: Optional name to be given to the issued Business Network Group.
+- `additionalParticipants`: Set of participants to be added to issued Business Network Group alongside initiator's identity.
+- `notary`: Identity of the notary to be used for transactions notarisation. If not specified, the first one from the whitelist will be used.
 
 **Example**:
 
@@ -378,13 +382,13 @@ To delete a group:
 
 **DeleteGroupFlow arguments**:
 
-- `groupId` ID of group to be deleted
-- `notary` Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used
+- `groupId`: ID of group to be deleted.
+- `notary`: Identity of the notary to be used for transactions notarisation. If not specified, the first one from the whitelist will be used.
 
 ### Modify a group
 
 The `ModifyGroupFlow` can update the name of a group and/or its list of members. At least one of the *name* or *participants* arguments
-must be provided.
+must be provided (see below).
 
 To modify a group:
 
@@ -393,10 +397,10 @@ To modify a group:
 
 **ModifyGroupFlow arguments**:
 
-- `groupId` ID of group to be modified
-- `name` New name of modified group
-- `participants` New participants of modified group
-- `notary` Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used
+- `groupId`: ID of group to be modified.
+- `name`: New name of the modified group.
+- `participants`: New participants of the modified group.
+- `notary`: Identity of the notary to be used for transactions notarisation. If not specified, the first one from the whitelist will be used.
 
 **Example**:
 
@@ -429,8 +433,8 @@ To remove membership completely:
 
 Both `SuspendMembershipFlow` and `RevokeMembershipFlow` use the same arguments:
 
-- `membershipId` ID of the membership to be suspended/revoked
-- `notary` Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used
+- `membershipId`: ID of the membership to be suspended/revoked.
+- `notary`: Identity of the notary to be used for transactions notarisation. If not specified, the first one from the whitelist will be used.
 
 **Example**:
 
@@ -456,17 +460,17 @@ When you request new roles, the changes will overwrite your existing roles.
 
 As an authorised member you can:
 
-* Decline the requested changes using ```DeclineMembershipAttributeChangeFlow```. If you decline the request the existing```ChangeRequestState``` will have ```DECLINED``` status.
-* Accept using ```ApproveMembershipAttributeChangeFlow```. If you accept the request the existing```ChangeRequestState``` will have ```ACCEPTED``` status.
-* Mark the request as consumed using ```DeleteMembershipAttributeChangeRequestFlow```. This avoids stockpiling requests in the database.
+* Decline the requested changes using `DeclineMembershipAttributeChangeFlow`. If you decline the request the existing `ChangeRequestState` will have `DECLINED` status.
+* Accept using `ApproveMembershipAttributeChangeFlow`. If you accept the request the existing `ChangeRequestState` will have `ACCEPTED` status.
+* Mark the request as consumed using `DeleteMembershipAttributeChangeRequestFlow`. This avoids stockpiling requests in the database.
 
 **RequestMembershipAttributeChangeFlow arguments**:
 
-- ```authorisedParty``` Identity of authorised member from whom the change request approval/rejection is requested.
-- ```networkId``` ID of the Business Network that members are part of.
-- ```businessIdentity``` The proposed business identity change.
-- ```roles``` The proposed role change.
-- ```notary``` Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used.
+- `authorisedParty`: Identity of authorised member from whom the change request approval/rejection is requested.
+- `networkId`: ID of the Business Network that members are part of.
+- `businessIdentity`: The proposed business identity change.
+- `roles`: The proposed role change.
+- `notary`: Identity of the notary to be used for transactions notarisation. If not specified, the first one from the whitelist will be used.
 
 *Example*:
 
@@ -483,8 +487,8 @@ subFlow(authorisedParty, networkId, updatedIdentity, updatedRoles, notary)
 
 **ApproveMembershipAttributeChangeFlow arguments**:
 
-- ```requestId``` The ID of the request which needs to be accepted.
-- ```notary``` Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used.
+- `requestId`: The ID of the request which needs to be accepted.
+- `notary`: Identity of the notary to be used for transactions notarisation. If not specified, the first one from the whitelist will be used.
 
 *Example*:
 
@@ -498,8 +502,8 @@ subFlow(ApproveMembershipAttributeChangeFlow(requestId, notary))
 
 **DeclineMembershipAttributeChangeFlow arguments**:
 
-- ```requestId``` The ID of the request which needs to be rejected.
-- ```notary``` Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used.
+- `requestId`: The ID of the request which needs to be rejected.
+- `notary`: Identity of the notary to be used for transactions notarisation. If not specified, the first one from the whitelist will be used.
 
 *Example*:
 
@@ -513,8 +517,8 @@ subFlow(DeclineMembershipAttributeChangeFlow(requestId, notary))
 
 **DeleteMembershipAttributeChangeRequestFlow arguments**:
 
-- ```requestId``` The ID of the request which needs to be consumed.
-- ```notary``` Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used.
+- `requestId`: The ID of the request which needs to be consumed.
+- `notary`: Identity of the notary to be used for transactions notarisation. If not specified, the first one from the whitelist will be used.
 
 *Example*:
 
@@ -528,27 +532,27 @@ subFlow(DeleteMembershipAttributeChangeRequestFlow(requestId, notary))
 
 ## Access control report
 
-As the Business Network Operator (BNO), you can ask for the access control report by calling ```BNOAccessControlReportFlow```. You will receive the following information in the form of an ```AccessControlReport```.
+As the Business Network Operator (BNO), you can ask for the access control report by calling `BNOAccessControlReportFlow`. You will receive the following information in the form of an `AccessControlReport`.
 
 The attributes of the report file are:
 
-* ```members``` - A detailed list of the members within the network. It contains the following information:
-    * ```cordaIdentity``` - The Corda identity of the member.
-    * ```businessIdentity``` The business identity of the member.
-    * ```membershipStatus``` The current status of the member's membership.
-    * ```groups``` List of all the groups member is part of.
-    * ```roles``` List roles the member has.
-* ```groups``` A detailed list of the groups within the network. It contains the following information:
-    * ```name``` The name of the group.
-    * ```participants``` List of participants in the group.
+* `members`: A detailed list of the members within the network. It contains the following information:
+    * `cordaIdentity`: The Corda identity of the member.
+    * `businessIdentity`: The business identity of the member.
+    * `membershipStatus`: The current status of the member's membership.
+    * `groups`: A list of all the groups the member is part of.
+    * `roles`: A list of the roles the member has.
+* `groups`: A detailed list of the groups within the network. It contains the following information:
+    * `name`: The name of the group.
+    * `participants`: A list of the participants in the group.
 
  **BNOAccessControlReportFlow arguments**:
 
-* ```networkId``` ID of the Business Network, where the participants are present.
-* ```path``` The chosen path for the file to be placed.
-* ```fileName``` The chosen file name of the report file.
+* `networkId`: ID of the Business Network, where the participants are present.
+* `path`: The chosen path for the report file to be placed.
+* `fileName`: The chosen file name of the report file.
 
-The ```path``` and ```fileName``` are optional arguments which means that they will have a default value if you don't define them. In this case the files will be written to the ```user.dir``` under the name of ```bno-access-control-report```.
+`path` and `fileName` are optional arguments - if unspecified, they take the default values `user.dir` and `bno-access-control-report`, respectively.
 
 *Example*:
 
