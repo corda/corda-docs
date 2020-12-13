@@ -208,9 +208,9 @@ You need to restart the node:
 * After 'delete-vault' has been run using the '--record' option.
 * After 'restore-snapshot' has been run using the '--record' option.
 
-## Archive Service Command Line Tool
+## Archive Service command-line tool
 
-The command line tool is a 'fat-jar' that can be executed directly using the `java -jar` option
+The command-line tool is a 'fat-jar' that can be executed directly using the `java -jar` option.
 
 ```text
 $ java -jar corda-tools-archive-service-1.0.jar --help
@@ -274,7 +274,7 @@ command line or from the CorDapp configuration file.
 Custom filters can be implemented by using the Archive Service Library.
 For more details see the Archive Service Library documentation.
 
-### Filter Configuration
+### Filter configuration
 
 The following is a sample HOCON configuration file that can be used to configure the standard TransactionId filter.
 
@@ -337,7 +337,7 @@ command line or from the CorDapp configuration file.
 Custom exporters can be implemented for individual archive solutions.
 For more details see the Archive Service Library documentation.
 
-## Queryable State Tables
+## Queryable state tables
 
 Queryable state tables can be exported to CSV format by listing the tables by listing the tables in
 the configuration file under the property `queryableTables`.
@@ -353,7 +353,7 @@ The property can be added to the Archive Service CorDapp configuration file, or 
 
 A suitable exporter, such as `QueryableStateFileExporter`, must also be listed on the command line to `export-snapshot`.
 
-## Additional Tables
+## Additional tables
 
 Archive Service will automatically detect transaction and attachment tables which use the columns
 `TRANSACTION_ID` or `ATT_ID` within the vault schema and include them in the archive process.
