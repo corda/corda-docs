@@ -15,7 +15,7 @@ title: LedgerGraph
 weight: 500
 ---
 
-# LedgerGraph
+# LedgerGraph V1.2
 
 **LedgerGraph** is a CorDapp you can use to get in-memory access to transaction data. Transaction information is kept in a graph structure on any node where **LedgerGraph** is installed. As not all transactions are related to all other transactions, there can actually be multiple components in the graph: each a **directed acyclic graph** (DAG).
 
