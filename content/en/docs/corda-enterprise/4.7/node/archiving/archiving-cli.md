@@ -108,7 +108,7 @@ If the configuration file uses obfuscated passwords and the service is executed 
 then the obfuscation passphase and seed will need to be given on the command line.
 {{< /note >}}
 
-Use the command line options `--rpc-url`, `--rpc-user` and `--rpc-password` to specify the RPC connection string, user name and password if the RPC credentials are encrypted or recorded in a database.
+Use the command line options `--rpc-url`, `--rpc-user`, and `--rpc-password` to specify the RPC connection string, user name and password if the RPC credentials are encrypted or recorded in a database.
 
 ## Workflow
 
@@ -120,14 +120,14 @@ If the process has to be aborted, you can use the `restore-snapshot` command.
 
 The workflow is as follows:
 
-1. `list-items` - used to view which transactions and attachments will be archived
-2. `create-snapshot` - marks the transactions and attachments that will be archived
-3. `export-snapshot` - exports the archivable items to a long-term archive
-4. `delete-vault` - deletes the archived items from the vault
+1. `list-items`: used to view which transactions and attachments will be archived.
+2. `create-snapshot`: marks the transactions and attachments that will be archived.
+3. `export-snapshot`: exports the archivable items to a long-term archive.
+4. `delete-vault`: deletes the archived items from the vault.
 
 If using a backup schema:
 
-5. `delete-snapshot` - cleans up the backup schema if a backup schema has been configured
+5. `delete-snapshot`: cleans up the backup schema if a backup schema has been configured.
 
 To revert any steps up to `delete-vault` or `delete-snapshot`, use:
 
@@ -226,7 +226,7 @@ Options:
 ```
 Copy the archived items from the vault to permanent storage using the listed exporters.
 
-Displays the results of the export
+Displays the results of the export.
 
 ```text
 SomeExporter:
@@ -261,7 +261,7 @@ Options:
 Delete all archived transactions and attachments from the Corda vault.
 
 If the `--record` option is given then the SQL is written to the file and no
-database updates are executed..
+database updates are executed.
 
 If the Corda database user has not been granted rights to delete items from the vault schema then the
 `--record` option must be used.
@@ -420,17 +420,17 @@ The Archive Service can be configured through the CorDapp's configuration file i
 
 The following are keys for configuring the Archive Service.
 
-* `generator` - SQL generator, defaults to vault's database type
-* `driver` - JDBC driver, defaults to vault's database driver
-* `source.schema` - Vault schema name, defaults to vault database schema
-* `target.schema` - Backup schema name, optional, indicates that a backup schema should be created
-* `target.url` - Backup schema archive URL, required if a backup schema is used
-* `target.user` - Backup schema archive database user, required if a backup schema is used
-* `target.password` - Backup schema archive database password, required if a backup schema is used
+* `generator`: SQL generator, defaults to vault's database type.
+* `driver`: JDBC driver, defaults to vault's database driver.
+* `source.schema`: Vault schema name, defaults to vault database schema.
+* `target.schema`: Backup schema name, optional, indicates that a backup schema should be created.
+* `target.url`: Backup schema archive URL, required if a backup schema is used.
+* `target.user`: Backup schema archive database user, required if a backup schema is used.
+* `target.password`: Backup schema archive database password, required if a backup schema is used.
 
-Passwords can be obfuscated using Corda's Config Obfuscator tool.
+Passwords can be obfuscated using [Corda Configuration Obfuscator tool](../../tools-config-obfuscator.md).
 
-The following is a sample configuration file
+A sample configuration file follows below:
 
 ```text
 target: {
@@ -472,7 +472,7 @@ additionalAttachmentTables: [
 ]
 ```
 
-Data from these tables will be recorded as part of the snapshot process and later deleted from the vault, but will not be exported to permanent archive.
+Data from these tables will be recorded as part of the snapshot process and later deleted from the vault, but will not be exported to the permanent archive.
 
 Tables should should be excluded from the archive process can be registered using the properties `excludeTransactionTables` and `excludeAttachmentTables`.
 
@@ -490,4 +490,4 @@ grant select on all tables in schema corda TO archive;
 An error message will be displayed when the `create-snapshot` command is executed if select rights have not been
 granted.
 
-If the Corda vault user does not have delete rights to the Corda vault then the `delete-vault` operation will fail. In this case the `--record` flag should be used and the resulting script executed by a DBA after the node has been shutdown.
+If the Corda vault user does not have delete rights to the Corda vault then the `delete-vault` operation will fail. In this case the `--record` flag should be used and the resulting script executed by a DBA after the node has been shut down.
