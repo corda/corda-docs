@@ -16,7 +16,7 @@ title: App Entity Manager
 weight: 500
 ---
 
-The AppEntityManager library can be used by CorDapps to access off-ledger databases using JPA APIs.
+The `AppEntityManager` library can be used by CorDapps to access off-ledger databases using JPA APIs.
 
 You can initialise the service using a JPA persistence XML or through configuration properties. The properties can be set explicitly in a call to `ServiceHub.initAppEntityManager` or implicitly by using a CorDapp conf file in the `cordapps/config` directory.
 
