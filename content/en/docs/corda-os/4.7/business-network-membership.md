@@ -110,7 +110,7 @@ subFlow(CreateBusinessNetworkFlow(businessNetworkId, myIdentity, groupId, "Group
 
 ## Onboarding a new member to your network
 
-You can choose one of two ways to onboard a new member to your network:
+You can onboard a new member to your network:
 
 * With prior request from the prospective member.
 * Without prior request from the prospective member.
