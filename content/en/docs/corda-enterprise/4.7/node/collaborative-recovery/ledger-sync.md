@@ -32,13 +32,13 @@ This means the node that requested the reconciliation will be notified if the re
 
 ### Integration with Archiving
 
-The LedgerSync behaviour introduced in version 1.2 integrates with Archiving  while remaining compatible with flows from previous versions of LedgerSync.
+The LedgerSync behaviour introduced in version 1.2 integrates with Archiving while remaining compatible with flows from previous versions of LedgerSync.
 
 Archived transactions on either node will not show up as false positives while performing the reconciliation, therefore the same performance can be expected from LedgerSync when Archiving is also installed and a portion of the ledger is migrated to archive storage instead and no longer stored on the ledger.
 
 Transactions that have been archived on the responder and are missing on the initiator party will be flagged up as an additional field in `ReconciliationStatus`, called `lastSuccessfulReconciliationArchivedResult`. These are not eligible to be requested to be recovered directly from the responding party's archive and will not be automatically processed during a Recovery request.
 
-If there are any transactions missing, the reconciliation result  will be showing `DIFFERENCES_FOUND`, even when only those transactions have been found missing that have been archived by the responding party.
+If there are any transactions missing, the reconciliation result will be showing `DIFFERENCES_FOUND`, even when only those transactions have been found missing that have been archived by the responding party.
 
 There is some performance decrease to be expected when using both Archiving and LedgerSync with a counterparty who has a previous version (1.1 or earlier) of the CorDapp.
 
