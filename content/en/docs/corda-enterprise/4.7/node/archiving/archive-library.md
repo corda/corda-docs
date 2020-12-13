@@ -135,7 +135,7 @@ class MarkItems(
 }
 ```
 
-### Create Snapshot
+### Create snapshot
 
 Copies marked items from the Corda vault to the archive schema.
 
@@ -165,7 +165,7 @@ class CreateSnapshot(
 }
 ```
 
-### Export Snapshot
+### Export snapshot
 
 Exports the marked items in the vault to an external archive.
 
@@ -195,7 +195,7 @@ class ExportSnapshot(
 }
 ```
 
-### Import Snapshot
+### Import snapshot
 
 Imports a snapshot from an external archive.
 
@@ -226,7 +226,7 @@ class ImportSnapshot(
     fun execute(): ImportSnapshotResults
 }
 ```
-### Delete Marked
+### Delete marked
 
 Deletes the marked items from the Corda vault.
 

@@ -315,7 +315,7 @@ Each filter has its own configuration requirements, which it takes either from t
 the command line or from the CorDapp configuration file.
 
 Custom filters can be implemented by using the Archive Service Library. For more details see
-the Archive Service Library documentation.
+the [Archive Service Library documentation](archive-library.md).
 
 ### Filter configuration
 
@@ -404,7 +404,7 @@ By default, no exporters are applied.
 
 Each exporter has its own configuration requirements, which it takes either from the HOCON file given on the command line or from the CorDapp configuration file.
 
-Custom exporters can be implemented for individual archive solutions. For more details see the Archive Service Library documentation.
+Custom exporters can be implemented for individual archive solutions. For more details see the [Archive Service Library documentation](archive-library.md).
 
 ## Archive schema
 
