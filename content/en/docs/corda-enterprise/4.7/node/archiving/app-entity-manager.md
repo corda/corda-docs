@@ -43,6 +43,7 @@ class Student {
 ...
 }
 ```
+
 ## Methods for initialising an entity manager factory
 
 A CorDapp can initialise an entity manager factory using the following methods:
