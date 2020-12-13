@@ -117,7 +117,7 @@ You can choose one of two ways to onboard a new member to your network:
 
 You can also onboard and activate memberships in batches using [Composite flows](#onboard-and-activate-members-with-composite-flows)
 
-## Onboard a new member with prior request
+### Onboard a new member with prior request
 
 You can make joining a business network a two-step process, in which prospective members must first send a request to join the network. The request can then be approved by the relevant parties, and the member is added.
 
