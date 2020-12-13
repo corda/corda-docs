@@ -4,7 +4,7 @@ menu:
   cenm-1-5:
     identifier: cenm-1-5-azure-ad-sso
     parent: cenm-1-5-operations
-    weight: 50
+    weight: 157
 tags:
 - contexts
 - auth
