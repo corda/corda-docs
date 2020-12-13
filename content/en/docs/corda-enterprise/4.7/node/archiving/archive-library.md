@@ -385,7 +385,7 @@ filter.scanPackages: "com.org.cordapp.filters"
 
 ## Exporter Interface
 Custom exporters can be implemented by extending the `AbstractExporter` class and
-implementing one or more of the `AttachmentExporter`, `TransactionExporter` and
+implementing one or more of the `AttachmentExporter`, `TransactionExporter`, and
 `QueryableTableExporter` interfaces depending on whether the exporter should export
 transaction, attachment and/or state table data.
 
