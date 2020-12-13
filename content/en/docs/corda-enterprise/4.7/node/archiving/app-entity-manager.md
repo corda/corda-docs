@@ -24,7 +24,7 @@ The service can be used by multiple CorDapps concurrently, with the library main
 
 If no JPA configuration is supplied then the Database Service will revert to the standard `ServiceHub.withEntityManager` API calls.
 
-## Entity Example
+## Entity example
 
 Let `Student` be an entity class:
 
@@ -52,7 +52,7 @@ A CorDapp can initialise an entity manager factory using the following methods:
 * Provide JPA properties in a map.
 * Record JPA properties in the CorDapp's configuration file.
 
-## Using a Persistence XML File
+## Using a persistence XML file
 
 The library will search for a persistence XML file in the `META-INF` directory named after the CorDapp's short name in lower case appended with `-persistence.xml`. For example, if the CorDapp was called 'Archive Tool' then the default persistence XML file will be 'archive-tool-persistence.xml'.
 
@@ -110,7 +110,7 @@ override fun call(): Boolean {
 
 ```
 
-## Using CorDapp Configuration
+## Using CorDapp configuration
 
 A CorDapp can initialise an entity manager factory by using the following properties in the CorDapp conf file in the `cordapps/config` directory:
 
@@ -159,7 +159,7 @@ override fun call(): Boolean {
 }
 ```
 
-## Using Programmatic Configuration
+## Using programmatic configuration
 
 The AppEntityManager can also be initialised within a flow by giving a JPA configuration and entity classes to the library `initAppEntityManager` method.
 
@@ -199,12 +199,12 @@ override fun call(): Boolean {
 }
 ```
 
-## Missing Configuration
+## Missing configuration
 
 If neither a persistence XML file nor a JDBC URL is set in the configuration
 properties then the standard `ServiceHub` entity manager will be used.
 
-## Service Hub Extension Functions
+## ServiceHub extension functions
 
 The following extension functions have been added to ServiceHub.
 
@@ -216,7 +216,7 @@ fun <T : Any?> ServiceHub.withAppEntityManager(block: EntityManager.() -> T): T
 fun ServiceHub.withAppEntityManager(block: Consumer<EntityManager>)
 ```
 
-## Built-in Persistence XML File
+## Built-in persistence XML file
 
 The built-in persistence XML file is given below. This file is used if none is provided.
 
@@ -240,11 +240,11 @@ The built-in persistence XML file is given below. This file is used if none is p
 </persistence>
 ```
 
-## CorDapp Configuration File
+## CorDapp configuration file
 JPA configuration properties can be recorded in the CorDapp's
 configuration file in the `cordapps/config` directory. The configuration file
 must have the same name as the CorDapp's jar file but with the suffix `conf`.
 
-## Development H2 Default Database
+## Development H2 default database
 Since the default node H2 database cannot be shared it is not possible to use this
 service to create an alternative schema on the default vault H2 database.
