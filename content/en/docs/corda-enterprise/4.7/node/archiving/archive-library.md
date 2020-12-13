@@ -305,7 +305,7 @@ class RestoreSnapshot(
 
 ## Filter Interface
 
-Custom filters can be implemented by extending the `AbstractDAGFilter`, the `AbstractTransactionFilter` or `AbstractContractStateFilter` classes.
+Custom filters can be implemented by extending the `AbstractDAGFilter`, `AbstractTransactionFilter`, or `AbstractContractStateFilter` classes.
 
 ```kotlin
 /**
