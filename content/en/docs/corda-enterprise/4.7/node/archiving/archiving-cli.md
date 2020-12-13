@@ -14,7 +14,7 @@ title: Archive Service CLI
 weight: 300
 ---
 
-# Archive Service Command Line Interface (CLI)
+# Archive Service Command-Line Interface (CLI)
 
 The Archive Service can be used to archive transactions and attachments from the Corda vault which can no longer be part of an ongoing or new transaction flow. These archivable transactions and attachments are only associated with transactions which have no unconsumed transaction outputs (UTXOs).
 
@@ -136,7 +136,7 @@ To revert any steps up to `delete-vault` or `delete-snapshot`, use:
 Commands which access or update the transaction and attachment tables on the Corda vault have an optional
 `--record` parameter to record the SQL to a file rather than execute it immediately.
 
-## List Jobs Command
+## List Jobs command
 
 ```text
 Usage:
@@ -156,7 +156,7 @@ Snapshot purge time:   <date and time>
 There can only be one active archive job in progress. If there are multiple jobs then
 use the `restore-snapshot` command to rollback or abort the incomplete jobs.
 
-## List Items Command
+## List Items command
 
 ```text
 Usage:
@@ -181,7 +181,7 @@ be marked for archiving if the `--write` option is given.
 
 This command does not update any archive log tables.
 
-## Create Snapshot Command
+## Create Snapshot command
 
 ```text
 Usage:
@@ -212,7 +212,7 @@ Attachment Tables
   <table name>: <row count>
 ```
 
-## Export Command
+## Export command
 
 ```text
 Usage:
@@ -233,7 +233,7 @@ SomeExporter:
   Completed export of 5 states to CONTRACT_NODE_STATES-snapshot-name.csv
 ```
 
-## Import Command
+## Import command
 
 ```text
 Usage:
@@ -248,7 +248,7 @@ Copy the archived items from a snapshot archive back to the vault.
 
 Displays the results of the import.
 
-## Delete Vault Command
+## Delete Vault command
 
 ```text
 Usage:
@@ -266,7 +266,7 @@ database updates are executed.
 If the Corda database user has not been granted rights to delete items from the vault schema then the
 `--record` option must be used.
 
-## Delete Snapshot Command
+## Delete Snapshot command
 
 ```text
 Usage:
@@ -282,7 +282,7 @@ database updates are executed.
 
 This command can only to used if a backup schema has been configured.
 
-## Restore Snapshot Command
+## Restore Snapshot command
 
 Use the restore snapshot command to:
 
@@ -317,7 +317,7 @@ the command line or from the CorDapp configuration file.
 Custom filters can be implemented by using the Archive Service Library. For more details see
 the Archive Service Library documentation.
 
-### Filter Configuration
+### Filter configuration
 
 The following is a sample HOCON configuration file that can be used to configure the standard
 `TransactionIdFilter` filter.
@@ -338,7 +338,7 @@ filter: {
 }
 ```
 
-## Tracking Progress
+## Tracking progress
 The `-t` or `--tracker` option can be used on the command to display progress as each command executes.
 
 ```text
@@ -406,7 +406,7 @@ Each exporter has its own configuration requirements, which it takes either from
 
 Custom exporters can be implemented for individual archive solutions. For more details see the Archive Service Library documentation.
 
-## Archive Schema
+## Archive schema
 
 The archiving process can be configured to create a temporary snapshot image of the archivable transactions and attachments from Corda vault on a backup schema within the same database. The snapshot can then be used to restore the vault should the database fail during the archive operation.   
 
@@ -414,7 +414,7 @@ The Corda vault schema and the archive schema must reside on the same database b
 
 The Archive Service uses a separate JPA entity manager factory to manage the archive schema and copy data from the Corda schema to the archive schema.
 
-## Archive Service Configuration
+## Archive Service configuration
 
 The Archive Service can be configured through the CorDapp's configuration file in `cordapps/config` directory. The name of the configuration file must be identical to the Archive Service CorDapp file but with the suffix `conf` rather than `jar`.
 
@@ -441,7 +441,7 @@ target: {
 }
 ```
 
-## Queryable State Tables
+## Queryable state tables
 
 Queryable state tables can be exported to CSV format by listing the tables by listing the tables in
 the configuration file under the property `queryableTables`.
@@ -457,7 +457,7 @@ The property can be added to the Archive Service CorDapp configuration file, or 
 
 A suitable exporter, such as `QueryableStateFileExporter`, must also be listed on the command line to `export-snapshot`.
 
-## Additional Tables
+## Additional tables
 
 Archive Service will automatically detect transaction and attachment tables which use the columns `TRANSACTION_ID` or `ATT_ID` within the vault schema and include them in the archive process.
 
@@ -476,7 +476,7 @@ Data from these tables will be recorded as part of the snapshot process and late
 
 Tables should should be excluded from the archive process can be registered using the properties `excludeTransactionTables` and `excludeAttachmentTables`.
 
-## Schema Permissions
+## Schema permissions
 
 If using a backup schema then the backup schema must have been granted select rights to the Corda vault.
 
