@@ -241,7 +241,7 @@ As an authorised member of the network, you can onboard a new member without nee
 
 **OnboardMembershipFlow arguments**:
 
-- `networkId` ID of the Business Network that member is onboarded to
+- `networkId`: ID of the Business Network that member is onboarded to.
 - `onboardedParty` Identity of an onboarded member
 - `businessIdentity` Custom business identity to be given to the onboarded membership
 - `notary` Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used
