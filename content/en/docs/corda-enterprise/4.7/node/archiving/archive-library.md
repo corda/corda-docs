@@ -28,7 +28,7 @@ The Archive Service Library provides programmatic access to the Archive Service.
 * `DeleteSnapshot`.
 * `RestoreSnapshot`.
 
-## Remote Procedure Call Connection
+## Remote Procedure Call (RPC) connection
 
 The first step in using the library is to establish a RPC connection to the Corda node:
 
@@ -43,7 +43,7 @@ sufficient privileges to run the Archive Service flows.
 
 The following APIs are provided by the Archive Service Library.
 
-### List Jobs
+### List jobs
 
 Returns the list of active Archive Service jobs.
 
@@ -67,7 +67,7 @@ class ListJobs(
 }
 ```
 
-### List Items
+### List items
 
 Returns the list of archivable items.
 
@@ -101,7 +101,7 @@ class ListItems(
 }
 ```
 
-### Mark Items
+### Mark items
 
 Marks all archivable items with the snapshot name.
 
@@ -252,7 +252,7 @@ class DeleteMarked(
 }
 ```
 
-### Delete Snapshot
+### Delete snapshot
 
 Deletes the snapshot from the archive schema.
 
@@ -277,7 +277,7 @@ class DeleteSnapshot(
     fun execute(): DeleteSnapshotResults
 }
 ```
-### Restore Snapshot
+### Restore snapshot
 
 Restores the snapshot to the Corda vault.
 
@@ -303,7 +303,7 @@ class RestoreSnapshot(
 }
 ```
 
-## Filter Interface
+## Filter interface
 
 Custom filters can be implemented by extending the `AbstractDAGFilter`, `AbstractTransactionFilter`, or `AbstractContractStateFilter` classes.
 
@@ -383,7 +383,7 @@ CorDapp configuration file using the key `filter.scanPackages` when the node is 
 filter.scanPackages: "com.org.cordapp.filters"
 ```
 
-## Exporter Interface
+## Exporter interface
 Custom exporters can be implemented by extending the `AbstractExporter` class and
 implementing one or more of the `AttachmentExporter`, `TransactionExporter`, and
 `QueryableTableExporter` interfaces depending on whether the exporter should export
@@ -488,7 +488,7 @@ CorDapp configuration file using the key `exporter.scanPackages` when the node i
 exporter.scanPackages: "com.org.cordapp.exporters"
 ```
 
-##Importer Interface
+## Importer interface
 Custom importers can be implemented by extending the `AbstractImporter` class and
 implementing the `retrieveTransactions()`, `retrieveAttachments()` methods.
 
