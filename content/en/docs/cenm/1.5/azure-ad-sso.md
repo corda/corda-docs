@@ -21,11 +21,11 @@ You can operate a single sign on (SSO) set-up between your Corda services and Az
 To set up SSO with Azure AD, you need to:
 
 1. Configure your Azure AD using the Azure online console.
-2. Configure your Auth Service.
-3. If you use the CENM CLI, you also need to configure Azure AD to enable commands.
+2. Configure your [Auth Service](auth-service.md).
+3. If you use the [CENM Command-line Interface Tool](cenm-cli-tool.md), you also need to configure Azure AD to enable commands.
 
 {{< note >}}
-Some steps in the Auth configuration require reference to your Azure AD account and set up, so you should be able to access both when setting up Azure AD SSO.
+Some steps in the Auth configuration require reference to your Azure AD account and setup, so you should be able to access both when setting up Azure AD SSO.
 {{< /note >}}
 
 ## Azure console set up guide
@@ -70,7 +70,7 @@ You have configured your Corda services on the Azure AD console.
 
 ## Auth Service configuration
 
-For Azure AD SSO, you can control the following options in your Auth Service config file:
+For Azure AD SSO, you can control the following options in your Auth Service configuration file:
 
 ```
     azuread {
@@ -90,24 +90,24 @@ You must apply the following settings in your **Auth Service configuration file*
 
 ### Add properties from Azure
 
-Add the `tenantId`, `clientId` and `clientSecret` property values from Azure. This means your setting in the config file must match the corresponding setting in Azure AD. In order for this to work they must belong to a valid App Registration that was configured for the AzureAD you wish to use. The App Registration should be enabled to use at least the `User.Read` scope.
+Add the `tenantId`, `clientId`, and `clientSecret` property values from Azure. This means your setting in the configuration file must match the corresponding setting in Azure AD. In order for this to work, they must belong to a valid App Registration that was configured for the AzureAD you wish to use. The App Registration should be enabled to use at least the `User.Read` scope.
 
-When enabled, `User.Read` means that the Corda Auth Service can only confirm who is in a group, and allow SSO access to the relevant services for group members. This is the minimum required scope. In the Azure AD setup, you can select scopes with greater permissions to suit your requirements.
+When `User.Read` is enabled, the Corda Auth Service can only confirm who is in a group, and allow SSO access to the relevant services for group members. This is the minimum required scope. In the Azure AD setup, you can select scopes with greater permissions to suit your requirements.
 
 ### Add group syncronization
 
-The `synchronizeGroups` setting controls whether the user should be added to the same groups in Corda services as they have been in AzureAD. By default this happens by matching internal groups by name to AzureAD membership groups. This is set to **true** by default in your configuration, and can be turned to **false** if you do not want to automatically synchronize adding users to groups.
+The `synchronizeGroups` setting controls whether the user should be added to the same groups in Corda services as they have been in AzureAD. By default this happens by matching internal groups by name to AzureAD membership groups. This is set to `true` by default in your configuration, and can be turned to `false` if you do not want to automatically synchronize adding users to groups.
 
 ### Set filtered group synchronization
 
 You can use Group synchronization to keep the memberships of each user up to date in Azure AD. You can use group synchronization to:
 
 * Create groups that do not yet exist. If a user is a member of groups that do not yet exist in Azure AD, you can use group synchronization to automatically have these groups created.  
-* Control which of the membership groups should be synchronized. To do this, you can provide a filter string, which has to be a valid `OData4` filter string (https://docs.microsoft.com/en-us/graph/api/group-list?view=graph-rest-1.0&tabs=http).
+* Control which of the membership groups should be synchronized. To do this, you can provide a filter string, which has to be a valid `OData4` filter string [https://docs.microsoft.com/en-us/graph/api/group-list?view=graph-rest-1.0&tabs=http](https://docs.microsoft.com/en-us/graph/api/group-list?view=graph-rest-1.0&tabs=http).
 
-#### Enable Group.Read.All
+#### Enable `Group.Read.All`
 
-When setting up the App Registration in Azure the `Group.Read.All` scope must be enabled in order for group filtering to work. If querying the filtered group list fails (either because of an invalid filter or insufficient rights) the user will have no groups synchronized.
+When setting up the App Registration in Azure, the `Group.Read.All` scope must be enabled in order for group filtering to work. If querying the filtered group list fails (either because of an invalid filter or insufficient rights), the user will have no groups synchronized.
 
 ### Set authentication provider filters
 
@@ -131,9 +131,9 @@ Using `password` authentication type enables users outside of Azure AD SSO. If y
 
 If the `authenticationTypes` option is skipped, the default is to enable all configured types (password+azuread in the case of the above example).
 
-## Set up CENM CLI for Azure AD
+## Set up the CENM Command-line Interface Tool for Azure AD
 
-To allow use of the CENM CLI you need to enable a few additional settings on the App Registration in Azure AD console that you used to configure the auth-service.
+To allow use of the CENM Command-line Interface Tool, you need to enable a few additional settings on the App Registration in Azure AD console that you used to configure the Auth Service.
 
 1. In the Azure AD console app registration **Authentication** section, use the switch to treat the application as a public client.
 
@@ -141,17 +141,17 @@ To allow use of the CENM CLI you need to enable a few additional settings on the
 
 3. In **Configure platform**, select **Mobile and Desktop Applications**.
 
-4. In **Configure desktop and devices**, select: **Custom redirect** and enter https://contoso.com.
+4. In **Configure desktop and devices**, select: **Custom redirect** and enter `https://contoso.com`.
 
 {{< note >}}
-If the custom redirect URI fails, you can select the URI: ```https://login.microsoftonline.com/common/oauth2/nativeclient```.
+If the custom redirect URI fails, you can select the URI: `https://login.microsoftonline.com/common/oauth2/nativeclient`.
 {{< /note >}}
 
-You can now access Azure login using the [CENM CLI](cenm-cli-tool).
+You can now access Azure login using the [CENM Command-line Interface Tool](cenm-cli-tool.md).
 
-To login:
+To log in:
 
-1. Use the below command. You can see that where you would normally add password credentials, there is a request to login using Azure AD:
+1. Use the command shown below. You can see that where you would normally add password credentials, there is a request to log in using Azure AD:
 
 ```
 <main> context login --azure-ad <gateway-service address>
