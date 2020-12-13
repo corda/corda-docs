@@ -447,7 +447,7 @@ subFlow(SuspendMembershipFlow(memberToBeRevoked, notary))
 
 ## Request membership attribute changes
 
-Using the ```RequestMembershipAttributeChangeFlow``` flow, a member can create requests in order to change its attributes (business identity and roles).
+Using the `RequestMembershipAttributeChangeFlow` flow, a member can create requests in order to change its attributes (business identity and roles).
 This flow will create a ```ChangeRequestState``` with ```PENDING``` status.
 
 {{< note >}}
