@@ -26,7 +26,7 @@ If no JPA configuration is supplied then the Database Service will revert to the
 
 ## Entity Example
 
-Let `Student` be an entity class
+Let `Student` be an entity class:
 
  ```aidl
 package com.entity
