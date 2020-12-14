@@ -483,7 +483,7 @@ val updatedRoles: Set<BNRole> = ... // the new roles you want to associate the m
 val notary = serviceHub.networkMapCache.notaryIdentities.first()
 
 // Request creation
-subFlow(authorisedParty, networkId, updatedIdentity, updatedRoles, notary)
+subFlow(RequestMembershipAttributeChangeFlow(authorisedParty, networkId, updatedIdentity, updatedRoles, notary))
 ```
 
 **ApproveMembershipAttributeChangeFlow arguments**:
@@ -564,6 +564,26 @@ val fileName = ... // the name of the report file
 
 subFlow(BNOAccessControlReportFlow(networkId, path, fileName))
 ```
+
+## Reissue states affected by the change to a member's Corda Identity
+
+It may happen that a member in the network needs to reissue the certificate to which its Corda Identity binds. In that case, all membership and group states, which are impacted, should be reissued with the new Corda Identity. This can be done using the `UpdateCordaIdentityFlow`. Please note that this flow requires the legal identity (CordaX500Name) to be the same. Furthermore, the flow can only be run from a member with sufficient permissions (who can modify groups).
+
+**If several members of the network have their certificates rotated, it is important to start the identity update process with the authorised members as they are required
+to sign all other identity update transactions.**
+
+**UpdateCordaIdentityFlow arguments**:
+
+- `membershipId`: The `membershipId` ID of the membership whose Corda Identity has changed.
+- `notary`: The Identity of the notary to be used for transactions notarisation. If not specified, the first one from the whitelist will be used.
+
+*Example*:
+
+```kotlin
+val notary = serviceHub.networkMapCache.notaryIdentities.first())
+val updatedMember = ... // get the linear ID of the membership state associated with the Party which was updated
+
+subflow(UpdateCordaIdentityFlow(updatedMember, notary)
 
 ## Business Network management demo
 
