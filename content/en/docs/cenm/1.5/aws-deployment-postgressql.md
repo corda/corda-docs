@@ -7,11 +7,11 @@ tags:
 - config
 - AWS
 - PostgreSQL
-title: Deploy CENM 1.4 with AWS and PostgreSQL
+title: Deploy CENM 1.5 with AWS and PostgreSQL
 weight: 300
 ---
 
-# CENM 1.4 reference deployment using AWS and PostgreSQL
+# CENM 1.5 reference deployment using AWS and PostgreSQL
 
 You can use CENM database and services documentation to complete a reference or test deployment of CENM using AWS and PostgreSQL. The references provided here refer to in depth documentation for databases and services in CENM.
 

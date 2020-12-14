@@ -1,7 +1,7 @@
 ---
 aliases:
 - /cenm-cli-tool.html
-- /releases/release-1.4/cenm-cli-tool.html
+- /releases/release-1.5/cenm-cli-tool.html
 date: '2020-05-28T17:40:25Z'
 menu:
   cenm-1-5:
@@ -29,7 +29,7 @@ Once you have the required permissions to access the CENM service you require, y
 
 ## Install the CENM CLI Tool
 
-The CLI Tool comes as a part of CENM 1.4 as a `.jar` file. If you cannot access the `.jar` file, you can install via Docker image.
+The CLI Tool comes as a part of CENM 1.5 as a `.jar` file. If you cannot access the `.jar` file, you can install via Docker image.
 
 To install using Docker:
 
@@ -38,7 +38,7 @@ To install using Docker:
 2. Use the command line to download the Docker image with CENM CLI:
 
      ```bash
-     docker pull cenm-cli:1.4-zulu-openjdk8u242
+     docker pull cenm-cli:1.5-zulu-openjdk8u242
      ```
 
 You have installed the Docker image with CENM CLI tool.

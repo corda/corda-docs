@@ -13,7 +13,7 @@ weight: 10
 
 # CENM Auth Service Helm Chart
 
-This Helm chart is to configure, deploy, and run the [CENM Auth Service](../../../../cenm/1.4/auth-service.md) on Kubernetes.
+This Helm chart is to configure, deploy, and run the [CENM Auth Service](../../../../cenm/1.5/auth-service.md) on Kubernetes.
 
 ## Example usage
 
@@ -36,7 +36,7 @@ helm install cenm-auth auth --set prefix=cenm --set acceptLicense=Y --set volume
 | ---------- | ------------- | -----------------|
 | `bashDebug`                   | Display additional information while running bash scripts (useful while investigating issues) | `false` |
 | `authImage.repository`        | URL to Network Map Docker image repository | `acrcenm.azurecr.io/auth/auth` |
-| `authImage.tag`               | Docker image tag | `1.4` |
+| `authImage.tag`               | Docker image tag | `1.5` |
 | `authImage.pullPolicy`        | Image pull policy. Ref.: https://kubernetes.io/docs/concepts/containers/images/#updating-images | `Always` |
 | `database.driverClassName`    | Auth Service database connection details | `org.h2.Driver` |
 | `database.jdbcDriver`         | Auth Service database connection details | `""`
@@ -50,4 +50,4 @@ helm install cenm-auth auth --set prefix=cenm --set acceptLicense=Y --set volume
 | `sleepTimeAfterError`         | Sleep time (in seconds) after an error occurred | `120` |
 | `logsContainersEnabled`       | Enable container displaying live logs | `true`
 {{< /table >}}
-For additional information on database connection details refer to the official documentation: [database documentation](../../../../cenm/1.4/config-database.md).
+For additional information on database connection details refer to the official documentation: [database documentation](../../../../cenm/1.5/config-database.md).

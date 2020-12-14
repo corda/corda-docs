@@ -20,7 +20,7 @@ Doorman), Network Map Service, or Signing Service - from previous versions to th
 in question. If not specified, you may assume the versions you are currently using are still in force.
 
 {{< warning >}}
-Before you start the upgrade, you must consult the [CENM Release Notes](../../../../cenm/1.4/release-notes.md) to confirm all changes between releases.
+Before you start the upgrade, you must consult the [CENM Release Notes](../../../../cenm/1.5/release-notes.md) to confirm all changes between releases.
 {{< /warning >}}
 
 ## 1.3.x to 1.4

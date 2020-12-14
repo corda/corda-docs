@@ -45,9 +45,9 @@ the same server. The network map consists of a list of `NodeInfo` hashes. The no
 {{< note >}}
 **New Headers**
 
-CENM 1.4 introduces a header in all Network Map API responses (except for internal error responses with code 5xx), which indicates the version of the Network Map and the available calls. This header is called `X-Corda-Server-Version` and for CENM 1.4 it has a default value of `2`.
+CENM 1.4 introduced a header in all Network Map API responses (except for internal error responses with code 5xx), which indicates the version of the Network Map and the available calls. This header is called `X-Corda-Server-Version` and has a default value of `2`.
 
-In addition, CENM 1.4 supports for two new headers, which replace existing headers as follows:
+In addition, CENM 1.4 and above support two new headers, which replace existing headers as follows:
 * `X-Corda-Platform-Version` replaces `Platform-version`.
 * `X-Corda-Client-Version` replaces `Client-version`.
 
@@ -80,7 +80,7 @@ The set of REST end-points for the network map service are as follows.
 ### Additional endpoints from R3
 
 Network maps hosted by R3 or other parties using R3’s commercial network management tools typically provide some
-additional endpoints for users. These additional endpoints can be found [here](../../../cenm/1.4/network-map-overview.html).
+additional endpoints for users. These additional endpoints can be found [here](../../../cenm/1.5/network-map-overview.html).
 
 HTTP is used for the network map service instead of Corda’s own AMQP based peer to peer messaging protocol to
 enable the server to be placed behind caching content delivery networks like Cloudflare, Akamai, Amazon Cloudfront and so on.
@@ -193,7 +193,7 @@ Read more about *Package ownership* here “[Package namespace ownership](../nod
 
 
 {{< note >}}
-To determine which *minimumPlatformVersion* a zone must mandate in order to permit all the features of Corda 4.6, see [Corda features and versions](../features-versions.md).
+To determine which *minimumPlatformVersion* a zone must mandate in order to permit all the features of Corda 4.7, see [Corda features and versions](../features-versions.md).
 
 {{< /note >}}
 More parameters will be added in future releases to regulate things like allowed port numbers, whether or not IPv6

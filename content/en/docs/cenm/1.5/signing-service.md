@@ -1388,7 +1388,7 @@ public enum SigningStatus {PENDING, COMPLETED}
 
 ### Asynchronous signing
 
-In 1.4 a new asynchronous infrastructure has been added to the plugins.
+In 1.4 a new asynchronous infrastructure was added to the plugins.
 If your plugin does not sign requests immediately, you can easily return a tracking id (`String` type) and the Signing Service will keep checking
 whether the plugin has already signed that particular request.
 

@@ -63,9 +63,9 @@ the original unsigned CorDapp and re-issuing them using the new signed CorDapp).
 These instructions only apply to CorDapp Contract JARs (unless otherwise stated).
 {{< /note >}}
 
-### Corda 4.6
+### Corda 4.7
 
-Corda 4.6 requires some additional steps to consume and evolve pre-existing on-ledger **hash** constrained states:
+Corda 4.7 requires some additional steps to consume and evolve pre-existing on-ledger **hash** constrained states:
 
 
 * All Corda Nodes in the same CZ or business network that may encounter a transaction chain with a hash constrained state must be started using
