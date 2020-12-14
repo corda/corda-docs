@@ -602,9 +602,25 @@ The actual content of the states can be retrieved from the `NODE_TRANSACTIONS` t
 {{< /table >}}
 
 
-## RPC audit
+## Node RPC audit data
 
-NODE_RPC_AUDIT_DATA
+RPC actions play a vital part in the process of triggering commands and flows on a node. In a variety of cases you will need to track the usage of RPC actions - for example, when there are security and regulatory concerns. To do so, you can use the Corda Enterprise node's capability to record audit information about RPC actions as they are received, prior to executing each action.
+
+Read more in [Recording of RPC audit data](../setup/rpc-audit-data-recording.md)
+
+{{< table >}}
+
+|NODE_RPC_AUDIT_DATA|Recording audit information about RPC actions as they are received, prior to executing each action|
+|------------------------------|------------------------------------------------------------------------------------------|
+|USERNAME|The specific user who executed the action (limited to 130 characters)|
+|INTERFACE|the specific type of RPC on which the action was called (limited to 130 characters)|
+|ACTION|The action that the user intended to invoke (limited to 130 characters)|
+|PARAMETERS|For non-flow actions, the parameter list which was passed with the action (limited to 255 characters)|
+|INVOCATIONTIME|The time when the action was recorded by the node and invoked|
+|INVOCATIONID|The unique invocation id of the action|
+|ALLOWED|A boolean field indicating if the user was allowed to call the action|
+
+{{< /table >}}
 
 
 ## Liquibase database migration
