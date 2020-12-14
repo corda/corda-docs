@@ -97,7 +97,7 @@ override fun nextScheduledActivity(thisStateRef: StateRef, flowLogicRefFactory: 
 {{% /tab %}}
 {{< /tabs >}}
 
-[IRS.kt](https://github.com/corda/corda/blob/release/os/4.6/samples/irs-demo/cordapp/contracts-irs/src/main/kotlin/net/corda/irs/contract/IRS.kt)
+[IRS.kt](https://github.com/corda/corda/blob/release/os/4.7/samples/irs-demo/cordapp/contracts-irs/src/main/kotlin/net/corda/irs/contract/IRS.kt)
 
 The first thing this does is establish if there are any remaining fixings. If there are none, then it returns `null`
 to indicate that there is no activity to schedule. Otherwise, it calculates the `Instant` at which the interest rate

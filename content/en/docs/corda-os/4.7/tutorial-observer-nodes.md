@@ -31,7 +31,7 @@ of digitally signed, de-duplicated reports useful for later processing.
 
 ## Adding support for observer nodes
 
-Adding support for observer nodes to your application is easy. The [IRS (interest rate swap) demo](https://github.com/corda/corda/blob/release/os/4.6/samples/irs-demo/cordapp/contracts-irs/src/main/kotlin/net/corda/irs/contract/IRS.kt) shows to do it.
+Adding support for observer nodes to your application is easy. The [IRS (interest rate swap) demo](https://github.com/corda/corda/blob/release/os/4.7/samples/irs-demo/cordapp/contracts-irs/src/main/kotlin/net/corda/irs/contract/IRS.kt) shows to do it.
 
 Just define a new flow that wraps the `SendTransactionFlow/ReceiveTransactionFlow`, as follows:
 
@@ -79,7 +79,7 @@ Just define a new flow that wraps the `SendTransactionFlow/ReceiveTransactionFlo
 {{< /tabs >}}
 
 
-[AutoOfferFlow.kt](https://github.com/corda/corda/blob/release/os/4.6/samples/irs-demo/cordapp/workflows-irs/src/main/kotlin/net.corda.irs/flows/AutoOfferFlow.kt)
+[AutoOfferFlow.kt](https://github.com/corda/corda/blob/release/os/4.7/samples/irs-demo/cordapp/workflows-irs/src/main/kotlin/net.corda.irs/flows/AutoOfferFlow.kt)
 
 In this example, the `AutoOfferFlow` is the business logic, and we define two very short and simple flows to send
 the transaction to the regulator. There are two important aspects to note here:

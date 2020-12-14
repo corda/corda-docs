@@ -60,7 +60,7 @@ interface Contract {
 
 
 
-[Structures.kt](https://github.com/corda/corda/blob/release/os/4.6/core/src/main/kotlin/net/corda/core/contracts/Structures.kt) | ![github](/images/svg/github.svg "github")
+[Structures.kt](https://github.com/corda/corda/blob/release/os/4.7/core/src/main/kotlin/net/corda/core/contracts/Structures.kt) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -170,7 +170,7 @@ The `LedgerTransaction` object passed into `verify` has the following properties
 
 
 
-[LedgerTransaction.kt](https://github.com/corda/corda/blob/release/os/4.6/core/src/main/kotlin/net/corda/core/transactions/LedgerTransaction.kt) | ![github](/images/svg/github.svg "github")
+[LedgerTransaction.kt](https://github.com/corda/corda/blob/release/os/4.7/core/src/main/kotlin/net/corda/core/transactions/LedgerTransaction.kt) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -291,7 +291,7 @@ data class CommandWithParties<out T : CommandData>(
 
 
 
-[Structures.kt](https://github.com/corda/corda/blob/release/os/4.6/core/src/main/kotlin/net/corda/core/contracts/Structures.kt) | ![github](/images/svg/github.svg "github")
+[Structures.kt](https://github.com/corda/corda/blob/release/os/4.7/core/src/main/kotlin/net/corda/core/contracts/Structures.kt) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -359,4 +359,3 @@ public class XContract implements Contract {
 {{% /tab %}}
 
 {{< /tabs >}}
-

@@ -44,22 +44,22 @@ ps aux | grep corda.jar | awk '{ print $2 }' | xargs sudo kill
 * Download the finance CorDappIn the terminal on your cloud instance run:
 
 ```bash
-wget https://software.r3.com/artifactory/corda-releases/net/corda/corda-finance-contracts/4.6/corda-finance-contracts-4.6.jar
-wget https://software.r3.com/artifactory/corda-releases/net/corda/corda-finance-workflows/4.6/corda-finance-workflows-4.6.jar
+wget https://software.r3.com/artifactory/corda-releases/net/corda/corda-finance-contracts/4.7/corda-finance-contracts-4.7.jar
+wget https://software.r3.com/artifactory/corda-releases/net/corda/corda-finance-workflows/4.7/corda-finance-workflows-4.7.jar
 ```
 
 This is required to run some flows to check your connections, and to issue/transfer cash to counterparties. Copy it to
 the Corda installation location:
 
 ```bash
-sudo cp /home/<USER>/corda-finance-4.6-corda.jar /opt/corda/cordapps/
+sudo cp /home/<USER>/corda-finance-4.7-corda.jar /opt/corda/cordapps/
 ```
 
 
 * Run the following to create a config file for the finance CorDapp:
 
 ```bash
-echo "issuableCurrencies = [ USD ]" > /opt/corda/cordapps/config/corda-finance-4.6-corda.conf
+echo "issuableCurrencies = [ USD ]" > /opt/corda/cordapps/config/corda-finance-4.7-corda.conf
 ```
 
 
@@ -79,7 +79,7 @@ Node Explorer is a JavaFX GUI which connects to the node over the RPC interface 
 Download the Node Explorer from here:
 
 ```bash
-https://software.r3.com/artifactory/corda-releases/net/corda/corda-tools-explorer/4.6-corda/corda-tools-explorer-4.6-corda.jar
+https://software.r3.com/artifactory/corda-releases/net/corda/corda-tools-explorer/4.7-corda/corda-tools-explorer-4.7-corda.jar
 ```
 
 
@@ -92,7 +92,7 @@ use different serialisation schemes (Kryo vs AMQP).{{< /warning >}}
 * Run the Node Explorer tool on your **LOCAL** machine.
 
 ```bash
-java -jar corda-tools-explorer-4.6-corda.jar
+java -jar corda-tools-explorer-4.7-corda.jar
 ```
 
 {{< figure alt="explorer login" zoom="/en/images/explorer-login.png" >}}
