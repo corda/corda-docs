@@ -137,11 +137,19 @@ To allow use of the CENM Command-line Interface Tool, you need to enable a few a
 
 1. In the Azure AD console app registration **Authentication** section, use the switch to treat the application as a public client.
 
+![step 12](./resources/step12.png)
+
 2. Click **Add a platform**.
+
+![step 13](./resources/step13.png)
 
 3. In **Configure platform**, select **Mobile and Desktop Applications**.
 
+![step 14](./resources/step14.png)
+
 4. In **Configure desktop and devices**, select the predefined url that starts with **msal**.
+
+![step 15](./resources/step15.png)
 
 {{< note >}}
 If the custom redirect URI fails, you can select the URI: `https://login.microsoftonline.com/common/oauth2/nativeclient`.
