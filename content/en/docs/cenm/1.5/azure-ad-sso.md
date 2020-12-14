@@ -141,7 +141,7 @@ To allow use of the CENM Command-line Interface Tool, you need to enable a few a
 
 3. In **Configure platform**, select **Mobile and Desktop Applications**.
 
-4. In **Configure desktop and devices**, select: **Custom redirect** and enter `https://contoso.com`.
+4. In **Configure desktop and devices**, select the predefined url that starts with **msal**.
 
 {{< note >}}
 If the custom redirect URI fails, you can select the URI: `https://login.microsoftonline.com/common/oauth2/nativeclient`.
