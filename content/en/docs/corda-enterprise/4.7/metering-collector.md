@@ -48,7 +48,7 @@ The difference between `AggregatedMeteringCollectionFlow` and `FilteredMeteringC
 
 ## Installation
 
-The Metering Collection Tool is distributed as part of Corda Enterprise 4.6 under the name `corda-tools-metering-collector-4.6.jar`. You must place this `.jar` file in the `cordapps` directory of the node.
+The Metering Collection Tool is distributed as part of Corda Enterprise 4.7 under the name `corda-tools-metering-collector-4.7.jar`. You must place this `.jar` file in the `cordapps` directory of the node.
 
 ## Metering data
 
@@ -72,7 +72,7 @@ Notaries running on Corda Enterprise are also metered. The data recorded for not
 
 The Metering Collection Tool also contains responder flows that can be used by other nodes on the network to collect metering data from the node where
 the respective CorDapp is installed. This feature must be enabled by the node operator deploying a
-[CorDapp configuration file](/docs/corda-os/4.6/cordapp-build-systems.html#cordapp-configuration-files) for the CorDapp.
+[CorDapp configuration file](/docs/corda-os/4.7/cordapp-build-systems.html#cordapp-configuration-files) for the CorDapp.
 If no configuration file is deployed, metering data will not be shared with any other network party.
 
 An example configuration file that enables metering data sharing is shown below:
@@ -414,7 +414,7 @@ Flow completed with result: [{
 }, {
   "name" : "Corda Metering Collection Tool",
   "vendor" : "R3",
-  "version" : "4.6-SNAPSHOT",
+  "version" : "4.7-SNAPSHOT",
   "hash" : "FC0150EFAB3BBD715BDAA7F67B4C4DB5E133D919B6860A3D3B4C6C7D3EFE25D5",
   "signingKeys" : [ "AA59D829F2CA8FDDF5ABEA40D815F937E3E54E572B65B93B5C216AE6594E7D6B" ]
 }]
@@ -860,4 +860,3 @@ All classes listed below belong to the `com.r3.corda.metering.filter` package.
 | ```Filter.ByCorDapp.ByTransactionType``` | Matches only the meterings related to transactions of the specified transaction type (helpers are available to specify ledger-updating transactions and non-ledger-updating transactions) |
 
 {{< /table >}}
-

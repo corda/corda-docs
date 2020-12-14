@@ -46,7 +46,7 @@ You will now be able to run the command line application from anywhere by runnin
 For example, for the Corda node, install the shell extensions using
 
 ```shell
-java -jar corda-4.6.jar install-shell-extensions
+java -jar corda-4.7.jar install-shell-extensions
 ```
 
 And then run the node by running:
@@ -81,16 +81,15 @@ restart the shell or see [above](#installing-shell-extensions) for instructions 
 
 |Description|Alias|JAR Name|
 |---------------------------------------------------------|------------------------------|----------------------------------------------------------|
-|[Corda node](../deploy/running-a-node.html#starting-an-individual-corda-node)|`corda --<option>`|`corda-4.6.jar`|
-|Network bootstrapper|`bootstrapper --<option>`|`corda-tools-network-bootstrapper-4.6.jar`|
-|[Standalone shell](shell.html#standalone-shell)|`corda-shell --<option>`|`corda-tools-shell-cli-4.6.jar`|
-|Blob inspector|`blob-inspector --<option>`|`corda-tools-blob-inspector-4.6.jar`|
+|[Corda node](../deploy/running-a-node.html#starting-an-individual-corda-node)|`corda --<option>`|`corda-4.7.jar`|
+|Network bootstrapper|`bootstrapper --<option>`|`corda-tools-network-bootstrapper-4.7.jar`|
+|[Standalone shell](shell.html#standalone-shell)|`corda-shell --<option>`|`corda-tools-shell-cli-4.7.jar`|
+|Blob inspector|`blob-inspector --<option>`|`corda-tools-blob-inspector-4.7.jar`|
 
 {{< /table >}}
 
 
 ## List of existing Enterprise CLI applications
 
-Database Manager                `database-manager --<option>`  `corda-tools-database-manager-4.6.jar`
-Corda Firewall          `corda-firewall --<option>`    `corda-firewall-4.6.jar`                                 |
-
+Database Manager                `database-manager --<option>`  `corda-tools-database-manager-4.7.jar`
+Corda Firewall          `corda-firewall --<option>`    `corda-firewall-4.7.jar`                                 |

@@ -52,9 +52,9 @@ the same server. The network map consists of a list of `NodeInfo` hashes. The no
 {{< note >}}
 **New Headers**
 
-CENM 1.4 introduces a header in all Network Map API responses (except for internal error responses with code 5xx), which indicates the version of the Network Map and the available calls. This header is called `X-Corda-Server-Version` and for CENM 1.4 it has a default value of `2`.
+CENM 1.4 introduced a header in all Network Map API responses (except for internal error responses with code 5xx), which indicates the version of the Network Map and the available calls. This header is called `X-Corda-Server-Version` and has a default value of `2`.
 
-In addition, CENM 1.4 supports for two new headers, which replace existing headers as follows:
+In addition, CENM 1.4 and above support two new headers, which replace existing headers as follows:
 * `X-Corda-Platform-Version` replaces `Platform-version`.
 * `X-Corda-Client-Version` replaces `Client-version`.
 

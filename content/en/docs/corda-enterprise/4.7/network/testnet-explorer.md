@@ -51,15 +51,15 @@ If this is an HA node, make sure to stop both the hot and cold nodes before proc
 {{< /warning >}}
 
 * Download the Resources:Download the finance CorDapp and database manager to your VM instance:
-    * corda-finance-contracts-4.6.jar
-    * corda-finance-workflows-4.6.jar
-    * corda-tools-database-manager-4.6.jar
+    * corda-finance-contracts-4.7.jar
+    * corda-finance-workflows-4.7.jar
+    * corda-tools-database-manager-4.7.jar
 
 This is required to run some flows to check your connections, and to issue/transfer cash to counterparties. Copy it to
 the Corda installation location:
 
 ```bash
-sudo cp /home/<USER>/corda-finance-*-4.6.jar /opt/corda/cordapps/
+sudo cp /home/<USER>/corda-finance-*-4.7.jar /opt/corda/cordapps/
 ```
 
 * Create a symbolic link to the shared database driver folder
@@ -73,14 +73,14 @@ sudo ln -s /opt/corda/drivers /opt/corda/plugins
 
 ```bash
 cd /opt/corda
-sudo java -jar /home/<USER>/corda-tools-database-manager-4.6.jar --base-directory /opt/corda --execute-migration
+sudo java -jar /home/<USER>/corda-tools-database-manager-4.7.jar --base-directory /opt/corda --execute-migration
 ```
 
 
 * Run the following to create a config file for the finance CorDapp:
 
 ```bash
-echo "issuableCurrencies = [ USD ]" > /opt/corda/cordapps/config/corda-finance-4.6.conf
+echo "issuableCurrencies = [ USD ]" > /opt/corda/cordapps/config/corda-finance-4.7.conf
 ```
 
 
@@ -100,7 +100,7 @@ file will list installed apps at startup. Search for `Loaded CorDapps` in the lo
 * Now download the Node Explorer to your **LOCAL** machine:
 
 ```bash
-https://software.r3.com/artifactory/corda-releases/net/corda/corda-tools-explorer/4.6/corda-tools-explorer-4.6.jar
+https://software.r3.com/artifactory/corda-releases/net/corda/corda-tools-explorer/4.7/corda-tools-explorer-4.7.jar
 ```
 
 {{< warning >}}
@@ -111,7 +111,7 @@ use different serialisation schemes (Kryo vs AMQP).
 * Run the Node Explorer tool on your **LOCAL** machine.
 
 ```bash
-java -jar corda-tools-explorer-4.6.jar
+java -jar corda-tools-explorer-4.7.jar
 ```
 
 {{< figure alt="explorer login" zoom="../resources/explorer-login.png" >}}
