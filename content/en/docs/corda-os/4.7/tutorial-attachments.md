@@ -118,7 +118,7 @@ val complexCondition =
 
 {{< /tabs >}}
 
-[NodeAttachmentServiceTest.kt](https://github.com/corda/corda/blob/release/os/4.6/node/src/test/kotlin/net/corda/node/services/persistence/NodeAttachmentServiceTest.kt)
+[NodeAttachmentServiceTest.kt](https://github.com/corda/corda/blob/release/os/4.7/node/src/test/kotlin/net/corda/node/services/persistence/NodeAttachmentServiceTest.kt)
 
 
 ## Fetching attachments
@@ -201,7 +201,7 @@ fun recipient(rpc: CordaRPCOps, webPort: Int) {
 {{< /tabs >}}
 
 
-[AttachmentDemo.kt](https://github.com/corda/corda/blob/release/os/4.6/samples/attachment-demo/src/main/kotlin/net/corda/attachmentdemo/AttachmentDemo.kt)
+[AttachmentDemo.kt](https://github.com/corda/corda/blob/release/os/4.7/samples/attachment-demo/src/main/kotlin/net/corda/attachmentdemo/AttachmentDemo.kt)
 
 
 
@@ -241,7 +241,7 @@ private fun sender(rpc: CordaRPCOps, inputStream: InputStream, hash: SecureHash.
 {{< /tabs >}}
 
 
-[AttachmentDemo.kt](https://github.com/corda/corda/blob/release/os/4.6/samples/attachment-demo/src/main/kotlin/net/corda/attachmentdemo/AttachmentDemo.kt)
+[AttachmentDemo.kt](https://github.com/corda/corda/blob/release/os/4.7/samples/attachment-demo/src/main/kotlin/net/corda/attachmentdemo/AttachmentDemo.kt)
 
 
 This side is a bit more complex. Firstly, it looks up its counterparty by name in the network map. Then, if the node
