@@ -415,7 +415,18 @@ extract the archive and copy the single file *mssql-jdbc-6.4.0.jre8.jar* into th
 
 #### Oracle
 
-The required `node.conf` settings for the Database Management Tool using Oracle:
+First, connect to the database as administrator (any user which can create other users, *my_admin_user* has no such privileges)
+and run the following DDL script to create `my_user`, which you will use in `node.conf`:
+
+
+```sql
+CREATE USER my_user identified by my_password;
+GRANT CREATE SESSION TO my_user;
+GRANT SELECT ON v_$parameter TO my_user;
+```
+
+
+Configure the required `node.conf` settings for the Database Management Tool using Oracle as shown below:
 
 
 ```groovy
@@ -542,15 +553,9 @@ This step is required for Oracle databases only.
 
 ### Oracle
 
-Connect to the database as administrator (any user which can create other users, *my_admin_user* has no such privileges)
-and run the following DDL script:
-
-
-```sql
-CREATE USER my_user identified by my_password;
-GRANT CREATE SESSION TO my_user;
-GRANT SELECT ON v_$parameter TO my_user;
-```
+{{< note >}}
+For Oracle, you have already created and configured user `my_user` in [Configure the Database Management Tool](#oracle-2).
+{{< /note >}}
 
 
 
