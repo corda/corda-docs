@@ -583,7 +583,7 @@ to sign all other identity update transactions.**
 val notary = serviceHub.networkMapCache.notaryIdentities.first())
 val updatedMember = ... // get the linear ID of the membership state associated with the Party which was updated
 
-subflow(UpdateCordaIdentityFlow(updatedMember, notary)
+subflow(UpdateCordaIdentityFlow(updatedMember, notary))
 ```
 
 ## Business Network management demo
