@@ -1,17 +1,17 @@
 ---
-date: '2020-09-25T12:00:00Z'
+date: '2020-12-11T12:00:00Z'
 menu:
-  corda-os-4-7:
-    identifier: corda-os-4-7-business-network-management
-    parent: corda-os-4-7-corda-networks-index
-    weight: 1200
+  corda-enterprise-4-7:
+    parent: corda-enterprise-4-7-corda-networks
 tags:
-- BNO
-- notary
+- corda
+- networks
 title: Managing Business Network membership
+weight: 500
+
 ---
 
-# Business Network membership management
+# Business Network membership management V1.1
 
 This Corda platform extension allows you to create and manage business networks - as a node operator, this means you can define and create a logical network based on a set of common CorDapps as well as a shared business context.
 
@@ -19,7 +19,7 @@ Corda nodes outside of your business network are not aware of its members. The n
 
 In a business network, there is at least one *authorised member*. This member has sufficient permissions to execute management operations over the network and its members.
 
-## In version 1.1
+### In version 1.1
 
 In this version, you can:
 
@@ -38,7 +38,7 @@ With this extension, you can use a set of flows to:
 * Assign members to membership lists or groups.
 * Update information about a member - such as their Business Network identity.
 * Modify a member's roles in the network.
-* Suspend or revoke membership.
+* Suspend or revoke membership.  
 
 {{< note >}}
 The code samples in this documentation show you how to run management operations using the provided primitives from the context of a tool or Cordapp. It is also possible to do these operations from an RPC client or node shell by simply invoking the supplied administrative flows using data resulted from executing vault queries.
@@ -82,7 +82,7 @@ dependencies {
 }
 ```
 
-3. Add both dependencies in your **Cordform** - `deployNodes` - [task](generating-a-node.md#tasks-using-the-cordform-plug-in).
+3. Add both dependencies in your **Cordform** - `deployNodes` - [task](node/deploy/generating-a-node.md#tasks-using-the-cordform-plug-in).
 
 You have installed the Business Network membership extension.
 
@@ -120,6 +120,8 @@ You can also onboard and activate memberships in batches using [Composite flows]
 ### Onboard a new member with prior request
 
 You can make joining a business network a two-step process, in which prospective members must first send a request to join the network. The request can then be approved by the relevant parties, and the member is added.
+
+You can also onboard and activate memberships in batches using [Composite flows](##onboard-and-activate-members-with-composite-flows)
 
 #### Step 1 - prospective member sends a membership request
 
@@ -184,7 +186,7 @@ subFlow(ModifyGroupFlow(groupId, groupName, newParticipantsList, notary))
 
 As an authorised member of the network, you can onboard a new member without needing a prior membership request. The joining party is immediately added to the network with an `ACTIVE` status. You can then add the member directly to the relevant groups.  
 
-1. Run `OnboardMembershipFlow` to directly issue a new membership with `ACTIVE` status.
+1. Run `OnboardMembershipFlow` to directly issue a new membership with an `ACTIVE` status.
 2. Run `ModifyGroupFlow` to assign the new member to the correct groups.
 
 **OnboardMembershipFlow arguments**:
@@ -222,7 +224,7 @@ To save time and effort, you can use composite flows to perform batch membership
 
 There are two composite flows:
 
-* `BatchOnboardMembershipFlow`: Onboards a set of new memberships and adds them to the specified groups.
+* `BatchOnboardMembershipFlow`: Onboards a set of new memberships and adds them to specified groups.
 * `BatchActivateMembershipFlow`: Activates a set of pending membership requests and adds them to the specified groups.
 
 **BatchOnboardMembershipFlow arguments**:
@@ -253,7 +255,7 @@ subFlow(BatchOnboardMembershipFlow(networkId, onboardedParties, defaultGroupId, 
 
 * `memberships`: Set of memberships' `ActivationInfo`s.
 * `defaultGroupId`: ID of the group where members are added if the specific group ID is not provided in their `ActivationInfo`.
-* `notary`: Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used.
+* `notary`: Identity of the notary to be used for transactions notarisation. If not specified, the first one from the whitelist will be used.
 
 *Example*:
 
@@ -318,14 +320,13 @@ To update a member's roles and permissions in the business network:
 **ModifyRolesFlow arguments**:
 
 - `membershipId`: ID of the membership to assign roles.
-- `roles`: Set of roles to be assigned to the membership.
+- `roles`: Set of roles to be assigned to membership.
 - `notary`: Identity of the notary to be used for transactions notarisation. If not specified, the first one from the whitelist will be used.
 
 There are two additional flows that can be used to quickly assign roles to a membership: `AssignBNORoleFlow` and `AssignMemberRoleFlow`. They both share the same arguments:
 
 - `membershipId`: ID of the membership to assign the role.
 - `notary`: Identity of the notary to be used for transactions notarisation. If not specified, the first one from the whitelist will be used.
-
 *Example*:
 
 ```kotlin
@@ -383,12 +384,12 @@ To delete a group:
 **DeleteGroupFlow arguments**:
 
 - `groupId`: ID of group to be deleted.
-- `notary`: Identity of the notary to be used for transactions notarisation. If not specified, the first one from the whitelist will be used.
+- `notary`: Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used.
 
 ### Modify a group
 
 The `ModifyGroupFlow` can update the name of a group and/or its list of members. At least one of the *name* or *participants* arguments
-must be provided (see below).
+must be provided.
 
 To modify a group:
 
@@ -398,8 +399,8 @@ To modify a group:
 **ModifyGroupFlow arguments**:
 
 - `groupId`: ID of group to be modified.
-- `name`: New name of the modified group.
-- `participants`: New participants of the modified group.
+- `name`: New name of modified group.
+- `participants`: New participants of modified group.
 - `notary`: Identity of the notary to be used for transactions notarisation. If not specified, the first one from the whitelist will be used.
 
 **Example**:
@@ -434,7 +435,7 @@ To remove membership completely:
 Both `SuspendMembershipFlow` and `RevokeMembershipFlow` use the same arguments:
 
 - `membershipId`: ID of the membership to be suspended/revoked.
-- `notary`: Identity of the notary to be used for transactions notarisation. If not specified, the first one from the whitelist will be used.
+- `notary`: Identity of the notary to be used for transactions notarisation. If not specified, first one from the whitelist will be used.
 
 **Example**:
 
@@ -452,16 +453,16 @@ subFlow(SuspendMembershipFlow(memberToBeRevoked, notary))
 ## Request membership attribute changes
 
 Using the `RequestMembershipAttributeChangeFlow` flow, a member can create requests in order to change its attributes (business identity and roles).
-This flow will create a `ChangeRequestState` with `PENDING` status.
+This flow will create a `ChangeRequestState` with a `PENDING` status.
 
 {{< note >}}
-When you request new roles, the changes will overwrite your existing roles.
+When you request new roles the changes will overwrite your existing roles.
 {{< /note >}}
 
 As an authorised member you can:
 
-* Decline the requested changes using `DeclineMembershipAttributeChangeFlow`. If you decline the request the existing `ChangeRequestState` will have `DECLINED` status.
-* Accept using `ApproveMembershipAttributeChangeFlow`. If you accept the request the existing `ChangeRequestState` will have `ACCEPTED` status.
+* Decline the requested changes using `DeclineMembershipAttributeChangeFlow`. If you decline the request the existing `ChangeRequestState` will have a `DECLINED` status.
+* Accept using `ApproveMembershipAttributeChangeFlow`. If you accept the request the existing `ChangeRequestState` will have an `ACCEPTED` status.
 * Mark the request as consumed using `DeleteMembershipAttributeChangeRequestFlow`. This avoids stockpiling requests in the database.
 
 **RequestMembershipAttributeChangeFlow arguments**:
