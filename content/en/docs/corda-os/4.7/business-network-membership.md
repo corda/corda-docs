@@ -48,7 +48,7 @@ In a Business Network, you can assign different roles to members of the network.
 
 ## Installation
 
-This is an extension of Corda OS 4.6. If you have this version of Corda, and want to set up and run a Business Network, you can make use of the extension flows.
+This is an extension of Corda OS 4.7. If you have this version of Corda, and want to set up and run a Business Network, you can make use of the extension flows.
 
 ## Create a business network
 

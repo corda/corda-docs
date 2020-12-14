@@ -61,7 +61,7 @@ query soft locks associated with states as required by their CorDapp application
 
 ```
 
-[VaultService.kt](https://github.com/corda/corda/blob/release/os/4.6/core/src/main/kotlin/net/corda/core/node/services/VaultService.kt)
+[VaultService.kt](https://github.com/corda/corda/blob/release/os/4.7/core/src/main/kotlin/net/corda/core/node/services/VaultService.kt)
 
 
 ## Query
@@ -83,7 +83,7 @@ Custom filterable criteria can be specified using the `SoftLockingCondition` att
 
 ```
 
-[QueryCriteria.kt](https://github.com/corda/corda/blob/release/os/4.6/core/src/main/kotlin/net/corda/core/node/services/vault/QueryCriteria.kt)
+[QueryCriteria.kt](https://github.com/corda/corda/blob/release/os/4.7/core/src/main/kotlin/net/corda/core/node/services/vault/QueryCriteria.kt)
 
 
 ## Explicit Usage
@@ -112,4 +112,3 @@ before they are transferred to the intended recipient. Soft locking will automat
 
 Other use cases for *soft locking* may involve competing flows attempting to match trades or any other concurrent
 activities that may involve operating on an identical set of unconsumed states.
-

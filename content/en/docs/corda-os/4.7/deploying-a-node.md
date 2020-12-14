@@ -53,7 +53,7 @@ handling, and ensures the Corda service is run at boot.
 
 * Create a directory called `/opt/corda` and change its ownership to the user you want to use to run Corda:`mkdir /opt/corda; chown corda:corda /opt/corda`
 * Download the [Corda jar](https://r3.bintray.com/corda/net/corda/corda/)
-(under `/4.6/corda-4.6.jar`) and place it in `/opt/corda`
+(under `/4.7/corda-4.7.jar`) and place it in `/opt/corda`
 * Create a directory called `cordapps` in `/opt/corda` and save your CorDapp jar file to it. Alternatively, download one of
 our [sample CorDapps](https://www.corda.net/samples/) to the `cordapps` directory
 * Save the below as `/opt/corda/node.conf`. See [Node configuration](corda-configuration-file.md) for a description of these options:
@@ -206,7 +206,7 @@ example using PowerShell:
 
 ```shell
 mkdir C:\Corda
-wget http://jcenter.bintray.com/net/corda/corda/4.6/corda-4.6.jar -OutFile C:\Corda\corda.jar
+wget http://jcenter.bintray.com/net/corda/corda/4.7/corda-4.7.jar -OutFile C:\Corda\corda.jar
 ```
 
 
@@ -298,7 +298,7 @@ telnet.
 
 ### Database schema initialisation
 
-From Corda 4.6, the database schema objects are not automatically initialised during the first run of the node. There are two ways to initialise the database schema sets:
+From Corda 4.7, the database schema objects are not automatically initialised during the first run of the node. There are two ways to initialise the database schema sets:
 
 #### Use `initial-registration`
 
