@@ -13,7 +13,7 @@ weight: 40
 
 # CENM Network Map Service Helm Chart
 
-This Helm chart is to configure, deploy, and run the [CENM Network Map Service](../../../../cenm/1.4/network-map.md) on Kubernetes.
+This Helm chart is to configure, deploy, and run the [CENM Network Map Service](../../../../cenm/1.5/network-map.md) on Kubernetes.
 
 ## Example usage
 
@@ -39,10 +39,10 @@ helm install nmap nmap --set shell.password="superDifficultPassword"
 | `volumeSizeNmapLogs`          | Volume size for the `logs/` directory                    | `10Gi` |
 | `volumeSizeNmapH2`            | Volume size for the `h2/` directory                      | `10Gi` |
 | `dockerImage.repository`      | URL to Network Map Docker image repository               | `acrcenm.azurecr.io/networkmap/networkmap` |
-| `dockerImage.tag`             | Docker image tag | `1.4` |
+| `dockerImage.tag`             | Docker image tag | `1.5` |
 | `dockerImage.pullPolicy`      | Image pull policy. Ref.: https://kubernetes.io/docs/concepts/containers/images/#updating-images | `Always` |
 | `dockerImageCli.repository`   | URL to CLI image repository | `acrcenm.azurecr.io/cli/cli` |
-| `dockerImageCli.tag`          | Docker image tag | `1.4` |
+| `dockerImageCli.tag`          | Docker image tag | `1.5` |
 | `dockerImageCli.pullPolicy`   | Image pull policy. Ref.: https://kubernetes.io/docs/concepts/containers/images/#updating-images | `Always` |
 | `nmapJar.xmx`                 | Value for java -Xmx memory settings | `1G` |
 | `nmapJar.path`                | The directory where the Network Map Service `.jar` file is stored | `bin` |
@@ -62,4 +62,4 @@ helm install nmap nmap --set shell.password="superDifficultPassword"
 | `logsContainersEnabled`       | Enable container displaying live logs | `true`
 {{< /table >}}
 
-For additional information on database connection details refer to the official documentation: [database documentation](../../../../cenm/1.4/config-database.md).
+For additional information on database connection details refer to the official documentation: [database documentation](../../../../cenm/1.5/config-database.md).

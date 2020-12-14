@@ -23,7 +23,7 @@ it and the firewall (if deployed externally) for information on configuration, s
 To run the health survey tool, use the following command:
 
 ```kotlin
-java -jar corda-tools-health-survey-4.6.jar --base-directory DIRECTORY [--node-configuration DIRECTORY]
+java -jar corda-tools-health-survey-4.7.jar --base-directory DIRECTORY [--node-configuration DIRECTORY]
 ```
 
 Usage:
@@ -232,4 +232,3 @@ fun CordaRPCOps.runHealthSurvey(parameters: Array<String>): Pair<String, ByteArr
     return this.startFlow(::HealthSurveyFlow, parameters).returnValue.get()
 }
 ```
-

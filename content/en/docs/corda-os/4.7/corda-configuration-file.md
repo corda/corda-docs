@@ -200,7 +200,7 @@ verifierType = InMemory
 
 ```
 
-[reference.conf](https://github.com/corda/corda/blob/release/os/4.6/node/src/main/resources/reference.conf)
+[reference.conf](https://github.com/corda/corda/blob/release/os/4.7/node/src/main/resources/reference.conf)
 
 ## Configuration examples
 

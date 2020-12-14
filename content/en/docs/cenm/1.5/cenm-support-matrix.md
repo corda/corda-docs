@@ -19,7 +19,7 @@ The Operating System platforms supported in Corda Enterprise Network Manager are
 
 Production use of Corda Enterprise Network Manager 1.3+ is only supported on Linux OS, see details below.
 
-For information about supported Operating Systems for Corda Enterprise, see the Corda Enterprise 4.6 [platform support matrix](../../corda-enterprise/4.6/platform-support-matrix.md) section or check the relevant [support documentation](https://docs.corda.net/docs/corda-enterprise/index.html) for previous versions of Corda Enterprise.
+For information about supported Operating Systems for Corda Enterprise, see the Corda Enterprise 4.7 [platform support matrix](../../corda-enterprise/4.7/platform-support-matrix.md) section or check the relevant [support documentation](https://docs.corda.net/docs/corda-enterprise/index.html) for previous versions of Corda Enterprise.
 
 ## Hardware Security Modules (HSMs)
 
@@ -55,7 +55,7 @@ CENM currently supports the following databases:
 
 Corda Enterprise 4.4+ and Corda Enterprise Network Manager 1.3+ have been tested and verified to work with **Oracle JDK 8 JVM 8u251** and **Azul Zulu Enterprise 8u252**, for Azure deployment downloadable from [Azul Systems](https://www.azul.com/downloads/azure-only/zulu/).
 
-Other distributions of the [OpenJDK](https://openjdk.java.net/) are not officially supported but should be compatible with Corda Enterprise Network Manager 1.4.
+Other distributions of the [OpenJDK](https://openjdk.java.net/) are not officially supported but should be compatible with Corda Enterprise Network Manager 1.5.
 
 {{< warning >}}
 In accordance with the [Oracle Java SE Support Roadmap](https://www.oracle.com/technetwork/java/java-se-support-roadmap.html)
