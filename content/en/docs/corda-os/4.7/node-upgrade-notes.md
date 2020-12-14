@@ -82,7 +82,7 @@ Remove any `transactionIsolationLevel`, `initialiseSchema`, or `initialiseAppSch
 
 ## Step 6. Start the node with `run-migration-scripts` sub-command
 
-{{< note >}} This step is only required when upgrading to Corda Enterpise 4.6. {{< /note >}}
+{{< note >}} This step is only required when upgrading to Corda Enterpise 4.7. {{< /note >}}
 
 Start the node with the `run-migration-scripts` sub-command with `--core-schemas` and `--app-schemas`.
 

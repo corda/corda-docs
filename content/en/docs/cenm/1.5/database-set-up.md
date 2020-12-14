@@ -905,7 +905,7 @@ To remove service tables, run the following SQL script:
 DROP SCHEMA IF EXISTS "my_schema" CASCADE;
 ```
 
-## 5. Database Migration
+## 6. Database Migration
 
 When upgrading a CENM service, any required database schema changes are applied by the services rather than by a standalone tool. As a best practice, we recommend that the services are configured with a database user without permission to make schema modifications, when running normally (this is the setup described above).
 
@@ -928,7 +928,7 @@ To migrate as service:
    schema migration permissions, and to set `runMigration = false` in the
    database configuration.
 
-### 5.1. Zone Service database migration in CENM 1.4
+### 6.1. Zone Service database migration in CENM 1.4
 
 If you are upgrading to CENM 1.4 from CENM 1.3, you **must** set `runMigration = true` in the database configuration. This is required due to a change in the Zone Service database schema - a new column in the database tables `socket_config` and `signer_config` called `timeout` is used to record the new optional `timeout` parameter values used in `serviceLocations` configuration blocks (Signing Services) and `identityManager` and `revocation` configuration blocks (Network Map Service). This value can remain `null`,
 in which case the default 30 seconds timeout will be used wherever applicable.
