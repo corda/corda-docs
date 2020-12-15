@@ -40,6 +40,7 @@ registers with the network map it will check its own version against the minimum
 {{< table >}}
 | Corda release  | Platform version |
 | :------------- | :------------- |
+| 4.7 | 9 |
 | 4.6 | 8 |
 | 4.5 | 7 |
 | 4.4 | 6 |
