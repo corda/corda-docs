@@ -40,6 +40,21 @@ The platform version is part of the node’s `NodeInfo` object, which is availab
 a CorDapp to find out which version it’s running on and determine whether a desired feature is available. When a node
 registers with the network map it will check its own version against the minimum version requirement for the network.
 
+### Platform version matrix
+
+{{< table >}}
+| Corda release  | Platform version |
+| :------------- | :------------- |
+| 4.7 | 9 |
+| 4.6 | 8 |
+| 4.5 | 7 |
+| 4.4 | 6 |
+| 4.3 | 5 |
+| 4.2 | 4 |
+| 4.1 | 4 |
+| 4.0 | 4 |
+| 3.3 | 3 |
+{{< /table >}}
 
 ## Minimum platform version
 

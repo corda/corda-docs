@@ -324,9 +324,11 @@ See [Node command-line options](node-commandline.md) for more details.
 
 ### Database schema migration
 
-From Corda 4.6, the database schema migration process requires you to explicitly perform the following actions. This step is only required when upgrading to Corda 4.6 from a previous version.
+The database schema migration process requires you to explicitly perform the following actions. This step is only required when upgrading to Corda 4.7 from a previous version.
 
 #### Update configuration
+
+This step is only required when updating from versions less than or equal to 4.5.
 
 Remove any `transactionIsolationLevel`, `initialiseSchema`, or `initialiseAppSchema` entries from the database section of your configuration.
 

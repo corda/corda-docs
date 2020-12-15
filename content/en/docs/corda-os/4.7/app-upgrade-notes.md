@@ -54,6 +54,10 @@ If you are using them you should re-namespace them to a package namespace you co
 | 3.3 | 3 |
 {{< /table >}}
 
+## Upgrading apps to Platform Version 9
+
+No manual upgrade steps are required.
+
 ## Upgrading apps to Platform Version 8
 
 ### Required actions relating to database optimisation in Corda 4.6

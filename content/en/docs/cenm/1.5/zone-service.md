@@ -54,7 +54,7 @@ The full list of configuration options follows below:
 - `--tls-keystore-password`: The password for the TLS keystore. Required if `--tls` is set to `true`.
 - `--tls-truststore`: The path for the TLS truststore. Required if `--tls` is set to `true`.
 - `--tls-truststore-password`: The password for the TLS truststore. Required if `--tls` is set to `true`.
-- `--run-migration`:  Defines whether schema migration is enabled on the database. Defaults to `false` if no value is provided. **Important:** if you are upgrading to CENM 1.4 from CENM 1.3, you **must** set this option to `true` due to a change in the Zone Service database schema - see the [CENM upgrade guide](upgrade-notes.md) for more information.
+- `--run-migration`:  Defines whether schema migration is enabled on the database. Defaults to `false` if no value is provided. **Important:** if you are upgrading to CENM 1.5 from CENM 1.3, you **must** set this option to `true` due to a change in the Zone Service database schema - see the [CENM upgrade guide](upgrade-notes.md) for more information.
 - `--jdbc-driver`:  The path for the `.jar` file containing the JDBC driver for the database.
 - `--driver-class-name`: The name of the JDBC driver class within the `.jar` file specified by `--jdbc-driver`.
 - `--url`: The URL for the Zone Service's database.
