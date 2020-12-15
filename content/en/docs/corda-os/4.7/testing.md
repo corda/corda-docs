@@ -54,7 +54,7 @@ as follows:
 * **Demobench** - changes to the `tools/demobench` project.
 
 {{< warning >}}
-**DemoBench** is deprecated in Corda 4.6 and Corda Enterprise 4.6.
+**DemoBench** was deprecated in Corda 4.6 and Corda Enterprise 4.6.
 {{< /warning >}}
 
 How to manually test each of these areas differs and is currently not fully specified. For now the best thing to do is to ensure the
