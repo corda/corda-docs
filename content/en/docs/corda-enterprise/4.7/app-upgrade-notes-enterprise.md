@@ -157,6 +157,6 @@ cordaCompile "$ext.corda_core_release_distribution:corda-core:$ext.corda_core_re
 ```
 
 
-## Upgrading from Enterprise lower than 4.5
+## Upgrading from Corda Enterprise 3.x
 
-You can only upgrade to Corda Enterprise 4.7 from versions 4.5 or 4.6. If you are on an older version, upgrade to 4.5 and then to 4.7.
+You can only upgrade to Corda Enterprise 4.7 from 4.x. To upgrade from 3.x, first upgrade to 4.x and then to 4.7.
