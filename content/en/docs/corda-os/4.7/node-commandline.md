@@ -74,7 +74,7 @@ Parameters:
 * `--core-schemas`: Use to run the core database migration script for the node database. Core schemas cannot be migrated while there are checkpoints.
 * `--app-schemas`: Use to run the app database migration script for CorDapps. To force an app schema to migrate with checkpoints present, use the `--update-app-schema-with-checkpoints` flag alongside the `run-migration-scripts` sub-command.
 
-`generate-node-info`: Performs the node start-up tasks necessary to generate the nodeInfo file, saves it to disk, then exits.
+`generate-node-info`: Performs the node start-up tasks necessary to generate the `nodeInfo` file, saves it to disk, then exits.
 
 `generate-rpc-ssl-settings`: Generates the SSL keystore and truststore for a secure RPC connection.
 

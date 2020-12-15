@@ -316,7 +316,7 @@ Allows fine-grained controls of various features only available in the enterpris
   * *Default:* `cordaclienttls`
 * `previousIdentityKeyAliases`
   * List of previous node identity key aliases after key rotation. For more information about this feature, contact R3 support.
-  * Default value: an empty list.
+  * Default value: An empty list.
 
 ## `tuning`
 
