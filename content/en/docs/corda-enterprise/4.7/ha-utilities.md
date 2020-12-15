@@ -363,7 +363,7 @@ The ampersand (&) character is not allowed in the password for Artemis SSL keyst
 
 
 
-## Notary Registration
+## Notary registration
 
 The notary registration tool is used to register the identity of the HA notary service, and generates the key and certificate of the notary
 service that is shared by all workers of the notary cluster. It is required to be run before registering any notary worker nodes.
@@ -390,6 +390,7 @@ ha-utilities notary-registration [-hrRvV] [--logging-level=<loggingLevel>] [-b=F
 * `-k`, `--output-keystore=FILE`: If set, stores the generated notary service certificate (and key if not using a HSM) in the configured key store.
 * `-h`, `--help`: Show this help message and exit.
 * `-V`, `--version`: Print version information and exit.
+* `-r`, `--renew`: Send a CSR to a different endpoint for certificate renewal. For more information about this feature, [contact R3 support](https://www.r3.com/support/).
 
 
 ### Output
@@ -401,3 +402,7 @@ After successful registration, a keystore file is created by the tool. The locat
 This key store contains the service identity certificate (and key if not using a HSM) that all notary workers of this notary cluster share.
 Due to HSM restrictions around storing certificate chains, the key store will still be generated when using a HSM however it will only
 contain the notary service certificate chain. See [HSM Support](notary/hsm-support.md#hsm-support) for more information.
+
+## Node Certificate Rotation Tool
+
+For more information about this tool, [contact R3 support](https://www.r3.com/support/).

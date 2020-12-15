@@ -315,6 +315,9 @@ Allows fine-grained controls of various features only available in the enterpris
 * `tlsKeyAlias`
   * The alias of the TLS key. It can consist of up to 100 lowercase alphanumeric characters and the hyphen (-).
   * *Default:* `cordaclienttls`
+* `previousIdentityKeyAliases`
+  * List of previous node identity key aliases after key rotation. For more information about this feature, contact R3 support.
+  * Default value: an empty list.
 
 ## Tuning
 
