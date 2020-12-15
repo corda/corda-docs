@@ -22,7 +22,7 @@ A small number of tools and utilities are available to help with setting up, run
 
 ## Node Certificate Rotation Tool
 
-This tool was introduced in Corda Enterprise Network Manager 1.5 to enable the reissuing of node legal identity keys and certificates, allowing CENM to re-register a node (including a notary node) with a new certificate in the Network Map. For more information about this feature, contact [R3 support](https://www.r3.com/support/).
+This tool enables the reissuing of node legal identity keys and certificates, allowing CENM to re-register a node (including a notary node) with a new certificate in the Network Map. For more information about this feature, contact [R3 support](https://www.r3.com/support/).
 
 ## General running of network
 
