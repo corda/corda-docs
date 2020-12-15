@@ -21,7 +21,7 @@ weight: 20
 ## Upgrading from Open Source
 
 
-### Running on Corda Enterprise 4.6
+### Running on Corda Enterprise 4.7
 
 A prerequisite to upgrade to Corda Enterprise 4.7 is to ensure your CorDapp is upgraded to Corda open source 4.7.
 Please follow the instructions in [Upgrading CorDapps to newer Platform Versions](app-upgrade-notes.md) section to complete this initial step.
@@ -38,15 +38,15 @@ Please read [Corda and Corda Enterprise compatibility](version-compatibility.md)
 {{< /note >}}
 
 
-### Re-compiling for Corda Enterprise 4.6
+### Re-compiling for Corda Enterprise 4.7
 
 Re-compiling your CorDapp requires updating its associated Gradle build file as follows:
 
 ```shell
 ext.corda_release_distribution = 'com.r3.corda'
 ext.corda_core_release_distribution = 'net.corda'
-ext.corda_release_version = '4.6'
-ext.corda_core_release_version = '4.6'
+ext.corda_release_version = '4.7'
+ext.corda_core_release_version = '4.7'
 ext.corda_gradle_plugins_version = '5.0.12'
 ext.kotlin_version = '1.2.71'
 ext.quasar_version = '0.7.12_r3'
@@ -101,7 +101,7 @@ testCompile "$corda_release_distribution:corda-node-driver:$corda_release_versio
 ```
 
 {{< note >}}
-Corda Enterprise 4.6 binaries are not available in a public repository. In order to make the dependencies available for development, either
+Corda Enterprise 4.7 binaries are not available in a public repository. In order to make the dependencies available for development, either
 create a mirror repository and upload them there, or add them to the local Maven repository.
 
 Please consult your R3 support contact to request a copy of the Corda Enterprise Developer Pack (this contains a Maven repository mirror
@@ -140,7 +140,7 @@ Therefore you have to add the following variables to your build configuration:
 
 ```shell
 ext.corda_core_release_distribution = 'net.corda'
-ext.corda_core_release_version = '4.6'
+ext.corda_core_release_version = '4.7'
 ```
 
 Any dependency on `corda-core` (or `corda-serialization`) has to use these new variables to depend on the open source version of those
@@ -157,59 +157,6 @@ cordaCompile "$ext.corda_core_release_distribution:corda-core:$ext.corda_core_re
 ```
 
 
-## Upgrading from Enterprise 3.x
+## Upgrading from Enterprise lower than 4.5
 
-Firstly, please update all your CorDapp project dependencies as described in [re-compiling for Corda Enterprise](#recompiling-for-enterprise).
-
-
-Adjust your CorDapp source code as necessary to take into account the following upgrade constraints:
-
-
-
-* Contract CorDapps `.jar` files with external dependencies. Refers to a Contract CorDapp `.jar` file that depends on one or more classes from another independently classloaded `.jar` file (which may be another
-Contract CorDapp `.jar` file or a third-party library). Prior to Corda 4, the node used a single applications classloader for loading all CorDapps and 3rd party `.jar` files (including node dependencies
-themselves). Corda 4 introduced an isolated classloader - the **attachments classloader** - for the sole purpose of transaction verification.
-Upon transaction verification, this classloader will attempt to resolve Contract CorDapp attachments from its internal attachments storage
-(this holds all versions of all Contract CorDapps loaded by the node from its /cordapps directory or manually uploaded using the RPC
-`uploadAttachment` secure API). However, Contract CorDapps **do not currently have a mechanism to explicitly specify dependencies on
-external classes from other `.jar` files** so the attachments classloader has no means of knowing what other dependent `.jar` files to classload. The implications of this are as follows:
-* Contract CorDapps should be packaged as **fat JARs** in Corda 4: they should be self-contained and include all classes required by the attachments classloader.
-* Contract states created pre-Corda 4 using CorDapps that, purposefully or inadvertently had external dependencies on other `.jar` files, would
-seamlessly verify in transactions a pre-Corda 4 node due to the lack of classloader isolation of attachment JARs (for example, all classloaded `.jar` files are visible to
-all other classloaded `.jar` files). To maintain backwards compatibility, Corda 4 introduced a “classloader fallback mechanism” which attempts to
-resolve and classload any referenced classes not found by the attachments classloader by scanning the applications classloader.
-
-
-
-
-{{< warning >}}
-The “classloader fallback mechanism” will be removed in a future version of Corda in favour of declarative dependency management,
-whereby a Contract CorDapp will declare any dependencies on external classes in its own `.jar` file metadata (similar to module `requires`
-declarations in [Java 9 modules](https://www.oracle.com/corporate/features/understanding-java-9-modules.html)).
-
-{{< /warning >}}
-
-
-
-### Example
-
-CorDapps built using the new [Token SDK](https://github.com/corda/token-sdk) fall into this category, specifically any CorDapp that
-extends the Token SDK `EvolvableTokenType` which is an abstract class that indirectly implements `Contract`. The `build.gradle`
-file of the third-party Contract CorDapp should specify inclusive Token SDK CorDapp dependencies as follows:
-
-```groovy
-ext.tokens_sdk_release_group = 'com.r3.tokens-sdk'
-ext.tokens_sdk_version = '1.0-SNAPSHOT'
-...
-
-dependencies {
-    ...
-    // Token SDK dependencies.
-    compile "$tokens_sdk_release_group:contract:$tokens_sdk_version"
-    compile "$tokens_sdk_release_group:money:$tokens_sdk_version"
-    ...
-}
-```
-
-
-* Workflow CorDapps.Please follow the instructions listed in step 5 of [Upgrading apps to Corda 4](app-upgrade-notes.md#cordapp-upgrade-finality-flow-ref).
+You can only upgrade to Corda Enterprise 4.7 from versions 4.5 or 4.6. If you are on an older version, upgrade to 4.5 and then to 4.7.

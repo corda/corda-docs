@@ -310,9 +310,11 @@ Corda 4 requires Java 8u171 or any higher Java 8 patch level. Java 9+ is not cur
 
 ## Step 5. Update configuration
 
+This step is only required when updating from versions less than or equal to 4.5.
+
 Remove any `transactionIsolationLevel`, `initialiseSchema`, or `initialiseAppSchema` entries from the database section of your configuration
 
-## Step 6. Update the database (automatic) 
+## Step 6. Update the database (automatic)
 
 {{< note >}}Do not perform this step if you have already updated the database manually ([Step 3](#step-3-update-the-database-manual)).{{< /note >}}
 
