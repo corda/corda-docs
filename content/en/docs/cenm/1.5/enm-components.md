@@ -77,7 +77,7 @@ main zone as a whole.
 {{< /warning >}}
 
 
-# The Workflow
+## The Workflow
 
 The Identity Manager’s issuance and revocation services both support plugins to model the workflow of approving certificate issuance/revocation. This enables zone operators to use a provided workflow, such as JIRA, or develop their own workflow. Ultimately a request is either accepted or rejected. Certain
 elements can only be signed once a request has been approved and put into an accepted state, such as a CSR request.
@@ -98,20 +98,19 @@ Accepting a CRR is the opposite of accepting a CSR, it is a request to revoke a 
 often at the request of that legal identity). Thus, checks must be in place to prevent abuse of this system.
 
 
-# Databases
+## Databases
 
 The Identity Manager and Network Map(s) require their own persistence layer. The CENM suite supports in production
 environments:
 
-
 * Oracle database
-* Postgres
+* PostgreSQL
 * SQL Server
 
 For details of supported versions and configuration, see [CENM Databases](database-set-up.md).
 
 
-# Public Key Infrastructure (PKI)
+## Public Key Infrastructure (PKI)
 
 The certificates and keys that represent the network’s PKI will be stored within an HSM. To prevent any breach of the
 systems integrity being able to generate a signed certificate the signers should be operated from an isolated network.
@@ -122,10 +121,13 @@ the HSM via some manual authentication mechanism.
 
 See [Certificate Hierarchy Guide](pki-guide.md) for a detailed guide to PKI.
 
+{{< note >}}
+The Node Certificate Rotation Tool was introduced in Corda Enterprise Network Manager 1.5 to enable the reissuing of node legal identity keys and certificates, allowing CENM to re-register a node (including a notary node) with a new certificate in the Network Map. For more information about this feature, contact [R3 support](https://www.r3.com/support/).
+{{< /note >}}
 
-# The Node
+## The Node
 
-Run by entities who wish to join the network, a node submits it’s Legal Identity to the Identity Manager for approval.
+Run by entities who wish to join the network, a node submits its Legal Identity to the Identity Manager for approval.
 On success, it will receive a PKI certificate linking that legal identity with its public key. It will then use that
-certificate to sign it’s Node Info (detailing it’s externally addressable location on the internet) and submit that to
+certificate to sign it’s Node Info (detailing its externally addressable location on the internet) and submit that to
 the Network Map.
