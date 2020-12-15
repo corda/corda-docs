@@ -121,9 +121,6 @@ the HSM via some manual authentication mechanism.
 
 See [Certificate Hierarchy Guide](pki-guide.md) for a detailed guide to PKI.
 
-{{< note >}}
-The Node Certificate Rotation Tool was introduced in Corda Enterprise Network Manager 1.5 to enable the reissuing of node legal identity keys and certificates, allowing CENM to re-register a node (including a notary node) with a new certificate in the Network Map. For more information about this feature, contact [R3 support](https://www.r3.com/support/).
-{{< /note >}}
 
 ## The Node
 

@@ -46,7 +46,7 @@ The PKI Tool is intended to make it easy to generate all the certificates needed
 The tool generates the keys in the desired key store(s) and outputs a set of certificates necessary for correct Corda Network operation.
 
 {{< note >}}
-The Node Certificate Rotation Tool was introduced in Corda Enterprise Network Manager 1.5 to enable the reissuing of node legal identity keys and certificates, allowing CENM to re-register a node (including a notary node) with a new certificate in the Network Map. For more information about this feature, contact [R3 support](https://www.r3.com/support/).
+The Node Certificate Rotation Tool enables Corda root certificate rotation, which causes a reissuing of all certificates in the Corda certificate hierarchy. For more information about this feature, contact [R3 support](https://www.r3.com/support/).
 {{< /note >}}
 
 
