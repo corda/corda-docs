@@ -329,7 +329,7 @@ Alternatively, you can enable the DJVM when creating nodes via DemoBench by tick
 when creating the initial notary node.
 
 {{< warning >}}
-**DemoBench** is deprecated in Corda 4.6 and Corda Enterprise 4.6.
+**DemoBench** was deprecated in Corda 4.6 and Corda Enterprise 4.6.
 {{< /warning >}}
 
 
