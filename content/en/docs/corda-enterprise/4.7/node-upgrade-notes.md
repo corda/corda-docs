@@ -338,3 +338,9 @@ You may now do any checks that you wish to perform, read the logs, and so on. Wh
 `run setFlowsDrainingModeEnabled enabled: false`
 
 Your upgrade is complete.
+
+## Notes
+
+{{< warning >}}
+The Multi RPC Client version must be aligned with the node version, meaning that both must be running the same Corda Enterprise version. See [Querying flow data](node/operating/querying-flow-data.md) for more information.
+{{< /warning >}}
