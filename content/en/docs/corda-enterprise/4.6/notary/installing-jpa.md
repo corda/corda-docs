@@ -214,18 +214,18 @@ create database if not exists corda;
 
 create table corda.notary_committed_states (
   state_ref varchar(73) not null,
-  consuming_transaction_id varchar(64) not null,
+  consuming_transaction_id VARCHAR(144) not null,
   constraint id1 primary key (state_ref)
   );
 
 create table corda.notary_committed_transactions (
-  transaction_id varchar(64) not null,
+  transaction_id VARCHAR(144) not null,
   constraint id2 primary key (transaction_id)
   );
 
 create table corda.notary_request_log (
   id varchar(76) not null,
-  consuming_transaction_id varchar(64),
+  consuming_transaction_id VARCHAR(144),
   requesting_party_name varchar(255),
   request_timestamp timestamp not null,
   request_signature bytea not null,
@@ -237,7 +237,7 @@ create table corda.notary_request_log (
 create table corda.notary_double_spends (
   state_ref varchar(73) not null,
   request_timestamp timestamp not null,
-  consuming_transaction_id varchar(64) not null,
+  consuming_transaction_id VARCHAR(144) not null,
   constraint id4 primary key (state_ref, consuming_transaction_id),
   index (state_ref, request_timestamp, consuming_transaction_id)
   );
@@ -348,18 +348,18 @@ database created above.
 ```sql
 create table corda_adm.notary_committed_states (
   state_ref varchar(73) not null,
-  consuming_transaction_id varchar(64) not null,
+  consuming_transaction_id VARCHAR(144) not null,
   constraint id1 primary key (state_ref)
   );
 
 create table corda_adm.notary_committed_transactions (
-  transaction_id varchar(64) not null,
+  transaction_id VARCHAR(144) not null,
   constraint id2 primary key (transaction_id)
   );
 
 create table corda_adm.notary_request_log (
   id varchar(76) not null,
-  consuming_transaction_id varchar(64),
+  consuming_transaction_id VARCHAR(144),
   requesting_party_name varchar(255),
   request_timestamp timestamp not null,
   request_signature RAW(1024) not null,
@@ -370,7 +370,7 @@ create table corda_adm.notary_request_log (
 create table corda_adm.notary_double_spends (
   state_ref varchar(73) not null,
   request_timestamp timestamp not null,
-  consuming_transaction_id varchar(64) not null,
+  consuming_transaction_id VARCHAR(144) not null,
   constraint id4 primary key (state_ref)
   );
 ```
