@@ -106,7 +106,7 @@ To list network participants that have or have not accepted the new network para
 run the following command:
 
 ```bash
-cenm signer netmap netparams update status --network-params-hash <parameters update hash value>
+cenm netmap netparams update status --network-params-hash <parameters update hash value>
 ```
 
 ## Execute network parameters update
@@ -140,7 +140,7 @@ from within the same network as the Signing Service:
 It is possible to cancel a previously scheduled update. To do so, run the following command:
 
 ```bash
-cenm signer netmap netparams update cancel
+cenm netmap netparams update cancel
 ```
 
 The Network Map Service will continue to advertise the cancelled update until a new network map is signed.

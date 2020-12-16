@@ -24,11 +24,6 @@ Liquibase database management scripts and adding these scripts into the database
 The migration from an H2 database to a 3rd party commercial database, while upgrading to Corda Enteprise,
 requires a third party tool to migrate data.
 
-An upgrade from the older Corda (open source) release (3.x) is also feasible,
-but you need to upgrade the Corda node to the latest 3.x version first (3.3, at time of writing).
-
-
-
 ## Upgrade from Corda (open source) to Corda Enterprise
 
 To upgrade Corda (open source) to Corda Enterprise within the same major release version, follow the Corda node upgrade procedure.
@@ -98,15 +93,10 @@ Please contact R3 for further advice.
 
 ## Upgrade from an older Corda (open source) release to Corda Enterpise
 
-CorDapps, contracts and states written for Corda 3.x and Corda 4.x are compatible with Corda Enterprise 4.7, so upgrading
+CorDapps, contracts and states written for Corda 4.x are compatible with Corda Enterprise 4.7, so upgrading
 existing open source Corda nodes should be a simple case of updating the Corda `.jar` file.
 See node-upgrade-notes for general instructions on upgrading your node.
 For developer information on recompiling CorDapps against Corda Enterprise, see upgrade-notes.
-
-Please ensure you follow the instructions in the [Corda 3.3 Upgrade Notes](../../corda-os/3.3/upgrade-notes.md)
-to upgrade your database to the latest minor release of Corda (3.3 as time of writing),
-and then proceed with the upgrade following the instructions in [above](#reusing-an-existing-database).
-
 
 ### Reusing an existing database
 

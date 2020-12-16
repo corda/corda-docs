@@ -57,13 +57,9 @@ user guide to learn how to make backups.
 
 We provide some [backup recommendations](node-administration.md#backup-recommendations) if you’d like more detail.
 
-## Step 3. Upgrade the node database to Corda 3.2 or later
+## Step 3. Upgrade the node database to Corda 4.0 or later
 
-Ensure your node is running Corda 3.2 or later.
-Corda 3.2 required a database table name change and column type change in PostgreSQL.
-These changes need to be applied to the database before upgrading to Corda 4.0.
-Refer to [Corda 3.2 release notes](https://docs.corda.net/releases/release-V3.4/upgrade-notes.html#v3-1-to-v3-2)
-for further information.
+Ensure your node is running Corda 4.0 or later.
 
 ## Step 4. Replace `corda.jar` with the new version
 
@@ -77,6 +73,8 @@ Corda 4 requires Java 8u171 or any higher Java 8 patchlevel. Java 9+ is not curr
 {{< /important >}}
 
 ## Step 5. Update configuration
+
+This step is only required when updating from versions less than or equal to 4.5.
 
 Remove any `transactionIsolationLevel`, `initialiseSchema`, or `initialiseAppSchema` entries from the database section of your configuration.
 
