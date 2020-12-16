@@ -73,6 +73,9 @@ all appropriate parties and record the data into the ledger. These actions are b
 rather than calling the individual steps manually. However, do note that the final broadcast to the other nodes is
 asynchronous, so care must be used in unit testing to correctly await the vault updates.
 
+{{< note >}}
+See [Reissuing states](reissuing-states.md) for information about reissuing states with a guaranteed state replacement, which allows you to break transaction backchains.
+{{< /note >}}
 
 ## Gathering inputs
 

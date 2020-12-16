@@ -45,6 +45,9 @@ This lifecycle for commercial paper is illustrated in the diagram below:
 
 {{< figure alt="contract cp" zoom="/en/images/contract-cp.png" >}}
 
+{{< note >}}
+See [Reissuing states](reissuing-states.md) for information about reissuing states with a guaranteed state replacement, which allows you to break transaction backchains.
+{{< /note >}}
 ## Defining the class
 
 A smart contract is a class that implements the `Contract` interface. This can be either implemented directly, as done
