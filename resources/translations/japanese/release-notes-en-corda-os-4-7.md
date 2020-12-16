@@ -33,7 +33,7 @@ Reissuing a state is usually considered for privacy reasons or to optimise perfo
 
 Corda 4.7 introduces a new mechanism to reissue states, bringing platform support for creating breaks in transaction chains where state owners can request a transaction break through a flow and rest assured that a state is not removed without being replaced. Nodes can now request the reissuance of a state by returning it to the issuer or to another trusted party. This reissuance mechanism is atomic and risk-free and provides better support for a developer pattern known as “chain snipping" - once a state is reissued, its pre-reissuance transaction history is no longer shared as part of transaction resolution. This improves performance for applications that build up very long transaction chains, and can help avoid leakage of information regarding the state’s history.
 
-For more information about this feature, see [Reissuing a state](reissuing-a-state.md).
+For more information about this feature, see [Reissuing a state](reissuing-states.md).
 
 #### Business Network Membership version 1.1
 
