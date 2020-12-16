@@ -18,7 +18,7 @@ title: Release notes
 
 ## Corda Enterprise Network Manager 1.5
 
-Corda Enterprise Network Manager (CENM) 1.5 introduces a number of new features and enhancements, including a new [CENM Console](cenm-console.md), single sign-on for Azure AD for Corda services, and the ability to reissue node legal identity keys and certificates.
+Corda Enterprise Network Manager (CENM) 1.5 introduces a number of new features and enhancements, including a new [CENM management console](cenm-console.md), single sign-on for Azure AD for Corda services, and the ability to reissue node legal identity keys and certificates.
 
 While this release is backward-compatible, you should consider upgrading to this release from earlier versions of the Corda Enterprise Network Manager.
 
@@ -28,7 +28,7 @@ Make sure to check out the [Upgrading Corda Enterprise Network Manager](upgrade-
 
 ### New features and enhancements
 
-#### CENM Console
+#### CENM management console
 
 The [CENM management console](cenm-console.md) is a new CENM web UI that enables you to view CSR and CRR requests, display nodes in the network map, run a flag day, and update services configuration.
 
