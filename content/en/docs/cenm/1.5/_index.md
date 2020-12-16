@@ -30,14 +30,20 @@ that are otherwise available from [Corda Network](https://corda.network), which 
 
 {{< /note >}}
 
-The Corda Enterprise Network Manager provides three main services:
+The Corda Enterprise Network Manager provides the following services:
 
-* [Identity Manager Service](identity-manager.md) - enables nodes to join the network, and handles revocation of a node certificate.
-* [Network Map Service](network-map.md) - provides a global view of the network.
-* [Signing Service](signing-service.md) - provides a way to sign approved requests to join the network (Certificate Signing Requests - CSRs) or revoke a certificate (Certificate Revocation Requests - CRRs), as well as changes to the network map.
+* [Identity Manager Service](identity-manager.md) Enables nodes to join the network, and handles revocation of a node certificate.
+* [Network Map Service](network-map.md) Provides a global view of the network.
+* [Signing Service](signing-service.md) Provides a way to sign approved requests to join the network (Certificate Signing Requests - CSRs) or revoke a certificate (Certificate Revocation Requests - CRRs), as well as changes to the network map.
+* [Auth Service](auth-service.md) The user authentication and authorization service for CENM. Stores and controls secure user-access to network services.
+* [Gateway Service](gateway-service.md) Provides a transfer layer between front-end Corda Enterprise Network Manager (CENM) interfaces, and the Auth Service that underpins authentication and authorisation in CENM.
+* [Zone Service](zone-service.md) A central store of configuration for other CENM services for one or more zones, and optionally for their Sub Zones. Stores relevant configurations for the Identity Manager Service, the Network Map Service, and the Signing Service.
+* [Angel Service](angel-service.md) An adapter, which manages the lifecycle of other services such as the Network Map Service or the Identity Manager Service, to make them more compatible with packaging tools such as Docker.
 
 {{< note >}}
 For instructions on deploying Corda Enterprise Network Manager with Docker, Kubernetes, and Helm charts, see [CENM Deployment with Docker, Kubernetes, and Helm charts](deployment-kubernetes.md).
+
+For instructions on deploying Corda Enterprise Network Manager with Amazon Web Services (AWS), see [CENM Deployment on AWS](aws-deployment-guide.md).
 
 For a quick start guide on deploying Corda Enterprise Network Manager services as a test environment, see the [CENM test environment quick start guide](quick-start.md).
 {{< /note >}}
@@ -95,11 +101,20 @@ Configuration
 
 Tools and utilities
 
-* [Tools and utilities](tools-index.md)
+* [Index](tools-index.md)
+* [Public Key Infrastructure (PKI) Tool](pki-tool.md)
+* [Certificate Revocation Request Submission Tool](tool-crr-submission.md)
+* Node Certificate Rotation Tool (contact [R3 support](https://www.r3.com/support/))
+* [CENM Command-line Interface Tool](cenm-cli-tool.md)
+* [CENM User Admin tool](user-admin.md)
+* [CENM Management Console](cenm-console.md)
+* [Config Obfuscation Tool](../../corda-enterprise/4.5/tools-config-obfuscator.md)
+* [CRL Endpoint Check Tool](crl-endpoint-check-tool.md)
 * [Embedded shell](shell.md)
 
 Public Key Infrastructure
 
+* [Public Key Infrastructure (PKI) Specifications](pki-specifications.md)
 * [Certificate hierarchy guide](pki-guide.md)
 * [Public Key Infrastructure (PKI) Tool](pki-tool.md)
 
