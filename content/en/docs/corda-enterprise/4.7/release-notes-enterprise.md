@@ -87,7 +87,7 @@ Corda Enterprise 4.7 introduces a capability for reissuing node legal identity k
 
 ### Other changes and improvements
 
-* **Single sign-on for Azure AD.** You can now operate a single sign on (SSO) set-up between Corda services and Azure AD, with a [simple configuration](azure-ad-sso.md) to both your Azure AD and Corda Auth services.
+* **Single sign-on for Azure AD.** You can now operate a single sign on (SSO) set-up between Corda services and Azure AD, with a [simple configuration](../../cenm/1.5/azure-ad-sso.md) to both your Azure AD and Corda Auth services.
 * **HSM integration support.** Corda Enterprise now supports users to integrate unsupported HSMs with their Corda Enterprise instance. This release includes a sample Java implementation to be used as an example, and a testing suite that can be used to test an implementation before deployment. For guidance on writing an HSM integration, see [Testing an HSM integration](operations/deployment/hsm-integration-tck.md/).
 * **Ability to store confidential identity keys in HSMs.** Corda Enterprise now provides support for storing the keys associated with confidential identities in nCipher, Futurex, and Azure Key Vault HSMs. nCipher and Azure Key Vault HSMs support native use of confidential identity keys, and Futurex HSMs support the wrapped key mode. For more information on configuring these HSMs to store confidential identity keys, see the [HSM documentation](operations/deployment/hsm-deployment-confidential.md#using-an-hsm-with-confidential-identities/).
 * **HSM APIs.** Corda Enterprise 4.7 introduces an HSM library with its own API that external tooling developers can use to expand Corda Enterprise HSM support.
