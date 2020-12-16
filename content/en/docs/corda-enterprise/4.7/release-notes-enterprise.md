@@ -76,8 +76,8 @@ By design, a notary can operate normally under extremely high loads of traffic. 
 
 Corda Enterprise 4.7 comes with two new management consoles:
 
-* The **Flow Management Console** allows you to see the state of the flows running on a node and perform some operations on them. For more information, see [Flow Management Console](node/node-flow-management-console.md).
-* The **Node Management Console** allows you to see information about a node and perform some operations on it. For more information, see [Node Management Console](node/management-console/_index.md).
+* The **Flow management console** allows you to see the state of the flows running on a node and perform some operations on them. For more information, see [Flow management console](node/node-flow-management-console.md).
+* The **Node management console** allows you to see information about a node and perform some operations on it. For more information, see [Node management console](node/management-console/_index.md).
 
 They both run as part of the CENM [Gateway service](../../cenm/1.5/gateway-service.md).
 
