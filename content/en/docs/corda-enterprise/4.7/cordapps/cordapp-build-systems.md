@@ -8,7 +8,7 @@ tags:
 - build
 - systems
 title: Building and installing a CorDapp
-weight: 10
+weight: 100
 ---
 
 # Building and installing a CorDapp

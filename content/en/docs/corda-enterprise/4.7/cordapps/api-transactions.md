@@ -105,6 +105,10 @@ The `StateRef` links an input state back to the transaction that created it. Thi
 “chains” linking each input back to an original issuance transaction. This allows nodes verifying the transaction
 to “walk the chain” and verify that each input was generated through a valid sequence of transactions.
 
+{{< note >}}
+See [Reissuing states](reissuing-states.md) for information about reissuing states with a guaranteed state replacement, which allows you to break transaction backchains.
+{{< /note >}}
+
 
 #### Reference input states
 

@@ -6,7 +6,7 @@ menu:
 tags:
 - cordapp
 title: CorDapp structure and format
-weight: 5
+weight: 30
 ---
 
 

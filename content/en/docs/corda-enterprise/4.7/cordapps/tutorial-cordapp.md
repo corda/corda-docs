@@ -16,7 +16,7 @@ tags:
 - deploy
 - quickstart
 title: Running a sample CorDapp
-weight: 3
+weight: 20
 
 ---
 

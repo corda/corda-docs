@@ -75,6 +75,9 @@ are considered to have a stake in the state. Among other things, the `participan
 * Need to sign any notary-change and contract-upgrade transactions involving this state
 * Receive any finalised transactions involving this state as part of `FinalityFlow` / `ReceiveFinalityFlow`
 
+{{< note >}}
+See [Reissuing states](reissuing-states.md) for information about reissuing states with a guaranteed state replacement, which allows you to break transaction backchains.
+{{< /note >}}
 
 ## ContractState sub-interfaces
 

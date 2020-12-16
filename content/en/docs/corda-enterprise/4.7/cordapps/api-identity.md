@@ -9,7 +9,7 @@ tags:
 - api
 - identity
 title: CorDapp Identities
-weight: 9
+weight: 90
 ---
 
 
@@ -44,6 +44,3 @@ basis.
 
 The `PartyAndCertificate` class is also used by the network map service to represent well-known identities, with the
 certificate path proving the certificate was issued by the doorman service.
-
-
-

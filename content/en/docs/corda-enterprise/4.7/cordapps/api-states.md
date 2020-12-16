@@ -9,7 +9,7 @@ tags:
 - api
 - states
 title: Writing CorDapp States
-weight: 7
+weight: 60
 ---
 
 # Writing CorDapp States
@@ -48,6 +48,9 @@ Among other things, the `participants` will:
 * Need to sign any notary change and contract upgrade transactions involving this state
 * Receive any finalised transactions involving this state as part of `FinalityFlow` / `ReceiveFinalityFlow`
 
+{{< note >}}
+See [Reissuing states](reissuing-states.md) for information about reissuing states with a guaranteed state replacement, which allows you to break transaction backchains.
+{{< /note >}}
 
 ## ContractState sub-interfaces
 
@@ -435,6 +438,3 @@ When building transactions, any `StatePointer` s contained within inputs or outp
 be optionally resolved to reference states using the `resolveStatePointers` method. The effect is that the pointed to
 data is carried along with the transaction. This may or may not be appropriate in all circumstances, which is why
 calling the method is optional.
-
-
-

@@ -8,7 +8,7 @@ tags:
 - core
 - types
 title: 'Core types in the Corda API'
-weight: 300
+weight: 190
 ---
 
 # API: Core types
