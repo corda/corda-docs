@@ -9,7 +9,7 @@ tags:
 - api
 - contracts
 title: Writing CorDapp Contracts
-weight: 6
+weight: 50
 ---
 
 
@@ -49,6 +49,9 @@ class XContract : Contract {
 }
 ```
 
+{{< note >}}
+See [Reissuing states](reissuing-states.md) for information about reissuing states with a guaranteed state replacement, which allows you to break transaction backchains.
+{{< /note >}}
 
 ## Understanding the `Contract` class
 
@@ -220,6 +223,3 @@ class XContract : Contract {
 
 After learning about writing contracts, we suggest you either learn more about how contract constraints can be used in
 [Contract Constraints](api-contract-constraints.md), or learn about [Writing CorDapp States](api-states.md), or [Writing CorDapp Flows](api-flows.md).
-
-
-

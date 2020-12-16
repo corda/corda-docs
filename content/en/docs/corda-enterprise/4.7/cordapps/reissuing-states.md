@@ -3,8 +3,8 @@ date: '2020-04-07T12:00:00Z'
 menu:
   corda-enterprise-4-7:
     identifier: corda-enterprise-4-7-reissuing-states
-    parent: corda-enterprise-4-7-cordapps-states
-    weight: 20
+    parent: corda-enterprise-4-7-cordapps
+    weight: 65
 tags:
 - state
 - reissue

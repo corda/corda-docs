@@ -22,7 +22,6 @@ title: 'API: Contracts'
 
 {{< note >}}
 Before reading this page, you should be familiar with the key concepts of [Contracts](key-concepts-contracts.md).
-
 {{< /note >}}
 
 
@@ -131,6 +130,10 @@ public void verify(LedgerTransaction tx) {
 {{% /tab %}}
 
 {{< /tabs >}}
+
+{{< note >}}
+See [Reissuing states](reissuing-states.md) for information about reissuing states with a guaranteed state replacement, which allows you to break transaction backchains.
+{{< /note >}}
 
 
 ## LedgerTransaction

@@ -6,7 +6,7 @@ menu:
 tags:
 - oracles
 title: Writing oracle services
-weight: 8
+weight: 80
 ---
 
 # Writing oracle services

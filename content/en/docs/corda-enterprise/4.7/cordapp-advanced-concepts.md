@@ -11,7 +11,7 @@ tags:
 - advanced
 - concepts
 title: Advanced CorDapp concepts
-weight: 13
+weight: 140
 ---
 
 
