@@ -13,13 +13,9 @@ title: Reissuing states
 ---
 
 
-# Reissuing states: breaking transaction backchains by reissuing a state with a guaranteed state replacement
+# Reissuing states
 
-State reissuance: breaking transaction backchains by reissuing a state with a guaranteed state replacement
-
-Ability to break transaction backchains by reissuing a state with a guaranteed state replacement
-
-
+The state reissuance mechanism described on this page enables you to break transaction backchains by reissuing a state with a guaranteed state replacement.
 
 ## Overview
 
@@ -29,7 +25,7 @@ Long transaction backchains are undesirable for two reasons:
 * **Performance**: Resolution along the chain slows down significantly.
 * **Privacy**: All backchain transactions are shared with the new owner.
 
-Prior to Corda 4.7, the approach used to resolve the problem with long transaction backchains has been for a trusted issuing party to simply reissue the state. This has meant that the state could simply be exited from the ledger and then re-issued. As there would be no links remaining between the exit transaction and the reissuance transactions, the transaction backchain would be pruned.
+Prior to Corda 4.7, the only possible approach to resolve the problem with long transaction backchains was for a trusted issuing party to simply reissue the state. This meant that the state could simply be exited from the ledger and then reissued. As there would be no links remaining between the exit transaction and the reissuance transactions, the transaction backchain would be pruned.
 
 However, this approach does not provide a guarantee that the issuing party would reissue the exited state as the actions described above are not atomic.
 
@@ -38,10 +34,10 @@ The new state reissuance functionality provides a state reissuance algorithm tha
 {{< note >}}
 State encumbrance refers to a state pointing to another state that must also appear as an input to any transaction consuming this state. A state may be encumbered by up to one other state, which is called an "encumbrance" state. The encumbrance state, if present, forces additional controls over the encumbered state, since the encumbrance state contract will also be verified during the execution of the transaction.
 
-See [Defining encumbrances](https://docs.corda.net/docs/corda-os/4.6/tutorial-contract.html#defining-encumbrances) in the public Corda docs for more information.
+See [Defining encumbrances](tutorial-contract.md#defining-encumbrances) for more information.
 {{< /note >}}
 
-In addition, a trusted issuing party can reissue multiple fungible states at once, on the condition that all of these states are of the same type - for example, a number of tokens of the same type and issued by the same party.
+In addition, a single trusted issuing party is allowed to reissue multiple fungible states at once, provided that all these states are of the same type. For example, you can issue at once a number of tokens with different quantities but with the same `TokenType` and issued by the same party.
 
 {{< note >}}
 This functionality is part of Corda open source 4.7 and can be fully leveraged by Corda Enterprise 4.7 users as well.
@@ -56,11 +52,6 @@ A trusted issuer reissues an encumbered state before the original state is delet
 1. The issuing party issues an encumbered state (State B) based on the original state (State A).
 2. The original state (State A) is deleted.
 3. Requester unlocks the reissued state (State B) immediately after the original state (State A) is deleted.
-
-{{< note >}}
-A single issuer is allowed to reissue multiple fungible states at once, provided that all these states are of the same type. For example, you can issue at once a number of tokens with different quantities but with the same `TokenType` and issued by the same party.
-{{< /note >}}
-
 
 ### Detailed steps
 
@@ -116,7 +107,7 @@ When the issuing party accepts a state reissuance request:
 * They generate encumbered copies of the states provided in the request.
 * They generate a lock state, which enforces successful state reissuance and ensures that the entire state reissuance process is successful.
 * The status of the newly created `ReIssuanceLock` object is set to `ACTIVE`.
-* The value of the `issuerIsRequiredExitTransactionSigner` property of the `ReIssuanceLock` state is set to the value of `extraAssetExitCommandSigners: List<AbstractParty>`.
+* The value of the `extraAssetExitCommandSigners: List<AbstractParty>` property is used for the `ReIssuanceLock` state.
 
 #### Step 4: The requesting party exits the original states
 
@@ -129,7 +120,7 @@ In case multiple states are reissued, there is no requirement that all the origi
 Constraints:
 * The command to run the transaction, which exits the original state(s) and serves as proof of exit, cannot produce any outputs.
 * There cannot be anything in the contract preventing lock being a transaction input.
-* If the `requiredExitCommandSigners` property of `ReIssuanceLock` is not empty, it must be signed by the listed parties as per the value of `extraAssetExitCommandSigners: List<AbstractParty>`.
+* If the `extraAssetExitCommandSigners` property of `ReIssuanceLock` is not empty, it must be signed by the listed parties as per the value of `extraAssetExitCommandSigners: List<AbstractParty>`.
 
 {{< note >}}
 Multiple exit transactions are supported because the requesting party may prefer to delete states through a number of transactions, or may simply forget to include some of the original states in the (single) exit transaction. However, multiple states should be exited using a single exit transaction so that the requesting party can ensure that all original states are still available, and also to eliminate the risk of exiting states whose reissued copies cannot be unlocked (this could happen when some original states have been
@@ -188,15 +179,15 @@ The flow returns a set because the exact order of backchain transactions is not 
 
 ### Reissuance - state machine
 
-State machine [CDL](https://docs.corda.net/docs/cdl/cdl/cdl-overview.html) chart:
+State machine [CDL](../../cdl/cdl/cdl-overview.md) chart:
 
-{{% figure zoom="reissuance-state-machine.png" alt="State reissuance - state machine CDL chart"%}}
+{{% figure zoom="/en/images/reissuance-state-machine.png" alt="State reissuance - state machine CDL chart"%}}
 
 ### Reissuance - state evolution
 
-State evolution [CDL](https://docs.corda.net/docs/cdl/cdl/cdl-overview.html) chart:
+State evolution [CDL](../../cdl/cdl/cdl-overview.md) chart:
 
-{{% figure zoom="reissuance-state-evolution.png" alt="State reissuance - state evolution CDL chart"%}}
+{{% figure zoom="/en/images/reissuance-state-evolution.png" alt="State reissuance - state evolution CDL chart"%}}
 
 ## Limitations
 
@@ -264,7 +255,7 @@ If the issuing party is not a participant and issuer information is not included
 
 The issuing party, contrary to a requesting party, is trusted to start the appropriate flows. If the issuing party is corrupted, they can implement their own version of a reissuance flow that does not check if the requested states have already been reissued. If such verification is disabled, the requesting party can create many reissuance requests, pointing to the same state, and use the same exit proof to unlock all of them.
 
-## Code examples and sample apps
+## Sample CorDapps
 
 State reissuance CorDapp: [https://github.com/corda/reissue-cordapp](https://github.com/corda/reissue-cordapp).
 
