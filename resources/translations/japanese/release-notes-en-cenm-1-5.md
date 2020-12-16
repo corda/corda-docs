@@ -30,7 +30,7 @@ Make sure to check out the [Upgrading Corda Enterprise Network Manager](upgrade-
 
 #### CENM Console
 
-The [CENM Console](cenm-console.md) is a new CENM web UI that enables you to view CSR and CRR requests, display nodes in the network map, run a flag day, and update services configuration.
+The [CENM management console](cenm-console.md) is a new CENM web UI that enables you to view CSR and CRR requests, display nodes in the network map, run a flag day, and update services configuration.
 
 #### Single sign-on for Azure AD
 
