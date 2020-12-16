@@ -43,7 +43,7 @@ Corda 4.7 introduces enhancements to the [Business Network Membership extension]
 
 A new RPC Client, called the Multi RPC Client, has been added in Corda 4.7. Node operators can use the Multi RPC client to interact with a Corda node via the `net.corda.core.messaging.CordaRPCOps` remote RPC interface.
 
-For more information, see the [Interacting with a node](clientrpc.html) documentation section.
+For more information, see the [Interacting with a node](clientrpc.md) documentation section.
 
 ### Featured apps
 
