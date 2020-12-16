@@ -15,7 +15,7 @@ tags:
 title: Third-party software licence information
 ---
 
-# Corda Open Source 4.6 third-party software notices and information
+# Corda Open Source 4.7 third-party software notices and information
 
 **Do not translate or localise.**
 
