@@ -64,7 +64,7 @@ See the [Archiving Service documentation section](node/archiving/archiving-setup
 
 To optimise the way notaries handle traffic, we have updated the notary back pressure mechanism (also referred to as [ETA mechanism](notary/faq/eta-mechanism.md#what-is-the-eta-mechanism)) to improve notary performance when there is a sudden increase in notarisation requests. This change increases the accuracy of transaction retry estimates that the notary provides to the node.
 
-As a result, the notary back pressure mechanism is now more precise and responsive under "heavy traffic conditions", which leads to fewer node retries, optimised performance, and a better end-user experience for node operators.
+As a result, the notary back pressure mechanism is now [more precise and responsive](notary/notary-load-handling.md) under "heavy traffic conditions", which leads to fewer node retries, optimised performance, and a better end-user experience for node operators.
 
 {{< note >}}
 What is the notary back pressure / ETA mechanism?
@@ -76,8 +76,8 @@ By design, a notary can operate normally under extremely high loads of traffic. 
 
 Corda Enterprise 4.7 comes with two new management consoles:
 
-* The **Flow Management Console** allows you to see the state of the flows running on a node and perform some operations on them. For more information, see [Flow Management Console](flow-management-console.md).
-* The **Node Management Console** allows you to see information about a node and perform some operations on it. For more information, see [Node Management Plug-in](node-management-console.md).
+* The **Flow Management Console** allows you to see the state of the flows running on a node and perform some operations on them. For more information, see [Flow Management Console](node/node-flow-management-console.md).
+* The **Node Management Console** allows you to see information about a node and perform some operations on it. For more information, see [Node Management Console](node/management-console/_index.md).
 
 They both run as part of the CENM [Gateway service](../../cenm/1.5/gateway-service.md).
 
@@ -87,8 +87,8 @@ Corda Enterprise 4.7 introduces a capability for reissuing node legal identity k
 
 ### Other changes and improvements
 
-* **Single sign-on for Azure AD.** You can now operate a single sign on (SSO) set-up between Corda services and Azure AD, with a simple configuration to both your Azure AD and Corda Auth services.
-* **HSM integration support.** Corda Enterprise now supports users to integrate unsupported HSMs with their Corda Enterprise instance. This release includes a sample Java implementation to be used as an example, and a testing suite that can be used to test an implementation before deployment. For guidance on writing an HSM integration, see the [HSM documentation](operations/deployment/hsm-integration.md/).
+* **Single sign-on for Azure AD.** You can now operate a single sign on (SSO) set-up between Corda services and Azure AD, with a [simple configuration](azure-ad-sso.md) to both your Azure AD and Corda Auth services.
+* **HSM integration support.** Corda Enterprise now supports users to integrate unsupported HSMs with their Corda Enterprise instance. This release includes a sample Java implementation to be used as an example, and a testing suite that can be used to test an implementation before deployment. For guidance on writing an HSM integration, see [Testing an HSM integration](operations/deployment/hsm-integration-tck.md/).
 * **Ability to store confidential identity keys in HSMs.** Corda Enterprise now provides support for storing the keys associated with confidential identities in nCipher, Futurex, and Azure Key Vault HSMs. nCipher and Azure Key Vault HSMs support native use of confidential identity keys, and Futurex HSMs support the wrapped key mode. For more information on configuring these HSMs to store confidential identity keys, see the [HSM documentation](operations/deployment/hsm-deployment-confidential.md#using-an-hsm-with-confidential-identities/).
 * **HSM APIs.** Corda Enterprise 4.7 introduces an HSM library with its own API that external tooling developers can use to expand Corda Enterprise HSM support.
 * Node `initial-registration` now includes the creation of the `identity-private-key` keystore alias. For more information, see the documentation about [node folder structure](node-structure.md#node-folder-structure). Previously, only `cordaclientca` and `cordaclienttls` aliases were created during `initial-registration`, while `identity-private-key` was generated on demand on the first node run. Therefore in Corda Enterprise 4.7 the content of `nodekeystore.jks` is never altered during a regular node run (except for `devMode = true`, where the certificates directory can be filled with pre-configured keystores).
