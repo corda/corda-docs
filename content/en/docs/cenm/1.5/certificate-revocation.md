@@ -150,6 +150,16 @@ Corda AMQP serialization framework is used as the serialization framework.
 
 {{< note >}} It is assumed that those endpoints are used by dedicated tools that support this kind of data encoding, because of the proprietary serialization mechanism. {{< /note >}}
 
+{{< note >}}
+Console help also lists the following reasons for revocation but these are **not** supported by the Identity Manager:
+
+* `UNSPECIFIED`
+* `CERTIFICATE_HOLD`
+* `REMOVE_FROM_CRL`
+* `AA_COMPROMISE`
+* `UNUSED`
+{{< /note >}}
+
 
 ## Internal protocol
 
