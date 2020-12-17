@@ -130,4 +130,4 @@ For more information about platform versions, see [Versioning](cordapps/versioni
 
 {{< note >}}
 The list above contains known issues specific to Corda Enterprise 4.7. See the release notes for previous Corda Enterprise releases for information about known issues specific to those versions.
-{{ < /note >}}
+{{< /note >}}
