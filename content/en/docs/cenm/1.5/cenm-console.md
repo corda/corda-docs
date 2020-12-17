@@ -37,7 +37,7 @@ To use the CENM management console, you must install it as a *plug-in* to your G
 
 The CENM management console is accessed via the [Gateway service](gateway-service.md). Once you have added the plugin binaries to the correct directory on the machine that hosts your Gateway Service, you can access the web service from any browser.
 
-To install the
+To install the CENM management console:
 
 1. Download the latest Gateway Service binaries from [Artifactory](https://software.r3.com).
 2. Download the CENM management console Gateway Plugin binaries from Artifactory.
@@ -91,7 +91,7 @@ See the [CENM User Admin tool](user-admin.md) documentation for more information
 
 The CENM management console is located in a directory within the machine that hosts your Gateway Service, followed by `/cenm`.
 
-For example: http://10.230.41.12:8080/cenm
+For example: `http://10.230.41.12:8080/cenm`
 
 To access the CENM management console:
 
@@ -143,41 +143,41 @@ To update the Network Parameters:
 
 2. Give a name to the update in the **ABOUT THE UPDATE** field.
 
-2. Use the calendar picker to schedule the time and date of the **Flag Day** - this is the period during which the network parameters will update.
+3. Use the calendar picker to schedule the time and date of the **Flag Day** - this is the period during which the network parameters will update.
 
-3. Make the required changes in the **BASIC PARAMETERS** fields. Alternatively, to make the changes in a command-line interface within the console, select the **CODE VIEW** in the top right corner of the screen:
+4. Make the required changes in the **BASIC PARAMETERS** fields. Alternatively, to make the changes in a command-line interface within the console, select the **CODE VIEW** in the top right corner of the screen:
 
 {{% figure zoom="/en/images/cenm-management-console-net-params-code-view.png" alt="CENM management console - Network Parameters" %}}
 
-4. If required, add a Notary to the update in the **NOTARIES** section.
+5. If required, add a Notary to the update in the **NOTARIES** section.
 
-5. Click **SET PARAMETERS**.
+6. Click **SET PARAMETERS**.
 
     Now that the update has been scheduled, click **ADVERTISE UPDATE** to advertise the update:
 
 {{% figure zoom="/en/images/cenm-management-console-net-params-advertise.png" alt="CENM management console - Network Parameters - advertise update" %}}
 
-6. Once you have updated the parameters, scroll down and click **ADVERTISE UPDATE** again to advertise the parameters update:
+7. Once you have updated the parameters, scroll down and click **ADVERTISE UPDATE** again to advertise the parameters update:
 
 {{% figure zoom="/en/images/cenm-management-console-net-params-advertise-params.png" alt="CENM management console - Network Parameters - advertise parameters update" %}}
 
-7. You can now see the nodes that have accepted the update, and those who are still pending.
+8. You can now see the nodes that have accepted the update, and those that are still pending.
 
     Once you have advertised the update, and the scheduled time has been reached, you can execute the flag day.
 
-8. Scroll down and click **Execute Flag Day**:
+9. Scroll down and click **Execute Flag Day**:
 
 {{% figure zoom="/en/images/cenm-management-console-net-params-acceptance.png" alt="CENM management console - Network Parameters - execute Flag Day" %}}
 
 ### Check Identity Manager Service status and progress
 
-To access the Identity Manager Service, click **IDENTITY MANAGER** in the top navigation area of the screen. A list of CSR requests and their status is shown in the **CSR STATUS** tab:
+To access the Identity Manager Service, click **IDENTITY MANAGER** in the top navigation area of the screen. A list of CSR requests and their statuses is shown in the **CSR STATUS** tab:
 
 {{% figure zoom="/en/images/cenm-management-console-identity-manager-csr-status.png" alt="CENM management console - Identity Manager Service" %}}
 
 #### Check CSR (onboarding) and CRL (removal) status
 
-To check the status of members being onboarded into the network, click the **CSR STATUS** tab. You can see the status tag, and details of the request like the Request ID and legal name of the prospective member:
+To check the status of members being onboarded to the network, click the **CSR STATUS** tab. You can see the status tag, and details of the request like the Request ID and legal name of the prospective member:
 
 {{% figure zoom="/en/images/cenm-management-console-identity-manager-csr-status-open.png" alt="CENM management console - Identity Manager Service" %}}
 

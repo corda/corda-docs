@@ -115,7 +115,7 @@ For a quick start guide on deploying Corda Enterprise Network Manager services a
 
 ## Public Key Infrastructure
 
-* [Public Key Infrastructure (PKI) Specifications](pki-specifications.md)
+* [Public Key Infrastructure (PKI) specifications](pki-specifications.md)
 * [Certificate hierarchy guide](pki-guide.md)
 * [Public Key Infrastructure (PKI) Tool](pki-tool.md)
 
