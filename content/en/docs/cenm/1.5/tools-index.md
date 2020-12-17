@@ -5,7 +5,6 @@ date: '2020-01-08T09:59:25Z'
 menu:
   cenm-1-5:
     identifier: cenm-1-5-tools-index
-    parent: cenm-1-5-tools-and-utilities
     weight: 280
 tags:
 - tools
@@ -32,6 +31,7 @@ This tool enables the reissuing of node legal identity keys and certificates, al
 
 * [CENM Command-line Interface Tool](cenm-cli-tool.md)
 * [CENM User Admin tool](user-admin.md)
+* [CENM Management Console](cenm-console.md)
 
 ## Other Tools
 
