@@ -114,7 +114,7 @@ class ClientRpcExample {
 {{< /tabs >}}
 
 {{< warning >}}
-The returned [CordaRPCConnection](https://api.corda.net/api/corda-os/4.7/html/api/javadoc/net/corda/client/rpc/CordaRPCConnection.html) is somewhat expensive to create and consumes a small amount of server-side resources. When you’re done with it, call `close` on it. Alternatively, you would typically employ the `use` method on [CordaRPCClient](https://api.corda.net/api/corda-os/4.7/html/api/javadoc/net/corda/client/rpc/CordaRPCClient.html), which cleans up automatically after the passed in lambda finishes. Don’t create a new proxy for every call you make - reuse an existing one.
+The returned [CordaRPCConnection](https://api.corda.net/api/corda-os/4.7/html/api/javadoc/net/corda/client/rpc/CordaRPCConnection.html) is somewhat expensive to create and consumes a small amount of server-side resources. When you’re done with it, call `close` on it. Alternatively, you would typically employ the `use` method on [CordaRPCClient](https://api.corda.net/api/corda-os/4.7/html/api/javadoc/net/corda/client/rpc/CordaRPCClient.html), which cleans up automatically after the passed in lambda finishes. Do not create a new proxy for every call you make: reuse an existing one.
 {{< /warning >}}
 
 For further information on using the RPC API, see [Working with the CordaRPCClient API](tutorial-clientrpc-api.md).
@@ -411,7 +411,7 @@ As some internal resources are allocated to `MultiRPCClient`, it is recommended 
 
 ### Specifying multiple endpoint addresses
 
-You can pass in multiple endpoint addresses when constructing `MultiRPCClient`. If you do so, `MultiRPCClient` will operate in fail-over mode and if one of the endpoints becomes unreachable, it will automatically retry the connection using a "round-robin" policy.
+You can pass in multiple endpoint addresses when constructing `MultiRPCClient`. If you do so, `MultiRPCClient` will operate in fail-over mode and if one of the endpoints becomes unreachable, it will automatically retry the connection using a round-robin policy.
 
 For more information, see the API documentation for [MultiRPCClient](https://api.corda.net/api/corda-os/4.7/html/api/javadoc/net/corda/client/rpc/ext/MultiRPCClient.html).
 
@@ -423,7 +423,7 @@ To be notified when the connection has been re-established or, indeed, to receiv
 For more information, see the API documentation reference for the [RPCConnectionListener](https://api.corda.net/api/corda-os/4.7/html/api/javadoc/net/corda/client/rpc/ext/RPCConnectionListener.html)) interface.
 
 {{< note >}}
-Using the [RPCConnectionListener](https://api.corda.net/api/corda-os/4.7/html/api/javadoc/net/corda/client/rpc/ext/RPCConnectionListener.html)) interface with the Multi RPC Client enables it to better handle connection speed variations when it is started in HA mode.
+Using the [RPCConnectionListener](https://api.corda.net/api/corda-os/4.7/html/api/javadoc/net/corda/client/rpc/ext/RPCConnectionListener.html) interface with the Multi RPC Client enables it to better handle connection speed variations when it is started in HA mode.
 {{< /note >}}
 
 ### Specifying RPC connection parameters
@@ -511,7 +511,7 @@ The SQL type of each column is not prescribed (although our tests were conducted
 
 ### Encrypting passwords
 
-Storing passwords in plain text is discouraged in applications where security is critical. Passwords are assumed to be in plain format by default, unless a different format is specified by the `passwordEncryption` field, as shown in the following example:
+Storing passwords in plain text should only be done in low-security situations, such as testing on a private network. Passwords are assumed to be in plain format by default, unless a different format is specified by the `passwordEncryption` field, as shown in the following example:
 
 ```groovy
 passwordEncryption = SHIRO_1_CRYPT
@@ -545,9 +545,9 @@ The returned observable may even emit object graphs with even more observables i
 would expect.
 
 This feature comes with a cost: the server must queue up objects emitted by the server-side observable until you
-download them. Note that the server-side observation buffer is bounded, once it fills up, the client is considered
+download them. Note that the server-side observation buffer is bounded; once it fills up, the client is considered
 slow and will be disconnected. You are expected to subscribe to all the observables returned, otherwise client-side
-memory starts filling up as observations come in. If you don’t want an observable, then subscribe then unsubscribe
+memory starts filling up as observations come in. If you do not want an observable, then subscribe then unsubscribe
 immediately to clear the client-side buffers and to stop the server from streaming. For Kotlin users, there is a
 convenience extension method called `notUsed()` which can be called on an observable to automate this step.
 
@@ -555,7 +555,7 @@ If your app quits, then server-side resources will be freed automatically.
 
 {{< warning >}}
 If you leak an observable on the client side and it gets garbage collected, a warning is
-printed to the logs and the observable will be unsubscribed for you. But don’t rely on this, as garbage collection
+printed to the logs and the observable will be unsubscribed for you. But do not rely on this, as garbage collection
 is non-deterministic. If you set `-Dnet.corda.client.rpc.trackRpcCallSites=true` on the JVM command line, then
 this warning includes a stack trace showing where the RPC that returned the forgotten observable was called from.
 This feature is off by default because tracking RPC call sites is moderately slow.
@@ -610,7 +610,7 @@ side as if it were thrown from inside the called RPC method. These exceptions ca
 
 ## Configuring wire security
 
-If TLS communications to the RPC endpoint are required, the node must be configured with `rpcSettings.useSSL=true` (see [Node configuration options](corda-configuration-file)).
+If TLS communications to the RPC endpoint are required, the node must be configured with `rpcSettings.useSSL=true` (see [`rpcSettings`](corda-configuration-fields.md#rpcsettings)).
 The node admin must then create a node-specific RPC certificate and key, by running the node once with the `generate-rpc-ssl-settings` command specified (see [Node command-line options](node-commandline.md)).
 
 The generated RPC TLS trust root certificate is exported to a `certificates/export/rpcssltruststore.jks` file, which should be distributed to the authorised RPC clients.
@@ -624,4 +624,4 @@ Note that RPC TLS does not use mutual authentication, and delegates fine-grained
 
 CorDapps must whitelist any classes used over RPC with Corda’s serialization framework, unless they are whitelisted by
 default in `DefaultWhitelist`. The whitelisting is done either via the plugin architecture or by using the
-`@CordaSerializable` annotation (see [Serialization](serialization.md)). An example is shown in [Using the client RPC API](tutorial-clientrpc-api.md).
+`@CordaSerializable` annotation (see [Object serialization](serialization.md)). An example is shown in [Working with the CordaRPCClient API](tutorial-clientrpc-api.md).
