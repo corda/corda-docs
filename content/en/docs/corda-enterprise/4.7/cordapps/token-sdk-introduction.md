@@ -11,7 +11,7 @@ tags:
 - non-fungible
 - assets
 title: Tokens SDK
-weight: 15
+weight: 160
 ---
 
 # The Tokens SDK

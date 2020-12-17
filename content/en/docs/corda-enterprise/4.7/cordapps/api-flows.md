@@ -9,7 +9,7 @@ tags:
 - api
 - flows
 title: Writing CorDapp Flows
-weight: 8
+weight: 70
 ---
 
 

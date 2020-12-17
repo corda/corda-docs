@@ -9,7 +9,7 @@ tags:
 - debugging
 - cordapp
 title: Debugging a CorDapp
-weight: 11
+weight: 120
 ---
 
 # Debugging a CorDapp

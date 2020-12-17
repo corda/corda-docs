@@ -386,6 +386,8 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON my_admin_user.ROLE_ASSIGNMENTS;
 GRANT SELECT, INSERT, UPDATE, DELETE ON my_admin_user.USERS;
 GRANT SELECT, INSERT, UPDATE, DELETE ON my_admin_user.USERS_IN_GROUPS;
 GRANT SELECT, INSERT, UPDATE, DELETE ON my_admin_user.USER_DATA;
+GRANT SELECT, INSERT, UPDATE, DELETE ON my_admin_user.JWK_SETS to my_user;
+GRANT SELECT, INSERT, UPDATE, DELETE ON my_admin_user.JWKS to my_user;
 ```
 
 ## 3. CENM service configuration
@@ -688,6 +690,8 @@ The list of tables created by the Auth Service follows below:
 <SCHEMA_NAME>.USERS
 <SCHEMA_NAME>.USERS_IN_GROUPS
 <SCHEMA_NAME>.USER_DATA
+<SCHEMA_NAME>.JWK_SETS
+<SCHEMA_NAME>.JWKS
 ```
 
 ## Clearing the database
@@ -794,6 +798,8 @@ DROP TABLE IF EXISTS <SCHEMA_NAME>.ROLE_ASSIGNMENTS;
 DROP TABLE IF EXISTS <SCHEMA_NAME>.USERS;
 DROP TABLE IF EXISTS <SCHEMA_NAME>.USERS_IN_GROUPS;
 DROP TABLE IF EXISTS <SCHEMA_NAME>.USER_DATA;
+DROP TABLE IF EXISTS <SCHEMA_NAME>.JWK_SETS;
+DROP TABLE IF EXISTS <SCHEMA_NAME>.JWKS;
 DROP SEQUENCE IF EXISTS <SCHEMA_NAME>.SEQ_AUDIT_EVENTS;
 ```
 
@@ -894,6 +900,8 @@ DROP TABLE <AUTH_ADMIN_USER>.ROLE_ASSIGNMENTS CASCADE CONSTRAINTS;
 DROP TABLE <AUTH_ADMIN_USER>.USERS CASCADE CONSTRAINTS;
 DROP TABLE <AUTH_ADMIN_USER>.USERS_IN_GROUPS CASCADE CONSTRAINTS;
 DROP TABLE <AUTH_ADMIN_USER>.USER_DATA CASCADE CONSTRAINTS;
+DROP TABLE <AUTH_ADMIN_USER>.JWK_SETS CASCADE CONSTRAINTS;
+DROP TABLE <AUTH_ADMIN_USER>.JWKS CASCADE CONSTRAINTS;
 DROP SEQUENCE <AUTH_ADMIN_USER>.SEQ_AUDIT_EVENTS;
 ```
 
@@ -928,9 +936,9 @@ To migrate as service:
    schema migration permissions, and to set `runMigration = false` in the
    database configuration.
 
-### 6.1. Zone Service database migration in CENM 1.4
+### 6.1. Zone Service database migration in CENM 1.5
 
-If you are upgrading to CENM 1.4 from CENM 1.3, you **must** set `runMigration = true` in the database configuration. This is required due to a change in the Zone Service database schema - a new column in the database tables `socket_config` and `signer_config` called `timeout` is used to record the new optional `timeout` parameter values used in `serviceLocations` configuration blocks (Signing Services) and `identityManager` and `revocation` configuration blocks (Network Map Service). This value can remain `null`,
+If you are upgrading to CENM 1.5 from CENM 1.3, you **must** set `runMigration = true` in the database configuration. This is required due to a change in the Zone Service database schema - a new column in the database tables `socket_config` and `signer_config` called `timeout` is used to record the new optional `timeout` parameter values used in `serviceLocations` configuration blocks (Signing Services) and `identityManager` and `revocation` configuration blocks (Network Map Service). This value can remain `null`,
 in which case the default 30 seconds timeout will be used wherever applicable.
 
 An example follows below:

@@ -28,6 +28,10 @@ title: Contracts
 
 {{% vimeo 214168839 %}}
 
+{{< note >}}
+See [Reissuing states](reissuing-states.md) for information about reissuing states with a guaranteed state replacement, which allows you to break transaction backchains.
+{{< /note >}}
+
 ## Transaction verification
 
 Recall that a transaction is only valid if it is digitally signed by all required signers. However, even if a

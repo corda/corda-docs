@@ -9,7 +9,7 @@ tags:
 - against
 - release
 title: Building CorDapps against a non-release branch
-weight: 11
+weight: 110
 ---
 
 

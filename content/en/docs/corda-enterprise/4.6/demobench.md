@@ -10,17 +10,17 @@ weight: 30
 ---
 
 
-# DemoBench - deprecated from in Corda Enterprise 4.6
+# DemoBench - deprecated in Corda Enterprise 4.6
 
 DemoBench is a standalone desktop application that makes it easy to configure and launch local Corda nodes. It is useful for training sessions, demos or just experimentation.
 
 {{< warning >}}
-**DemoBench** is deprecated in Corda Enterprise 4.6. 
+**DemoBench** was deprecated in Corda Enterprise 4.6.
 {{< /warning >}}
 
 ## Downloading
 
-Operating System specific installers are provided as part of Corda Enterprise distribution, e.g. for Windows this will be “Corda DemoBench-4.6.exe”.
+Operating System specific installers are provided as part of Corda Enterprise distribution, e.g. for Windows this will be “Corda DemoBench-4.7.exe”.
 
 
 ## Running DemoBench

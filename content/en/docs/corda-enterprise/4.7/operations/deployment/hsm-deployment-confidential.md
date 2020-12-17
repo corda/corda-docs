@@ -18,7 +18,7 @@ weight: 50
 
 In Corda, all nodes are associated with a public key. However, when additional privacy is required, nodes can use confidential identities. A confidential identity is a new key pair, referred to as a **confidential identity key**, that can be communicated to other specific nodes, which then associate the new key pair with the node that generated them.
 
-This system allows the **confidential identity keys** to be used to sign transactions, without the wider network being able to associate the key pair with the signing node. Confidential identity keys can be used either by using the `KeyManagementService` APIs, where a CorDapp generates a fresh key pair, and communicates it to other nodes; or with the `SwapIdentitiesFlow` and `IdentitySyncFlow`.
+This system allows the **confidential identity keys** to be used to sign transactions, without the wider network being able to associate the key pair with the signing node. Confidential identity keys can be used either by using the `KeyManagementService` APIs, where a CorDapp generates a fresh key pair, and communicates it to other nodes;  or with the `SwapIdentitiesFlow` and `IdentitySyncFlow`.
 
 
 {{< warning >}}
@@ -70,7 +70,6 @@ Confidential identities can be used with a keystore in the node filesystem. The 
 
 {{< warning >}}
 This method is less secure than the degraded wrapped HSM mode, and is recommended for use in development and testing scenarios only. The encrypted private key is exposed in the node’s memory and the associated wrapping key is also stored in the node’s filesystem.
-
 {{< /warning >}}
 
 
@@ -119,6 +118,9 @@ The following table contains the current support and the associated configuratio
 |file-based keystore|`BC_SIMPLE`|not used|`DEGRADED_WRAPPED`|
 |Securosys PrimusX HSM|`PRIMUS_X`|path to the PrimusX configuration file|`WRAPPED`|
 |AWS CloudHSM|`AWS_CLOUD`|path to the AWS CloudHSM configuration file|`WRAPPED`|
+|nCipher | `N_SHIELD` | path to `nshield.conf`| `NATIVE`|
+|Futurex|`FUTUREX`|path to`futurex.conf`|`WRAPPED`|
+|Azure Key Vault|path to `AZURE_KEY_VAULT`|`az_keyvault.conf`|`NATIVE`|
 
 {{< /table >}}
 
@@ -152,3 +154,82 @@ The following parameters are used for confidential identities on AWS CloudHSM:
 * AES Key Wrap Algorithm (RFC 3394) with PKCS#5 padding
 * Persistent, non-extractable 256-bit AES key as a wrapping key (KEK)
 * Non-persistent (valid for the current session only), extractable EC secp256r1 key pair as an ephemeral key
+
+## nCipher HSMs
+
+To use confidential identities with an nCipher HSM, the following configuration block must be present in the `node.conf` file:
+
+```
+freshIdentitiesConfiguration: {
+    mode: "NATIVE",
+    cryptoServiceConfiguration: {
+            cryptoServiceName: "N_SHIELD"
+            cryptoServiceConf: "nshield.conf"
+            cryptoServiceTimeout: 10000
+    },
+    masterKeyAlias: "ci-master-key-1"
+}
+```
+
+The nCipher HSM configuration file must contain the following configuration:
+
+```
+keyStore: "certificates/keystore.nshield"
+password: "my-password
+```
+
+## Futurex HSMs
+
+To use confidential identities with a Futurex HSM, the following configuration block must be present in the `node.conf` file:
+
+```
+freshIdentitiesConfiguration: {
+    mode: "WRAPPED",
+    cryptoServiceConfiguration: {
+        cryptoServiceName: "FUTUREX",
+        cryptoServiceConf: "futurex.conf"
+    },
+    masterKeyAlias: "ci-master-key-1"
+}
+```
+
+The Futurex HSM configuration file must contain the following configuration:
+
+```
+credentials: 123456
+```
+
+{{<note>}}
+The `FXPKCS11_CFG` environment variable must be set as detailed in the Futurex documentation. The `<WRAP-PRESERVE-USAGE>` tag **must** be set to `NO`. This tag doesn't affect the legal identity functions of the HSM. Currently Corda Enterprise only supports Futurex HSMs at Java version 8.271 or earlier.
+{{</note>}}
+
+## Azure Key Vault
+
+To use an Azure Key Vault HSM, the following configuration block must be present in the `node.conf` file:
+
+```
+freshIdentitiesConfiguration: {
+    mode: "NATIVE",
+    cryptoServiceConfiguration: {
+          cryptoServiceName: "AZURE_KEY_VAULT"
+          cryptoServiceConf: "az_keyvault.conf"
+          cryptoServiceTimeout: 10000
+    },
+    masterKeyAlias: "ci-master-key-1"
+}
+```
+
+The Azure Key Vault configuration file must contain the following configuration:
+
+```
+path: keyvault_login.p12
+alias: "my-alias"
+password: "my-password"
+keyVaultURL: "[https:/](https:/)/<mykeyvault>.vault.azure.net/"
+clientId: "a3d72387-egfa-4bc2-9cba-b0b27c63540e"
+protection: "SOFTWARE"
+```
+
+{{<note>}}
+When using an Azure Key Vault HSM with confidential identities the protection configuration option **must** be set to `SOFTWARE`.
+{{</note>}}

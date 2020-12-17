@@ -69,6 +69,10 @@ This situation can be illustrated as follows:
 {{< figure alt="tx chain" zoom="/en/images/tx-chain.png" >}}
 These input state references link transactions together over time, forming what is known as a *transaction chain*.
 
+{{< note >}}
+See [Reissuing states](reissuing-states.md) for information about reissuing states with a guaranteed state replacement, which allows you to break transaction backchains.
+{{< /note >}}
+
 ## Committing transactions
 
 Initially, a transaction is just a **proposal** to update the ledger. It represents the future state of the ledger

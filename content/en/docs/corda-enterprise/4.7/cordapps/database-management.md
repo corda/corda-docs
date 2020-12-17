@@ -7,7 +7,7 @@ tags:
 - database
 - management
 title: Database management scripts
-weight: 3
+weight: 30
 ---
 
 # Database management scripts
