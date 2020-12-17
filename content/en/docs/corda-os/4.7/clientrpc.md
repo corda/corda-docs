@@ -15,19 +15,15 @@ title: Interacting with a node
 ---
 
 
-
-
 # Interacting with a node
-
-
 
 ## Overview
 
 To interact with your node, you need to build an RPC client. This RPC client enables you to connect to a specified server and to make calls to the server that perform various useful tasks. The RPC client must be written in a JVM-compatible language.
 
-Corda Enterprise supports two types of RPC client:
-* **Corda RPC Client**, which is used if you want to interact with your node via the `CordaRPCOps` remote interface only.
-* **Multi RPC Client**, which is used if you want to interact with your node via any of the other remote interfaces that the Corda node provides.
+Corda supports two types of RPC client:
+* **Corda RPC Client**, which is used if you want to interact with your node via the `CordaRPCOps` remote interface.
+* **Multi RPC Client**, which is used if you want to interact with your node via the `CordaRPCOps` remote interface, as an alternative to the Corda RPC Client. Compared to the Corda RPC Client, the Multi RPC Client is more flexible with handling connection speed variations when started in HA mode, through the use of the [`RPCConnectionListener` interface](#adding-rpc-connection-listeners).
 
 {{< warning >}}
 The built-in Corda test webserver is deprecated and unsuitable for production use. If you want to interact with your node via HTTP, you will need to stand up your own webserver that connects to your node using the [CordaRPCClient](https://api.corda.net/api/corda-os/4.7/html/api/javadoc/net/corda/client/rpc/CordaRPCClient.html) class. You can find an example of how to do this using the popular Spring Boot server [here](https://github.com/corda/spring-webserver).
@@ -425,6 +421,10 @@ If the reconnection cycle has started, the previously supplied `RPCConnection` m
 
 To be notified when the connection has been re-established or, indeed, to receive notifications throughout the lifecycle of every connection, you can add one or more [RPCConnectionListeners](https://api.corda.net/api/corda-os/4.7/html/api/javadoc/net/corda/client/rpc/ext/RPCConnectionListener.html) to `MultiRPCClient`.
 For more information, see the API documentation reference for the [RPCConnectionListener](https://api.corda.net/api/corda-os/4.7/html/api/javadoc/net/corda/client/rpc/ext/RPCConnectionListener.html)) interface.
+
+{{< note >}}
+Using the [RPCConnectionListener](https://api.corda.net/api/corda-os/4.7/html/api/javadoc/net/corda/client/rpc/ext/RPCConnectionListener.html)) interface with the Multi RPC Client enables it to better handle connection speed variations when it is started in HA mode.
+{{< /note >}}
 
 ### Specifying RPC connection parameters
 
