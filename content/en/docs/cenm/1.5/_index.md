@@ -48,7 +48,7 @@ For instructions on deploying Corda Enterprise Network Manager with Amazon Web S
 For a quick start guide on deploying Corda Enterprise Network Manager services as a test environment, see the [CENM test environment quick start guide](quick-start.md).
 {{< /note >}}
 
-Concepts and overview
+## Concepts and overview
 
 * [Corda Networks](corda-networks.md)
 * [Components of the Corda Enterprise Network Manager](enm-components.md)
@@ -60,12 +60,13 @@ Concepts and overview
 * [Network Map overview](network-map-overview.md)
 * [Certificate Revocation List](certificate-revocation.md)
 
-CENM releases
+## CENM releases
 
 * [Release notes](release-notes.md)
+* [Release notes (Japanese)](release-notes-ja.md)
 * [Upgrading Corda Enterprise Network Manager](upgrade-notes.md)
 
-Operations
+## Operations
 
 * [Deployment with Kubernetes](deployment-kubernetes.md)
   * [CENM Auth Service Helm Chart](deployment-kubernetes-auth.md)
@@ -91,7 +92,7 @@ Operations
 * [Troubleshooting common issues](troubleshooting-common-issues.md)
 * [CENM support matrix](cenm-support-matrix.md)
 
-Configuration
+## Configuration
 
 * [Identity Manager Service configuration parameters](config-identity-manager-parameters.md)
 * [Network Map Service configuration parameters](config-network-map-parameters.md)
@@ -99,7 +100,7 @@ Configuration
 * [Configuring the CENM services to use SSL](enm-with-ssl.md)
 * [Workflow](workflow.md)
 
-Tools and utilities
+## Tools and utilities
 
 * [Index](tools-index.md)
 * [Public Key Infrastructure (PKI) Tool](pki-tool.md)
@@ -112,12 +113,12 @@ Tools and utilities
 * [CRL Endpoint Check Tool](crl-endpoint-check-tool.md)
 * [Embedded shell](shell.md)
 
-Public Key Infrastructure
+## Public Key Infrastructure
 
 * [Public Key Infrastructure (PKI) Specifications](pki-specifications.md)
 * [Certificate hierarchy guide](pki-guide.md)
 * [Public Key Infrastructure (PKI) Tool](pki-tool.md)
 
-Signing Plug-in Samples
+## Signing Plug-in Samples
 
 * [EJBCA sample plug-in](ejbca-plugin.md)
