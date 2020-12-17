@@ -64,7 +64,7 @@ For more information about this feature, contact [R3 support](https://www.r3.com
 
 {{< note >}}
 The list above contains known issues specific to CENM 1.5. See the release notes for previous CENM releases further down on this page for information about known issues specific to those versions.
-{{ < /note >}}
+{{< /note >}}
 
 
 ## Corda Enterprise Network Manager 1.4.1
