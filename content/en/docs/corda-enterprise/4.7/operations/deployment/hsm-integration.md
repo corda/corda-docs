@@ -16,15 +16,18 @@ weight: 60
 
 # Integrating an HSM
 
-When integrating an HSM for use with Corda Enterprise, there are specific interfaces that
+While Corda Enterprise supports a variety of HSMs for storing legal identity and confidential identity keys, you can also integrate other HSMs with Corda Enterprise using Corda Enterprise APIs. Once HSM integration has been written, HSMs can be tested against Corda Enteprise using the HSM Technical Compatibility Kit (TCK), a test suite [available here](hsm-integration-tck.md/).
 
-The example HSM is available in the Corda Enterprise utilities package `com.r3.corda:corda-enterprise-utils:4.7`, and contains four main files:
+To help write integration for your HSM, there is an example HSM implementation available as part of the `com.r3.corda:corda-enterprise-utils:4.7` resources. We'll go over this example HSM here to explain what the components are, and how they work.
 
-  - A configuration file, `AWSCloudConfiguration.java`
-  - A configuration parser, `AWSCloudConfigurationParser.java`
-  - A factory class `AWSCloudCryptoServiceProvider.java`
-  - The HSM integration, `AWSCloudCryptoService.java`
-  - A file specifying the java class that implements the `CryptoServiceProvider` interface, `resources/META-INF/services/com.r3.corda.utils.CryptoServiceProvider`
+In the example HSM there are five key files:
+
+  - A configuration file, called `AWSCloudConfiguration.java`.
+  - A configuration parser, called `AWSCloudConfigurationParser.java`.
+  - A factory class called `AWSCloudCryptoServiceProvider.java`.
+  - A file specifying the java class that implements the `CryptoServiceProvider` interface, called `resources/META-INF/services/com.r3.corda.utils.CryptoServiceProvider`.
+  - The HSM integration, called `AWSCloudCryptoService.java`.
+
 
 We'll go through each of these files and use them as a basis for explaining how to integrate an HSM with Corda Enterprise.
 
@@ -54,11 +57,13 @@ The factory class `AWSCloudCryptoServiceProvider` implements the `CryptoServiceP
 
 {{< codesample file="/content/en/docs/corda-enterprise/codesamples/AWSCloudCryptoServiceProvider.java" >}}
 
+Corda Enterprise uses a service loader class to discover implementations of `CryptoServiceProvider`.
+
 The class takes the configuration information and creates an instance of the `CryptoService` - in this case `AWSCloudCryptoService` - including an X500 identifier and the configuration information defined in `AWSCloudConfiguration.java`.
 
 ## Java class specification file
 
-This file is required in any implementation of an HSM. It must have the following filepath: `src/main/resources/META-INF/services/com.r3.corda.utils.cryptoservice.CryptoServiceProvider`.
+This file is required when integrating an HSM. It must have the following filepath: `src/main/resources/META-INF/services/com.r3.corda.utils.cryptoservice.CryptoServiceProvider`.
 
 The file must contain the fully qualified name of the Java class that implements the `CryptoServiceProvider` interface. In this example implementation, the contents of the file is:
 
@@ -67,6 +72,14 @@ The file must contain the fully qualified name of the Java class that implements
 ## The HSM integration
 
 The HSM integration will differ depending on the mechanics of any given HSM, but in this example we've used a Java helper class `JCACryptoService` to reduce the complexity. This class was created to facilitate the integration of further HSM vendors that provide a JCA provider.
+
+When writing HSM integration, there are two groups of keys to consider: "alias" keys used for Artemis, node legal identity, and TLS, and "non-alias" keys, used for confidential identities.
+
+Alias keys are stored in the HSM, and are never removed. Each HSM implementation should only have a very small number of alias keys.
+
+Non-alias keys are are generated using by the HSM and extracted from HSMs in a wrapped format. Depending on the implementation there may be very many confidential identity keys. Confidential identity keys are not stored in the HSM. The key used to wrap confidential identity keys is stored in the HSM and is not extracted.
+
+All asymmetric keypairs (TLS, Artemis, and node legal identity) should use elliptic-curve keys, and all wrapping keys should use at least AES 256-bit keys.
 
 ```java
 public class AWSCloudCryptoService extends JCACryptoService implements CryptoServiceAdmin {
@@ -83,54 +96,7 @@ public class AWSCloudCryptoService extends JCACryptoService implements CryptoSer
 
 The above code block also includes the HSM configuration, and defines the HSM class, including `keyStore`, `Provider`, `X500Principal`, and `config` arguments. For full details, see the [JCACryptoService definition](../../../codesamples/JCACryptoService.kt).
 
-The HSM integration must include code the creating keypairs, retrieving keys, signing, creating wrapping keys, wrapping private keys, and error handling.
-
-The example HSM integration includes code to create a keypair:
-
-```java
-public PublicKey generateKeyPair(String alias, SignatureScheme scheme) throws CryptoServiceException {
-    return withAuthentication(() -> {
-        String publicAlias = toPublic(alias);
-        String privateAlias = toPrivate(alias);
-        logger.trace("CryptoService(action=generate_key_pair_start;alias='" + alias + "';scheme='" + scheme + "'");
-        // Multiples keys can be stored under the same alias, so we need to check existing keys first
-        Key publicKey;
-        try {
-            publicKey = getKeyStore().getKey(publicAlias, null);
-        } catch (Exception e) {
-            throw new CryptoServiceException("Exception getting public key from key store for alias '" + alias + "'", e, false);
-        }
-
-        if (publicKey != null) {
-            throw new CryptoServiceException("Public key already exists in key store for alias '" + publicAlias + "'", null, false);
-        }
-
-        Key privateKey;
-        try {
-            privateKey = getKeyStore().getKey(privateAlias, null);
-        } catch (Exception e) {
-            throw new CryptoServiceException("Exception getting private key from key store for alias '" + alias + "'", e, false);
-        }
-
-        if (privateKey != null) {
-            throw new CryptoServiceException("Private key already exists in key store for alias '" + publicAlias + "'", null, false);
-        }
-
-        KeyPairGenerator keyPairGenerator = keyPairGeneratorFromScheme(scheme, publicAlias, privateAlias, false, true);
-        KeyPair keyPair = keyPairGenerator.generateKeyPair();
-        try {
-            getKeyStore().setKeyEntry(privateAlias, keyPair.getPrivate(), null, selfSign(scheme, keyPair));
-        } catch (Exception e) {
-            throw new CryptoServiceException("Exception setting private key in key store", e, false);
-        }
-
-        logger.trace("CryptoService(action=generate_key_pair_end;alias='" + alias + "';scheme='" + scheme + "'");
-        return Crypto.toSupportedPublicKey(keyPair.getPublic());
-    });
-}
-```
-
-The example integration includes error handling and authentication with the HSM.
+The HSM integration must include code for authenticating with the HSM, creating keypairs, retrieving public keys, signing, creating wrapping keys, wrapping private keys, and error handling.
 
 The full HSM integration example is as follows:
 
