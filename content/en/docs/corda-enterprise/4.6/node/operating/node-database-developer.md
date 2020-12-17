@@ -390,7 +390,7 @@ Additionally, the node will create any tables for CorDapps containing Liquibase 
 
 As the Corda node is configured to automatically run migrations on startup,
 no additional database update steps are required when upgrading Corda.
-See the [Corda node upgrade notes](cm-upgrading-node.md#node-upgrade-notes-update-database-ref) for more information.
+See the [Corda node upgrade notes](../../node-upgrade-notes.md) for more information.
 
 
 
@@ -575,6 +575,12 @@ DROP TABLE my_user.PK_HASH_TO_EXT_ID_MAP;
 DROP TABLE my_user.STATE_PARTY;
 DROP VIEW my_user.V_PKEY_HASH_EX_ID_MAP;
 DROP SEQUENCE my_user.HIBERNATE_SEQUENCE;
+DROP TABLE my_user.NODE_CORDAPP_METADATA;
+DROP TABLE my_user.NODE_CORDAPP_SIGNERS;
+DROP TABLE my_user.NODE_METERING_COMMANDS;
+DROP TABLE my_user.NODE_METERING_CORDAPPS;
+DROP TABLE my_user.NODE_METERING_DATA;
+DROP TABLE my_user.NODE_RPC_AUDIT_DATA;
 ```
 
 
