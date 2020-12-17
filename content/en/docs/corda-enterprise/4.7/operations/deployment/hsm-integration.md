@@ -49,7 +49,7 @@ The configuration parser file `AWSCloudConfigurationParser.java` implements the 
 
 {{< codesample file="/content/en/docs/corda-enterprise/codesamples/AWSCloudConfigurationParser.java" >}}
 
-The configuration parser will be unique to the HSM implementation, and is used to deserialise HSM configuration to a java class.
+The configuration parser will be unique to the HSM implementation, and is used to deserialise HSM configuration to a Java class.
 
 ## The factory class
 
@@ -65,7 +65,7 @@ The class takes the configuration information and creates an instance of the `Cr
 
 This file is required when integrating an HSM. It must have the following filepath: `src/main/resources/META-INF/services/com.r3.corda.utils.cryptoservice.CryptoServiceProvider`.
 
-The file must contain the fully qualified name of the Java class that implements the `CryptoServiceProvider` interface. In this example implementation, the contents of the file is:
+The file must contain the fully qualified name of the Java class that implements the `CryptoServiceProvider` interface. In this example implementation, the content of the file is:
 
 {{< codesample file="/content/en/docs/corda-enterprise/codesamples/com.r3.corda.utils.CryptoServiceProvider" >}}
 
@@ -77,7 +77,7 @@ When writing HSM integration, there are two groups of keys to consider: "alias" 
 
 Alias keys are stored in the HSM, and are never removed. Each HSM implementation should only have a very small number of alias keys.
 
-Non-alias keys are are generated using by the HSM and extracted from HSMs in a wrapped format. Depending on the implementation there may be very many confidential identity keys. Confidential identity keys are not stored in the HSM. The key used to wrap confidential identity keys is stored in the HSM and is not extracted.
+Non-alias keys are generated using the HSM and extracted from HSMs in a wrapped format. Depending on the implementation there may be many confidential identity keys. Confidential identity keys are not stored in the HSM. The key used to wrap confidential identity keys is stored in the HSM and is not extracted.
 
 All asymmetric keypairs (TLS, Artemis, and node legal identity) should use elliptic-curve keys, and all wrapping keys should use at least AES 256-bit keys.
 
