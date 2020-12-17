@@ -422,22 +422,33 @@ Sets the context of the command that overrides the current context set.
 `-e, --reporter=<reporter>`
 Specifies the reporter who requested the certificate revocation.
 
-`-o, <outputType>``
+`-o, <outputType>`
 Specifies output format. Valid values are: json, pretty. Default value is `pretty`.
 
 ``-r, --reason=<reason>``
 Reason for the revocation. Possible values:
-* `UNSPECIFIED`
+
 * `KEY_COMPROMISE`
 * `CA_COMPROMISE`
 * `AFFILIATION_CHANGED`
 * `SUPERSEDED`
 * `CESSATION_OF_OPERATION`
-* `CERTIFICATE_HOLD`
-* `UNUSED`
-* `REMOVE_FROM_CRL`
 * `PRIVILEGE_WITHDRAWN`
+
+
+{{< note >}}
+The following reasons for revocation are also listed in the CLI tool but are **not** supported by the Identity Manager:
+
+* `UNSPECIFIED`
+* `CERTIFICATE_HOLD`
+* `REMOVE_FROM_CRL`
 * `AA_COMPROMISE`
+* `UNUSED`
+{{< /note >}}
+
+
+
+
 
 **Certificate identifiers**
 
