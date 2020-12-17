@@ -38,12 +38,12 @@ Corda Enterprise 4.7における主な新機能と機能強化は以下の通り
 {{< note >}}
 このページでは、Corda Enterprise 4.7に特有の機能のみを記載しています。 しかし、Corda Enterpriseのお客様は、Cordaオープンソースリリースの一環として、利用可能な全ての機能をご利用いただけます。
 
-Corda 4.7の一環として提供される以下のような新機能、機能強化、修正については、[Cordaオープンソースリリースノート](../../corda-os/4.7/release-notes.md)をご覧ください。
+Corda 4.7の一環として提供される以下のような新機能、機能強化、修正については、[Cordaオープンソースリリースノート](../../corda-os/4.7/release-notes-ja.md)をご覧ください。
 
-* [保証されたステートのリプレイスメントを伴うステートの再発行を行うことで、取引のバックチェーンを断ち切る機能](../../corda-os/4.7/release-notes.md#ability-to-break-transaction-backchains-by-reissuing-a-state-with-a-guaranteed-state-replacement)
-* [ビジネスネットワークメンバーシップバージョン1.1](../../corda-os/4.7/release-notes.md#business-network-membership-version-11)
-* [新しいマルチRPCクライアントを通じてCordaノードとやり取りをする機能](../../corda-os/4.7/release-notes.md#ability-to-interact-with-a-corda-node-via-the-new-multi-rpc-client)
-* [参照アプリケーション：](../../corda-os/4.7/release-notes.md#reference-app-bank-in-a-box)[ ](../../corda-os/4.7/release-notes.md#reference-app-bank-in-a-box)[Bank in a Box](../../corda-os/4.7/release-notes.md#reference-app-bank-in-a-box)
+* [保証されたステートのリプレイスメントを伴うステートの再発行を行うことで、取引のバックチェーンを断ち切る機能](../../corda-os/4.7/release-notes-ja.md#保証されたステートのリプレイスメントを伴うステートの再発行を行うことで取引のバックチェーンを断ち切る機能)
+* [ビジネスネットワークメンバーシップバージョン1.1](../../corda-os/4.7/release-notes-ja.md#ビジネスネットワークメンバーシップバージョン11)
+* [新しいマルチRPCクライアントを通じてCordaノードとやり取りをする機能](../../corda-os/4.7/release-notes-ja.md#新しいマルチrpcクライアントを通じてcordaノードとやり取りをする機能)
+* [参照アプリケーション：](../../corda-os/4.7/release-notes-ja.md#参照アプリ-bank-in-a-box)
 {{< /note >}}
 
 ## 新機能と機能強化
