@@ -95,13 +95,19 @@ For example: http://10.230.41.12:8080/cenm
 
 To access the CENM management console:
 
-1. Navigate to the URL address for your CENM management console.
+1. Navigate to the URL address for your CENM management console instance.
 
-2. On the login screen, enter your user login credentials.
+2. On the login screen, enter your user login credentials:
+
+{{% figure zoom="/en/images/cenm-management-console-login-screen.png" alt="CENM management console login screen" %}}
 
 3. Select **CENM Console**.
 
+{{% figure zoom="/en/images/cenm-management-console-wrapper.png" alt="CENM management console welcome screen" %}}
+
 The CENM management console loads on the **Network Map** list screen.
+
+{{% figure zoom="/en/images/cenm-management-console-network-map-list-screen.png" alt="CENM management console Network Map list screen" %}}
 
 ### Explore the Network Map Service
 
