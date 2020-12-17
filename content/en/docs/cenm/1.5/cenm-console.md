@@ -24,7 +24,7 @@ You can use the CENM management console to perform key CENM tasks and access CEN
 Your ability to perform certain tasks using the CENM management console depends on your user permissions. Permissions for each CENM service can be allocated and managed by an administrator in the [User Admin tool](user-admin.md). You will not be able to self-allocate the required permissions - they must be granted by an administrator.
 {{< /note >}}
 
-To use the CENM management console, you must install it as a **plug-in** to your Gateway Service. Once you have installed the plug-in, anyone with the required permissions can access and use the management console from any web browser.
+To use the CENM management console, you must install it as a *plug-in* to your Gateway Service. Once you have installed the plug-in, anyone with the required permissions can access and use the management console from any web browser.
 
 ## Installation
 
@@ -79,7 +79,7 @@ To install the
 6. Launch the Gateway Service.
 7. Open your browser and use the Gateway Service's host and the `port` property from the configuration (`localhost:8081` in the example above).
 8. The login page is displayed. Log in using the initial user credentials.
-9. You can either open the **User Administration** page to manage users, groups, and roles (please note that this requires admin rights), or open the CENM management console to manage your CENM instance.
+9. You can either open the **USER ADMINISTRATION** page to manage users, groups, and roles (please note that this requires admin rights), or open the CENM management console to manage your CENM instance.
 
 {{< note >}}
 See the [CENM User Admin tool](user-admin.md) documentation for more information. This tool is accessed in the same way as the CENM management console.
@@ -101,29 +101,89 @@ To access the CENM management console:
 
 {{% figure zoom="/en/images/cenm-management-console-login-screen.png" alt="CENM management console login screen" %}}
 
-3. Select **CENM Console**.
+3. Select **CENM CONSOLE**.
 
 {{% figure zoom="/en/images/cenm-management-console-launcher.png" alt="CENM management console launcher screen" %}}
 
-The CENM management console loads on the **Network Map** list screen.
+The CENM management console loads on the **NETWORK MAP** Service screen.
 
-{{% figure zoom="/en/images/cenm-management-console-network-map-list-screen.png" alt="CENM management console Network Map list screen" %}}
+{{% figure zoom="/en/images/cenm-management-console-network-map-list-screen.png" alt="CENM management console Network Map Service screen" %}}
 
 ### Explore the Network Map Service
 
 You can access network member details, filter information, and search using the Network Map Service screen.
 
-### Check Identity Management Service progress
+#### Switch between Layout View and Map View of the Network Map
 
-To access the Identity Manager Service, click **Identity Manager** in the top navigation area of the screen.
+The default Network Map view is called **LAYOUT VIEW** - this is what you see when you log in to the CENM management console (as shown above).
 
-A list of requests and their status is shown.
+There is also a **MAP VIEW**, which shows the Network Map as an actual map grid:
 
-#### Check onboarding and removal status
+{{% figure zoom="/en/images/cenm-management-console-map-view.png" alt="CENM management console - Map View" %}}
 
-To check the status of members being onboarded into the network, click the **Onboarding** tab. You can see the status tag, and details of the request like the Request ID, and legal name of the prospective member.
+You can switch between the two views by selecting **MAP VIEW**/**LAYOUT VIEW** respectively from the drop-down menu that opens when youo click on your user name in the top right corner of the screen:
 
-To check the status of members being removed from the network, click the **Removal** tab. You can view the status tag for the removal progress, and details of the membership.
+{{% figure src="/en/images/cenm-management-console-map-layout-view-switch.png" alt="CENM management console - switching between Map View and Layout View" width=200 %}}
+
+### View and update Network Parameters
+
+To view the status and any pending changes to the Network Parameters, or to make new updates, click **NETWORK PARAMETERS** in the top navigation area of the screen. The Network Parameters view shows the current network parameters in the **CURRENT PARAMETERS** tab:
+
+{{% figure zoom="/en/images/cenm-management-console-net-params-current-only.png" alt="CENM management console - Network Parameters" %}}
+
+If there are pending updates, you will see them in the **PENDING UPDATE** tab:
+
+{{% figure zoom="/en/images/cenm-management-console-net-params.png" alt="CENM management console - Network Parameters" %}}
+
+To update the Network Parameters:
+
+1. On the **NETWORK PARAMETERS** screen, scroll to the bottom and click **START UPDATE PROCESS** to open the **Network Parameters Update** form view:
+
+{{% figure zoom="/en/images/cenm-management-console-net-params-update-started.png" alt="CENM management console - Network Parameters" %}}
+
+2. Give a name to the update in the **ABOUT THE UPDATE** field.
+
+2. Use the calendar picker to schedule the time and date of the **Flag Day** - this is the period during which the network parameters will update.
+
+3. Make the required changes in the **BASIC PARAMETERS** fields. Alternatively, to make the changes in a command-line interface within the console, select the **CODE VIEW** in the top right corner of the screen:
+
+{{% figure zoom="/en/images/cenm-management-console-net-params-code-view.png" alt="CENM management console - Network Parameters" %}}
+
+4. If required, add a Notary to the update in the **NOTARIES** section.
+
+5. Click **SET PARAMETERS**.
+
+    Now that the update has been scheduled, click **ADVERTISE UPDATE** to advertise the update:
+
+{{% figure zoom="/en/images/cenm-management-console-net-params-advertise.png" alt="CENM management console - Network Parameters - advertise update" %}}
+
+6. Once you have updated the parameters, scroll down and click **ADVERTISE UPDATE** again to advertise the parameters update:
+
+{{% figure zoom="/en/images/cenm-management-console-net-params-advertise-params.png" alt="CENM management console - Network Parameters - advertise parameters update" %}}
+
+7. You can now see the nodes that have accepted the update, and those who are still pending.
+
+    Once you have advertised the update, and the scheduled time has been reached, you can execute the flag day.
+
+8. Scroll down and click **Execute Flag Day**:
+
+{{% figure zoom="/en/images/cenm-management-console-net-params-acceptance.png" alt="CENM management console - Network Parameters - execute Flag Day" %}}
+
+### Check Identity Manager Service status and progress
+
+To access the Identity Manager Service, click **IDENTITY MANAGER** in the top navigation area of the screen. A list of CSR requests and their status is shown in the **CSR STATUS** tab:
+
+{{% figure zoom="/en/images/cenm-management-console-identity-manager-csr-status.png" alt="CENM management console - Identity Manager Service" %}}
+
+#### Check CSR (onboarding) and CRL (removal) status
+
+To check the status of members being onboarded into the network, click the **CSR STATUS** tab. You can see the status tag, and details of the request like the Request ID and legal name of the prospective member:
+
+{{% figure zoom="/en/images/cenm-management-console-identity-manager-csr-status-open.png" alt="CENM management console - Identity Manager Service" %}}
+
+To check the status of members being removed from the network, click the **CRR/CRL STATUS** tab. You can view the status tag for the removal progress, and details of the membership:
+
+{{% figure zoom="/en/images/cenm-management-console-identity-manager-crr-crl-status-open.png" alt="CENM management console - Identity Manager Service" %}}
 
 ### Update services configuration files
 
@@ -133,30 +193,13 @@ You can access and edit the configuration files of these services:
 * Signing Service.
 * Network Map Service.
 
-### Update Network Parameters
+#### Identity Manager Service configuration
 
-You can view pending changes to the Network Parameters, and make new updates.
 
-To edit the Network Parameters:
 
-1. On the Network Parameters screen, click **Start Update Process**.
 
-2. Give a name to the update in the **Name** field.
+#### Signing Service configuration
 
-2. Use the calendar picker to schedule the time and date of the Flag Day - the period during which the network parameters will update.
 
-3. Make the required changes in the **Basic Parameters** fields. Alternatively, select the **Code view** to make the changes in a command line within the console.
 
-4. If required, add a Notary to the update.
-
-5. Click **Set Parameters**.
-
-    Now that the update has been scheduled, you can Advertise the update.
-
-6. Once you have updated the parameters, scroll down and click the **Advertise Parameters Update**.
-
-7. You can now see the nodes that have accepted the update, and those who are still pending.
-
-    Once you have advertised the update, and the scheduled time has been reached, you can execute the flag day.
-
-8. Scroll down and click **Execute Flag Day**.
+#### Network Map Service configuration
