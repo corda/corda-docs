@@ -344,144 +344,42 @@ The logic of the `wasFlowTriggered()` function is naturally dependent on the flo
 This approach provides at-least-once guarantees. It cannot provide exactly-once guarantees, because of race conditions between the moment the check is performed and the moment the side effects of the flow become visible.
 {{< /warning >}}
 
-
-
-
-===========================================================================================================
-REMOVE ENTERPRISE BITS, update API links to be OS, etc.
-
-===========================================================================================================
-
-
 ## Building the Multi RPC Client
 
-Corda exposes a number of custom, remote RPC interfaces.
+The Milti RPC Client in Corda open source can be used as an extension of the [`net.corda.core.messaging.CordaRPCOps`](https://api.corda.net/api/corda-os/4.7/html/api/javadoc/net/corda/core/messaging/RPCOps.html) remote interface.
 
-To interact with your node via any of the following interfaces, you need to build a client that uses the [MultiRPCClient](https://api.corda.net/api/corda-enterprise/4.6/html/api/javadoc/net/corda/client/rpc/ext/MultiRPCClient.html) class:
-
-* `net.corda.client.rpc.proxy.AuditDataRPCOps` - This interface enables you to audit the log of RPC activity.
-* `net.corda.client.rpc.proxy.FlowRPCOps` - This interface enables you to retry a previously hospitalised flow.
-* `net.corda.client.rpc.proxy.NodeFlowStatusRpcOps` - This interface enables external applications to query and view the status of the flows which are currently under monitoring by the Flow Hospital.
-
-
-
-* `net.corda.client.rpc.proxy.NodeHealthCheckRpcOps` - This interface enables you to get a report about the health of the Corda Enterprise node.
-* `net.corda.client.rpc.proxy.notary.NotaryQueryRpcOps` - This interface enables you to perform a spend audit for a particular state reference.
-
-All of these interfaces are located in the `:client:extensions-rpc` module.
-
-{{< note >}}
-`CordaRPCClient` enables you to interact with the `CordaRPCOps` remote interface. However, if you intend to interact with any of the other remote interfaces that the Corda Enterprise provides, you need to build a client that uses the [MultiRPCClient](https://api.corda.net/api/corda-enterprise/4.6/html/api/javadoc/net/corda/client/rpc/ext/MultiRPCClient.html) class.
-{{< /note >}}
+To interact with your node via this interface, you need to build a client that uses the [MultiRPCClient](https://api.corda.net/api/corda-os/4.7/html/api/javadoc/net/corda/client/rpc/ext/MultiRPCClient.html) class.
 
 ### Pre-requisites
 
-To use the functionality of the [MultiRPCClient](https://api.corda.net/api/corda-enterprise/4.6/html/api/javadoc/net/corda/client/rpc/ext/MultiRPCClient.html) class from a custom JVM application, you must include the following
-dependencies:
+To use the functionality of the [MultiRPCClient](https://api.corda.net/api/corda-os/4.7/html/api/javadoc/net/corda/client/rpc/ext/MultiRPCClient.html) class from a custom JVM application, you must include the following dependency:
 
 ```groovy
 dependencies {
     compile "net.corda:corda-rpc:$corda_release_version"
-    compile "net.corda:corda-rpc-ext:$corda_release_version"
     ...
 }
 ```
-### Defining RPC users and permissions
-
-On the Corda Enterprise node side, you must define one or more RPC users and grant permissions to those users to invoke remote methods. To do this, you must edit the `node.conf` file.
-
-#### Granting all permissions
-
-To provide an RPC user with the permission to all the methods of an interface, use the syntax `InvokeRpc.<interface name>#ALL` in the `node.conf` file.
-
-For example, to grant permissions to all the methods of the `net.corda.client.rpc.proxy.NodeHealthCheckRpcOps` interface, you must include the syntax `InvokeRpc:net.corda.client.rpc.proxy.NodeHealthCheckRpcOps#ALL` in the `node.conf` file, as shown in the following code snippet:
-
-```groovy
-rpcUsers=[
-    {
-        username=exampleUser
-        password=examplePass
-        permissions=[
-            "InvokeRpc:net.corda.client.rpc.proxy.NodeHealthCheckRpcOps#ALL"
-        ]
-    },
-    ...
-]
-```
-
-#### Granting permissions for RPC operations
-
-To grant permissions in situations where multiple RPC interfaces are running within a single node, you can use the `InvokeRpc` syntax in the `node.conf` file to specify permissions for a particular interface.
-
-The `InvokeRpc` syntax can take any of the following forms:
-
-* `InvokeRpc:com.fully.qualified.package.CustomClientRpcOps#firstMethod`
-
-  Here, we are assuming that that there is a fully qualified interface `com.fully.qualified.package.CustomClientRpcOps` which has a method `firstMethod` permission to which we are specifying explicitly.
-
-* `InvokeRpc:com.fully.qualified.package.CustomClientRpcOps#ALL`
-
-  Here, we are granting permissions to all the methods of the `com.fully.qualified.package.CustomClientRpcOps` interface.
-
-* `InvokeRpc:com.fully.qualified.package.CustomClientRpcOps#READ_ONLY`
-
-  Here, we are granting permissions to a group of methods or properties that have been marked with `@RpcPermissionGroup(READ_ONLY)`. You can define as many groups as necessary and mark `RPCOps` interface methods as necessary. Each method may belong to multiple groups.
-
-{{% note %}}
-It is not uncommon for `RPCOps` interfaces to inherit from each other. Permissions to specific methods or methods groups should always be expressed using the declaring interface name. When granting RPC permissions, a node operator should disregard the `RPCOps` interfaces hierarchy.
-{{% /note %}}
-
-Consider the following interface definition in `com.fully.qualified.package` package:
-
-```kotlin
-interface Alpha : RPCOps {
-    @RpcPermissionGroup(READ_ONLY)
-    fun readAlpha() : String
-}
-
-interface Beta : Alpha {
-    @RpcPermissionGroup(READ_ONLY, SENSITIVE)
-    val betaValue : Int
-
-    @RpcPermissionGroup(SENSITIVE)
-    fun writeBeta(foo: Int)
-
-    fun nothingSpecial() : Int
-}
-```
-
-To grant permission to the `nothingSpecial()` method, you would use the syntax `InvokeRpc:com.fully.qualified.package.Beta#nothingSpecial`.
-
-To grant permission to the `readAlpha()` method, you would use the syntax `InvokeRpc:com.fully.qualified.package.Alpha#readAlpha`, even though by inheritance, the `readAlpha()` method is also present in the `Beta` interface.
-
-To grant permission to the `betaValue` property only, but not to the `readAlpha()` method, you would use the syntax `InvokeRpc:com.fully.qualified.package.Beta#READ_ONLY`.
-
-To grant permission to the `readAlpha()` method only, but not to the `betaValue` property, you would use the syntax `InvokeRpc:com.fully.qualified.package.Alpha#READ_ONLY`.
-
-{{% note %}}
-Permission strings are case-insensitive.
-{{% /note %}}
 
 ### Connecting to a node with `MultiRPCClient`
 
-The code snippet below demonstrates how to use the [MultiRPCClient](https://api.corda.net/api/corda-enterprise/4.7/html/api/javadoc/net/corda/client/rpc/ext/MultiRPCClient.html) class  to build a Multi RPC Client and define the following:
+The code snippet below demonstrates how to use the [MultiRPCClient](https://api.corda.net/api/corda-os/4.7/html/api/javadoc/net/corda/client/rpc/ext/MultiRPCClient.html) class to build a Multi RPC Client and define the following:
 
-* Endpoint address
-* Interface class to be used for communication (in this example, `NodeHealthCheckRpcOps::class.java`, which is used to communicate with the `net.corda.client.rpc.proxy.NodeHealthCheckRpcOps` interface)
-* User name
-* Password
+* Endpoint address.
+* Interface class to be used for communication (in this example, `CordaRPCOps::class.java`, which is used to communicate with the `net.corda.core.messaging.CordaRPCOps` interface).
+* User name.
+* Password.
 
 {{< tabs name="tabs-4" >}}
 {{% tab name="kotlin" %}}
 
 ```kotlin
-val client = MultiRPCClient(rpcAddress, NodeHealthCheckRpcOps::class.java, "exampleUser", "examplePass")
-
+val client = MultiRPCClient(rpcAddress, CordaRPCOps::class.java, "exampleUser", "examplePass")
 client.use {
-    val connFuture: CompletableFuture<RPCConnection<NodeHealthCheckRpcOps>> = client.start()
-    val conn: RPCConnection<NodeHealthCheckRpcOps> = connFuture.get()
+    val connFuture: CompletableFuture<RPCConnection<CordaRPCOps>> = client.start()
+    val conn: RPCConnection<CordaRPCOps> = connFuture.get()
     conn.use {
-        assertThat(it.proxy.runtimeInfo(), containsString("usedMemory"))
+        assertNotNull(it.proxy.nodeInfo())
     }
 }
 ```
@@ -491,10 +389,10 @@ client.use {
 {{% tab name="java" %}}
 
 ```java
-try(MultiRPCClient client = new MultiRPCClient(rpcAddress, NodeHealthCheckRpcOps.class, "exampleUser", "examplePass")) {
-    CompletableFuture<RPCConnection<NodeHealthCheckRpcOps>> connFuture = client.start();
-    try(RPCConnection<NodeHealthCheckRpcOps> conn = connFuture.get()) {
-        assertThat(conn.getProxy().runtimeInfo(), containsString("usedMemory"));
+try(MultiRPCClient client = new MultiRPCClient(rpcAddress, CordaRPCOps.class, "exampleUser", "examplePass")) {
+    CompletableFuture<RPCConnection<CordaRPCOps>> connFuture = client.start();
+    try(RPCConnection<CordaRPCOps> conn = connFuture.get()) {
+        assertNotNull(conn.getProxy().nodeInfo());
     }
 }
 ```
@@ -503,52 +401,36 @@ try(MultiRPCClient client = new MultiRPCClient(rpcAddress, NodeHealthCheckRpcOps
 
 {{< /tabs >}}
 
-`MultiRPCClient` is not started upon its creation, thus enabling you to perform any additional configuration steps that may be required and attach
-`RPCConnectionListener`s if necessary before starting.
+`MultiRPCClient` is not started upon its creation, thus enabling you to perform any additional configuration steps that may be required, and to attach `RPCConnectionListener`s if necessary before starting.
 
-When the `start` method is called on `MultiRPCClient`, it performs a remote call to establish an RPC connection with the specified endpoint.
-The connection is not created instantly. For this reason, the `start()` method returns `Future` over `RPCConnection` for the specified remote interface type.
+When the `start` method is called on `MultiRPCClient`, it performs a remote call to establish an RPC connection with the specified endpoint. The connection is not created instantly. For this reason, the `start()` method returns `Future` over `RPCConnection` for the specified remote interface type.
 
-Once the connection has been created, it is possible to obtain a `proxy` and perform a remote call. In the example above, this is demonstrated by a
- call to the `runtimeInfo()` method of `NodeHealthCheckRpcOps` interface.
+{{< note >}}
+Once the connection has been created, it is possible to obtain a `proxy` and perform a remote call.
+{{< /note >}}
 
 As some internal resources are allocated to `MultiRPCClient`, it is recommended that you call the `close()` method when the `MultiRPCClient` is no longer needed. In Kotlin, you would typically employ the `use` construct for this purpose. In Java, you can use `try-with-resource`.
 
 `RPCConnection` is also a `Closeable` construct, so it is a good idea to call `close()` on it after use.
 
-
 ### Specifying multiple endpoint addresses
 
-You can pass in multiple endpoint addresses when constructing `MultiRPCClient`.
-If you do so, `MultiRPCClient` will operate in fail-over mode and if one of the endpoints becomes unreachable, it will automatically re-try the connection using a round-robin policy.
+You can pass in multiple endpoint addresses when constructing `MultiRPCClient`. If you do so, `MultiRPCClient` will operate in fail-over mode and if one of the endpoints becomes unreachable, it will automatically retry the connection using a "round-robin" policy.
 
-For more information, see the API documentation for [MultiRPCClient](https://api.corda.net/api/corda-enterprise/4.7/html/api/javadoc/net/corda/client/rpc/ext/MultiRPCClient.html).
+For more information, see the API documentation for [MultiRPCClient](https://api.corda.net/api/corda-os/4.7/html/api/javadoc/net/corda/client/rpc/ext/MultiRPCClient.html).
 
 ### Adding RPC connection listeners
 
-If the reconnection cycle has started, the previously supplied `RPCConnection` may become interrupted and `proxy` will throw an
-`RPCException` every time the remote method is called.
+If the reconnection cycle has started, the previously supplied `RPCConnection` may become interrupted and `proxy` will throw an `RPCException` every time the remote method is called.
 
-To be notified when the connection has been re-established or, indeed, to receive notifications throughout the lifecycle of every connection, you can add one or more [RPCConnectionListeners](https://api.corda.net/api/corda-enterprise/4.7/html/api/javadoc/net/corda/client/rpc/ext/RPCConnectionListener.html) to `MultiRPCClient`.
-For more information, see [RPCConnectionListener](https://api.corda.net/api/corda-enterprise/4.7/html/api/javadoc/net/corda/client/rpc/ext/RPCConnectionListener.html) in the API documentation.
+To be notified when the connection has been re-established or, indeed, to receive notifications throughout the lifecycle of every connection, you can add one or more [RPCConnectionListeners](https://api.corda.net/api/corda-os/4.7/html/api/javadoc/net/corda/client/rpc/ext/RPCConnectionListener.html) to `MultiRPCClient`.
+For more information, see the API documentation reference for the [RPCConnectionListener](https://api.corda.net/api/corda-os/4.7/html/api/javadoc/net/corda/client/rpc/ext/RPCConnectionListener.html)) interface.
 
 ### Specifying RPC connection parameters
-Many constructors are available for `MultiRPCClient`. This enables you to specify a variety of other configuration parameters relating to the RPC connection. The parameters for `MultiRPCClient` are largely similar to the parameters for [CordaRPCClient](https://api.corda.net/api/corda-enterprise/4.7/html/api/javadoc/net/corda/client/rpc/CordaRPCClient.html). For more information, see [MultiRPCClient](https://api.corda.net/api/corda-enterprise/4.7/html/api/javadoc/net/corda/client/rpc/ext/MultiRPCClient.html) in the API documentation.
 
+Many constructors are available for `MultiRPCClient`. This enables you to specify a variety of other configuration parameters relating to the RPC connection. The parameters for `MultiRPCClient` are largely similar to the parameters for the [CordaRPCClient](https://api.corda.net/api/corda-os/4.7/html/api/javadoc/net/corda/client/rpc/CordaRPCClient.html).
 
-===========================================================================================================
-END OF SECTION FOR EDITING
-===========================================================================================================
-
-
-
-
-
-
-
-
-
-
+For more information, see [MultiRPCClient](https://api.corda.net/api/corda-os/4.7/html/api/javadoc/net/corda/client/rpc/ext/MultiRPCClient.html) in the API documentation.
 
 ## Managing RPC security
 
