@@ -79,7 +79,7 @@ For more information about platform versions, see [Versioning](versioning.md).
 
 {{< note >}}
 The list above contains known issues specific to Corda 4.7. See the release notes for previous Corda releases further down on this page for information about known issues specific to those versions.
-{{ < /note >}}
+{{< /note >}}
 
 
 ## Corda 4.6
