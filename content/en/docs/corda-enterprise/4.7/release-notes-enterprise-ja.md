@@ -26,14 +26,14 @@ Corda 3.0以上で有効なステートやアプリはCorda 4.7でもお使い�
 
 Corda Enterprise 4.7における主な新機能と機能強化は以下の通りです：
 
-* [アーカイブサービス](#archiving-service)
-* [改善されたノータリーのバックプレッシャー（ETA）メカニズム](#improved-notary-back-pressure-eta-mechanism)
-* [ノード管理とフロー管理用の新しい管理コンソール](#new-management-consoles-for-node-management-and-flow-management)
-* [証明書ローテーション](#certificate-rotation)
-* [Azure ADへのシングルサインオン](#other-changes-and-improvements)
-* [HSM統合サポート](#other-changes-and-improvements)
-* [HSMに秘密アイデンティティ鍵を保存する機能](#other-changes-and-improvements)
-* [HSM API](#other-changes-and-improvements)
+* [アーカイブサービス](#アーカイブサービス)
+* [改善されたノータリーのバックプレッシャー（ETA）メカニズム](#改善されたノータリーのバックプレッシャーetaメカニズム)
+* [ノード管理とフロー管理用の新しい管理コンソール](#ノード管理とフロー管理用の新しい管理コンソール)
+* [証明書ローテーション](#証明書ローテーション)
+* [Azure ADへのシングルサインオン](#その他の変更と改善)
+* [HSM統合サポート](#その他の変更と改善)
+* [HSMに秘密アイデンティティ鍵を保存する機能](#その他の変更と改善)
+* [HSM API](#その他の変更と改善)
 
 {{< note >}}
 このページでは、Corda Enterprise 4.7に特有の機能のみを記載しています。 しかし、Corda Enterpriseのお客様は、Cordaオープンソースリリースの一環として、利用可能な全ての機能をご利用いただけます。
