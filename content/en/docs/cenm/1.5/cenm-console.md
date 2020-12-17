@@ -103,7 +103,7 @@ To access the CENM management console:
 
 3. Select **CENM Console**.
 
-{{% figure zoom="/en/images/cenm-management-console-wrapper.png" alt="CENM management console welcome screen" %}}
+{{% figure zoom="/en/images/cenm-management-console-launcher.png" alt="CENM management console launcher screen" %}}
 
 The CENM management console loads on the **Network Map** list screen.
 
