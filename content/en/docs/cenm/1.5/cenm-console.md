@@ -121,7 +121,7 @@ There is also a **MAP VIEW**, which shows the Network Map as an actual map grid:
 
 {{% figure zoom="/en/images/cenm-management-console-map-view.png" alt="CENM management console - Map View" %}}
 
-You can switch between the two views by selecting **MAP VIEW**/**LAYOUT VIEW** respectively from the drop-down menu that opens when youo click on your user name in the top right corner of the screen:
+You can switch between the two views by selecting **MAP VIEW**/**LAYOUT VIEW** respectively from the drop-down menu that opens when you click on your username in the top right corner of the screen:
 
 {{% figure src="/en/images/cenm-management-console-map-layout-view-switch.png" alt="CENM management console - switching between Map View and Layout View" width=200 %}}
 
@@ -187,19 +187,22 @@ To check the status of members being removed from the network, click the **CRR/C
 
 ### Update services configuration files
 
-You can access and edit the configuration files of these services:
-
-* Identity Manager Service.
-* Signing Service.
-* Network Map Service.
+You can access and edit the configuration files of the Identity Manager Service, the Signing Service, and the Network Map Service.
 
 #### Identity Manager Service configuration
 
+To access and edit the configuration files of the Identity Manager Service, click **CONFIGURATION** in the top navigation area of the screen, and then the **IDENTITY MANAGER** tab:
 
-
+{{% figure zoom="/en/images/cenm-management-console-configuration-identity-manager.png" alt="CENM management console - Identity Manager Service configuration" %}}
 
 #### Signing Service configuration
 
+To access and edit the configuration files of the Identity Manager Service, click **CONFIGURATION** in the top navigation area of the screen, and then the **SIGNER** tab:
 
+{{% figure zoom="/en/images/cenm-management-console-configuration-signer.png" alt="CENM management console - Signing Service configuration" %}}
 
 #### Network Map Service configuration
+
+To access and edit the configuration files of the Identity Manager Service, click **CONFIGURATION** in the top navigation area of the screen, and then the **NETWORK MAP** tab:
+
+{{% figure zoom="/en/images/cenm-management-console-configuration-network-map.png" alt="CENM management console - Network Map configuration" %}}
