@@ -193,11 +193,6 @@ identifier = "cenm-1-5-signing-plugin-samples"
 name = "Signing Plugin Samples"
 weight = 330
 
-[[cenm-1-5]]
-identifier = "cenm-1-5-tools-and-utilities"
-name = "Tools & Utilities"
-weight = 270
-
 [[corda-enterprise-3-0]]
 identifier = "corda-enterprise-3-0-corda-enterprise"
 name = "Corda Enterprise"
