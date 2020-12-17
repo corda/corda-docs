@@ -165,11 +165,11 @@ The node can optionally be started with the following command-line options:
 
 **Important note about running the initial node registration command**
 
-In Corda 4.7, database schemas are no longer initialised/migrated automatically by running any command at the first run of the node - typically at the initial node registration. This is now done explicitly by running `run-migration-scripts`, so no other commands during the first node run would initialise/migrate the database schema.
+From Corda 4.6, database schemas are no longer initialised/migrated automatically by running any command at the first run of the node - typically at the initial node registration. This is now done explicitly by running `run-migration-scripts`, so no other commands during the first node run would initialise/migrate the database schema.
 
-The exception to that is the `--initial-registration` command, which embeds `run-migration-scripts` and therefore runs the database migration scripts by default.
+The exception to that is the `initial-registration` command, which embeds `run-migration-scripts` and therefore runs the database migration scripts by default.
 
-So if you are using deployment automation you may need to adjust your scripts accordingly and exclude the database initialisation/migration task from the initial node registration command. To do so, use the `--skip-schema-creation` flag alongside the `--initial-registration` command.
+So if you are using deployment automation you may need to adjust your scripts accordingly and exclude the database initialisation/migration task from the initial node registration command. To do so, use the `--skip-schema-creation` flag alongside the `initial-registration` command.
 
 
 {{< /warning >}}
@@ -179,7 +179,19 @@ Parameters:
 
 * `--network-root-truststore`, `-t` **required**: Network root trust store obtained from network operator.
 * `--network-root-truststore-password`, `-p`: Network root trust store password obtained from network operator.
-* * `--skip-schema-creation`: Skips the default database migration step.
+* `--skip-schema-creation`: Skips the default database migration step.
+
+{{< note >}}
+Node `initial-registration` now includes the creation of `identity-private-key` keystore alias. For more information, see [node folder structure](../../node/setup/node-structure.md). Previously, only `cordaclientca` and `cordaclienttls` aliases were created during `initial-registration`, while `identity-private-key` was generated on demand on the first node run. Hence, in Corda 4.7 the content of `nodekeystore.jks` is never altered during a regular node run (except for `devMode = true`, where the certificates directory can be filled with pre-configured keystores).
+{{< /note >}}
+
+`run-migration-scripts`: From version 4.6, a Corda node can no longer modify/create schema on the fly in normal run mode - schema setup or changes must be
+applied deliberately using this sub-command. It runs the database migration script for the requested schema set defined in the following parameters. Once it creates or modifies the schema(s), the sub-command will exit.
+
+Parameters:
+
+* `--core-schemas`: Use to run the core database migration script for the node database. Core schemas cannot be migrated while there are checkpoints.
+* `--app-schemas`: Use to run the app database migration script for CorDapps. To force an app schema to migrate with checkpoints present, use the `--update-app-schema-with-checkpoints` flag alongside the `run-migration-scripts` sub-command.
 
 `generate-node-info`: Performs the node start-up tasks necessary to generate the nodeInfo file, saves it to disk, then exits.
 

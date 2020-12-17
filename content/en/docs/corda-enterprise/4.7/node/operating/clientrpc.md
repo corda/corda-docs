@@ -16,8 +16,8 @@ weight: 3
 To interact with your node, you need to build an RPC client. This RPC client enables you to connect to a specified server and to make calls to the server that perform various useful tasks. The RPC client must be written in a JVM-compatible language.
 
 Corda Enterprise supports two types of RPC client:
-* Corda RPC Client, which is used if you want to interact with your node via the `CordaRPCOps` remote interface only
-* Multi RPC Client, which is used if you want to interact with your node via any of the other remote interfaces that the Corda node provides
+* **Corda RPC Client**, which is used if you want to interact with your node via the `CordaRPCOps` remote interface only.
+* **Multi RPC Client**, which is used if you want to interact with your node via any of the other remote interfaces that the Corda node provides.
 
 {{< warning >}}
 The built-in Corda test webserver is deprecated and unsuitable for production use. If you want to interact with

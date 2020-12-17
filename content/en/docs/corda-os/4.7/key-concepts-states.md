@@ -71,3 +71,7 @@ where one party creates reference data, which is then used (but not updated) by 
 states containing reference data are referred to as “reference states”. Syntactically, reference states are no different
 to regular states. However, they are treated different by Corda transactions. See [Transactions](key-concepts-transactions.md) for
 more details.
+
+## Reissuing states
+
+See [Reissuing states](reissuing-states.md) for information about reissuing states with a guaranteed state replacement, which allows you to break transaction backchains.

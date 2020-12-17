@@ -20,6 +20,10 @@ A small number of tools and utilities are available to help with setting up, run
 
 * [Public Key Infrastructure (PKI) Tool](pki-tool.md)
 
+## Node Certificate Rotation Tool
+
+This tool enables the reissuing of node legal identity keys and certificates, allowing CENM to re-register a node (including a notary node) with a new certificate in the Network Map. For more information about this feature, contact [R3 support](https://www.r3.com/support/).
+
 ## General running of network
 
 * [Certificate Revocation Request Submission Tool](tool-crr-submission.md)

@@ -8,7 +8,7 @@ tags:
 - coding
 - guidelines
 title: Secure coding guidelines
-weight: 6
+weight: 40
 ---
 
 

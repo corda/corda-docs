@@ -314,6 +314,9 @@ Allows fine-grained controls of various features only available in the enterpris
 * `tlsKeyAlias`
   * The alias of the TLS key. It can consist of up to 100 lowercase alphanumeric characters and the hyphen (-).
   * *Default:* `cordaclienttls`
+* `previousIdentityKeyAliases`
+  * List of previous node identity key aliases after key rotation. For more information about this feature, contact R3 support.
+  * Default value: An empty list.
 
 ## `tuning`
 
@@ -395,7 +398,13 @@ Threshold duration suspended flows waiting for IO need to exceed before they are
 
 When a flow implementing the `TimedFlow` interface and setting the `isTimeoutEnabled` flag does not complete within a defined elapsed time, it is restarted from the initial checkpoint.
 Currently only used for notarisation requests with clustered notaries: if a notary cluster member dies while processing a notarisation request, the client flow eventually times out and gets restarted.
-On restart the request is resent to a different notary cluster member in a round-robin fashion. Note that the flow will keep retrying forever.
+On restart the request is resent to a different notary cluster member in a round-robin fashion. Note that the flow will keep retrying forever. The calculation of the retry timer is as follows:
+
+```
+Timeout = Base timeout * Backoff base ^ Retry count * Jitter factor
+```
+
+The jitter factor is set to a random number between 1 and 1.5, and is intended to introduce a degree of randomness to the calculation, helping to protect the notary against sudden increases in notarisation requests causing a subsequent increase in retry attempts.
 
 * `timeout`
   * The initial flow timeout period.

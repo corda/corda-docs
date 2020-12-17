@@ -7,7 +7,7 @@ tags:
 - concepts
 - djvm
 title: How are transactions resolved?
-weight: 20
+weight: 170
 ---
 
 

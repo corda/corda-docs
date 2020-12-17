@@ -10,7 +10,7 @@ tags:
 - getting
 - set
 title: Getting set up for CorDapp development
-weight: 2
+weight: 10
 
 ---
 
