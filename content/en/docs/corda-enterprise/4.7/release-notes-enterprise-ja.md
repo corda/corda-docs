@@ -88,7 +88,7 @@ Corda Enterprise 4.7では、ノードの法的アイデンティティ鍵や証
 ### その他の変更と改善
 
 * **Azure ADへのシングルサインオン** Azure ADとCorda Authサービスで簡単な設定を行うだけで、CordaサービスとAzure AD間でシングルサインオン（SSO）設定が使えるようになりました。[詳しくはこちらをご覧ください](../../cenm/1.5/azure-ad-sso.md).
-* **HSM統合サポート** Corda Enterpriseでは、ユーザーに対して、サポート外のHSMとCorda Enterpriseの統合のサポートを行うようになりました。 今回のリリースには、例として使えるJava実装のサンプルと、展開前に実装をテストできるテストスイートが含まれています。 HSM統合の書き方ガイドについては、[HSMの説明書](operations/deployment/hsm-integration-tck.md/)をご覧ください。
+* **HSM統合サポート** Corda Enterpriseでは、ユーザーに対して、サポート外のHSMとCorda Enterpriseの統合のサポートを行うようになりました。 今回のリリースには、例として使えるJava実装のサンプルと、展開前に実装をテストできるテストスイートが含まれています。 HSM統合の書き方ガイドについては、[HSMの説明書](operations/deployment/hsm-integration.md/)をご覧ください。
 * **HSMに秘密アイデンティティ鍵を保存する機能** Corda Enterpriseは、nCipher、FuturexとAzure Key VaultのHSMにおける秘密アイデンティティに関する鍵の保管をサポートするようになりました。nCipherとAzure Key VaultのHSMでは秘密アイデンティティ鍵のネイティブでの利用をサポートし、FuturexのHSMではキーラップモードをサポートします。 これらのHSMにおける秘密アイデンティティ鍵保管の設定については、[HSMの説明書](operations/deployment/hsm-deployment-confidential.md#using-an-hsm-with-confidential-identities/)をご覧ください。
 * **HSM API** Corda Enterprise 4.7では、外部のツール開発者がCorda EnterpriseのHSMサポートを拡張するために使える独自のAPIを有するHSMライブラリーが導入されています。
 * ノード`initial-registration`が`identity-private-key`キー保管のエイリアス作成を含むようになりました。 詳細については、[ノードフォルダー構造](node/setup/node-structure.md#node-folder-structure)の説明書をご覧ください。 これまでは、`cordaclientca`と`cordaclienttls`のエイリアスだけが`initial-registration`中に作成され、`identity-private-key`は初回のノード実行時に必要に応じて生成されていました。 そのため、Corda Enterprise 4.7では、`nodekeystore.jks`の内容は通常のノード実行中に変更されません（証明書ディレクトリを事前に設定したキー保管で埋められる`devMode = true`を除きます）。
