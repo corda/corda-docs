@@ -9,3 +9,4 @@ The _network participant_ is the user (or users) in an organisation who have sig
 
 * [Understanding transactions](../api-transactions.md)
 * [Writing CorDapp Flows](../api-flows.md)
+* [Business Network Membership](../business-network-membership.md)
