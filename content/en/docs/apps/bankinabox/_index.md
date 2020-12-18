@@ -5,7 +5,7 @@ aliases:
 date: '2020-01-08T09:59:25Z'
 menu:
   versions:
-    weight: 1050
+    weight: -260
 project: bankinabox
 section_menu: bankinabox
 title: Bank in a Box
