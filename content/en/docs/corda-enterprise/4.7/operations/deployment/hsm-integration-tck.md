@@ -322,7 +322,7 @@ which will change the user type to _Crypto Officer_ (CO).
     ./runHSMTests.sh | tee out
     ```
 
-   The tests will take approximately 10 minutes to run. If any tests fail, the logs will saved in a date- and time-stamped subdirectory.
+   The tests will take approximately 10 minutes to run. If any tests fail, the logs will be saved in a date- and time-stamped subdirectory.
 
 4. If the standard tests pass, delete the keys as described in Step Two, and run the timeout tests by running the following command:
 
@@ -333,4 +333,4 @@ which will change the user type to _Crypto Officer_ (CO).
     ./runHSMTimeoutTests.sh | tee out
     ```
 
-    The timeout tests may take over an hour to complete. The tests are designed to hang for up to 20 minutes in order to ensure that connections can be successfully reestablished.
+    The timeout tests may take over an hour to complete. The tests are designed to hang for up to 20 minutes in order to ensure that connections can be successfully re-established.
