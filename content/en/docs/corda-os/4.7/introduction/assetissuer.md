@@ -12,3 +12,4 @@ Business networks are typically created to transact a specific asset type or to 
 * [Writing CordDapp Flows](../api-flows.md)
 * [Writing vault queries](../api-vault-query.md)
 * [Understanding transactions](../api-transactions.md)
+* [Reissuing states](../reissuing-states.md)
