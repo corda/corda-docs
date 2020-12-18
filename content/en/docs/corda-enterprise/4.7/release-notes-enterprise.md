@@ -103,7 +103,7 @@ For more information about platform versions, see [Versioning](cordapps/versioni
 ## Fixed issues
 
 * We have fixed a [Collaborative recovery](node/collaborative-recovery/introduction-cr.md) issue where, when using Accounts, [LedgerSync](node/collaborative-recovery/ledger-sync.md) returned no differences if the party that initiated the transaction wanted to recover against the receiving party.
-* We have fixed an issue where the flow metadata finish time was set in a different timezone than the flow metadata start time.
+* We have fixed an issue where the flow metadata finish time was set in a different time zone than the flow metadata start time.
 * We have fixed an issue where, in case of hot/cold node failover, ongoing flows would sometimes get stuck on a new hot node and/or counterparty nodes while waiting to receive messages from the counterparty.
 * We have fixed an issue where the Corda 4.6 RPC Client could not execute the method `NodeFlowStatusRpcOps::getFlowStatus` against a Corda 4.7 node due to failing to deserialise some enums when querying the node states.
 * We have fixed an issue with JPA notaries where, if there were 10 or more input states, the `StateRef` was correctly encoded as `<hash>:a` but then was incorrectly decoded due to an expected integer input.

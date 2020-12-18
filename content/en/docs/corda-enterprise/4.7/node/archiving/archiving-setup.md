@@ -47,7 +47,7 @@ Once the Archive Service has marked a transaction or attachment as archivable, y
 
 ### Archiving and Collaborative Recovery
 
-The [Collaborative Recovery CorDapp **LedgerSync** V1.2](../collaborative-recovery/ledger-sync) has been introduced for compatibility with the Archive Service. If you or anyone on your network uses Collaborative Recovery to recover data after a disaster scenario, archived transactions in any nodes on the network are marked as such. This means they do not appear to be 'lost' or 'missing'data and will not be recovered automatically in the recovery process.
+The [Collaborative Recovery CorDapp **LedgerSync** V1.2](../collaborative-recovery/ledger-sync) has been introduced for compatibility with the Archive Service. If you or anyone on your network uses Collaborative Recovery to recover data after a disaster scenario, archived transactions in any nodes on the network are marked as such. This means they do not appear to be 'lost' or 'missing' data and will not be recovered automatically in the recovery process.
 
 ## Making archive-friendly CorDapps
 
@@ -103,7 +103,7 @@ total 12
 ```
 
 The Archive Service configuration file provides the database connection details used by the service to
-to record a temporary snapshot of the vault data.
+record a temporary snapshot of the vault data.
 
 The following are keys for configuring the Archive Service:
 
@@ -373,5 +373,5 @@ additionalAttachmentTables: [
 Data from these tables will be recorded as part of the snapshot process and later deleted from the vault,
 but will not be exported to permanent archive.
 
-Tables should should be excluded from the archive process can be registered using the
+Tables should be excluded from the archive process can be registered using the
 properties `excludeTransactionTables` and `excludeAttachmentTables`.

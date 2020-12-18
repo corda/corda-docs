@@ -280,7 +280,7 @@ Options:
 If the `--record` option is given then the SQL is written to the file and no
 database updates are executed.
 
-This command can only to used if a backup schema has been configured.
+This command can only be used if a backup schema has been configured.
 
 ## Restore Snapshot command
 
@@ -474,7 +474,7 @@ additionalAttachmentTables: [
 
 Data from these tables will be recorded as part of the snapshot process and later deleted from the vault, but will not be exported to the permanent archive.
 
-Tables should should be excluded from the archive process can be registered using the properties `excludeTransactionTables` and `excludeAttachmentTables`.
+Tables should be excluded from the archive process can be registered using the properties `excludeTransactionTables` and `excludeAttachmentTables`.
 
 ## Schema permissions
 
