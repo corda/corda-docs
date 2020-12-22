@@ -34,7 +34,7 @@ The new state reissuance functionality provides a state reissuance algorithm tha
 {{< note >}}
 State encumbrance refers to a state pointing to another state that must also appear as an input to any transaction consuming this state. A state may be encumbered by up to one other state, which is called an "encumbrance" state. The encumbrance state, if present, forces additional controls over the encumbered state, since the encumbrance state contract will also be verified during the execution of the transaction.
 
-See [Defining encumbrances](../../corda-os/4.7/tutorial-contract.md#defining-encumbrances) for more information.
+See [Defining encumbrances](../../../corda-os/4.7/tutorial-contract.md#defining-encumbrances) for more information.
 {{< /note >}}
 
 In addition, a single trusted issuing party is allowed to reissue multiple fungible states at once, provided that all these states are of the same type. For example, you can issue at once a number of tokens with different quantities but with the same `TokenType` and issued by the same party.
@@ -179,13 +179,13 @@ The flow returns a set because the exact order of backchain transactions is not 
 
 ### Reissuance - state machine
 
-State machine [CDL](../../cdl/cdl/cdl-overview.md) chart:
+State machine [CDL](../../../cdl/cdl/cdl-overview.md) chart:
 
 {{% figure zoom="/en/images/reissuance-state-machine.png" alt="State reissuance - state machine CDL chart"%}}
 
 ### Reissuance - state evolution
 
-State evolution [CDL](../../cdl/cdl/cdl-overview.md) chart:
+State evolution [CDL](../../../cdl/cdl/cdl-overview.md) chart:
 
 {{% figure zoom="/en/images/reissuance-state-evolution.png" alt="State reissuance - state evolution CDL chart"%}}
 
@@ -238,14 +238,9 @@ As state references are compared in the contract code, it is impossible to cheat
 
 If the issuing party is not a participant, they do not get updated if the original state is consumed. It is therefore possible for the issuing party to reissue a state, which has already been consumed. However, in that case the requesting party will not be able to prove that such a state has been exited, and therefore be unable to unlock (consume) it.
 
-### Further cheating possibilities that are not covered
+### Preventing other cheating possibilities
 
-Despite the actions preventing cheating described above, cheating still might be possible if state implementation
-allows for that.
-
-{{< note >}}
-Consider using different wording in the customer-facing copy. For example, something along the lines that the issuing party must a trusted party and is expected to act in an appropriate way.
-{{< /note >}}
+The issuing party must be a trusted party and is expected to act in an appropriate way. The use cases described below provide recommendations on state implementations that could prevent other cheating possibilities.
 
 #### Possibility of other party reissuing the state
 
