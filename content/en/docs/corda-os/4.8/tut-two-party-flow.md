@@ -5,9 +5,9 @@ aliases:
 - /tut-two-party-flow.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-7:
-    identifier: corda-os-4-7-tut-two-party-flow
-    parent: corda-os-4-7-tut-two-party-introduction
+  corda-os-4-8:
+    identifier: corda-os-4-8-tut-two-party-flow
+    parent: corda-os-4-8-tut-two-party-introduction
     weight: 1020
 tags:
 - tut

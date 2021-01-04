@@ -1,10 +1,10 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-7:
-    identifier: corda-enterprise-4-7-cordapp-advanced-concepts
+  corda-enterprise-4-8:
+    identifier: corda-enterprise-4-8-cordapp-advanced-concepts
     name: "Advanced CorDapp concepts"
-    parent: corda-enterprise-4-7-cordapps
+    parent: corda-enterprise-4-8-cordapps
 
 tags:
 - cordapp

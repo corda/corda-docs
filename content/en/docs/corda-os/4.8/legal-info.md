@@ -5,9 +5,9 @@ aliases:
 - /legal-info.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-7:
-    identifier: corda-os-4-7-legal-info
-    parent: corda-os-4-7-release-notes
+  corda-os-4-8:
+    identifier: corda-os-4-8-legal-info
+    parent: corda-os-4-8-release-notes
     weight: 450
 tags:
 - legal
@@ -1277,7 +1277,7 @@ Apache License
 
        http://www.apache.org/licenses/LICENSE-2.0
 
-  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    
+  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
 

@@ -1,10 +1,10 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-7:
-    identifier: corda-enterprise-4-7-cordapps-contracts
+  corda-enterprise-4-8:
+    identifier: corda-enterprise-4-8-cordapps-contracts
     name: "Writing CorDapp contracts"
-    parent: corda-enterprise-4-7-cordapps
+    parent: corda-enterprise-4-8-cordapps
 tags:
 - api
 - contracts

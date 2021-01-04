@@ -1,9 +1,9 @@
 ---
 date: '2020-09-20T09:59:25Z'
 menu:
-  corda-os-4-7:
-    identifier: corda-os-4-7-testnet-explorer-corda
-    parent: corda-os-4-7-deploy-to-testnet-index
+  corda-os-4-8:
+    identifier: corda-os-4-8-testnet-explorer-corda
+    parent: corda-os-4-8-deploy-to-testnet-index
     weight: 1080
 tags:
 - testnet

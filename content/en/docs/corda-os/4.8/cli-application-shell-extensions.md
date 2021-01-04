@@ -5,9 +5,9 @@ aliases:
 - /cli-application-shell-extensions.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-7:
-    identifier: corda-os-4-7-cli-application-shell-extensions
-    parent: corda-os-4-7-operations
+  corda-os-4-8:
+    identifier: corda-os-4-8-cli-application-shell-extensions
+    parent: corda-os-4-8-operations
     weight: 390
 tags:
 - cli

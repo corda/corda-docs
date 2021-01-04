@@ -5,9 +5,9 @@ aliases:
 - /features-versions.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-7:
-    identifier: corda-os-4-7-features-versions
-    parent: corda-os-4-7-upgrading
+  corda-os-4-8:
+    identifier: corda-os-4-8-features-versions
+    parent: corda-os-4-8-upgrading
     weight: 10
 tags:
 - features

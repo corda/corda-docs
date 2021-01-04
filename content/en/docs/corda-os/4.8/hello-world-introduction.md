@@ -5,9 +5,9 @@ aliases:
 - /hello-world-introduction.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-7:
-    identifier: corda-os-4-7-hello-world-introduction
-    parent: corda-os-4-7-tutorials-index
+  corda-os-4-8:
+    identifier: corda-os-4-8-hello-world-introduction
+    parent: corda-os-4-8-tutorials-index
     weight: 1010
 tags:
 - introduction

@@ -1,10 +1,10 @@
 ---
 date: '2020-05-10T12:00:00Z'
 menu:
-  corda-os-4-7:
-    identifier: corda-os-4-7-token-sdk
+  corda-os-4-8:
+    identifier: corda-os-4-8-token-sdk
     name: "Tokens SDK"
-    parent: corda-os-4-7-development
+    parent: corda-os-4-8-development
 tags:
 - tokens sdk
 - fungible

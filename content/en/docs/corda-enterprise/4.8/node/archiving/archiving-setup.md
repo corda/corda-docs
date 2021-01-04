@@ -1,10 +1,10 @@
 ---
 date: '2020-12-10T12:00:00Z'
 menu:
-  corda-enterprise-4-7:
-    identifier: corda-enterprise-4-7-corda-nodes-archive-service
+  corda-enterprise-4-8:
+    identifier: corda-enterprise-4-8-corda-nodes-archive-service
     name: "Archive Service"
-    parent: corda-enterprise-4-7-corda-nodes
+    parent: corda-enterprise-4-8-corda-nodes
 tags:
 - archive
 - backup schema
@@ -71,12 +71,12 @@ The Archive Service requires:
 
 * Node minimum platform version 6.
 * Corda Enterprise minimum version 4.4.
-* [LedgerGraph V1.2](./operating/ledger-graph).
+* [LedgerGraph V1.2](../operating/ledger-graph.md).
 * Collaborative Recovery V 1.2 (if you use Collaborative Recovery).
 
 {{< warning >}}
 Archive Service V1.0 does not support **Accounts** or **Confidential Identities** functionality in Corda.
-{{< /warning >}}  
+{{< /warning >}}
 
 ## Installation
 
@@ -135,7 +135,7 @@ target: {
 
 you can configure the archiving process to create a temporary snapshot image of the archivable transactions
 and attachments from your Corda vault on a backup schema within the same database. This snapshot can then be used
-to restore the vault should the database fail during the archiving operation.   
+to restore the vault should the database fail during the archiving operation.
 
 For the backup schema to work, the Corda vault schema and the archive schema must reside on the same database but be
 managed by different schema owners.

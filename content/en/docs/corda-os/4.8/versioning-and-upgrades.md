@@ -5,9 +5,9 @@ aliases:
 - /versioning-and-upgrades.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-7:
-    identifier: corda-os-4-7-versioning-and-upgrades
-    parent: corda-os-4-7-development
+  corda-os-4-8:
+    identifier: corda-os-4-8-versioning-and-upgrades
+    parent: corda-os-4-8-development
     weight: 150
 tags:
 - versioning

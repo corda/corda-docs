@@ -1,9 +1,9 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-7:
-    identifier: corda-enterprise-4-7-corda-nodes-operating-administration
-    parent: corda-enterprise-4-7-corda-nodes-operating
+  corda-enterprise-4-8:
+    identifier: corda-enterprise-4-8-corda-nodes-operating-administration
+    parent: corda-enterprise-4-8-corda-nodes-operating
 tags:
 - node
 - administration

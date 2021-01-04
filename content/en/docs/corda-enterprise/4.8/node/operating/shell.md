@@ -1,8 +1,8 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-7:
-    parent: corda-enterprise-4-7-corda-nodes-operating-interacting
+  corda-enterprise-4-8:
+    parent: corda-enterprise-4-8-corda-nodes-operating-interacting
 tags:
 - shell
 title: Node shell
@@ -582,9 +582,9 @@ Use this command to display all flows currently running on the node with result 
 The output will show results listed with flow `Id`, `Flow name`, `Initiator`, and `Status`.
 
 ```
-Id                                Flow name                                                          Initiator                        Status                                                             
+Id                                Flow name                                                          Initiator                        Status
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-27fc3a53-5fc3-4c30-a872-a2f282291 Cash Payment Receiver                                              O=BankOfCorda, L=London, C=GB    No return value                                                    
+27fc3a53-5fc3-4c30-a872-a2f282291 Cash Payment Receiver                                              O=BankOfCorda, L=London, C=GB    No return value
 Waiting for completion or Ctrl-C ...
 ```
 

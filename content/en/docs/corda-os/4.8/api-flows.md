@@ -5,9 +5,9 @@ aliases:
 - /api-flows.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-7:
-    identifier: corda-os-4-7-api-flows
-    parent: corda-os-4-7-corda-api
+  corda-os-4-8:
+    identifier: corda-os-4-8-api-flows
+    parent: corda-os-4-8-corda-api
     weight: 220
 tags:
 - api

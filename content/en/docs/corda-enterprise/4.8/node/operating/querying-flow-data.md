@@ -1,7 +1,7 @@
 ---
 menu:
-  corda-enterprise-4-7:
-    parent: corda-enterprise-4-7-corda-nodes-operating
+  corda-enterprise-4-8:
+    parent: corda-enterprise-4-8-corda-nodes-operating
 tags:
 - shell
 - node

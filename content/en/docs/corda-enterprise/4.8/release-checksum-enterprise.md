@@ -2,8 +2,8 @@
 title: Release files and checksums
 date: '2020-08-29T12:19:11Z'
 menu:
-  corda-enterprise-4-7:
-    parent: corda-enterprise-4-7-release-notes
+  corda-enterprise-4-8:
+    parent: corda-enterprise-4-8-release-notes
     weight: 200
 tags:
 - release

@@ -2,8 +2,8 @@
 title: "Flow management console"
 linkTitle: "Flow management console"
 menu:
-  corda-enterprise-4-7:
-    parent: corda-enterprise-4-7-corda-nodes-operating
+  corda-enterprise-4-8:
+    parent: corda-enterprise-4-8-corda-nodes-operating
 tags:
 - node
 - flow
@@ -60,9 +60,9 @@ If a flow does **not** have a client ID attached to it, it will not be visible i
 
 The **Dashboard** tab displays two charts:
 
-* A pie chart that shows the breakdown of flows by flow state (`FAILED`, `KILLED`, `HOSPITALIZED`, `PAUSED`, `RUNNABLE`, or `COMPLETED`). 
- * Clicking on a pie chart _section_ redirects to the query flows tab with a filter applied for that flow state. 
- * Clicking on the _name_ of a section in the legend removes matching flow states from the pie chart. 
+* A pie chart that shows the breakdown of flows by flow state (`FAILED`, `KILLED`, `HOSPITALIZED`, `PAUSED`, `RUNNABLE`, or `COMPLETED`).
+ * Clicking on a pie chart _section_ redirects to the query flows tab with a filter applied for that flow state.
+ * Clicking on the _name_ of a section in the legend removes matching flow states from the pie chart.
 * A bar chart which lists flows by suspension duration, starting with the longest duration on the left. Clicking on a flow redirects the user to the query flows page filtered on that specific flow. This chart has options for choosing how many flows to display and to filter out flows that have not been suspended for a specified amount of time (for example, only display flows that have been suspended for at least 20 minutes).
 
 ## Query flows tab
@@ -82,5 +82,5 @@ The commands panel has three commands: pause flow, retry flow, and kill flow. If
 A user can have either read-only permissions, or admin permissions. Permissions are set using the User Admin tool, `http://<gateway-service-ip>:<port>/admin`.
 
 {{% note %}}
-Unless a tab or other functionality is specifically restricted, it is available to an unprivileged user. 
+Unless a tab or other functionality is specifically restricted, it is available to an unprivileged user.
 {{% /note%}}

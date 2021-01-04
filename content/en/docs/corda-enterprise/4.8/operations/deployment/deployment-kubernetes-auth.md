@@ -1,9 +1,9 @@
 ---
 date: '2020-01-08T09:59:25Z'
 menu:
-  corda-enterprise-4-7:
-    parent: corda-enterprise-4-7-operations-guide-deployment-cenm-kubernetes
-    identifier: corda-enterprise-4-7-operations-guide-deployment-cenm-kubernetes-auth
+  corda-enterprise-4-8:
+    parent: corda-enterprise-4-8-operations-guide-deployment-cenm-kubernetes
+    identifier: corda-enterprise-4-8-operations-guide-deployment-cenm-kubernetes-auth
 tags:
 - config
 - kubernetes

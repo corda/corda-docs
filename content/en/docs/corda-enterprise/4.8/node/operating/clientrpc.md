@@ -1,10 +1,10 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-7:
-    identifier: corda-enterprise-4-7-corda-nodes-operating-interacting
+  corda-enterprise-4-8:
+    identifier: corda-enterprise-4-8-corda-nodes-operating-interacting
     name: "Interacting with a node"
-    parent: corda-enterprise-4-7-corda-nodes-operating
+    parent: corda-enterprise-4-8-corda-nodes-operating
 tags:
 - clientrpc
 title: Interacting with a node
@@ -127,7 +127,7 @@ method on [CordaRPCClient](https://api.corda.net/api/corda-enterprise/4.7/html/a
 a new proxy for every call you make - reuse an existing one.
 {{< /warning >}}
 
-For further information on using the RPC API, see [Working with the CordaRPCClient API](../../../../corda-os/4.7/tutorial-clientrpc-api.md).
+For further information on using the RPC API, see [Working with the CordaRPCClient API](../../../../corda-os/4.8/tutorial-clientrpc-api.md).
 
 ### Defining RPC users and permissions
 
@@ -723,4 +723,4 @@ Note that RPC TLS does not use mutual authentication, and delegates fine-grained
 
 CorDapps must whitelist any classes used over RPC with Corda’s serialization framework, unless they are whitelisted by
 default in `DefaultWhitelist`. The whitelisting is done either via the plugin architecture or by using the
-`@CordaSerializable` annotation (see [Serialization](../../serialization-index.md)). An example is shown in [Working with the CordaRPCClient API](../../../../corda-os/4.7/tutorial-clientrpc-api.md).
+`@CordaSerializable` annotation (see [Serialization](../../serialization-index.md)). An example is shown in [Working with the CordaRPCClient API](../../../../corda-os/4.8/tutorial-clientrpc-api.md).

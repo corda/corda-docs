@@ -5,9 +5,9 @@ aliases:
 - /flow-cookbook.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-7:
-    identifier: corda-os-4-7-flow-cookbook
-    parent: corda-os-4-7-building-a-cordapp-index
+  corda-os-4-8:
+    identifier: corda-os-4-8-flow-cookbook
+    parent: corda-os-4-8-building-a-cordapp-index
     weight: 1100
 tags:
 - flow

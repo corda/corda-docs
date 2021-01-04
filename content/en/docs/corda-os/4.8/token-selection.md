@@ -1,8 +1,8 @@
 ---
 date: '2020-05-10T12:00:00Z'
 menu:
-  corda-os-4-7:
-    parent: corda-os-4-7-token-sdk
+  corda-os-4-8:
+    parent: corda-os-4-8-token-sdk
 weight: 100
 tags:
 - Tokens SDK

@@ -5,9 +5,9 @@ aliases:
 - /node-flow-hospital.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-7:
-    identifier: corda-os-4-7-node-flow-hospital
-    parent: corda-os-4-7-corda-nodes-index
+  corda-os-4-8:
+    identifier: corda-os-4-8-node-flow-hospital
+    parent: corda-os-4-8-corda-nodes-index
     weight: 1150
 tags:
 - node

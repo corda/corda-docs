@@ -1,8 +1,8 @@
 ---
 date: '2020-09-20T09:59:25Z'
 menu:
-  corda-enterprise-4-7:
-    parent: corda-enterprise-4-7-corda-networks-testnet
+  corda-enterprise-4-8:
+    parent: corda-enterprise-4-8-corda-networks-testnet
 tags:
 - testnet
 - explorer

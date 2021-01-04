@@ -1,10 +1,10 @@
 ---
 aliases:
-- /releases/4.7/node-metrics.html
+- /releases/4.8/node-metrics.html
 date: '2020-04-16T19:30:25Z'
 menu:
-  corda-enterprise-4-7:
-    parent: corda-enterprise-4-7-corda-nodes-operating
+  corda-enterprise-4-8:
+    parent: corda-enterprise-4-8-corda-nodes-operating
 tags:
 - node
 - metrics

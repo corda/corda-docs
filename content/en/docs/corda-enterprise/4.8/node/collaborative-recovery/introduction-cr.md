@@ -1,10 +1,10 @@
 ---
 date: '2020-04-24T12:00:00Z'
 menu:
-  corda-enterprise-4-7:
-    identifier: corda-enterprise-4-7-corda-nodes-collaborative-recovery
+  corda-enterprise-4-8:
+    identifier: corda-enterprise-4-8-corda-nodes-collaborative-recovery
     name: "Collaborative Recovery"
-    parent: corda-enterprise-4-7-corda-nodes
+    parent: corda-enterprise-4-8-corda-nodes
 tags:
 - disaster recovery
 - collaborative recovery
@@ -25,7 +25,7 @@ weight: 100
 
 ## Introducing Collaborative Recovery V1.2
 
-In Collaborative Recovery V1.2, LedgerSync has been modified to be compatible with the [Archive Service](../archiving/archiving-setup). 
+In Collaborative Recovery V1.2, LedgerSync has been modified to be compatible with the [Archive Service](../archiving/archiving-setup).
 
 ### In Collaborative Recovery V1.1
 

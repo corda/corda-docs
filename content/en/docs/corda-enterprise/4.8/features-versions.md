@@ -1,10 +1,10 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-7:
-    identifier: "corda-enterprise-4-7-features-versions"
+  corda-enterprise-4-8:
+    identifier: "corda-enterprise-4-8-features-versions"
     name: "Corda features and versions"
-    parent: corda-enterprise-4-7-upgrading-menu
+    parent: corda-enterprise-4-8-upgrading-menu
 tags:
 - features
 - versions

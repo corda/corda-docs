@@ -5,9 +5,9 @@ aliases:
 - /hello-world-running.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-7:
-    identifier: corda-os-4-7-hello-world-running
-    parent: corda-os-4-7-hello-world-introduction
+  corda-os-4-8:
+    identifier: corda-os-4-8-hello-world-running
+    parent: corda-os-4-8-hello-world-introduction
     weight: 1040
 tags:
 - running

@@ -5,9 +5,9 @@ aliases:
 - /azure-vm-explore.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-7:
-    identifier: corda-os-4-7-azure-vm-explore
-    parent: corda-os-4-7-deploy-to-testnet-index
+  corda-os-4-8:
+    identifier: corda-os-4-8-azure-vm-explore
+    parent: corda-os-4-8-deploy-to-testnet-index
     weight: 1010
 tags:
 - azure

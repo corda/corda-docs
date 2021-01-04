@@ -5,9 +5,9 @@ aliases:
 - /blob-inspector.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-7:
-    identifier: corda-os-4-7-blob-inspector
-    parent: corda-os-4-7-serialization-index
+  corda-os-4-8:
+    identifier: corda-os-4-8-blob-inspector
+    parent: corda-os-4-8-serialization-index
     weight: 1060
 tags:
 - blob

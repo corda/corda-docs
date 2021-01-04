@@ -5,9 +5,9 @@ aliases:
 - /loadtesting.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-7:
-    identifier: corda-os-4-7-loadtesting
-    parent: corda-os-4-7-operations
+  corda-os-4-8:
+    identifier: corda-os-4-8-loadtesting
+    parent: corda-os-4-8-operations
     weight: 380
 tags:
 - loadtesting

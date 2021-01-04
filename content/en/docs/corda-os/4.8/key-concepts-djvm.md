@@ -5,9 +5,9 @@ aliases:
 - /key-concepts-djvm.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-7:
-    identifier: corda-os-4-7-key-concepts-djvm
-    parent: corda-os-4-7-key-concepts
+  corda-os-4-8:
+    identifier: corda-os-4-8-key-concepts-djvm
+    parent: corda-os-4-8-key-concepts
     weight: 1150
 tags:
 - concepts

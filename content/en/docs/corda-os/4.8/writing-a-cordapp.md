@@ -5,9 +5,9 @@ aliases:
 - /writing-a-cordapp.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-7:
-    identifier: corda-os-4-7-writing-a-cordapp
-    parent: corda-os-4-7-building-a-cordapp-index
+  corda-os-4-8:
+    identifier: corda-os-4-8-writing-a-cordapp
+    parent: corda-os-4-8-building-a-cordapp-index
     weight: 1050
 tags:
 - cordapp

@@ -1,8 +1,8 @@
 ---
 date: '2020-04-24T12:00:00Z'
 menu:
-  corda-enterprise-4-7:
-    parent: corda-enterprise-4-7-corda-nodes-archive-service
+  corda-enterprise-4-8:
+    parent: corda-enterprise-4-8-corda-nodes-archive-service
 tags:
 - archive
 - backup schema
@@ -408,7 +408,7 @@ Custom exporters can be implemented for individual archive solutions. For more d
 
 ## Archive schema
 
-The archiving process can be configured to create a temporary snapshot image of the archivable transactions and attachments from Corda vault on a backup schema within the same database. The snapshot can then be used to restore the vault should the database fail during the archive operation.   
+The archiving process can be configured to create a temporary snapshot image of the archivable transactions and attachments from Corda vault on a backup schema within the same database. The snapshot can then be used to restore the vault should the database fail during the archive operation.
 
 The Corda vault schema and the archive schema must reside on the same database but be managed by different schema owners.
 

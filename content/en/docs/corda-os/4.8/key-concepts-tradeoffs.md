@@ -5,9 +5,9 @@ aliases:
 - /key-concepts-tradeoffs.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-7:
-    identifier: corda-os-4-7-key-concepts-tradeoffs
-    parent: corda-os-4-7-key-concepts
+  corda-os-4-8:
+    identifier: corda-os-4-8-key-concepts-tradeoffs
+    parent: corda-os-4-8-key-concepts
     weight: 1140
 tags:
 - concepts

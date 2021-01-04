@@ -5,9 +5,9 @@ aliases:
 - /messaging.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-7:
-    identifier: corda-os-4-7-messaging
-    parent: corda-os-4-7-node-internals-index
+  corda-os-4-8:
+    identifier: corda-os-4-8-messaging
+    parent: corda-os-4-8-node-internals-index
     weight: 1020
 tags:
 - messaging

@@ -1,8 +1,8 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-7:
-    parent: corda-enterprise-4-7-cordapps-flows
+  corda-enterprise-4-8:
+    parent: corda-enterprise-4-8-cordapps-flows
 tags:
 - flow
 - start
@@ -36,7 +36,7 @@ When a flow is started using one of the new APIs, the following scenarios are po
 * There is a running flow mapped to the `clientId`: re-hook to the existing flow by returning the flow's future (completes when the flow finishes).
 * There is a completed flow or a failed flow, mapped to the `clientId`: return a completed future containing the flow's result, or the exception that caused it to fail.
 
-The two APIs are available from `CordaRPCOps` (see [Using the client RPC API](../../corda-os/4.7/tutorial-clientrpc-api.md)). They both return a `FlowHandleWithClientId`, which extends `FlowHandle` but also contains the `clientId` that the flow started with.
+The two APIs are available from `CordaRPCOps` (see [Using the client RPC API](../../corda-os/4.8/tutorial-clientrpc-api.md)). They both return a `FlowHandleWithClientId`, which extends `FlowHandle` but also contains the `clientId` that the flow started with.
 
 ### `startFlowDynamicWithClientId` API
 

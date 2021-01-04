@@ -1,16 +1,16 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-7:
-    identifier: "corda-enterprise-4-7-node-upgrade"
-    parent: corda-enterprise-4-7-upgrading-menu
+  corda-enterprise-4-8:
+    identifier: "corda-enterprise-4-8-node-upgrade"
+    parent: corda-enterprise-4-8-upgrading-menu
 tags:
 - upgrading
 - node
 - upgrade
 - notes
-title: Upgrading a node to Corda 4.7
-aliases: /docs/corda-enterprise/4.7/node/operating/cm-upgrading-node.html
+title: Upgrading a node to Corda 4.8
+aliases: /docs/corda-enterprise/4.8/node/operating/cm-upgrading-node.html
 weight: 10
 ---
 

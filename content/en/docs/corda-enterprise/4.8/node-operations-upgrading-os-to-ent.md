@@ -1,8 +1,8 @@
 ---
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-enterprise-4-7:
-    parent: corda-enterprise-4-7-upgrading-menu
+  corda-enterprise-4-8:
+    parent: corda-enterprise-4-8-upgrading-menu
 tags:
 - node
 - operations
@@ -10,7 +10,7 @@ tags:
 - os
 - ent
 title: Upgrading a Corda OS node to Corda Enterprise
-aliases: /docs/corda-enterprise/4.7/node/operating/node-operations-upgrading-os-to-ent.html
+aliases: /docs/corda-enterprise/4.8/node/operating/node-operations-upgrading-os-to-ent.html
 weight: 40
 ---
 
