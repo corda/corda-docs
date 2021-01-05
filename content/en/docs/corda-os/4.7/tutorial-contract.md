@@ -501,7 +501,7 @@ for ((inputs, outputs, _) in groups) {
 
 {{% tab name="java" %}}
 ```java
-import net.corda.finance.contracts.utils.sumCashBy
+import net.corda.finance.contracts.utils.sumCashBy;
 
 TimeWindow timeWindow = tx.getTimeWindow();
 
