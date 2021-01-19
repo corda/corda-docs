@@ -35,12 +35,6 @@ The available configuration fields are listed below in alphabetic order.
 
   *Default:* 10MB
 
-## `attachmentCacheBound`
-
-  Optionally specify how many attachments should be cached locally. Note that this includes only the key and metadata, the content is cached separately and can be loaded lazily.
-
-  *Default:* 1024
-
 ## `blacklistedAttachmentSigningKeys`
 
   List of SHA-256 hashes of public keys. Attachments signed by any of these public keys will not be considered as trust roots for any attachments received over the network.
