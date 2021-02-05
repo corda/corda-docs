@@ -380,7 +380,7 @@ val vaultSnapshot = proxy.vaultQueryBy<ContractState>(
 {{< /tabs >}}
 
 {{< note >}}
-Page's maximum size `MAX_PAGE_SIZE` is defined as `Int.MAX_VALUE` and should be used with extreme
+A page's maximum size `MAX_PAGE_SIZE` is defined as `Int.MAX_VALUE` and should be used with extreme
 caution as results returned may exceed your JVM’s memory footprint.
 
 {{< /note >}}
