@@ -257,7 +257,7 @@ If an RPC user tries to perform an RPC operation that they do not have permissio
 User not authorized to perform RPC call public abstract net.corda.core.node.services.Vault$Page net.corda.core.messaging.CordaRPCOps.vaultQueryByWithPagingSpec(java.lang.Class,net.corda.core.node.services.vault.QueryCriteria,net.corda.core.node.services.vault.PageSpecification) with target []
 ```
 
-To fix this, you must grant them permissions based on the method name: `InvokeRpc.methodName`, where `methodName` is the method name of the `CordaRPCOps` interface.
+To fix this, you must grant them permissions based on the method name: `InvokeRpc.<method name>`, where `<method name>` is the method name of the `CordaRPCOps` interface.
 
 In this example, the method name is `vaultQueryByWithPagingSpec`, so `InvokeRpc.vaultQueryByWithPagingSpec` must be added to the RPC user's `permissions`.
 
