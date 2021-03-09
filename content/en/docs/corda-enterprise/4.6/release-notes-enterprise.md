@@ -18,7 +18,7 @@ weight: 1
 
 ## Corda Enterprise 4.6.2
 
-Corda Enterprise 4.6.2 is a patch release of Corda Enterprise that introduces fixes to known issues in Corda Enterprise 4.6.
+Corda Enterprise 4.6.2 is a patch release of Corda Enterprise that introduces fixes to known issues in Corda Enterprise 4.6.1
 
 ### Upgrade recommendation
 
