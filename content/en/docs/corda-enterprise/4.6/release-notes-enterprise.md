@@ -29,13 +29,13 @@ As a node operator, you should upgrade to the [latest released version of Corda]
 ### Fixed issues
 
 * We have fixed an issue where the HA utilities tool does not write the correct log file.
-* We have fixed an issue that prevented the HA utilities tool loading third-party HSM jars from the `drivers` directory when the `generate-internal-tunnel-ssl-keystores` command is run.
+* We have fixed an issue that prevented the HA utilities tool loading third-party HSM `.jar` files from the `drivers` directory when the `generate-internal-tunnel-ssl-keystores` command is run.
 * The `startFlowWithClientId` now uses the same permissioning as the `startFlow` method.
 * Corda Enterprise 4.6.2 now supports version 3.2.1 of the AWS CloudHSM client library.
 * We have fixed an issue that caused the Corda Firewall to throw an error when version information was requested.
-* We have fixed an issue where after migrating from Corda Enterprise 4.5 to Corda Enterprise 4.6 could cause some flows to experience a retry loop.
+* We have fixed an issue where migrating from Corda Enterprise 4.5 to Corda Enterprise 4.6 could cause some flows to experience a retry loop.
 * We have fixed an issue that could cause flow execution to hang.
-* We have fixed an issue that caused Jmeter to be unable to  deserialise CorDapps if they were not listed as Jmeter dependencies.
+* We have fixed an issue that caused Jmeter to be unable to deserialise CorDapps if they were not listed as Jmeter dependencies.
 * We have fixed an issue that caused the float to not reactivate after a bridge restart.
 * We have fixed an issue that could cause a float to handle two connection attempts from the same bridge simultaneously.
 * We have fixed an issue that misinterpreted an internal error as a bad certificate error, preventing future connection attempts.
