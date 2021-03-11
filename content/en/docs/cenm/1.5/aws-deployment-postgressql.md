@@ -35,8 +35,8 @@ To set up a reference deployment of CENM using AWS and PostgreSQL:
 
 You must ensure that each CENM service has it's own PostgreSQL database. Complete the steps referenced below for each of the following:
 
-* [Auth service](auth-service).
-* [Gateway service](gateway-service).
+* [Auth service](../../corda-enterprise/4.7/node/auth-service).
+* [Gateway service](../../corda-enterprise/4.7/node/gateway-service).
 * [Identity manager](identity-manager).
 * [Network Map](network-map).
 * [Signer service](signing-service).
@@ -57,7 +57,7 @@ In step 4 above, you must create a schema for each CENM service. The guide provi
 
 ### Deploy CENM services
 
-1. Deploy the [Auth Service](auth-service.html) using PostgreSQL on AWS.
+1. Deploy the [Auth Service](../../corda-enterprise/4.7/node/auth-service.md) using PostgreSQL on AWS.
 2. Deploy the [Identity Manager Service](identity-manager.html) using PostgreSQL on AWS.
 3. Deploy the [Network Map Service](network-map.html) using PostgreSQL on AWS.
 4. Deploy the [Zone Service](zone-service.html) using PostgreSQL on AWS.

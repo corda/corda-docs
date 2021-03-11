@@ -24,7 +24,10 @@ It consists of two `.jar` files:
 
 These files can be downloaded from Artifactory: [`corda-gatewayplugins`](https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-gateway-plugins).
 
-`flow-management-plugin-<release>.jar` should be put into the `plugins` directory in the Gateway service, and `auth-baseline-flow-management-<release>.jar` should be put into the `plugins` directory in the Auth service.
+## Installation
+
+1. Put `flow-management-plugin-<release>.jar` into the `plugins` directory in the Gateway service
+2. Put `auth-baseline-flow-management-<release>.jar` into the `plugins` directory in the Auth service.
 
 ## Configuration
 

@@ -42,7 +42,10 @@ The plug-in consists of two `.jar` files:
 
 These files can be downloaded from Artifactory: [`corda-gatewayplugins`](https://software.r3.com/artifactory/webapp/#/artifacts/browse/tree/General/corda-gateway-plugins).
 
-`node-management-plugin-<release>.jar` should be put into the `plugins` directory in the Gateway service, and `auth-baseline-node-management-<release>.jar` should be put into the `plugins` directory in the Auth service.
+## Installation
+
+1. Put `node-management-plugin-<release>.jar` into the `plugins` directory in the Gateway service
+2. Put `auth-baseline-node-management-<release>.jar` into the `plugins` directory in the Auth service.
 
 ## Configuration
 
