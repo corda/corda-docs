@@ -144,9 +144,9 @@ the flow framework - it allows you to reduce complex negotiation and update proc
 Starting this flow will return the following:
 ```bash
 ✅   Starting
-         Requesting signature by notary service
-             Requesting signature by Notary service
-             Validating response from Notary service
+         Requesting signature by Notary Service
+             Requesting signature by Notary Service
+             Validating response from Notary Service
     ✅   Broadcasting transaction to participants
 ➡️   Done
 Flow completed with result: null

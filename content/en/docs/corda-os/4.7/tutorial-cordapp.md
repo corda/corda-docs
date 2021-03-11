@@ -298,7 +298,7 @@ The key files and directories are as follows:
 * **clients** contains the source code for Spring Boot integration.
 * **config** contains the log4j2 configuration.
 * **contracts** and **workflows** contain the source code for the sample CorDapp written in Java.
-* **gradle** contains the gradle wrapper, which allows the use of Gradle without installing it yourself and worrying about which version is required.
+* **gradle** contains the Gradle Wrapper, which allows the use of Gradle without installing it yourself and worrying about which version is required.
 
 
 ## Starting the sample CorDapp

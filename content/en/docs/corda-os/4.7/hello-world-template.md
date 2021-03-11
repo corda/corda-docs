@@ -50,7 +50,7 @@ git clone https://github.com/corda/cordapp-template-java.git
 
 {{< /tabs >}}
 
-Once you have cloned the repository you wish to use, navigate to the correct sub-directory:
+Once you have cloned the repository you wish to use, navigate to the correct subdirectory:
 
 {{< tabs name="tabs-2" >}}
 {{% tab name="kotlin" %}}

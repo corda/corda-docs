@@ -195,7 +195,7 @@ public class IOUContract implements Contract {
 {{< /tabs >}}
 
 {{< note >}}
-Be sure to update the `@BelongsToContract` annotation in the state definition ([Writing the state](hello-world-state.md)) to specify `IOUContract` class.
+Ensure to update the `@BelongsToContract` annotation in the state definition ([Writing the state](hello-world-state.md)) to specify `IOUContract` class.
 {{< /note >}}
 
 Let’s walk through this code step by step.
