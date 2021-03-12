@@ -83,7 +83,7 @@ For a quick start guide on deploying Corda Enterprise Network Manager services a
 * [Network Map Service](network-map.md)
 * [Signing Service](signing-service.md)
 * [Auth Service](../../corda-enterprise/4.7/node/auth-service.md)
-* [Gateway service](../../corda-enterprise/4.7/node/gateway-service.md)
+* [Gateway Service](../../corda-enterprise/4.7/node/gateway-service.md)
 * [CENM Command-line Interface (CLI) tool](cenm-cli-tool.md)
 * [Updating the network parameters](updating-network-parameters.md)
 * [Upgrading Corda Enterprise Network Manager](upgrade-notes.md)

@@ -21,7 +21,7 @@ The Gateway Service does not need its own database - so there is no database con
 {{< /warning >}}
 
 
-## Install the gateway Gateway service
+## Install the Gateway Service
 
 You can install the Gateway Service by installing the Gateway Service `.jar` file:
 
@@ -31,9 +31,9 @@ You can install the Gateway Service by installing the Gateway Service `.jar` fil
 
 When you configure the Gateway Service, you need to:
 
-1. Specify the endpoint where the Auth service is exposed - this must match the IP or host name of the machine/VM/container and the port that is configured in the Auth Service config file.
+1. Specify the endpoint where the Auth Service is exposed - this must match the IP or host name of the machine/VM/container and the port that is configured in the Auth Service config file.
 
-2. Specify the SSL configuration for connecting to the Auth service. You can do this using the [PKI tool](../../../cenm/1.5/pki-tool).
+2. Specify the SSL configuration for connecting to the Auth Service. You can do this using the [PKI tool](../../../cenm/1.5/pki-tool).
 
 3. Your authentication credentials, as specified in your [Auth Service configuration](auth-service).
 
@@ -100,7 +100,7 @@ Command line arguments:
 ## Installing applications onto the Gateway Service
 
 {{< note >}}
-[Auth service](auth-service) needs to be set up with baseline permission data for each application.
+[Auth Service](auth-service) needs to be set up with baseline permission data for each application.
 {{< /note >}}
 
 * [CENM management console](../../../cenm/1.5/cenm-console)

@@ -13,7 +13,7 @@ weight: 155
 ---
 # Flow management console
 
-The flow management console allows you to see the state of the flows running on a node and perform some operations on them. It runs as part of the [Gateway service](gateway-service.md).
+The flow management console allows you to see the state of the flows running on a node and perform some operations on them. It runs as part of the [Gateway Service](gateway-service.md).
 
 It has a front end written in React, and a REST service written in Kotlin, which makes RPC calls to Corda Enterprise.
 
@@ -26,8 +26,8 @@ These files can be downloaded from Artifactory: [`corda-gatewayplugins`](https:/
 
 ## Installation
 
-1. Put `flow-management-plugin-<release>.jar` into the `plugins` directory in the Gateway service
-2. Put `auth-baseline-flow-management-<release>.jar` into the `plugins` directory in the Auth service.
+1. Put `flow-management-plugin-<release>.jar` into the `plugins` directory in the Gateway Service.
+2. Put `auth-baseline-flow-management-<release>.jar` into the `plugins` directory in the Auth Service.
 
 ## Configuration
 
@@ -64,9 +64,9 @@ If a flow does **not** have a client ID attached to it, it will not be visible i
 The **Dashboard** tab displays two charts:
 
 * A pie chart that shows the breakdown of flows by flow state (`FAILED`, `KILLED`, `HOSPITALIZED`, `PAUSED`, `RUNNABLE`, or `COMPLETED`).
- * Clicking on a pie chart _section_ redirects to the query flows tab with a filter applied for that flow state.
+ * Clicking on a pie chart _section_ redirects you to the query flows tab with a filter applied for that flow state.
  * Clicking on the _name_ of a section in the legend removes matching flow states from the pie chart.
-* A bar chart which lists flows by suspension duration, starting with the longest duration on the left. Clicking on a flow redirects the user to the query flows page filtered on that specific flow. This chart has options for choosing how many flows to display and to filter out flows that have not been suspended for a specified amount of time (for example, only display flows that have been suspended for at least 20 minutes).
+* A bar chart which lists flows by suspension duration, starting with the longest duration on the left. Clicking on a flow redirects you to the query flows page filtered on that specific flow. This chart has options for choosing how many flows to display and to filter out flows that have not been suspended for a specified amount of time (for example, only display flows that have been suspended for at least 20 minutes).
 
 ## Query flows tab
 

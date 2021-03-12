@@ -34,7 +34,7 @@ The [CENM management console](cenm-console.md) is a new CENM web UI that enables
 
 #### Single sign-on for Azure AD
 
-CENM 1.5 introduces support for Azure Active Directory (AAD) as a Single sign-on (SSO) for the CENM [Auth Service](../../corda-enterprise/4.7/node/auth-service.md), which supports full Role-Based Access Control (RBAC) and provides a web-based management interface for system administrators to create and manage user groups and entitlements. As a result, you can now operate a SSO set-up between Corda services and Azure AD, with a [simple configuration](../../corda-enterprise/4.7/node/azure-ad-sso/) to both your Azure AD and Corda Auth services.
+CENM 1.5 introduces support for Azure Active Directory (AAD) as a single sign-on (SSO) for the CENM [Auth Service](../../corda-enterprise/4.7/node/auth-service.md), which supports full Role-Based Access Control (RBAC) and provides a web-based management interface for system administrators to create and manage user groups and entitlements. As a result, you can now operate a SSO set-up between Corda services and Azure AD, with a [simple configuration](../../corda-enterprise/4.7/node/azure-ad-sso/) to both your Azure AD and Corda Auth services.
 
 #### Certificate rotation: ability to reissue node legal identity keys and certificates
 
@@ -207,7 +207,7 @@ See the [CENM deployment](aws-deployment-guide.md/) section for more information
 * We have fixed an issue where HSM passwords were not hidden in service logs.
 * We have fixed an issue where the Zone Service removed the `mode` field from the Signing Service's configuration with Utimaco and then failed to return this field to the Angel Service.
 * Commands for the Identity Manager Service and the Network Map Service, which previously returned no information, now indicate when no data is available.
-* We have fixed an issue where [Gateway Service](../../corda-enterprise/4.7/node/gateway-service.md) (previously called FARM Service in CENM 1.2) logs were not available in the `logs-farm` container.
+* We have fixed an issue where [Gateway Service](../../corda-enterprise/4.7/node/gateway-service.md) (previously called FARM Service in CENM 1.3) logs were not available in the `logs-farm` container.
 * We have fixed an issue where submitting a CRR request with CENM Command-line Interface Tool failed with the unexpected error `method parameters invalid`.
 * When using the Signing Service to manually perform signing tasks with multiple accounts for each task and the option to authenticate `ALL` users is selected, the Signing Service now indicates which user should enter their password.
 with multiple accounts for each task The Signing Service now prompts a specific user to login in while all are being authenticated.

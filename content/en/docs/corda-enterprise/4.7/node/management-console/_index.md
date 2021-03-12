@@ -11,7 +11,7 @@ weight: 76
 ---
 # Node management console
 
-The node management console allows you to see information about a node and perform some operations on it. It runs as a plug-in for the [Gateway service](../gateway-service.md).
+The node management console allows you to see information about a node and perform some operations on it. It runs as a plug-in for the [Gateway Service](../gateway-service.md).
 
 The node management console allows you to see the following information about the node:
 
@@ -44,8 +44,8 @@ These files can be downloaded from Artifactory: [`corda-gatewayplugins`](https:/
 
 ## Installation
 
-1. Put `node-management-plugin-<release>.jar` into the `plugins` directory in the Gateway service
-2. Put `auth-baseline-node-management-<release>.jar` into the `plugins` directory in the Auth service.
+1. Put `node-management-plugin-<release>.jar` into the `plugins` directory in the Gateway Service
+2. Put `auth-baseline-node-management-<release>.jar` into the `plugins` directory in the Auth Service.
 
 ## Configuration
 

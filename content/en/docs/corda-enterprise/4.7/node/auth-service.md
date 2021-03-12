@@ -11,21 +11,21 @@ aliases: "/docs/cenm/1.5/auth-service.html"
 title: Auth service
 ---
 
-# Auth service
+# Auth Service
 
-The Auth service is the user authentication and authorization service for managing Corda Nodes and networks (CENM). It stores and controls secure user-access to network services, such as:
+The Auth Service is the user authentication and authorization service for managing Corda Nodes and networks (CENM). It stores and controls secure user-access to network services, such as:
 
 * Nodes
-* Identity manager
-* Zone service
-* Signing service
-* Network map (and associated network configurations and node info)
+* Identity Manager
+* Zone Service
+* Signing Service
+* Network Map (and associated network configurations and node info)
 
-Whenever you use the [CENM User admin tool](../../../cenm/1.5/user-admin) to create new users, groups or roles, the Auth service is updated to authenticate those users and their permissions. When using the remote management tools such as the [CENM Command Line Interface](../../../cenm/1.5/cenm-cli-tool) or the web GUIs hosted on the Gateway Service, the auth service verifies your identity and security clearance as needed.
+Whenever you use the [CENM User admin tool](../../../cenm/1.5/user-admin) to create new users, groups or roles, the Auth Service is updated to authenticate those users and their permissions. When using the remote management tools such as the [CENM Command Line Interface](../../../cenm/1.5/cenm-cli-tool) or the web GUIs hosted on the Gateway Service, the Auth Service verifies your identity and security clearance as needed.
 
-You do not need to interact directly with the Auth Service once it has been installed and configured. To protect the integrity of this secure service, there is no direct API contact with the Auth Service: all front-end communications go via the Gateway service.
+You do not need to interact directly with the Auth Service once it has been installed and configured. To protect the integrity of this secure service, there is no direct API contact with the Auth Service: all front-end communications go via the Gateway Service.
 
-Auth service can also be configured to use [Azure AD SSO](azure-ad-sso).
+Auth Service can also be configured to use [Azure AD SSO](azure-ad-sso).
 
 ## Install the Auth service
 
@@ -71,7 +71,7 @@ To do this:
 
 1. Create a SSL certificate in a `.jks` file using the [CENM PKI tool](../../../cenm/1.5/PKI-tool).
 
-2. Generate a `jwt` signing key (RSA keypair) in a jks file with the following command line command:
+2. Generate a JWT signing key (RSA keypair) in a `.jks` file with the following command-line command:
 `keytool -genkeypair -alias mytest -keyalg RSA -keypass mypass -keystore mytest.jks -storepass mypass`.
 
 3. Ensure you have the CENM baseline `.jar` file `accounts-baseline-cenm-<VERSION>.jar` that contains the set
@@ -88,13 +88,13 @@ When you create your config file, you establish its connection to your [Gateway 
 
 In the sample below, you can see the initial configuration process:
 
-1. [Database configuration](../../../cenm/1.5/database-set-up). Add the name, address and login credentials for the SQL database that supports the Auth service.
+1. [Database configuration](../../../cenm/1.5/database-set-up). Add the name, address and login credentials for the SQL database that supports the Auth Service.
 
 {{<note>}}
 If multiple CENM instances are connected to the same database, setting `lockResolutionStrategy` to `SingleInstance` can cause startup problems and/or database corruption. For more information, see the [database configuration options](../../../cenm/1.5/config-database.md).
 {{</note>}}
 
-2. JSON Web Key configuration. Set the username, password, and location of the RSA keypair store for signing. The location must be the absolute path.
+2. JSON Web Key configuration. Set the user name, password, and location of the RSA keypair store for signing. The location must be the absolute path.
 
 3. Configure the connection to the Gateway service. Add the ID, secret, and scope of services that you use when setting up the Gateway service.
 
@@ -229,7 +229,7 @@ Reset user (**initializer**): Use this command group to reset, re-enable, and un
 ## Setting up applications
 
 {{< note >}}
-Auth service needs to be set up with baseline permission data for each application.
+Auth Service needs to be set up with baseline permission data for each application.
 {{< /note >}}
 
 * [CENM management console](../../../cenm/1.5/cenm-console#installation)

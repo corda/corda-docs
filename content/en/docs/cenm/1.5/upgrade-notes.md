@@ -50,7 +50,7 @@ This new setting can be change to `true` or removed only after all users have ch
 * Maximum 50 characters long.
 * Contains at least one number, one lower case character, and one upper case character.
 * Does not contain regular sequences (like `abcdf` or `1234`) that are longer than three characters.
-* Does not contain the username.
+* Does not contain the user name.
 
 ### Identity Manager Workflow Plugin changes
 
