@@ -1,18 +1,16 @@
 ---
-aliases:
-- /head/deploy-to-testnet-index.html
-- /HEAD/deploy-to-testnet-index.html
-- /deploy-to-testnet-index.html
 date: '2020-04-07T12:00:00Z'
 menu:
-  corda-os-4-5:
-    identifier: corda-os-4-5-deploy-to-testnet-index
-    parent: corda-os-4-5-corda-networks-index
-    weight: 1070
+  corda-enterprise-4-7:
+    identifier: corda-enterprise-4-7-corda-networks-testnet-decommission
+    name: "Corda Testnet"
+    parent: corda-enterprise-4-7-corda-networks
 tags:
-- deploy
+- corda
 - testnet
+- intro
 title: Corda Testnet
+weight: 6
 ---
 
 # Corda Testnet
