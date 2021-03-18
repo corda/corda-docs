@@ -1,8 +1,4 @@
 ---
-aliases:
-- /releases/4.4/legal-info.html
-- /docs/corda-enterprise/head/legal-info.html
-- /docs/corda-enterprise/legal-info.html
 date: '2020-01-08T09:59:25Z'
 menu:
   corda-enterprise-4-4:
@@ -17,9 +13,6 @@ weight: 5
 # Corda Enterprise 4.4.4 third-party software notices and licence information
 
 **Do not translate or localise.**
-
-CORDA ENTERPRISE 4.4.4 THIRD-PARTY SOFTWARE NOTICES AND INFORMATION
-Do Not Translate or Localize
 
 This file is based on or incorporates material from the projects listed below (Third Party IP). R3 LLC licenses these components under the Corda Enterprise software license terms. The original copyright notices and the licenses under which R3 LLC received such components are set forth below for informational purposes.  R3 LLC reserves all rights not expressly granted herein, whether by  implication, estoppel or otherwise.
 
