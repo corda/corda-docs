@@ -32,7 +32,7 @@ With the User Admin tool, you can:
 
 You can only use the User Admin tool if you are registered to use the tool as an Administrator. If you are the first person using the tool in your organisation, you need to request access from your network owner's organization.
 
-## Access the CENM User Admin tool
+## Access the User Admin tool
 
 You access the User Admin tool from the location of your [Gateway Service](../../corda-enterprise/4.7/node/gateway-service#manage-your-configuration) instance. Enter the full address of your Gateway Service, including the port number, followed by `/admin` into a web browser.
 
