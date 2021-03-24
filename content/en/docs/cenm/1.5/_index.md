@@ -35,7 +35,7 @@ The Corda Enterprise Network Manager provides the following services:
 * [Identity Manager Service](identity-manager.md) Enables nodes to join the network, and handles revocation of a node certificate.
 * [Network Map Service](network-map.md) Provides a global view of the network.
 * [Signing Service](signing-service.md) Provides a way to sign approved requests to join the network (Certificate Signing Requests - CSRs) or revoke a certificate (Certificate Revocation Requests - CRRs), as well as changes to the network map.
-* [Auth Service](../../corda-enterprise/4.7/node/auth-service.md) The user authentication and authorization service. Stores and controls secure user-access to network services.
+* [Auth Service](../../corda-enterprise/4.7/node/auth-service.md) The user authentication and authorisation service. Stores and controls secure user-access to network services.
 * [Gateway Service](../../corda-enterprise/4.7/node/gateway-service.md) Provides a transfer layer between front-end Corda Enterprise Network Manager (CENM) interfaces, and the Auth Service that underpins authentication and authorisation in CENM.
 * [Zone Service](zone-service.md) A central store of configuration for other CENM services for one or more zones, and optionally for their Sub Zones. Stores relevant configurations for the Identity Manager Service, the Network Map Service, and the Signing Service.
 * [Angel Service](angel-service.md) An adapter, which manages the lifecycle of other services such as the Network Map Service or the Identity Manager Service, to make them more compatible with packaging tools such as Docker.
