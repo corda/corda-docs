@@ -26,7 +26,7 @@ Corda is an open source project with the aim of developing an enterprise-grade d
 industries.  Corda was designed and developed to apply the concepts of blockchain and smart contract technologies to the requirements of
 modern business transactions.  It is unique in its aim to build a platform for businesses to transact freely with any counter-party while
 retaining strict privacy. Corda provides an implementation of this vision in a code base which others are free to build on, contribute to
-or innovate around. The mission of Corda is further detailed in the [Corda introductory white paper](/en/pdf/corda-introductory-whitepaper.pdf).
+or innovate around. The mission of Corda is further detailed in the [Corda introductory white paper](https://www.r3.com/white-papers/the-corda-platform-an-introduction-whitepaper/).
 
 The project is supported and maintained by [R3](https://www.r3.com).
 
@@ -66,7 +66,7 @@ You can contact our community maintainers in the `#contributing` channel on the 
 ## Existing Contributors
 
 Over two hundred individuals have contributed to the development of Corda. You can find a full list of contributors in the
-[CONTRIBUTORS.md list](https://github.com/corda/corda/blob/master/CONTRIBUTORS.md).
+[CONTRIBUTORS.md list](https://github.com/corda/corda/blob/release/os/4.7/CONTRIBUTORS.md).
 
 
 ## Transparency and Conflict Policy

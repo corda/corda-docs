@@ -107,9 +107,13 @@ The deployment steps are given below:
 
 - Download the Docker image with CENM [Command-Line Interface (CLI) tool](cenm-cli-tool.md) so you can manage CENM services:
 
-    ```bash
-    docker pull cenm-cli:1.3-zulu-openjdk8u242
-    ```
+{{< note >}}
+Note the `.0`.
+{{< /note >}}
+
+```bash
+  docker pull corda/enterprise-cenm-cli:1.5.0-zulu-openjdk8u242
+```
 
 #### 2. Set up the Kubernetes cluster
 
@@ -205,7 +209,7 @@ Use the CENM [Command Line Interface (CLI) Tool](cenm-cli-tool.md) to access the
 To star CENM CLI Tool run Docker command starting Docker container with the tool:
 
   ```bash
-  docker run  -it --env ACCEPT_LICENSE=Y --name=cenm-cli cenm-cli:1.3-zulu-openjdk8u242
+  docker run  -it --env ACCEPT_LICENSE=Y --name=cenm-cli corda/enterprise-cenm-cli:1.5.0-zulu-openjdk8u242
   ```
 
 The welcome message will appear:
@@ -539,12 +543,10 @@ cd network-services/deployment/k8s/helm
 # These Helm charts trigger public IP allocation
 helm install idman-ip idman-ip
 helm install notary-ip notary-ip
-helm install gateway-ip gateway-ip
 
 # Run these commands to display allocated public IP addresses:
 kubectl get svc --namespace cenm idman-ip --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"   # step 1
 kubectl get svc --namespace cenm notary-ip --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"  # step 2
-kubectl get svc --namespace cenm gateway-ip --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"  # step 3
 
 # These Helm charts bootstrap CENM
 helm install cenm-auth auth --set prefix=cenm --set acceptLicense=YES
@@ -554,7 +556,7 @@ helm install cenm-signer signer --set prefix=cenm --set acceptLicense=YES
 helm install cenm-idman idman --set prefix=cenm --set acceptLicense=Y --set idmanPublicIP=[use IP from step 1]
 helm install notary notary --set prefix=cenm --set acceptLicense=YES --set notaryPublicIP=[use IP from step 2]
 helm install cenm-nmap nmap --set prefix=cenm --set acceptLicense=YES
-helm install cenm-gateway gateway --set prefix=cenm --set acceptLicense=YES --set idmanPublicIP=[use IP from step 3]
+helm install cenm-gateway gateway --set prefix=cenm --set acceptLicense=YES
 
 # Run these commands to display allocated public IP for Network Map Service:
 kubectl get svc --namespace cenm nmap --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"
@@ -568,13 +570,13 @@ The Docker images used for the Kubernetes deployment are listed below for refere
 
 | Service           | Image Name                         | Tag |
 |-------------------|------------------------------------|-----|
-| Identity Manager  | acrcenm.azurecr.io/nmap/nmap       | 1.3 |
-| Network Map       | acrcenm.azurecr.io/nmap/nmap       | 1.3 |
-| Signing           | acrcenm.azurecr.io/signer/signer   | 1.3 |
-| Zone              | acrcenm.azurecr.io/zone/zone       | 1.3 |
-| Auth              | acrcenm.azurecr.io/auth/auth       | 1.3 |
-| Gateway              | acrcenm.azurecr.io/gateway/gateway       | 1.3 |
-| PKI Tool          | acrcenm.azurecr.io/pkitool/pkitool | 1.3 |
-| Notary            | acrcenm.azurecr.io/notary/notary   | 1.3 |
+| Identity Manager  | acrcenm.azurecr.io/nmap/nmap       | 1.5.0 |
+| Network Map       | acrcenm.azurecr.io/nmap/nmap       | 1.5.0 |
+| Signing           | acrcenm.azurecr.io/signer/signer   | 1.5.0 |
+| Zone              | acrcenm.azurecr.io/zone/zone       | 1.5.0 |
+| Auth              | acrcenm.azurecr.io/auth/auth       | 1.5.0 |
+| Gateway              | acrcenm.azurecr.io/gateway/gateway       | 1.5.0 |
+| PKI Tool          | acrcenm.azurecr.io/pkitool/pkitool | 1.5.0 |
+| Notary            | acrcenm.azurecr.io/notary/notary   | 1.5.0 |
 
 {{< /table >}}
