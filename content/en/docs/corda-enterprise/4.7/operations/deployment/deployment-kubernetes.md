@@ -199,7 +199,7 @@ cd network-services/deployment/k8s/helm
 ## Network operations
 
 Use the CENM [Command Line Interface (CLI) Tool](../../../../cenm/1.5/cenm-cli-tool.md) to access the [Gateway Service](../../node/gateway-service.md) from your local machine.
-To star CENM CLI Tool run Docker command starting Docker container with the tool:
+To start the CENM CLI Tool, run Docker command starting a Docker container with the tool:
 
   ```bash
   docker run  -it --env ACCEPT_LICENSE=Y --name=cenm-cli cenm-cli:1.3-zulu-openjdk8u242
