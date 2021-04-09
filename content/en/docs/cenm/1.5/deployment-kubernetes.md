@@ -17,9 +17,11 @@ weight: 20
 
 ## Introduction
 
-This deployment guide provides a set of simple steps for deploying Corda Enterprise Network Manager (CENM)
+This deployment guide provides a set of simple steps for a test deployment of Corda Enterprise Network Manager (CENM)
 on a Kubernetes cluster in Azure Cloud.
 The deployment uses Bash scripts and Helm templates provided with CENM Docker images.
+
+{{<note>}}You may find it useful to use [Kubernetes Dashboard](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/) to visualise the deployment.{{</note>}}
 
 ### Who is this deployment guide for?
 
@@ -560,15 +562,6 @@ helm install cenm-gateway gateway --set prefix=cenm --set acceptLicense=YES
 
 # Run these commands to display allocated public IP for Network Map Service:
 kubectl get svc --namespace cenm nmap --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"
-```
-
-You may also want to install the Kubernetes dashboard, but this is not required. To install the Kubernetes dashboard, run the following commands from the `network-services/deployment/k8s/helm` directory.
-
-```bash
-# Add the kubernetes-dashbard helm repo
-helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
-# Install the kubernetes dashboard
-helm install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard -f dashboard/values.yaml -n kube-system
 ```
 
 ## Appendix A: Docker Images
