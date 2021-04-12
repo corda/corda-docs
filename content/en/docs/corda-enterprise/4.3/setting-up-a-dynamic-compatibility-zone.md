@@ -63,7 +63,7 @@ members and at the start of each flow, throw a FlowException if the counterparty
 In this way you can impose a centrally controlled ACL that all members will collectively enforce.
 
 {{< note >}}
-A production-ready Corda network and a new iteration of the testnet will be available soon.
+A production-ready Corda network will be available soon.
 
 {{< /note >}}
 
