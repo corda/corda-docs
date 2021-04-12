@@ -81,6 +81,10 @@ then there's no need to recompile plugin.
 In Gateway Service create a new directory called `plugins`, located inside the working directory.
 Copy the `cenm-gateway-plugin-1.5.0.jar`. The plugin contains the new CENM Web UI.
 
+### Parameter changes
+
+CENM 1.5 no longer uses the paths `node.admin.middleware` or `flow.hospital.middleware`. Use the paths `node.management.plugin.middleware` and `flow.management.plugin.middleware` instead.
+
 ## 1.3.x to 1.4
 
 CENM 1.4 includes a few changes and improvements that require some additional upgrade steps, as described below.
