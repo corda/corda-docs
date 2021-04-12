@@ -62,6 +62,10 @@ The platform version of Corda 4.8 has been bumped up from 9 to 10.
 
 For more information about platform versions, see [Versioning](cordapps/versioning.md).
 
+## Changes to the Node Management Console and Flow Management Console parameters
+
+Node Management Console version 1.0.1-RC01 and Flow Management Console version 1.0.1-RC01 no longer use the paths `node.admin.middleware` or `flow.hospital.middleware`. Use the paths `node.management.plugin.middleware` and `flow.management.plugin.middleware` instead.
+
 ## Fixed issues
 
 * * We have fixed several issues that caused memory leaks. As a result, we have added a new node configuration field - `enableURLConnectionCache` - and we have modified the `attachmentClassLoaderCacheSize` node configuration field. See the [node configuration fields page](node/setup/corda-configuration-fields.md#enterpriseconfiguration) for details.
@@ -74,6 +78,7 @@ For more information about platform versions, see [Versioning](cordapps/versioni
 * ...
 * ...
 * ...
+
 
 {{< note >}}
 The list above contains known issues specific to Corda Enterprise 4.8. See the release notes for previous Corda Enterprise releases for information about known issues specific to those versions.
