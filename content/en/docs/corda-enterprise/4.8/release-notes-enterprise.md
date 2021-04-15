@@ -64,7 +64,7 @@ For more information about platform versions, see [Versioning](cordapps/versioni
 
 ## Changes to the Node Management Console and Flow Management Console parameters
 
-Node Management Console version 1.0.1-RC01 and Flow Management Console version 1.0.1-RC01 no longer use the paths `node.admin.middleware` or `flow.hospital.middleware`. Use the paths `node.management.plugin.middleware` and `flow.management.plugin.middleware` instead.
+Node Management Console version 1.0.1 and Flow Management Console version 1.0.1 no longer use the paths `node.admin.middleware` or `flow.hospital.middleware`. Use the paths `node.management.plugin.middleware` and `flow.management.plugin.middleware` instead.
 
 ## Fixed issues
 
