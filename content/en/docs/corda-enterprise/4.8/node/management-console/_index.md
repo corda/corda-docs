@@ -58,7 +58,7 @@ To upgrade to the latest version of the node management console:
 
  {{% note %}}
 Note: If your configuration uses the deprecated path `node.admin.middleware`, update it to `node.management.plugin.middleware`.
-{{% /note%}}
+{{% /note %}}
 
 ## Configuration
 
