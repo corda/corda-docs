@@ -57,8 +57,8 @@ To upgrade to the latest version of the node management console:
 3. Replace both `.jar` files with the latest versions.
 
 {{< note >}}
-Note: If your configuration uses the deprecated path `node.admin.middleware`, update it to `node.management.plugin.middleware`.
-{{% /note %}}
+If your configuration uses the deprecated path `node.admin.middleware`, update it to `node.management.plugin.middleware`.
+{{< /note >}}
 
 ## Configuration
 

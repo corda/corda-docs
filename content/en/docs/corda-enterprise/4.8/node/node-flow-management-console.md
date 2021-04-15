@@ -39,7 +39,7 @@ To upgrade to the latest version of the flow management console:
 3. Replace both `.jar` files with the latest versions.
 
 {{< note >}}
-Note: If your configuration uses the deprecated path `flow.hospital.middleware`, update it to `flow.management.plugin.middleware`.
+If your configuration uses the deprecated path `flow.hospital.middleware`, update it to `flow.management.plugin.middleware`.
 {{< /note >}}
 
 ## Configuration
