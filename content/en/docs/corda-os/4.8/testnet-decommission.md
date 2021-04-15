@@ -1,21 +1,22 @@
 ---
 aliases:
-- /head/deploy-to-testnet-index.html
-- /HEAD/deploy-to-testnet-index.html
-- /deploy-to-testnet-index.html
+- /head/corda-testnet-intro.html
+- /HEAD/corda-testnet-intro.html
+- /corda-testnet-intro.html
 date: '2020-04-07T12:00:00Z'
 menu:
   corda-os-4-8:
-    identifier: corda-os-4-8-deploy-to-testnet-index
+    identifier: corda-os-4-8-corda-testnet-intro
     parent: corda-os-4-8-corda-networks-index
-    weight: 1070
+    weight: 1000
 tags:
-- deploy
+- corda
 - testnet
-title: Corda Testnet
+- intro
+title: Corda Testnet decommission notice
 ---
 
-# Corda Testnet
+# Corda Testnet decommissioned
 
 {{< warning >}}
 To provide the best experience for users setting up a network, we have decided to decommission the use of Testnet effective April 31, 2021. Here we highlight other options that are available to users following the removal of Testnet.
