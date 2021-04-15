@@ -78,7 +78,6 @@ The **Dashboard** tab displays two charts:
 
 * A pie chart that shows the breakdown of flows by flow state (`FAILED`, `KILLED`, `HOSPITALIZED`, `PAUSED`, `RUNNABLE`, or `COMPLETED`).
  * Clicking on a pie chart _section_ redirects you to the query flows tab with a filter applied for that flow state.
- * Clicking on the _name_ of a section in the legend removes matching flow states from the pie chart.
 * A bar chart which lists flows by suspension duration, starting with the longest duration on the left. Clicking on a flow redirects you to the query flows page filtered on that specific flow. This chart has options for choosing how many flows to display and to filter out flows that have not been suspended for a specified amount of time (for example, only display flows that have been suspended for at least 20 minutes).
 
 ## Query flows tab
