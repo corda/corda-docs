@@ -56,7 +56,7 @@ To upgrade to the latest version of the node management console:
 2. Delete the old version of the `.jar` in the plugins directory of the Auth Service.
 3. Replace both `.jar` files with the latest versions.
 
- {{% note %}}
+{{% note %}}
 Note: If your configuration uses the deprecated path `node.admin.middleware`, update it to `node.management.plugin.middleware`.
 {{% /note %}}
 
