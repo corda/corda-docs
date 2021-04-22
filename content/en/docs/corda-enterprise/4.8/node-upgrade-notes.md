@@ -14,7 +14,7 @@ aliases: /docs/corda-enterprise/4.8/node/operating/cm-upgrading-node.html
 weight: 10
 ---
 
-# Upgrading a node to Corda 4.7
+# Upgrading a node to Corda 4.8
 
 Corda releases strive to be backwards compatible, so upgrading a node is fairly straightforward and should not require changes to applications. Upgrading from 4.x  consists of the following steps:
 
@@ -35,7 +35,7 @@ The protocol is designed to tolerate node outages. During the upgrade process, p
 If upgrading from Corda Enterprise 3.x:
 * First ensure your node has been upgraded to the latest point release of that distribution. See [Upgrade a Corda 3.X Enterprise Node](../3.3/node-operations-upgrading.html#upgrading-a-corda-enterprise-node) for information on upgrading Corda 3.x versions.
 * Then, upgrade to 4.5.
-* Finally, upgrade to 4.7.
+* Finally, upgrade to 4.8.
 {{< /warning >}}
 
 ## Step 1. Drain the node
@@ -256,7 +256,7 @@ An accidental re-run of the scripts will fail (as the tables are already there),
 
 ### 3.4. Apply data updates on a database
 
-The schema structure changes in Corda 4.0 require data to be propagated to new tables and columns based on the existing rows and specific node configuration (for example, node legal name). Such migrations cannot be expressed by the DDL script, so they need to be performed by the Database Management Tool (or a Corda node). These updates are required any time you are upgrading either from an earlier version to 4.0 or from 4.x to 4.x - for example, upgrading from 4.5 to 4.7.
+The schema structure changes in Corda 4.0 require data to be propagated to new tables and columns based on the existing rows and specific node configuration (for example, node legal name). Such migrations cannot be expressed by the DDL script, so they need to be performed by the Database Management Tool (or a Corda node). These updates are required any time you are upgrading either from an earlier version to 4.0 or from 4.x to 4.x - for example, upgrading from 4.5 to 4.8.
 
 The Database Management Tool can execute the remaining data upgrade.
 As the schema structure is already created in the 3rd step, the tool can connect with *restricted* database permissions.

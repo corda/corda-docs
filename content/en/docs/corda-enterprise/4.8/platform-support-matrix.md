@@ -103,11 +103,13 @@ for your deployment needs.
 | FutureX Vectera Plus          | * Firmware version 6.1.5.8 | * Firmware version 6.1.5.8 | * Firmware version 6.1.5.8 | * Firmware version 6.1.5.8  |
 |                               | * PKCS#11 version 3.1      | * PKCS#11 version 3.1      | * PKCS#11 version 3.1      | * PKCS#11 version 3.1       |
 |                               | * FXJCA version 1.17       | * FXJCA version 1.17       | * FXJCA version 1.17       | * FXJCA version 1.17        |
-| Azure Key Vault               | * Driver version 1.2.1     | * Driver version 1.2.1     | * Driver version 1.2.1 (SOFTWARE mode only)| * Driver version 1.2.1      |
+| Azure Key Vault               | * Driver version           | * Driver version           | * Driver version (SOFTWARE mode only)| * Driver version  |
+|                               | * azure-identity 1.2.0     | * azure-identity 1.2.0     | * azure-identity 1.2.0     | * azure-identity 1.2.0      |
+|                               | * azure-security-keyvault-keys 4.2.3| * azure-security-keyvault-keys 4.2.3| * azure-security-keyvault-keys 4.2.3| * azure-security-keyvault-keys 4.2.3|
 | Securosys PrimusX             | * Firmware version 2.7.4   | * Firmware version 2.7.4   | * Firmware version 2.7.4   | * Firmware version 2.7.4    |
 |                               | * Driver version 1.8.2     | * Driver version 1.8.2     | * Driver version 1.8.2     | * Driver version 1.8.2      |
 | nCipher nShield Connect       | * Firmware version 12.50.11| * Firmware version 12.50.11| * Firmware version 12.50.11| * Firmware version 12.50.11 |
 |                               | * Driver version 12.60.2   | * Driver version 12.60.2   | * Driver version 12.60.2   | * Driver version 12.60.2    |
-| AWS CloudHSM                  | * Driver version 3.0.0     | * Driver version 3.0.0     | * Driver version 3.0.0     | * Driver version 3.0.0      |
+| AWS CloudHSM                  | * Driver version 3.1.2     | * Driver version 3.1.2     | * Driver version 3.1.2     | * Driver version 3.1.2      |
 
 {{< /table >}}

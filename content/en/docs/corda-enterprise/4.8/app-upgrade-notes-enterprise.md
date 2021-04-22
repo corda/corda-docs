@@ -9,21 +9,21 @@ tags:
 - upgrade
 - notes
 - enterprise
-title: Upgrading a CorDapp to Corda Enterprise 4.7
+title: Upgrading a CorDapp to Corda Enterprise 4.8
 weight: 20
 ---
 
 
 
 
-# Upgrading a CorDapp to Corda Enterprise 4.7
+# Upgrading a CorDapp to Corda Enterprise 4.8
 
 ## Upgrading from Open Source
 
 
-### Running on Corda Enterprise 4.7
+### Running on Corda Enterprise 4.8
 
-A prerequisite to upgrade to Corda Enterprise 4.7 is to ensure your CorDapp is upgraded to Corda open source 4.7.
+A prerequisite to upgrade to Corda Enterprise 4.8 is to ensure your CorDapp is upgraded to Corda open source 4.8.
 Please follow the instructions in [Upgrading CorDapps to newer Platform Versions](app-upgrade-notes.md) section to complete this initial step.
 
 There is no requirement to re-compile your CorDapp to Corda Enterprise in order to run it on Corda Enterprise. If you wish your CorDapp to
@@ -38,15 +38,15 @@ Please read [Corda and Corda Enterprise compatibility](version-compatibility.md)
 {{< /note >}}
 
 
-### Re-compiling for Corda Enterprise 4.7
+### Re-compiling for Corda Enterprise 4.8
 
 Re-compiling your CorDapp requires updating its associated Gradle build file as follows:
 
 ```shell
 ext.corda_release_distribution = 'com.r3.corda'
 ext.corda_core_release_distribution = 'net.corda'
-ext.corda_release_version = '4.7'
-ext.corda_core_release_version = '4.7'
+ext.corda_release_version = '4.8'
+ext.corda_core_release_version = '4.8'
 ext.corda_gradle_plugins_version = '5.0.12'
 ext.kotlin_version = '1.2.71'
 ext.quasar_version = '0.7.13_r3'
@@ -101,7 +101,7 @@ testCompile "$corda_release_distribution:corda-node-driver:$corda_release_versio
 ```
 
 {{< note >}}
-Corda Enterprise 4.7 binaries are not available in a public repository. In order to make the dependencies available for development, either
+Corda Enterprise 4.8 binaries are not available in a public repository. In order to make the dependencies available for development, either
 create a mirror repository and upload them there, or add them to the local Maven repository.
 
 Please consult your R3 support contact to request a copy of the Corda Enterprise Developer Pack (this contains a Maven repository mirror
@@ -140,7 +140,7 @@ Therefore you have to add the following variables to your build configuration:
 
 ```shell
 ext.corda_core_release_distribution = 'net.corda'
-ext.corda_core_release_version = '4.7'
+ext.corda_core_release_version = '4.8'
 ```
 
 Any dependency on `corda-core` (or `corda-serialization`) has to use these new variables to depend on the open source version of those
@@ -159,4 +159,4 @@ cordaCompile "$ext.corda_core_release_distribution:corda-core:$ext.corda_core_re
 
 ## Upgrading from Corda Enterprise 3.x
 
-You can only upgrade to Corda Enterprise 4.7 from 4.x. To upgrade from 3.x, first upgrade to 4.x and then to 4.7.
+You can only upgrade to Corda Enterprise 4.8 from 4.x. To upgrade from 3.x, first upgrade to 4.x and then to 4.8.

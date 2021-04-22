@@ -13,11 +13,11 @@ tags:
 - node
 - upgrade
 - notes
-title: Upgrading your node to Corda 4.7
+title: Upgrading your node to Corda 4.8
 ---
 
 
-# Upgrading your node to Corda 4.7
+# Upgrading your node to Corda 4.8
 
 Corda releases strive to be backwards compatible, so upgrading a node is fairly straightforward and should not require changes to
 applications. It consists of the following steps:
@@ -79,8 +79,6 @@ This step is only required when updating from versions less than or equal to 4.5
 Remove any `transactionIsolationLevel`, `initialiseSchema`, or `initialiseAppSchema` entries from the database section of your configuration.
 
 ## Step 6. Start the node with `run-migration-scripts` sub-command
-
-{{< note >}} This step is only required when upgrading to Corda Enterpise 4.7. {{< /note >}}
 
 Start the node with the `run-migration-scripts` sub-command with `--core-schemas` and `--app-schemas`.
 
