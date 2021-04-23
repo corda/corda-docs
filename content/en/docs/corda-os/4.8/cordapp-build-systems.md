@@ -80,7 +80,7 @@ Corda you’re developing against:
 The current versions used are as follows:
 
 ```groovy
-ext.corda_release_version = '4.7'
+ext.corda_release_version = '4.8'
 ext.corda_gradle_plugins_version = '5.0.12'
 ext.quasar_version = '0.7.13_r3'
 ext.quasar_classifier=''
@@ -432,7 +432,7 @@ class GetStringConfigFlow(private val configKey: String) : FlowLogic<String>() {
 
 ```
 
-[GetStringConfigFlow.kt](https://github.com/corda/corda/blob/release/os/4.7/samples/cordapp-configuration/workflows/src/main/kotlin/net/corda/configsample/GetStringConfigFlow.kt)
+[GetStringConfigFlow.kt](https://github.com/corda/corda/blob/release/os/4.8/samples/cordapp-configuration/workflows/src/main/kotlin/net/corda/configsample/GetStringConfigFlow.kt)
 
 
 ### Using CorDapp configuration with the deployNodes task
@@ -477,7 +477,7 @@ task deployNodes(type: net.corda.plugins.Cordform, dependsOn: ['jar']) {
 ```
 
 There is an example project that demonstrates this in the `samples` folder of the Corda Git repository, called `cordapp-configuration` .
-API documentation can be found at [api/kotlin/corda/net.corda.core.cordapp/index.html](https://api.corda.net/api/corda-os/4.7/html/api/kotlin/corda/net.corda.core.cordapp/index.html).
+API documentation can be found at [api/kotlin/corda/net.corda.core.cordapp/index.html](https://api.corda.net/api/corda-os/4.8/html/api/kotlin/corda/net.corda.core.cordapp/index.html).
 
 
 ## Minimum and target platform version

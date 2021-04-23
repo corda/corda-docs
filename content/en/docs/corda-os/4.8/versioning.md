@@ -45,6 +45,7 @@ registers with the network map it will check its own version against the minimum
 {{< table >}}
 | Corda release  | Platform version |
 | :------------- | :------------- |
+| 4.8 | 10 |
 | 4.7 | 9 |
 | 4.6 | 8 |
 | 4.5 | 7 |
@@ -88,6 +89,7 @@ can be disabled.
 {{< table >}}
 | Corda release  | Platform version |
 | :------------- | :------------- |
+| 4.8 | 10 |
 | 4.7 | 9 |
 | 4.6 | 8 |
 | 4.5 | 7 |
@@ -165,7 +167,7 @@ The following error message will be received before the node shuts down:
 ```
 [ERROR] 17:10:11+0100 [main] internal.NodeStartupLogging. - Invalid Cordapps found, that couldn't be loaded:
 [Problem: CorDapp requires minimumPlatformVersion: 7, but was: 2 in Cordapp
-file:/corda-open-source/samples/bank-of-corda-demo/build/nodes/BankOfCorda/cordapps/bank-of-corda-demo-4.7-SNAPSHOT.jar
+file:/corda-open-source/samples/bank-of-corda-demo/build/nodes/BankOfCorda/cordapps/bank-of-corda-demo-4.8-SNAPSHOT.jar
 ```
 
 For more information on how to address this, see the [Release new CorDapp versions](upgrading-cordapps.md) page.

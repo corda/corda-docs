@@ -44,7 +44,7 @@ interface NamedByHash {
 
 
 
-[Structures.kt](https://github.com/corda/corda/blob/release/os/4.7/core/src/main/kotlin/net/corda/core/contracts/Structures.kt) | ![github](/images/svg/github.svg "github")
+[Structures.kt](https://github.com/corda/corda/blob/release/os/4.8/core/src/main/kotlin/net/corda/core/contracts/Structures.kt) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 

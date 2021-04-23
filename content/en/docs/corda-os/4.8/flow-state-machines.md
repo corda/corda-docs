@@ -486,7 +486,7 @@ public SignedTransaction call() throws FlowException {
 {{% /tab %}}
 
 
-[TwoPartyTradeFlow.kt](https://github.com/corda/corda/blob/release/os/4.7/finance/workflows/src/main/kotlin/net/corda/finance/flows/TwoPartyTradeFlow.kt) | ![github](/images/svg/github.svg "github")
+[TwoPartyTradeFlow.kt](https://github.com/corda/corda/blob/release/os/4.8/finance/workflows/src/main/kotlin/net/corda/finance/flows/TwoPartyTradeFlow.kt) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -736,7 +736,7 @@ private Pair<StateAndRef<OwnableState>, SellerTradeInfo> receiveAndValidateTrade
 {{% /tab %}}
 
 
-[TwoPartyTradeFlow.kt](https://github.com/corda/corda/blob/release/os/4.7/finance/workflows/src/main/kotlin/net/corda/finance/flows/TwoPartyTradeFlow.kt) | ![github](/images/svg/github.svg "github")
+[TwoPartyTradeFlow.kt](https://github.com/corda/corda/blob/release/os/4.8/finance/workflows/src/main/kotlin/net/corda/finance/flows/TwoPartyTradeFlow.kt) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -951,7 +951,7 @@ public class signTransactionFlow extends FlowLogic<SignedTransaction> {
 {{% /tab %}}
 
 
-[TwoPartyTradeFlow.kt](https://github.com/corda/corda/blob/release/os/4.7/finance/workflows/src/main/kotlin/net/corda/finance/flows/TwoPartyTradeFlow.kt) | ![github](/images/svg/github.svg "github")
+[TwoPartyTradeFlow.kt](https://github.com/corda/corda/blob/release/os/4.8/finance/workflows/src/main/kotlin/net/corda/finance/flows/TwoPartyTradeFlow.kt) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -1127,7 +1127,7 @@ private static final ProgressTracker.Step VERIFYING_AND_SIGNING = new ProgressTr
 
 
 
-[TwoPartyTradeFlow.kt](https://github.com/corda/corda/blob/release/os/4.7/finance/workflows/src/main/kotlin/net/corda/finance/flows/TwoPartyTradeFlow.kt) | ![github](/images/svg/github.svg "github")
+[TwoPartyTradeFlow.kt](https://github.com/corda/corda/blob/release/os/4.8/finance/workflows/src/main/kotlin/net/corda/finance/flows/TwoPartyTradeFlow.kt) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 

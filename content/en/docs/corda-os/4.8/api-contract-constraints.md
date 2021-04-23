@@ -481,7 +481,7 @@ The following error message will be received before the node shuts down:
 ```
 [ERROR] 10:59:11+0100 [main] internal.NodeStartupLogging. - Invalid Cordapps found, that couldn't be loaded:
 [Problem: Corresponding contracts are signed by blacklisted key(s) only (probably development key), in Cordapp
-file:/corda-open-source/samples/bank-of-corda-demo/build/nodes/BankOfCorda/cordapps/corda-finance-workflows-4.7-SNAPSHOT.jar]
+file:/corda-open-source/samples/bank-of-corda-demo/build/nodes/BankOfCorda/cordapps/corda-finance-workflows-4.8-SNAPSHOT.jar]
 ```
 
 To address this, see the [CorDapp JAR signing](cordapp-build-systems.md#cordapp-build-system-signing-cordapp-jar-ref) page.

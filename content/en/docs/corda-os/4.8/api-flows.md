@@ -1393,7 +1393,7 @@ open class FlowException(message: String?, cause: Throwable?, var originalErrorI
 
 {{% /tab %}}
 
-[FlowException.kt](https://github.com/corda/corda/blob/release/os/4.7/core/src/main/kotlin/net/corda/core/flows/FlowException.kt) | ![github](/images/svg/github.svg "github")
+[FlowException.kt](https://github.com/corda/corda/blob/release/os/4.8/core/src/main/kotlin/net/corda/core/flows/FlowException.kt) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 
@@ -1473,7 +1473,7 @@ open class HospitalizeFlowException(message: String?, cause: Throwable?) : Corda
 
 {{% /tab %}}
 
-[HospitalizeFlowException.kt](https://github.com/corda/corda/blob/release/os/4.7/core/src/main/kotlin/net/corda/core/flows/HospitalizeFlowException.kt) | ![github](/images/svg/github.svg "github")
+[HospitalizeFlowException.kt](https://github.com/corda/corda/blob/release/os/4.8/core/src/main/kotlin/net/corda/core/flows/HospitalizeFlowException.kt) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
 

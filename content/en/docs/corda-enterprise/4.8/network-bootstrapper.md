@@ -41,7 +41,7 @@ The Corda Network Bootstrapper can be downloaded from [here](https://software.r3
 Create a directory containing a node config file, ending in “_node.conf”, for each node you want to create. “devMode” must be set to true. Then run the
 following command:
 
-`java -jar network-bootstrapper-4.7.jar --dir <nodes-root-dir>`
+`java -jar network-bootstrapper-4.8.jar --dir <nodes-root-dir>`
 
 For example running the command on a directory containing these files:
 
@@ -167,7 +167,7 @@ can use the Network Bootstrapper on the following network structure:
 
 Then run the Network Bootstrapper again from the root dir:
 
-`java -jar network-bootstrapper-4.7.jar --dir <nodes-root-dir>`
+`java -jar network-bootstrapper-4.8.jar --dir <nodes-root-dir>`
 
 Which will give the following:
 
@@ -239,7 +239,7 @@ For example, with the following pre-generated network:
 
 Then run the Network Bootstrapper again from the root dir:
 
-`java -jar network-bootstrapper-4.7.jar --dir <nodes-root-dir>`
+`java -jar network-bootstrapper-4.8.jar --dir <nodes-root-dir>`
 
 To give the following:
 
@@ -288,11 +288,11 @@ be used to override the default network parameters. See [Command line options](#
 
 You can provide a network parameters overrides file using the following syntax:
 
-`java -jar network-bootstrapper-4.7.jar --network-parameter-overrides=<path_to_file>`
+`java -jar network-bootstrapper-4.8.jar --network-parameter-overrides=<path_to_file>`
 
 Or alternatively, by using the short form version:
 
-`java -jar network-bootstrapper-4.7.jar -n=<path_to_file>`
+`java -jar network-bootstrapper-4.8.jar -n=<path_to_file>`
 
 The network parameter overrides file is a HOCON file with the following fields, all of which are optional. Any field that is not provided will be
 ignored. If a field is not provided and you are bootstrapping a new network, a sensible default value will be used. If a field is not provided and you
@@ -403,7 +403,7 @@ The alias for the name associated with the certificate to be associated with the
 
 
 Using the Example CorDapp (found in these repositories in [Java](https://github.com/corda/samples-java/tree/master/Basic/cordapp-example) and [Kotlin](https://github.com/corda/samples-kotlin/tree/master/Basic/cordapp-example)) as an example, we will initialise a simple network and then register and unregister a package namespace.
-Check out the Example CorDapp and follow the instructions to build it [here](../../corda-os/4.7/tutorial-cordapp.html#building-the-example-cordapp).
+Check out the Example CorDapp and follow the instructions to build it [here](../../corda-os/4.8/tutorial-cordapp.html#building-the-example-cordapp).
 
 {{< note >}}
 You can point to any existing bootstrapped Corda network (this will have the effect of updating the associated network parameters file).
