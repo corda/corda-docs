@@ -315,6 +315,11 @@ Allows fine-grained controls of various features only available in the enterpris
   * Enables URL connection caching. It is set to `false` by default and it is highly recommended to keep it that way.
   * When caching is enabled (set to `true`), `.jar` files will be cached, which can cause leaking of file handles. This is caused by the way the `ServiceLoader` handles `.jar` files that are children of the `URLClassLoader`. For more information, see [here](https://bugs.java.com/bugdatabase/view_bug.do?bug_id=8156014).
     * *Default:* `false`
+* `metricsConfiguration`
+  * Optional configuration section that controls metric configuration.
+  * Parameters:
+    * `reservoirType`: Sets the reservoir type. Valid values are `EDR` (default) and `TIME_WINDOW`. For more information, see the [metrics documentation](../../node-metrics.md/).
+    * `timeWindow`: Sets the data gathering duration for `TIME_WINDOW` data reservoirs. If not set, the default is five minutes.
 
 ## `tuning`
 

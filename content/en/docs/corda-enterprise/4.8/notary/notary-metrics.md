@@ -17,9 +17,7 @@ weight: 4
 
 ## Available metrics
 
-A notary exports the standard metrics exported by all Corda nodes (see ../node-administration), plus the
-highly-available notary metrics below. Note that all timers and histograms use exponentially decaying reservoirs, and
-all meters use exponential moving averages.
+A notary exports the standard metrics exported by all Corda nodes (see ../node/node-administration), plus the highly-available notary metrics below. All meters use exponential moving averages, and all timers and histograms can be configured to use either exponential decaying reservoirs or time window reservoirs. For more details, see the [node metrics documentation](../node-metrics.md).
 
 
 {{< table >}}
@@ -46,7 +44,6 @@ all meters use exponential moving averages.
 ## Notary monitoring recommendations
 
 For each metric, a number of values are provided, including:
-
 
 * `Mean`: Representative of the last five minutes of received data, rather than the entire
 history. Technically, uses an exponentially decaying reservoir of 1028 elements, which offers a 99.9%
