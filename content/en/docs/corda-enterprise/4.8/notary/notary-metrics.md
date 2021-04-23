@@ -2,11 +2,12 @@
 date: '2020-04-07T12:00:00Z'
 menu:
   corda-enterprise-4-8:
+    identifier: corda-enterprise-4-8-corda-notary-metrics
     parent: corda-enterprise-4-8-corda-nodes-notary-operate
 tags:
 - notary
 - metrics
-title: Highly-available notary metrics
+title: Notary Metrics and Performance
 weight: 4
 ---
 
@@ -38,7 +39,7 @@ all meters use exponential moving averages.
 | `NumberOfUniqueTxHashes` | Histogram | Tracks the statistical distribution of the number of unique transactions that contributed states to each transaction. This is mainly intended for trend analysis of the number of transactions a given transaction depends on.|
 | `ProcessedBatchSize` | Histogram | Measures the statistical distribution of the number of states notarised per batch. The notary groups and processes states in batches for performance reasons.|
 | `BatchCommit` | Timer | Measures the time taken in milliseconds to commit a single batch and the number of batches per second.|
-
+| `BatchSignLatency` | Timer | This metric represents the time elapsed during a batch signature, measured in milliseconds. It includes building the merkle tree for all the participating transactions using a cryptographic hash function and then signing over the root. |
 {{< /table >}}
 
 

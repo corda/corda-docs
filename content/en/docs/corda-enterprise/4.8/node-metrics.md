@@ -84,8 +84,10 @@ The avalable set of metrics depends on the cache type. The `maximum-size` and `s
 |net.corda:type=Flows,name=QueueSizeOnInsert|A histogram showing the queue size at the point new flows are added.|
 |net.corda:type=Flows,name=Started|The total number of flows started.|
 |net.corda:type=Flows,name=StartedPerMinute|The rate at which flows are started.|
+|net.corda:type=Flows,name=StartupQueueTime|This timer measures the time a flow spends queued before it is executed.|
 |net.corda:type=Flows,name=Success|The total number of successful flows.|
 |net.corda:type=Flows,name=<action_name>|A histogram indicating the time taken to execute a particular action. See the following section for more details.|
+
 
 {{< /table >}}
 
@@ -93,6 +95,8 @@ The avalable set of metrics depends on the cache type. The `maximum-size` and `s
 
 
 Actions are reified IO actions to execute as part of state machine transitions. These metrics are only exposed when the relevant action gets executed for the first time.
+
+{{<table>}}
 
 |Metric Query|Action description|
 |----------------------------------------------------------------|--------------------------------------------------------------------------------------|
@@ -120,6 +124,7 @@ Actions are reified IO actions to execute as part of state machine transitions. 
 |net.corda:type=Flows,name=Actions.SleepUntil|Sleep until a given moment in time.|
 |net.corda:type=Flows,name=Actions.TrackTransaction|Track a transaction hash and notify the state machine once the corresponding transaction has committed.|
 
+{{</table>}}
 
 ## Metering
 
