@@ -15,15 +15,21 @@ title: LedgerGraph
 weight: 500
 ---
 
-# LedgerGraph V1.2
+# LedgerGraph V1.2.1
 
 **LedgerGraph** is a CorDapp you can use to get in-memory access to transaction data. Transaction information is kept in a graph structure on any node where **LedgerGraph** is installed. As not all transactions are related to all other transactions, there can actually be multiple components in the graph: each a **directed acyclic graph** (DAG).
 
-**LedgerGraph** enables other CorDapps, such as the set of [Collaborative Recover CorDapps](../collaborative-recovery/introduction-cr), to have near real-time access to data concerning all of a node's transactions and their relationships. Without it, many operations would be unacceptably slow and impractical.
+**LedgerGraph** enables other CorDapps, such as the set of [Collaborative Recovery CorDapps](../collaborative-recovery/introduction-cr.md), to have near real-time access to data concerning all of a node's transactions and their relationships. Without it, many operations would be unacceptably slow and impractical.
 
 {{< warning >}}
 LedgerGraph is a dependency for the set of Collaborative Recovery CorDapps V1.1 and above. If you are using an earlier version of Collaborative Recovery, you should not install the stand-alone LedgerGraph.
 {{< /warning >}}
+
+### New in V1.2.1
+
+**onDemand**: In V1.2.1 you can configure the setting `onDemand` to `true` or `false`. When set to `true`, your LedgerGraph becomes an on-demand service, active only when triggered by the [Archive Service](../archiving/archiving-setup.md). This saves heap memory usage.
+
+LedgerGraph then deletes a constructed graph when the Archive Service `create-snapshot` task completes. For example, if a `create-snapshot` task is followed by a `list-items` task, the graph will be initialized once more.
 
 ## Installation requirements
 
@@ -38,7 +44,7 @@ LedgerGraph is a dependency for the set of Collaborative Recovery CorDapps V1.1 
 
 ### Database requirements
 
-LedgerGraph CorDapps are tested against Corda Enterprise and will work according to the [support matrix.] (../../platform-support-matrix.html#platform-support-matrix).
+LedgerGraph CorDapps are tested against Corda Enterprise and will work according to the [support matrix](../../platform-support-matrix.md).
 
 ## Install LedgerGraph
 
@@ -79,7 +85,7 @@ Once the node has been successfully drained of any pending activity you will be 
 checkpoints dump
 ```
 
-If this list is empty, the node has been successfully drained. If the list contains representations of in-flight flows, and continues to do so for an unreasonable amount of time, the flows may have become stuck. At this point you may wish to kill the flows explicitly using the `killFlow` api. To learn more about this and the associated risks you can review the documentation found [here](https://docs.corda.net/docs/corda-enterprise/4.4/cordapps/upgrading-cordapps.html#flow-drains).
+If this list is empty, the node has been successfully drained. If the list contains representations of in-flight flows, and continues to do so for an unreasonable amount of time, the flows may have become stuck. At this point you may wish to kill the flows explicitly using the `killFlow` api. To learn more about this and the associated risks you can review the documentation found [here](../../cordapps/upgrading-cordapps.md#flow-drains).
 
 ### Uninstall Old Versions
 
@@ -99,7 +105,7 @@ If you're installing the <nobr>`ledger-graph-confidential-identities`</nobr> Cor
 
 ### Restart the Node
 
-Restart the node in the same manner originally started by the [node operator](../deploy/deploying-a-node.md/).
+Restart the node in the same manner originally started by the [node operator](../deploy/deploying-a-node.md).
 
 Depending on the size of the  node's vault, it might take longer to start than it did previously.
 
@@ -131,6 +137,7 @@ You can tune **LedgerGraph**'s behaviour through a small set of configuration pa
 |-|:-:|:-:|-|
 |`transactionReaderPageSize` &dagger; |`100`|`10` to `10,000,000`|The number of transactions to include in the result set when querying the database during graph initialization.|
 |`transactionReaderPoolSize` &Dagger;|`10`|`1` to `1000`|The number of threads to use when deserializing transaction data during graph initialization.|
+|`onDemand`|`true`| `true`, `false`|When set to `true`, your LedgerGraph becomes an on-demand service, active only when triggered by the [Archive Service](../archiving/archiving-setup.md). This saves heap memory usage.
 {{< /table >}}
 
 **&dagger;** Because there can be an extremely large number of transactions in a node's vault, it is important to select an appropriate page size for your database to optimize retrieval performance. Some amount of experimentation may be required on your part to find/define the best value to be used here, so we don't recommend the default value for most production environments.
@@ -139,7 +146,7 @@ You can tune **LedgerGraph**'s behaviour through a small set of configuration pa
 
 ## Configure LedgerGraph parameters
 
-To use LedgerGraph's configuration parameters, create a configuration file named after the **LedgerGraph** JAR file. For example, if the JAR file is called `ledger-graph-1.1.jar`, the configuration file would be `<corda_node_dir>/cordapps/config/ledger-graph-1.1.conf`.
+To use LedgerGraph's configuration parameters, create a configuration file named after the **LedgerGraph** `.jar` file. For example, if the JAR file is called `ledger-graph-1.1.jar`, the configuration file would be `<corda_node_dir>/cordapps/config/ledger-graph-1.1.conf`.
 
 If the configuration parameter is not specified, or the configuration file is not present, the default value(s) will be used.
 
@@ -153,7 +160,7 @@ transactionReaderPoolSize = 32
 
 ## Support for Confidential Identities
 
-If you are using Corda [Confidential Identities](./../../cordapps/api-confidential-identity.md), you need to add further configuration to LedgerGraph  in order to properly support your environment. This is due to a limitation in the current implementation of the Confidential Identities CorDapp.
+If you are using Corda [Confidential Identities](../../cordapps/api-confidential-identity.md), you need to add further configuration to LedgerGraph  in order to properly support your environment. This is due to a limitation in the current implementation of the Confidential Identities CorDapp.
 
 This additional configuration step helps to ensure that confidential identities on your node are properly mapped to known identities (where they have been shared with your node) when new transactions are processed and added to the graph.
 
@@ -420,7 +427,7 @@ A list of strings that provide a description of the errors that were encountered
 The **LedgerGraph** CorDapp requires participating Corda nodes to be:
 - Using Corda Enterprise, not Corda Open Source (OS).
 - Corda Minimum Platform Version (MPV) > 6.
-- Running on top of a supported [database technology](https://docs.corda.r3.com/platform-support-matrix.html).
+- Running on top of a supported [database technology](../../platform-support-matrix.md).
 
 ### Memory Requirements
 
