@@ -172,7 +172,7 @@ cryptoServiceName: "AZURE_KEY_VAULT"
 cryptoServiceConf: "az_keyvault.conf"
 ```
 
-The configuration file for Azure KeyVault contains the fields listed below. For details refer to the [Azure KeyVault documentation](https://docs.microsoft.com/en-gb/azure/key-vault).
+The configuration file for Azure Key Vault contains the fields listed below. For details refer to the [Azure KeyVault documentation](https://docs.microsoft.com/en-gb/azure/key-vault).
 
 * **path**:
 path to the key store for login. Note that the .pem file that belongs to your service principal needs to be created to pkcs12. One way of doing this is by using openssl: `openssl pkcs12 -export -in /home/username/tmpdav8oje3.pem -out keyvault_login.p12`.
@@ -182,7 +182,7 @@ If a relative path is specified for the pkcs12 key store, it must be relative to
 
 {{< /note >}}
 
-* **alias**:
+* **tenantId**:
 alias of the key used for login.
 
 * **password**:
@@ -200,15 +200,15 @@ If set to “HARDWARE”, ‘hard’ keys will be used, if set to “SOFTWARE”
 Example configuration file:
 
 ```kotlin
-path: keyvault_login.p12
-alias: "my-alias"
+path: "keyvault_login.p12"
+tenantId: "my-id"
 password: "my-password"
 keyVaultURL: "[https:/](https:/)/<mykeyvault>.vault.azure.net/"
 clientId: "a3d72387-egfa-4bc2-9cba-b0b27c63540e"
 protection: "HARDWARE"
 ```
 
-The drivers directory needs to contain an uber jar, built by the gradle script below.
+The drivers directory must contain a jar built by the gradle script below.
 
 First copy the following text in to a new file called build.gradle anywhere on your file system.
 Please do not change any of your existing build.gradle files.
@@ -224,12 +224,11 @@ repositories {
 }
 
 dependencies {
-    compile 'com.microsoft.azure:azure-keyvault:1.2.1'
-    compile 'com.microsoft.azure:adal4j:1.6.4'
+    compile 'com.azure:azure-security-keyvault-keys:4.2.3'
+    compile 'com.azure:azure-identity:1.2.0'
 }
 
 shadowJar {
-    relocate 'okhttp3', 'shadow.okhttp3'
     archiveName = 'azure-keyvault-with-deps.jar'
 }
 ```
@@ -250,6 +249,10 @@ This will create a jar called azure-keyvault-with-deps.jar, copy this into the d
 
 Note that okhttp3 needs to be shaded as the latest version of this library will raise an exception on a handle leak which version 1.2.1
 of azure key vault has. For further details see [https://github.com/Azure/azure-sdk-for-java/issues/4879](https://github.com/Azure/azure-sdk-for-java/issues/4879)
+
+### Authentication using Azure Managed Identities
+
+If any of the properties
 
 ## Securosys Primus X
 

@@ -145,7 +145,7 @@ needed or set after the flow’s `call` function has been triggered.
 ## Starting Flows from a Service
 
 Starting flows via a service can lead to deadlock within the node’s flow worker queue, which will prevent new flows from
-starting. To avoid this, the rules bellow should be followed:
+starting. To avoid this, the rules below should be followed:
 
 
 

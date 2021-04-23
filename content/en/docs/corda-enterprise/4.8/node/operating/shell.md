@@ -780,7 +780,9 @@ You can shut the node down via shell:
 * `run gracefulShutdown` will put the node into draining mode, and shut down when there are no flows running.
 * `run shutdown` will shut the node down immediately.
 
-
+{{<note>}}
+Please that RPC note that users can run the `gracefulShutdown` command without `InvokeRpc.gracefulShutdown` permission if they have `InvokeRpc.terminate` and `InvokeRpc.stateMachinesFeed` permissions.
+{{</note>}}
 
 
 ### Parameter syntax
