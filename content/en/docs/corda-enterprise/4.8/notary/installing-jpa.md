@@ -24,7 +24,7 @@ database vendor - ensure that the configuration matches the database name.
 ## Supported databases for highly available mode
 
 The JPA notary uses the Java Persistence API (JPA) interface to connect to the notary state database. For performance
-and ease of operation, the recommended database is CockroachDB 19.1.2. The full set of supported configurations is
+and ease of operation, the recommended database is CockroachDB 20.1.6. The full set of supported configurations is
 listed in the [Platform support matrix](../platform-support-matrix.md).
 
 {{< note >}}
@@ -181,8 +181,8 @@ The double-spend table includes records of transactions that attempted a double-
 
 ## Configuring the notary backend - CockroachDB
 
-The JPA notary service is tested against CockroachDB 19.1.2. CockroachDB’s
-[documentation page](https://www.cockroachlabs.com/docs/v19.1/) explains the installation
+The JPA notary service is tested against CockroachDB 20.1.6. CockroachDB’s
+[documentation page](https://www.cockroachlabs.com/docs/v20.1/) explains the installation
 in detail.
 
 Some information specific to the configuration of the JPA notary to interact with CockroachDB is covered below.
@@ -282,7 +282,7 @@ Additionally, the same user has to have access to the key in PKCS8 format used t
 ### JDBC driver
 
 The PostgresSQL driver should be used when attempting to connect the JPA notary to CockroachDB. The JPA notary
-service has been tested with driver version 42.2.7. This JAR file should be placed in the `drivers` folder.
+service has been tested with driver version 42.2.7. This `.jar` file should be placed in the `drivers` folder.
 
 
 ### Connection string

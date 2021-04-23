@@ -61,7 +61,7 @@ The use of read-only mode for the Percona database will require some database do
     ```
 
 {{< warning >}}
-The export file **must** be copied into a subdirectory of `/opt/cockroachdb/cockroach-data/extern/` for each node, as described in the [CockroachDB documentation](https://www.cockroachlabs.com/docs/v19.2/import.html#import-file-urls/)
+The export file **must** be copied into a subdirectory of `/opt/cockroachdb/cockroach-data/extern/` for each node, as described in the [CockroachDB documentation](https://www.cockroachlabs.com/docs/v20.1/import.html#import-file-urls/)
 {{</ warning >}}
 
 3. After copying the data to CockroachDB, the data must be imported to the `corda_mysql` database. The `corda_mysql`
