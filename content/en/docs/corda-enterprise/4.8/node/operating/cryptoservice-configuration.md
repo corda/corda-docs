@@ -171,8 +171,6 @@ There are two methods of authentication when using an Azure Key Vault:
 
 ### Authentication using certificates
 
-When authenticating using certificates,
-
 In the `node.conf`, the `cryptoServiceName` needs to be set to "AZURE_KEY_VAULT" and `cryptoServiceConf` should contain the path to the configuration for Azure Key Vault, as shown below.
 
 ```kotlin
