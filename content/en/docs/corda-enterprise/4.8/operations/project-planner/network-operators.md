@@ -73,7 +73,7 @@ All Corda Nodes have a database. A range of third-party databases are supported 
 |Vendor|CPU Architecture|Versions|JDBC Driver|
 |-------------------------------|------------------|------------------|--------------------|
 |CockroachDB|x86-64|19.1.2|PostgreSQL JDBCDriver 42.1.4|
-|Oracle RAC|x86-64|12cR2|Oracle JDBC 8|
+|Oracle RAC|x86-64|19c|Oracle JDBC 8|
 
 {{< /table >}}
 

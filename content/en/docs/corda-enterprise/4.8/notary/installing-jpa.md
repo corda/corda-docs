@@ -299,10 +299,10 @@ dataSource.url="jdbc:postgresql://{list of CockroachDB node IP addresses}:26257/
 Refer to the section [Configuring the notary worker nodes](installing-the-notary-service.md) for more details on configuring the JPA notary.
 
 
-## Configuring notary backend - Oracle RAC 12cR2
+## Configuring notary backend - Oracle RAC 19c
 
-The JPA notary service is tested against Oracle RAC, with Oracle database version 12cR2.
-Oracle’s [documentation page](https://docs.oracle.com/database/121/RACAD/toc.htm) explains the installation
+The JPA notary service is tested against Oracle RAC, with Oracle database version 19c.
+Oracle’s [documentation page](https://docs.oracle.com/en/database/oracle/oracle-database/19/install-and-upgrade.html) explains the installation
 in detail.
 
 Some information specific to the configuration of the JPA notary to interact with Oracle RAC is covered below.
@@ -415,7 +415,7 @@ GRANT SELECT, INSERT ON corda_adm.notary_request_log TO corda_pdb_user;
 
 ### JDBC driver
 
-The `ojdbc8` driver should be used when connecting to Oracle RAC database 12cR2. This JAR file
+The `ojdbc8` driver should be used when connecting to Oracle RAC database 19c. This JAR file
 should be placed in the `drivers` folder.
 
 
