@@ -165,7 +165,15 @@ The following versions should be used for the required FutureX libraries: 3.1 fo
 
 ## Azure KeyVault
 
-In the `node.conf`, the `cryptoServiceName` needs to be set to “AZURE_KEY_VAULT” and `cryptoServiceConf` should contain the path to the configuration for Azure KeyVault, as shown below.
+There are two methods of authentication when using an Azure Key Vault:
+ - authentication using certificates
+ - authentication using Azure Managed Identities
+
+### Authentication using certificates
+
+When authenticating using certificates,
+
+In the `node.conf`, the `cryptoServiceName` needs to be set to "AZURE_KEY_VAULT" and `cryptoServiceConf` should contain the path to the configuration for Azure Key Vault, as shown below.
 
 ```kotlin
 cryptoServiceName: "AZURE_KEY_VAULT"
@@ -175,11 +183,10 @@ cryptoServiceConf: "az_keyvault.conf"
 The configuration file for Azure Key Vault contains the fields listed below. For details refer to the [Azure KeyVault documentation](https://docs.microsoft.com/en-gb/azure/key-vault).
 
 * **path**:
-path to the key store for login. Note that the .pem file that belongs to your service principal needs to be created to pkcs12. One way of doing this is by using openssl: `openssl pkcs12 -export -in /home/username/tmpdav8oje3.pem -out keyvault_login.p12`.
+The path to the key store for login. Note that the `.pem` file that belongs to your service principal must be created in the pkcs12 format. One way of doing this is by using openssl: `openssl pkcs12 -export -in /home/username/tmpdav8oje3.pem -out keyvault_login.p12`.
 
 {{< note >}}
 If a relative path is specified for the pkcs12 key store, it must be relative to the base directory of the running node, firewall or HA Utility.
-
 {{< /note >}}
 
 * **tenantId**:
@@ -200,12 +207,12 @@ If set to “HARDWARE”, ‘hard’ keys will be used, if set to “SOFTWARE”
 Example configuration file:
 
 ```kotlin
-path: "keyvault_login.p12"
-tenantId: "my-id"
-password: "my-password"
-keyVaultURL: "[https:/](https:/)/<mykeyvault>.vault.azure.net/"
-clientId: "a3d72387-egfa-4bc2-9cba-b0b27c63540e"
-protection: "HARDWARE"
+path: keyvault_login.p12
+password: "<password used in the key vault creation>"
+clientId: "<app id from creation of the service principle>"
+tenantId: "45ca2399-b7b3-7869-11ee-564aca9b634e"
+keyVaultURL: "https://<key vault name>.vault.azure.net/"
+protection: "SOFTWARE" # HARDWARE can be specified if using a premium vault
 ```
 
 The drivers directory must contain a jar built by the gradle script below.
@@ -252,7 +259,16 @@ of azure key vault has. For further details see [https://github.com/Azure/azure-
 
 ### Authentication using Azure Managed Identities
 
-If any of the properties
+If any of the parameters required for the certificate are not defined, or set to null, then the Azure Key Vault will be use Azure Managed Identities.
+
+The minimum configuration required for authentication using Azure Managed Identities is:
+
+```
+keyVaultURL="https://tck-test-vault.vault.azure.net
+protection=SOFTWARE
+```
+
+To set up Azure Managed Identities, see the [Microsoft Azure Managed Identities documentation](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview).
 
 ## Securosys Primus X
 
