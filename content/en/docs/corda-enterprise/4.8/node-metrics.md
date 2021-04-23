@@ -19,6 +19,25 @@ A Corda node exports a number of metrics for the purpose of monitoring the healt
 
 For more information on how to monitor a node, see [Node administration](node/operating/node-administration.md), [Node monitoring and logging](node/operating/monitoring-logging.md), and [Node monitoring scenarios](node/operating/monitoring-scenarios.md).
 
+## Metric accuracy and performance
+
+Histogram and timer-based metrics use internal data reservoirs to compute percentile-based metric data. By default, the metrics produced by Corda nodes rely on the reservoir implementation provided by the DropWizard metrics library, which is an exponentially decaying reservoir (EDR). These reservoirs sample the data and do not keep a full set of data over time. This can cause outlying data points to be missed if they are not included in the sample set.
+
+Alternatively, a node can be configured to use a time window reservoir by adding the following configuration block to the `node.conf` file:
+
+```
+enterpriseConfiguration {
+    metricsConfiguration {
+        reservoirType = TIME_WINDOW // Can also be EDR, but this is the default if this item is absent
+        timeWindow = \<Duration\> // Optional - will default to 5m if not specified
+    }
+```
+
+The `reservoirType` configuration option can be set as either `TIME_WINDOW` or `EDR`, and will default to `EDR` if the configuration block is missing.
+
+Time window data reservoirs record all data points across the specified time window. This ensures that outliers are accurately recorded for metrics calculation, and contain a bias towards more recent results.
+
+Using time window reservoirs increases heap memory usage proportionally to the amount of load on the system.
 
 ## Attachments
 
