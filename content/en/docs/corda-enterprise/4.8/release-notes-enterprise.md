@@ -47,7 +47,7 @@ The LTS status of this release provides an extra 6 months to our previous suppor
 
 ### Notary database support updates
 
-The JPA notary now supports [Oracle DB version 19c](platform-support-matrix.md#jpa-notary-databases). This database is supported until April 30th, 2027, providing long-term support for this Corda release.
+The [JPA notary](notary/installing-jpa.md) now supports [Oracle DB version 19c](platform-support-matrix.md#jpa-notary-databases). This database is supported until April 30th, 2027, providing long-term support for this Corda release.
 
 ### Azure Managed Identities authentication
 
