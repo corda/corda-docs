@@ -25,11 +25,11 @@ States and apps valid in Corda 3.0 and above are usable in Corda 4.8 and Corda E
 
 The main new features and enhancements in Corda Enterprise 4.8 are listed below:
 
-* Added support for version 19c of the [Oracle database as a notary database](platform-support-matrix.md).
-* Added support for Azure Managed Identities as authentication when using an [Azure Key Vault HSM](node/operating/cryptoservice-configuration.md#Azure-KeyVault).
-* Metrics can now be configured to use [time-window reservoirs](node-metrics.md) for data collection.
-* Additional metrics have been added for [tracking notary latency](notary/faq/notary-latency-monitoring.md).
-* Confidential identities now support [Utimaco and Gemalto Luna HSMs](platform-support-matrix.md).
+* Added support for version 19c of the [Oracle database as a notary database](#notary-database-support-updates).
+* Added support for Azure Managed Identities as authentication when using an [Azure Key Vault HSM](#azure-managed-identities-authentication).
+* Metrics can now be configured to use [time-window reservoirs](#time-window-metrics-gathering) for data collection.
+* Additional metrics have been added for [tracking notary latency](#additional-notary-metrics).
+* Confidential identities now support [Utimaco and Gemalto Luna HSMs](platform-support-matrix.md#hardware-security-modules-hsm).
 
 {{< note >}}
 This page only describes functionality specific to Corda Enterprise 4.8. However, as a Corda Enterprise customer, you can also make full use of the entire range of features available as part of Corda open source releases.
@@ -47,11 +47,17 @@ The LTS status of this release provides an extra 6 months to our previous suppor
 
 ### Notary database support updates
 
-The JPA notary now supports Oracle DB version 19c. This database is supported until April 30th, 2027, providing long-term support for this Corda release.
+The JPA notary now supports [Oracle DB version 19c](platform-support-matrix.md#jpa-notary-databases). This database is supported until April 30th, 2027, providing long-term support for this Corda release.
 
 ### Azure Managed Identities authentication
 
-When using an Azure Key Vault HSM with Corda Enterprise, you can now use an existing Azure Managed Identities service as authentication.
+When using an Azure Key Vault HSM with Corda Enterprise, you can now use an existing Azure Managed Identities service as authentication. See [Using an HSM with Corda Enterprise](node/operating/cryptoservice-configuration.md#azure-keyvault) for more information.
+
+### Time-window metrics gathering
+
+Timer and histogram metrics can now be configured to use time-window data gathering. Time-window data gathering collects all data points for a given time window, allowing outlying data points to be properly represented.
+
+See [Node metrics](node-metrics.md) for more information.
 
 ### Additional notary metrics
 
@@ -60,14 +66,12 @@ Two new metrics have been added that can be used to help calculate notary latenc
 * The `StartupQueueTime` represents the time a flow has been queued before starting, in milliseconds.
 * The `BatchSignLatency` metric represents the time elapsed during a batch signature in milliseconds.
 
-### Time-window metrics gathering
-
-Timer and histogram metrics can now be configured to use time-window data gathering. Time-window data gathering collects all data points for a given time window, allowing outlying data points to be properly represented.
+See [Monitoring Notary Latency](notary/faq/notary-latency-monitoring.md) for more information.
 
 ### Other changes and improvements
 
-* Confidential identities now support [Utimaco and Gemalto Luna HSMs](platform-support-matrix.md).
-* One of the flow management console parameters has changed.
+* Confidential identities now support [Utimaco and Gemalto Luna HSMs](platform-support-matrix.md#hardware-security-modules-hsm).
+* One of the [flow management console](node/node-flow-management-console.md) parameters has changed.
 
 ## Platform version change
 
