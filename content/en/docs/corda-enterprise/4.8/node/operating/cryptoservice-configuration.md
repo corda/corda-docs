@@ -166,8 +166,8 @@ The following versions should be used for the required FutureX libraries: 3.1 fo
 ## Azure KeyVault
 
 There are two methods of authentication when using an Azure Key Vault:
- - authentication using certificates
- - authentication using Azure Managed Identities
+ - Authentication using certificates.
+ - Authentication using Azure Managed Identities.
 
 ### Authentication using certificates
 
@@ -213,7 +213,7 @@ keyVaultURL: "https://<key vault name>.vault.azure.net/"
 protection: "SOFTWARE" # HARDWARE can be specified if using a premium vault
 ```
 
-The drivers directory must contain a jar built by the gradle script below.
+The drivers directory must contain a `.jar` file built by the gradle script below.
 
 First copy the following text in to a new file called build.gradle anywhere on your file system.
 Please do not change any of your existing build.gradle files.
@@ -257,7 +257,7 @@ of azure key vault has. For further details see [https://github.com/Azure/azure-
 
 ### Authentication using Azure Managed Identities
 
-If any of the parameters required for the certificate are not defined, or set to null, then the Azure Key Vault will be use Azure Managed Identities.
+If any of the parameters required for the certificate are not defined, or set to `null`, then the Azure Key Vault will use Azure Managed Identities.
 
 The minimum configuration required for authentication using Azure Managed Identities is:
 
