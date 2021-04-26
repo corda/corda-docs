@@ -6,7 +6,7 @@ tags:
 - authentication
 - auth
 weight: 150
-
+aliases: "/docs/cenm/1.5/auth-service.html"
 title: Auth service
 ---
 
