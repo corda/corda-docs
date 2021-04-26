@@ -19,9 +19,9 @@ weight: 1
 
 This release introduces a number of new features and enhancements, and fixes for known issues from previous releases.
 
-Just as prior releases have brought with them commitments to wire and API stability, Corda 4.8 comes with those same guarantees.
+Just as prior releases have brought with them commitments to wire and API stability, Corda Enterprise 4.8 comes with those same guarantees.
 
-States and apps valid in Corda 3.0 and above are usable in Corda 4.8.
+States and apps valid in Corda 3.0 and above are usable in Corda 4.8 and Corda Enterprise 4.8.
 
 The main new features and enhancements in Corda Enterprise 4.8 are listed below:
 
@@ -35,8 +35,13 @@ The main new features and enhancements in Corda Enterprise 4.8 are listed below:
 This page only describes functionality specific to Corda Enterprise 4.8. However, as a Corda Enterprise customer, you can also make full use of the entire range of features available as part of Corda open source releases.
 
 See the [Corda open source release notes](../../corda-os/4.8/release-notes.md) for information about new features, enhancements, and fixes shipped as part of Corda 4.8.
-
 {{< /note >}}
+
+## Long-term support (LTS) release
+
+As part of our first major Corda release for 2021, [Corda 4.8](../../corda-os/4.8/release-notes.md) and Corda Enterprise 4.8 are our long-term support (LTS) platform versions, which bring improvements and stability fixes that continue to enhance the maturity of the platform as a whole.
+
+The LTS status of this release provides an extra 6 months to our previous support period, providing Corda customers extra time to plan for the next upgrade.
 
 ## New features and enhancements
 
@@ -47,7 +52,6 @@ The JPA notary now supports Oracle DB version 19c. This database is supported un
 ### Azure Managed Identities authentication
 
 When using an Azure Key Vault HSM with Corda Enterprise, you can now use an existing Azure Managed Identities service as authentication.
-
 
 ### Additional notary metrics
 
@@ -73,24 +77,23 @@ For more information about platform versions, see [Versioning](cordapps/versioni
 
 ## Fixed issues
 
-* A security issue has been fixed that affects notary systems that use the JPA notary implementation in an HA configuration, and when the notary backing database has been set up using the Corda database management tool. The new version of the Corda database management tool must be re-run for the fix to take effect.
+* We have fixed a security issue that affects notary systems that use the JPA notary implementation in an HA configuration, and when the notary backing database has been set up using the Corda database management tool. The new version of the Corda [database management tool](database-management-tool.md) must be re-run for the fix to take effect.
 * We have fixed several issues that caused memory leaks. As a result, we have added a new node configuration field - `enableURLConnectionCache` - and we have modified the `attachmentClassLoaderCacheSize` node configuration field. See the [node configuration fields page](node/setup/corda-configuration-fields.md#enterpriseconfiguration) for details.
-* Fixed a bug where the node would be unable to resolve transaction chains that contain states or contracts that it do not relate to installed CorDapps.
-* Fixed an issue causing flow state, invocation source, and suspension source filters to break in the node GUI.
-* Fixed an issue causing transaction verification to be performed outside of the attachments class loader.
-* Fixed an issue where HA utilities did not log a message stating that the master key is not needed when using a native mode HSM.
-* Fixed an issue where HA utilities did not log information about the freshIdentitiesConfiguration.
-* Fixed an issue where a log message incorrectly stated that a confidential identity key was created.
-* Fixed an issue that could cause a node to hang if shut down using SIGTERM.
-* Fixed an issue where the attachment presence cache contained the attachment contents.
-* Fixed an issue where the Corda Firewall throws an error when retrieving version information.
-* Fixed an issue where the HA utilities created erroneous logs when using confidential identities.
+* We have fixed an issue where the node would be unable to resolve transaction chains that contained states or contracts that it did not relate to installed CorDapps.
+* We have fixed an issue that caused flow state, invocation source, and suspension source filters to break in the node GUI.
+* We have fixed an issue that caused transaction verification to be performed outside of the attachments class loader.
+* We have fixed an issue where HA utilities did not log a message stating that the master key was not needed when using a native mode HSM.
+* We have fixed an issue where HA utilities did not log information about the `freshIdentitiesConfiguration`.
+* We have fixed an issue where a log message incorrectly stated that a confidential identity key was created.
+* We have fixed an issue that could cause a node to hang if shut down using `SIGTERM`.
+* We have fixed an issue where the attachment presence cache contained the attachment contents.
+* We have fixed an issue where the Corda Firewall threw an error when retrieving version information.
+* We have fixed an issue where the HA utilities created erroneous logs when using confidential identities.
 
 ## Known issues
 
 * When using the Oracle 12c database, the JDBC driver can hang when it is blocked by an empty entropy pool at random times.
 
-
 {{< note >}}
-The list above contains known issues specific to Corda Enterprise 4.8. See the release notes for previous Corda Enterprise releases for information about known issues specific to those versions.
+The known issue listed above is specific to Corda Enterprise 4.8. See the release notes for previous Corda Enterprise releases for information about known issues specific to those versions.
 {{< /note >}}
