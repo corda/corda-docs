@@ -19,7 +19,29 @@ title: Release notes
 
 ## Corda 4.8
 
-...
+Welcome to the Corda 4.8 release notes. This release introduces a number of fixes and enhancements.
+
+Just as prior releases have brought with them commitments to wire and API stability, Corda 4.8 comes with those same guarantees.
+
+States and apps valid in Corda 3.0 and above are usable in Corda 4.8.
+
+### Platform version change
+
+The platform version of Corda 4.8 has been bumped up from 9 to 10.
+
+For more information about platform versions, see [Versioning](cordapps/versioning.md).
+
+### Fixes
+
+* Fixed an issue causing transaction verification to be performed outside of the attachments class loader.
+* Clarified inconsistencies in source code comments.
+* Fixed an issue where flows could disable validation, leading to privileges escalation.
+* Fixed an issue where the attachment presence cache contained the attachment contents.
+* Fixed an issue where permissions were failing for StartFlowWithClientId.
+* Fixed an issue where the service loader could leak jar_cache handles.
+* Addressed a security issue in a Corda dependency.
+* Fixed an issue that caused CordaPersistence.transaction to fail to correctly flush.
+
 
 ## Corda 4.7
 
