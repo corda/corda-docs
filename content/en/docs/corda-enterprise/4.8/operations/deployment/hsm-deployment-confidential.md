@@ -223,7 +223,7 @@ The Azure Key Vault configuration file must contain the following configuration:
 
 ```
 path: keyvault_login.p12
-alias: "my-alias"
+tenantId: "my-alias"
 password: "my-password"
 keyVaultURL: "[https:/](https:/)/<mykeyvault>.vault.azure.net/"
 clientId: "a3d72387-egfa-4bc2-9cba-b0b27c63540e"

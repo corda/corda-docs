@@ -165,24 +165,29 @@ The following versions should be used for the required FutureX libraries: 3.1 fo
 
 ## Azure KeyVault
 
-In the `node.conf`, the `cryptoServiceName` needs to be set to “AZURE_KEY_VAULT” and `cryptoServiceConf` should contain the path to the configuration for Azure KeyVault, as shown below.
+There are two methods of authentication when using an Azure Key Vault:
+ - Authentication using certificates.
+ - Authentication using Azure Managed Identities.
+
+### Authentication using certificates
+
+In the `node.conf`, the `cryptoServiceName` needs to be set to "AZURE_KEY_VAULT" and `cryptoServiceConf` should contain the path to the configuration for Azure Key Vault, as shown below.
 
 ```kotlin
 cryptoServiceName: "AZURE_KEY_VAULT"
 cryptoServiceConf: "az_keyvault.conf"
 ```
 
-The configuration file for Azure KeyVault contains the fields listed below. For details refer to the [Azure KeyVault documentation](https://docs.microsoft.com/en-gb/azure/key-vault).
+The configuration file for Azure Key Vault contains the fields listed below. For details refer to the [Azure KeyVault documentation](https://docs.microsoft.com/en-gb/azure/key-vault).
 
 * **path**:
-path to the key store for login. Note that the .pem file that belongs to your service principal needs to be created to pkcs12. One way of doing this is by using openssl: `openssl pkcs12 -export -in /home/username/tmpdav8oje3.pem -out keyvault_login.p12`.
+The path to the key store for login. Note that the `.pem` file that belongs to your service principal must be created in the pkcs12 format. One way of doing this is by using openssl: `openssl pkcs12 -export -in /home/username/tmpdav8oje3.pem -out keyvault_login.p12`.
 
 {{< note >}}
 If a relative path is specified for the pkcs12 key store, it must be relative to the base directory of the running node, firewall or HA Utility.
-
 {{< /note >}}
 
-* **alias**:
+* **tenantId**:
 alias of the key used for login.
 
 * **password**:
@@ -201,14 +206,14 @@ Example configuration file:
 
 ```kotlin
 path: keyvault_login.p12
-alias: "my-alias"
-password: "my-password"
-keyVaultURL: "[https:/](https:/)/<mykeyvault>.vault.azure.net/"
-clientId: "a3d72387-egfa-4bc2-9cba-b0b27c63540e"
-protection: "HARDWARE"
+password: "<password used in the key vault creation>"
+clientId: "<app id from creation of the service principle>"
+tenantId: "45ca2399-b7b3-7869-11ee-564aca9b634e"
+keyVaultURL: "https://<key vault name>.vault.azure.net/"
+protection: "SOFTWARE" # HARDWARE can be specified if using a premium vault
 ```
 
-The drivers directory needs to contain an uber jar, built by the gradle script below.
+The drivers directory must contain a `.jar` file built by the gradle script below.
 
 First copy the following text in to a new file called build.gradle anywhere on your file system.
 Please do not change any of your existing build.gradle files.
@@ -224,12 +229,11 @@ repositories {
 }
 
 dependencies {
-    compile 'com.microsoft.azure:azure-keyvault:1.2.1'
-    compile 'com.microsoft.azure:adal4j:1.6.4'
+    compile 'com.azure:azure-security-keyvault-keys:4.2.3'
+    compile 'com.azure:azure-identity:1.2.0'
 }
 
 shadowJar {
-    relocate 'okhttp3', 'shadow.okhttp3'
     archiveName = 'azure-keyvault-with-deps.jar'
 }
 ```
@@ -250,6 +254,19 @@ This will create a jar called azure-keyvault-with-deps.jar, copy this into the d
 
 Note that okhttp3 needs to be shaded as the latest version of this library will raise an exception on a handle leak which version 1.2.1
 of azure key vault has. For further details see [https://github.com/Azure/azure-sdk-for-java/issues/4879](https://github.com/Azure/azure-sdk-for-java/issues/4879)
+
+### Authentication using Azure Managed Identities
+
+If any of the parameters required for the certificate are not defined, or set to `null`, then the Azure Key Vault will use Azure Managed Identities.
+
+The minimum configuration required for authentication using Azure Managed Identities is:
+
+```
+keyVaultURL="https://tck-test-vault.vault.azure.net
+protection=SOFTWARE
+```
+
+To set up Azure Managed Identities, see the [Microsoft Azure Managed Identities documentation](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview).
 
 ## Securosys Primus X
 

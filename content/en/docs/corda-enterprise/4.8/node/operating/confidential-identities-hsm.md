@@ -30,6 +30,10 @@ When using a confidential identity, the keys are stored in the node database in 
 
 By using an HSM, the confidential identity keys can be stored in the node database in an encrypted form. There are two supported modes for combining HSMs and confidential identities on Corda Enterprise; **wrapped** and **degraded wrapped**. Both of these modes are more secure than using confidential identities without an HSM.
 
+### Native mode
+
+In native mode all key material is stored inside the HSM. In all other modes, some key material is stored on the node.
+
 
 ### Wrapped mode
 
@@ -84,7 +88,7 @@ The `freshIdentitiesConfiguration` field contains the following attributes:
 
 |Attribute|Type|Required|Description|
 |-------------------------|-------------------------|-------------------------|-------------------------|
-|mode|String|Yes|Defines the mode of operation, valid values are: `WRAPPED` or `DEGRADED_WRAPPED`.|
+|mode|String|Yes|Defines the mode of operation, valid values are: `WRAPPED`, `NATIVE`, or `DEGRADED_WRAPPED`.|
 |masterKeyAlias|String|No|Defines an alias for the wrapping key. The default value is `wrapping-key-alias`.|
 |cryptoServiceConfiguration|N/A|Yes|Contains the `cryptoServiceName` and `cryptoServiceConf` attributes.|
 |cryptoServiceName|String|Yes|Defines the type of HSM. Valid values can be found in the [HSM documentation]({{% ref "cryptoservice-configuration.md" %}}).|
@@ -117,6 +121,9 @@ The following table contains the current support and the associated configuratio
 |file-based keystore|`BC_SIMPLE`|not used|`DEGRADED_WRAPPED`|
 |Securosys PrimusX HSM|`PRIMUS_X`|path to the PrimusX configuration file|`WRAPPED`|
 |AWS CloudHSM|`AWS_CLOUD`|path to the AWS CloudHSM configuration file|`WRAPPED`|
+|nCipher | `N_SHIELD` | path to `nshield.conf`| `NATIVE`|
+|Futurex|`FUTUREX`|path to`futurex.conf`|`WRAPPED`|
+|Azure Key Vault|path to `AZURE_KEY_VAULT`|`az_keyvault.conf`|`NATIVE`|
 
 {{< /table >}}
 
