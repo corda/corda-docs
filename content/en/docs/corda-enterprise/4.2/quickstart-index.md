@@ -90,8 +90,6 @@ I want to:
 |[Node folder structure]({{% ref "node-structure.md" %}})|The Corda node folder structure and how to name your node|
 |[Node configuration]({{% ref "corda-configuration-file.md" %}})|A detailed description of the Corda node configuration file with examples|
 |[Deploying a node to a server]({{% ref "deploying-a-node.md" %}})|A step-by-step guide on deploying a Corda node to your own server|
-|[<no title>]({{% ref "azure-vm.md" %}})|A step-by-step guide on creating a Corda Network on Azure|
-|aws-vm|A step-by-step guide on creating a Corda Network on AWS|
 |[Node shell]({{% ref "shell.md" %}})|Guidance on using an embedded command line to control and monitor a node|
 |[Node administration]({{% ref "node-administration.md" %}})|How to monitor a Corda node using an RPC interface|
 |[Node Explorer]({{% ref "node-explorer.md" %}})|A GUI-based tool to view transactional data and transactional history for a node|
@@ -103,13 +101,4 @@ I want to:
 
 ## Add a node to an existing production network
 
-
-{{< table >}}
-
-|Corda Network is a global production network of Corda nodes, operated by the independent
-Corda Network Foundation. You can learn more here: [https://corda.network/participation/index.html](https://corda.network/participation/index.html)|
-|Corda Testnet is a test network, operated for the community by R3. You can learn
-more here: [https://marketplace.r3.com/network/testnet](https://marketplace.r3.com/network/testnet)|
-
-{{< /table >}}
-
+Corda Network is a global production network of Corda nodes, operated by the independent Corda Network Foundation. You can learn more here: [https://corda.network/participation/index.html](https://corda.network/participation/index.html)

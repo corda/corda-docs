@@ -15,6 +15,37 @@ weight: 1
 
 # Corda Enterprise release notes
 
+## Corda Enterprise 4.7.1
+
+Corda Enterprise 4.7.1 is a patch release of Corda Enterprise that introduces fixes to known issues in Corda Enterprise 4.7.
+
+The main new features and enhancements in Corda Enterprise 4.7.1 are listed below:
+
+* [LedgerGraph version 1.2.1](node/operating/ledger-graph.md/).
+* [Archive service version 1.0.1](node/archiving/archiving-setup.md/).
+
+### Upgrade recommendation
+
+As a developer, you should upgrade to the [latest released version of Corda](https://docs.corda.net/docs/corda-enterprise/index.html) as soon as possible. Check the latest Corda Enterprise release notes and upgrade guide [here](https://docs.corda.net/docs/corda-enterprise/release-notes-enterprise.html).
+
+As a node operator, you should upgrade to the [latest released version of Corda](https://docs.corda.net/docs/corda-enterprise/index.html) if the fixed issues listed below are relevant to your work.
+
+### Fixed issues
+
+* A security issue has been fixed that affects notary systems that use the JPA notary implementation in an HA configuration, and when the notary backing database has been set up using the Corda database management tool. The new version of the Corda database management tool must be re-run for the fix to take effect.
+* We have fixed several issues that caused memory leaks. As a result, we have added a new node configuration field - `enableURLConnectionCache` - and we have modified the `attachmentClassLoaderCacheSize` node configuration field. See the [node configuration fields page](node/setup/corda-configuration-fields.md#enterpriseconfiguration) for details.
+* We have fixed an issue where the HA utilities tool does not write the correct log file.
+* We have fixed an issue that prevented the HA utilities tool loading third-party HSM `.jar` files from the `drivers` directory when the `generate-internal-tunnel-ssl-keystores` command is run.
+* The `startFlowWithClientId` now uses the same permissioning as the `startFlow` method.
+* Corda Enterprise 4.6.2 now supports version 3.2.1 of the AWS CloudHSM client library.
+* We have fixed an issue that could cause flow execution to hang.
+* We have fixed an issue that caused the Corda Firewall to throw an error when version information was requested.
+* We have fixed an issue where migrating from Corda Enterprise 4.5 to Corda Enterprise 4.6 could cause some flows to experience a retry loop.
+* The `attachmentPresenceCache` has been removed. The functionality is duplicated in the `attachmentContent` cache in the `NodeAttachmentService`.
+* We have fixed an issue that could cause a node to hang at shutdown.
+* We have fixed an issue where `CordaPersistence.transaction` did not flush properly and another flush had to be added in order to complete the transaction.
+
+
 ## Corda Enterprise 4.7 release overview
 
 This release introduces a number of new features and enhancements, and fixes for known issues from previous releases.
@@ -78,15 +109,15 @@ Corda Enterprise 4.7 comes with two new management consoles:
 * The **Flow management console** allows you to see the state of the flows running on a node and perform some operations on them. For more information, see [Flow management console](node/node-flow-management-console.md).
 * The **Node management console** allows you to see information about a node and perform some operations on it. For more information, see [Node management console](node/management-console/_index.md).
 
-They both run as part of the CENM [Gateway service](../../cenm/1.5/gateway-service.md).
+They both run as part of the [Gateway Service](node/gateway-service.md).
 
 ### Certificate rotation
 
-Corda Enterprise 4.7 introduces a capability for reissuing node legal identity keys and certificates, allowing for re-registration of a node (including a notary node) with a new certificate in the Network Map in [Corda Enterprise Network Manager](../../cenm/1.5/_index.md). For more information about this feature, contact [R3 support](https://www.r3.com/support/).
+Corda Enterprise 4.7 introduces a capability for reissuing node legal identity keys and certificates, allowing for re-registration of a node (including a notary node) with a new certificate in the Network Map in [Corda Enterprise Network Manager](../../cenm/1.5/_index.md). For more information about this feature, contact your R3 account manager.
 
 ### Other changes and improvements
 
-* **Single sign-on for Azure AD.** You can now operate a single sign on (SSO) set-up between Corda services and Azure AD, with a [simple configuration](../../cenm/1.5/azure-ad-sso.md) to both your Azure AD and Corda Auth services.
+* **Single sign-on for Azure AD.** You can now operate a single sign-on (SSO) set-up between Corda services and Azure AD, with a [simple configuration](node/azure-ad-sso/) to both your Azure AD and Corda Auth services.
 * **HSM integration support.** Corda Enterprise now supports users to integrate unsupported HSMs with their Corda Enterprise instance. This release includes a sample Java implementation to be used as an example, and a testing suite that can be used to test an implementation before deployment. For guidance on writing an HSM integration, see [HSM documentation](operations/deployment/hsm-integration.md/).
 * **Ability to store confidential identity keys in HSMs.** Corda Enterprise now provides support for storing the keys associated with confidential identities in nCipher, Futurex, and Azure Key Vault HSMs. nCipher and Azure Key Vault HSMs support native use of confidential identity keys, and Futurex HSMs support the wrapped key mode. For more information on configuring these HSMs to store confidential identity keys, see the [HSM documentation](operations/deployment/hsm-deployment-confidential.md#using-an-hsm-with-confidential-identities/).
 * **HSM APIs.** Corda Enterprise 4.7 introduces an HSM library with its own API that external tooling developers can use to expand Corda Enterprise HSM support.

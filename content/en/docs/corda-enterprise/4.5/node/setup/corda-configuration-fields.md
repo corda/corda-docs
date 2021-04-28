@@ -289,9 +289,17 @@ Allows fine-grained controls of various features only available in the enterpris
       * Absolute path to HSM provider specific configuration which will contain everything necessary to establish connection with HSM.
       * *Default:* Not present so local file system is used.
 * `auditService`
-  * Allows for configuration of audit services within the node
+  * Allows for configuration of audit services within the node.
     * `eventsToRecord` defines which types of events will be recorded by the audit service - currently supported types are `{NONE, RPC, ALL}`
     * *Default:* `NONE`
+* `attachmentClassLoaderCacheSize`
+  * This field can be used to configure the attachments class loader cache size - this is the number of attachment class loaders per cache. This cache caches the class loaders used to store the transaction attachments.
+  * *Default:* The default value is `32` attachment class loaders per cache.
+  * **IMPORTANT: The default value must not be changed unless explicitly advised by R3 support!**
+* `enableURLConnectionCache`
+  * Enables URL connection caching. It is set to `false` by default and it is highly recommended to keep it that way.
+  * When caching is enabled (set to `true`), `.jar` files will be cached, which can cause leaking of file handles. This is caused by the way the `ServiceLoader` handles `.jar` files that are children of the `URLClassLoader`. For more information, see [here](https://bugs.java.com/bugdatabase/view_bug.do?bug_id=8156014).
+    * *Default:* `false`
 
 ## `tuning`
 
@@ -431,7 +439,7 @@ It's advisable to copy any required JAR files to the 'drivers' subdirectory of t
 ## `jmxMonitoringHttpPort`
 
 If set, will enable JMX metrics reporting via the Jolokia HTTP/JSON agent on the corresponding port.
-Default Jolokia access url is <http://127.0.0.1:port/jolokia/>
+Default Jolokia access url is `http://127.0.0.1:port/jolokia/`.
 
 *Default:* not defined
 

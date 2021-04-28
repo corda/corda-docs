@@ -1,6 +1,4 @@
 ---
-aliases:
-- /release-notes.html
 date: '2020-01-08T09:59:25Z'
 menu:
   cenm-1-5:
@@ -8,6 +6,7 @@ menu:
     parent: cenm-1-5-cenm-releases
     weight: 80
 tags:
+- cenm
 - release
 - notes
 title: Release notes
@@ -15,6 +14,63 @@ title: Release notes
 
 
 # Corda Enterprise Network Manager release notes
+
+## Corda Enterprise Network Manager 1.5.1
+
+CENM 1.5.1 introduces fixes to known issues in CENM 1.5.
+
+### Enhancements
+
+* CENM 1.5.1 now supports [Oracle Database 19c](https://docs.oracle.com/en/database/oracle/oracle-database/19/index.html).
+* We have bumped the supported version of the AWS CloudHSM client library from 3.0.0 to 3.2.1.
+* Configuration passwords are now hidden in both **CODE VIEW** and **FORM VIEW** modes in the [CENM management console](cenm-console.md) **CONFIGURATION**.
+
+### Fixed issues
+
+* We have fixed an issue where some certificate revocation reasons supported by the CENM Command-line Interface Tool (CLI) were not supported by the Identity Manager service. All CLI revocation reasons are now supported by the Identity Manager service.
+* We have fixed an issue where service configurations were sometimes recorded in the logs by mistake. This problem was also present in CENM 1.3 and 1.4 and the fix has been ported back to these versions as well.
+* We have fixed an issue where the signing CRL did not give sufficient details about the revocation after a revocation submission request was made using the CRR tool, and as a result the user had to inspect the Identity Manager Service logs for more information. The revoking node now shows more details, for example:
+  ```
+  Successfully signed request. The following certificates were added to the CRL:
+  DN: O=PartyB, L=Chicago, C=US, Serial Number: 92919584395295172078852936608980933912
+  ```
+* We have fixed an issue where the signing request status command in the CENM Command-line Interface Tool (CLI) did not work for asynchronous signing.
+* We have fixed an issue where the Network Map Service failed to start with an EC public key used in the `packageOwnership` configuration in the network parameters, and an `Unrecognised algorithm` error was thrown.
+* We have fixed an issue where, if a CSR was rejected with a [rejection code](workflow.md#certificate-signing-request-rejection-reasons) between 1 and 11 via the JIRA workflow, the node notification would be incorrect - the `Additional remark` field output would contain technical data instead of a description of the rejection reason.
+
+#### Fixed issues specific to the CENM management console
+
+We have also fixed the following issues specific to the [CENM management console](cenm-console.md):
+
+* We have fixed an issue where removing scheduled times in **FORM VIEW** mode in the **SIGNER** tab of **CONFIGURATION** showed configuration details in **CODE VIEW** mode, which might result is Signing Service configuration failures.
+* We have fixed an issue where the **Remove Edits** option in **CONFIGURATION** did not work for a number of fields for all configuration types.
+* We have fixed an issue where the database properties field **AdditionalProperties** did not show `connectionInitSql` in **FORM VIEW** mode.
+* We have fixed an issue where the SSL dropdown list did not shown in the **IDENTITY MANAGER** tab of **CONFIGURATION** in **FORM VIEW** mode.
+* We have fixed an issue where the UI would freeze indefinitely with a "Deployment failure" error if an invalid configuration was deployed due to incorrect database credentials or missing plug-in details.
+* We have fixed an issue where boolean parameters for the **ADMIN LISTENER** were not properly saved or set in **FORM VIEW** mode for Network Map configurations.
+* We have fixed an issue with the `Removing signing key` option in the **SIGNER** tab of **CONFIGURATION** in **FORM VIEW** mode, which might prevent the user from confirming whether the signing key was actually removed or not.
+* We have fixed an issue with setting scheduled signing time in **FORM VIEW** mode.
+* We have fixed an issue where editing or renaming the alias for either issuance or revocation workflow type in the **IDENTITY MANAGER** tab of **CONFIGURATION** would result in complete removal of the workflow in **FORM VIEW** mode.
+* We have fixed an issue where the CENM management console would fail to show a new zone after initial setup.
+* We have fixed an issue where network parameters could not be set and flag day dates would default to the current time.
+* We have fixed an issue where the **Update Config** remained enabled even without a configuration value change.
+* We have fixed an issue where the CENM management console crashed and hung when attempting to deploy a valid configuration in **CODE VIEW** mode.
+* We have fixed an issue where the `RequestID` and `Certificate Signing Request ID` fields on the **CRR/CRL Status** tab showed the same data.
+* We have fixed an issue where the details for `Auth Service configuration`, which existed in the back-end configuration, were not shown for any of the configuration types in any of the two views - **CODE VIEW** and **FORM VIEW**.
+* We have fixed an issue where removing an HSM Library from the **SIGNER** configuration in **FORM VIEW** mode resulted in a blank screen, which prompted the user to refresh the entire application.
+* We have fixed an issue where the Angel Service did not get restored to the last working configuration and might stop polling when the SSL Keystore/TrustStore files were not found.
+* We have fixed an issue where there was no indication shown when the user token was expired.
+* We have fixed an issue where the theme, language, and font size in the **CONFIGURATION** tab were not saved when the user switched to a different tab.
+* We have fixed an issue where changes in **CODE VIEW** mode were not reflected in **FORM VIEW** mode when the user switched over.
+* We have fixed an issue where clicking **Cancel Flag Day** before the flag day was run would fail to cancel the flag day.
+
+### Known issues
+
+* There is still an option to view configuration passwords in **FORM VIEW** mode in the [CENM management console](cenm-console.md) **CONFIGURATION**.
+
+{{< note >}}
+The known issue listed above is specific to CENM 1.5.1. See the release notes for previous CENM releases further down on this page for information about known issues specific to those versions.
+{{< /note >}}
 
 ## Corda Enterprise Network Manager 1.5
 
@@ -34,7 +90,7 @@ The [CENM management console](cenm-console.md) is a new CENM web UI that enables
 
 #### Single sign-on for Azure AD
 
-CENM 1.5 introduces support for Azure Active Directory (AAD) as a Single sign-on (SSO) for the CENM [Auth Service](auth-service.md), which supports full Role-Based Access Control (RBAC) and provides a web-based management interface for system administrators to create and manage user groups and entitlements. As a result, you can now operate a SSO set-up between Corda services and Azure AD, with a [simple configuration](azure-ad-sso.md) to both your Azure AD and Corda Auth services.
+CENM 1.5 introduces support for Azure Active Directory (AAD) as a single sign-on (SSO) for the CENM [Auth Service](../../corda-enterprise/4.7/node/auth-service.md), which supports full Role-Based Access Control (RBAC) and provides a web-based management interface for system administrators to create and manage user groups and entitlements. As a result, you can now operate an SSO set-up between Corda services and Azure AD, with a [simple configuration](../../corda-enterprise/4.7/node/azure-ad-sso/) to both your Azure AD and Corda Auth services.
 
 #### Certificate rotation: ability to reissue node legal identity keys and certificates
 
@@ -44,7 +100,7 @@ Corda Enterprise 4.7 introduces a capability for reissuing node legal identity k
 The introduction of this functionality may require changes to your custom Identity Manager Workflow Plugins, regardless of using certificate reissuance functionality in your system. Make sure to check the [Upgrading Corda Enterprise Network Manager](upgrade-notes.md) page.
 {{< /warning >}}
 
-For more information about this feature, contact [R3 support](https://www.r3.com/support/).
+For more information about this feature, contact your R3 account manager.
 
 ### Fixed issues
 
@@ -196,18 +252,18 @@ See the [CENM deployment](aws-deployment-guide.md/) section for more information
 #### Other changes
 * We have added support for PostgreSQL 10.10 and 11.5 (JDBC 42.2.8), as noted in [CENM Databases](database-set-up.md#supported-databases) and [CENM support matrix](cenm-support-matrix.md#cenm-databases).
 * A `non-ca-plugin.jar` has been added to `signing-service-plugins` in Artifactory.
-* We have renamed the FARM Service, introduced in CENM 1.3, to [Gateway Service](gateway-service.md). As a result, if you are [upgrading](upgrade-notes.md) from CENM 1.3 to CENM 1.4, the FARM Service `.jar` file used in CENM 1.3 should be replaced with the Gateway Service `.jar` file used in CENM 1.4.
+* We have renamed the FARM Service, introduced in CENM 1.3, to [Gateway Service](../../corda-enterprise/4.7/node/gateway-service.md). As a result, if you are [upgrading](upgrade-notes.md) from CENM 1.3 to CENM 1.4, the FARM Service `.jar` file used in CENM 1.3 should be replaced with the Gateway Service `.jar` file used in CENM 1.4.
 * In CENM 1.4 we have changed the way `subZoneID` is set in Signing Service configurations - see the [CENM upgrade guide](upgrade-notes.md#change-in-setting-subzoneid-in-signing-service-configurations) for more details.
 
 ### Fixed issues
 
-* We have fixed an issue where the [Auth service](auth-service.md) could not start during database schema initialisation for PostgreSQL.
+* We have fixed an issue where the [Auth service](../../corda-enterprise/4.7/node/auth-service.md) could not start during database schema initialisation for PostgreSQL.
 * We have fixed an issue where the Signing Service failed to start, following setup without the SMR (Signable Material Retriever) Service, producing a `serviceLocations` configuration error. Note that the SMR Service has been removed in CENM 1.4 and its functionality has been merged with the Signing Service - see the [New features and enhancements](#new-features-and-enhancements) section above for more details.
 * We have fixed an issue where the `azure-keyvault-with-deps.jar` and `out.pkcs12` files were not copied to the `pki-pod` and PKI generation failed as a result.
 * We have fixed an issue where HSM passwords were not hidden in service logs.
 * We have fixed an issue where the Zone Service removed the `mode` field from the Signing Service's configuration with Utimaco and then failed to return this field to the Angel Service.
 * Commands for the Identity Manager Service and the Network Map Service, which previously returned no information, now indicate when no data is available.
-* We have fixed an issue where [Gateway Service](gateway-service.md) (previously called FARM Service in CENM 1.2) logs were not available in the `logs-farm` container.
+* We have fixed an issue where [Gateway Service](../../corda-enterprise/4.7/node/gateway-service.md) (previously called FARM Service in CENM 1.3) logs were not available in the `logs-farm` container.
 * We have fixed an issue where submitting a CRR request with CENM Command-line Interface Tool failed with the unexpected error `method parameters invalid`.
 * When using the Signing Service to manually perform signing tasks with multiple accounts for each task and the option to authenticate `ALL` users is selected, the Signing Service now indicates which user should enter their password.
 with multiple accounts for each task The Signing Service now prompts a specific user to login in while all are being authenticated.
@@ -482,7 +538,7 @@ Network Manager version 1.0. The CENM can be used to operate a bespoke Corda net
 for an entity to be in complete control of the consensus rules, identity, and deployment topology exists.
 
 This is the same software used to operate the global Corda Network on behalf of the Corda
-Network Foundation since its launch in 2018 and the R3 TestNet before it.
+Network Foundation since its launch in 2018.
 
 Please note, whilst this is the first public release of the Corda Enterprise Network Manager, these
 release notes and any associated documentation should be read from the perspective of those coming

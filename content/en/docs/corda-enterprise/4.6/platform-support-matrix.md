@@ -20,7 +20,7 @@ Production use of Corda Enterprise 4.6 is only supported on Linux OS, see detail
 
 ## JDK support
 
-Corda Enterprise 4.5 has been tested and verified to work with **Oracle JDK 8 JVM 8u251** and **Azul Zulu Enterprise 8u252**, for Azure deployment downloadable from
+Corda Enterprise 4.6 has been tested and verified to work with **Oracle JDK 8 JVM 8u251** and **Azul Zulu Enterprise 8u252**, for Azure deployment downloadable from
 [Azul Systems](https://www.azul.com/downloads/azure-only/zulu/).
 
 Other distributions of the [OpenJDK](https://openjdk.java.net/) are not officially supported but should be compatible with Corda Enterprise 4.6.
@@ -108,6 +108,6 @@ for your deployment needs.
 |                               | * Driver version 1.8.2     | * Driver version 1.8.2     | * Driver version 1.8.2     | * Driver version 1.8.2      |
 | nCipher nShield Connect       | * Firmware version 12.50.11| * Firmware version 12.50.11| Not supported              | * Firmware version 12.50.11 |
 |                               | * Driver version 12.60.2   | * Driver version 12.60.2   |                            | * Driver version 12.60.2    |
-| AWS CloudHSM                  | * Driver version 3.0.0     | * Driver version 3.0.0     | * Driver version 3.0.0     | * Driver version 3.0.0      |
+| AWS CloudHSM                  | * Driver version 3.2.1     | * Driver version 3.2.1     | * Driver version 3.2.1     | * Driver version 3.2.1      |
 
 {{< /table >}}
