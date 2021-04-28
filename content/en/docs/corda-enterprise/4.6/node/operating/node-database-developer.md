@@ -192,7 +192,7 @@ The following updates are required to a nodes filesystem configuration:
 
 * The Corda node configuration file `node.conf` needs to contain JDBC connection properties in the `dataSourceProperties` entry
 and other database properties (passed to nodes’ JPA persistence provider or schema creation/upgrade flag) in the `database` entry.
-For development convenience the properties are specified in the [deployNodes Cordform task](../../testing.md#testing-cordform-ref) task.
+For development convenience the properties are specified in the `deployNodes` Cordform task.
 
 ```none
 dataSourceProperties = {
@@ -575,6 +575,12 @@ DROP TABLE my_user.PK_HASH_TO_EXT_ID_MAP;
 DROP TABLE my_user.STATE_PARTY;
 DROP VIEW my_user.V_PKEY_HASH_EX_ID_MAP;
 DROP SEQUENCE my_user.HIBERNATE_SEQUENCE;
+DROP TABLE my_user.NODE_CORDAPP_METADATA;
+DROP TABLE my_user.NODE_CORDAPP_SIGNERS;
+DROP TABLE my_user.NODE_METERING_COMMANDS;
+DROP TABLE my_user.NODE_METERING_CORDAPPS;
+DROP TABLE my_user.NODE_METERING_DATA;
+DROP TABLE my_user.NODE_RPC_AUDIT_DATA;
 ```
 
 

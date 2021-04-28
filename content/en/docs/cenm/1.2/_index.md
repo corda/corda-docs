@@ -4,7 +4,7 @@ aliases:
 date: '2020-01-08T09:59:25Z'
 menu:
   versions:
-    weight: 980
+    weight: 320
 project: cenm
 section_menu: cenm-1-2
 title: CENM 1.2
@@ -51,7 +51,7 @@ CENM Releases
 * [Release notes](release-notes.md)
 * [Upgrading Corda Enterprise Network Manager](upgrade-notes.md)
 * [Changelog](changelog.md)
-* [Legal notice](legal-info.md)
+* [Legal notice](legal-info-1.2.3.md)
 
 
 

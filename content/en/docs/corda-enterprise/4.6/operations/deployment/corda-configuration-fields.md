@@ -30,13 +30,11 @@ Nodes can use this configuration option to advertise HA endpoints and aliases to
 
 Optionally specify how much memory should be used to cache attachment contents in memory.
 
-*Default:* 10MB
+*Default:* 8 MB plus 5% of all heap memory above 300MB.
 
 ## `attachmentCacheBound`
 
-Optionally specify how many attachments should be cached locally. Note that this includes only the key and metadata, the content is cached separately and can be loaded lazily.
-
-*Default:* 1024
+This parameter is not used and if specified it is ignored.
 
 ## `blacklistedAttachmentSigningKeys`
 
@@ -274,8 +272,8 @@ Allows fine-grained controls of various features only available in the enterpris
     * Absolute path to HSM provider specific configuration which will contain everything necessary to establish connection with HSM.
     * *Default:* Not present so local file system is used.
 * `attachmentClassLoaderCacheSize`
-  * This field can be used to configure the attachments class loader cache size - this is the number of attachments per cache. This cache caches the class loaders used to store the transaction attachments.
-  * *Default:* The default value is `256` attachments per cache.
+  * This field can be used to configure the attachments class loader cache size - this is the number of attachment class loaders per cache. This cache caches the class loaders used to store the transaction attachments.
+  * *Default:* The default value is `32` attachment class loaders per cache.
   * **IMPORTANT: The default value must not be changed unless explicitly advised by R3 support!**
 * `auditService`
   * Allows for configuration of audit services within the node
@@ -316,6 +314,10 @@ Allows fine-grained controls of various features only available in the enterpris
 * `tlsKeyAlias`
   * The alias of the TLS key. It can consist of up to 100 lowercase alphanumeric characters and the hyphen (-).
   * *Default:* `cordaclienttls`
+* `enableURLConnectionCache`
+  * Enables URL connection caching. It is set to `false` by default and it is highly recommended to keep it that way.
+  * When caching is enabled (set to `true`), `.jar` files will be cached, which can cause leaking of file handles. This is caused by the way the `ServiceLoader` handles `.jar` files that are children of the `URLClassLoader`. For more information, see [here](https://bugs.java.com/bugdatabase/view_bug.do?bug_id=8156014).
+    * *Default:* `false`
 
 ## Tuning
 
@@ -453,7 +455,7 @@ It's advisable to copy any required JAR files to the 'drivers' subdirectory of t
 ## `jmxMonitoringHttpPort`
 
 If set, will enable JMX metrics reporting via the Jolokia HTTP/JSON agent on the corresponding port.
-Default Jolokia access url is <http://127.0.0.1:port/jolokia/>
+Default Jolokia access url is `http://127.0.0.1:port/jolokia/`.
 
 *Default:* not defined
 

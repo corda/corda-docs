@@ -18,9 +18,44 @@ weight: 10
 
 # Corda Enterprise Release notes
 
+## Corda Enterprise 4.4.6
+
+Corda Enterprise 4.4.6 is a patch release of Corda Enterprise that fixes a security vulnerability in Corda Enterprise 4.4.5.
+
+### Upgrade recommendation
+
+As a developer, you should upgrade to the [latest released version of Corda](https://docs.corda.net/docs/corda-enterprise/index.html) as soon as possible. Check the latest Corda Enterprise release notes and upgrade guide [here](https://docs.corda.net/docs/corda-enterprise/release-notes-enterprise.html).
+
+As a node operator, you should upgrade to the [latest released version of Corda](https://docs.corda.net/docs/corda-enterprise/index.html) if the fixed issues listed below are relevant to your work.
+
+### Fixed issues
+
+A security issue has been fixed that affects notary systems that use the JPA notary implementation in an HA configuration, and when the notary backing database has been set up using the Corda database management tool. The new version of the Corda database management tool must be re-run for the fix to take effect.
+
+
+## Corda Enterprise 4.4.5
+
+Corda Enterprise 4.4.5 is a patch release of Corda Enterprise that introduces fixes to known issues in Corda Enterprise 4.4.4.
+
+### Upgrade recommendation
+
+As a developer, you should upgrade to the [latest released version of Corda](https://docs.corda.net/docs/corda-enterprise/index.html) as soon as possible. Check the latest Corda Enterprise release notes and upgrade guide [here](https://docs.corda.net/docs/corda-enterprise/release-notes-enterprise.html).
+
+As a node operator, you should upgrade to the [latest released version of Corda](https://docs.corda.net/docs/corda-enterprise/index.html) if the fixed issues listed below are relevant to your work.
+
+### Fixed issues
+
+* The `attachmentPresenceCache` has been removed. The functionality is duplicated in the `attachmentContent` cache in the `NodeAttachmentService`.
+* We have fixed an issue that caused the Corda Firewall to throw an error when version information was requested.
+* We have fixed an issue that caused the float to not reactivate after a bridge restart.
+* We have fixed an issue that could cause a float to handle two connection attempts from the same bridge simultaneously.
+* We have fixed an issue that misinterpreted an internal error as a bad certificate error, preventing future connection attempts.
+* We have fixed an issue that can cause failure at node startup.
+* We have fixed several issues that caused memory leaks. As a result, we have added two new node configuration fields - `attachmentClassLoaderCacheSize` and `enableURLConnectionCache`. See the [node configuration fields page](node/setup/corda-configuration-file.md) for details.
+
 ## Corda Enterprise 4.4.4
 
-Corda Enterprise 4.4.4 is a patch release of Corda Enterprise that introduces fixes to known issues in Corda Enterprise 4.4.
+Corda Enterprise 4.4.4 is a patch release of Corda Enterprise that introduces fixes to known issues in Corda Enterprise 4.4.3.
 
 ### Upgrade recommendation
 
@@ -59,6 +94,7 @@ As a node operator, you should upgrade to the [latest released version of Corda]
 * Fixed an issue where deobfuscation options were missing from [HA Utilities](ha-utilities.md) in `generate-internal-tunnel-ssl-keystores` mode.
 * Some Corda Enterprise 4.5 features have been backported to allow AKS deployment in Corda Enterprise 4.4.3.
 * Fixed `vaultService.updates.subscribe` errors when running inside `STATE_MACHINE_STARTED` event handler.
+* In the `graphiteOptions` section of `node.conf`, `sampleInvervallSeconds` has been changed to `sampleIntervalSeconds`.
 
 
 ## Corda Enterprise 4.4.2

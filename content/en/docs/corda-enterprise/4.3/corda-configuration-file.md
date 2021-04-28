@@ -160,13 +160,11 @@ The available configuration fields are listed below in alphabetic order.
 
   Optionally specify how much memory should be used to cache attachment contents in memory.
 
-  *Default:* 10MB
+  *Default:* 8 MB plus 5% of all heap memory above 300MB.
 
 ### `attachmentCacheBound`
 
-  Optionally specify how many attachments should be cached locally. Note that this includes only the key and metadata, the content is cached separately and can be loaded lazily.
-
-  *Default:* 1024
+  This parameter is not used and if specified it is ignored.
 
 ### `blacklistedAttachmentSigningKeys`
 
@@ -450,6 +448,19 @@ To add additional data source properties (for a specific JDBC driver) use the `d
         Absolute path to HSM provider specific configuration which will contain everything necessary to establish connection with HSM.
 
     *Default* Not present so local file system is used.
+
+* `attachmentClassLoaderCacheSize`
+    This field can be used to configure the attachments class loader cache size - this is the number of attachment class loaders per cache. This cache caches the class loaders used to store the transaction attachments.
+
+    *Default:* The default value is `32` attachment class loaders per cache.
+
+    **IMPORTANT:** The default value must not be changed unless explicitly advised by R3 support!
+
+* `enableURLConnectionCache`
+    Enables URL connection caching. It is set to `false` by default and it is highly recommended to keep it that way.
+    When caching is enabled (set to `true`), `.jar` files will be cached, which can cause leaking of file handles. This is caused by the way the `ServiceLoader` handles `.jar` files that are children of the `URLClassLoader`. For more information, see [here](https://bugs.java.com/bugdatabase/view_bug.do?bug_id=8156014).
+
+    *Default:* `false`
 
 ### `tuning`
 

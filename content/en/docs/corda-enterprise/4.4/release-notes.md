@@ -91,7 +91,9 @@ Some of your existing integration tests might implicitly be relying on the prese
 
 Given the addition of new APIs, the platform version of Corda 4.4 has been bumped up from 5 to 6. This is to prevent CorDapps that use it being deployed onto nodes unable to host them. Note that the minimum platform version has not been changed - this means that older Corda nodes can still interoperate with Corda 4.4 nodes. Since the APIs added do not affect the wire protocol or have other zone-level implications, applications can take advantage of these new platform version 6 features even if the Corda 4.4 node is running on a network whose minimum platform version is 4.
 
-For more information on platform version, please see versioning. For more details on upgrading a CorDapp to use platform version 5, please see [Upgrading CorDapps to newer Platform Versions](app-upgrade-notes.md).
+For more information on platform version, please see [Versioning](../../corda-os/4.4/versioning.md).
+
+For more details on upgrading a CorDapp to use platform version 5, please see [Upgrading CorDapps to newer Platform Versions](app-upgrade-notes.md).
 
 
 ### Known Issues
@@ -456,7 +458,6 @@ As such, we recommend you upgrade from Corda 4.0 to Corda 4.1 as soon possible.
 * Docs: build the docs page needs updating [[CORDA-2808](https://r3-cev.atlassian.net/browse/CORDA-2808)]
 * Don’t retry database transaction in abstract node start [[CORDA-2807](https://r3-cev.atlassian.net/browse/CORDA-2807)]
 * Upgrade Corda Core to use Java Persistence API 2.2 [[CORDA-2804](https://r3-cev.atlassian.net/browse/CORDA-2804)]
-* Network map stopped updating on Testnet staging notary [[CORDA-2803](https://r3-cev.atlassian.net/browse/CORDA-2803)]
 * Improve test reliability by eliminating fixed-duration Thread.sleeps [[CORDA-2802](https://r3-cev.atlassian.net/browse/CORDA-2802)]
 * Not handled exception when certificates directory is missing [[CORDA-2786](https://r3-cev.atlassian.net/browse/CORDA-2786)]
 * Unable to run FinalityFlow if the initiating app has `targetPlatformVersion=4` and the recipient is using the old version [[CORDA-2784](https://r3-cev.atlassian.net/browse/CORDA-2784)]
@@ -519,7 +520,6 @@ As such, we recommend you upgrade from Corda 4.0 to Corda 4.1 as soon possible.
 * Database connection pools leaking memory on every checkpoint [[CORDA-2646](https://r3-cev.atlassian.net/browse/CORDA-2646)]
 * Exception swallowed when querying vault via RPC with bad page spec [[CORDA-2645](https://r3-cev.atlassian.net/browse/CORDA-2645)]
 * Applying CordFormation and Cordapp Gradle plugins together includes Jolokia into the Cordapp. [[CORDA-2642](https://r3-cev.atlassian.net/browse/CORDA-2642)]
-* Wrong folder ownership while trying to connect to Testnet using  RC* docker image [[CORDA-2641](https://r3-cev.atlassian.net/browse/CORDA-2641)]
 * Provide a better error message on an incompatible implicit contract upgrade [[CORDA-2633](https://r3-cev.atlassian.net/browse/CORDA-2633)]
 * `uploadAttachment` via shell can fail with unhelpful message if the result of the command is unsuccessful [[CORDA-2632](https://r3-cev.atlassian.net/browse/CORDA-2632)]
 * Provide a better error msg when the notary type is misconfigured on the net params [[CORDA-2629](https://r3-cev.atlassian.net/browse/CORDA-2629)]
@@ -595,7 +595,7 @@ it can’t hurt to read the instructions anyway.
 
 Additionally, be aware that the data model improvements are changes to the Corda consensus rules. To use
 apps that benefit from them, *all* nodes in a compatibility zone must be upgraded and the zone must be
-enforcing that upgrade. This may take time in large zones like the testnet. Please take this into
+enforcing that upgrade. This may take time in large zones. Please take this into
 account for your own schedule planning.
 
 

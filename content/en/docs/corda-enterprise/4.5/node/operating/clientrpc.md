@@ -146,7 +146,7 @@ By default, RPC users are not allowed to perform any RPC operations.
 
 ### Granting flow permissions
 
-In order to provide an RPC user with the permission to start a specific flow, the following syntax can be used: `StartFlow.<fully qualified flow name>` , e.g.:
+To grant an RPC user permission to start a specific flow, use the syntax `StartFlow.<fully qualified flow name>`, and the listed `InvokeRpc` permissions, as shown in the following example:
 
 ```groovy
 rpcUsers=[
@@ -154,6 +154,10 @@ rpcUsers=[
         username=exampleUser
         password=examplePass
         permissions=[
+            "InvokeRpc.nodeInfo",
+            "InvokeRpc.registeredFlows",
+            "InvokeRpc.partiesFromName",
+            "InvokeRpc.wellKnownPartyFromX500Name",
             "StartFlow.net.corda.flows.ExampleFlow1",
             "StartFlow.net.corda.flows.ExampleFlow2"
         ]
@@ -162,7 +166,7 @@ rpcUsers=[
 ]
 ```
 
-In order to provide an RPC user with the permission to start any flow, the following syntax can be used: `InvokeRpc.startFlow`, e.g.:
+To grant an RPC user permission to start any flow, use the syntax `InvokeRpc.startFlow`, `InvokeRpc.startTrackedFlowDynamic`, and the listed `InvokeRpc` permissions, as shown in the following example:
 
 ```groovy
 rpcUsers=[
@@ -170,7 +174,12 @@ rpcUsers=[
         username=exampleUser
         password=examplePass
         permissions=[
-            "InvokeRpc.startFlow"
+            "InvokeRpc.nodeInfo",
+            "InvokeRpc.registeredFlows",
+            "InvokeRpc.partiesFromName",
+            "InvokeRpc.wellKnownPartyFromX500Name",
+            "InvokeRpc.startFlow",
+            "InvokeRpc.startTrackedFlowDynamic"
         ]
     },
     ...
@@ -247,6 +256,19 @@ Syntax `InvokeRpc:com.fully.qualified.package.Alpha#READ_ONLY` will grant permis
 {{% note %}}
 Permission strings are case-insensitive.
 {{% /note %}}
+
+### Fixing permissions
+
+If an RPC user tries to perform an RPC operation that they do not have permission for, they will see an error like this:
+
+```
+User not authorized to perform RPC call public abstract net.corda.core.node.services.Vault$Page net.corda.core.messaging.CordaRPCOps.vaultQueryByWithPagingSpec(java.lang.Class,net.corda.core.node.services.vault.QueryCriteria,net.corda.core.node.services.vault.PageSpecification) with target []
+```
+
+To fix this, you must grant them permissions based on the method name: `InvokeRpc.<method name>`, where `<method name>` is the method name of the `CordaRPCOps` interface.
+
+In this example, the method name is `vaultQueryByWithPagingSpec`, so `InvokeRpc.vaultQueryByWithPagingSpec` must be added to the RPC user's `permissions`.
+
 
 ### Granting all permissions
 

@@ -16,6 +16,51 @@ weight: 1
 
 # Corda Enterprise release notes
 
+## Corda Enterprise 4.6.3
+
+Corda Enterprise 4.6.3 is a patch release of Corda Enterprise that fixes a security vulnerability in Corda Enterprise 4.6.2.
+
+### Upgrade recommendation
+
+As a developer, you should upgrade to the [latest released version of Corda](https://docs.corda.net/docs/corda-enterprise/index.html) as soon as possible. Check the latest Corda Enterprise release notes and upgrade guide [here](https://docs.corda.net/docs/corda-enterprise/release-notes-enterprise.html).
+
+As a node operator, you should upgrade to the [latest released version of Corda](https://docs.corda.net/docs/corda-enterprise/index.html) if the fixed issues listed below are relevant to your work.
+
+### Fixed issues
+
+A security issue has been fixed that affects notary systems that use the JPA notary implementation in an HA configuration, and when the notary backing database has been set up using the Corda database management tool. The new version of the Corda database management tool must be re-run for the fix to take effect.
+
+
+## Corda Enterprise 4.6.2
+
+Corda Enterprise 4.6.2 is a patch release of Corda Enterprise that introduces fixes to known issues in Corda Enterprise 4.6.1
+
+### Upgrade recommendation
+
+As a developer, you should upgrade to the [latest released version of Corda](https://docs.corda.net/docs/corda-enterprise/index.html) as soon as possible. Check the latest Corda Enterprise release notes and upgrade guide [here](https://docs.corda.net/docs/corda-enterprise/release-notes-enterprise.html).
+
+As a node operator, you should upgrade to the [latest released version of Corda](https://docs.corda.net/docs/corda-enterprise/index.html) if the fixed issues listed below are relevant to your work.
+
+### Fixed issues
+
+* We have fixed an issue where the HA utilities tool does not write the correct log file.
+* We have fixed an issue that prevented the HA utilities tool loading third-party HSM `.jar` files from the `drivers` directory when the `generate-internal-tunnel-ssl-keystores` command is run.
+* The `startFlowWithClientId` now uses the same permissioning as the `startFlow` method.
+* Corda Enterprise 4.6.2 now supports version 3.2.1 of the AWS CloudHSM client library.
+* We have fixed an issue that caused the Corda Firewall to throw an error when version information was requested.
+* We have fixed an issue where migrating from Corda Enterprise 4.5 to Corda Enterprise 4.6 could cause some flows to experience a retry loop.
+* We have fixed an issue that could cause flow execution to hang.
+* We have fixed an issue that caused Jmeter to be unable to deserialise CorDapps if they were not listed as Jmeter dependencies.
+* We have fixed an issue that caused the float to not reactivate after a bridge restart.
+* We have fixed an issue that could cause a float to handle two connection attempts from the same bridge simultaneously.
+* We have fixed an issue that misinterpreted an internal error as a bad certificate error, preventing future connection attempts.
+* We have fixed an issue that could cause a node to hang at shutdown.
+* We have fixed an issue that can cause failure at node startup.
+* The `attachmentPresenceCache` has been removed. The functionality is duplicated in the `attachmentContent` cache in the `NodeAttachmentService`.
+* We have fixed an issue that caused timestamps to change timezone between the start and end times of a flow.
+* We have fixed an issue where `CordaPersistence.transaction` did not flush properly and another flush had to be added in order to complete the transaction.
+* We have fixed several issues that caused memory leaks. As a result, we have added a new node configuration field - `enableURLConnectionCache` - and we have modified the `attachmentClassLoaderCacheSize` node configuration field. See the [node configuration fields page](node/setup/corda-configuration-fields.md#enterpriseconfiguration) for details.
+
 ## Corda Enterprise 4.6.1
 
 Corda Enterprise 4.6.1 is a patch release of Corda Enterprise that introduces fixes to known issues in Corda Enterprise 4.6.
@@ -500,7 +545,6 @@ The `initial-registration` command is described in [Node command-line options](n
 * Business Network roles are not displayed when `MembershipState` is queried via the Shell Command-line Interface. It is also not possible to change the participant roles via the Shell Command-line Interface.
 * Filtering flows by `FlowStart` using the constants `Instant.MAX` and `Instant.MIN` returns an exception.
 * The SSH Client returns inconsistent exit codes after `gracefulShutdown` is run, indicating that an error has occurred.
-* The Docker node does not generate configuration and certificates against Testnet.
 * The node rejects the incoming P2P connection from a node with a revoked certificate, with warnings and errors, but does not block any attempts to re-establish it. This leads to a quick accumulation of warnings and errors in the node log files.
 * The error text is repeated in the console when trying to register a node with forbidden characters in the Organisation (`O`) name.
 * The ``<install-shell-extensions>`` sub-command of Corda node creates log files in the home folder, while all other sub-commands create log files the `logs` subfolder.
