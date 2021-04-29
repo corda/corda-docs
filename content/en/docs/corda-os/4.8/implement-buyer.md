@@ -6,164 +6,37 @@ aliases:
 date: '2020-04-07T12:00:00Z'
 menu:
   corda-os-4-8:
-    identifier: corda-os-4-8-implementing-the-seller
+    identifier: corda-os-4-8-implement-buyer
     parent: corda-os-4-8-flow-state-machines
     weight: 1240
 tags:
 - flow
 - state
 - machines
-title: Implementing the seller
+title: Implement buyer
 ---
 
+## Implement buyer
 
-## Implementing the seller
+OK, let’s do the same for the buyer side. This code is longer but no more complicated.
 
-Let’s implement the `Seller.call` method that will be run when the flow is invoked.
+1. Perform some sanity checking on the proposed trade transaction received from the seller to ensure you’re being offered
+what you expected to be offered.
 
-{{< tabs name="tabs-2" >}}
-{{% tab name="kotlin" %}}
-```kotlin
-@Suspendable
-override fun call(): SignedTransaction {
-    progressTracker.currentStep = AWAITING_PROPOSAL
-    // Make the first message we'll send to kick off the flow.
-    val hello = SellerTradeInfo(price, myParty)
-    // What we get back from the other side is a transaction that *might* be valid and acceptable to us,
-    // but we must check it out thoroughly before we sign!
-    // SendTransactionFlow allows seller to access our data to resolve the transaction.
-    subFlow(SendStateAndRefFlow(otherSideSession, listOf(assetToSell)))
-    otherSideSession.send(hello)
+2. Create a cash spend using `Cash.generateSpend`.
 
-    // Verify and sign the transaction.
-    progressTracker.currentStep = VERIFYING_AND_SIGNING
+   You can read the vault documentation to learn more about this.
 
-    // DOCSTART 07
-    // Sync identities to ensure we know all of the identities involved in the transaction we're about to
-    // be asked to sign
-    subFlow(IdentitySyncFlow.Receive(otherSideSession))
-    // DOCEND 07
+3. Access the *service hub* to access things that are transient and may change or be recreated
+whilst a flow is suspended, such as the wallet or the network map.
 
-    // DOCSTART 5
-    val signTransactionFlow = object : SignTransactionFlow(otherSideSession, VERIFYING_AND_SIGNING.childProgressTracker()) {
-        override fun checkTransaction(stx: SignedTransaction) {
-            // Verify that we know who all the participants in the transaction are
-            val states: Iterable<ContractState> = serviceHub.loadStates(stx.tx.inputs.toSet()).map { it.state.data } + stx.tx.outputs.map { it.data }
-            states.forEach { state ->
-                state.participants.forEach { anon ->
-                    require(serviceHub.identityService.wellKnownPartyFromAnonymous(anon) != null) {
-                        "Transaction state $state involves unknown participant $anon"
-                    }
-                }
-            }
+4. Call `CollectSignaturesFlow` as a subflow to send the unfinished, still-invalid transaction to the seller so
+they can sign it and send it back to you.
 
-            if (stx.tx.outputStates.sumCashBy(myParty.party).withoutIssuer() != price)
-                throw FlowException("Transaction is not sending us the right amount of cash")
-        }
-    }
+5. Call `FinalityFlow` as a subflow to finalize the transaction.
 
-    val txId = subFlow(signTransactionFlow).id
-    // DOCEND 5
-
-    return subFlow(ReceiveFinalityFlow(otherSideSession, expectedTxId = txId))
-}
-
-```
-{{% /tab %}}
-
-{{% tab name="java" %}}
-```java
-
-@Suspendable
-@Override
-public SignedTransaction call() throws FlowException {
-
-    progressTracker.setCurrentStep(AWAITING_PROPOSAL);
-
-    // Make the first message we'll send to kick off the flow.
-    SellerTradeInfo hello = new SellerTradeInfo(price, myParty);
-    // What we get back from the other side is a transaction that *might* be valid and acceptable to us,
-    // but we must check it out thoroughly before we sign!
-    // SendTransactionFlow allows seller to access our data to resolve the transaction.
-    subFlow(SendStateAndRefFlow(otherSideSession, Arrays.asList(assetToSell)));
-    otherSideSession.send(hello);
-
-    // Verify and sign the transaction.
-    progressTracker.setCurrentStep(VERIFYING_AND_SIGNING);
-
-    // DOCSTART 07
-    // Sync identities to ensure we know all of the identities involved in the transaction we're about to
-    // be asked to sign
-    subFlow(IdentitySyncFlow.Receive(otherSideSession));
-
-    // DOCEND 07
-
-    // DOCSTART 5
-    SignTransactionFlow signTransactionFlow = SignTransactionFlow(otherSideSession, VERIFYING_AND_SIGNING.childProgressTracker())
-
-        @Override
-        void checkTransaction(SignedTransaction stx) {
-            // Verify that we know who all the participants in the transaction are
-            Iterable<ContractState> states = getServiceHub().loadStates(stx.getTx().getInputs().toSet()).stream().map(it -> it.getState.getData).collect(Collectors.toList()) + stx.getTx().getOutputs().stream().map(it -> it.getState.getData).collect(Collectors.toList());
-
-
-            for(State state: states) {
-                for(AbstractParty anon: state.getParticipants()) {
-                    // "Transaction state $state involves unknown participant $anon"
-                    assertNotNull(getServiceHub().getIdentityService().getWellKnownPartyFromAnonymous(anon), "Transaction state involves unknown participant");
-                }
-            }
-
-            if (stx.getTx().getOutputStates().sumCashBy(myParty.getParty()).withoutIssuer() != price) {
-                throw new FlowException("Transaction is not sending us the right amount of cash");
-            }
-
-        }
-    }
-
-
-    SecureHash txId = subFlow(signTransactionFlow).getId();
-    // DOCEND 5
-
-    return subFlow(ReceiveFinalityFlow(otherSideSession, txId));
-}
-
-{{% /tab %}}
-
-
-[TwoPartyTradeFlow.kt](https://github.com/corda/corda/blob/release/os/4.8/finance/workflows/src/main/kotlin/net/corda/finance/flows/TwoPartyTradeFlow.kt) | ![github](/images/svg/github.svg "github")
-
-{{< /tabs >}}
-
-We start by sending information about the asset we wish to sell to the buyer. We fill out the initial flow message with
-the trade info, and then call `otherSideSession.send`. which takes two arguments:
-
-
-* The party we wish to send the message to
-* The payload being sent
-
-`otherSideSession.send` will serialise the payload and send it to the other party automatically.
-
-Next, we call a *subflow* called `IdentitySyncFlow.Receive` (see [Implementing sub-flows](#subflows)). `IdentitySyncFlow.Receive`
-ensures that our node can de-anonymise any confidential identities in the transaction it’s about to be asked to sign.
-
-Next, we call another subflow called `SignTransactionFlow`. `SignTransactionFlow` automates the process of:
-
-
-* Receiving a proposed trade transaction from the buyer, with the buyer’s signature attached.
-* Checking that the proposed transaction is valid.
-* Calculating and attaching our own signature so that the transaction is now signed by both the buyer and the seller.
-* Sending the transaction back to the buyer.
-
-The transaction then needs to be finalized. This is the the process of sending the transaction to a notary to assert
-(with another signature) that the time-window in the transaction (if any) is valid and there are no double spends.
-In this flow, finalization is handled by the buyer, we just wait for them to send it to us. It will have the same ID as
-the one we started with but more signatures.
-
-
-## Implementing the buyer
-
-OK, let’s do the same for the buyer side:
+As you can see, the flow logic is straightforward and does not contain any callbacks or network glue code, despite
+the fact that it takes minimal resources and can survive node restarts.
 
 {{< tabs name="tabs-3" >}}
 {{% tab name="kotlin" %}}
@@ -384,18 +257,3 @@ private Pair<StateAndRef<OwnableState>, SellerTradeInfo> receiveAndValidateTrade
 [TwoPartyTradeFlow.kt](https://github.com/corda/corda/blob/release/os/4.8/finance/workflows/src/main/kotlin/net/corda/finance/flows/TwoPartyTradeFlow.kt) | ![github](/images/svg/github.svg "github")
 
 {{< /tabs >}}
-
-This code is longer but no more complicated. Here are some things to pay attention to:
-
-
-* We do some sanity checking on the proposed trade transaction received from the seller to ensure we’re being offered
-what we expected to be offered.
-* We create a cash spend using `Cash.generateSpend`. You can read the vault documentation to learn more about this.
-* We access the *service hub* as needed to access things that are transient and may change or be recreated
-whilst a flow is suspended, such as the wallet or the network map.
-* We call `CollectSignaturesFlow` as a subflow to send the unfinished, still-invalid transaction to the seller so
-they can sign it and send it back to us.
-* Last, we call `FinalityFlow` as a subflow to finalize the transaction.
-
-As you can see, the flow logic is straightforward and does not contain any callbacks or network glue code, despite
-the fact that it takes minimal resources and can survive node restarts.

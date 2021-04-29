@@ -3,90 +3,30 @@ aliases:
 - /head/flow-state-machines.html
 - /HEAD/flow-state-machines.html
 - /flow-state-machines.html
-date: '2021-04-27'
+date: '2020-04-07T12:00:00Z'
 menu:
   corda-os-4-8:
-    identifier: corda-os-4-8-create-two-classes-containing-flow-definition
+    identifier: corda-os-4-8-whitelist-classes-with-the-corda-node
     parent: corda-os-4-8-flow-state-machines
-    weight: 1210
+    weight: 1230
 tags:
 - flow
 - state
 - machines
-title: Create two classes containing flow definition
+title: Whitelist classes with the Corda node
 ---
 
-## Defining classes
+## Whitelist classes with the Corda node
 
-{{< note >}}
+* Whitelist every class contained in messages using the `@CordaSerializable` annotation.
 
-The code examples in this tutorial are only available in Kotlin and Java, but you can use any JVM language to
-write them and the approach is the same.
+For security reasons, we do not want Corda nodes to be able to just receive instances of any class on the classpath
+via messaging, since this has been exploited in other Java application containers in the past. Instead, we require
+every class contained in messages to be whitelisted. Some classes are whitelisted by default (see `DefaultWhitelist`),
+but others outside of that set need to be whitelisted either by using the annotation `@CordaSerializable` or via the
+plugin framework. See [Object serialization](serialization.md).
 
-{{< /note >}}
-
-1. Define two classes containing the flow definition.
-
-2. Provide data used by each side of the transaction.
-
-{{< tabs name="tabs-1" >}}
-
-{{% tab name="kotlin" %}}
-
-```kotlin
-object TwoPartyTradeFlow {
-    class UnacceptablePriceException(givenPrice: Amount<Currency>) : FlowException("Unacceptable price: $givenPrice")
-    class AssetMismatchException(val expectedTypeName: String, val typeName: String) : FlowException() {
-        override fun toString() = "The submitted asset didn't match the expected type: $expectedTypeName vs $typeName"
-    }
-
-```
-{{% /tab %}}
-
-{{% tab name="java" %}}
-```java
-@InitiatingFlow
-@StartableByRPC
-public class TwoPartyTradeFlow extends FlowLogic<SignedTransaction> {
-
-    public inline class UnacceptablePriceException {
-        private int givenPrice;
-
-        private OptionalInt(Amount<Currency> givenPrice) {
-            if (givenPrice < 1) { // if price is invalid
-                FlowException("Unacceptable price: $givenPrice");
-            }
-        }
-    }
-
-    public inline class AssetMismatchException extends FlowException {
-        private String expectedTypeName;
-        private String typeName;
-
-        private toString() {
-            return "The submitted asset didn't match the expected type: " + expectedTypeName + " vs " + typeName;
-        }
-    }
-
-3. Define classes nested inside the main `TwoPartyTradeFlow` singleton.
-
-   Some of the classes are simply flow messages or exceptions. The other two represent the buyer and seller side of the flow.
-
-   a. Add data for the seller:
-
-    * `otherSideSession: FlowSession` - a flow session for communication with the buyer
-    * `assetToSell: StateAndRef<OwnableState>` - a pointer to the ledger entry that represents the thing being sold
-    * `price: Amount<Currency>` - the agreed on price that the asset is being sold for (without an issuer constraint)
-    * `myParty: PartyAndCertificate` - the certificate representing the party that controls the asset being sold
-
-   b. Add data for the buyer:
-
-    * `sellerSession: FlowSession` - a flow session for communication with the seller
-    * `notary: Party` - the entry in the network map for the chosen notary. See “Notaries” for more information on notaries
-    * `acceptablePrice: Amount<Currency>` - the price that was agreed upon out of band. If the seller specifies a price less than or equal to this, then the trade will go ahead
-    * `typeToBuy: Class<out OwnableState>` - the type of state that is being purchased. This is used to check that the sell side of the flow isn’t trying to sell us the wrong thing, whether by accident or on purpose
-    * `anonymous: Boolean` - whether to generate a fresh, anonymous public key for the transaction
-
+You can see below that the `SellerTradeInfo` has been annotated.
 
 {{< tabs name="tabs-1" >}}
 
@@ -247,9 +187,3 @@ public class TwoPartyTradeFlow extends FlowLogic<SignedTransaction> {
 {{% /tab %}}
 
 {{< /tabs >}}
-
-
-Alright, so using this flow shouldn’t be too hard: in the simplest case we can just create a Buyer or Seller
-with the details of the trade, depending on who we are. We then have to start the flow in some way. Just
-calling the `call` function ourselves won’t work: instead we need to ask the framework to start the flow for
-us. More on that in a moment.
