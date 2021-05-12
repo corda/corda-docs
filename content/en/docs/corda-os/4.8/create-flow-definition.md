@@ -13,7 +13,7 @@ tags:
 - flow
 - state
 - machines
-title: Define flow's classes
+title: Create flow definition
 ---
 
 ## Create flow definition
