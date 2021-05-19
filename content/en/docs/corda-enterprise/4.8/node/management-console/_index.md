@@ -206,6 +206,10 @@ When the node management console is reloaded, the node diagnostic info is unavai
 * The buttons and toggle do not display.
 * The unavailable node information shows as `---`.
 
+{{% note %}}
+If you need to stop a node, use the Node Management Console. If you use the command line, the node will still appear in the console because Corda does not poll the node to see if it is still connected.
+{{% /note%}}
+
 {{% figure zoom="management-console/node-management-console_status.png" alt="Node management console status tab" figcaption="Node management console status tab"%}}
 
 ### Permission
@@ -245,6 +249,10 @@ When the node management console is reloaded, the node diagnostic info is unavai
 
 * The buttons and toggle do not display.
 * The unavailable node information shows as `---`.
+
+{{% note %}}
+If you need to stop a node, use the Node Management Console. If you use the command line, the node will still appear in the console because Corda does not poll the node to see if it is still connected.
+{{% /note%}}
 
 ### Permission
 
