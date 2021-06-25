@@ -566,6 +566,8 @@ For a single-node notary, you must specify the `validating` and `serviceLegalNam
   * `backOffBaseMs`
     * The duration to wait before retrying failing DB operations. Doubled with every retry.
     * *Default:* 20
+  * `batchTimeoutMs`
+    * Configures the amount of time that the notary will wait before processing a batch, even if the batch is not full. Smaller values can lead to lower latency but potentially worse throughput as smaller batches might be processed.
 * `mysql`
   * If using the MySQL notary (deprecated), specify this configuration section with the settings below.
   * `connectionRetries`
