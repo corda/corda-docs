@@ -62,7 +62,7 @@ You can use the `collectAuditData` action with the following parameters:
 {{% tab name="kotlin" %}}
 
 ```kotlin
-fun collectRpcAuditData(rpc: AuditDataRPCOps): String {
+MultiRPCClient(rpcAddress, AuditDataRpcOps::class.java, admin.username, admin.password).use {
     val startTime = Instant.now() - Duration.ofDays(7)
     val endTime = Instant.now()
     return rpc.collectAuditData(
@@ -76,7 +76,7 @@ fun collectRpcAuditData(rpc: AuditDataRPCOps): String {
 {{% tab name="java" %}}
 
 ```java
-public String collectRpcAuditData(AuditDataRPCOps rpc) {
+MultiRPCClient client = new MultiRPCClient(rpcAddress, AuditDataRpcOps.class, admin.username, admin.password)
     Instant startTime = Instant.now() - Duration.ofDays(7)
     Instant endTime = Instant.now()
     return rpc.collectAuditData(
@@ -97,7 +97,7 @@ public String collectRpcAuditData(AuditDataRPCOps rpc) {
 {{% tab name="kotlin" %}}
 
 ```kotlin
-fun collectData(rpc: AuditDataRPCOps): String {
+MultiRPCClient(rpcAddress, AuditDataRpcOps::class.java, admin.username, admin.password).use {
     val startTime = Instant.now() - Duration.ofDays(7)
     val endTime = Instant.now()
     return rpc.collectAuditData(
@@ -111,7 +111,7 @@ fun collectData(rpc: AuditDataRPCOps): String {
 {{% tab name="java" %}}
 
 ```java
-public String collectRpcAuditData(AuditDataRPCOps rpc) {
+MultiRPCClient client = new MultiRPCClient(rpcAddress, AuditDataRpcOps.class, admin.username, admin.password)
     Instant startTime = Instant.now() - Duration.ofDays(7)
     Instant endTime = Instant.now()
     return rpc.collectAuditData(
@@ -132,7 +132,7 @@ public String collectRpcAuditData(AuditDataRPCOps rpc) {
 {{% tab name="kotlin" %}}
 
 ```kotlin
-fun collectData(rpc: AuditDataRPCOps): String {
+MultiRPCClient(rpcAddress, AuditDataRpcOps::class.java, admin.username, admin.password).use {
     return rpc.collectAuditData(
         Format.JSON,
         action = "startDynamicFlow")
@@ -143,7 +143,7 @@ fun collectData(rpc: AuditDataRPCOps): String {
 {{% tab name="java" %}}
 
 ```java
-public String collectRpcAuditData(AuditDataRPCOps rpc) {
+MultiRPCClient client = new MultiRPCClient(rpcAddress, AuditDataRpcOps.class, admin.username, admin.password)
     return rpc.collectAuditData(
         Format.JSON,
         null,
