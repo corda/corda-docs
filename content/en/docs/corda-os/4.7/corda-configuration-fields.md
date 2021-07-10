@@ -22,6 +22,8 @@ The available configuration fields are listed below in alphabetic order.
 
   An array of additional host:port values, which will be included in the advertised NodeInfo in the network map in addition to the `p2pAddress`.
   Nodes can use this configuration option to advertise HA endpoints and aliases to external parties.
+  
+  Note that this param is not currently supported if using the DockerForm gradle task, we recommend you set `p2pAddress` instead. 
 
 {{< note >}}
 0.0.0.0 is not a valid host setting since each additional `P2PAddress` must be an external client address.
