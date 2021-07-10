@@ -16,7 +16,7 @@ weight: 100
 There are many benefits to having a custom binary serialisation format (see [Object serialization](serialization.md) for details) but one
 disadvantage is the inability to view the contents in a human-friendly manner. The Corda Blob Inspector tool alleviates
 this issue by allowing the contents of a binary blob file (or URL end-point) to be output in either YAML or JSON. It
-uses `JacksonSupport` to do this (see [JSON](json.md)).
+uses `JacksonSupport` to do this (see [JSON](json.md)). 
 
 The tool is distributed as part of Corda Enterprise 4.7 in the form of runnable `.jar.` file - `corda-tools-blob-inspector-4.7.jar`.
 
@@ -31,7 +31,7 @@ Use the `--help` flag for a full list of command line options.
 
 When inspecting your custom data structures, there is no need to include the jars containing the class definitions for them
 in the classpath. The blob inspector (or rather the serialization framework) is able to synthesis any classes found in the
-blob that are not on the classpath.
+blob that are not on the classpath. [You can download the blob inspector here](https://software.r3.com/artifactory/corda-releases/net/corda/corda-tools-blob-inspector/).
 
 
 ## Supported formats
