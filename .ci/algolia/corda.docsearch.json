@@ -1,0 +1,86 @@
+{
+    "index_name": "banks.corda.net",
+    "start_urls": [
+        {
+            "url": "https://banks.corda.net/docs/apps/(?P<app>.*?)/",
+            "tags": [
+                "apps"
+            ],
+            "variables": {
+                "app": [
+                    "bankinabox",
+                    "payments"
+                ]
+            }
+        },
+        {
+            "url": "https://banks.corda.net/docs/(?P<project>.*?)/",
+            "tags": [
+                "projects"
+            ],
+            "variables": {
+                "project": [
+                    "corda-os",
+                    "corda-entreprise",
+                    "cenm",
+                    "cdl"
+                ]
+            }
+        }
+    ],
+    "stop_urls": [
+        "/release"
+    ],
+    "scrape_start_urls": false,
+    "sitemap_urls": [
+        "https://banks.corda.net/sitemap.xml"
+    ],
+    "selectors": {
+        "default": {
+            "lvl0": ".r3-content h1",
+            "lvl1": ".r3-content h2",
+            "lvl2": ".r3-content h3",
+            "lvl3": ".r3-content h4",
+            "lvl4": ".r3-content h5",
+            "text": ".r3-content p, .r3-content li"
+        },
+        "apis": {
+            "lvl0": {
+                "selector": "",
+                "default_value": "API"
+            },
+            "lvl1": "h2",
+            "lvl2": "h3",
+            "text": "p, li, td"
+        }
+    },
+    "custom_settings": {
+        "separatorsToIndex": "_",
+        "attributesForFaceting": [
+            "language",
+            "version",
+            "project",
+            "tags",
+            "app",
+            "type"
+        ],
+        "attributesToRetrieve": [
+            "language",
+            "version",
+            "project",
+            "tags",
+            "app",
+            "hierarchy",
+            "content",
+            "anchor",
+            "url",
+            "url_without_anchor",
+            "type"
+        ]
+    },
+    "conversation_id": [
+        "1283651396"
+    ],
+    "min_indexed_level": 1,
+    "nb_hits": 130340
+}

@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# pass these in:  
+# pass these in:
 
 THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 ALGOLIA_APPLICATION_ID=$1
 ALGOLIA_API_ADMIN_KEY=$2
 
-ALGOLIA_CONFIG=$(jq -r tostring $THIS_DIR/algolia.search.json)
+ALGOLIA_CONFIG=$(jq -r tostring $THIS_DIR/corda.docsearch.json)
 
 echo $ALGOLIA_CONFIG
 
